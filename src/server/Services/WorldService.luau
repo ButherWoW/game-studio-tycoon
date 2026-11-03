@@ -111,13 +111,13 @@ local function ensureUpgradeModels()
 	end
 	local spacing = 16
 	-- Модели этапов (Config/Stages) ставятся как апгрейды с position
-	local entries: { { model: string, name: string, position: Vector3? } } = {}
+	local entries: { { model: string, position: Vector3? } } = {}
 	for _, upgrade in Upgrades do
-		table.insert(entries, { model = upgrade.model, name = upgrade.name, position = upgrade.position })
+		table.insert(entries, { model = upgrade.model, position = upgrade.position })
 	end
 	for _, stage in Stages do
 		if stage.model then
-			table.insert(entries, { model = stage.model, name = stage.name, position = stage.position })
+			table.insert(entries, { model = stage.model, position = stage.position })
 		end
 	end
 	for index, upgrade in entries do

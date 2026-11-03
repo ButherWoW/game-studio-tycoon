@@ -269,7 +269,6 @@ function TeamWindow.start()
 	ClientState.changed:Connect(function()
 		render()
 	end)
-
 end
 
 return TeamWindow
