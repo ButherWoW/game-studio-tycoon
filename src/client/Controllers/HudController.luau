@@ -1,84 +1,75 @@
 --!strict
--- Временный HUD из кода, чтобы core loop можно было проверить без дизайна.
--- В Фазе 2 UI-дизайнер заменит его на нормальные ScreenGui.
+-- HUD: деньги, число игр, активная реклама, прогресс разработки и кнопка «Создать игру».
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
+local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local ClientState = require(script.Parent.Parent.ClientState)
+local Ui = require(script.Parent.Parent.Ui)
+local CreateGameWindow = require(script.Parent.CreateGameWindow)
 
 local HudController = {}
 
-local function label(parent: Instance, name: string, y: number): TextLabel
-	local l = Instance.new("TextLabel")
-	l.Name = name
-	l.Size = UDim2.fromOffset(320, 28)
+local function plate(parent: Instance, y: number): TextLabel
+	local l = Ui.label(parent, "", 34, Ui.titleFont)
+	l.Size = UDim2.fromOffset(300, 34)
 	l.Position = UDim2.fromOffset(12, y)
-	l.BackgroundTransparency = 0.4
-	l.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
-	l.TextColor3 = Color3.new(1, 1, 1)
-	l.Font = Enum.Font.GothamBold
-	l.TextScaled = true
-	l.TextXAlignment = Enum.TextXAlignment.Left
-	l.Text = ""
-	l.Parent = parent
+	l.BackgroundTransparency = 0.25
+	l.BackgroundColor3 = Ui.colors.panel
+	Ui.corner(l, 10)
+	local padding = Instance.new("UIPadding")
+	padding.PaddingLeft = UDim.new(0, 10)
+	padding.PaddingTop = UDim.new(0, 4)
+	padding.PaddingBottom = UDim.new(0, 4)
+	padding.Parent = l
 	return l
-end
-
-local function button(parent: Instance, text: string, y: number, onClick: () -> ()): TextButton
-	local b = Instance.new("TextButton")
-	b.Size = UDim2.fromOffset(320, 36)
-	b.Position = UDim2.fromOffset(12, y)
-	b.BackgroundColor3 = Color3.fromRGB(70, 130, 255)
-	b.TextColor3 = Color3.new(1, 1, 1)
-	b.Font = Enum.Font.GothamBold
-	b.TextScaled = true
-	b.Text = text
-	b.Parent = parent
-	b.Activated:Connect(onClick)
-	return b
 end
 
 function HudController.start()
 	local gui = Instance.new("ScreenGui")
-	gui.Name = "DebugHud"
+	gui.Name = "Hud"
 	gui.ResetOnSpawn = false
 	gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 
-	local cash = label(gui, "Cash", 12)
-	local progress = label(gui, "Progress", 44)
-	local result = label(gui, "Result", 76)
+	local cash = plate(gui, 12)
+	cash.TextColor3 = Ui.colors.money
+	local info = plate(gui, 52)
+	local progress = plate(gui, 92)
+	progress.Visible = false
 
-	button(gui, "Сделать игру: Космос + Экшен", 116, function()
-		Remotes.StartDevelopment:FireServer({
-			name = "Space Blaster",
-			genreId = "action",
-			topicId = "space",
-			focus = { gameplay = 4, graphics = 3, sound = 2, story = 1 },
-		})
+	local create = Ui.button(gui, ClientState.t("hud_create"), Ui.colors.money, function()
+		CreateGameWindow.open()
 	end)
-	button(gui, "Купить стол (бесплатно)", 158, function()
-		Remotes.BuyUpgrade:FireServer("desk1")
-	end)
-	button(gui, "Реклама: соцсети (+30%) за 3 000", 200, function()
-		Remotes.BuyAdCampaignWithCash:FireServer("social")
-	end)
+	create.TextColor3 = Color3.fromRGB(40, 30, 0)
+	create.AnchorPoint = Vector2.new(0.5, 1)
+	create.Position = UDim2.new(0.5, 0, 1, -24)
+	create.Size = UDim2.fromOffset(260, 56)
 
-	Remotes.DataChanged.OnClientEvent:Connect(function(data)
-		local ad = ""
-		if data.activeAd and data.activeAd.expiresAt > os.time() then
-			ad = string.format("  | реклама +%d%%", data.activeAd.bonus * 100)
+	local function refresh()
+		local data = ClientState.data
+		if not data then
+			return
 		end
-		cash.Text = string.format("  $ %d  | игр: %d%s", data.cash, data.gamesReleased, ad)
-	end)
+		cash.Text = ClientState.t("hud_cash", { cash = Texts.money(data.cash):sub(2) })
+		local line = ClientState.t("hud_games", { count = data.gamesReleased })
+		if data.activeAd and data.activeAd.expiresAt > os.time() then
+			line ..= "  ·  " .. ClientState.t("hud_ad", { percent = math.floor(data.activeAd.bonus * 100) })
+		end
+		info.Text = line
+		create.Visible = not ClientState.developing
+		if not ClientState.developing then
+			progress.Visible = false
+		end
+	end
 
-	Remotes.DevelopmentProgress.OnClientEvent:Connect(function(info)
-		progress.Text = string.format("  Разработка: %d%%", math.floor(info.progress * 100))
-	end)
+	ClientState.changed:Connect(refresh)
+	refresh()
 
-	Remotes.GameReleased.OnClientEvent:Connect(function(info)
-		result.Text = string.format("  «%s»: %d/10, +$%d", info.name, info.score, info.revenue)
-		progress.Text = ""
+	Remotes.DevelopmentProgress.OnClientEvent:Connect(function(data)
+		progress.Visible = true
+		progress.Text = ClientState.t("hud_developing", { percent = math.floor(data.progress * 100) })
 	end)
 end
 
