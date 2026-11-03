@@ -1,10 +1,89 @@
 --!strict
--- Тексты интерфейса RU + EN (задача A из docs/DEV2_NEXT.md).
+-- Тексты интерфейса (задача A из docs/DEV2_NEXT.md).
+-- RU и EN — здесь, новые ключи дописывать в обе таблицы. Остальные языки —
+-- Config/Locales/<code>.luau с теми же ключами; чего нет в языке, берётся из EN, потом из RU.
 -- Подстановки: {name}, {price}, {percent} и т.п. — см. Texts.format.
 
-export type Lang = "ru" | "en"
+export type Lang = string
 
 local Texts = {}
+
+-- Языки для меню выбора: код (как имя файла в Locales) и самоназвание
+Texts.languages = {
+	{ code = "ru", nativeName = "Русский" },
+	{ code = "en", nativeName = "English" },
+	{ code = "uk", nativeName = "Українська" },
+	{ code = "de", nativeName = "Deutsch" },
+	{ code = "fr", nativeName = "Français" },
+	{ code = "es", nativeName = "Español" },
+	{ code = "it", nativeName = "Italiano" },
+	{ code = "pt", nativeName = "Português" },
+	{ code = "nl", nativeName = "Nederlands" },
+	{ code = "pl", nativeName = "Polski" },
+	{ code = "cs", nativeName = "Čeština" },
+	{ code = "sk", nativeName = "Slovenčina" },
+	{ code = "sl", nativeName = "Slovenščina" },
+	{ code = "hr", nativeName = "Hrvatski" },
+	{ code = "sr", nativeName = "Српски" },
+	{ code = "bg", nativeName = "Български" },
+	{ code = "ro", nativeName = "Română" },
+	{ code = "hu", nativeName = "Magyar" },
+	{ code = "el", nativeName = "Ελληνικά" },
+	{ code = "sv", nativeName = "Svenska" },
+	{ code = "da", nativeName = "Dansk" },
+	{ code = "fi", nativeName = "Suomi" },
+	{ code = "no", nativeName = "Norsk" },
+	{ code = "et", nativeName = "Eesti" },
+	{ code = "lv", nativeName = "Latviešu" },
+	{ code = "lt", nativeName = "Lietuvių" },
+	{ code = "tr", nativeName = "Türkçe" },
+	{ code = "zh-cn", nativeName = "中文" },
+	{ code = "id", nativeName = "Bahasa Indonesia" },
+	{ code = "hi", nativeName = "हिन्दी" },
+} :: { { code: string, nativeName: string } }
+
+function Texts.isLanguage(code: any): boolean
+	if type(code) ~= "string" then
+		return false
+	end
+	for _, language in Texts.languages do
+		if language.code == code then
+			return true
+		end
+	end
+	return false
+end
+
+-- Таблица языка: ru/en отсюда, остальные из Locales (грузятся при первом обращении)
+local loaded: { [string]: { [string]: string } } = {}
+
+function Texts.locale(lang: Lang): { [string]: string }?
+	if lang == "ru" or lang == "en" then
+		return (Texts :: any)[lang]
+	end
+	local cached = loaded[lang]
+	if cached then
+		return cached
+	end
+	local folder = (script.Parent :: Instance):FindFirstChild("Locales")
+	local module = folder and folder:FindFirstChild(lang)
+	if not module or not module:IsA("ModuleScript") then
+		return nil
+	end
+	local ok, result = pcall(require, module)
+	if not ok or type(result) ~= "table" then
+		warn("[Texts] Locale failed to load:", lang, result)
+		return nil
+	end
+	loaded[lang] = result :: any
+	return result :: any
+end
+
+-- Текст ключа только в этом языке, без запасных (nil — перевода нет)
+function Texts.lookup(lang: Lang, key: string): string?
+	local tbl = Texts.locale(lang)
+	return tbl and tbl[key]
+end
 
 Texts.ru = {
 	-- HUD
@@ -13,6 +92,9 @@ Texts.ru = {
 	hud_ad = "Реклама +{percent}%",
 	hud_create = "🎮 Создать игру",
 	hud_developing = "Разработка: {percent}%",
+
+	-- Выбор языка
+	lang_title = "🌐 Язык",
 
 	-- Окно «Создать игру»
 	create_title = "Новая игра",
@@ -165,6 +247,8 @@ Texts.en = {
 	hud_create = "🎮 Make a game",
 	hud_developing = "Developing: {percent}%",
 
+	lang_title = "🌐 Language",
+
 	create_title = "New game",
 	create_name_label = "Title",
 	create_name_placeholder = "My first game",
@@ -308,8 +392,7 @@ Texts.en = {
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть
 function Texts.format(lang: Lang, key: string, vars: { [string]: any }?): string
-	local tbl = if lang == "en" then Texts.en else Texts.ru
-	local text = tbl[key] or Texts.ru[key] or key
+	local text = Texts.lookup(lang, key) or Texts.en[key] or Texts.ru[key] or key
 	if vars then
 		text = text:gsub("{(%w+)}", function(name: string): string?
 			local value = vars[name]

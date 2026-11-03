@@ -13,7 +13,7 @@ local CreateGameWindow = require(script.Parent.CreateGameWindow)
 local HudController = {}
 
 local function plate(parent: Instance, y: number): TextLabel
-	local l = Ui.label(parent, "", 34, Ui.titleFont)
+	local l = Ui.label(parent, "", 34, Ui.titleFontFor(ClientState.lang))
 	l.TextXAlignment = Enum.TextXAlignment.Center
 	-- Сверху по центру: слева окно чата Roblox (перекрывает HUD и забирает клики),
 	-- справа список игроков с leaderstats
@@ -43,6 +43,7 @@ function HudController.start()
 	local info = plate(gui, 52)
 	local progress = plate(gui, 92)
 	progress.Visible = false
+	local lastPercent = 0
 
 	local create = Ui.button(gui, ClientState.t("hud_create"), Ui.colors.money, function()
 		CreateGameWindow.open()
@@ -54,6 +55,10 @@ function HudController.start()
 	create.Size = UDim2.fromOffset(260, 56)
 
 	local function refresh()
+		-- Язык мог смениться: тексты и шрифт, которые не зависят от данных
+		create.Text = ClientState.t("hud_create")
+		local font = Ui.titleFontFor(ClientState.lang)
+		cash.Font, info.Font, progress.Font = font, font, font
 		local data = ClientState.data
 		if not data then
 			return
@@ -67,6 +72,8 @@ function HudController.start()
 		create.Visible = not ClientState.developing
 		if not ClientState.developing then
 			progress.Visible = false
+		elseif progress.Visible then
+			progress.Text = ClientState.t("hud_developing", { percent = lastPercent })
 		end
 	end
 
@@ -75,7 +82,8 @@ function HudController.start()
 
 	Remotes.DevelopmentProgress.OnClientEvent:Connect(function(data)
 		progress.Visible = true
-		progress.Text = ClientState.t("hud_developing", { percent = math.floor(data.progress * 100) })
+		lastPercent = math.floor(data.progress * 100)
+		progress.Text = ClientState.t("hud_developing", { percent = lastPercent })
 	end)
 end
 

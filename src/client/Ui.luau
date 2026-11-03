@@ -35,6 +35,22 @@ Ui.colors = {
 Ui.titleFont = Enum.Font.FredokaOne
 Ui.bodyFont = Enum.Font.GothamBold
 
+-- В Fredoka One нет кириллицы, греческого, деванагари и иероглифов
+local NON_LATIN_LANGS: { [string]: boolean } = {
+	ru = true,
+	uk = true,
+	bg = true,
+	sr = true,
+	el = true,
+	["zh-cn"] = true,
+	hi = true,
+}
+
+-- Шрифт заголовков для языка интерфейса (передавай ClientState.lang)
+function Ui.titleFontFor(lang: string): Enum.Font
+	return if NON_LATIN_LANGS[lang] then Enum.Font.GothamBold else Ui.titleFont
+end
+
 function Ui.scoreColor(score: number): Color3
 	if score >= 8 then
 		return Ui.colors.good
