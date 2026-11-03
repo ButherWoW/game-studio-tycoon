@@ -116,6 +116,29 @@ function Ui.button(parent: Instance, text: string, color: Color3, onClick: () ->
 	return b
 end
 
+-- Боковое меню слева посередине (слева сверху чат, справа сверху список игроков).
+-- Слоты, чтобы фичи не спорили за место: 1 исследования, 2 сотрудники, 3 задания,
+-- 4 магазин, 5 rebirth, 6 язык. order внутри слота не нужен — один слот, одна кнопка.
+local menuGui: ScreenGui? = nil
+local MENU_BUTTON = 52
+
+function Ui.menuButton(slot: number, icon: string, onClick: () -> ()): TextButton
+	if not menuGui then
+		local Players = game:GetService("Players")
+		local screen = Instance.new("ScreenGui")
+		screen.Name = "SideMenu"
+		screen.ResetOnSpawn = false
+		screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
+		menuGui = screen
+	end
+	local b = Ui.button(menuGui :: ScreenGui, icon, Ui.colors.panel, onClick)
+	b.Name = "Slot" .. slot
+	b.AnchorPoint = Vector2.new(0, 0.5)
+	b.Size = UDim2.fromOffset(MENU_BUTTON, MENU_BUTTON)
+	b.Position = UDim2.new(0, 12, 0.5, (slot - 3.5) * (MENU_BUTTON + 8))
+	return b
+end
+
 function Ui.list(parent: Instance, padding: number)
 	local layout = Instance.new("UIListLayout")
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
