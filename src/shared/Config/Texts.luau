@@ -51,6 +51,17 @@ Texts.ru = {
 	release_ad = "📢 Реклама +30% за {price}",
 	release_close = "Закрыть",
 	release_best = "Новый рекорд студии!",
+
+	-- tutorial
+	tutorial_desk = "Наступи на зелёную кнопку — это твой первый стол",
+	tutorial_open = "Нажми «Создать игру»",
+	tutorial_pick = "Выбери жанр и тему",
+	tutorial_start = "Распредели фокус и начни разработку",
+	tutorial_wait = "Пока студия работает, купи компьютер (или подожди)",
+	tutorial_release = "Критики оценили игру! Деньги — твои",
+	tutorial_done = "Покупай апгрейды и делай игры лучше. Бонус: {money}!",
+	tutorial_skip = "Пропустить",
+	tutorial_ok = "Готово",
 } :: { [string]: string }
 
 Texts.en = {
@@ -94,6 +105,17 @@ Texts.en = {
 	release_ad = "📢 Ads +30% for {price}",
 	release_close = "Close",
 	release_best = "New studio record!",
+
+	-- tutorial
+	tutorial_desk = "Step on the green button: it's your first desk",
+	tutorial_open = "Press “Make a game”",
+	tutorial_pick = "Pick a genre and a topic",
+	tutorial_start = "Split the focus and start development",
+	tutorial_wait = "While the studio works, buy a computer (or just wait)",
+	tutorial_release = "Critics have rated your game! The money is yours",
+	tutorial_done = "Buy upgrades and make better games. Bonus: {money}!",
+	tutorial_skip = "Skip",
+	tutorial_ok = "Done",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть
