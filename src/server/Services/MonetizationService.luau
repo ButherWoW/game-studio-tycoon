@@ -12,6 +12,19 @@ local DataService = require(script.Parent.DataService)
 
 local MonetizationService = {}
 
+-- Повторы ProcessReceipt приходят вскоре после покупки; старые квитанции хранить незачем,
+-- иначе запись в DataStore растёт до лимита
+local MAX_STORED_RECEIPTS = 50
+
+local function rememberReceipt(profile: DataService.Profile, purchaseId: string)
+	profile.processedReceipts[purchaseId] = true
+	table.insert(profile.receiptLog, purchaseId)
+	while #profile.receiptLog > MAX_STORED_RECEIPTS do
+		local oldest = table.remove(profile.receiptLog, 1) :: string
+		profile.processedReceipts[oldest] = nil
+	end
+end
+
 local function applyAd(player: Player, campaign: AdCampaigns.AdCampaign)
 	local profile = DataService.get(player)
 	if not profile then
@@ -54,7 +67,7 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 	end
 
 	applyAd(player, campaign)
-	profile.processedReceipts[receipt.PurchaseId] = true
+	rememberReceipt(profile, receipt.PurchaseId)
 	if not DataService.save(player) then
 		return Enum.ProductPurchaseDecision.NotProcessedYet
 	end

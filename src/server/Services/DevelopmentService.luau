@@ -3,6 +3,7 @@
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
+local TextService = game:GetService("TextService")
 
 local Shared = ReplicatedStorage.Shared
 local Remotes = require(Shared.Remotes)
@@ -26,10 +27,38 @@ type Project = {
 
 local BASE_DURATION = 30 -- секунд на одну игру в начале
 local MAX_NAME_LENGTH = 30
+local DEFAULT_NAME = "Без названия"
 
 local DevelopmentService = {}
 local projects: { [Player]: Project } = {}
 local rng = Random.new()
+
+-- Заглушка, пока название проходит фильтр: слот занят, но очки не идут
+local PENDING: Project = {
+	name = "",
+	genreId = "",
+	topicId = "",
+	focus = { gameplay = 0, graphics = 0, sound = 0, story = 0 },
+	points = { gameplay = 0, graphics = 0, sound = 0, story = 0 },
+	elapsed = 0,
+	duration = math.huge,
+}
+
+-- Название увидят другие игроки (релиз, лидерборд), поэтому фильтр обязателен
+local function filterName(player: Player, rawName: string): string
+	if rawName:match("^%s*$") then
+		return DEFAULT_NAME
+	end
+	local ok, result = pcall(function()
+		local filtered = TextService:FilterStringAsync(rawName, player.UserId)
+		return filtered:GetNonChatStringForBroadcastAsync()
+	end)
+	if not ok then
+		warn("[DevelopmentService] Text filter failed:", result)
+		return DEFAULT_NAME
+	end
+	return result
+end
 
 local function pointsPerSecond(player: Player): number
 	local profile = DataService.get(player)
@@ -58,7 +87,8 @@ local function sanitizeFocus(raw: any): Focus?
 	}
 	local sum = 0
 	for _, v in f do
-		if v < 0 or v ~= v then
+		-- NaN и бесконечность ломают нормализацию (inf / inf = NaN)
+		if v < 0 or v ~= v or v == math.huge then
 			return nil
 		end
 		sum += v
@@ -94,10 +124,14 @@ local function onStartDevelopment(player: Player, request: any)
 	if not focus then
 		return
 	end
-	local name = if type(request.name) == "string"
-		then request.name:sub(1, MAX_NAME_LENGTH)
-		else "Без названия"
-	-- TODO (Фаза 2): фильтровать name через TextService:FilterStringAsync перед показом другим игрокам
+	local rawName = if type(request.name) == "string" then request.name:sub(1, MAX_NAME_LENGTH) else ""
+
+	-- Фильтр уступает поток: занимаем слот заранее, чтобы второй запрос не прошёл
+	projects[player] = PENDING
+	local name = filterName(player, rawName)
+	if projects[player] ~= PENDING or not player.Parent then
+		return
+	end
 
 	projects[player] = {
 		name = name,
@@ -149,6 +183,9 @@ function DevelopmentService.start()
 		while true do
 			task.wait(TICK)
 			for player, project in projects do
+				if project == PENDING then
+					continue
+				end
 				local pps = pointsPerSecond(player) * TICK
 				project.points.gameplay += pps * project.focus.gameplay
 				project.points.graphics += pps * project.focus.graphics
