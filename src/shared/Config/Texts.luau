@@ -51,6 +51,24 @@ Texts.ru = {
 	release_ad = "📢 Реклама +30% за {price}",
 	release_close = "Закрыть",
 	release_best = "Новый рекорд студии!",
+
+	-- staff
+	team_title = "Команда",
+	team_desks = "Свободных столов: {free} из {total}",
+	team_hire = "Нанять {price}",
+	team_hired = "В команде",
+	team_locked = "🔒 {stage}",
+	team_soon = "⭐ Скоро",
+	team_no_desk = "Нет стола",
+	team_multiplier = "×{mult} · {spec}",
+	team_spec_all = "всё",
+	team_stage = "Студия: {stage}",
+	team_next = "Следующий этап: {stage}",
+	team_req_money = "{price}",
+	team_req_games = "игр: {have}/{need}",
+	team_req_upgrade = "купить «{name}»",
+	team_move = "🚚 Переезд",
+	team_max_stage = "Это самый большой этап!",
 } :: { [string]: string }
 
 Texts.en = {
@@ -94,6 +112,24 @@ Texts.en = {
 	release_ad = "📢 Ads +30% for {price}",
 	release_close = "Close",
 	release_best = "New studio record!",
+
+	-- staff
+	team_title = "Team",
+	team_desks = "Free desks: {free} of {total}",
+	team_hire = "Hire {price}",
+	team_hired = "On the team",
+	team_locked = "🔒 {stage}",
+	team_soon = "⭐ Soon",
+	team_no_desk = "No desk",
+	team_multiplier = "×{mult} · {spec}",
+	team_spec_all = "everything",
+	team_stage = "Studio: {stage}",
+	team_next = "Next stage: {stage}",
+	team_req_money = "{price}",
+	team_req_games = "games: {have}/{need}",
+	team_req_upgrade = "buy “{name}”",
+	team_move = "🚚 Move",
+	team_max_stage = "This is the biggest stage!",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть

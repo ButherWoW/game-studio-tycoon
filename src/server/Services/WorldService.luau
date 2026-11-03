@@ -7,6 +7,7 @@ local ServerStorage = game:GetService("ServerStorage")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
+local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 
 local PLOT_COUNT = 6
 local PLOT_SIZE = 60
@@ -25,6 +26,8 @@ local PLACEHOLDERS: { [string]: { size: Vector3, color: Color3 } } = {
 	Posters = { size = Vector3.new(8, 4, 0.5), color = Color3.fromRGB(255, 80, 200) },
 	PCPro = { size = Vector3.new(3, 3, 2), color = Color3.fromRGB(40, 160, 255) },
 	Office = { size = Vector3.new(12, 10, 12), color = Color3.fromRGB(220, 230, 240) },
+	Floor = { size = Vector3.new(12, 16, 12), color = Color3.fromRGB(70, 110, 200) },
+	Skyscraper = { size = Vector3.new(10, 40, 10), color = Color3.fromRGB(40, 40, 70) },
 }
 local DEFAULT_PLACEHOLDER = { size = Vector3.new(3, 3, 3), color = Color3.fromRGB(150, 150, 150) }
 
@@ -107,7 +110,17 @@ local function ensureUpgradeModels()
 		folder = newFolder
 	end
 	local spacing = 16
-	for index, upgrade in Upgrades do
+	-- Модели этапов (Config/Stages) ставятся как апгрейды с position
+	local entries: { { model: string, name: string, position: Vector3? } } = {}
+	for _, upgrade in Upgrades do
+		table.insert(entries, { model = upgrade.model, name = upgrade.name, position = upgrade.position })
+	end
+	for _, stage in Stages do
+		if stage.model then
+			table.insert(entries, { model = stage.model, name = stage.name, position = stage.position })
+		end
+	end
+	for index, upgrade in entries do
 		if not (folder :: Instance):FindFirstChild(upgrade.model) then
 			local spec = PLACEHOLDERS[upgrade.model] or DEFAULT_PLACEHOLDER
 			-- Сетка 3×3 на участке, чтобы заглушки не налезали друг на друга

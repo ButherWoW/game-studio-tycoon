@@ -4,6 +4,7 @@
 -- в ServerStorage — папка Upgrades с моделями (имена из Config/Upgrades).
 -- Если их нет в плейсе, WorldService создаёт их сам при старте сервера.
 -- Кнопки-апгрейды на полу создаются из кода: наступил — купил.
+-- Здесь же этапы студии (Config/Stages): studioLevel, переезд и модель этапа на участке.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -12,6 +13,8 @@ local ServerStorage = game:GetService("ServerStorage")
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Stages = require(ReplicatedStorage.Shared.Config.Stages)
+local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local DataService = require(script.Parent.DataService)
 
 local BUTTON_SIZE = Vector3.new(5, 0.4, 5)
@@ -27,6 +30,10 @@ local owners: { [BasePart]: Player } = {}
 local buttons: { [Player]: { [BasePart]: Upgrades.Upgrade } } = {}
 local lastTouch: { [Player]: number } = {}
 
+-- Участок собран заново (вход игрока, переезд): StaffService пересаживает NPC
+local plotChanged = Instance.new("BindableEvent")
+PlotService.plotChanged = plotChanged.Event
+
 local function getPlot(player: Player): BasePart?
 	for plot, owner in owners do
 		if owner == player then
@@ -35,24 +42,84 @@ local function getPlot(player: Player): BasePart?
 	end
 	return nil
 end
+PlotService.getPlot = getPlot
 
-local function placeUpgrade(plot: BasePart, upgrade: Upgrades.Upgrade)
+local function placeModel(plot: BasePart, modelName: string, position: Vector3?, rotationDeg: number?)
 	local folder = ServerStorage:FindFirstChild("Upgrades")
-	local template = folder and folder:FindFirstChild(upgrade.model)
+	local template = folder and folder:FindFirstChild(modelName)
 	if not template or not template:IsA("Model") then
-		warn("[PlotService] Missing model", upgrade.model)
+		warn("[PlotService] Missing model", modelName)
 		return
 	end
 	local model = template:Clone()
-	if upgrade.position then
-		-- Раскладка из Config/Upgrades: pivot модели — центр её основания
-		local rotation = math.rad(upgrade.rotation or 0)
-		model:PivotTo(plot.CFrame * CFrame.new(upgrade.position) * CFrame.Angles(0, rotation, 0))
+	if position then
+		-- Раскладка из Config: pivot модели — центр её основания
+		local rotation = math.rad(rotationDeg or 0)
+		model:PivotTo(plot.CFrame * CFrame.new(position) * CFrame.Angles(0, rotation, 0))
 	else
 		-- Модель уже собрана на своём месте относительно центра участка
 		model:PivotTo(plot.CFrame * model:GetPivot())
 	end
 	model.Parent = plot
+end
+
+local function placeUpgrade(plot: BasePart, upgrade: Upgrades.Upgrade)
+	placeModel(plot, upgrade.model, upgrade.position, upgrade.rotation)
+end
+
+-- Можно ли переехать на этап stage (без проверки денег и того, что это следующий этап)
+local function stageRequirementsMet(profile: DataService.Profile, stage: Stages.Stage): boolean
+	if stage.requiresUpgrade and not profile.upgrades[stage.requiresUpgrade] then
+		return false
+	end
+	return profile.gamesReleased >= stage.gamesRequired
+end
+
+-- studioLevel из сохранения может быть мусором; бесплатные этапы (офис после апгрейда office)
+-- наступают сами. Возвращает true, если уровень изменился.
+local function normalizeStage(profile: DataService.Profile): boolean
+	local old = profile.studioLevel
+	local level = tonumber(old) or 1
+	level = math.clamp(math.floor(level), 1, #Stages)
+	while level < #Stages do
+		local nextStage = Stages[level + 1]
+		if nextStage.cost > 0 or not stageRequirementsMet(profile, nextStage) then
+			break
+		end
+		level += 1
+	end
+	profile.studioLevel = level
+	return level ~= old
+end
+
+-- Поставить всё купленное и модель текущего этапа
+local function buildPlot(plot: BasePart, profile: DataService.Profile)
+	for _, upgrade in Upgrades do
+		if profile.upgrades[upgrade.id] then
+			placeUpgrade(plot, upgrade)
+		end
+	end
+	local stage = Stages[profile.studioLevel]
+	if stage and stage.model then
+		placeModel(plot, stage.model, stage.position, 0)
+	end
+end
+
+-- Пересобрать участок: снести модели и поставить заново (купленное + модель этапа).
+-- NPC сотрудников лежат в папке, а не моделью, — их пересаживает StaffService по plotChanged.
+function PlotService.rebuild(player: Player)
+	local plot = getPlot(player)
+	local profile = DataService.get(player)
+	if not plot or not profile then
+		return
+	end
+	for _, child in plot:GetChildren() do
+		if child:IsA("Model") then
+			child:Destroy()
+		end
+	end
+	buildPlot(plot, profile)
+	plotChanged:Fire(player)
 end
 
 local function formatPrice(cost: number): string
@@ -168,8 +235,13 @@ tryBuy = function(player: Player, upgradeId: string)
 			if DataService.trySpend(player, upgrade.cost) then
 				profile.upgrades[upgrade.id] = true
 				placeUpgrade(plot, upgrade)
+				if normalizeStage(profile) then
+					PlotService.rebuild(player)
+				end
 				DataService.replicate(player)
 				refreshButtons(player)
+				-- Новый стол — StaffService может посадить за него сотрудника
+				plotChanged:Fire(player)
 			end
 			return
 		end
@@ -196,17 +268,32 @@ local function assignPlot(player: Player)
 				if not profile or owners[plot] ~= player then
 					return
 				end
-				for _, upgrade in Upgrades do
-					if profile.upgrades[upgrade.id] then
-						placeUpgrade(plot, upgrade)
-					end
-				end
+				normalizeStage(profile)
+				buildPlot(plot, profile)
+				DataService.replicate(player)
 				refreshButtons(player)
+				plotChanged:Fire(player)
 			end)
 			return
 		end
 	end
 	warn("[PlotService] No free plots")
+end
+
+local function onMoveStudio(player: Player)
+	local profile = DataService.get(player)
+	if not profile or not getPlot(player) then
+		return
+	end
+	local nextStage = Stages[profile.studioLevel + 1]
+	if not nextStage or not stageRequirementsMet(profile, nextStage) then
+		return
+	end
+	if DataService.trySpend(player, nextStage.cost) then
+		profile.studioLevel = nextStage.level
+		PlotService.rebuild(player)
+		DataService.replicate(player)
+	end
 end
 
 local function onBuyUpgrade(player: Player, upgradeId: any)
@@ -235,6 +322,7 @@ function PlotService.start()
 		end
 	end)
 	Remotes.BuyUpgrade.OnServerEvent:Connect(onBuyUpgrade)
+	StaffRemotes.MoveStudio.OnServerEvent:Connect(onMoveStudio)
 
 	-- Один общий цикл: зелёная кнопка — денег хватает, серая — нет
 	task.spawn(function()

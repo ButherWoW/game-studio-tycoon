@@ -11,7 +11,9 @@ local Formulas = require(Shared.Formulas)
 local Genres = require(Shared.Config.Genres)
 local Topics = require(Shared.Config.Topics)
 local Upgrades = require(Shared.Config.Upgrades)
+local Employees = require(Shared.Config.Employees)
 local DataService = require(script.Parent.DataService)
+local StaffService = require(script.Parent.StaffService)
 
 type Focus = { gameplay: number, graphics: number, sound: number, story: number }
 
@@ -60,18 +62,42 @@ local function filterName(player: Player, rawName: string): string
 	return result
 end
 
-local function pointsPerSecond(player: Player): number
+local FOCUS_KEYS = { "gameplay", "graphics", "sound", "story" }
+
+-- Очки в секунду по направлениям с учётом сотрудников. Каждый стол даёт pointsPerSecond,
+-- сотрудник за ним умножает это на свой multiplier, а в своё направление — ещё на
+-- (1 + specBonus), если в фокусе оно >= specThreshold. Формулы оценки не меняются.
+function DevelopmentService.pointsRate(player: Player, focus: Focus): Formulas.Points
+	local rate = { gameplay = 0, graphics = 0, sound = 0, story = 0 }
 	local profile = DataService.get(player)
 	if not profile then
-		return 0
+		return rate
 	end
-	local total = 0
+	local byDesk = StaffService.employeesByDesk(player)
+	local any = false
 	for _, upgrade in Upgrades do
-		if profile.upgrades[upgrade.id] and upgrade.pointsPerSecond then
-			total += upgrade.pointsPerSecond
+		local deskPoints = upgrade.pointsPerSecond
+		if profile.upgrades[upgrade.id] and deskPoints then
+			any = true
+			local employee = byDesk[upgrade.id]
+			local base = deskPoints * (if employee then employee.multiplier else 1)
+			for _, key in FOCUS_KEYS do
+				local share = (focus :: any)[key] :: number
+				local bonus = 1
+				if employee and employee.specialization == key and share >= Employees.specThreshold then
+					bonus += Employees.specBonus
+				end
+				(rate :: any)[key] += base * share * bonus
+			end
 		end
 	end
-	return math.max(total, 1) -- даже без стола игрок что-то делает сам
+	if not any then
+		-- Даже без стола игрок что-то делает сам: 1 очко/с
+		for _, key in FOCUS_KEYS do
+			(rate :: any)[key] = (focus :: any)[key]
+		end
+	end
+	return rate
 end
 
 -- Клиенту нельзя доверять: проверяем каждое поле
@@ -190,11 +216,11 @@ function DevelopmentService.start()
 				if project == PENDING then
 					continue
 				end
-				local pps = pointsPerSecond(player) * TICK
-				project.points.gameplay += pps * project.focus.gameplay
-				project.points.graphics += pps * project.focus.graphics
-				project.points.sound += pps * project.focus.sound
-				project.points.story += pps * project.focus.story
+				local rate = DevelopmentService.pointsRate(player, project.focus)
+				project.points.gameplay += rate.gameplay * TICK
+				project.points.graphics += rate.graphics * TICK
+				project.points.sound += rate.sound * TICK
+				project.points.story += rate.story * TICK
 				project.elapsed += TICK
 
 				Remotes.DevelopmentProgress:FireClient(player, {
