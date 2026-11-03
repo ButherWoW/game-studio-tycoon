@@ -2,6 +2,7 @@
 -- Участки и тайкун-апгрейды.
 -- В Workspace нужна папка Plots с частями Plot1..PlotN (точка привязки участка),
 -- в ServerStorage — папка Upgrades с моделями (имена из Config/Upgrades).
+-- Если их нет в плейсе, WorldService создаёт их сам при старте сервера.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
