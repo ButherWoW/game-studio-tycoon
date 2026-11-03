@@ -92,10 +92,15 @@ local function normalizeStage(profile: DataService.Profile): boolean
 	return level ~= old
 end
 
+-- Начинка прошлых этапов (гаражные стеллажи, офисные стены) после переезда не нужна
+local function isVisible(upgrade: Upgrades.Upgrade, profile: DataService.Profile): boolean
+	return upgrade.shellStage == nil or upgrade.shellStage >= profile.studioLevel
+end
+
 -- Поставить всё купленное и модель текущего этапа
 local function buildPlot(plot: BasePart, profile: DataService.Profile)
 	for _, upgrade in Upgrades do
-		if profile.upgrades[upgrade.id] then
+		if profile.upgrades[upgrade.id] and isVisible(upgrade, profile) then
 			placeUpgrade(plot, upgrade)
 		end
 	end
@@ -243,7 +248,9 @@ tryBuy = function(player: Player, upgradeId: string)
 			end
 			if DataService.trySpend(player, upgrade.cost) then
 				profile.upgrades[upgrade.id] = true
-				placeUpgrade(plot, upgrade)
+				if isVisible(upgrade, profile) then
+					placeUpgrade(plot, upgrade)
+				end
 				if normalizeStage(profile) then
 					PlotService.rebuild(player)
 				end

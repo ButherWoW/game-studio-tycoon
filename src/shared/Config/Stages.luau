@@ -17,7 +17,16 @@ export type Stage = {
 }
 
 local Stages: { Stage } = {
-	{ level = 1, id = "garage", name = "Гараж", nameEn = "Garage", cost = 0, gamesRequired = 0 },
+	{
+		level = 1,
+		id = "garage",
+		name = "Гараж",
+		nameEn = "Garage",
+		cost = 0,
+		gamesRequired = 0,
+		model = "Garage",
+		position = Vector3.new(0, 0.5, 0),
+	},
 	-- Офис оплачивается апгрейдом office (его модель Office ставит PlotService как апгрейд)
 	{
 		level = 2,
@@ -36,7 +45,7 @@ local Stages: { Stage } = {
 		cost = 60_000,
 		gamesRequired = 10,
 		model = "Floor",
-		position = Vector3.new(-16, 0.5, 6),
+		position = Vector3.new(0, 0.5, 0),
 	},
 	-- TODO(#8): ещё условие — исследование «Онлайн-режим», когда появятся исследования
 	{
@@ -47,7 +56,7 @@ local Stages: { Stage } = {
 		cost = 400_000,
 		gamesRequired = 40,
 		model = "Skyscraper",
-		position = Vector3.new(0, 0.5, 8),
+		position = Vector3.new(0, 0.5, 0),
 	},
 }
 

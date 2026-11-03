@@ -7,6 +7,7 @@ local ServerStorage = game:GetService("ServerStorage")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
+local ModelFactory = require(script.Parent.ModelFactory)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 
 local PLOT_COUNT = 6
@@ -121,7 +122,13 @@ local function ensureUpgradeModels()
 		end
 	end
 	for index, upgrade in entries do
-		if not (folder :: Instance):FindFirstChild(upgrade.model) then
+		-- Импортированная в Studio модель важнее; иначе — модель из деталей (ModelFactory)
+		local built = if (folder :: Instance):FindFirstChild(upgrade.model)
+			then nil
+			else ModelFactory.build(upgrade.model)
+		if built then
+			built.Parent = folder
+		elseif not (folder :: Instance):FindFirstChild(upgrade.model) then
 			local spec = PLACEHOLDERS[upgrade.model] or DEFAULT_PLACEHOLDER
 			-- Сетка 3×3 на участке, чтобы заглушки не налезали друг на друга
 			local model = Instance.new("Model")
