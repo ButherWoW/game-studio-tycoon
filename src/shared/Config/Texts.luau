@@ -110,6 +110,23 @@ Texts.ru = {
 	offline_amount = "+{money}",
 	offline_hint = "Студия работала без тебя за половину дохода",
 	offline_claim = "Забрать",
+	-- shop
+	shop_title = "🛒 Магазин",
+	shop_tab_ads = "Реклама",
+	shop_tab_passes = "Геймпассы",
+	shop_tab_boosts = "Бусты",
+	shop_robux = "R$ {price}",
+	shop_soon = "Скоро",
+	shop_owned = "✓ Куплено",
+	shop_ad_line = "+{percent}% к доходу на {minutes} мин",
+	shop_ad_note = "Бонусы не складываются: действует самый большой, максимум +100%",
+	shop_charges = "Есть: {count}",
+	shop_coffee_left = "Действует ещё {minutes} мин",
+	shop_income_amount = "Сейчас ≈ {money}",
+	ad_name_social = "Баннеры в соцсетях",
+	ad_name_streamers = "Стримеры",
+	ad_name_tv = "ТВ-реклама",
+	ad_name_worldwide = "Мировая кампания",
 } :: { [string]: string }
 
 Texts.en = {
@@ -212,6 +229,23 @@ Texts.en = {
 	offline_amount = "+{money}",
 	offline_hint = "Your studio kept working at half income",
 	offline_claim = "Claim",
+	-- shop
+	shop_title = "🛒 Shop",
+	shop_tab_ads = "Ads",
+	shop_tab_passes = "Game Passes",
+	shop_tab_boosts = "Boosts",
+	shop_robux = "R$ {price}",
+	shop_soon = "Soon",
+	shop_owned = "✓ Owned",
+	shop_ad_line = "+{percent}% revenue for {minutes} min",
+	shop_ad_note = "Bonuses don't stack: the biggest one applies, up to +100%",
+	shop_charges = "You have: {count}",
+	shop_coffee_left = "Active for {minutes} more min",
+	shop_income_amount = "Now ≈ {money}",
+	ad_name_social = "Social media banners",
+	ad_name_streamers = "Streamers",
+	ad_name_tv = "TV ads",
+	ad_name_worldwide = "Worldwide campaign",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть

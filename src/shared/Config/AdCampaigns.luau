@@ -10,7 +10,7 @@ export type AdCampaign = {
 	bonus: number, -- 0.3 = +30%
 	durationSeconds: number,
 	productId: number,
-	robuxPrice: number, -- для справки, реальная цена задаётся в Dashboard
+	robuxPrice: number, -- для показа в магазине; ПРЕДЛОЖЕНИЕ из #11, финальную решает владелец, реальная — в Dashboard
 	cashCost: number?,
 }
 
@@ -21,7 +21,7 @@ local AdCampaigns: { AdCampaign } = {
 		bonus = 0.3,
 		durationSeconds = 15 * 60,
 		productId = 0,
-		robuxPrice = 25,
+		robuxPrice = 19, -- #11: было 25
 		cashCost = 3_000,
 	},
 	{
@@ -30,7 +30,7 @@ local AdCampaigns: { AdCampaign } = {
 		bonus = 0.5,
 		durationSeconds = 15 * 60,
 		productId = 0,
-		robuxPrice = 75,
+		robuxPrice = 39, -- #11: было 75
 		cashCost = 12_000,
 	},
 	{
@@ -39,7 +39,7 @@ local AdCampaigns: { AdCampaign } = {
 		bonus = 0.75,
 		durationSeconds = 15 * 60,
 		productId = 0,
-		robuxPrice = 150,
+		robuxPrice = 79, -- #11: было 150
 	},
 	{
 		id = "worldwide",
@@ -47,7 +47,7 @@ local AdCampaigns: { AdCampaign } = {
 		bonus = 1.0,
 		durationSeconds = 15 * 60,
 		productId = 0,
-		robuxPrice = 299,
+		robuxPrice = 129, -- #11: было 299
 	},
 }
 
