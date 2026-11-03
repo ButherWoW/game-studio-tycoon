@@ -83,8 +83,9 @@ local function ensurePlots()
 			PLOT_THICKNESS / 2,
 			math.sin(angle) * PLOT_RING_RADIUS
 		)
-		-- Участок «смотрит» на спавн (LookVector к центру)
-		local cf = CFrame.lookAt(pos, Vector3.new(0, pos.Y, 0))
+		-- Передний край участка (+Z, там кнопки покупки) смотрит на спавн.
+		-- lookAt направляет к центру -Z, поэтому разворачиваем на 180°.
+		local cf = CFrame.lookAt(pos, Vector3.new(0, pos.Y, 0)) * CFrame.Angles(0, math.pi, 0)
 		makePart(
 			"Plot" .. i,
 			Vector3.new(PLOT_SIZE, PLOT_THICKNESS, PLOT_SIZE),
@@ -95,8 +96,8 @@ local function ensurePlots()
 	end
 end
 
--- Модели строятся относительно (0,0,0) = центр участка.
--- PlotService ставит их так: plot.CFrame * model:GetPivot().
+-- Заглушки строятся центром основания в (0,0,0): место на участке задаёт
+-- position/rotation в Config/Upgrades (PlotService). Без position — старая сетка.
 local function ensureUpgradeModels()
 	local folder = ServerStorage:FindFirstChild("Upgrades")
 	if not folder then
@@ -110,14 +111,22 @@ local function ensureUpgradeModels()
 		if not (folder :: Instance):FindFirstChild(upgrade.model) then
 			local spec = PLACEHOLDERS[upgrade.model] or DEFAULT_PLACEHOLDER
 			-- Сетка 3×3 на участке, чтобы заглушки не налезали друг на друга
-			local col = (index - 1) % 3 - 1
-			local row = math.floor((index - 1) / 3) - 1
-			local y = PLOT_THICKNESS / 2 + spec.size.Y / 2
 			local model = Instance.new("Model")
 			model.Name = upgrade.model
-			local part =
-				makePart("Main", spec.size, CFrame.new(col * spacing, y, row * spacing), spec.color, model)
+			local cframe
+			if upgrade.position then
+				cframe = CFrame.new(0, spec.size.Y / 2, 0)
+			else
+				local col = (index - 1) % 3 - 1
+				local row = math.floor((index - 1) / 3) - 1
+				cframe = CFrame.new(col * spacing, PLOT_THICKNESS / 2 + spec.size.Y / 2, row * spacing)
+			end
+			local part = makePart("Main", spec.size, cframe, spec.color, model)
 			model.PrimaryPart = part
+			if upgrade.position then
+				-- С PrimaryPart pivot модели берётся из детали: опускаем его к основанию
+				part.PivotOffset = CFrame.new(0, -spec.size.Y / 2, 0)
+			end
 			-- Подпись над заглушкой, чтобы в тесте было видно, что куплено
 			local gui = Instance.new("BillboardGui")
 			gui.Size = UDim2.fromOffset(160, 30)

@@ -44,8 +44,14 @@ local function placeUpgrade(plot: BasePart, upgrade: Upgrades.Upgrade)
 		return
 	end
 	local model = template:Clone()
-	-- Модели в ServerStorage построены относительно точки (0,0,0)
-	model:PivotTo(plot.CFrame * model:GetPivot())
+	if upgrade.position then
+		-- Раскладка из Config/Upgrades: pivot модели — центр её основания
+		local rotation = math.rad(upgrade.rotation or 0)
+		model:PivotTo(plot.CFrame * CFrame.new(upgrade.position) * CFrame.Angles(0, rotation, 0))
+	else
+		-- Модель уже собрана на своём месте относительно центра участка
+		model:PivotTo(plot.CFrame * model:GetPivot())
+	end
 	model.Parent = plot
 end
 
