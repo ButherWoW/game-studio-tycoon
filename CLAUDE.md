@@ -10,7 +10,8 @@
 ## Роли
 - **Dev 1 — Claude**: весь код в `src/`, **Roblox Studio** (через computer use на компьютере владельца: стройка, вставка кода, тесты), публикация, Creator Dashboard, PR'ы и доки. Доступ к Studio есть только у Claude.
 - **Dev 2 — человек**: геймдизайн и контент (жанры, темы, сотрудники, квесты, цены), визуальные референсы, иконка/превью, разбор отчётов о тестах, сообщество. Studio не использует и игру не тестирует — **все тесты делает только Claude** и после каждой задачи пишет в Issue «Отчёт #N» (что сделано, скриншоты, числа). Общение — GitHub Issues.
-- Rojo CLI на компьютере владельца запустить нельзя (терминал недоступен для ввода), поэтому код в плейс вставляется через Command Bar Studio скриптом-установщиком, собранным из `src/`. Источник правды — репозиторий.
+- Репозиторий: **https://github.com/ButherWoW/game-studio-tycoon** (перенесён 2026-11-04 из `erlbro-debug/game-studio-tycoon`, тот больше не используется). Источник правды — репозиторий.
+- На ПК владельца Claude работает из VS Code: терминал есть, `gh` залогинен (ButherWoW), Rokit в `%USERPROFILE%\.rokit\bin` (rojo/stylua/selene), git — встроенный в GitHub Desktop (`%LOCALAPPDATA%\GitHubDesktop\app-*\resources\app\git\cmd`, добавлять в PATH). Код в Studio — через `rojo build -o build.rbxl` или `rojo serve` + плагин Rojo.
 
 ## Технически
 - Rojo (`default.project.json`): `src/shared` → ReplicatedStorage.Shared, `src/server` → ServerScriptService.Server, `src/client` → StarterPlayerScripts.Client.
@@ -28,10 +29,12 @@
 ## Статус
 - Фаза 0 выполнена (репозиторий, структура, CI).
 - Фаза 1: код прототипа готов (`DataService`, `PlotService`, `DevelopmentService`, `MonetizationService`, тестовый `HudController`), ждёт проверки Claude в Studio.
-- Следующее для Dev 1 (Фаза 2): окно создания игры и окно релиза (UI из кода), физические тайкун-кнопки, фильтр названий через TextService, расширить жанры до 10 и темы до 15.
+- 2026-11-04: репозиторий переехал на ButherWoW; смёржены PR #15 (баги #13) и #16 (новая экономика, 10 жанров, 15 тем, 9 апгрейдов). Прогресс 19/46 (41%).
+- Ждём от владельца: выбор названия (#4); публикация плейса из Studio (0.4).
+- Dev 2 забрал 2.4–2.6 (окна «Создать игру»/«Релиз», кнопки-апгрейды) — Claude их не делает. Следующее для Dev 1: 0.4 → 1.5 → 1.6 (Отчёт #1) → 2.7.
 
 ## Как работать в каждой сессии
-0. **Сначала прочитай GitHub сам:** `gh issue list -R erlbro-debug/game-studio-tycoon`, `gh pr list -R erlbro-debug/game-studio-tycoon` и новые комментарии в них (особенно в #14 — сообщения от Dev 2). PR от Dev 2 приходят из форка `ButherWoW/game-studio-tycoon`: запусти CI («Approve and run»), проверь в Studio по разделу «Как проверить в Studio», смёрджи или ответь в PR. Задачи, которые Dev 2 пометил «забрал Dev 2», не делай.
+0. **Сначала прочитай GitHub сам:** `gh issue list -R ButherWoW/game-studio-tycoon`, `gh pr list -R ButherWoW/game-studio-tycoon` и новые комментарии в них (особенно в #14 — сообщения от Dev 2). PR от Dev 2 — из веток того же репозитория: проверь (`stylua`, `selene`, `rojo build`) в Studio по разделу «Как проверить в Studio», смёрджи или ответь в PR. Задачи, которые Dev 2 пометил «забрал Dev 2», не делай.
 1. Открой `docs/ROADMAP.md` — найди первый шаг со статусом ⏳ или ⬜ для Claude. Это текущая задача.
 2. Сделай шаг, проверь (`stylua`, `rojo build`, тест в Studio, если доступен).
 3. Обнови прогресс в двух местах:

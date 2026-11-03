@@ -20,6 +20,7 @@ export type Profile = {
 	bestScore: number,
 	activeAd: { bonus: number, expiresAt: number }?,
 	processedReceipts: { [string]: boolean },
+	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
 }
 
@@ -39,6 +40,7 @@ local function defaultProfile(): Profile
 		bestScore = 0,
 		activeAd = nil,
 		processedReceipts = {},
+		receiptLog = {},
 		lastLogout = os.time(),
 	}
 end
