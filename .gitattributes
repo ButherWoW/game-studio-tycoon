@@ -1,0 +1,6 @@
+# Всегда LF, чтобы stylua --check проходил и на Windows
+* text=auto eol=lf
+*.rbxl binary
+*.rbxm binary
+*.png binary
+*.jpg binary
