@@ -69,6 +69,19 @@ Texts.ru = {
 	team_req_upgrade = "купить «{name}»",
 	team_move = "🚚 Переезд",
 	team_max_stage = "Это самый большой этап!",
+	-- research
+	research_title = "🔬 Исследования",
+	research_points = "ОИ: {points}",
+	research_hint = "Каждая выпущенная игра даёт столько ОИ, какая у неё оценка",
+	research_branch_genres = "Жанры",
+	research_branch_tech = "Технологии",
+	research_branch_studio = "Студия",
+	research_cost = "{cost} ОИ",
+	research_buy = "Исследовать · {cost} ОИ",
+	research_need = "Нужно {cost} ОИ",
+	research_owned = "✓ Изучено",
+	research_requires = "🔒 Сначала: {names}",
+	research_genre_owned = "(жанр уже открыт)",
 } :: { [string]: string }
 
 Texts.en = {
@@ -130,6 +143,19 @@ Texts.en = {
 	team_req_upgrade = "buy “{name}”",
 	team_move = "🚚 Move",
 	team_max_stage = "This is the biggest stage!",
+	-- research
+	research_title = "🔬 Research",
+	research_points = "RP: {points}",
+	research_hint = "Every released game gives as many RP as its score",
+	research_branch_genres = "Genres",
+	research_branch_tech = "Technology",
+	research_branch_studio = "Studio",
+	research_cost = "{cost} RP",
+	research_buy = "Research · {cost} RP",
+	research_need = "Need {cost} RP",
+	research_owned = "✓ Researched",
+	research_requires = "🔒 First: {names}",
+	research_genre_owned = "(genre already unlocked)",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть
