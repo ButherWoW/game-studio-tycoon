@@ -105,6 +105,8 @@ local function buildPlot(plot: BasePart, profile: DataService.Profile)
 	end
 end
 
+local refreshButtons: (player: Player) -> ()
+
 -- Пересобрать участок: снести модели и поставить заново (купленное + модель этапа).
 -- NPC сотрудников лежат в папке, а не моделью, — их пересаживает StaffService по plotChanged.
 function PlotService.rebuild(player: Player)
@@ -113,12 +115,19 @@ function PlotService.rebuild(player: Player)
 	if not plot or not profile then
 		return
 	end
+	-- После Rebirth офиса больше нет: студия снова в гараже
+	if not profile.upgrades.office then
+		profile.studioLevel = 1
+	end
+	normalizeStage(profile)
 	for _, child in plot:GetChildren() do
 		if child:IsA("Model") then
 			child:Destroy()
 		end
 	end
 	buildPlot(plot, profile)
+	refreshButtons(player)
+	DataService.replicate(player)
 	plotChanged:Fire(player)
 end
 
@@ -193,7 +202,7 @@ local function createButton(
 end
 
 -- Пересоздать кнопки: по одной на каждый доступный, но ещё не купленный апгрейд
-local function refreshButtons(player: Player)
+refreshButtons = function(player: Player)
 	local plot = getPlot(player)
 	local profile = DataService.get(player)
 	if not plot or not profile then

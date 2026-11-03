@@ -24,7 +24,7 @@ local staff: { [string]: string } = {}
 local function deskCounts(data: any): (number, number)
 	local total = 0
 	for _, upgrade in Upgrades do
-		if (upgrade.pointsPerSecond or 0) > 0 and data.upgrades[upgrade.id] then
+		if upgrade.desk == true and data.upgrades[upgrade.id] then
 			total += 1
 		end
 	end

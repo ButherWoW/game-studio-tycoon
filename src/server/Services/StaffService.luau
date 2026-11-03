@@ -1,7 +1,7 @@
 --!strict
 -- Найм сотрудников (issue #7) и NPC за столами (без подписей — имена видны в окне «Команда»).
 -- Данные — (profile :: any).staff = { [employeeId]: deskUpgradeId }. Стол — купленный апгрейд
--- с pointsPerSecond; за одним столом один сотрудник.
+-- с desk = true (Config/Upgrades); за одним столом один сотрудник.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -46,7 +46,7 @@ local function getStaff(profile: DataService.Profile): { [string]: string }
 end
 
 local function isDesk(upgrade: Upgrades.Upgrade): boolean
-	return (upgrade.pointsPerSecond or 0) > 0
+	return upgrade.desk == true
 end
 
 local function freeDesk(profile: DataService.Profile, staff: { [string]: string }): Upgrades.Upgrade?
@@ -213,6 +213,15 @@ local function onHire(player: Player, employeeId: any)
 		staff[employee.id] = desk.id
 		sendStaff(player)
 		task.spawn(refreshNpcs, player)
+		-- Задания «найми сотрудника» из ветки заданий, если она уже в игре
+		local questModule = script.Parent:FindFirstChild("QuestService")
+		if questModule and questModule:IsA("ModuleScript") then
+			local count = 0
+			for _ in staff do
+				count += 1
+			end
+			(require(questModule) :: any).onEmployeesChanged(player, count)
+		end
 	end
 end
 

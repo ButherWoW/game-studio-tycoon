@@ -9,6 +9,7 @@ export type Upgrade = {
 	model: string,
 	requires: string?,
 	pointsPerSecond: number?, -- рабочее место добавляет очки разработки
+	desk: boolean?, -- за этим апгрейдом может сидеть сотрудник (один на стол)
 	-- Где стоит на участке 60×60: центр участка = (0, 0, 0), пол = Y 0.5, +Z — к кнопкам (вход).
 	-- Модель строится центром основания в (0, 0, 0); nil — модель уже собрана на своём месте.
 	position: Vector3?,
@@ -19,6 +20,7 @@ export type Upgrade = {
 local Upgrades: { Upgrade } = {
 	{
 		id = "desk1",
+		desk = true,
 		position = Vector3.new(-12, 0.5, -20),
 		rotation = 0,
 		name = "Старый стол",
@@ -57,6 +59,7 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "desk2",
+		desk = true,
 		position = Vector3.new(4, 0.5, -20),
 		rotation = 0,
 		name = "Второй стол с ПК",
