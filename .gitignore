@@ -1,0 +1,13 @@
+# Сборки Rojo
+*.rbxl
+*.rbxlx
+*.rbxm
+*.rbxmx
+!assets/**/*.rbxm
+
+# Служебное
+sourcemap.json
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
