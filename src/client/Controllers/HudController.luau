@@ -14,13 +14,18 @@ local HudController = {}
 
 local function plate(parent: Instance, y: number): TextLabel
 	local l = Ui.label(parent, "", 34, Ui.titleFont)
+	l.TextXAlignment = Enum.TextXAlignment.Center
+	-- Сверху по центру: слева окно чата Roblox (перекрывает HUD и забирает клики),
+	-- справа список игроков с leaderstats
+	l.AnchorPoint = Vector2.new(0.5, 0)
 	l.Size = UDim2.fromOffset(300, 34)
-	l.Position = UDim2.fromOffset(12, y)
+	l.Position = UDim2.new(0.5, 0, 0, y)
 	l.BackgroundTransparency = 0.25
 	l.BackgroundColor3 = Ui.colors.panel
 	Ui.corner(l, 10)
 	local padding = Instance.new("UIPadding")
 	padding.PaddingLeft = UDim.new(0, 10)
+	padding.PaddingRight = UDim.new(0, 10)
 	padding.PaddingTop = UDim.new(0, 4)
 	padding.PaddingBottom = UDim.new(0, 4)
 	padding.Parent = l
