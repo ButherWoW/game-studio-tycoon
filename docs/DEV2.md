@@ -21,7 +21,7 @@
 
 1. Зарегистрируйся на https://github.com (если ещё нет) и отправь свой логин владельцу.
 2. Владелец добавит тебя: репозиторий → Settings → Collaborators. Прими приглашение на почте.
-3. Открой https://github.com/erlbro-debug/game-studio-tycoon — нажми **Watch → All Activity**, чтобы видеть новые задачи и обновления.
+3. Открой https://github.com/ButherWoW/game-studio-tycoon — нажми **Watch → All Activity**, чтобы видеть новые задачи и обновления.
 4. Установи приложение GitHub на телефон — удобно отвечать на задачи.
 
 ## Шаг 2. Как работать с задачами
