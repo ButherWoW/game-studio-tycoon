@@ -63,6 +63,7 @@ local function close()
 	if gui then
 		gui:Destroy()
 		gui = nil
+		Ui.windowClosed()
 	end
 end
 
@@ -82,6 +83,7 @@ local function show(info: any)
 	screen.DisplayOrder = 20
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	gui = screen
+	Ui.windowOpened()
 
 	local window = Ui.window(screen, "Window", Vector2.new(620, 560))
 	local body = Instance.new("Frame")

@@ -314,6 +314,7 @@ function CreateGameWindow.open()
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	gui = screen
 	pendingUnlock = nil
+	Ui.windowOpened()
 	render()
 end
 
@@ -321,6 +322,7 @@ function CreateGameWindow.close()
 	if gui then
 		gui:Destroy()
 		gui = nil
+		Ui.windowClosed()
 	end
 end
 

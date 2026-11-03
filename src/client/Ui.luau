@@ -1,7 +1,24 @@
 --!strict
 -- Стиль интерфейса из issue #5 и общие конструкторы элементов.
 
+local TextChatService = game:GetService("TextChatService")
+
 local Ui = {}
+
+-- Пока открыто окно игры, прячем окно чата: оно рисуется поверх нашего UI и забирает клики
+local openWindows = 0
+
+function Ui.windowOpened()
+	openWindows += 1
+	TextChatService.ChatWindowConfiguration.Enabled = false
+end
+
+function Ui.windowClosed()
+	openWindows = math.max(openWindows - 1, 0)
+	if openWindows == 0 then
+		TextChatService.ChatWindowConfiguration.Enabled = true
+	end
+end
 
 Ui.colors = {
 	primary = Color3.fromRGB(61, 123, 255),
