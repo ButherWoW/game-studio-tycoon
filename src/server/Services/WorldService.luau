@@ -127,20 +127,6 @@ local function ensureUpgradeModels()
 				-- С PrimaryPart pivot модели берётся из детали: опускаем его к основанию
 				part.PivotOffset = CFrame.new(0, -spec.size.Y / 2, 0)
 			end
-			-- Подпись над заглушкой, чтобы в тесте было видно, что куплено
-			local gui = Instance.new("BillboardGui")
-			gui.Size = UDim2.fromOffset(160, 30)
-			gui.StudsOffset = Vector3.new(0, spec.size.Y / 2 + 1.5, 0)
-			gui.AlwaysOnTop = false
-			local label = Instance.new("TextLabel")
-			label.Size = UDim2.fromScale(1, 1)
-			label.BackgroundTransparency = 1
-			label.TextScaled = true
-			label.TextColor3 = Color3.new(1, 1, 1)
-			label.TextStrokeTransparency = 0.3
-			label.Text = upgrade.name
-			label.Parent = gui
-			gui.Parent = part
 			model.Parent = folder
 		end
 	end
