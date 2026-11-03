@@ -155,7 +155,7 @@ local function buildFocusRow(parent: Instance, key: string, order: number)
 
 	local total = focusTotal()
 	local percent = if total > 0 then math.floor(focus[key] / total * 100 + 0.5) else 0
-	local pct = Ui.label(row, percent .. "%", 34, Ui.titleFont, Ui.colors.money)
+	local pct = Ui.label(row, percent .. "%", 34, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
 	pct.Size = UDim2.new(0.2, 0, 1, 0)
 	pct.Position = UDim2.new(0.8, 0, 0, 0)
 	pct.TextXAlignment = Enum.TextXAlignment.Right
@@ -209,7 +209,7 @@ render = function()
 
 	local window = Ui.window(gui, "Window", Vector2.new(640, 640))
 
-	local title = Ui.label(window, ClientState.t("create_title"), 36, Ui.titleFont)
+	local title = Ui.label(window, ClientState.t("create_title"), 36, Ui.titleFontFor(ClientState.lang))
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -80, 0, 36)
 	local close = Ui.button(window, ClientState.t("create_close"), Ui.colors.locked, function()
@@ -271,7 +271,7 @@ render = function()
 	buildGrid(topicHolder, "topic", TOPIC_LIST, data.unlockedTopics, selectedTopic)
 
 	local hintText, hintColor = comboHint()
-	Ui.label(body, hintText, 24, Ui.titleFont, hintColor).LayoutOrder = nextOrder()
+	Ui.label(body, hintText, 24, Ui.titleFontFor(ClientState.lang), hintColor).LayoutOrder = nextOrder()
 
 	Ui.label(body, ClientState.t("create_focus_label"), 22, nil, Ui.colors.muted).LayoutOrder = nextOrder()
 	Ui.label(body, ClientState.t("create_focus_hint"), 18, Enum.Font.GothamMedium, Ui.colors.muted).LayoutOrder =
