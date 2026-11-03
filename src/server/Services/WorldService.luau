@@ -7,6 +7,8 @@ local ServerStorage = game:GetService("ServerStorage")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
+local ModelFactory = require(script.Parent.ModelFactory)
+local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 
 local PLOT_COUNT = 6
 local PLOT_SIZE = 60
@@ -25,6 +27,8 @@ local PLACEHOLDERS: { [string]: { size: Vector3, color: Color3 } } = {
 	Posters = { size = Vector3.new(8, 4, 0.5), color = Color3.fromRGB(255, 80, 200) },
 	PCPro = { size = Vector3.new(3, 3, 2), color = Color3.fromRGB(40, 160, 255) },
 	Office = { size = Vector3.new(12, 10, 12), color = Color3.fromRGB(220, 230, 240) },
+	Floor = { size = Vector3.new(12, 16, 12), color = Color3.fromRGB(70, 110, 200) },
+	Skyscraper = { size = Vector3.new(10, 40, 10), color = Color3.fromRGB(40, 40, 70) },
 }
 local DEFAULT_PLACEHOLDER = { size = Vector3.new(3, 3, 3), color = Color3.fromRGB(150, 150, 150) }
 
@@ -107,8 +111,24 @@ local function ensureUpgradeModels()
 		folder = newFolder
 	end
 	local spacing = 16
-	for index, upgrade in Upgrades do
-		if not (folder :: Instance):FindFirstChild(upgrade.model) then
+	-- Модели этапов (Config/Stages) ставятся как апгрейды с position
+	local entries: { { model: string, position: Vector3? } } = {}
+	for _, upgrade in Upgrades do
+		table.insert(entries, { model = upgrade.model, position = upgrade.position })
+	end
+	for _, stage in Stages do
+		if stage.model then
+			table.insert(entries, { model = stage.model, position = stage.position })
+		end
+	end
+	for index, upgrade in entries do
+		-- Импортированная в Studio модель важнее; иначе — модель из деталей (ModelFactory)
+		local built = if (folder :: Instance):FindFirstChild(upgrade.model)
+			then nil
+			else ModelFactory.build(upgrade.model)
+		if built then
+			built.Parent = folder
+		elseif not (folder :: Instance):FindFirstChild(upgrade.model) then
 			local spec = PLACEHOLDERS[upgrade.model] or DEFAULT_PLACEHOLDER
 			-- Сетка 3×3 на участке, чтобы заглушки не налезали друг на друга
 			local model = Instance.new("Model")
@@ -127,20 +147,6 @@ local function ensureUpgradeModels()
 				-- С PrimaryPart pivot модели берётся из детали: опускаем его к основанию
 				part.PivotOffset = CFrame.new(0, -spec.size.Y / 2, 0)
 			end
-			-- Подпись над заглушкой, чтобы в тесте было видно, что куплено
-			local gui = Instance.new("BillboardGui")
-			gui.Size = UDim2.fromOffset(160, 30)
-			gui.StudsOffset = Vector3.new(0, spec.size.Y / 2 + 1.5, 0)
-			gui.AlwaysOnTop = false
-			local label = Instance.new("TextLabel")
-			label.Size = UDim2.fromScale(1, 1)
-			label.BackgroundTransparency = 1
-			label.TextScaled = true
-			label.TextColor3 = Color3.new(1, 1, 1)
-			label.TextStrokeTransparency = 0.3
-			label.Text = upgrade.name
-			label.Parent = gui
-			gui.Parent = part
 			model.Parent = folder
 		end
 	end

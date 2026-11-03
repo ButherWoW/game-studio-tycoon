@@ -13,14 +13,19 @@ local CreateGameWindow = require(script.Parent.CreateGameWindow)
 local HudController = {}
 
 local function plate(parent: Instance, y: number): TextLabel
-	local l = Ui.label(parent, "", 34, Ui.titleFont)
+	local l = Ui.label(parent, "", 34, Ui.titleFontFor(ClientState.lang))
+	l.TextXAlignment = Enum.TextXAlignment.Center
+	-- Сверху по центру: слева окно чата Roblox (перекрывает HUD и забирает клики),
+	-- справа список игроков с leaderstats
+	l.AnchorPoint = Vector2.new(0.5, 0)
 	l.Size = UDim2.fromOffset(300, 34)
-	l.Position = UDim2.fromOffset(12, y)
+	l.Position = UDim2.new(0.5, 0, 0, y)
 	l.BackgroundTransparency = 0.25
 	l.BackgroundColor3 = Ui.colors.panel
 	Ui.corner(l, 10)
 	local padding = Instance.new("UIPadding")
 	padding.PaddingLeft = UDim.new(0, 10)
+	padding.PaddingRight = UDim.new(0, 10)
 	padding.PaddingTop = UDim.new(0, 4)
 	padding.PaddingBottom = UDim.new(0, 4)
 	padding.Parent = l
@@ -38,16 +43,22 @@ function HudController.start()
 	local info = plate(gui, 52)
 	local progress = plate(gui, 92)
 	progress.Visible = false
+	local lastPercent = 0
 
 	local create = Ui.button(gui, ClientState.t("hud_create"), Ui.colors.money, function()
 		CreateGameWindow.open()
 	end)
+	create.Name = "CreateGameButton" -- по имени его находит туториал
 	create.TextColor3 = Color3.fromRGB(40, 30, 0)
 	create.AnchorPoint = Vector2.new(0.5, 1)
 	create.Position = UDim2.new(0.5, 0, 1, -24)
 	create.Size = UDim2.fromOffset(260, 56)
 
 	local function refresh()
+		-- Язык мог смениться: тексты и шрифт, которые не зависят от данных
+		create.Text = ClientState.t("hud_create")
+		local font = Ui.titleFontFor(ClientState.lang)
+		cash.Font, info.Font, progress.Font = font, font, font
 		local data = ClientState.data
 		if not data then
 			return
@@ -61,6 +72,8 @@ function HudController.start()
 		create.Visible = not ClientState.developing
 		if not ClientState.developing then
 			progress.Visible = false
+		elseif progress.Visible then
+			progress.Text = ClientState.t("hud_developing", { percent = lastPercent })
 		end
 	end
 
@@ -69,7 +82,8 @@ function HudController.start()
 
 	Remotes.DevelopmentProgress.OnClientEvent:Connect(function(data)
 		progress.Visible = true
-		progress.Text = ClientState.t("hud_developing", { percent = math.floor(data.progress * 100) })
+		lastPercent = math.floor(data.progress * 100)
+		progress.Text = ClientState.t("hud_developing", { percent = lastPercent })
 	end)
 end
 

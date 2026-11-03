@@ -9,6 +9,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local AdCampaigns = require(ReplicatedStorage.Shared.Config.AdCampaigns)
 local DataService = require(script.Parent.DataService)
+local ShopService = require(script.Parent.ShopService)
 
 local MonetizationService = {}
 
@@ -57,16 +58,22 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 		return Enum.ProductPurchaseDecision.NotProcessedYet
 	end
 	if profile.processedReceipts[receipt.PurchaseId] then
-		return Enum.ProductPurchaseDecision.PurchaseGranted
+		-- Эффект уже выдан; подтверждаем, только когда он точно записан в DataStore
+		return if DataService.save(player)
+			then Enum.ProductPurchaseDecision.PurchaseGranted
+			else Enum.ProductPurchaseDecision.NotProcessedYet
 	end
 
+	-- Диспетчер по productId: реклама здесь, остальные продукты — ShopService
 	local campaign = findByProduct(receipt.ProductId)
-	if not campaign then
+	if campaign then
+		applyAd(player, campaign)
+	elseif not ShopService.grantProduct(player, profile, receipt.ProductId) then
 		warn("[Monetization] Unknown product", receipt.ProductId)
 		return Enum.ProductPurchaseDecision.NotProcessedYet
 	end
 
-	applyAd(player, campaign)
+	-- Эффект и квитанция попадают в DataStore одной записью ДО PurchaseGranted
 	rememberReceipt(profile, receipt.PurchaseId)
 	if not DataService.save(player) then
 		return Enum.ProductPurchaseDecision.NotProcessedYet

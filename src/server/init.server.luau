@@ -1,13 +1,38 @@
 --!strict
--- Точка входа сервера: запускает все сервисы по порядку.
+-- Точка входа сервера. Сначала базовые сервисы в нужном порядке, потом все остальные
+-- модули из Services по алфавиту: новую фичу достаточно положить в папку, править этот файл не нужно.
 
 local Services = script.Services
 
-require(Services.WorldService).start() -- пол, участки, заглушки моделей (если их нет в плейсе)
-require(Services.DataService).start()
-require(Services.PlotService).start()
-require(Services.DevelopmentService).start()
-require(Services.MonetizationService).start()
-require(Services.UnlockService).start()
+local ORDER = {
+	"WorldService", -- пол, участки, заглушки моделей (если их нет в плейсе)
+	"DataService",
+	"PlotService",
+	"DevelopmentService",
+	"MonetizationService",
+	"UnlockService",
+}
+
+local started: { [string]: boolean } = {}
+for _, name in ORDER do
+	require(Services:FindFirstChild(name) :: ModuleScript).start()
+	started[name] = true
+end
+
+local rest = {}
+for _, child in Services:GetChildren() do
+	if child:IsA("ModuleScript") and not started[child.Name] then
+		table.insert(rest, child)
+	end
+end
+table.sort(rest, function(a, b)
+	return a.Name < b.Name
+end)
+for _, module in rest do
+	local service = require(module) :: any
+	if type(service) == "table" and type(service.start) == "function" then
+		service.start()
+	end
+end
 
 print("[Game Studio Tycoon] Server started")

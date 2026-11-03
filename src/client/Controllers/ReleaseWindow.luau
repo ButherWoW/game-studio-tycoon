@@ -44,9 +44,13 @@ local function shuffled<T>(list: { T }): { T }
 end
 
 local function criticLine(critic: Critics.Critic, score: number, genreName: string, topicName: string): string
-	local options = (critic.phrases :: any)[band(score)] :: { Critics.Phrase }
-	local phrase = options[rng:NextInteger(1, #options)]
-	local text = if ClientState.lang == "en" then phrase.en else phrase.ru
+	local scoreBand = band(score)
+	local options = (critic.phrases :: any)[scoreBand] :: { Critics.Phrase }
+	local index = rng:NextInteger(1, #options)
+	local phrase = options[index]
+	-- Перевод из Locales (critic_<id>_<band>_<n>), иначе поля ru/en из Config/Critics
+	local text = Texts.lookup(ClientState.lang, `critic_{critic.id}_{scoreBand}_{index}`)
+		or if ClientState.lang == "ru" then phrase.ru else phrase.en
 	return (text:gsub("{genre}", genreName):gsub("{topic}", topicName))
 end
 
@@ -63,6 +67,7 @@ local function close()
 	if gui then
 		gui:Destroy()
 		gui = nil
+		Ui.windowClosed()
 	end
 end
 
@@ -82,6 +87,7 @@ local function show(info: any)
 	screen.DisplayOrder = 20
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	gui = screen
+	Ui.windowOpened()
 
 	local window = Ui.window(screen, "Window", Vector2.new(620, 560))
 	local body = Instance.new("Frame")
@@ -91,7 +97,12 @@ local function show(info: any)
 	Ui.list(body, 8)
 	body.Parent = window
 
-	local title = Ui.label(body, ClientState.t("release_title", { name = info.name }), 40, Ui.titleFont)
+	local title = Ui.label(
+		body,
+		ClientState.t("release_title", { name = info.name }),
+		40,
+		Ui.titleFontFor(ClientState.lang)
+	)
 	title.TextXAlignment = Enum.TextXAlignment.Center
 	title.LayoutOrder = 1
 	local sub = Ui.label(body, ClientState.t("release_critics"), 22, nil, Ui.colors.muted)
@@ -108,11 +119,12 @@ local function show(info: any)
 		row.LayoutOrder = 2 + i
 		Ui.corner(row, 10)
 
-		local scoreLabel = Ui.label(row, "?", 58, Ui.titleFont, Ui.colors.muted)
+		local scoreLabel = Ui.label(row, "?", 58, Ui.titleFontFor(ClientState.lang), Ui.colors.muted)
 		scoreLabel.Size = UDim2.new(0, 58, 1, 0)
 		scoreLabel.TextXAlignment = Enum.TextXAlignment.Center
 
-		local criticName = if ClientState.lang == "en" then critic.nameEn else critic.name
+		local criticName = Texts.lookup(ClientState.lang, "critic_name_" .. critic.id)
+			or if ClientState.lang == "ru" then critic.name else critic.nameEn
 		local nameLabel = Ui.label(row, criticName, 20, nil, Ui.colors.muted)
 		nameLabel.Position = UDim2.fromOffset(64, 4)
 		nameLabel.Size = UDim2.new(1, -72, 0, 20)
@@ -126,10 +138,10 @@ local function show(info: any)
 		table.insert(cards, { score = scoreLabel, quote = quote, value = value, critic = critic })
 	end
 
-	local total = Ui.label(body, "", 44, Ui.titleFont)
+	local total = Ui.label(body, "", 44, Ui.titleFontFor(ClientState.lang))
 	total.TextXAlignment = Enum.TextXAlignment.Center
 	total.LayoutOrder = 20
-	local money = Ui.label(body, "", 32, Ui.titleFont, Ui.colors.money)
+	local money = Ui.label(body, "", 32, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
 	money.TextXAlignment = Enum.TextXAlignment.Center
 	money.LayoutOrder = 21
 

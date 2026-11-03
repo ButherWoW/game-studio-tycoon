@@ -1,10 +1,89 @@
 --!strict
--- Тексты интерфейса RU + EN (задача A из docs/DEV2_NEXT.md).
+-- Тексты интерфейса (задача A из docs/DEV2_NEXT.md).
+-- RU и EN — здесь, новые ключи дописывать в обе таблицы. Остальные языки —
+-- Config/Locales/<code>.luau с теми же ключами; чего нет в языке, берётся из EN, потом из RU.
 -- Подстановки: {name}, {price}, {percent} и т.п. — см. Texts.format.
 
-export type Lang = "ru" | "en"
+export type Lang = string
 
 local Texts = {}
+
+-- Языки для меню выбора: код (как имя файла в Locales) и самоназвание
+Texts.languages = {
+	{ code = "ru", nativeName = "Русский" },
+	{ code = "en", nativeName = "English" },
+	{ code = "uk", nativeName = "Українська" },
+	{ code = "de", nativeName = "Deutsch" },
+	{ code = "fr", nativeName = "Français" },
+	{ code = "es", nativeName = "Español" },
+	{ code = "it", nativeName = "Italiano" },
+	{ code = "pt", nativeName = "Português" },
+	{ code = "nl", nativeName = "Nederlands" },
+	{ code = "pl", nativeName = "Polski" },
+	{ code = "cs", nativeName = "Čeština" },
+	{ code = "sk", nativeName = "Slovenčina" },
+	{ code = "sl", nativeName = "Slovenščina" },
+	{ code = "hr", nativeName = "Hrvatski" },
+	{ code = "sr", nativeName = "Српски" },
+	{ code = "bg", nativeName = "Български" },
+	{ code = "ro", nativeName = "Română" },
+	{ code = "hu", nativeName = "Magyar" },
+	{ code = "el", nativeName = "Ελληνικά" },
+	{ code = "sv", nativeName = "Svenska" },
+	{ code = "da", nativeName = "Dansk" },
+	{ code = "fi", nativeName = "Suomi" },
+	{ code = "no", nativeName = "Norsk" },
+	{ code = "et", nativeName = "Eesti" },
+	{ code = "lv", nativeName = "Latviešu" },
+	{ code = "lt", nativeName = "Lietuvių" },
+	{ code = "tr", nativeName = "Türkçe" },
+	{ code = "zh-cn", nativeName = "中文" },
+	{ code = "id", nativeName = "Bahasa Indonesia" },
+	{ code = "hi", nativeName = "हिन्दी" },
+} :: { { code: string, nativeName: string } }
+
+function Texts.isLanguage(code: any): boolean
+	if type(code) ~= "string" then
+		return false
+	end
+	for _, language in Texts.languages do
+		if language.code == code then
+			return true
+		end
+	end
+	return false
+end
+
+-- Таблица языка: ru/en отсюда, остальные из Locales (грузятся при первом обращении)
+local loaded: { [string]: { [string]: string } } = {}
+
+function Texts.locale(lang: Lang): { [string]: string }?
+	if lang == "ru" or lang == "en" then
+		return (Texts :: any)[lang]
+	end
+	local cached = loaded[lang]
+	if cached then
+		return cached
+	end
+	local folder = (script.Parent :: Instance):FindFirstChild("Locales")
+	local module = folder and folder:FindFirstChild(lang)
+	if not module or not module:IsA("ModuleScript") then
+		return nil
+	end
+	local ok, result = pcall(require, module)
+	if not ok or type(result) ~= "table" then
+		warn("[Texts] Locale failed to load:", lang, result)
+		return nil
+	end
+	loaded[lang] = result :: any
+	return result :: any
+end
+
+-- Текст ключа только в этом языке, без запасных (nil — перевода нет)
+function Texts.lookup(lang: Lang, key: string): string?
+	local tbl = Texts.locale(lang)
+	return tbl and tbl[key]
+end
 
 Texts.ru = {
 	-- HUD
@@ -13,6 +92,9 @@ Texts.ru = {
 	hud_ad = "Реклама +{percent}%",
 	hud_create = "🎮 Создать игру",
 	hud_developing = "Разработка: {percent}%",
+
+	-- Выбор языка
+	lang_title = "🌐 Язык",
 
 	-- Окно «Создать игру»
 	create_title = "Новая игра",
@@ -51,6 +133,111 @@ Texts.ru = {
 	release_ad = "📢 Реклама +30% за {price}",
 	release_close = "Закрыть",
 	release_best = "Новый рекорд студии!",
+
+	-- staff
+	team_title = "Команда",
+	team_desks = "Свободных столов: {free} из {total}",
+	team_hire = "Нанять {price}",
+	team_hired = "В команде",
+	team_locked = "🔒 {stage}",
+	team_soon = "⭐ Скоро",
+	team_no_desk = "Нет стола",
+	team_multiplier = "×{mult} · {spec}",
+	team_spec_all = "всё",
+	team_stage = "Студия: {stage}",
+	team_next = "Следующий этап: {stage}",
+	team_req_money = "{price}",
+	team_req_games = "игр: {have}/{need}",
+	team_req_upgrade = "купить «{name}»",
+	team_move = "🚚 Переезд",
+	team_max_stage = "Это самый большой этап!",
+	-- research
+	research_title = "🔬 Исследования",
+	research_points = "ОИ: {points}",
+	research_hint = "Каждая выпущенная игра даёт столько ОИ, какая у неё оценка",
+	research_branch_genres = "Жанры",
+	research_branch_tech = "Технологии",
+	research_branch_studio = "Студия",
+	research_cost = "{cost} ОИ",
+	research_buy = "Исследовать · {cost} ОИ",
+	research_need = "Нужно {cost} ОИ",
+	research_owned = "✓ Изучено",
+	research_requires = "🔒 Сначала: {names}",
+	research_genre_owned = "(жанр уже открыт)",
+	-- tutorial
+	tutorial_desk = "Наступи на зелёную кнопку — это твой первый стол",
+	tutorial_open = "Нажми «Создать игру»",
+	tutorial_pick = "Выбери жанр и тему",
+	tutorial_start = "Распредели фокус и начни разработку",
+	tutorial_wait = "Пока студия работает, купи компьютер (или подожди)",
+	tutorial_release = "Критики оценили игру! Деньги — твои",
+	tutorial_done = "Покупай апгрейды и делай игры лучше. Бонус: {money}!",
+	tutorial_skip = "Пропустить",
+	tutorial_ok = "Готово",
+	-- retention
+	trend_banner = "🔥 В тренде: {genre} + {topic}, ещё {time}",
+	rebirth_title = "♻️ Rebirth",
+	rebirth_count = "Ребёрзов: {count} · доход ×{mult}",
+	rebirth_next = "После ребёрза доход ×{mult} навсегда",
+	rebirth_need_office = "Переезд в офис",
+	rebirth_need_cash = "Деньги: {price}",
+	rebirth_resets = "Сбросится: деньги (останется $100), апгрейды, открытые жанры и темы",
+	rebirth_keeps = "Останется: рекорд и число выпущенных игр",
+	rebirth_button = "Начать заново",
+	rebirth_confirm = "Точно? Нажми ещё раз",
+	rebirth_locked = "Условия не выполнены",
+	rebirth_done = "Студия начинает заново! Доход ×{mult}",
+	rebirth_close = "Закрыть",
+	offline_title = "Пока тебя не было",
+	offline_amount = "+{money}",
+	offline_hint = "Студия работала без тебя за половину дохода",
+	offline_claim = "Забрать",
+	-- shop
+	shop_title = "🛒 Магазин",
+	shop_tab_ads = "Реклама",
+	shop_tab_passes = "Геймпассы",
+	shop_tab_boosts = "Бусты",
+	shop_robux = "R$ {price}",
+	shop_soon = "Скоро",
+	shop_owned = "✓ Куплено",
+	shop_ad_line = "+{percent}% к доходу на {minutes} мин",
+	shop_ad_note = "Бонусы не складываются: действует самый большой, максимум +100%",
+	shop_charges = "Есть: {count}",
+	shop_coffee_left = "Действует ещё {minutes} мин",
+	shop_income_amount = "Сейчас ≈ {money}",
+	ad_name_social = "Баннеры в соцсетях",
+	ad_name_streamers = "Стримеры",
+	ad_name_tv = "ТВ-реклама",
+	ad_name_worldwide = "Мировая кампания",
+	-- quests
+	quests_title = "Задания",
+	quests_tab_quests = "Задания",
+	quests_tab_daily = "Ежедневные",
+	quests_tab_leaders = "Лидеры",
+	quests_claim = "Забрать",
+	quests_claimed = "✓ Получено",
+	quests_progress = "{progress} / {target}",
+	quests_daily_reset = "Новые задания через {time}",
+	quests_loading = "Загрузка…",
+	reward_income = "{minutes} мин дохода (~{money})",
+	reward_research = "{count} ОИ",
+	reward_badge = "значок «{name}»",
+	reward_income_bonus = "+{percent}% к доходу навсегда",
+	reward_employee = "сотрудник «{name}»",
+	reward_coffee = "кофе ×2 скорость на {minutes} мин",
+	reward_ad = "реклама +{percent}% на {minutes} мин",
+	reward_trophy = "декор «{name}»",
+	badge_masterpiece = "Шедевр",
+	employee_ghost_coder = "Призрачный кодер",
+	trophy_weekly_cup = "Кубок недели",
+	leaders_best = "Лучшая оценка",
+	leaders_games = "Всего игр",
+	leaders_unavailable = "Таблица лидеров недоступна",
+	leaders_empty = "Пока пусто",
+	daily_reward_title = "Награда за вход",
+	daily_reward_day = "День {day}",
+	daily_reward_claim = "День {day} — забрать",
+	daily_reward_hint = "Заходи каждый день: пропуск начинает серию заново",
 } :: { [string]: string }
 
 Texts.en = {
@@ -59,6 +246,8 @@ Texts.en = {
 	hud_ad = "Ads +{percent}%",
 	hud_create = "🎮 Make a game",
 	hud_developing = "Developing: {percent}%",
+
+	lang_title = "🌐 Language",
 
 	create_title = "New game",
 	create_name_label = "Title",
@@ -94,12 +283,116 @@ Texts.en = {
 	release_ad = "📢 Ads +30% for {price}",
 	release_close = "Close",
 	release_best = "New studio record!",
+
+	-- staff
+	team_title = "Team",
+	team_desks = "Free desks: {free} of {total}",
+	team_hire = "Hire {price}",
+	team_hired = "On the team",
+	team_locked = "🔒 {stage}",
+	team_soon = "⭐ Soon",
+	team_no_desk = "No desk",
+	team_multiplier = "×{mult} · {spec}",
+	team_spec_all = "everything",
+	team_stage = "Studio: {stage}",
+	team_next = "Next stage: {stage}",
+	team_req_money = "{price}",
+	team_req_games = "games: {have}/{need}",
+	team_req_upgrade = "buy “{name}”",
+	team_move = "🚚 Move",
+	team_max_stage = "This is the biggest stage!",
+	-- research
+	research_title = "🔬 Research",
+	research_points = "RP: {points}",
+	research_hint = "Every released game gives as many RP as its score",
+	research_branch_genres = "Genres",
+	research_branch_tech = "Technology",
+	research_branch_studio = "Studio",
+	research_cost = "{cost} RP",
+	research_buy = "Research · {cost} RP",
+	research_need = "Need {cost} RP",
+	research_owned = "✓ Researched",
+	research_requires = "🔒 First: {names}",
+	research_genre_owned = "(genre already unlocked)",
+	-- tutorial
+	tutorial_desk = "Step on the green button: it's your first desk",
+	tutorial_open = "Press “Make a game”",
+	tutorial_pick = "Pick a genre and a topic",
+	tutorial_start = "Split the focus and start development",
+	tutorial_wait = "While the studio works, buy a computer (or just wait)",
+	tutorial_release = "Critics have rated your game! The money is yours",
+	tutorial_done = "Buy upgrades and make better games. Bonus: {money}!",
+	tutorial_skip = "Skip",
+	tutorial_ok = "Done",
+	-- retention
+	trend_banner = "🔥 Trending: {genre} + {topic}, {time} left",
+	rebirth_title = "♻️ Rebirth",
+	rebirth_count = "Rebirths: {count} · income ×{mult}",
+	rebirth_next = "After rebirth: income ×{mult} forever",
+	rebirth_need_office = "Move to an office",
+	rebirth_need_cash = "Money: {price}",
+	rebirth_resets = "Resets: money (you keep $100), upgrades, unlocked genres and topics",
+	rebirth_keeps = "Keeps: best score and games released",
+	rebirth_button = "Start over",
+	rebirth_confirm = "Sure? Click again",
+	rebirth_locked = "Requirements not met",
+	rebirth_done = "Your studio starts over! Income ×{mult}",
+	rebirth_close = "Close",
+	offline_title = "While you were away",
+	offline_amount = "+{money}",
+	offline_hint = "Your studio kept working at half income",
+	offline_claim = "Claim",
+	-- shop
+	shop_title = "🛒 Shop",
+	shop_tab_ads = "Ads",
+	shop_tab_passes = "Game Passes",
+	shop_tab_boosts = "Boosts",
+	shop_robux = "R$ {price}",
+	shop_soon = "Soon",
+	shop_owned = "✓ Owned",
+	shop_ad_line = "+{percent}% revenue for {minutes} min",
+	shop_ad_note = "Bonuses don't stack: the biggest one applies, up to +100%",
+	shop_charges = "You have: {count}",
+	shop_coffee_left = "Active for {minutes} more min",
+	shop_income_amount = "Now ≈ {money}",
+	ad_name_social = "Social media banners",
+	ad_name_streamers = "Streamers",
+	ad_name_tv = "TV ads",
+	ad_name_worldwide = "Worldwide campaign",
+	-- quests
+	quests_title = "Quests",
+	quests_tab_quests = "Quests",
+	quests_tab_daily = "Daily",
+	quests_tab_leaders = "Leaders",
+	quests_claim = "Claim",
+	quests_claimed = "✓ Claimed",
+	quests_progress = "{progress} / {target}",
+	quests_daily_reset = "New quests in {time}",
+	quests_loading = "Loading…",
+	reward_income = "{minutes} min of income (~{money})",
+	reward_research = "{count} RP",
+	reward_badge = "“{name}” badge",
+	reward_income_bonus = "+{percent}% income forever",
+	reward_employee = "employee “{name}”",
+	reward_coffee = "coffee ×2 speed for {minutes} min",
+	reward_ad = "ads +{percent}% for {minutes} min",
+	reward_trophy = "“{name}” decor",
+	badge_masterpiece = "Masterpiece",
+	employee_ghost_coder = "Ghost Coder",
+	trophy_weekly_cup = "Weekly Cup",
+	leaders_best = "Best score",
+	leaders_games = "Games released",
+	leaders_unavailable = "Leaderboard unavailable",
+	leaders_empty = "Nobody yet",
+	daily_reward_title = "Daily reward",
+	daily_reward_day = "Day {day}",
+	daily_reward_claim = "Day {day} — claim",
+	daily_reward_hint = "Come back every day: missing one restarts the streak",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть
 function Texts.format(lang: Lang, key: string, vars: { [string]: any }?): string
-	local tbl = if lang == "en" then Texts.en else Texts.ru
-	local text = tbl[key] or Texts.ru[key] or key
+	local text = Texts.lookup(lang, key) or Texts.en[key] or Texts.ru[key] or key
 	if vars then
 		text = text:gsub("{(%w+)}", function(name: string): string?
 			local value = vars[name]

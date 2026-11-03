@@ -1,7 +1,24 @@
 --!strict
 -- Стиль интерфейса из issue #5 и общие конструкторы элементов.
 
+local TextChatService = game:GetService("TextChatService")
+
 local Ui = {}
+
+-- Пока открыто окно игры, прячем окно чата: оно рисуется поверх нашего UI и забирает клики
+local openWindows = 0
+
+function Ui.windowOpened()
+	openWindows += 1
+	TextChatService.ChatWindowConfiguration.Enabled = false
+end
+
+function Ui.windowClosed()
+	openWindows = math.max(openWindows - 1, 0)
+	if openWindows == 0 then
+		TextChatService.ChatWindowConfiguration.Enabled = true
+	end
+end
 
 Ui.colors = {
 	primary = Color3.fromRGB(61, 123, 255),
@@ -17,6 +34,22 @@ Ui.colors = {
 
 Ui.titleFont = Enum.Font.FredokaOne
 Ui.bodyFont = Enum.Font.GothamBold
+
+-- В Fredoka One нет кириллицы, греческого, деванагари и иероглифов
+local NON_LATIN_LANGS: { [string]: boolean } = {
+	ru = true,
+	uk = true,
+	bg = true,
+	sr = true,
+	el = true,
+	["zh-cn"] = true,
+	hi = true,
+}
+
+-- Шрифт заголовков для языка интерфейса (передавай ClientState.lang)
+function Ui.titleFontFor(lang: string): Enum.Font
+	return if NON_LATIN_LANGS[lang] then Enum.Font.GothamBold else Ui.titleFont
+end
 
 function Ui.scoreColor(score: number): Color3
 	if score >= 8 then
@@ -96,6 +129,29 @@ function Ui.button(parent: Instance, text: string, color: Color3, onClick: () ->
 	end)
 	b.Activated:Connect(onClick)
 	b.Parent = parent
+	return b
+end
+
+-- Боковое меню слева посередине (слева сверху чат, справа сверху список игроков).
+-- Слоты, чтобы фичи не спорили за место: 1 исследования, 2 сотрудники, 3 задания,
+-- 4 магазин, 5 rebirth, 6 язык. order внутри слота не нужен — один слот, одна кнопка.
+local menuGui: ScreenGui? = nil
+local MENU_BUTTON = 52
+
+function Ui.menuButton(slot: number, icon: string, onClick: () -> ()): TextButton
+	if not menuGui then
+		local Players = game:GetService("Players")
+		local screen = Instance.new("ScreenGui")
+		screen.Name = "SideMenu"
+		screen.ResetOnSpawn = false
+		screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
+		menuGui = screen
+	end
+	local b = Ui.button(menuGui :: ScreenGui, icon, Ui.colors.panel, onClick)
+	b.Name = "Slot" .. slot
+	b.AnchorPoint = Vector2.new(0, 0.5)
+	b.Size = UDim2.fromOffset(MENU_BUTTON, MENU_BUTTON)
+	b.Position = UDim2.new(0, 12, 0.5, (slot - 3.5) * (MENU_BUTTON + 8))
 	return b
 end
 
