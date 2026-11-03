@@ -213,6 +213,8 @@ local function onHire(player: Player, employeeId: any)
 		staff[employee.id] = desk.id
 		sendStaff(player)
 		task.spawn(refreshNpcs, player)
+		-- Все столы заняты — на участке может появиться кнопка переезда
+		PlotService.refreshButtons(player)
 		-- Задания «найми сотрудника» из ветки заданий, если она уже в игре
 		local questModule = script.Parent:FindFirstChild("QuestService")
 		if questModule and questModule:IsA("ModuleScript") then

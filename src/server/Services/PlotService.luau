@@ -24,6 +24,9 @@ local TOUCH_COOLDOWN = 0.5
 local COLOR_REFRESH = 0.5
 local COLOR_AFFORDABLE = Color3.fromRGB(61, 220, 132)
 local COLOR_EXPENSIVE = Color3.fromRGB(70, 72, 90)
+-- Кнопка переезда крупнее и золотая, чтобы не путать с интерьером
+local MOVE_BUTTON_SIZE = Vector3.new(8, 0.5, 8)
+local COLOR_MOVE = Color3.fromRGB(255, 201, 60)
 
 local PlotService = {}
 local owners: { [BasePart]: Player } = {}
@@ -140,18 +143,69 @@ local function formatPrice(cost: number): string
 	return if cost <= 0 then "Бесплатно" else Texts.money(cost)
 end
 
+-- Весь интерьер текущего этапа куплен (всё, кроме переездов и начинки прошлых этапов)
+local function interiorComplete(profile: DataService.Profile): boolean
+	for _, upgrade in Upgrades do
+		if not upgrade.move and isVisible(upgrade, profile) and not profile.upgrades[upgrade.id] then
+			return false
+		end
+	end
+	return true
+end
+
+-- За каждым купленным столом сидит сотрудник
+local function staffFull(profile: DataService.Profile): boolean
+	local desks = 0
+	for _, upgrade in Upgrades do
+		if upgrade.desk and profile.upgrades[upgrade.id] then
+			desks += 1
+		end
+	end
+	local hired = 0
+	for _ in ((profile :: any).staff or {}) :: { [string]: string } do
+		hired += 1
+	end
+	return desks > 0 and hired >= desks
+end
+
+local function readyToMove(profile: DataService.Profile): boolean
+	return interiorComplete(profile) and staffFull(profile)
+end
+
+-- Переезд на этаж и в небоскрёб — тоже кнопкой на участке (офис — апгрейд office)
+local function stageMoveButton(profile: DataService.Profile): Upgrades.Upgrade?
+	local nextStage = Stages[profile.studioLevel + 1]
+	if not nextStage or nextStage.cost <= 0 or not stageRequirementsMet(profile, nextStage) then
+		return nil
+	end
+	return {
+		id = "stage_" .. nextStage.id,
+		name = "Переезд: " .. nextStage.name,
+		cost = nextStage.cost,
+		model = "",
+		move = true,
+	}
+end
+
 local function availableUpgrades(profile: DataService.Profile): { Upgrades.Upgrade }
 	local result = {}
 	for _, upgrade in Upgrades do
 		local unlocked = not upgrade.requires or profile.upgrades[upgrade.requires]
-		if not profile.upgrades[upgrade.id] and unlocked then
-			table.insert(result, upgrade)
+		if not profile.upgrades[upgrade.id] and unlocked and isVisible(upgrade, profile) then
+			if not upgrade.move or readyToMove(profile) then
+				table.insert(result, upgrade)
+			end
 		end
+	end
+	local stageMove = if readyToMove(profile) then stageMoveButton(profile) else nil
+	if stageMove then
+		table.insert(result, stageMove)
 	end
 	return result
 end
 
 local tryBuy: (player: Player, upgradeId: string) -> ()
+local onMoveStudio: (player: Player) -> ()
 
 local function createButton(
 	player: Player,
@@ -166,7 +220,7 @@ local function createButton(
 
 	local button = Instance.new("Part")
 	button.Name = "Buy_" .. upgrade.id
-	button.Size = BUTTON_SIZE
+	button.Size = if upgrade.move then MOVE_BUTTON_SIZE else BUTTON_SIZE
 	button.Anchored = true
 	button.CanCollide = false
 	button.Material = Enum.Material.Neon
@@ -187,7 +241,7 @@ local function createButton(
 	label.TextStrokeTransparency = 0.4
 	label.Font = Enum.Font.FredokaOne
 	label.TextScaled = true
-	label.Text = upgrade.name .. "\n" .. formatPrice(upgrade.cost)
+	label.Text = (if upgrade.move then "🏢 " else "") .. upgrade.name .. "\n" .. formatPrice(upgrade.cost)
 	label.Parent = billboard
 
 	button.Touched:Connect(function(hit: BasePart)
@@ -233,6 +287,11 @@ refreshButtons = function(player: Player)
 end
 
 tryBuy = function(player: Player, upgradeId: string)
+	-- Кнопка переезда на этаж или в небоскрёб
+	if upgradeId:sub(1, 6) == "stage_" then
+		onMoveStudio(player)
+		return
+	end
 	local profile = DataService.get(player)
 	local plot = getPlot(player)
 	if not profile or not plot then
@@ -244,6 +303,9 @@ tryBuy = function(player: Player, upgradeId: string)
 				return
 			end
 			if upgrade.requires and not profile.upgrades[upgrade.requires] then
+				return
+			end
+			if upgrade.move and not readyToMove(profile) then
 				return
 			end
 			if DataService.trySpend(player, upgrade.cost) then
@@ -296,13 +358,13 @@ local function assignPlot(player: Player)
 	warn("[PlotService] No free plots")
 end
 
-local function onMoveStudio(player: Player)
+onMoveStudio = function(player: Player)
 	local profile = DataService.get(player)
 	if not profile or not getPlot(player) then
 		return
 	end
 	local nextStage = Stages[profile.studioLevel + 1]
-	if not nextStage or not stageRequirementsMet(profile, nextStage) then
+	if not nextStage or not stageRequirementsMet(profile, nextStage) or not readyToMove(profile) then
 		return
 	end
 	if DataService.trySpend(player, nextStage.cost) then
@@ -310,6 +372,11 @@ local function onMoveStudio(player: Player)
 		PlotService.rebuild(player)
 		DataService.replicate(player)
 	end
+end
+
+-- Нанят сотрудник — может появиться кнопка переезда
+function PlotService.refreshButtons(player: Player)
+	refreshButtons(player)
 end
 
 local function onBuyUpgrade(player: Player, upgradeId: any)
@@ -348,9 +415,8 @@ function PlotService.start()
 				local profile = DataService.get(player)
 				if profile then
 					for button, upgrade in playerButtons do
-						button.Color = if profile.cash >= upgrade.cost
-							then COLOR_AFFORDABLE
-							else COLOR_EXPENSIVE
+						local ready = if upgrade.move then COLOR_MOVE else COLOR_AFFORDABLE
+						button.Color = if profile.cash >= upgrade.cost then ready else COLOR_EXPENSIVE
 					end
 				end
 			end
