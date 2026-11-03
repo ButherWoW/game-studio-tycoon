@@ -5,6 +5,7 @@
 local DataStoreService = game:GetService("DataStoreService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
 
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 
@@ -129,10 +130,19 @@ local function onPlayerAdded(player: Player)
 		return store:GetAsync(key(player))
 	end)
 	if not ok then
-		player:Kick(
-			"Не удалось загрузить сохранение. Попробуйте зайти ещё раз."
-		)
-		return
+		if RunService:IsStudio() then
+			-- В Studio без публикации/доступа к API DataStore недоступен: играем без сохранений
+			warn(
+				"[DataService] DataStore недоступен в Studio, профиль не сохранится:",
+				result
+			)
+			result = nil
+		else
+			player:Kick(
+				"Не удалось загрузить сохранение. Попробуйте зайти ещё раз."
+			)
+			return
+		end
 	end
 
 	local profile = defaultProfile()

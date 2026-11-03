@@ -8,9 +8,9 @@
 - Роадмап: `docs/ROADMAP.md`. Инструкция для второго разработчика: `docs/DEV2.md`.
 
 ## Роли
-- **Dev 1 — Claude**: весь код в `src/` (сервер, клиентский UI из кода, конфиги, баланс), PR'ы, README/доки.
-- **Dev 2 — человек**: Roblox Studio (карта, модели в `ServerStorage.Upgrades`, NPC), тесты в игре, Creator Dashboard (Developer Products, геймпассы, публикация), мёрдж PR.
-- Claude не может запускать Studio → любые изменения должен проверить Dev 2. В PR всегда писать «Как проверить в Studio».
+- **Dev 1 — Claude**: весь код в `src/`, **Roblox Studio** (через computer use на компьютере владельца: стройка, вставка кода, тесты), публикация, Creator Dashboard, PR'ы и доки. Доступ к Studio есть только у Claude.
+- **Dev 2 — человек**: геймдизайн и контент (жанры, темы, сотрудники, квесты, цены), визуальные референсы, иконка/превью, разбор отчётов о тестах, сообщество. Studio не использует и игру не тестирует — **все тесты делает только Claude** и после каждой задачи пишет в Issue «Отчёт #N» (что сделано, скриншоты, числа). Общение — GitHub Issues.
+- Rojo CLI на компьютере владельца запустить нельзя (терминал недоступен для ввода), поэтому код в плейс вставляется через Command Bar Studio скриптом-установщиком, собранным из `src/`. Источник правды — репозиторий.
 
 ## Технически
 - Rojo (`default.project.json`): `src/shared` → ReplicatedStorage.Shared, `src/server` → ServerScriptService.Server, `src/client` → StarterPlayerScripts.Client.
@@ -27,5 +27,11 @@
 
 ## Статус
 - Фаза 0 выполнена (репозиторий, структура, CI).
-- Фаза 1: код прототипа готов (`DataService`, `PlotService`, `DevelopmentService`, `MonetizationService`, тестовый `HudController`), ждёт проверки Dev 2 в Studio.
+- Фаза 1: код прототипа готов (`DataService`, `PlotService`, `DevelopmentService`, `MonetizationService`, тестовый `HudController`), ждёт проверки Claude в Studio.
 - Следующее для Dev 1 (Фаза 2): окно создания игры и окно релиза (UI из кода), физические тайкун-кнопки, фильтр названий через TextService, расширить жанры до 10 и темы до 15.
+
+## Как работать в каждой сессии
+1. Открой `docs/ROADMAP.md` — найди первый шаг со статусом ⏳ или ⬜ для Claude. Это текущая задача.
+2. Сделай шаг, проверь (`stylua`, `rojo build`, тест в Studio, если доступен).
+3. Обнови `docs/ROADMAP.md`: ⬜ → ✅, пересчитай проценты фазы и общий прогресс (всего 44 шага).
+4. Коротко обнови раздел «Статус» в этом файле.
