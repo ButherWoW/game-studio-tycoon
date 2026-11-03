@@ -50,15 +50,15 @@ local function plotButton(upgradeId: string): BasePart?
 	return if button and button:IsA("BasePart") then button else nil
 end
 
--- Ищем кнопку по тексту: так не нужно трогать код чужого окна
-local function findButton(root: Instance?, text: string): GuiButton?
+-- Кнопки окон ищем по имени (HUD: CreateGameButton, окно: StartButton), а не по тексту:
+-- тексты переводятся на 30 языков
+local function findButton(root: Instance?, name: string): GuiButton?
 	if not root then
 		return nil
 	end
-	for _, child in root:GetDescendants() do
-		if child:IsA("TextButton") and child.Text == text and child.Visible then
-			return child
-		end
+	local button = root:FindFirstChild(name, true)
+	if button and button:IsA("GuiButton") and button.Visible then
+		return button
 	end
 	return nil
 end
@@ -90,7 +90,8 @@ local function currentStep(playerGui: Instance): number
 		return STEP_OPEN
 	end
 	-- Кнопка старта показывает «Начать разработку», только когда жанр и тема выбраны
-	if findButton(window, ClientState.t("create_start")) then
+	local start = findButton(window, "StartButton")
+	if start and start:GetAttribute("Ready") == true then
 		return STEP_START
 	end
 	return STEP_PICK
@@ -211,10 +212,9 @@ local function run()
 			if step == STEP_DESK then
 				target3d = plotButton("desk1")
 			elseif step == STEP_OPEN then
-				target2d = findButton(playerGui:FindFirstChild("Hud"), ClientState.t("hud_create"))
+				target2d = findButton(playerGui:FindFirstChild("Hud"), "CreateGameButton")
 			elseif step == STEP_START then
-				target2d =
-					findButton(playerGui:FindFirstChild("CreateGameWindow"), ClientState.t("create_start"))
+				target2d = findButton(playerGui:FindFirstChild("CreateGameWindow"), "StartButton")
 			elseif step == STEP_WAIT and not owns("pc1") then
 				target3d = plotButton("pc1")
 			end

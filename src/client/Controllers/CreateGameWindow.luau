@@ -298,6 +298,9 @@ render = function()
 			CreateGameWindow.close()
 		end
 	)
+	start.Name = "StartButton"
+	-- Туториал смотрит на атрибут, а не на текст: тексты переводятся
+	start:SetAttribute("Ready", err == nil)
 	start.TextColor3 = if err then Ui.colors.muted else Color3.fromRGB(40, 30, 0)
 	start.Size = UDim2.new(1, -32, 0, 52)
 	start.Position = UDim2.new(0, 16, 1, -64)

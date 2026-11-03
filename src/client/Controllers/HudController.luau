@@ -47,6 +47,7 @@ function HudController.start()
 	local create = Ui.button(gui, ClientState.t("hud_create"), Ui.colors.money, function()
 		CreateGameWindow.open()
 	end)
+	create.Name = "CreateGameButton" -- по имени его находит туториал
 	create.TextColor3 = Color3.fromRGB(40, 30, 0)
 	create.AnchorPoint = Vector2.new(0.5, 1)
 	create.Position = UDim2.new(0.5, 0, 1, -24)
