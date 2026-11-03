@@ -4,6 +4,7 @@
 
 local Genres = require(script.Parent.Config.Genres)
 local Topics = require(script.Parent.Config.Topics)
+local Economy = require(script.Parent.Config.Economy)
 
 export type Points = { gameplay: number, graphics: number, sound: number, story: number }
 
@@ -34,10 +35,13 @@ end
 -- Оценка 1..10. rng передаётся снаружи, чтобы формулу можно было тестировать.
 function Formulas.review(genreId: string, topicId: string, points: Points, rng: Random): number
 	local total = points.gameplay + points.graphics + points.sound + points.story
-	local quality = math.log10(1 + total) / 3 -- больше очков — лучше, но с затуханием
-	local raw = 10 * (0.55 * Formulas.balanceScore(genreId, points) + 0.45 * math.min(quality, 1))
-	raw *= Formulas.topicFit(topicId, genreId)
-	raw += rng:NextNumber(-0.75, 0.75)
+	-- больше очков — лучше, но с затуханием
+	local quality = math.min(math.log10(1 + total) / Economy.qualityLogDivisor, 1)
+	local raw = 10
+		* (Economy.balanceWeight * Formulas.balanceScore(genreId, points) + Economy.qualityWeight * quality)
+	-- Тема — бонус или штраф, а не множитель всей оценки
+	raw += (Formulas.topicFit(topicId, genreId) - 1) * Economy.topicFitStrength
+	raw += rng:NextNumber(-Economy.reviewNoise, Economy.reviewNoise)
 	return math.clamp(math.floor(raw + 0.5), 1, 10)
 end
 
@@ -48,7 +52,7 @@ function Formulas.revenue(
 	adBonus: number,
 	rebirthMultiplier: number
 ): number
-	local base = 100 * (score ^ 2) * (1 + 0.25 * (studioLevel - 1))
+	local base = Economy.revenueBase * (score ^ 2) * (1 + Economy.studioLevelBonus * (studioLevel - 1))
 	return math.floor(base * (1 + math.min(adBonus, 1)) * rebirthMultiplier)
 end
 

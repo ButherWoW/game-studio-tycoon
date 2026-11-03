@@ -60,7 +60,7 @@ function HudController.start()
 	button(gui, "Купить стол (бесплатно)", 158, function()
 		Remotes.BuyUpgrade:FireServer("desk1")
 	end)
-	button(gui, "Реклама: соцсети (+30%) за 50 000", 200, function()
+	button(gui, "Реклама: соцсети (+30%) за 3 000", 200, function()
 		Remotes.BuyAdCampaignWithCash:FireServer("social")
 	end)
 
