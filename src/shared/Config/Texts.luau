@@ -92,6 +92,24 @@ Texts.ru = {
 	tutorial_done = "Покупай апгрейды и делай игры лучше. Бонус: {money}!",
 	tutorial_skip = "Пропустить",
 	tutorial_ok = "Готово",
+	-- retention
+	trend_banner = "🔥 В тренде: {genre} + {topic}, ещё {time}",
+	rebirth_title = "♻️ Rebirth",
+	rebirth_count = "Ребёрзов: {count} · доход ×{mult}",
+	rebirth_next = "После ребёрза доход ×{mult} навсегда",
+	rebirth_need_office = "Переезд в офис",
+	rebirth_need_cash = "Деньги: {price}",
+	rebirth_resets = "Сбросится: деньги (останется $100), апгрейды, открытые жанры и темы",
+	rebirth_keeps = "Останется: рекорд и число выпущенных игр",
+	rebirth_button = "Начать заново",
+	rebirth_confirm = "Точно? Нажми ещё раз",
+	rebirth_locked = "Условия не выполнены",
+	rebirth_done = "Студия начинает заново! Доход ×{mult}",
+	rebirth_close = "Закрыть",
+	offline_title = "Пока тебя не было",
+	offline_amount = "+{money}",
+	offline_hint = "Студия работала без тебя за половину дохода",
+	offline_claim = "Забрать",
 } :: { [string]: string }
 
 Texts.en = {
@@ -176,6 +194,24 @@ Texts.en = {
 	tutorial_done = "Buy upgrades and make better games. Bonus: {money}!",
 	tutorial_skip = "Skip",
 	tutorial_ok = "Done",
+	-- retention
+	trend_banner = "🔥 Trending: {genre} + {topic}, {time} left",
+	rebirth_title = "♻️ Rebirth",
+	rebirth_count = "Rebirths: {count} · income ×{mult}",
+	rebirth_next = "After rebirth: income ×{mult} forever",
+	rebirth_need_office = "Move to an office",
+	rebirth_need_cash = "Money: {price}",
+	rebirth_resets = "Resets: money (you keep $100), upgrades, unlocked genres and topics",
+	rebirth_keeps = "Keeps: best score and games released",
+	rebirth_button = "Start over",
+	rebirth_confirm = "Sure? Click again",
+	rebirth_locked = "Requirements not met",
+	rebirth_done = "Your studio starts over! Income ×{mult}",
+	rebirth_close = "Close",
+	offline_title = "While you were away",
+	offline_amount = "+{money}",
+	offline_hint = "Your studio kept working at half income",
+	offline_claim = "Claim",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть
