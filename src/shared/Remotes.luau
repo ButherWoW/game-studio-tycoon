@@ -10,6 +10,7 @@ local NAMES = {
 	"GameReleased", -- сервер -> клиент: { name, score, revenue }
 	"BuyUpgrade", -- клиент -> сервер: upgradeId
 	"BuyAdCampaignWithCash", -- клиент -> сервер: campaignId
+	"UnlockContent", -- клиент -> сервер: kind ("genre" | "topic"), id
 	"DataChanged", -- сервер -> клиент: снимок публичных данных игрока
 }
 
