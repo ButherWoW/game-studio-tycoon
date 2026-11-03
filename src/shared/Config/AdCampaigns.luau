@@ -22,7 +22,7 @@ local AdCampaigns: { AdCampaign } = {
 		durationSeconds = 15 * 60,
 		productId = 0,
 		robuxPrice = 25,
-		cashCost = 50_000,
+		cashCost = 3_000,
 	},
 	{
 		id = "streamers",
@@ -31,7 +31,7 @@ local AdCampaigns: { AdCampaign } = {
 		durationSeconds = 15 * 60,
 		productId = 0,
 		robuxPrice = 75,
-		cashCost = 250_000,
+		cashCost = 12_000,
 	},
 	{
 		id = "tv",
