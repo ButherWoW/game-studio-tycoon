@@ -77,7 +77,7 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "posters",
-		position = Vector3.new(0, 9, -29.5),
+		position = Vector3.new(0, 3.5, -29.5),
 		rotation = 0,
 		name = "Постеры и неоновая вывеска",
 		cost = 2_500,
