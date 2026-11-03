@@ -9,13 +9,27 @@ export type Upgrade = {
 	model: string,
 	requires: string?,
 	pointsPerSecond: number?, -- рабочее место добавляет очки разработки
+	-- Где стоит на участке 60×60: центр участка = (0, 0, 0), пол = Y 0.5, +Z — к кнопкам (вход).
+	-- Модель строится центром основания в (0, 0, 0); nil — модель уже собрана на своём месте.
+	position: Vector3?,
+	rotation: number?, -- поворот вокруг Y в градусах, 0 — смотрит на +Z
 }
 
 -- Порядок, цены и очки — issue #3 (гараж -> офис за 11–15 минут при Config/Economy).
 local Upgrades: { Upgrade } = {
-	{ id = "desk1", name = "Старый стол", cost = 0, model = "Desk1", pointsPerSecond = 1 },
+	{
+		id = "desk1",
+		position = Vector3.new(-12, 0.5, -20),
+		rotation = 0,
+		name = "Старый стол",
+		cost = 0,
+		model = "Desk1",
+		pointsPerSecond = 1,
+	},
 	{
 		id = "pc1",
+		position = Vector3.new(-12, 3.5, -21),
+		rotation = 0,
 		name = "Компьютер с барахолки",
 		cost = 100,
 		model = "PC1",
@@ -24,6 +38,8 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "walls",
+		position = Vector3.new(0, 0.5, -29.5),
+		rotation = 0,
 		name = "Стены и свет гаража",
 		cost = 250,
 		model = "GarageWalls",
@@ -31,6 +47,8 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "chair",
+		position = Vector3.new(-12, 0.5, -15),
+		rotation = 180,
 		name = "Геймерское кресло",
 		cost = 500,
 		model = "Chair",
@@ -39,6 +57,8 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "desk2",
+		position = Vector3.new(4, 0.5, -20),
+		rotation = 0,
 		name = "Второй стол с ПК",
 		cost = 900,
 		model = "Desk2",
@@ -47,6 +67,8 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "coffee",
+		position = Vector3.new(25, 0.5, -24),
+		rotation = -90,
 		name = "Кофемашина",
 		cost = 1_500,
 		model = "Coffee",
@@ -55,6 +77,8 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "posters",
+		position = Vector3.new(0, 3.5, -29.5),
+		rotation = 0,
 		name = "Постеры и неоновая вывеска",
 		cost = 2_500,
 		model = "Posters",
@@ -62,6 +86,8 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "pcpro",
+		position = Vector3.new(4, 3.5, -21),
+		rotation = 0,
 		name = "Мощный ПК",
 		cost = 4_000,
 		model = "PCPro",
@@ -70,6 +96,8 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "office",
+		position = Vector3.new(18, 0.5, 4),
+		rotation = 0,
 		name = "Переезд в офис",
 		cost = 8_000,
 		model = "Office",

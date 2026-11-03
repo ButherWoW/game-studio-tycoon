@@ -159,15 +159,19 @@ local function release(player: Player, project: Project)
 	local rebirthMultiplier = 1 + 0.5 * profile.rebirths
 	local revenue = Formulas.revenue(score, profile.studioLevel, adBonus, rebirthMultiplier)
 
+	local isRecord = profile.gamesReleased > 0 and score > profile.bestScore
 	profile.gamesReleased += 1
 	profile.bestScore = math.max(profile.bestScore, score)
 	DataService.addCash(player, revenue)
 
 	Remotes.GameReleased:FireClient(player, {
 		name = project.name,
+		genreId = project.genreId,
+		topicId = project.topicId,
 		score = score,
 		revenue = revenue,
 		adBonus = adBonus,
+		isRecord = isRecord,
 	})
 end
 
