@@ -57,6 +57,13 @@ function RewardService.takeRewardCash(player: Player): number
 	return amount
 end
 
+-- Деньги не за игру (пакеты за Robux, тестовые, награда туториала): не идут в задание «заработай»
+function RewardService.noteNonEarned(player: Player, amount: number)
+	if amount > 0 then
+		rewardCash[player] = (rewardCash[player] or 0) + amount
+	end
+end
+
 function RewardService.forget(player: Player)
 	rewardCash[player] = nil
 end

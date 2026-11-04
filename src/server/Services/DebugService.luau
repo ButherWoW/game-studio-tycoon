@@ -19,7 +19,9 @@ local function onPlayerAdded(player: Player)
 		profile = DataService.get(player)
 	end
 	if profile and profile.cash < Debug.studioStartCash then
-		DataService.addCash(player, Debug.studioStartCash - profile.cash)
+		local amount = Debug.studioStartCash - profile.cash
+		DataService.addCash(player, amount);
+		(require(script.Parent.RewardService) :: any).noteNonEarned(player, amount)
 		warn("[DebugService] Studio: выдано $" .. Debug.studioStartCash .. " для теста")
 	end
 end
