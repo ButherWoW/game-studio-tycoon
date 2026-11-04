@@ -86,6 +86,7 @@ function Texts.lookup(lang: Lang, key: string): string?
 end
 
 Texts.ru = {
+	price_free = "Бесплатно",
 	-- HUD
 	hud_cash = "$ {cash}",
 	hud_games = "Игр: {count}",
@@ -241,6 +242,7 @@ Texts.ru = {
 } :: { [string]: string }
 
 Texts.en = {
+	price_free = "Free",
 	hud_cash = "$ {cash}",
 	hud_games = "Games: {count}",
 	hud_ad = "Ads +{percent}%",

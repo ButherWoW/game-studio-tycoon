@@ -25,10 +25,9 @@ local scrollPositions: { [string]: Vector2 } = {}
 local render: () -> ()
 
 local function nodeText(node: Research.Node): (string, string)
-	if ClientState.lang == "en" then
-		return node.nameEn, node.descriptionEn
-	end
-	return node.name, node.description
+	local key = "research_" .. node.id
+	return ClientState.localText(key, node.name, node.nameEn),
+		ClientState.localText(key .. "_desc", node.description, node.descriptionEn)
 end
 
 local function requiredNames(node: Research.Node): string

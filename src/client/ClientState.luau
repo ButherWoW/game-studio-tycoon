@@ -9,6 +9,7 @@ local LanguageRemotes = require(ReplicatedStorage.Shared.LanguageRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
+local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 
 local ClientState = {}
 
@@ -60,6 +61,11 @@ function ClientState.setLang(code: string, save: boolean?)
 	end
 end
 
+-- Текст из конфига на языке игрока: перевод по ключу из Locales, иначе поля ru/en конфига
+function ClientState.localText(key: string, ru: string, en: string): string
+	return Texts.lookup(ClientState.lang, key) or (if ClientState.lang == "ru" then ru else en)
+end
+
 -- Имя жанра или темы на языке игрока: перевод genre_<id>/topic_<id>, иначе name/nameEn
 function ClientState.localName(item: { name: string, nameEn: string }): string
 	local id = (item :: any).id
@@ -67,6 +73,7 @@ function ClientState.localName(item: { name: string, nameEn: string }): string
 		then nil
 		elseif (Genres :: any)[id] == item then "genre_"
 		elseif (Topics :: any)[id] == item then "topic_"
+		elseif (Stages :: any)[(item :: any).level] == item then "stage_"
 		else nil
 	if prefix then
 		local translated = Texts.lookup(ClientState.lang, prefix .. id)

@@ -38,7 +38,7 @@ end
 local function upgradeName(id: string): string
 	for _, upgrade in Upgrades do
 		if upgrade.id == id then
-			return upgrade.name
+			return ClientState.localText("upgrade_" .. upgrade.id, upgrade.name, upgrade.name)
 		end
 	end
 	return id
@@ -144,11 +144,15 @@ local function buildRow(
 	Ui.corner(swatch, 4)
 	swatch.Parent = row
 
-	local isEn = ClientState.lang == "en"
-	local name = Ui.label(row, if isEn then employee.nameEn else employee.name, 26, Ui.titleFont)
+	local name = Ui.label(
+		row,
+		ClientState.localText("employee_" .. employee.id, employee.name, employee.nameEn),
+		26,
+		Ui.titleFont
+	)
 	name.Position = UDim2.fromOffset(24, 6)
 	name.Size = UDim2.new(0.6, -24, 0, 26)
-	local role = if isEn then employee.roleEn else employee.role
+	local role = ClientState.localText("employee_" .. employee.id .. "_role", employee.role, employee.roleEn)
 	local details =
 		ClientState.t("team_multiplier", { mult = employee.multiplier, spec = specName(employee) })
 	local sub = Ui.label(row, role .. " · " .. details, 20, nil, Ui.colors.muted)

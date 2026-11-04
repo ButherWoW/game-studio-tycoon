@@ -29,8 +29,8 @@ local tab: Tab = "quests"
 local questState: any = nil
 local board: any = nil
 
-local function nameOf(item: { name: string, nameEn: string }): string
-	return if ClientState.lang == "en" then item.nameEn else item.name
+local function nameOf(item: { id: string, name: string, nameEn: string }): string
+	return ClientState.localText("quest_" .. item.id, item.name, item.nameEn)
 end
 
 -- «N мин дохода (~$X)» и т.п.; деньги — подсказка по текущим данным, выдаёт сервер
