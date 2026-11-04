@@ -83,9 +83,23 @@ local function upgradeBonus(player: Player, field: "speed" | "reviewBonus"): num
 end
 
 -- Прибавка к оценке до округления: предметы студии + VIP-офис
+-- Перки сотрудников (StaffService.perkTotals): devTime, bugAlwaysWins, streamerMultiplier, trendBonus
+local function perks(player: Player): any
+	-- StaffService подключается ниже по файлу: берём модуль по требованию (require кэшируется)
+	local ok, totals = pcall(function()
+		return (require(script.Parent.StaffService) :: any).perkTotals(player)
+	end)
+	return if ok and type(totals) == "table" then totals else {}
+end
+
 local function reviewBonus(player: Player): number
 	local vip = if ownsPass(player, "vipOffice") then GamePasses.effects.vipReviewBonus else 0
-	return upgradeBonus(player, "reviewBonus") + vip
+	-- «Мастер Пиксель» +1 и перк «Перфекционист» +0.2
+	local ok, staff = pcall(function()
+		return (require(script.Parent.StaffService) :: any).reviewBonus(player)
+	end)
+	local staffBonus = if ok and type(staff) == "number" then staff else 0
+	return upgradeBonus(player, "reviewBonus") + vip + staffBonus
 end
 
 local function durationFactor(player: Player): number
@@ -93,7 +107,9 @@ local function durationFactor(player: Player): number
 	-- Research.modifiers отдаёт множители: 1 = без изменений, 0.9 = на 10% быстрее
 	local devTime = if research and type(research.devTime) == "number" then research.devTime else 1
 	local items = math.min(upgradeBonus(player, "speed"), Economy.maxUpgradeSpeed)
-	return math.max(devTime, 0.25) * (1 - items) / speedFactor(player)
+	-- Перк «Кранчер» и подобные: множитель времени (0.9 = −10%)
+	local perkTime = tonumber(perks(player).devTime) or 1
+	return math.max(devTime * perkTime, 0.25) * (1 - items) / speedFactor(player)
 end
 local StaffService = require(script.Parent.StaffService)
 local PlotService = require(script.Parent.PlotService)
@@ -266,13 +282,16 @@ function DevelopmentService.pointsRate(player: Player, focus: Focus, tempo: numb
 			any = true
 			local employee = byDesk[upgrade.id]
 			local base = deskPoints * (if employee then employee.multiplier else 1)
+			-- Навыки сотрудника за этим столом и перк «Наставник» соседей
+			local okMult, deskMult = pcall(StaffService.deskMultipliers, player, upgrade.id)
+			local mult: any = if okMult and type(deskMult) == "table" then deskMult else {}
 			for _, key in FOCUS_KEYS do
 				local share = (focus :: any)[key] :: number
 				local bonus = 1
 				if employee and employee.specialization == key and share >= Employees.specThreshold then
 					bonus += Employees.specBonus
 				end
-				(rate :: any)[key] += base * share * bonus
+				(rate :: any)[key] += base * share * bonus * (tonumber(mult[key]) or 1)
 			end
 		end
 	end
@@ -430,7 +449,13 @@ local function release(player: Player, project: Project)
 	local score = Formulas.review(project.genreId, project.topicId, project.points, rng, reviewBonus(player))
 	local TrendService = optional("TrendService")
 	if TrendService then
-		score += TrendService.getBonus(project.genreId, project.topicId)
+		local trend = TrendService.getBonus(project.genreId, project.topicId)
+		score += trend
+		-- Перк «Тренд-хантер»: ещё бонус, если игра в тренде
+		if trend > 0 then
+			score += tonumber(perks(player).trendBonus) or 0
+		end
+		score = math.floor(score + 0.5)
 	end
 	-- Праздник (Хэллоуин: хоррор/призраки/тыквы; Новый год) — бонус к оценке
 	local HolidayService = optional("HolidayService")
@@ -519,9 +544,22 @@ local function release(player: Player, project: Project)
 end
 
 -- Применить выбор события: очки в направление (или по фокусу), время, риск
-local function applyEffect(player: Player, project: Project, effect: DevEvents.Effect): boolean
-	local ok = effect.chance == nil or rng:NextNumber() < effect.chance
+local function applyEffect(
+	player: Player,
+	project: Project,
+	effect: DevEvents.Effect,
+	eventId: string?
+): boolean
+	local perk = perks(player)
+	-- Перк «Багоборец»: событие «баг» всегда заканчивается удачно
+	local ok = effect.chance == nil
+		or (eventId == "bug" and perk.bugAlwaysWins == true)
+		or rng:NextNumber() < effect.chance
 	local work = if ok then effect.work or 0 else effect.failWork or 0
+	-- Перк «Хайпожор»: стример даёт больше
+	if eventId == "streamer" and work > 0 then
+		work *= tonumber(perk.streamerMultiplier) or 1
+	end
 	if work ~= 0 then
 		local rate = DevelopmentService.pointsRate(player, project.focus, project.tempo)
 		local perSecond = rate.gameplay + rate.graphics + rate.sound + rate.story
@@ -548,7 +586,7 @@ local function resolveEvent(player: Player, project: Project, choice: string)
 	end
 	project.event = nil
 	local effect = if choice == "a" then active.def.a else active.def.b
-	local ok = applyEffect(player, project, effect)
+	local ok = applyEffect(player, project, effect, active.def.id)
 	Remotes.DevEventResult:FireClient(player, { id = active.def.id, choice = choice, ok = ok })
 end
 
