@@ -92,7 +92,8 @@ function RebirthWindow.open()
 			return
 		end
 		local rebirths = data.rebirths or 0
-		local cost = Rebirth.cost(rebirths)
+		-- Долг банка гасится вместе с ребёрзом (LoanService)
+		local cost = Rebirth.cost(rebirths) + (tonumber(Players.LocalPlayer:GetAttribute("LoanDebt")) or 0)
 		local hasOffice = data.upgrades and data.upgrades[Rebirth.requiredUpgrade] == true
 		local hasCash = data.cash >= cost
 		canRebirth = hasOffice and hasCash

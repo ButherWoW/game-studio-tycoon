@@ -528,6 +528,8 @@ local function release(player: Player, project: Project)
 
 	hook("ResearchService", "onGameReleased", player, score)
 	hook("PerksService", "onGameReleased", player, revenue)
+	-- Кредит: часть дохода игры уходит в погашение (Config/Loans.repayShare)
+	hook("LoanService", "onGameReleased", player, revenue)
 	local p = project.points
 	hook("ExpoService", "onGameReleased", player, {
 		name = project.name,

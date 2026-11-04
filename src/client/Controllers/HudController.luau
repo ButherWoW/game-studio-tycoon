@@ -179,6 +179,10 @@ function HudController.start()
 		if expenses > 0 then
 			line ..= "  ·  " .. ClientState.t("hud_expenses", { amount = Texts.money(expenses) })
 		end
+		local debt = tonumber(player:GetAttribute("LoanDebt")) or 0
+		if debt > 0 then
+			line ..= "  ·  " .. ClientState.t("hud_debt", { amount = Texts.money(debt) })
+		end
 		local strike = player:GetAttribute("StaffStrike") == true
 		if strike then
 			-- Плашка одна (ниже строки прогресса): пока бастуют — показываем только это
@@ -193,6 +197,7 @@ function HudController.start()
 	ClientState.changed:Connect(refresh)
 	Players.LocalPlayer:GetAttributeChangedSignal("ExpensesPerMinute"):Connect(refresh)
 	Players.LocalPlayer:GetAttributeChangedSignal("StaffStrike"):Connect(refresh)
+	Players.LocalPlayer:GetAttributeChangedSignal("LoanDebt"):Connect(refresh)
 	DevState.changed:Connect(function()
 		-- Проекты, которых больше нет, забываем
 		local alive: { [number]: boolean } = {}
