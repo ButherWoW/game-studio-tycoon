@@ -224,6 +224,9 @@ export type PopupSpec = {
 	-- Строка с обратным отсчётом: текст по секундам до конца (nil — без отсчёта)
 	countdown: ((secondsLeft: number) -> string)?,
 	endsAt: number?,
+	-- Вторая кнопка: свой текст и действие (контракт: «Отказаться»); nil — «Не сейчас»
+	laterText: string?,
+	onLater: (() -> ())?,
 }
 
 -- Показать окно (проверку canPopup делает вызывающий). Считается в кулдаун и лимит сессии
@@ -294,7 +297,13 @@ function OfferClient.popup(spec: PopupSpec)
 		spec.onBuy()
 	end)
 	buy.Size = UDim2.new(0.6, 0, 1, 0)
-	Ui.button(buttons, ClientState.t("offer_later"), Ui.colors.locked, close).Size = UDim2.new(0.36, 0, 1, 0)
+	Ui.button(buttons, spec.laterText or ClientState.t("offer_later"), Ui.colors.locked, function()
+		close()
+		if spec.onLater then
+			spec.onLater()
+		end
+	end).Size =
+		UDim2.new(0.36, 0, 1, 0)
 end
 
 -- ===== Стартовый набор =====

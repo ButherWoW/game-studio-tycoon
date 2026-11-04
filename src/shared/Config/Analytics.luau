@@ -59,6 +59,11 @@ local Analytics = {
 		gift = "GiftPurchased", -- подарок за Robux; поле — gift_<id>, значение 1 — другу, 0 — достался себе
 		groupReward = "GroupReward", -- награда за вступление в группу
 		offer = "Offer", -- предложение доната; поле — "вид_этап" (starterPack_shown, floorLock_purchased)
+		-- Франшизы и контракты: поле — этап (created; offered/accepted/declined/expired/completed/failed)
+		-- или id обогнанной студии
+		franchise = "Franchise",
+		contract = "Contract",
+		rivalPassed = "RivalPassed",
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -78,6 +83,8 @@ local Analytics = {
 		OfferService = { transactionType = "IAP", sku = "offer" },
 		TutorialService = { transactionType = "Onboarding", sku = "tutorial" },
 		SocialService = { transactionType = "TimedReward", sku = "group" },
+		ContractService = { transactionType = "Contract", sku = "contract" },
+		RivalService = { transactionType = "Reward", sku = "rivalPassed" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },

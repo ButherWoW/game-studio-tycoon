@@ -49,6 +49,10 @@ export type Profile = {
 	skins: { owned: { [string]: boolean }, assigned: { [string]: string } },
 	-- Предложения доната (OfferService): первый вход (таймер стартового набора), куплен ли он, значок
 	offers: { firstJoin: number, starterBought: boolean, starterShown: boolean, starterBadge: boolean },
+	-- Франшизы и контракты (FranchiseService, ContractService, RivalService); формат проверяют сервисы
+	franchises: any?,
+	contracts: any?,
+	rivals: any?,
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
@@ -109,6 +113,9 @@ local function defaultProfile(): Profile
 		decor = { owned = {} },
 		skins = { owned = {}, assigned = {} },
 		offers = { firstJoin = os.time(), starterBought = false, starterShown = false, starterBadge = false },
+		franchises = { list = {}, candidates = {}, nextId = 1 },
+		contracts = { done = 0, failed = 0 },
+		rivals = { minutes = 0, passed = {} },
 		processedReceipts = {},
 		receiptLog = {},
 		lastLogout = os.time(),
