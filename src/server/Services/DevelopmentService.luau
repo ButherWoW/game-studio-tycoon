@@ -803,6 +803,12 @@ local function release(player: Player, project: Project)
 		revenue = revenue,
 		score = score,
 	})
+	-- Мини-аркада «Сыграй в свою игру» (ArcadeService запоминает релиз на windowSeconds)
+	hook("ArcadeService", "onGameReleased", player, {
+		projectId = project.id,
+		revenue = revenue,
+		genreId = project.genreId,
+	})
 
 	Remotes.GameReleased:FireClient(player, {
 		name = project.name,

@@ -74,6 +74,7 @@ local Analytics = {
 		franchise = "Franchise",
 		contract = "Contract",
 		rivalPassed = "RivalPassed",
+		arcade = "Arcade", -- мини-аркада после релиза; поле — "вид_этап" (whack_start, lanes_gold, jump_none)
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -100,6 +101,7 @@ local Analytics = {
 		GameJamService = { transactionType = "GameJam", sku = "jam" },
 		ContractService = { transactionType = "Contract", sku = "contract" },
 		RivalService = { transactionType = "Reward", sku = "rivalPassed" },
+		ArcadeService = { transactionType = "Reward", sku = "arcade" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },

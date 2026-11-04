@@ -16,6 +16,7 @@ local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local CreateGameWindow = require(script.Parent.CreateGameWindow)
 local OfferClient = require(script.Parent.Parent.OfferClient)
+local ArcadeWindow = require(script.Parent.ArcadeWindow)
 
 local REVEAL_DELAY = 0.6
 local CRITIC_SPREAD = { -1, 0, 0, 1 } -- сумма 0: среднее равно итоговой оценке
@@ -107,7 +108,13 @@ local function show(info: any)
 
 	-- Предложение под итогом (×2 к доходу этой игры / геймпасс ×2): окно выше на строку
 	local offer = OfferClient.releaseOffer(info)
-	local window = Ui.window(screen, "Window", Vector2.new(620, if offer then 692 else 636))
+	-- Плейтест «Сыграй в свою игру» (ArcadeWindow): ещё строка под итогом
+	local arcade = ArcadeWindow.available(info)
+	local window = Ui.window(
+		screen,
+		"Window",
+		Vector2.new(620, (if offer then 692 else 636) + (if arcade then 50 else 0))
+	)
 	local body = Instance.new("Frame")
 	body.BackgroundTransparency = 1
 	body.Position = UDim2.fromOffset(16, 12)
@@ -306,6 +313,19 @@ local function show(info: any)
 		buttons.Visible = true
 		if offer then
 			offer(body, 24)
+		end
+		if arcade then
+			local play = Ui.button(
+				body,
+				ClientState.t("arcade_play"),
+				Color3.fromRGB(150, 90, 230),
+				function()
+					close()
+					ArcadeWindow.open(info)
+				end
+			)
+			play.Size = UDim2.new(1, 0, 0, 40)
+			play.LayoutOrder = 25
 		end
 		revealed()
 	end)
