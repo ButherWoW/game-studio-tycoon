@@ -77,6 +77,13 @@ local function durationFactor(player: Player): number
 end
 local StaffService = require(script.Parent.StaffService)
 local PlotService = require(script.Parent.PlotService)
+local StartPark = require(Shared.Config.StartPark)
+
+-- «Инди в парке»: пока нет гаража, игры делаются на общем ноутбуке — фиксированные время
+-- и очки в секунду (бонусы студии, магазина и исследований не действуют), доход ниже
+local function onLaptop(player: Player): boolean
+	return not PlotService.ownsGarage(player)
+end
 
 type Focus = { gameplay: number, graphics: number, sound: number, story: number }
 
@@ -93,6 +100,7 @@ type Project = {
 	eventsDone: number,
 	tempo: number, -- скорость разработки на момент старта (см. pointsRate)
 	event: { def: DevEvents.DevEvent, expiresAt: number }?,
+	laptop: boolean?, -- начата на ноутбуке в парке: доход × StartPark.laptopRevenueMultiplier
 }
 
 local BASE_DURATION = 30 -- секунд на одну игру в начале
@@ -145,6 +153,12 @@ function DevelopmentService.pointsRate(player: Player, focus: Focus, tempo: numb
 	local rate = { gameplay = 0, graphics = 0, sound = 0, story = 0 }
 	local profile = DataService.get(player)
 	if not profile then
+		return rate
+	end
+	if onLaptop(player) then
+		for _, key in FOCUS_KEYS do
+			(rate :: any)[key] = (focus :: any)[key] * StartPark.laptopPointsPerSecond
+		end
 		return rate
 	end
 	local byDesk = StaffService.employeesByDesk(player)
@@ -260,6 +274,7 @@ local function onStartDevelopment(player: Player, request: any)
 	if projects[player] ~= PENDING or not player.Parent then
 		return
 	end
+	local laptop = onLaptop(player)
 
 	local factor = durationFactor(player)
 	projects[player] = {
@@ -269,10 +284,11 @@ local function onStartDevelopment(player: Player, request: any)
 		focus = focus,
 		points = { gameplay = 0, graphics = 0, sound = 0, story = 0 },
 		elapsed = 0,
-		duration = BASE_DURATION * factor,
+		duration = if laptop then StartPark.laptopDuration else BASE_DURATION * factor,
 		nextEventAt = DevEvents.firstAt,
 		eventsDone = 0,
-		tempo = 1 / factor,
+		tempo = if laptop then 1 else 1 / factor,
+		laptop = laptop,
 	}
 end
 
@@ -310,7 +326,8 @@ local function release(player: Player, project: Project)
 	local research = researchModifiers(player)
 	local cashMultiplier = if shop and type(shop.cashMultiplier) == "number" then shop.cashMultiplier else 1
 	local researchMultiplier = if research and type(research.revenue) == "number" then research.revenue else 1
-	revenue = math.floor(revenue * cashMultiplier * researchMultiplier)
+	local laptopMultiplier = if project.laptop then StartPark.laptopRevenueMultiplier else 1
+	revenue = math.floor(revenue * cashMultiplier * researchMultiplier * laptopMultiplier)
 
 	local isRecord = profile.gamesReleased > 0 and score > profile.bestScore
 	profile.gamesReleased += 1

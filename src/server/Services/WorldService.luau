@@ -9,6 +9,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local ModelFactory = require(script.Parent.ModelFactory)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
+local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
 
 -- Участок каждому: не меньше 6 и не меньше максимума игроков на сервере
 local PLOT_COUNT = math.max(6, game:GetService("Players").MaxPlayers)
@@ -154,11 +155,79 @@ local function ensureUpgradeModels()
 	end
 end
 
+-- Парк «Инди в парке» вокруг спавна: скамейки с ноутбуками, доска заказов, ломбард и точки
+-- картриджей (поведение — StartParkService). Участки начинаются в 60 studs от спавна,
+-- тропинки к ним идут по углам 0°, 60°…, поэтому скамейки и киоски стоят между тропинками.
+local function ensureStartPark()
+	if workspace:FindFirstChild("StartPark") then
+		return
+	end
+	local spawn = workspace:FindFirstChildWhichIsA("SpawnLocation", true)
+	local center = if spawn and spawn:IsA("BasePart")
+		then Vector3.new(spawn.Position.X, 0, spawn.Position.Z)
+		else Vector3.zero
+	local folder = Instance.new("Folder")
+	folder.Name = "StartPark"
+
+	-- Поставить модель на землю в точке angle/radius; lookAt разворачивает −Z модели к спавну
+	local function place(model: Model, angleDeg: number, radius: number, faceSpawnWithFront: boolean)
+		local angle = math.rad(angleDeg)
+		local pos = center + Vector3.new(math.cos(angle) * radius, 0, math.sin(angle) * radius)
+		local cf = CFrame.lookAt(pos, center)
+		if faceSpawnWithFront then
+			-- «Лицо» моделей ModelFactory — +Z, разворачиваем к спавну
+			cf *= CFrame.Angles(0, math.pi, 0)
+		end
+		model:PivotTo(cf)
+		model.Parent = folder
+	end
+
+	-- Сидящий на скамейке смотрит на −Z (к спавну), столик с ноутбуком перед ним
+	for i = 1, StartPark.benchCount do
+		local bench = ModelFactory.build("ParkBench")
+		if bench then
+			bench.Name = "Bench" .. i
+			place(bench, 30 + (i - 1) * 360 / StartPark.benchCount, StartPark.benchRadius, false)
+		end
+	end
+	local board = ModelFactory.build("JobBoard")
+	if board then
+		place(board, 90, StartPark.boardRadius, true)
+	end
+	local pawn = ModelFactory.build("Pawnshop")
+	if pawn then
+		place(pawn, 270, StartPark.boardRadius, true)
+	end
+
+	-- Точки картриджей — на тропинках к участкам: игрок проходит мимо
+	local spots = Instance.new("Folder")
+	spots.Name = "CartridgeSpots"
+	spots.Parent = folder
+	for i = 1, StartPark.cartridgeSpots do
+		local angle = math.rad((i - 1) * 360 / StartPark.cartridgeSpots)
+		local pos = center
+			+ Vector3.new(
+				math.cos(angle) * StartPark.cartridgeRadius,
+				0.1,
+				math.sin(angle) * StartPark.cartridgeRadius
+			)
+		local spot =
+			makePart("Spot" .. i, Vector3.new(3, 0.2, 3), CFrame.new(pos), Color3.fromRGB(80, 70, 60), spots)
+		spot.Shape = Enum.PartType.Cylinder
+		spot.Size = Vector3.new(0.2, 3, 3)
+		spot.CFrame = CFrame.new(pos) * CFrame.Angles(0, 0, math.rad(90))
+		spot.CanCollide = false
+		spot.Material = Enum.Material.Ground
+	end
+	folder.Parent = workspace
+end
+
 -- Вызывать до PlotService.start()
 function WorldService.start()
 	ensureGround()
 	ensurePlots()
 	ensureUpgradeModels()
+	ensureStartPark()
 end
 
 return WorldService
