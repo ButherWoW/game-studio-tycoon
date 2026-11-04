@@ -6,8 +6,9 @@
 
 local Skins = require(script.Parent.Skins)
 local Posters = require(script.Parent.Posters)
+local Mascots = require(script.Parent.Mascots)
 
-export type GiftKind = "skin" | "poster"
+export type GiftKind = "skin" | "poster" | "mascot"
 
 export type Gift = {
 	id: string, -- gift_<itemId>
@@ -29,9 +30,13 @@ local giftProducts: { [string]: number } = {
 	gift_mechTitan = 0,
 	gift_galaxyLegends = 0,
 	gift_goldenController = 0,
+	gift_neon_fox = 0,
+	gift_dragon_byte = 0,
+	gift_golden_trophy = 0,
+	gift_cosmic_whale = 0,
 }
 
--- Подарить можно премиум-скины и премиум-постеры; цена — как у предмета
+-- Подарить можно премиум-скины, премиум-постеры и маскотов за Robux; цена — как у предмета
 local gifts: { Gift } = {}
 for _, skin in Skins.list do
 	if skin.premium then
@@ -54,6 +59,19 @@ for _, poster in Posters.list do
 			itemId = poster.id,
 			productId = giftProducts[id] or 0,
 			robuxPrice = poster.robuxPrice or 0,
+		})
+	end
+end
+
+for _, mascot in Mascots.list do
+	if mascot.how == "robux" then
+		local id = "gift_" .. mascot.id
+		table.insert(gifts, {
+			id = id,
+			kind = "mascot",
+			itemId = mascot.id,
+			productId = giftProducts[id] or 0,
+			robuxPrice = mascot.robuxPrice or 0,
 		})
 	end
 end

@@ -107,10 +107,15 @@ function QuickEvents.sweep(t: number, period: number, phase: number): number
 	return if x < 0.5 then x * 2 else 2 - x * 2
 end
 
--- Оценка попадания value в зону [center ± width/2]
-function QuickEvents.zoneGrade(value: number, center: number, width: number): Grade
+-- Доля «Отлично» внутри зоны с учётом маскота (scale 1.1 = +10%), не шире самой зоны
+function QuickEvents.perfectShareFor(scale: number?): number
+	return math.min(QuickEvents.perfectShare * (scale or 1), 1)
+end
+
+-- Оценка попадания value в зону [center ± width/2]; perfectScale — маскот «Отлично»
+function QuickEvents.zoneGrade(value: number, center: number, width: number, perfectScale: number?): Grade
 	local distance = math.abs(value - center)
-	if distance <= width * QuickEvents.perfectShare / 2 then
+	if distance <= width * QuickEvents.perfectShareFor(perfectScale) / 2 then
 		return "perfect"
 	elseif distance <= width / 2 then
 		return "good"

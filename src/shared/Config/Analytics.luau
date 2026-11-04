@@ -60,6 +60,8 @@ local Analytics = {
 		groupReward = "GroupReward", -- награда за вступление в группу
 		offer = "Offer", -- предложение доната; поле — "вид_этап" (starterPack_shown, floorLock_purchased)
 		seizure = "BailiffSeizure", -- приставы забрали предмет за долг; поле — id, значение — выручка
+		code = "CodeRedeemed", -- активирован промокод; поле — код
+		mascot = "MascotPurchased", -- маскот куплен; поле — "id_cash" / "id_robux"
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -80,6 +82,7 @@ local Analytics = {
 		TutorialService = { transactionType = "Onboarding", sku = "tutorial" },
 		SocialService = { transactionType = "TimedReward", sku = "group" },
 		BailiffService = { transactionType = "Seizure", sku = "bailiffs" }, -- продажа предмета за долг
+		CodeService = { transactionType = "TimedReward", sku = "code" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },
@@ -97,6 +100,7 @@ local Analytics = {
 		penalty = "ThiefPenalty", -- штраф пойманного вора
 		decor = "Decor", -- декор студии (DecorService), sku — ключ покупки id@этаж
 		skin = "Skin", -- скины сотрудников за $ (SkinService), sku — id скина
+		mascot = "Mascot", -- маскоты за $ (MascotService), sku — id маскота
 		other = "Other",
 	},
 }

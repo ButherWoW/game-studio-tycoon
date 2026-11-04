@@ -10,6 +10,7 @@ local TextChatService = game:GetService("TextChatService")
 local Shared = ReplicatedStorage.Shared
 local Skins = require(Shared.Config.Skins)
 local Posters = require(Shared.Config.Posters)
+local Mascots = require(Shared.Config.Mascots)
 local Texts = require(Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
@@ -65,6 +66,11 @@ local function itemName(kind: any, id: any): string
 	if kind == "skin" then
 		local skin = Skins.get(id)
 		return if skin then ClientState.localText("skin_" .. skin.id, skin.name, skin.nameEn) else "?"
+	elseif kind == "mascot" then
+		local mascot = Mascots.get(id)
+		return if mascot
+			then ClientState.localText("mascot_" .. mascot.id, mascot.name, mascot.nameEn)
+			else "?"
 	end
 	local poster = Posters.get(id)
 	return if poster then ClientState.localText("poster_" .. poster.id, poster.name, poster.nameEn) else "?"

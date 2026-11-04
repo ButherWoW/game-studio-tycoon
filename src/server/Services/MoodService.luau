@@ -155,6 +155,16 @@ local function compute(profile: DataService.Profile, player: Player?): ({ Part }
 	if aftermath > 0 and (profile :: any).staffStrike ~= true then
 		table.insert(parts, { key = "mood_part_aftermath", value = -aftermath })
 	end
+	-- Надетый маскот «настроение» (MascotService, ленивый require)
+	local mascotModule = script.Parent:FindFirstChild("MascotService")
+	if mascotModule and mascotModule:IsA("ModuleScript") then
+		local ok, mascotMood = pcall(function()
+			return (require(mascotModule) :: any).bonusFor(profile, "mood")
+		end)
+		if ok and type(mascotMood) == "number" and mascotMood > 0 then
+			table.insert(parts, { key = "mood_part_mascot", value = math.floor(mascotMood) })
+		end
+	end
 	-- Временные события команды (Config/Mood.newcomer / fired): одинаковые складываются в одну строку
 	local sums: { [string]: number } = {}
 	local order: { string } = {}

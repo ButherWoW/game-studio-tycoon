@@ -1,5 +1,5 @@
 --!strict
--- Подарки (Config/Social.gifts): премиум-скин или премиум-постер за Robux другому игроку на сервере.
+-- Подарки (Config/Social.gifts): премиум-скин, премиум-постер или маскот за Robux за Robux другому игроку на сервере.
 -- 1) Клиент выбирает получателя (GiftSelect) — проверяем и запоминаем «кому» за покупателем,
 --    окно покупки открывает сервер.
 -- 2) Квитанция gift_<itemId> приходит в MonetizationService.ProcessReceipt -> grantProduct:
@@ -16,6 +16,7 @@ local SocialRemotes = require(Shared.SocialRemotes)
 local DataService = require(script.Parent.DataService)
 local SkinService = require(script.Parent.SkinService)
 local PosterService = require(script.Parent.PosterService)
+local MascotService = require(script.Parent.MascotService)
 
 local SELECT_COOLDOWN = 1
 
@@ -34,6 +35,8 @@ end
 local function ownsItem(profile: DataService.Profile, gift: Social.Gift): boolean
 	if gift.kind == "skin" then
 		return SkinService.owns(profile, gift.itemId)
+	elseif gift.kind == "mascot" then
+		return MascotService.owns(profile, gift.itemId)
 	end
 	return PosterService.ownsIn(profile, gift.itemId)
 end
@@ -41,6 +44,8 @@ end
 local function grantItem(player: Player, profile: DataService.Profile, gift: Social.Gift)
 	if gift.kind == "skin" then
 		SkinService.grantSkin(player, profile, gift.itemId)
+	elseif gift.kind == "mascot" then
+		MascotService.grantMascot(player, profile, gift.itemId)
 	else
 		PosterService.grantPoster(player, profile, gift.itemId)
 	end

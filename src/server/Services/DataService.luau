@@ -50,6 +50,10 @@ export type Profile = {
 	skins: { owned: { [string]: boolean }, assigned: { [string]: string } },
 	-- Предложения доната (OfferService): первый вход (таймер стартового набора), куплен ли он, значок
 	offers: { firstJoin: number, starterBought: boolean, starterShown: boolean, starterBadge: boolean },
+	-- Промокоды (CodeService): код -> os.time() активации
+	codes: { [string]: number },
+	-- Маскоты (MascotService): открытые и надетый. Rebirth не сбрасывает
+	mascots: { owned: { [string]: boolean }, equipped: string? },
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
@@ -110,6 +114,8 @@ local function defaultProfile(): Profile
 		decor = { owned = {} },
 		skins = { owned = {}, assigned = {} },
 		offers = { firstJoin = os.time(), starterBought = false, starterShown = false, starterBadge = false },
+		codes = {},
+		mascots = { owned = {}, equipped = nil },
 		processedReceipts = {},
 		receiptLog = {},
 		lastLogout = os.time(),
