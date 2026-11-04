@@ -373,8 +373,8 @@ local function ensureLandscape()
 	end
 end
 
--- Пустая земля вокруг парка и между участками: трава + деревья, кусты и клумбы Астры
--- (отдельные модели из astra-park в ServerStorage). Раскладка случайная, но одна и та же
+-- Пустая земля вокруг парка и между участками: трава + деревья, кусты, клумбы, камни, изгороди,
+-- заборчики и скамейки Астры (отдельные модели из astra-park и astra-landscape в ServerStorage). Раскладка случайная, но одна и та же
 -- на каждом сервере (свой seed); обходим парк, участки с запасом под кнопки и тропинки
 local OUTER_NAME = "OuterPark"
 local OUTER_GROUND_COLOR = Color3.fromRGB(78, 145, 60)
@@ -392,6 +392,13 @@ local OUTER_PROPS = {
 	{ name = "TreeBirch", weight = 3, scale = { 0.85, 1.2 } },
 	{ name = "Bush", weight = 4, scale = { 0.8, 1.4 } },
 	{ name = "Flowerbed", weight = 1, scale = { 1, 1 } },
+	-- Набор Астры для разнообразия (assets/models/astra-landscape)
+	{ name = "RockSmall", weight = 2, scale = { 0.8, 1.3 } },
+	{ name = "RockMedium", weight = 1.5, scale = { 0.8, 1.2 } },
+	{ name = "RockLarge", weight = 0.7, scale = { 0.9, 1.1 } },
+	{ name = "Hedge", weight = 1.5, scale = { 1, 1 } },
+	{ name = "FenceSection", weight = 0.8, scale = { 1, 1 } },
+	{ name = "StreetBench", weight = 0.8, scale = { 1, 1 } },
 }
 local OUTER_FILL = 0.55 -- доля клеток с предметом
 
