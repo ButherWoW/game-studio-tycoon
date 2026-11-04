@@ -13,7 +13,7 @@ export type RewardStore = {
 	researchPoints: number, -- TODO #8
 	incomeBonus: number, -- TODO #9: доход × (1 + incomeBonus) в DevelopmentService
 	badges: { [string]: boolean }, -- TODO #9: BadgeService
-	employees: { [string]: boolean }, -- TODO #7
+	employees: { [string]: boolean }, -- легендарные из квестов: StaffService даёт нанять бесплатно
 	trophies: { [string]: number }, -- TODO #10: декор на участке
 	coffeeUntil: number, -- os.time(), TODO #10: ×2 скорость разработки до этого времени
 }
@@ -80,6 +80,11 @@ function RewardService.grant(player: Player, reward: Rewards.Reward)
 	end
 	if reward.employee then
 		store.employees[reward.employee] = true
+		-- Легендарный сотрудник открыт: окно «Команда» покажет «Нанять бесплатно»
+		local staff = script.Parent:FindFirstChild("StaffService")
+		if staff and staff:IsA("ModuleScript") then
+			task.defer((require(staff) :: any).onRewardsChanged, player)
+		end
 	end
 	if reward.trophy then
 		store.trophies[reward.trophy] = (store.trophies[reward.trophy] or 0) + 1

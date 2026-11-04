@@ -17,6 +17,7 @@ local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
 local StartRemotes = require(ReplicatedStorage.Shared.StartRemotes)
+local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local DataService = require(script.Parent.DataService)
 
 local BUTTON_SIZE = Vector3.new(5, 0.4, 5)
@@ -146,9 +147,10 @@ local function normalizeStage(profile: DataService.Profile): boolean
 	return level ~= old
 end
 
--- Начинка прошлых этапов (гаражные стеллажи, офисные стены) после переезда не нужна
+-- Начинка прошлых этапов (гаражные стеллажи, офисные стены) после переезда не нужна,
+-- интерьер следующих этапов появляется только после переезда (Upgrade.stage)
 local function isVisible(upgrade: Upgrades.Upgrade, profile: DataService.Profile): boolean
-	return upgrade.shellStage == nil or upgrade.shellStage >= profile.studioLevel
+	return StudioLayout.isVisible(upgrade, profile.studioLevel)
 end
 
 -- Поставить всё купленное и модель текущего этапа
@@ -208,19 +210,28 @@ local function interiorComplete(profile: DataService.Profile): boolean
 	return true
 end
 
--- За каждым купленным столом сидит сотрудник
+-- За каждым купленным столом текущего этапа сидит сотрудник. Рассадку (staff: сотрудник -> стол,
+-- "" — ждёт стол) ведёт StaffService; спрятанные столы прошлых этапов не считаются
 local function staffFull(profile: DataService.Profile): boolean
-	local desks = 0
-	for _, upgrade in Upgrades do
-		if upgrade.desk and profile.upgrades[upgrade.id] then
-			desks += 1
+	local desks = StudioLayout.visibleDesks(profile.upgrades, profile.studioLevel)
+	if #desks == 0 then
+		return false
+	end
+	local staff = (profile :: any).staff
+	local seated: { [string]: boolean } = {}
+	if type(staff) == "table" then
+		for _, deskId in staff do
+			if type(deskId) == "string" then
+				seated[deskId] = true
+			end
 		end
 	end
-	local hired = 0
-	for _ in ((profile :: any).staff or {}) :: { [string]: string } do
-		hired += 1
+	for _, desk in desks do
+		if not seated[desk.id] then
+			return false
+		end
 	end
-	return desks > 0 and hired >= desks
+	return true
 end
 
 local function readyToMove(profile: DataService.Profile): boolean
@@ -406,14 +417,16 @@ tryBuy = function(player: Player, upgradeId: string)
 			if upgrade.requires and not profile.upgrades[upgrade.requires] then
 				return
 			end
+			-- Интерьер другого этапа (BuyUpgrade может прийти с клиента в обход кнопок)
+			if not isVisible(upgrade, profile) then
+				return
+			end
 			if upgrade.move and not readyToMove(profile) then
 				return
 			end
 			if DataService.trySpend(player, upgrade.cost) then
 				profile.upgrades[upgrade.id] = true
-				if isVisible(upgrade, profile) then
-					placeUpgrade(plot, upgrade)
-				end
+				placeUpgrade(plot, upgrade)
 				if normalizeStage(profile) then
 					PlotService.rebuild(player)
 				end
