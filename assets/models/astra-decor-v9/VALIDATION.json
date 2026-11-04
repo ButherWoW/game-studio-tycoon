@@ -1,0 +1,204 @@
+{
+  "BeanBags": {
+    "parts": 15,
+    "limit": 60,
+    "size_W_D_H": [
+      7.8,
+      2.65,
+      2.41
+    ],
+    "bounds_min": [
+      -3.9,
+      0.0,
+      -1.325
+    ],
+    "bounds_max": [
+      3.9,
+      2.41,
+      1.325
+    ],
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "pivot_rule": "center_base",
+    "lights": 0,
+    "light_shadows": false,
+    "classes": [
+      "Model",
+      "Part"
+    ],
+    "binary_verified": true,
+    "checks": "PASS"
+  },
+  "Bookshelf": {
+    "parts": 57,
+    "limit": 80,
+    "size_W_D_H": [
+      5.8,
+      1.44,
+      5.0
+    ],
+    "bounds_min": [
+      -2.9,
+      0.0,
+      -0.72
+    ],
+    "bounds_max": [
+      2.9,
+      5.0,
+      0.72
+    ],
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "pivot_rule": "center_base",
+    "lights": 0,
+    "light_shadows": false,
+    "classes": [
+      "Model",
+      "Part"
+    ],
+    "binary_verified": true,
+    "checks": "PASS"
+  },
+  "MiniFridge": {
+    "parts": 42,
+    "limit": 60,
+    "size_W_D_H": [
+      2.4,
+      2.46,
+      4.0
+    ],
+    "bounds_min": [
+      -1.2000000000000002,
+      0.0,
+      -1.23
+    ],
+    "bounds_max": [
+      1.2000000000000002,
+      4.0,
+      1.23
+    ],
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "pivot_rule": "center_base",
+    "lights": 1,
+    "light_shadows": false,
+    "classes": [
+      "Model",
+      "Part",
+      "PointLight"
+    ],
+    "binary_verified": true,
+    "checks": "PASS"
+  },
+  "NeonSign": {
+    "parts": 18,
+    "limit": 40,
+    "size_W_D_H": [
+      5.7,
+      0.26,
+      2.3
+    ],
+    "bounds_min": [
+      -2.85,
+      -1.15,
+      -0.08
+    ],
+    "bounds_max": [
+      2.85,
+      1.15,
+      0.18
+    ],
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "pivot_rule": "panel_center",
+    "lights": 1,
+    "light_shadows": false,
+    "classes": [
+      "Model",
+      "Part",
+      "PointLight"
+    ],
+    "binary_verified": true,
+    "checks": "PASS"
+  },
+  "Aquarium": {
+    "parts": 45,
+    "limit": 80,
+    "size_W_D_H": [
+      5.9,
+      1.9825,
+      4.96
+    ],
+    "bounds_min": [
+      -2.95,
+      0.0,
+      -0.99125
+    ],
+    "bounds_max": [
+      2.95,
+      4.96,
+      0.99125
+    ],
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "pivot_rule": "center_base",
+    "lights": 1,
+    "light_shadows": false,
+    "classes": [
+      "Model",
+      "Part",
+      "PointLight"
+    ],
+    "binary_verified": true,
+    "checks": "PASS"
+  },
+  "ArcadeMachine": {
+    "parts": 34,
+    "limit": 80,
+    "size_W_D_H": [
+      2.86,
+      2.5,
+      6.0
+    ],
+    "bounds_min": [
+      -1.4300000000000002,
+      0.0,
+      -1.25
+    ],
+    "bounds_max": [
+      1.4300000000000002,
+      6.0,
+      1.25
+    ],
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "pivot_rule": "center_base",
+    "lights": 1,
+    "light_shadows": false,
+    "classes": [
+      "Model",
+      "Part",
+      "PointLight"
+    ],
+    "binary_verified": true,
+    "checks": "PASS"
+  }
+}

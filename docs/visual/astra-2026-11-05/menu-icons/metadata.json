@@ -1,0 +1,26 @@
+{
+  "tool": "built-in image_gen",
+  "transparent_background": true,
+  "final_size": [
+    256,
+    256
+  ],
+  "resize": "sips -z 256 256",
+  "assets": [
+    {
+      "file": "menu_achievements.png",
+      "prompt": "Use case: stylized-concept. Asset type: square Roblox game menu icon, 256x256 delivery. A single large golden achievement trophy with two handles, blue pedestal and a simple gold star embossed on its bowl. Match a polished chunky cartoon sticker game-menu icon: thick smooth dark navy outline #1E1E2E around all main shapes, rounded beveled edges, simple bold silhouette, bright blue #3D7BFF and warm gold #FFC93C, restrained lighter edge highlights. Centered front three-quarter view occupying 86% of canvas, generous safe transparent margin. Genuine transparent background, isolated object, no ground shadow. Legible at tiny menu sizes. No lettering, numbers, logos, brands, watermark, badges or surrounding objects.",
+      "source": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-04f2376a-7041-40ac-afc0-24bbe2876a33.png"
+    },
+    {
+      "file": "menu_studio.png",
+      "prompt": "Use case: stylized-concept. Asset type: square Roblox game menu icon, 256x256 delivery. A single compact cheerful game-development studio house, chunky blue pitched roof and blue walls, one gold yellow door, and one large clearly recognizable computer monitor mounted prominently on the front facade, monitor has plain blue screen and a short gold stand. The house-plus-monitor communicates MY STUDIO immediately. Match a polished chunky cartoon sticker game-menu icon: thick smooth dark navy outline #1E1E2E around all main shapes, rounded beveled edges, simple bold silhouette, bright blue #3D7BFF and warm gold #FFC93C, restrained lighter edge highlights. Centered near frontal slight three-quarter view occupying 86% of square canvas with safe transparent margin. Genuine transparent background, isolated object, no ground shadow. Legible at tiny menu sizes. No lettering, numbers, logos, brands, watermark, extra objects, scenery or background.",
+      "source": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-c16396e8-c31d-4c03-822c-c8e0e210eae8.png"
+    },
+    {
+      "file": "home.png",
+      "prompt": "Use case: stylized-concept. Asset type: square Roblox game HOME navigation icon, 256x256 delivery. A single very simple compact house, blue pitched roof, blue body, one big golden yellow centered doorway, two small simple golden yellow square windows. No monitor or sign. Match a polished chunky cartoon sticker game-menu icon: thick smooth dark navy outline #1E1E2E around all main shapes, rounded beveled edges, simple bold instantly recognizable home silhouette, bright blue #3D7BFF and warm gold #FFC93C, restrained lighter edge highlights. Centered frontal view occupying 84% of square canvas with safe transparent margin. Genuine transparent background, isolated house, no ground shadow. Legible at tiny menu sizes. No lettering, numbers, logos, brands, watermark, scenery, extra objects or background.",
+      "source": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-bee7ff3c-dc1f-4e38-b4ee-f91e60a1c5a8.png"
+    }
+  ]
+}
