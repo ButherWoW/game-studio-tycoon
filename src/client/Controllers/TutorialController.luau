@@ -305,6 +305,13 @@ local function run()
 	end)
 	local finalAt: number? = nil
 	local shownStep = 0
+	-- Сменили язык: подсказка перерисуется на следующем шаге цикла, кнопка — сразу
+	local langConn = ClientState.langChanged:Connect(function()
+		shownStep = 0
+		hint.Font = Ui.titleFontFor(ClientState.lang)
+		action.Text = ClientState.t(if finalAt then "tutorial_ok" else "tutorial_skip")
+	end)
+	hint.Font = Ui.titleFontFor(ClientState.lang)
 
 	task.spawn(function()
 		while not finished and player:GetAttribute("TutorialActive") == true do
@@ -317,7 +324,8 @@ local function run()
 					price = Texts.money(StartPark.garagePrice),
 				})
 				if step == STEP_DONE then
-					finalAt = now
+					-- После смены языка шаг показывается заново: таймер финала не сбрасываем
+					finalAt = finalAt or now
 					action.Text = ClientState.t("tutorial_ok")
 					action.BackgroundColor3 = Ui.colors.good
 				end
@@ -389,6 +397,7 @@ local function run()
 			task.wait(if target2d then 0 else Tutorial.checkInterval)
 		end
 		releasedConn:Disconnect()
+		langConn:Disconnect()
 		highlight:Destroy()
 		billboard:Destroy()
 		gui:Destroy()

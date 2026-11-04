@@ -375,6 +375,13 @@ function HitController.start()
 			refreshWindow()
 		end
 	end)
+	-- Заголовок, правила и кнопки строятся один раз: при смене языка собираем окно заново
+	ClientState.langChanged:Connect(function()
+		if window then
+			closeWindow()
+			openWindow()
+		end
+	end)
 	HitRemotes.RequestHitState:FireServer()
 end
 

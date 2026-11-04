@@ -871,9 +871,23 @@ local function onPreviewRequest(player: Player, request: any)
 	}
 	local score =
 		Formulas.review(genreId, topicId, points, NO_NOISE, scoreBonus(player, profile, genreId, topicId))
+	-- Тренд, перк «Тренд-хантер» и праздник — как в release, чтобы прогноз совпадал с оценкой
 	local TrendService = optional("TrendService")
 	if TrendService then
-		score += TrendService.getBonus(genreId, topicId)
+		local okTrend, trendValue = pcall(TrendService.getBonus, genreId, topicId)
+		local trend = if okTrend and type(trendValue) == "number" then trendValue else 0
+		score += trend
+		if trend > 0 then
+			score += tonumber(perks(player).trendBonus) or 0
+		end
+		score = math.floor(score + 0.5)
+	end
+	local HolidayService = optional("HolidayService")
+	if HolidayService then
+		local okHoliday, bonus = pcall(HolidayService.reviewBonus, genreId, topicId)
+		if okHoliday and type(bonus) == "number" then
+			score += bonus
+		end
 	end
 	score = math.clamp(score, 1, 10)
 	PaidRemotes.ReviewPreview:FireClient(player, {

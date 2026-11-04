@@ -256,21 +256,43 @@ function StudioCamera.start()
 	end)
 	menuButton = button
 
-	-- Маленький тумблер справа от 🎥: авто-вид при посадке за ПК вкл/выкл.
-	-- Кнопка 🎥 с UIPadding (8 px по бокам), поэтому 8 + 6 — зазор 6 px от её края
-	local toggle = Ui.button(button, "", Ui.colors.good, function()
+	-- Маленький тумблер авто-вида при посадке за ПК (вкл/выкл)
+	local function toggleAuto()
 		local enabled = not StudioCamera.autoEnabled()
 		player:SetAttribute(AUTO_ATTRIBUTE, enabled)
 		showHint(button, ClientState.t(if enabled then "camera_auto_on" else "camera_auto_off"))
-	end)
-	toggle.Name = "AutoToggle"
-	toggle.AnchorPoint = Vector2.new(0, 0.5)
-	toggle.Position = UDim2.new(1, 8 + 6, 0.5, 0)
-	toggle.Size = UDim2.fromOffset(28, 28)
-	local togglePadding = toggle:FindFirstChildOfClass("UIPadding")
-	if togglePadding then
-		togglePadding:Destroy()
 	end
+	local toggle: TextButton
+	if Ui.touch then
+		-- Тач: меню — сетка столбцами, справа от 🎥 соседний столбец. Тумблер — значок
+		-- в правом верхнем углу самой кнопки (внутри её клетки), без своей тач-подушки:
+		-- она закрывала соседние кнопки меню. Лежит выше подушки 🎥 по ZIndex, поэтому
+		-- нажатие в угол ловит тумблер, остальная кнопка — камера.
+		-- Кнопка 🎥 с UIPadding (8 px по бокам, 6 сверху), отсюда смещение (8, -6)
+		toggle = Instance.new("TextButton")
+		toggle.TextColor3 = Ui.colors.text
+		toggle.Font = Ui.bodyFont
+		toggle.TextScaled = true
+		toggle.AutoButtonColor = true
+		toggle.ZIndex = button.ZIndex + 1
+		toggle.AnchorPoint = Vector2.new(1, 0)
+		toggle.Position = UDim2.new(1, 8, 0, -6)
+		toggle.Size = UDim2.fromOffset(22, 22)
+		Ui.corner(toggle, 6)
+		toggle.Activated:Connect(toggleAuto)
+		toggle.Parent = button
+	else
+		-- ПК: справа от 🎥. Кнопка с UIPadding (8 px по бокам), поэтому 8 + 6 — зазор 6 px от её края
+		toggle = Ui.button(button, "", Ui.colors.good, toggleAuto)
+		toggle.AnchorPoint = Vector2.new(0, 0.5)
+		toggle.Position = UDim2.new(1, 8 + 6, 0.5, 0)
+		toggle.Size = UDim2.fromOffset(28, 28)
+		local togglePadding = toggle:FindFirstChildOfClass("UIPadding")
+		if togglePadding then
+			togglePadding:Destroy()
+		end
+	end
+	toggle.Name = "AutoToggle"
 
 	refreshButtons = function()
 		local auto = StudioCamera.autoEnabled()

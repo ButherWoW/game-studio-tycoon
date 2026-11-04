@@ -178,36 +178,141 @@ function Ui.button(parent: Instance, text: string, color: Color3, onClick: () ->
 end
 
 -- На тач-экране окна уменьшаются UIScale, и кнопка 40 px становится 25 px. Прозрачная
--- «подушка» поверх кнопки растягивает зону нажатия до MIN_TOUCH px по каждой оси (по центру),
+-- «подушка» поверх кнопки растягивает зону нажатия до MIN_TOUCH px по каждой оси,
 -- сам вид кнопки не меняется. Нажатие ловит подушка и вызывает тот же onClick.
+-- Подушка не залезает на соседние кнопки: в плотных рядах (фокус −/+, сетка жанров,
+-- перки команды) она растёт в сторону соседа не больше чем на половину зазора до него,
+-- иначе соседняя подушка перехватывала нажатия (поле ввода тоже считается соседом).
+type PadFit = () -> ()
+local padFits: { [TextButton]: PadFit } = {}
+local refitScheduled = false
+
+-- Пересчитать все подушки за один кадр: кнопки окна создаются пачкой, и подушка,
+-- посчитанная раньше соседа, иначе о нём не узнала бы
+local function scheduleRefit()
+	if refitScheduled then
+		return
+	end
+	refitScheduled = true
+	task.defer(function()
+		refitScheduled = false
+		for pad, fit in padFits do
+			if pad.Parent then
+				fit()
+			else
+				padFits[pad] = nil
+			end
+		end
+	end)
+end
+
+-- Где искать соседей: ближайший ScrollingFrame (внутри него всё прокручивается вместе)
+-- или весь ScreenGui
+local function padScope(b: GuiButton): Instance?
+	local node = b.Parent
+	while node do
+		if node:IsA("ScrollingFrame") or node:IsA("LayerCollector") then
+			return node
+		end
+		node = node.Parent
+	end
+	return nil
+end
+
 function Ui.touchPad(b: GuiButton, onClick: () -> (), pressScale: UIScale?)
 	local pad = Instance.new("TextButton")
 	pad.Name = "TouchPad"
 	pad.Text = ""
 	pad.BackgroundTransparency = 1
 	pad.AutoButtonColor = false
-	pad.AnchorPoint = Vector2.new(0.5, 0.5)
-	pad.Position = UDim2.fromScale(0.5, 0.5)
+	pad.Position = UDim2.fromScale(0, 0)
 	pad.Size = UDim2.fromScale(1, 1)
 	pad.ZIndex = b.ZIndex
-	local sx, sy = 1, 1
-	-- Подушка лежит внутри UIPadding кнопки, поэтому её «1» — область без отступов:
-	-- меряем её через собственный AbsoluteSize и подбираем масштаб под нужный размер
+	-- Подушка лежит внутри UIPadding кнопки, поэтому её «1» — область без отступов.
+	-- Эту область меряем пустой рамкой во всю неё (сама подушка меняет размер — по ней нельзя)
+	local ref = Instance.new("Frame")
+	ref.Name = "TouchPadRef"
+	ref.BackgroundTransparency = 1
+	ref.Size = UDim2.fromScale(1, 1)
+	ref.Parent = b
+	-- Текущий прямоугольник подушки в долях внутренней области кнопки
+	local px, py, sx, sy = 0, 0, 1, 1
 	local function fit()
-		local own, button = pad.AbsoluteSize, b.AbsoluteSize
-		if own.X <= 0 or own.Y <= 0 or button.X <= 0 or button.Y <= 0 then
+		local innerSize, button = ref.AbsoluteSize, b.AbsoluteSize
+		if innerSize.X <= 0 or innerSize.Y <= 0 or button.X <= 0 or button.Y <= 0 then
 			return
 		end
-		local inner = Vector2.new(own.X / sx, own.Y / sy)
-		local nx = math.max(button.X, Ui.MIN_TOUCH) / inner.X
-		local ny = math.max(button.Y, Ui.MIN_TOUCH) / inner.Y
-		if math.abs(nx - sx) > 0.01 or math.abs(ny - sy) > 0.01 then
-			sx, sy = nx, ny
+		local innerPos = ref.AbsolutePosition
+		local x0, y0 = b.AbsolutePosition.X, b.AbsolutePosition.Y
+		local x1, y1 = x0 + button.X, y0 + button.Y
+		local growX = math.max(Ui.MIN_TOUCH - button.X, 0) / 2
+		local growY = math.max(Ui.MIN_TOUCH - button.Y, 0) / 2
+		local left, right, up, down = growX, growX, growY, growY
+		local scope = padScope(b)
+		if scope and (growX > 0 or growY > 0) then
+			for _, other in scope:GetDescendants() do
+				if
+					other == b
+					or not (other:IsA("GuiButton") or other:IsA("TextBox"))
+					or other.Name == "TouchPad"
+					or not other.Visible
+					or other:IsDescendantOf(b)
+					or b:IsDescendantOf(other)
+				then
+					continue
+				end
+				local o = other :: GuiObject
+				local oPos, oSize = o.AbsolutePosition, o.AbsoluteSize
+				if oSize.X <= 0 or oSize.Y <= 0 then
+					continue
+				end
+				local ox0, oy0 = oPos.X, oPos.Y
+				local ox1, oy1 = ox0 + oSize.X, oy0 + oSize.Y
+				-- Сосед слева/справа: пересекается по высоте с выросшей подушкой
+				if oy0 < y1 + down and oy1 > y0 - up then
+					if ox0 >= x1 then
+						right = math.min(right, (ox0 - x1) / 2)
+					elseif ox1 <= x0 then
+						left = math.min(left, (x0 - ox1) / 2)
+					end
+				end
+				-- Сосед сверху/снизу: пересекается по ширине
+				if ox0 < x1 + right and ox1 > x0 - left then
+					if oy0 >= y1 then
+						down = math.min(down, (oy0 - y1) / 2)
+					elseif oy1 <= y0 then
+						up = math.min(up, (y0 - oy1) / 2)
+					end
+				end
+			end
+		end
+		local nx = (x0 - left - innerPos.X) / innerSize.X
+		local ny = (y0 - up - innerPos.Y) / innerSize.Y
+		local nsx = (button.X + left + right) / innerSize.X
+		local nsy = (button.Y + up + down) / innerSize.Y
+		if
+			math.abs(nx - px) > 0.01
+			or math.abs(ny - py) > 0.01
+			or math.abs(nsx - sx) > 0.01
+			or math.abs(nsy - sy) > 0.01
+		then
+			px, py, sx, sy = nx, ny, nsx, nsy
+			pad.Position = UDim2.fromScale(px, py)
 			pad.Size = UDim2.fromScale(sx, sy)
 		end
 	end
-	pad:GetPropertyChangedSignal("AbsoluteSize"):Connect(fit)
-	b:GetPropertyChangedSignal("AbsoluteSize"):Connect(fit)
+	padFits[pad] = fit
+	pad.Destroying:Connect(function()
+		padFits[pad] = nil
+	end)
+	-- Размер (UIScale окна) или место (раскладка, вне прокрутки) кнопки сменились — пересчитать все
+	b:GetPropertyChangedSignal("AbsoluteSize"):Connect(scheduleRefit)
+	local function watchPosition()
+		-- В прокрутке позиция меняется каждый кадр, а соседи двигаются вместе — не следим
+		if not b:FindFirstAncestorWhichIsA("ScrollingFrame") then
+			b:GetPropertyChangedSignal("AbsolutePosition"):Connect(scheduleRefit)
+		end
+	end
 	if pressScale then
 		pad.MouseButton1Down:Connect(function()
 			pressScale.Scale = 0.95
@@ -221,6 +326,8 @@ function Ui.touchPad(b: GuiButton, onClick: () -> (), pressScale: UIScale?)
 	end
 	pad.Activated:Connect(onClick)
 	pad.Parent = b
+	task.defer(watchPosition)
+	scheduleRefit()
 end
 
 -- Боковое меню слева посередине (слева сверху чат, справа сверху список игроков).
