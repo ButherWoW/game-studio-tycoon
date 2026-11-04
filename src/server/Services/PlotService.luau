@@ -15,6 +15,8 @@ local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
+local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
+local StartRemotes = require(ReplicatedStorage.Shared.StartRemotes)
 local DataService = require(script.Parent.DataService)
 
 local BUTTON_SIZE = Vector3.new(5, 0.4, 5)
@@ -27,6 +29,8 @@ local COLOR_EXPENSIVE = Color3.fromRGB(70, 72, 90)
 -- Кнопка переезда крупнее и золотая, чтобы не путать с интерьером
 local MOVE_BUTTON_SIZE = Vector3.new(8, 0.5, 8)
 local COLOR_MOVE = Color3.fromRGB(255, 201, 60)
+-- Табличка «Гараж продаётся» — кнопка Buy_garage (не апгрейд из Config, а покупка самого гаража)
+local GARAGE_ID = "garage"
 
 local PlotService = {}
 local owners: { [BasePart]: Player } = {}
@@ -83,13 +87,36 @@ local function placeUpgrade(plot: BasePart, upgrade: Upgrades.Upgrade)
 	end
 end
 
--- Игрок сидит за своим компьютером (Seat «PcSeat» на своём участке)
+-- Есть ли у игрока гараж (начало «Инди в парке»). Флаг (profile :: any).ownsGarage ставится
+-- один раз при первом обращении: старые сохранения (стол или выпущенные игры) — уже владельцы.
+-- Rebirth флаг не сбрасывает: студия возвращается в гараж, а не в парк.
+local function profileOwnsGarage(profile: DataService.Profile): boolean
+	local p = profile :: any
+	if p.ownsGarage == nil then
+		p.ownsGarage = profile.upgrades.desk1 == true or profile.gamesReleased > 0
+	end
+	return p.ownsGarage == true
+end
+
+function PlotService.ownsGarage(player: Player): boolean
+	local profile = DataService.get(player)
+	return profile ~= nil and profileOwnsGarage(profile)
+end
+
+-- Игрок сидит за своим компьютером (Seat «PcSeat» на своём участке).
+-- Пока гаража нет, компьютер — любой общий ноутбук в парке (PcSeat с атрибутом Public).
 function PlotService.isAtPc(player: Player): boolean
-	local plot = getPlot(player)
 	local character = player.Character
 	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
 	local seat = humanoid and humanoid.SeatPart
-	return plot ~= nil and seat ~= nil and seat.Name == "PcSeat" and seat:IsDescendantOf(plot)
+	if not seat or seat.Name ~= "PcSeat" then
+		return false
+	end
+	if seat:GetAttribute("Public") == true then
+		return not PlotService.ownsGarage(player)
+	end
+	local plot = getPlot(player)
+	return plot ~= nil and seat:IsDescendantOf(plot)
 end
 
 -- Можно ли переехать на этап stage (без проверки денег и того, что это следующий этап)
@@ -124,6 +151,10 @@ end
 
 -- Поставить всё купленное и модель текущего этапа
 local function buildPlot(plot: BasePart, profile: DataService.Profile)
+	-- Участок без гаража пустой: только табличка «Гараж продаётся» (refreshButtons)
+	if not profileOwnsGarage(profile) then
+		return
+	end
 	for _, upgrade in Upgrades do
 		if profile.upgrades[upgrade.id] and isVisible(upgrade, profile) then
 			placeUpgrade(plot, upgrade)
@@ -263,7 +294,10 @@ local function createButton(
 	label.TextStrokeTransparency = 0.4
 	label.Font = Enum.Font.FredokaOne
 	label.TextScaled = true
-	label.Text = (if upgrade.move then "🏢 " else "") .. upgrade.name .. "\n" .. formatPrice(upgrade.cost)
+	label.Text = (if upgrade.move and upgrade.id ~= GARAGE_ID then "🏢 " else "")
+		.. upgrade.name
+		.. "\n"
+		.. formatPrice(upgrade.cost)
 	label.Parent = billboard
 
 	button.Touched:Connect(function(hit: BasePart)
@@ -297,7 +331,18 @@ refreshButtons = function(player: Player)
 	local newFolder = Instance.new("Folder")
 	newFolder.Name = "Buttons"
 
-	local list = availableUpgrades(profile)
+	-- Без гаража на участке одна кнопка — покупка гаража: крупная, золотая, у самого входа
+	local list = if profileOwnsGarage(profile)
+		then availableUpgrades(profile)
+		else {
+			{
+				id = GARAGE_ID,
+				name = "🏠 Гараж продаётся",
+				cost = StartPark.garagePrice,
+				model = "",
+				move = true,
+			} :: Upgrades.Upgrade,
+		}
 	local playerButtons = {}
 	for i, upgrade in list do
 		local button = createButton(player, plot, upgrade, i, #list)
@@ -308,7 +353,33 @@ refreshButtons = function(player: Player)
 	buttons[player] = playerButtons
 end
 
+-- Купить гараж: помещение этапа 1 и бесплатный стол сразу
+local function buyGarage(player: Player)
+	local profile = DataService.get(player)
+	if not profile or not getPlot(player) or profileOwnsGarage(profile) then
+		return
+	end
+	if not DataService.trySpend(player, StartPark.garagePrice) then
+		return
+	end
+	(profile :: any).ownsGarage = true
+	profile.upgrades.desk1 = true
+	player:SetAttribute("OwnsGarage", true)
+	PlotService.rebuild(player)
+	StartRemotes.GarageBought:FireClient(player)
+	-- Крупная покупка — сохраняем сразу, не ждём автосейва
+	task.spawn(DataService.save, player)
+end
+
 tryBuy = function(player: Player, upgradeId: string)
+	if upgradeId == GARAGE_ID then
+		buyGarage(player)
+		return
+	end
+	-- Без гаража апгрейдов нет (кнопок тоже, но BuyUpgrade может прийти с клиента)
+	if not PlotService.ownsGarage(player) then
+		return
+	end
 	-- Кнопка переезда на этаж или в небоскрёб
 	if upgradeId:sub(1, 6) == "stage_" then
 		onMoveStudio(player)
@@ -369,6 +440,7 @@ local function assignPlot(player: Player)
 					return
 				end
 				normalizeStage(profile)
+				player:SetAttribute("OwnsGarage", profileOwnsGarage(profile))
 				buildPlot(plot, profile)
 				DataService.replicate(player)
 				refreshButtons(player)

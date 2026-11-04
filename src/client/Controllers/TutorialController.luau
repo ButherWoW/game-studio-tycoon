@@ -9,6 +9,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local TutorialRemotes = require(ReplicatedStorage.Shared.TutorialRemotes)
 local Tutorial = require(ReplicatedStorage.Shared.Config.Tutorial)
+local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
@@ -17,6 +18,8 @@ local player = Players.LocalPlayer
 
 -- Порядок шагов; номер шага — индекс в этом списке
 local STEP_DESK, STEP_OPEN, STEP_PICK, STEP_START, STEP_WAIT, STEP_RELEASE, STEP_DONE = 1, 2, 3, 4, 5, 6, 7
+-- «Инди в парке»: шаги до покупки гаража
+local STEP_LAPTOP, STEP_FIRST_GAME, STEP_SAVE, STEP_BUY_GARAGE = 8, 9, 10, 11
 local STEP_TEXT = {
 	"tutorial_desk",
 	"tutorial_open",
@@ -25,6 +28,10 @@ local STEP_TEXT = {
 	"tutorial_wait",
 	"tutorial_release",
 	"tutorial_done",
+	"tutorial_laptop",
+	"tutorial_first_game",
+	"tutorial_save",
+	"tutorial_buy_garage",
 }
 local ARROW = "⬇"
 local ARROW_SIZE = 48
@@ -71,6 +78,38 @@ local function pcSeat(): BasePart?
 	return if seat and seat:IsA("BasePart") then seat else nil
 end
 
+-- Ближайший свободный ноутбук в парке (Seat «PcSeat» с атрибутом Public)
+local function laptopSeat(): BasePart?
+	local park = workspace:FindFirstChild("StartPark")
+	local character = player.Character
+	local root = character and character:FindFirstChild("HumanoidRootPart")
+	if not park or not root or not root:IsA("BasePart") then
+		return nil
+	end
+	local best: BasePart? = nil
+	local bestDistance = math.huge
+	for _, d in park:GetDescendants() do
+		if d:IsA("Seat") and d.Name == "PcSeat" and d:GetAttribute("Public") == true and not d.Occupant then
+			local distance = (d.Position - (root :: BasePart).Position).Magnitude
+			if distance < bestDistance then
+				best, bestDistance = d, distance
+			end
+		end
+	end
+	return best
+end
+
+local function parkPart(modelName: string, partName: string): BasePart?
+	local park = workspace:FindFirstChild("StartPark")
+	local model = park and park:FindFirstChild(modelName)
+	local p = model and model:FindFirstChild(partName, true)
+	return if p and p:IsA("BasePart") then p else nil
+end
+
+local function ownsGarage(): boolean
+	return player:GetAttribute("OwnsGarage") == true
+end
+
 local function owns(upgradeId: string): boolean
 	local data = ClientState.data
 	return data ~= nil and data.upgrades ~= nil and data.upgrades[upgradeId] == true
@@ -79,6 +118,20 @@ end
 local function currentStep(playerGui: Instance): number
 	if finalReached then
 		return STEP_DONE
+	end
+	-- До гаража: ноутбук в парке → первая игра → накопить → купить гараж
+	if not ownsGarage() then
+		if playerGui:FindFirstChild("ReleaseWindow") then
+			return STEP_RELEASE
+		end
+		local data = ClientState.data
+		if data and (tonumber(data.gamesReleased) or 0) > 0 then
+			return if (tonumber(data.cash) or 0) >= StartPark.garagePrice then STEP_BUY_GARAGE else STEP_SAVE
+		end
+		if ClientState.developing or ClientState.atPc() then
+			return STEP_FIRST_GAME
+		end
+		return STEP_LAPTOP
 	end
 	if released then
 		if playerGui:FindFirstChild("ReleaseWindow") then
@@ -196,7 +249,10 @@ local function run()
 	end
 
 	local releasedConn = Remotes.GameReleased.OnClientEvent:Connect(function()
-		released = true
+		-- Игры на ноутбуке не завершают туториал: дальше ещё гараж и первая игра в нём
+		if ownsGarage() then
+			released = true
+		end
 	end)
 	local finalAt: number? = nil
 	local shownStep = 0
@@ -207,7 +263,10 @@ local function run()
 			local step = currentStep(playerGui)
 			if step ~= shownStep then
 				shownStep = step
-				hint.Text = ClientState.t(STEP_TEXT[step], { money = Texts.money(Tutorial.reward) })
+				hint.Text = ClientState.t(STEP_TEXT[step], {
+					money = Texts.money(Tutorial.reward),
+					price = Texts.money(StartPark.garagePrice),
+				})
 				if step == STEP_DONE then
 					finalAt = now
 					action.Text = ClientState.t("tutorial_ok")
@@ -217,7 +276,24 @@ local function run()
 
 			local target3d: BasePart? = nil
 			local target2d: GuiButton? = nil
-			if step == STEP_DESK then
+			if step == STEP_LAPTOP then
+				target3d = laptopSeat()
+			elseif step == STEP_FIRST_GAME then
+				local window = playerGui:FindFirstChild("CreateGameWindow")
+				local start = findButton(window, "StartButton")
+				if start and start:GetAttribute("Ready") == true then
+					target2d = start
+				elseif not window and ClientState.atPc() and not ClientState.developing then
+					target2d = findButton(playerGui:FindFirstChild("Hud"), "CreateGameButton")
+				elseif not ClientState.atPc() then
+					-- Встал посреди разработки — вернуть за ноутбук
+					target3d = laptopSeat()
+				end
+			elseif step == STEP_SAVE then
+				target3d = parkPart("JobBoard", "Board")
+			elseif step == STEP_BUY_GARAGE then
+				target3d = plotButton("garage")
+			elseif step == STEP_DESK then
 				target3d = plotButton("desk1")
 			elseif step == STEP_OPEN then
 				-- Сначала сесть за стол: окно «Создать игру» откроется само

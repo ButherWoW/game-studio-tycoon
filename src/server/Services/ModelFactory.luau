@@ -326,6 +326,8 @@ builders.Posters = function(m)
 	text.TextScaled = true
 	text.TextColor3 = rgb(255, 120, 220)
 	text.Text = "GAME STUDIO"
+	-- На участке StartParkService пишет сюда название студии игрока
+	text.Name = "StudioName"
 	text.Parent = gui
 	light(sign, neon, 14, 1.5)
 end
@@ -573,6 +575,109 @@ builders.Skyscraper = function(m)
 	)
 	plant(m, Vector3.new(-26, 0, 22))
 	plant(m, Vector3.new(26, 0, 22))
+end
+
+-- ===== Парк у спавна («Инди в парке», Config/StartPark) =====
+
+-- Надпись на табличке: текст по-русски, клиент (StartParkController) переводит по атрибуту TextKey
+local function signText(p: BasePart, face: Enum.NormalId, key: string, text: string, color: Color3)
+	local gui = Instance.new("SurfaceGui")
+	gui.Face = face
+	gui.LightInfluence = 0
+	gui.Parent = p
+	local label = Instance.new("TextLabel")
+	label.Name = "SignText"
+	label.Size = UDim2.fromScale(1, 1)
+	label.BackgroundTransparency = 1
+	label.Font = Enum.Font.GothamBold
+	label.TextScaled = true
+	label.TextColor3 = color
+	label.Text = text
+	label:SetAttribute("TextKey", key)
+	label.Parent = gui
+end
+
+-- Скамейка с ноутбуком. Сидящий смотрит на −Z модели (так сажает Seat): там столик с ноутбуком.
+-- Seat «PcSeat» с атрибутом Public — общий компьютер, пока у игрока нет гаража (PlotService.isAtPc)
+builders.ParkBench = function(m)
+	local wood, iron = rgb(160, 110, 65), rgb(45, 45, 50)
+	local seat = Instance.new("Seat")
+	seat.Name = "PcSeat"
+	seat.Anchored = true
+	seat.Size = Vector3.new(5, 0.4, 1.8)
+	seat.CFrame = CFrame.new(0, 1.6, 0)
+	seat.Color = wood
+	seat.Material = Enum.Material.WoodPlanks
+	seat.TopSurface = Enum.SurfaceType.Smooth
+	seat:SetAttribute("Public", true)
+	seat.Parent = m
+	-- Спинка сзади (+Z) и чугунные боковины
+	part(
+		m,
+		Vector3.new(5, 1.6, 0.3),
+		Vector3.new(0, 2.8, 0.95),
+		wood,
+		{ material = Enum.Material.WoodPlanks }
+	)
+	for _, x in { -2.3, 2.3 } do
+		part(m, Vector3.new(0.3, 1.4, 1.8), Vector3.new(x, 0.7, 0), iron, { material = Enum.Material.Metal })
+	end
+	-- Столик перед скамейкой и открытый ноутбук экраном к сидящему (+Z)
+	part(m, Vector3.new(3, 0.25, 1.6), Vector3.new(0, 2.4, -2), wood, { material = Enum.Material.WoodPlanks })
+	part(m, Vector3.new(0.4, 2.3, 0.4), Vector3.new(0, 1.15, -2), iron, { material = Enum.Material.Metal })
+	part(m, Vector3.new(1.6, 0.08, 1.1), Vector3.new(0, 2.56, -1.9), rgb(70, 70, 80))
+	local screen = part(m, Vector3.new(1.6, 1, 0.08), Vector3.new(0, 3.05, -2.45), rgb(70, 70, 80))
+	part(m, Vector3.new(1.45, 0.85, 0.02), Vector3.new(0, 3.05, -2.4), rgb(80, 200, 255), {
+		material = Enum.Material.Neon,
+	})
+	screen.CanCollide = false
+	-- Фонарь рядом: парк видно и вечером
+	cylinder(m, 7, 0.3, Vector3.new(3.3, 3.5, 0.5), iron, { material = Enum.Material.Metal })
+	local lamp = part(m, Vector3.new(0.9, 0.9, 0.9), Vector3.new(3.3, 7.3, 0.5), rgb(255, 235, 180), {
+		material = Enum.Material.Neon,
+		shape = Enum.PartType.Ball,
+	})
+	light(lamp, rgb(255, 225, 170), 16, 0.8)
+end
+
+-- Доска заказов: пробковая доска на двух стойках, листки-заказы; лицом к +Z.
+-- Деталь «Board» — для ProximityPrompt (StartParkService)
+builders.JobBoard = function(m)
+	local wood = rgb(120, 85, 50)
+	for _, x in { -3.6, 3.6 } do
+		part(m, Vector3.new(0.5, 7, 0.5), Vector3.new(x, 3.5, 0), wood, { material = Enum.Material.Wood })
+	end
+	local board = part(m, Vector3.new(7, 4, 0.3), Vector3.new(0, 4.5, 0), rgb(190, 140, 90), {
+		material = Enum.Material.Fabric,
+	})
+	board.Name = "Board"
+	local papers = { rgb(255, 255, 240), rgb(255, 240, 140), rgb(170, 230, 255) }
+	for i, x in { -2.2, 0, 2.2 } do
+		part(m, Vector3.new(1.6, 2, 0.05), Vector3.new(x, 4.3, 0.18), papers[i])
+	end
+	local header = part(m, Vector3.new(7.4, 1, 0.3), Vector3.new(0, 7, 0), rgb(61, 123, 255))
+	signText(header, Enum.NormalId.Front, "park_board_sign", "📋 ЗАКАЗЫ", rgb(255, 255, 255))
+end
+
+-- Ломбард: киоск с прилавком и вывеской; лицом к +Z. Деталь «Counter» — для ProximityPrompt
+builders.Pawnshop = function(m)
+	local wall, roof = rgb(230, 210, 170), rgb(200, 70, 60)
+	part(m, Vector3.new(6, 6, 0.4), Vector3.new(0, 3, -2), wall)
+	for _, x in { -2.9, 2.9 } do
+		part(m, Vector3.new(0.4, 6, 4), Vector3.new(x, 3, 0), wall)
+	end
+	part(m, Vector3.new(7, 0.4, 5), Vector3.new(0, 6.2, 0), roof)
+	local counter = part(m, Vector3.new(5.4, 2.6, 1), Vector3.new(0, 1.3, 1.5), rgb(130, 90, 55), {
+		material = Enum.Material.WoodPlanks,
+	})
+	counter.Name = "Counter"
+	-- Картриджи на прилавке
+	for i, x in { -1.5, -0.5, 0.5, 1.5 } do
+		local hue = (i - 1) / 4
+		part(m, Vector3.new(0.7, 0.9, 0.2), Vector3.new(x, 3.05, 1.3), Color3.fromHSV(hue, 0.7, 0.9))
+	end
+	local sign = part(m, Vector3.new(6, 1.2, 0.3), Vector3.new(0, 7.1, 1.6), rgb(40, 40, 50))
+	signText(sign, Enum.NormalId.Front, "park_pawn_sign", "📦 ЛОМБАРД", rgb(255, 201, 60))
 end
 
 -- Собрать модель по имени; nil — для этого имени билдера нет
