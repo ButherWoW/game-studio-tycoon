@@ -2,6 +2,8 @@
 -- Темы игр и их совместимость с жанрами.
 -- 1.2 = отлично, 1.1 = хорошо, 0.8 = так себе, 0.7 = плохо. Не указан жанр -> 1.0.
 -- Список и цены — issue #2.
+-- seasonal = id ивента (Config/Holidays): тема открыта бесплатно только во время ивента
+-- (HolidayService выдаёт и забирает её), не продаётся и не попадает в тренды.
 
 export type Topic = {
 	id: string,
@@ -9,6 +11,7 @@ export type Topic = {
 	nameEn: string,
 	fit: { [string]: number },
 	unlockCost: number,
+	seasonal: string?,
 }
 
 local Topics: { [string]: Topic } = {
@@ -116,6 +119,22 @@ local Topics: { [string]: Topic } = {
 		nameEn = "Ghosts",
 		fit = { horror = 1.2, adventure = 1.1, sports = 0.7, racing = 0.7 },
 		unlockCost = 5_000,
+	},
+	pumpkins = {
+		id = "pumpkins",
+		name = "Тыквы",
+		nameEn = "Pumpkins",
+		fit = { horror = 1.2, casual = 1.1, adventure = 1.1, sports = 0.7, racing = 0.8 },
+		unlockCost = 0,
+		seasonal = "halloween",
+	},
+	newyear = {
+		id = "newyear",
+		name = "Новый год",
+		nameEn = "New Year",
+		fit = { casual = 1.2, adventure = 1.1, simulation = 1.1, horror = 0.7, strategy = 0.8 },
+		unlockCost = 0,
+		seasonal = "newyear",
 	},
 }
 

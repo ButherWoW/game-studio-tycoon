@@ -25,7 +25,13 @@ local function sortedKeys(map: { [string]: any }): { string }
 end
 
 local genreIds = sortedKeys(Genres)
-local topicIds = sortedKeys(Topics)
+-- Сезонные темы (Config/Holidays) в тренд не попадают: большую часть года они закрыты
+local topicIds = {}
+for _, id in sortedKeys(Topics) do
+	if not Topics[id].seasonal then
+		table.insert(topicIds, id)
+	end
+end
 
 local function pickTrend()
 	-- Не повторяем ту же пару два раза подряд

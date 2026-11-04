@@ -23,7 +23,8 @@ local function onUnlock(player: Player, kind: any, id: any)
 	local unlocked: { [string]: boolean }
 	if kind == "genre" and Genres[id] then
 		cost, unlocked = Genres[id].unlockCost, profile.unlockedGenres
-	elseif kind == "topic" and Topics[id] then
+	elseif kind == "topic" and Topics[id] and not Topics[id].seasonal then
+		-- Сезонные темы не продаются: их выдаёт и забирает HolidayService
 		cost, unlocked = Topics[id].unlockCost, profile.unlockedTopics
 	else
 		return
