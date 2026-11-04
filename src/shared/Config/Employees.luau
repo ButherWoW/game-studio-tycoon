@@ -27,6 +27,10 @@ local Employees = {}
 Employees.specBonus = 0.5
 Employees.specThreshold = 0.3
 
+-- Увольнение возвращает долю цены найма (Employees.refundFor). Меньше 1 — цикл
+-- «нанял → уволил» только тратит деньги; легендарным (бесплатный найм) — 0
+Employees.fireRefund = 0.25
+
 -- Цвет футболки NPC по специализации
 Employees.shirtColors = {
 	gameplay = Color3.fromRGB(61, 123, 255),
@@ -202,6 +206,14 @@ end
 
 function Employees.get(id: string): Employee?
 	return byId[id]
+end
+
+-- Сколько вернут за увольнение (сервер начисляет, окно «Команда» показывает)
+function Employees.refundFor(hired: Employee): number
+	if hired.legendary then
+		return 0
+	end
+	return math.floor(hired.cost * math.clamp(Employees.fireRefund, 0, 1))
 end
 
 return Employees

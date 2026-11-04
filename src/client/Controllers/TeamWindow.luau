@@ -1,6 +1,6 @@
 --!strict
 -- Окно «Команда» (3.3 + 3.5 + 3.7): найм, переезд студии, столы по этапам, легендарные,
--- навыки, перки и внешность сотрудников (кнопка ✏️).
+-- навыки, перки и внешность сотрудников (кнопка ✏️), увольнение (два нажатия «Уволить»).
 -- Клиент только показывает и просит; цену, этап, свободный стол и всё остальное проверяет сервер.
 
 local Players = game:GetService("Players")
@@ -26,6 +26,7 @@ local LOOK_FIELDS = { "shirt", "skin", "hat", "item" }
 local SMALL_TEXT = 16
 local ROW_HEIGHT = 96
 local STAGE_PANEL_HEIGHT = 132
+local FIRE_CONFIRM_SECONDS = 5 -- сколько ждём второе нажатие «Уволить»
 
 local TeamWindow = {}
 local gui: ScreenGui? = nil
@@ -37,6 +38,9 @@ local unlocked: { [string]: boolean } = {}
 local serverOffset = 0 -- os.time() сервера − клиента (перезарядка смены перка)
 local expanded: string? = nil -- сотрудник, у которого открыта карточка ✏️
 local scrollPosition = Vector2.zero
+-- Первое нажатие «Уволить»: кого и когда (второе в течение FIRE_CONFIRM_SECONDS увольняет)
+local fireArmed: string? = nil
+local fireArmedAt = 0
 
 local function studioLevel(data: any): number
 	return math.clamp(tonumber(data.studioLevel) or 1, 1, #Stages)
@@ -472,9 +476,16 @@ local function buildRow(
 			StaffRemotes.HireEmployee:FireServer(employee.id)
 		end
 	end)
-	button.AnchorPoint = Vector2.new(1, 0.5)
-	button.Position = UDim2.new(1, if deskId then -60 else -10, 0.5, 0)
-	button.Size = UDim2.new(0.38, -10, 0, 44)
+	if deskId then
+		-- Нанятый: сверху статус, снизу «Уволить»
+		button.AnchorPoint = Vector2.new(1, 0)
+		button.Position = UDim2.new(1, -60, 0, 6)
+		button.Size = UDim2.new(0.38, -10, 0, 40)
+	else
+		button.AnchorPoint = Vector2.new(1, 0.5)
+		button.Position = UDim2.new(1, -10, 0.5, 0)
+		button.Size = UDim2.new(0.38, -10, 0, 44)
+	end
 	if canHire then
 		button.TextColor3 = Color3.fromRGB(40, 30, 0)
 	elseif color == Ui.colors.locked then
@@ -482,6 +493,35 @@ local function buildRow(
 	end
 
 	if deskId then
+		local armed = fireArmed == employee.id and os.clock() - fireArmedAt <= FIRE_CONFIRM_SECONDS
+		local refund = Employees.refundFor(employee)
+		local fireText = if not armed
+			then ClientState.t("team_fire")
+			elseif refund > 0 then ClientState.t("team_fire_confirm", { price = Texts.money(refund) })
+			else ClientState.t("team_fire_confirm_free")
+		local fire = Ui.button(row, fireText, if armed then Ui.colors.bad else Ui.colors.locked, function()
+			local now = os.clock()
+			if fireArmed == employee.id and now - fireArmedAt <= FIRE_CONFIRM_SECONDS then
+				fireArmed = nil
+				StaffRemotes.FireEmployee:FireServer(employee.id)
+				return
+			end
+			-- Первое нажатие: просим подтвердить; через FIRE_CONFIRM_SECONDS кнопка остывает
+			fireArmed = employee.id
+			fireArmedAt = now
+			local stamp = now
+			render()
+			task.delay(FIRE_CONFIRM_SECONDS, function()
+				if fireArmed == employee.id and fireArmedAt == stamp then
+					fireArmed = nil
+					render()
+				end
+			end)
+		end)
+		fire.AnchorPoint = Vector2.new(1, 0)
+		fire.Position = UDim2.new(1, -60, 0, 50)
+		fire.Size = UDim2.new(0.38, -10, 0, 40)
+
 		local edit = Ui.button(
 			row,
 			"✏️",

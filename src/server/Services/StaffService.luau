@@ -13,6 +13,12 @@
 --   reviewBonus(player)              — прибавка к оценке: «Мастер Пиксель» +1 и «Перфекционист»
 --   perkTotals(player)               — остальные эффекты перков (время, баг, стример, тренд)
 --   offlineMultiplier(profile)       — офлайн-доход: «Призрачный кодер» ×2, «Ночная смена»
+--
+-- Увольнение (FireEmployee): сотрудник уходит вместе с навыками и перками, возвращается
+-- Employees.refundFor (доля fireRefund от цены найма; легендарные бесплатные — 0,
+-- нанять снова можно даром).
+-- Подсказка о забастовке: (profile :: any).strikeTipSeen = true, когда игрок её закрыл;
+-- клиенту — атрибут игрока StrikeTipSeen (false — ещё не видел; nil — профиль не загружен).
 
 local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
@@ -36,6 +42,7 @@ local PANTS = Color3.fromRGB(45, 50, 70)
 local ACTION_COOLDOWN = 0.2 -- между запросами навыков/перков/внешности
 local PASS_RECHECK = 4 -- через сколько секунд после покупки геймпасса пересылать команду
 local JOIN_RECHECK = 8 -- геймпассы ShopService грузит асинхронно: перешлём ещё раз после входа
+local PROFILE_WAIT = 30 -- сколько ждать загрузки профиля для атрибута StrikeTipSeen
 
 export type Look = { shirt: number, skin: number, hat: number, item: number }
 export type Info = {
@@ -870,6 +877,46 @@ local function onHire(player: Player, employeeId: any)
 	end
 end
 
+-- Уволить: навыки и перки пропадают, освободившийся стол займёт ждущий (seatAll).
+-- Во время забастовки тоже можно — это способ уменьшить зарплаты
+local function onFire(player: Player, employeeId: any)
+	if type(employeeId) ~= "string" or throttled(player) then
+		return
+	end
+	local employee = Employees.get(employeeId)
+	local profile = DataService.get(player)
+	if not employee or not profile then
+		return
+	end
+	local staff = getStaff(profile)
+	if staff[employee.id] == nil then
+		return
+	end
+	staff[employee.id] = nil
+	-- getInfo чистит staffInfo уволенных: при повторном найме навыки начнутся с нуля
+	getInfo(profile)
+	local refund = Employees.refundFor(employee)
+	if refund > 0 then
+		DataService.addCash(player, refund)
+	end
+	-- Пересадка, StaffChanged, NPC и кнопка переезда — как при найме.
+	-- QuestService не зовём: счётчик заданий «найми» хранит максимум и не уменьшается
+	onTeamChanged(player)
+end
+
+-- Игрок закрыл подсказку о забастовке: больше не показывать
+local function onStrikeTipSeen(player: Player)
+	if throttled(player) then
+		return
+	end
+	local profile = DataService.get(player)
+	if not profile then
+		return
+	end
+	(profile :: any).strikeTipSeen = true
+	player:SetAttribute("StrikeTipSeen", true)
+end
+
 -- «+1» к навыку за деньги
 local function onUpgradeSkill(player: Player, employeeId: any, key: any)
 	if type(employeeId) ~= "string" or not Skills.isKey(key) or throttled(player) then
@@ -953,6 +1000,8 @@ end
 
 function StaffService.start()
 	StaffRemotes.HireEmployee.OnServerEvent:Connect(onHire)
+	StaffRemotes.FireEmployee.OnServerEvent:Connect(onFire)
+	StaffRemotes.StrikeTipSeen.OnServerEvent:Connect(onStrikeTipSeen)
 	StaffRemotes.UpgradeSkill.OnServerEvent:Connect(onUpgradeSkill)
 	StaffRemotes.SetPerk.OnServerEvent:Connect(onSetPerk)
 	StaffRemotes.SetLook.OnServerEvent:Connect(onSetLook)
@@ -973,6 +1022,18 @@ function StaffService.start()
 		task.delay(JOIN_RECHECK, function()
 			if player.Parent then
 				sendStaff(player)
+			end
+		end)
+		-- Видел ли подсказку о забастовке: клиент ждёт этот атрибут, прежде чем её показать
+		task.spawn(function()
+			local started = os.clock()
+			while player.Parent and os.clock() - started < PROFILE_WAIT do
+				local profile = DataService.get(player)
+				if profile then
+					player:SetAttribute("StrikeTipSeen", (profile :: any).strikeTipSeen == true)
+					return
+				end
+				task.wait(0.5)
 			end
 		end)
 	end)
