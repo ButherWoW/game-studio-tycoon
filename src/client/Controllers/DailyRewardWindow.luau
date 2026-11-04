@@ -14,7 +14,9 @@ local QuestWindow = require(script.Parent.QuestWindow)
 local DailyRewardWindow = {}
 
 local gui: ScreenGui? = nil
--- Автопоказ один раз на состояние: закрыл без получения — не всплывает снова при каждом запросе
+-- Автопоказ один раз, пока награда доступна: закрыл без получения — не всплывает снова
+-- при каждом запросе, но остаётся кнопка в окне «Задания» (QuestWindow.setDailyReward).
+-- Сбрасывается, когда сервер говорит «недоступна» (забрал) — часы клиента не нужны
 local shownDay: number? = nil
 -- День в открытом окне: перерисовать его, когда придёт сохранённый язык
 local openDay = 1
@@ -98,6 +100,7 @@ local function show(day: number)
 		Ui.colors.good,
 		function()
 			QuestRemotes.ClaimDailyReward:FireServer()
+			QuestWindow.setDailyReward(nil, nil)
 			close()
 		end
 	)
@@ -112,16 +115,21 @@ function DailyRewardWindow.start()
 			return
 		end
 		if not state.available then
+			shownDay = nil
+			QuestWindow.setDailyReward(nil, nil)
 			close()
 			return
 		end
-		-- День UTC меняется — значит, новое состояние, можно показать снова
-		local utcDay = os.time() // 86_400
-		if shownDay == utcDay then
+		local day = state.day
+		QuestWindow.setDailyReward(day, function()
+			QuestWindow.close()
+			show(day)
+		end)
+		if shownDay == day then
 			return
 		end
-		shownDay = utcDay
-		show(state.day)
+		shownDay = day
+		show(day)
 	end)
 	-- Окно всплывает при входе, сохранённый язык приходит позже (отчёт #2, п. 3)
 	ClientState.langChanged:Connect(function()

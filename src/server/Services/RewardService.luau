@@ -102,6 +102,11 @@ function RewardService.grant(player: Player, reward: Rewards.Reward)
 
 	if reward.researchPoints then
 		store.researchPoints += reward.researchPoints
+		-- Начисляем в настоящий счёт исследований (store — только история наград)
+		local research = script.Parent:FindFirstChild("ResearchService")
+		if research and research:IsA("ModuleScript") then
+			pcall((require(research) :: any).addPoints, player, reward.researchPoints)
+		end
 	end
 	if reward.incomeBonus then
 		store.incomeBonus += reward.incomeBonus
@@ -122,6 +127,11 @@ function RewardService.grant(player: Player, reward: Rewards.Reward)
 	end
 	if reward.coffeeMinutes then
 		store.coffeeUntil = math.max(store.coffeeUntil, now) + reward.coffeeMinutes * 60
+		-- Ускорение действует через boosts.coffeeUntil, как у продукта «Кофе»
+		local shop = script.Parent:FindFirstChild("ShopService")
+		if shop and shop:IsA("ModuleScript") then
+			pcall((require(shop) :: any).addCoffee, player, reward.coffeeMinutes * 60)
+		end
 	end
 	if reward.adBonus and reward.adMinutes then
 		-- Как в MonetizationService: бонусы не складываются, берём больший, время продлеваем
@@ -129,6 +139,9 @@ function RewardService.grant(player: Player, reward: Rewards.Reward)
 		local current = profile.activeAd
 		if current and current.expiresAt > now and current.bonus > reward.adBonus then
 			current.expiresAt += math.floor(reward.adMinutes * 60 * reward.adBonus / current.bonus)
+		elseif current and current.expiresAt > now and current.bonus == math.min(reward.adBonus, 1) then
+			-- Та же реклама уже идёт: продлеваем, а не перезапускаем
+			current.expiresAt += reward.adMinutes * 60
 		else
 			profile.activeAd =
 				{ bonus = math.min(reward.adBonus, 1), expiresAt = now + reward.adMinutes * 60 }

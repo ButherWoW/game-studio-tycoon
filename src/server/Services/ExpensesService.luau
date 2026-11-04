@@ -66,14 +66,9 @@ local function charge(player: Player)
 end
 
 function ExpensesService.start()
-	Players.PlayerAdded:Connect(function(player)
-		-- Забастовка из прошлой сессии видна сразу, до первого списания
-		task.delay(Expenses.tickSeconds / 2, function()
-			local profile = DataService.get(player)
-			if profile and player.Parent then
-				player:SetAttribute("StaffStrike", (profile :: any).staffStrike == true)
-			end
-		end)
+	-- Забастовка из прошлой сессии видна сразу после загрузки профиля, до первого списания
+	DataService.onProfileLoaded(function(player, profile)
+		player:SetAttribute("StaffStrike", (profile :: any).staffStrike == true)
 	end)
 	Players.PlayerRemoving:Connect(function(player)
 		owed[player] = nil

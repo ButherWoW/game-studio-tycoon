@@ -11,6 +11,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
+local Debug = require(ReplicatedStorage.Shared.Config.Debug)
 
 export type Profile = {
 	cash: number,
@@ -25,6 +26,7 @@ export type Profile = {
 	runBestScore: number,
 	-- Сочетания жанр/тема последних игр (Formulas.comboKey): штраф за повтор в оценке
 	recentCombos: { string },
+	strikeTipSeen: boolean?, -- закрыл подсказку о первой забастовке (StaffService)
 	activeAd: { bonus: number, expiresAt: number }?,
 	-- Купленные за Robux разовые эффекты (ShopService): заряды и конец действия кофе
 	boosts: { instantFinish: number, patch: number, coffeeUntil: number },
@@ -78,6 +80,7 @@ local function defaultProfile(): Profile
 		bestScore = 0,
 		runBestScore = 0,
 		recentCombos = {},
+		strikeTipSeen = false,
 		activeAd = nil,
 		boosts = { instantFinish = 0, patch = 0, coffeeUntil = 0 },
 		processedReceipts = {},
@@ -196,6 +199,7 @@ local function isFiniteAmount(amount: any): boolean
 end
 
 -- Доход релиза прячется из таблицы лидеров, пока в окне релиза не открылась оценка (отчёт #2, п. 6)
+local loadedCallbacks: { (Player, Profile) -> () } = {}
 local leaderstatsHold: { [Player]: { amount: number, untilAt: number } } = {}
 
 -- Отправить клиенту публичный снимок данных (без квитанций)
@@ -304,7 +308,17 @@ local function onPlayerAdded(player: Player)
 	local userId = player.UserId
 	-- Перезашёл на этот же сервер: ждём, пока допишется сохранение прошлой сессии
 	acquire(userId)
-	local status, result = load(userId)
+	-- Studio с тестовыми деньгами: боевой профиль не трогаем совсем (ни чтения с меткой сессии,
+	-- ни записи) — иначе тест доливал $999 999 в настоящее сохранение игрока
+	local testCash = RunService:IsStudio() and (Debug.studioStartCash or 0) > 0
+	local status, result
+	if testCash then
+		status, result =
+			"error",
+			"Studio test cash: профиль не загружается и не сохраняется"
+	else
+		status, result = load(userId)
+	end
 	busy[userId] = nil
 
 	local persistent = true
@@ -340,6 +354,11 @@ local function onPlayerAdded(player: Player)
 		if type(profile.recentCombos) ~= "table" then
 			profile.recentCombos = {}
 		end
+		-- Сохранения до защиты addCash/trySpend могли получить NaN или ±inf: с ними trySpend
+		-- пропускал любые траты бесплатно. Чиним при загрузке
+		if not isFiniteAmount(profile.cash) then
+			profile.cash = 0
+		end
 	end
 	profiles[player] = profile
 	states[player] = { persistent = persistent, closed = false }
@@ -359,6 +378,20 @@ local function onPlayerAdded(player: Player)
 	leaderstats.Parent = player
 
 	DataService.replicate(player)
+	for _, callback in loadedCallbacks do
+		task.spawn(callback, player, profile)
+	end
+end
+
+-- Вызвать callback(player, profile) для каждого загруженного профиля: уже загруженных — сразу,
+-- новых — после загрузки. Для атрибутов из профиля без опроса и угадывания задержек
+function DataService.onProfileLoaded(callback: (Player, Profile) -> ())
+	table.insert(loadedCallbacks, callback)
+	for player, profile in profiles do
+		if player.Parent then
+			task.spawn(callback, player, profile)
+		end
+	end
 end
 
 function DataService.start()

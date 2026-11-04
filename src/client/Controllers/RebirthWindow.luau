@@ -163,6 +163,13 @@ function RebirthWindow.start()
 			refresh()
 		end
 	end)
+	-- Заголовок и статичные строки не обновляет refresh: при смене языка собираем окно заново
+	ClientState.langChanged:Connect(function()
+		if gui then
+			close()
+			RebirthWindow.open()
+		end
+	end)
 
 	RetentionRemotes.RebirthResult.OnClientEvent:Connect(function(result)
 		if type(result) ~= "table" then

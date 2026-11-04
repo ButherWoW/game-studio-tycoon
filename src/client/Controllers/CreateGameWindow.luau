@@ -136,6 +136,22 @@ local function focusTotal(): number
 	return total
 end
 
+-- Полоски и проценты фокуса: −/+ обновляют их на месте, без перерисовки окна
+local focusViews: { [string]: { fill: Frame, pct: TextLabel } } = {}
+local onFocusChanged: () -> ()
+
+local function focusPercent(key: string): number
+	local total = focusTotal()
+	return if total > 0 then math.floor(focus[key] / total * 100 + 0.5) else 0
+end
+
+local function updateFocusViews()
+	for key, view in focusViews do
+		view.fill.Size = UDim2.fromScale(focus[key] / MAX_FOCUS, 1)
+		view.pct.Text = focusPercent(key) .. "%"
+	end
+end
+
 local function buildFocusRow(parent: Instance, key: string, order: number)
 	local row = Instance.new("Frame")
 	row.BackgroundTransparency = 1
@@ -147,7 +163,7 @@ local function buildFocusRow(parent: Instance, key: string, order: number)
 
 	local minus = Ui.button(row, "−", Ui.colors.locked, function()
 		focus[key] = math.max(focus[key] - 1, 0)
-		render()
+		onFocusChanged()
 	end)
 	minus.Size = UDim2.new(0, 34, 1, 0)
 	minus.Position = UDim2.new(0.28, 0, 0, 0)
@@ -166,17 +182,17 @@ local function buildFocusRow(parent: Instance, key: string, order: number)
 
 	local plus = Ui.button(row, "+", Ui.colors.primary, function()
 		focus[key] = math.min(focus[key] + 1, MAX_FOCUS)
-		render()
+		onFocusChanged()
 	end)
 	plus.Size = UDim2.new(0, 34, 1, 0)
 	plus.Position = UDim2.new(0.78, -34, 0, 0)
 
-	local total = focusTotal()
-	local percent = if total > 0 then math.floor(focus[key] / total * 100 + 0.5) else 0
-	local pct = Ui.label(row, percent .. "%", 34, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
+	local pct =
+		Ui.label(row, focusPercent(key) .. "%", 34, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
 	pct.Size = UDim2.new(0.2, 0, 1, 0)
 	pct.Position = UDim2.new(0.8, 0, 0, 0)
 	pct.TextXAlignment = Enum.TextXAlignment.Right
+	focusViews[key] = { fill = fill, pct = pct }
 
 	row.Parent = parent
 end
@@ -299,31 +315,67 @@ local function updateStartButton()
 	end
 end
 
-render = function()
-	if not gui then
-		return
+onFocusChanged = function()
+	updateFocusViews()
+	updateStartButton()
+	updatePreviewLabel()
+	requestPreview()
+end
+
+-- Что окно берёт из ClientState: открытые жанры/темы, известный итог выбранной пары, язык.
+-- Деньги сюда не входят: они меняются каждые несколько секунд (зарплаты), и полная
+-- перерисовка на каждое изменение прыгала прокруткой и мешала печатать название
+local function idList(set: { [string]: boolean }?): string
+	local ids = {}
+	if set then
+		for id, open in set do
+			if open then
+				table.insert(ids, id)
+			end
+		end
 	end
+	table.sort(ids)
+	return table.concat(ids, ",")
+end
+
+local function contentKey(): string
 	local data = ClientState.data
-	if not data then
-		return
-	end
-	local old = gui:FindFirstChild("Window")
-	if old then
-		old:Destroy()
-	end
+	local combo = if selectedGenre and selectedTopic
+		then ClientState.knownCombos[selectedGenre .. "/" .. selectedTopic]
+		else nil
+	return table.concat({
+		ClientState.lang,
+		idList(data and data.unlockedGenres),
+		idList(data and data.unlockedTopics),
+		tostring(combo),
+	}, "|")
+end
+local shownKey = ""
 
-	local window = Ui.window(gui, "Window", Vector2.new(640, 640))
+-- Каркас окна (заголовок, ×, прокрутка, поле названия, «Начать») строится один раз на открытие;
+-- render пересобирает только содержимое прокрутки вокруг поля названия: поле не пересоздаётся,
+-- фокус и набранный текст (и клавиатура на телефоне) не теряются
+local titleLabel: TextLabel? = nil
+local closeButton: TextButton? = nil
+local bodyFrame: ScrollingFrame? = nil
+local nameBox: TextBox? = nil
 
-	local title = Ui.label(window, ClientState.t("create_title"), 36, Ui.titleFontFor(ClientState.lang))
+local function buildShell(screen: ScreenGui)
+	local window = Ui.window(screen, "Window", Vector2.new(640, 640))
+
+	local title = Ui.label(window, "", 36, Ui.titleFontFor(ClientState.lang))
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -80, 0, 36)
-	local close = Ui.button(window, ClientState.t("create_close"), Ui.colors.locked, function()
+	titleLabel = title
+	local close = Ui.button(window, "", Ui.colors.locked, function()
 		CreateGameWindow.close()
 	end)
 	close.Size = UDim2.fromOffset(40, 40)
 	close.Position = UDim2.new(1, -52, 0, 8)
+	closeButton = close
 
 	local body = Instance.new("ScrollingFrame")
+	body.Name = "Body"
 	body.BackgroundTransparency = 1
 	body.BorderSizePixel = 0
 	body.Position = UDim2.fromOffset(16, 56)
@@ -333,37 +385,101 @@ render = function()
 	body.ScrollBarThickness = 6
 	Ui.list(body, 8)
 	body.Parent = window
+	bodyFrame = body
 
-	local order = 0
+	local box = Instance.new("TextBox")
+	box.Name = "NameBox"
+	box.Size = UDim2.new(1, 0, 0, 40)
+	box.BackgroundColor3 = Color3.fromRGB(44, 46, 66)
+	box.TextColor3 = Ui.colors.text
+	-- Не длиннее, чем примет сервер (30 символов)
+	box:GetPropertyChangedSignal("Text"):Connect(function()
+		local length = utf8.len(box.Text)
+		if length and length > 30 then
+			box.Text = box.Text:sub(1, (utf8.offset(box.Text, 31) or (#box.Text + 1)) - 1)
+		end
+	end)
+	box.Font = Ui.bodyFont
+	box.TextScaled = true
+	box.ClearTextOnFocus = false
+	box.Text = nameText
+	-- Подпись «Название» — LayoutOrder 1, поле — 2, остальное содержимое — с 3
+	box.LayoutOrder = 2
+	Ui.corner(box, 10)
+	box:GetPropertyChangedSignal("Text"):Connect(function()
+		nameText = box.Text
+		updateStartButton()
+	end)
+	box.Parent = body
+	nameBox = box
+
+	local start = Ui.button(window, "", Ui.colors.locked, function()
+		if startError() then
+			return
+		end
+		Remotes.StartDevelopment:FireServer({
+			name = trimmedName(),
+			genreId = selectedGenre,
+			topicId = selectedTopic,
+			focus = table.clone(focus),
+		})
+		CreateGameWindow.close()
+	end)
+	start.Name = "StartButton"
+	startButton = start
+	start.Size = UDim2.new(1, -32, 0, 52)
+	start.Position = UDim2.new(0, 16, 1, -64)
+end
+
+render = function()
+	local screen = gui
+	if not screen then
+		return
+	end
+	local data = ClientState.data
+	if not data then
+		return
+	end
+	if not bodyFrame then
+		buildShell(screen)
+	end
+	local body = bodyFrame :: ScrollingFrame
+	local box = nameBox :: TextBox
+	shownKey = contentKey()
+
+	-- Тексты каркаса — на случай смены языка
+	local lang = ClientState.lang
+	if titleLabel then
+		titleLabel.Text = ClientState.t("create_title")
+		titleLabel.Font = Ui.titleFontFor(lang)
+	end
+	if closeButton then
+		closeButton.Text = ClientState.t("create_close")
+	end
+	box.PlaceholderText = ClientState.t("create_name_placeholder")
+
+	-- Пересобираем содержимое, не трогая поле названия; прокрутку возвращаем после
+	-- пересчёта AutomaticCanvasSize (сразу холст ещё пустой и позиция обрезалась бы до 0)
+	local scroll = body.CanvasPosition
+	for _, child in body:GetChildren() do
+		if child ~= box and not child:IsA("UIListLayout") then
+			child:Destroy()
+		end
+	end
+	focusViews = {}
+	task.defer(function()
+		if body.Parent then
+			body.CanvasPosition = scroll
+		end
+	end)
+
+	local order = 2
 	local function nextOrder(): number
 		order += 1
 		return order
 	end
 
-	Ui.label(body, ClientState.t("create_name_label"), 22, nil, Ui.colors.muted).LayoutOrder = nextOrder()
-	local nameBox = Instance.new("TextBox")
-	nameBox.Size = UDim2.new(1, 0, 0, 40)
-	nameBox.BackgroundColor3 = Color3.fromRGB(44, 46, 66)
-	nameBox.TextColor3 = Ui.colors.text
-	nameBox.PlaceholderText = ClientState.t("create_name_placeholder")
-	-- Не длиннее, чем примет сервер (30 символов)
-	nameBox:GetPropertyChangedSignal("Text"):Connect(function()
-		local length = utf8.len(nameBox.Text)
-		if length and length > 30 then
-			nameBox.Text = nameBox.Text:sub(1, (utf8.offset(nameBox.Text, 31) or (#nameBox.Text + 1)) - 1)
-		end
-	end)
-	nameBox.Font = Ui.bodyFont
-	nameBox.TextScaled = true
-	nameBox.ClearTextOnFocus = false
-	nameBox.Text = nameText
-	nameBox.LayoutOrder = nextOrder()
-	Ui.corner(nameBox, 10)
-	nameBox:GetPropertyChangedSignal("Text"):Connect(function()
-		nameText = nameBox.Text
-		updateStartButton()
-	end)
-	nameBox.Parent = body
+	Ui.label(body, ClientState.t("create_name_label"), 22, nil, Ui.colors.muted).LayoutOrder = 1
 
 	Ui.label(body, ClientState.t("create_genre_label"), 22, nil, Ui.colors.muted).LayoutOrder = nextOrder()
 	local genreHolder = Instance.new("Frame")
@@ -382,7 +498,7 @@ render = function()
 	topicHolder.Size = UDim2.new(1, 0, 0, topicHeight)
 
 	local hintText, hintColor = comboHint()
-	local hint = Ui.label(body, hintText, 24, Ui.titleFontFor(ClientState.lang), hintColor)
+	local hint = Ui.label(body, hintText, 24, Ui.titleFontFor(lang), hintColor)
 	hint.LayoutOrder = nextOrder()
 	-- Пустая подсказка (жанр/тема не выбраны) не занимает место
 	hint.Visible = hintText ~= ""
@@ -394,38 +510,15 @@ render = function()
 		buildFocusRow(body, key, nextOrder())
 	end
 
-	local previewText = Ui.label(body, "", 26, Ui.titleFontFor(ClientState.lang), Ui.colors.muted)
+	local previewText = Ui.label(body, "", 26, Ui.titleFontFor(lang), Ui.colors.muted)
 	previewText.Name = "ReviewPreview"
 	previewText.LayoutOrder = nextOrder()
 	previewLabel = previewText
 	updatePreviewLabel()
 	requestPreview()
 
-	local err = startError()
-	local start = Ui.button(
-		window,
-		err or ClientState.t("create_start"),
-		if err then Ui.colors.locked else Ui.colors.money,
-		function()
-			if startError() then
-				return
-			end
-			Remotes.StartDevelopment:FireServer({
-				name = trimmedName(),
-				genreId = selectedGenre,
-				topicId = selectedTopic,
-				focus = table.clone(focus),
-			})
-			CreateGameWindow.close()
-		end
-	)
-	start.Name = "StartButton"
-	startButton = start
-	-- Туториал смотрит на атрибут, а не на текст: тексты переводятся
-	start:SetAttribute("Ready", err == nil)
-	start.TextColor3 = if err then Ui.colors.muted else Color3.fromRGB(40, 30, 0)
-	start.Size = UDim2.new(1, -32, 0, 52)
-	start.Position = UDim2.new(0, 16, 1, -64)
+	-- Туториал смотрит на атрибут Ready, а не на текст: тексты переводятся
+	updateStartButton()
 end
 
 function CreateGameWindow.open()
@@ -447,6 +540,8 @@ function CreateGameWindow.close()
 	-- Очки/с могли измениться, пока окно закрыто: при следующем открытии спросить заново
 	preview = nil
 	previewSentKey = nil
+	titleLabel, closeButton, bodyFrame, nameBox, startButton, previewLabel = nil, nil, nil, nil, nil, nil
+	focusViews = {}
 	if gui then
 		gui:Destroy()
 		gui = nil
@@ -455,9 +550,12 @@ function CreateGameWindow.close()
 end
 
 function CreateGameWindow.start()
-	-- Деньги или открытые жанры поменялись — перерисовать открытое окно
+	-- Открытые жанры/темы, итог пары или язык поменялись — перерисовать открытое окно
+	-- (на одни деньги не перерисовываем: см. contentKey)
 	ClientState.changed:Connect(function()
-		render()
+		if gui and contentKey() ~= shownKey then
+			render()
+		end
 	end)
 	-- Слот освободился/занялся, открылась тест-группа — обновить на месте
 	DevState.changed:Connect(function()

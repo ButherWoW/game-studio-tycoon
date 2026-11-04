@@ -109,6 +109,9 @@ local function onRequestRebirth(player: Player)
 	if devModule and devModule:IsA("ModuleScript") then
 		(require(devModule) :: any).cancel(player)
 	end
+	-- Этап сбрасываем здесь: PlotService.rebuild делает это только при наличии участка,
+	-- а игрок в очереди на участок иначе сохранял бы офис/небоскрёб после Rebirth
+	profile.studioLevel = 1
 	DataService.replicate(player)
 
 	rebuildPlot(player)

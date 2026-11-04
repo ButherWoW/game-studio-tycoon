@@ -140,13 +140,40 @@ local function findIndex(hits: { Hit }, id: string): number?
 	return nil
 end
 
--- Добавить картридж; при полной полке выкинуть самый слабый (при равенстве — самый старый).
+-- Сколько картриджей хранится всего: на полке — сильнейшие capacity(profile), остальные
+-- «в коробке» до следующих переездов (после Rebirth слотов меньше, но хиты не пропадают)
+local BOX_LIMIT = HitCartridges.maxSlots
+
+-- Самый слабый не уносимый сейчас картридж (при равенстве — самый старый)
+local function weakestIndex(hits: { Hit }): (number?, number)
+	local weakest: number? = nil
+	local weakestScore = math.huge
+	for i, candidate in hits do
+		if not carriedIds[candidate.id] and candidate.score < weakestScore then
+			weakest = i
+			weakestScore = candidate.score
+		end
+	end
+	return weakest, weakestScore
+end
+
+-- Поместится ли хит: коробка не полна или он сильнее самого слабого
+local function fits(profile: DataService.Profile, hit: Hit): boolean
+	local hits = hitsOf(profile)
+	if #hits < BOX_LIMIT then
+		return true
+	end
+	local _, weakestScore = weakestIndex(hits)
+	return hit.score > weakestScore
+end
+
+-- Добавить картридж; при полной коробке выкинуть самый слабый (при равенстве — самый старый).
 -- Новый тоже участвует: если он слабее всех, он и вылетает. Уносимые сейчас не трогаем.
 -- Возвращает true, если новый остался.
 local function addHit(profile: DataService.Profile, hit: Hit): boolean
 	local hits = hitsOf(profile)
 	table.insert(hits, hit)
-	while #hits > capacity(profile) do
+	while #hits > BOX_LIMIT do
 		local weakest = #hits
 		local weakestScore = math.huge
 		for i, candidate in hits do
@@ -422,6 +449,11 @@ local function deliver(carry: Carry)
 		return
 	end
 	-- Без yield между проверкой и переносом: картридж не может оказаться у двоих
+	-- Коробка вора полна более сильными: картридж не поместится — не уничтожаем чужой хит
+	if not fits(thiefProfile, carry.hit) then
+		cancelCarry(carry)
+		return
+	end
 	cleanup(carry)
 	local hit = table.remove(victimHits, index) :: Hit
 	hit.stolenFrom = carry.victim.DisplayName
@@ -768,7 +800,12 @@ function HitService.start()
 			for _, carry in list do
 				-- Мог уже завершиться в этом же проходе (вор поймал вора и т.п.)
 				if carries[carry.thief] == carry then
-					checkCarry(carry)
+					-- Ошибка в одной краже не должна останавливать цикл для всех
+					local ok, err = pcall(checkCarry, carry)
+					if not ok then
+						warn("[HitService] checkCarry failed:", err)
+						pcall(cancelCarry, carry)
+					end
 				end
 			end
 		end
@@ -779,13 +816,18 @@ function HitService.start()
 		while true do
 			task.wait(HitCartridges.incomeInterval)
 			for _, player in Players:GetPlayers() do
-				local profile = DataService.get(player)
-				if profile and not leaving[player] then
-					local amount = incomeOf(profile)
-					if amount > 0 then
-						DataService.addCash(player, amount)
-						toast(player, "hit_income", { amount = Texts.money(amount) })
+				local ok, err = pcall(function()
+					local profile = DataService.get(player)
+					if profile and not leaving[player] then
+						local amount = incomeOf(profile)
+						if amount > 0 then
+							DataService.addCash(player, amount)
+							toast(player, "hit_income", { amount = Texts.money(amount) })
+						end
 					end
+				end)
+				if not ok then
+					warn("[HitService] income failed:", err)
 				end
 			end
 		end

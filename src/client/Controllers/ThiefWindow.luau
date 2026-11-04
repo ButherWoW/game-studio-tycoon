@@ -209,6 +209,13 @@ function ThiefWindow.start()
 		end
 	end)
 	ClientState.changed:Connect(updateCrown)
+	-- Заголовок и вкладки строятся один раз: при смене языка собираем окно заново
+	ClientState.langChanged:Connect(function()
+		if gui then
+			close()
+			open()
+		end
+	end)
 	ReplicatedStorage:GetAttributeChangedSignal("TopThiefUserId"):Connect(updateCrown)
 	-- Лидер переродился или вышел: голова сменилась. Дешёвая проверка раз в секунду
 	task.spawn(function()

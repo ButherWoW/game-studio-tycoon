@@ -28,6 +28,10 @@ local tabButtons: { [string]: TextButton } = {}
 local tab: Tab = "quests"
 local questState: any = nil
 local board: any = nil
+-- Награда за вход, которую закрыли «×» не забрав: день и как открыть окно (DailyRewardWindow
+-- требует этот модуль, поэтому он сам регистрирует себя здесь, без циклического require)
+local dailyRewardDay: number? = nil
+local openDailyReward: (() -> ())? = nil
 
 local function nameOf(item: { id: string, name: string, nameEn: string }): string
 	return ClientState.localText("quest_" .. item.id, item.name, item.nameEn)
@@ -172,6 +176,22 @@ local function questRow(
 	row.Parent = parent
 end
 
+-- Кнопка «День N — забрать» над списком, пока награда за вход доступна
+local function dailyRewardRow(frame: ScrollingFrame)
+	local day, openReward = dailyRewardDay, openDailyReward
+	if not day or not openReward then
+		return
+	end
+	local button = Ui.button(
+		frame,
+		"🎁 " .. ClientState.t("daily_reward_claim", { day = day }),
+		Ui.colors.good,
+		openReward
+	)
+	button.LayoutOrder = -1
+	button.Size = UDim2.new(1, -8, 0, 44)
+end
+
 local function renderQuests(frame: ScrollingFrame)
 	local list = questState and questState.quests
 	if type(list) ~= "table" then
@@ -281,11 +301,25 @@ local function render()
 		button.BackgroundColor3 = if name == tab then Ui.colors.primary else Ui.colors.locked
 	end
 	if tab == "quests" then
+		dailyRewardRow(frame)
 		renderQuests(frame)
 	elseif tab == "daily" then
+		dailyRewardRow(frame)
 		renderDaily(frame)
 	else
 		renderLeaders(frame)
+	end
+end
+
+-- DailyRewardWindow: награда доступна (day) или нет (nil)
+function QuestWindow.setDailyReward(day: number?, open: (() -> ())?)
+	if dailyRewardDay == day and openDailyReward == open then
+		return
+	end
+	dailyRewardDay = day
+	openDailyReward = open
+	if tab ~= "leaders" then
+		render()
 	end
 end
 
@@ -390,24 +424,35 @@ function QuestWindow.start()
 		end
 	end)
 	-- Награды «минуты дохода» зависят от лучшей оценки — обновим подсказки
-	-- (DataChanged приходит на каждое изменение денег — перерисовываем только при смене этих полей)
+	-- (DataChanged приходит на каждое изменение денег — перерисовываем только при смене этих полей).
+	-- Поля те же, что у describeReward: лучшая оценка забега, уровень, rebirth, гараж
 	local incomeKey = ""
-	ClientState.changed:Connect(function()
+	local function refreshIncome()
 		local data = ClientState.data
 		if not data then
 			return
 		end
 		local key = string.format(
-			"%s/%s/%s",
-			tostring(data.bestScore),
+			"%s/%s/%s/%s",
+			tostring(data.runBestScore),
 			tostring(data.studioLevel),
-			tostring(data.rebirths)
+			tostring(data.rebirths),
+			tostring(Players.LocalPlayer:GetAttribute("OwnsGarage") == true)
 		)
 		if key ~= incomeKey then
 			incomeKey = key
 			if tab ~= "leaders" then
 				render()
 			end
+		end
+	end
+	ClientState.changed:Connect(refreshIncome)
+	Players.LocalPlayer:GetAttributeChangedSignal("OwnsGarage"):Connect(refreshIncome)
+	-- Сменили язык: заголовок и вкладки строятся в open — открытое окно собираем заново
+	ClientState.langChanged:Connect(function()
+		if gui then
+			QuestWindow.close()
+			QuestWindow.open()
 		end
 	end)
 	QuestRemotes.RequestQuestData:FireServer()

@@ -17,6 +17,7 @@ local WordFilter = require(Shared.WordFilter)
 local Genres = require(Shared.Config.Genres)
 local Topics = require(Shared.Config.Topics)
 local Upgrades = require(Shared.Config.Upgrades)
+local Rebirth = require(Shared.Config.Rebirth)
 local Employees = require(Shared.Config.Employees)
 local GamePasses = require(Shared.Config.GamePasses)
 local Research = require(Shared.Config.Research)
@@ -166,9 +167,12 @@ type Project = {
 	tempo: number, -- скорость разработки на момент старта (см. pointsRate)
 	event: { def: DevEvents.DevEvent, expiresAt: number }?,
 	sequel: boolean?, -- сиквел от «Авто-релиза» (слабее штраф за повтор)
+	paid: boolean?, -- доход релиза уже начислен (повторно не выпускать и заряд не возвращать)
+	releaseFailures: number?, -- сколько раз релиз упал с ошибкой
 	laptop: boolean?, -- начата на ноутбуке в парке: доход × StartPark.laptopRevenueMultiplier
 }
 
+local MAX_RELEASE_FAILURES = 3 -- после стольких ошибок релиза игра снимается, чтобы не падать каждый тик
 local LEADERSTATS_REVEAL_SECONDS = 4.5 -- сколько клиент раскрывает оценки в окне релиза
 local BASE_DURATION = 30 -- секунд на одну игру в начале
 local MAX_NAME_LENGTH = 30
@@ -538,7 +542,7 @@ local function release(player: Player, project: Project)
 	if profile.activeAd and profile.activeAd.expiresAt > os.time() then
 		adBonus = profile.activeAd.bonus
 	end
-	local rebirthMultiplier = 1 + 0.5 * profile.rebirths
+	local rebirthMultiplier = Rebirth.multiplier(profile.rebirths)
 	local revenue = Formulas.revenue(score, profile.studioLevel, adBonus, rebirthMultiplier)
 	local shop = shopModifiers(player)
 	local research = researchModifiers(player)
@@ -554,6 +558,10 @@ local function release(player: Player, project: Project)
 		end
 	end
 	local powerMultiplier = 1 + math.min(power * Economy.revenuePerPower, Economy.maxPowerBonus)
+	-- Постоянные бонусы из наград заданий (Config/Quests: incomeBonus), не больше +50%
+	local rewards = (profile :: any).rewards
+	local rewardBonus = if type(rewards) == "table" then tonumber(rewards.incomeBonus) or 0 else 0
+	local rewardMultiplier = 1 + math.clamp(rewardBonus, 0, 0.5)
 	local holidayMultiplier = 1
 	if HolidayService then
 		local ok, value = pcall(HolidayService.revenueMultiplier, project.genreId)
@@ -562,7 +570,13 @@ local function release(player: Player, project: Project)
 		end
 	end
 	revenue = math.floor(
-		revenue * cashMultiplier * researchMultiplier * laptopMultiplier * powerMultiplier * holidayMultiplier
+		revenue
+			* cashMultiplier
+			* researchMultiplier
+			* laptopMultiplier
+			* powerMultiplier
+			* holidayMultiplier
+			* rewardMultiplier
 	)
 
 	local isRecord = profile.gamesReleased > 0 and score > profile.bestScore
@@ -570,9 +584,10 @@ local function release(player: Player, project: Project)
 	profile.bestScore = math.max(profile.bestScore, score)
 	profile.runBestScore = math.max(profile.runBestScore, score)
 	Formulas.rememberCombo(profile.recentCombos, project.genreId, project.topicId)
-	DataService.addCash(player, revenue)
-	-- В таблице лидеров доход появится вместе с оценкой в окне релиза, а не раньше
+	-- Сначала прячем доход в таблице лидеров, потом начисляем: addCash сразу обновляет leaderstats
 	DataService.holdLeaderstats(player, revenue, LEADERSTATS_REVEAL_SECONDS)
+	DataService.addCash(player, revenue)
+	project.paid = true
 
 	hook("ResearchService", "onGameReleased", player, score)
 	hook("PerksService", "onGameReleased", player, revenue)
@@ -756,7 +771,20 @@ local function finishProject(player: Player, project: Project)
 	if not removeProject(player, project) then
 		return
 	end
-	release(player, project)
+	local ok, err = pcall(release, player, project)
+	if not ok and not project.paid then
+		-- Релиз упал до начисления дохода: игра не должна пропасть — возвращаем её в разработку,
+		-- следующий тик попробует снова (но не бесконечно)
+		project.releaseFailures = (project.releaseFailures or 0) + 1
+		local list = projects[player]
+		if list and project.releaseFailures < MAX_RELEASE_FAILURES then
+			table.insert(list, project)
+		end
+		DevelopmentService.pushState(player)
+		error(err, 0)
+	elseif not ok then
+		warn("[DevelopmentService] Release finished with an error after payout:", err)
+	end
 	DevelopmentService.pushState(player)
 	maybeAutoRelease(player, project)
 end
@@ -803,10 +831,10 @@ local function onInstantFinish(player: Player, projectId: any)
 	project.elapsed = project.duration
 	local ok, err = pcall(finishProject, player, project)
 	if not ok then
-		-- Релиз не прошёл — заряд возвращаем, игра остаётся в разработке
 		warn("[DevelopmentService] Instant finish failed:", err)
+		-- Доход не начислен — игра вернулась в разработку, заряд возвращаем
 		local refund = ShopService.refundCharge
-		if type(refund) == "function" then
+		if not project.paid and type(refund) == "function" then
 			pcall(refund, player, "instantFinish")
 		end
 	end
@@ -843,9 +871,23 @@ local function onPreviewRequest(player: Player, request: any)
 	}
 	local score =
 		Formulas.review(genreId, topicId, points, NO_NOISE, scoreBonus(player, profile, genreId, topicId))
+	-- Тренд, перк «Тренд-хантер» и праздник — как в release, чтобы прогноз совпадал с оценкой
 	local TrendService = optional("TrendService")
 	if TrendService then
-		score += TrendService.getBonus(genreId, topicId)
+		local okTrend, trendValue = pcall(TrendService.getBonus, genreId, topicId)
+		local trend = if okTrend and type(trendValue) == "number" then trendValue else 0
+		score += trend
+		if trend > 0 then
+			score += tonumber(perks(player).trendBonus) or 0
+		end
+		score = math.floor(score + 0.5)
+	end
+	local HolidayService = optional("HolidayService")
+	if HolidayService then
+		local okHoliday, bonus = pcall(HolidayService.reviewBonus, genreId, topicId)
+		if okHoliday and type(bonus) == "number" then
+			score += bonus
+		end
 	end
 	score = math.clamp(score, 1, 10)
 	PaidRemotes.ReviewPreview:FireClient(player, {

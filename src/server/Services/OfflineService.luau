@@ -19,11 +19,18 @@ local OfflineService = {}
 -- Сколько заработала бы студия за seconds офлайна
 function OfflineService.earnings(profile: DataService.Profile, seconds: number): number
 	local capped = math.min(seconds, Offline.maxSeconds)
-	if capped < Offline.minSeconds then
+	-- Без гаража офлайн-дохода нет: этап парка проходят игрой, а не ожиданием
+	-- (старые сохранения без флага — как в PlotService: гараж есть, если куплен стол или вышла игра)
+	local owns = (profile :: any).ownsGarage
+	if owns == nil then
+		owns = profile.upgrades.desk1 == true or profile.gamesReleased > 0
+	end
+	if capped < Offline.minSeconds or owns ~= true then
 		return 0
 	end
+	-- Лучшая оценка с последнего Rebirth: рекорд прошлой студии не должен кормить новый гараж
 	local perGame = Formulas.revenue(
-		math.max(profile.bestScore, 1),
+		math.max(profile.runBestScore, 1),
 		profile.studioLevel,
 		0,
 		Rebirth.multiplier(profile.rebirths)
@@ -80,6 +87,11 @@ local function onClaim(player: Player)
 	data.offlinePending = 0
 	player:SetAttribute("OfflinePending", 0)
 	DataService.addCash(player, pending)
+	-- Офлайн-доход — не «заработок за сессию» для заданий
+	local reward = script.Parent:FindFirstChild("RewardService")
+	if reward and reward:IsA("ModuleScript") then
+		pcall((require(reward) :: any).noteNonEarned, player, pending)
+	end
 	-- Кредит банка: доля офлайн-дохода тоже идёт в погашение
 	local loan = script.Parent:FindFirstChild("LoanService")
 	if loan then

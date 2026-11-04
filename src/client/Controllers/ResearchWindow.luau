@@ -156,12 +156,19 @@ local function buildColumn(parent: Instance, branch: Research.Branch, order: num
 	end
 	column.Parent = parent
 
-	local saved = scrollPositions[branch]
-	if saved then
-		list.CanvasPosition = saved
-	end
-	list:GetPropertyChangedSignal("CanvasPosition"):Connect(function()
-		scrollPositions[branch] = list.CanvasPosition
+	-- Восстанавливаем после пересчёта AutomaticCanvasSize (сразу холст ещё нулевой и позиция
+	-- обрезалась до 0), а слушатель вешаем после восстановления — иначе он затирал сохранённое
+	task.defer(function()
+		if not list.Parent then
+			return
+		end
+		local saved = scrollPositions[branch]
+		if saved then
+			list.CanvasPosition = saved
+		end
+		list:GetPropertyChangedSignal("CanvasPosition"):Connect(function()
+			scrollPositions[branch] = list.CanvasPosition
+		end)
 	end)
 end
 
@@ -260,10 +267,29 @@ function ResearchWindow.start()
 		end
 	end
 	requestOnce()
+	-- Из ClientState окно показывает только открытые жанры (пометка «жанр уже открыт») и язык:
+	-- деньги меняются каждые несколько секунд, лишняя перерисовка сбрасывала колонки
+	local function stateKey(): string
+		local data = ClientState.data
+		local genres = {}
+		if data and data.unlockedGenres then
+			for id, open in data.unlockedGenres do
+				if open then
+					table.insert(genres, id)
+				end
+			end
+		end
+		table.sort(genres)
+		return ClientState.lang .. "|" .. table.concat(genres, ",")
+	end
+	local lastKey = stateKey()
 	ClientState.changed:Connect(function()
 		requestOnce()
-		-- Открытые жанры могли поменяться — обновить пометки «жанр уже открыт»
-		render()
+		local key = stateKey()
+		if key ~= lastKey then
+			lastKey = key
+			render()
+		end
 	end)
 
 	Ui.menuButton(MENU_SLOT, "🔬", function()
