@@ -1,5 +1,5 @@
 --!strict
--- Окно «Магазин» (5.4, 5.5): вкладки «Реклама / Геймпассы / Бусты».
+-- Окно «Магазин» (5.4, 5.5): вкладки «Реклама / Геймпассы / Бусты / Постеры» (постеры — PosterShop).
 -- Клиент только показывает цены и открывает окно покупки Roblox; что куплено и что выдать,
 -- решает сервер (ShopService, MonetizationService). ID 0 = товар ещё не создан: кнопка «Скоро».
 
@@ -16,8 +16,9 @@ local Products = require(Shared.Config.Products)
 local Texts = require(Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local PosterShop = require(script.Parent.Parent.PosterShop)
 
-type Tab = "ads" | "passes" | "boosts"
+type Tab = "ads" | "passes" | "boosts" | "posters"
 type ShopState = {
 	passes: { [string]: boolean },
 	boosts: { instantFinish: number, patch: number, coffeeUntil: number }?,
@@ -26,7 +27,7 @@ type ShopState = {
 
 local MENU_SLOT = 4
 local ROW_HEIGHT = 72
-local TABS: { Tab } = { "ads", "passes", "boosts" }
+local TABS: { Tab } = { "ads", "passes", "boosts", "posters" }
 
 local ShopWindow = {}
 local gui: ScreenGui? = nil
@@ -248,6 +249,8 @@ render = function()
 		buildAds(body)
 	elseif tab == "passes" then
 		buildPasses(body)
+	elseif tab == "posters" then
+		PosterShop.build(body)
 	else
 		buildBoosts(body)
 	end
@@ -275,6 +278,7 @@ function ShopWindow.open()
 	render()
 	-- Свежие заряды и доход в минуту (рекорд мог вырасти)
 	ShopRemotes.ShopStateRequest:FireServer()
+	PosterShop.request()
 end
 
 function ShopWindow.close()
@@ -299,6 +303,9 @@ function ShopWindow.start()
 			return
 		end
 		state = newState
+		render()
+	end)
+	PosterShop.listen(function()
 		render()
 	end)
 	-- Деньги поменялись — перекрасить кнопки «за $»

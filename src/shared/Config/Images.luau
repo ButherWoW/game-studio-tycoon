@@ -20,4 +20,23 @@ Images.menu = {
 	home = 0, -- 🏠, PNG в V3 нет
 } :: { [string]: number }
 
+-- Постеры магазина (docs/VISUAL.md, V8; Config/Posters). 0 — картинки ещё нет: постер рисуется
+-- цветом, эмодзи и названием. Dev 1: загрузить poster_<id>.png (768×1024) так же, как иконки
+-- меню, и вставить Image ID напротив id постера
+Images.posters = {
+	pixelHero = 0, -- poster_pixelHero.png
+	puzzleBlocks = 0, -- poster_puzzleBlocks.png
+	turboRacer = 0, -- poster_turboRacer.png
+	starBlaster = 0, -- poster_starBlaster.png
+	ninjaCat = 0, -- poster_ninjaCat.png
+	ghostManor = 0, -- poster_ghostManor.png
+	robotArena = 0, -- poster_robotArena.png
+	dragonValley = 0, -- poster_dragonValley.png
+	neonCity = 0, -- poster_neonCity.png, премиум
+	crystalKingdom = 0, -- poster_crystalKingdom.png, премиум
+	mechTitan = 0, -- poster_mechTitan.png, премиум
+	galaxyLegends = 0, -- poster_galaxyLegends.png, премиум
+	goldenController = 0, -- poster_goldenController.png, премиум
+} :: { [string]: number }
+
 return Images

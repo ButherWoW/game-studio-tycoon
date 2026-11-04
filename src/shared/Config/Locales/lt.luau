@@ -2,6 +2,29 @@
 -- Lithuanian (lt). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Plakatai",
+	posters_hint = "Paprasti kainuoja $, premium — Robux. Plakatai kabo ant studijos sienų",
+	posters_no_slots = "Pirmiausia nusipirk garažą — plakatai kabo ant jo sienų",
+	posters_hang = "Pakabinti",
+	posters_hung = "✓ Kabo",
+	posters_pick = "Kur pakabinti „{name}“?",
+	posters_slot = "Vieta {n}",
+	posters_remove = "Nukabinti",
+	posters_cancel = "Atšaukti",
+	poster_pixelHero = "Pikselių herojus",
+	poster_puzzleBlocks = "Kaladėlių galvosūkis",
+	poster_turboRacer = "Turbo lenktynininkas",
+	poster_starBlaster = "Žvaigždžių blasteris",
+	poster_ninjaCat = "Katinas nindzė",
+	poster_ghostManor = "Vaiduoklių dvaras",
+	poster_robotArena = "Robotų arena",
+	poster_dragonValley = "Drakonų slėnis",
+	poster_neonCity = "Neoninis miestas",
+	poster_crystalKingdom = "Krištolo karalystė",
+	poster_mechTitan = "Mechaninis titanas",
+	poster_galaxyLegends = "Galaktikos legendos",
+	poster_goldenController = "Auksinis pultelis",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Žaidimai: {count}",

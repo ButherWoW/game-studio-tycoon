@@ -2,6 +2,29 @@
 -- Czech (cs). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Plakáty",
+	posters_hint = "Obyčejné stojí $, prémiové stojí Robux. Plakáty visí na zdech studia",
+	posters_no_slots = "Nejdřív kup garáž — plakáty visí na jejích zdech",
+	posters_hang = "Pověsit",
+	posters_hung = "✓ Visí",
+	posters_pick = "Kam pověsit „{name}“?",
+	posters_slot = "Místo {n}",
+	posters_remove = "Sundat",
+	posters_cancel = "Zrušit",
+	poster_pixelHero = "Pixelový hrdina",
+	poster_puzzleBlocks = "Kostičkový hlavolam",
+	poster_turboRacer = "Turbo závodník",
+	poster_starBlaster = "Hvězdný blaster",
+	poster_ninjaCat = "Kočka nindža",
+	poster_ghostManor = "Veselí duchové",
+	poster_robotArena = "Aréna robotů",
+	poster_dragonValley = "Dračí údolí",
+	poster_neonCity = "Neonové město",
+	poster_crystalKingdom = "Křišťálové království",
+	poster_mechTitan = "Mech titán",
+	poster_galaxyLegends = "Legendy galaxie",
+	poster_goldenController = "Zlatý ovladač",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Hry: {count}",

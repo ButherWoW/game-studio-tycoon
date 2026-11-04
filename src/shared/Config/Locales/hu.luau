@@ -2,6 +2,29 @@
 -- Hungarian (hu). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Poszterek",
+	posters_hint = "A sima posztereket $-ért, a prémiumokat Robuxért veheted. A poszterek a stúdió falán lógnak",
+	posters_no_slots = "Előbb vedd meg a garázst — a poszterek annak a falán lógnak",
+	posters_hang = "Felakaszt",
+	posters_hung = "✓ Kint van",
+	posters_pick = "Hová akasszuk: „{name}”?",
+	posters_slot = "{n}. hely",
+	posters_remove = "Levesz",
+	posters_cancel = "Mégse",
+	poster_pixelHero = "Pixelhős",
+	poster_puzzleBlocks = "Kockarejtvény",
+	poster_turboRacer = "Turbó versenyző",
+	poster_starBlaster = "Csillagblaszter",
+	poster_ninjaCat = "Nindzsamacska",
+	poster_ghostManor = "Szellemkastély",
+	poster_robotArena = "Robotaréna",
+	poster_dragonValley = "Sárkányvölgy",
+	poster_neonCity = "Neonváros",
+	poster_crystalKingdom = "Kristálykirályság",
+	poster_mechTitan = "Mech titán",
+	poster_galaxyLegends = "A galaxis legendái",
+	poster_goldenController = "Arany kontroller",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Játékok: {count}",

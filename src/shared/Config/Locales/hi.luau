@@ -2,6 +2,29 @@
 -- Hindi (hi). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 पोस्टर",
+	posters_hint = "साधारण पोस्टर $ में, प्रीमियम Robux में मिलते हैं। पोस्टर स्टूडियो की दीवारों पर लगते हैं",
+	posters_no_slots = "पहले गैराज खरीदो — पोस्टर उसकी दीवारों पर लगते हैं",
+	posters_hang = "लगाओ",
+	posters_hung = "✓ लगा है",
+	posters_pick = "“{name}” कहाँ लगाएँ?",
+	posters_slot = "जगह {n}",
+	posters_remove = "उतारो",
+	posters_cancel = "रद्द करो",
+	poster_pixelHero = "पिक्सेल हीरो",
+	poster_puzzleBlocks = "ब्लॉक पहेली",
+	poster_turboRacer = "टर्बो रेसर",
+	poster_starBlaster = "स्टार ब्लास्टर",
+	poster_ninjaCat = "निंजा बिल्ली",
+	poster_ghostManor = "भूतों की हवेली",
+	poster_robotArena = "रोबोट अखाड़ा",
+	poster_dragonValley = "ड्रैगन घाटी",
+	poster_neonCity = "नियॉन शहर",
+	poster_crystalKingdom = "क्रिस्टल साम्राज्य",
+	poster_mechTitan = "मेक टाइटन",
+	poster_galaxyLegends = "आकाशगंगा के दिग्गज",
+	poster_goldenController = "सुनहरा कंट्रोलर",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "गेम्स: {count}",

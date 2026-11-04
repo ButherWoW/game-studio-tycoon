@@ -2,6 +2,29 @@
 -- Serbian (sr). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Постери",
+	posters_hint = "Обични су за $, премијум за Robux. Постери висе на зидовима студија",
+	posters_no_slots = "Прво купи гаражу — постери висе на њеним зидовима",
+	posters_hang = "Окачи",
+	posters_hung = "✓ Окачен",
+	posters_pick = "Где да окачиш „{name}“?",
+	posters_slot = "Место {n}",
+	posters_remove = "Скини",
+	posters_cancel = "Откажи",
+	poster_pixelHero = "Пикселни јунак",
+	poster_puzzleBlocks = "Блок слагалица",
+	poster_turboRacer = "Турбо тркач",
+	poster_starBlaster = "Звездани бластер",
+	poster_ninjaCat = "Мачак нинџа",
+	poster_ghostManor = "Весели духови",
+	poster_robotArena = "Арена робота",
+	poster_dragonValley = "Долина змајева",
+	poster_neonCity = "Неонски град",
+	poster_crystalKingdom = "Кристално краљевство",
+	poster_mechTitan = "Мех титан",
+	poster_galaxyLegends = "Легенде галаксије",
+	poster_goldenController = "Златни контролер",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Игре: {count}",

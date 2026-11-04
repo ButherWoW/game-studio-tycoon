@@ -2,6 +2,29 @@
 -- Simplified Chinese (zh-cn). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 海报",
+	posters_hint = "普通海报用 $ 购买，高级海报用 Robux 购买。海报挂在工作室的墙上",
+	posters_no_slots = "先买下车库——海报挂在车库墙上",
+	posters_hang = "挂上",
+	posters_hung = "✓ 已挂",
+	posters_pick = "把“{name}”挂在哪里？",
+	posters_slot = "位置 {n}",
+	posters_remove = "取下",
+	posters_cancel = "取消",
+	poster_pixelHero = "像素英雄",
+	poster_puzzleBlocks = "方块拼图",
+	poster_turboRacer = "极速赛车手",
+	poster_starBlaster = "星际爆破",
+	poster_ninjaCat = "忍者猫",
+	poster_ghostManor = "幽灵庄园",
+	poster_robotArena = "机器人竞技场",
+	poster_dragonValley = "巨龙山谷",
+	poster_neonCity = "霓虹之城",
+	poster_crystalKingdom = "水晶王国",
+	poster_mechTitan = "机甲泰坦",
+	poster_galaxyLegends = "银河传奇",
+	poster_goldenController = "黄金手柄",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "游戏：{count}",

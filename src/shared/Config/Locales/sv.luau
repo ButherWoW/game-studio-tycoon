@@ -2,6 +2,29 @@
 -- Swedish (sv). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Affischer",
+	posters_hint = "Vanliga kostar $, premium kostar Robux. Affischerna hänger på studions väggar",
+	posters_no_slots = "Köp garaget först — affischerna hänger på dess väggar",
+	posters_hang = "Häng upp",
+	posters_hung = "✓ Hänger",
+	posters_pick = 'Var ska "{name}" hänga?',
+	posters_slot = "Plats {n}",
+	posters_remove = "Ta ner",
+	posters_cancel = "Avbryt",
+	poster_pixelHero = "Pixelhjälten",
+	poster_puzzleBlocks = "Blockpussel",
+	poster_turboRacer = "Turboföraren",
+	poster_starBlaster = "Stjärnblaster",
+	poster_ninjaCat = "Ninjakatten",
+	poster_ghostManor = "Spökvillan",
+	poster_robotArena = "Robotarenan",
+	poster_dragonValley = "Drakdalen",
+	poster_neonCity = "Neonstaden",
+	poster_crystalKingdom = "Kristallriket",
+	poster_mechTitan = "Mech-titanen",
+	poster_galaxyLegends = "Galaxens legender",
+	poster_goldenController = "Gyllene handkontrollen",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Spel: {count}",

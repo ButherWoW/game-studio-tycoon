@@ -10,6 +10,7 @@ local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local AdCampaigns = require(ReplicatedStorage.Shared.Config.AdCampaigns)
 local DataService = require(script.Parent.DataService)
 local ShopService = require(script.Parent.ShopService)
+local PosterService = require(script.Parent.PosterService)
 
 local MonetizationService = {}
 
@@ -78,11 +79,14 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 			else Enum.ProductPurchaseDecision.NotProcessedYet
 	end
 
-	-- Диспетчер по productId: реклама здесь, остальные продукты — ShopService
+	-- Диспетчер по productId: реклама здесь, премиум-постеры — PosterService, остальное — ShopService
 	local campaign = findByProduct(receipt.ProductId)
 	if campaign then
 		applyAd(player, campaign, true)
-	elseif not ShopService.grantProduct(player, profile, receipt.ProductId) then
+	elseif
+		not PosterService.grantProduct(player, profile, receipt.ProductId)
+		and not ShopService.grantProduct(player, profile, receipt.ProductId)
+	then
 		warn("[Monetization] Unknown product", receipt.ProductId)
 		return Enum.ProductPurchaseDecision.NotProcessedYet
 	end

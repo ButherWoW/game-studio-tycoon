@@ -2,6 +2,29 @@
 -- Norwegian Bokmål (no). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Plakater",
+	posters_hint = "Vanlige koster $, premium koster Robux. Plakatene henger på veggene i studioet",
+	posters_no_slots = "Kjøp garasjen først — plakatene henger på veggene der",
+	posters_hang = "Heng opp",
+	posters_hung = "✓ Henger",
+	posters_pick = "Hvor skal «{name}» henge?",
+	posters_slot = "Plass {n}",
+	posters_remove = "Ta ned",
+	posters_cancel = "Avbryt",
+	poster_pixelHero = "Pikselhelten",
+	poster_puzzleBlocks = "Klossepuslespill",
+	poster_turboRacer = "Turbosjåføren",
+	poster_starBlaster = "Stjerneblaster",
+	poster_ninjaCat = "Ninjakatten",
+	poster_ghostManor = "Spøkelsesvillaen",
+	poster_robotArena = "Robotarenaen",
+	poster_dragonValley = "Dragedalen",
+	poster_neonCity = "Neonbyen",
+	poster_crystalKingdom = "Krystallriket",
+	poster_mechTitan = "Mek-titanen",
+	poster_galaxyLegends = "Galaksens legender",
+	poster_goldenController = "Gullkontrolleren",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Spill: {count}",

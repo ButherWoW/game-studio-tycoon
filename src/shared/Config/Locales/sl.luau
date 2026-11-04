@@ -2,6 +2,29 @@
 -- Slovenian (sl). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Plakati",
+	posters_hint = "Navadni stanejo $, premium stanejo Robux. Plakati visijo na stenah studia",
+	posters_no_slots = "Najprej kupi garažo — plakati visijo na njenih stenah",
+	posters_hang = "Obesi",
+	posters_hung = "✓ Visi",
+	posters_pick = "Kam obesiti »{name}«?",
+	posters_slot = "Mesto {n}",
+	posters_remove = "Snemi",
+	posters_cancel = "Prekliči",
+	poster_pixelHero = "Pikselni junak",
+	poster_puzzleBlocks = "Kockasta uganka",
+	poster_turboRacer = "Turbo dirkač",
+	poster_starBlaster = "Zvezdni blaster",
+	poster_ninjaCat = "Mačka nindža",
+	poster_ghostManor = "Veseli duhovi",
+	poster_robotArena = "Arena robotov",
+	poster_dragonValley = "Dolina zmajev",
+	poster_neonCity = "Neonsko mesto",
+	poster_crystalKingdom = "Kristalno kraljestvo",
+	poster_mechTitan = "Meh titan",
+	poster_galaxyLegends = "Legende galaksije",
+	poster_goldenController = "Zlati krmilnik",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Igre: {count}",

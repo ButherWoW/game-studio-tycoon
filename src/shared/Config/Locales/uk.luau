@@ -2,6 +2,29 @@
 -- Ukrainian (uk). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Постери",
+	posters_hint = "Звичайні — за $, преміум — за Robux. Постери висять на стінах студії",
+	posters_no_slots = "Спершу купи гараж — постери висять на його стінах",
+	posters_hang = "Повісити",
+	posters_hung = "✓ Висить",
+	posters_pick = "Куди повісити «{name}»?",
+	posters_slot = "Місце {n}",
+	posters_remove = "Зняти",
+	posters_cancel = "Скасувати",
+	poster_pixelHero = "Піксельний герой",
+	poster_puzzleBlocks = "Кубики-головоломки",
+	poster_turboRacer = "Турбо-гонщик",
+	poster_starBlaster = "Зоряний бластер",
+	poster_ninjaCat = "Кіт-ніндзя",
+	poster_ghostManor = "Веселі привиди",
+	poster_robotArena = "Арена роботів",
+	poster_dragonValley = "Долина драконів",
+	poster_neonCity = "Неонове місто",
+	poster_crystalKingdom = "Кришталеве королівство",
+	poster_mechTitan = "Мех-титан",
+	poster_galaxyLegends = "Легенди галактики",
+	poster_goldenController = "Золотий геймпад",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Ігор: {count}",

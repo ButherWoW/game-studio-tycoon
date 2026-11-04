@@ -2,6 +2,29 @@
 -- Latvian (lv). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Plakāti",
+	posters_hint = "Parastie maksā $, premium maksā Robux. Plakāti karājas uz studijas sienām",
+	posters_no_slots = "Vispirms nopērc garāžu — plakāti karājas uz tās sienām",
+	posters_hang = "Pakārt",
+	posters_hung = "✓ Karājas",
+	posters_pick = "Kur pakārt “{name}”?",
+	posters_slot = "Vieta {n}",
+	posters_remove = "Noņemt",
+	posters_cancel = "Atcelt",
+	poster_pixelHero = "Pikseļu varonis",
+	poster_puzzleBlocks = "Kluču mīkla",
+	poster_turboRacer = "Turbo braucējs",
+	poster_starBlaster = "Zvaigžņu blasteris",
+	poster_ninjaCat = "Nindzju kaķis",
+	poster_ghostManor = "Spoku muiža",
+	poster_robotArena = "Robotu arēna",
+	poster_dragonValley = "Pūķu ieleja",
+	poster_neonCity = "Neona pilsēta",
+	poster_crystalKingdom = "Kristāla karaliste",
+	poster_mechTitan = "Mehāniskais titāns",
+	poster_galaxyLegends = "Galaktikas leģendas",
+	poster_goldenController = "Zelta pults",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Spēles: {count}",

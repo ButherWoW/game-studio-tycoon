@@ -2,6 +2,29 @@
 -- Dutch (nl). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Posters",
+	posters_hint = "Gewone kosten $, premium kost Robux. Posters hangen aan de muren van je studio",
+	posters_no_slots = "Koop eerst de garage — de posters hangen aan de muren",
+	posters_hang = "Ophangen",
+	posters_hung = "✓ Hangt",
+	posters_pick = 'Waar hang je "{name}" op?',
+	posters_slot = "Plek {n}",
+	posters_remove = "Weghalen",
+	posters_cancel = "Annuleren",
+	poster_pixelHero = "Pixelheld",
+	poster_puzzleBlocks = "Blokpuzzel",
+	poster_turboRacer = "Turboracer",
+	poster_starBlaster = "Sterrenblaster",
+	poster_ninjaCat = "Ninjakat",
+	poster_ghostManor = "Spookhuis",
+	poster_robotArena = "Robotarena",
+	poster_dragonValley = "Drakenvallei",
+	poster_neonCity = "Neonstad",
+	poster_crystalKingdom = "Kristallen koninkrijk",
+	poster_mechTitan = "Mech-titaan",
+	poster_galaxyLegends = "Legendes van de melkweg",
+	poster_goldenController = "Gouden controller",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Games: {count}",

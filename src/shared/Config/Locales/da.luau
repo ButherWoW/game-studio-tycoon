@@ -2,6 +2,29 @@
 -- Danish (da). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Plakater",
+	posters_hint = "Almindelige koster $, premium koster Robux. Plakaterne hænger på studiets vægge",
+	posters_no_slots = "Køb garagen først — plakaterne hænger på dens vægge",
+	posters_hang = "Hæng op",
+	posters_hung = "✓ Hænger",
+	posters_pick = 'Hvor skal "{name}" hænge?',
+	posters_slot = "Plads {n}",
+	posters_remove = "Tag ned",
+	posters_cancel = "Annuller",
+	poster_pixelHero = "Pixelhelten",
+	poster_puzzleBlocks = "Klodspuslespil",
+	poster_turboRacer = "Turbokøreren",
+	poster_starBlaster = "Stjerneblaster",
+	poster_ninjaCat = "Ninjakatten",
+	poster_ghostManor = "Spøgelsesvillaen",
+	poster_robotArena = "Robotarenaen",
+	poster_dragonValley = "Dragedalen",
+	poster_neonCity = "Neonbyen",
+	poster_crystalKingdom = "Krystalriget",
+	poster_mechTitan = "Mek-titanen",
+	poster_galaxyLegends = "Galaksens legender",
+	poster_goldenController = "Den gyldne controller",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Spil: {count}",
