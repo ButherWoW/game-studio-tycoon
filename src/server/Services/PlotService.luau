@@ -165,6 +165,20 @@ local function isVisible(upgrade: Upgrades.Upgrade, profile: DataService.Profile
 	return StudioLayout.isVisible(upgrade, profile.studioLevel)
 end
 
+-- Кодовая оболочка этапа → купленная модель, которая её заменяет, если импортирована из Studio
+-- (стены гаража Астры #61 уже с полом и стенами: вторые стены мерцали бы)
+local SUPERSEDED_BY = { Garage = "GarageWalls" }
+
+local function supersededOnPlot(plot: BasePart, modelName: string): boolean
+	local replacement = SUPERSEDED_BY[modelName]
+	if not replacement or not plot:FindFirstChild(replacement) then
+		return false
+	end
+	local folder = ServerStorage:FindFirstChild("Upgrades")
+	local template = folder and folder:FindFirstChild(replacement)
+	return template ~= nil and template:GetAttribute("Generated") ~= true
+end
+
 -- Поставить всё купленное и модель текущего этапа
 local function buildPlot(plot: BasePart, profile: DataService.Profile)
 	-- Участок без гаража пустой: только табличка «Гараж продаётся» (refreshButtons)
@@ -177,7 +191,7 @@ local function buildPlot(plot: BasePart, profile: DataService.Profile)
 		end
 	end
 	local stage = Stages[profile.studioLevel]
-	if stage and stage.model then
+	if stage and stage.model and not supersededOnPlot(plot, stage.model) then
 		placeModel(plot, stage.model, stage.position, 0)
 	end
 end

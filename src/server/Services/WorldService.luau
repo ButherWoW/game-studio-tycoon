@@ -192,6 +192,8 @@ local function ensureUpgradeModels()
 			then nil
 			else ModelFactory.build(upgrade.model)
 		if built then
+			-- Метка «собрано кодом»: PlotService отличает её от импортированной модели
+			built:SetAttribute("Generated", true)
 			built.Parent = folder
 		elseif not (folder :: Instance):FindFirstChild(upgrade.model) then
 			local spec = PLACEHOLDERS[upgrade.model] or DEFAULT_PLACEHOLDER
