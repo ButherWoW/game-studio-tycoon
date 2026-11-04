@@ -4,7 +4,8 @@
 -- Клиент присылает только моменты нажатий; попадание считает сервер по тем же функциям
 -- (QuickEvents.sweep / zoneGrade). Флагу «отлично» от клиента не верим — его и нет.
 -- DevelopmentService вызывает: plan (старт игры), tick (тик разработки), finish (релиз —
--- сумма к оценке), cancel (Rebirth), noteActivity (игрок что-то нажал — не AFK).
+-- сумма к оценке), cancel (Rebirth), noteActivity (игрок что-то нажал — не AFK),
+-- choiceAllowed / noteChoice (событие с выбором не ближе QuickEvents.minGap к быстрым).
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -32,8 +33,9 @@ type Active = {
 	inputs: { Input },
 }
 
--- События одной игры: моменты (секунды разработки), сколько уже было, сумма эффектов
-type Plan = { times: { number }, done: number, total: number, count: number }
+-- События одной игры: моменты (секунды разработки), сколько уже было, сумма эффектов,
+-- elapsed — разработка на последнем тике (для проверки «скоро быстрое событие»)
+type Plan = { times: { number }, done: number, total: number, count: number, elapsed: number }
 
 local EXPIRY_CHECK = 0.2 -- секунд между проверками просроченных событий
 
@@ -43,6 +45,7 @@ local active: { [Player]: Active } = {}
 local lastKind: { [Player]: Kind } = {}
 local ignoredStreak: { [Player]: number } = {}
 local lastInput: { [Player]: number } = {}
+local lastEventAt: { [Player]: number } = {} -- os.clock() старта последнего события (любого)
 local nextId = 0
 local rng = Random.new()
 
@@ -53,6 +56,16 @@ end
 
 local function serverNow(): number
 	return workspace:GetServerTimeNow()
+end
+
+-- С прошлого события (быстрого или с выбором) прошло не меньше minGap секунд
+local function gapPassed(player: Player): boolean
+	local last = lastEventAt[player]
+	return last == nil or os.clock() - last >= QuickEvents.minGap
+end
+
+local function isAfk(player: Player): boolean
+	return (ignoredStreak[player] or 0) >= QuickEvents.afkAfter
 end
 
 -- Время нажатия на сервере. Клиентскому времени верим, только если оно правдоподобно:
@@ -299,6 +312,7 @@ local function startEvent(player: Player, projectId: number)
 		event.zoneCenter = rng:NextNumber(QuickEvents.hold.zoneMin, QuickEvents.hold.zoneMax)
 	end
 	active[player] = event
+	lastEventAt[player] = os.clock()
 	QuickRemotes.QuickEvent:FireClient(player, {
 		id = event.id,
 		kind = kind,
@@ -320,23 +334,32 @@ end
 
 -- ===== Для DevelopmentService =====
 
--- Разложить события новой игры по её длительности. skip — авто-релиз (игрок может быть AFK)
+-- Разложить события новой игры по её длительности. skip — авто-релиз (игрок может быть AFK).
+-- Сколько событий — QuickEvents.countFor, но не больше, чем помещается с шагом minGap
+-- в окне [windowFrom, min(windowTo, до релиза roomSeconds)]
 function QuickEventService.plan(player: Player, projectId: number, duration: number, skip: boolean)
 	local list = plans[player]
 	if not list then
 		list = {}
 		plans[player] = list
 	end
-	local plan: Plan = { times = {}, done = 0, total = 0, count = 0 }
+	local plan: Plan = { times = {}, done = 0, total = 0, count = 0, elapsed = 0 }
 	list[projectId] = plan
 	if skip then
 		return
 	end
-	local count = QuickEvents.countFor(duration)
-	local from, to = duration * QuickEvents.windowFrom, duration * QuickEvents.windowTo
-	local slot = (to - from) / count
+	local gap = QuickEvents.minGap
+	local from = duration * QuickEvents.windowFrom
+	local to = math.min(duration * QuickEvents.windowTo, duration - QuickEvents.roomSeconds)
+	if to < from then
+		return
+	end
+	local count = math.min(QuickEvents.countFor(duration), math.floor((to - from) / gap) + 1)
+	-- Запас сверх минимальных промежутков: каждому событию — свой случайный сдвиг в доле запаса,
+	-- соседние всё равно не ближе gap
+	local share = (to - from - gap * (count - 1)) / count
 	for index = 1, count do
-		table.insert(plan.times, from + slot * (index - 1) + rng:NextNumber(0, slot * 0.6))
+		table.insert(plan.times, from + (index - 1) * (gap + share) + rng:NextNumber(0, share))
 	end
 end
 
@@ -353,19 +376,49 @@ function QuickEventService.tick(
 		return true
 	end
 	local plan = plans[player] and plans[player][projectId]
-	if choiceActive or not plan or plan.done >= #plan.times or elapsed < plan.times[plan.done + 1] then
+	if plan then
+		plan.elapsed = elapsed
+	end
+	-- Ждём: открыт выбор или с прошлого события (в т. ч. другой игры) прошло меньше minGap
+	if
+		choiceActive
+		or not gapPassed(player)
+		or not plan
+		or plan.done >= #plan.times
+		or elapsed < plan.times[plan.done + 1]
+	then
 		return false
 	end
 	plan.done += 1
 	-- До релиза не успеть или игрок AFK — пропускаем без штрафа
-	if
-		elapsed + QuickEvents.roomSeconds > duration
-		or (ignoredStreak[player] or 0) >= QuickEvents.afkAfter
-	then
+	if elapsed + QuickEvents.roomSeconds > duration or isAfk(player) then
 		return false
 	end
 	startEvent(player, projectId)
 	return true
+end
+
+-- Можно ли начать событие с выбором: быстрые в приоритете. Нельзя, пока идёт быстрое, если
+-- с прошлого события меньше minGap или быстрое событие любой игры игрока скоро (в пределах minGap)
+function QuickEventService.choiceAllowed(player: Player): boolean
+	if active[player] or not gapPassed(player) then
+		return false
+	end
+	if isAfk(player) then
+		return true -- быстрые события всё равно пропустятся
+	end
+	for _, plan in plans[player] or {} do
+		local nextAt = plan.times[plan.done + 1]
+		if nextAt and nextAt - plan.elapsed < QuickEvents.minGap then
+			return false
+		end
+	end
+	return true
+end
+
+-- Началось событие с выбором: следующее быстрое — не раньше чем через minGap
+function QuickEventService.noteChoice(player: Player)
+	lastEventAt[player] = os.clock()
 end
 
 -- Игра выходит: незаконченное событие этой игры закрываем (без нажатий — без штрафа).
@@ -470,6 +523,7 @@ function QuickEventService.start()
 		lastKind[player] = nil
 		ignoredStreak[player] = nil
 		lastInput[player] = nil
+		lastEventAt[player] = nil
 	end)
 	-- Просроченные события: закрываем с тем, что успел нажать (ничего — «пропущено»).
 	-- Отдельный цикл: если игрок встал из-за компьютера, тики разработки стоят
