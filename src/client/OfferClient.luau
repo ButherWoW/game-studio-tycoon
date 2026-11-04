@@ -159,6 +159,21 @@ function OfferClient.canPopup(kind: string): boolean
 	return kind == "starterPack" or newPlayerLeft() <= 0
 end
 
+-- Окно предложения сейчас открыто (карточка события компании его не перекрывает)
+function OfferClient.popupOpen(): boolean
+	return gui ~= nil
+end
+
+-- Сколько секунд прошло с последнего всплывающего предложения
+function OfferClient.secondsSincePopup(): number
+	return os.clock() - lastPopup
+end
+
+-- Не показывать предложения ещё seconds секунд (после карточки события компании — не друг за другом)
+function OfferClient.holdPopups(seconds: number)
+	lastPopup = math.max(lastPopup, os.clock() + seconds - Offers.popup.cooldownSeconds)
+end
+
 -- ===== Пакеты дохода =====
 
 local function productById(id: string): Products.Product?

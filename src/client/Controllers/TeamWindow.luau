@@ -39,6 +39,8 @@ local staff: { [string]: string } = {}
 -- Навыки/перки/внешность и открытые легендарные — тоже с сервера
 local info: { [string]: any } = {}
 local unlocked: { [string]: boolean } = {}
+-- Прибавки к зарплате после событий компании: employeeId -> множитель
+local raises: { [string]: number } = {}
 local serverOffset = 0 -- os.time() сервера − клиента (перезарядка смены перка)
 local expanded: string? = nil -- сотрудник, у которого открыта карточка ✏️
 local scrollPosition = Vector2.zero
@@ -521,7 +523,11 @@ local function buildRow(
 	local employeeSkills = info[employee.id] and info[employee.id].skills
 	details ..= " · " .. ClientState.t("team_salary", {
 		amount = Texts.money(
-			Expenses.salary(employee, if type(employeeSkills) == "table" then employeeSkills else nil)
+			math.floor(
+				Expenses.salary(employee, if type(employeeSkills) == "table" then employeeSkills else nil)
+					-- Прибавка после события «переманивают» (CompanyEventService)
+					* (tonumber(raises[employee.id]) or 1)
+			)
 		),
 	})
 	local deskId = staff[employee.id]
@@ -758,6 +764,7 @@ function TeamWindow.start()
 		if type(extra) == "table" then
 			info = if type(extra.info) == "table" then extra.info else {}
 			unlocked = if type(extra.unlocked) == "table" then extra.unlocked else {}
+			raises = if type(extra.raises) == "table" then extra.raises else {}
 			if type(extra.now) == "number" then
 				serverOffset = extra.now - os.time()
 			end

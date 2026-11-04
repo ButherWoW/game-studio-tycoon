@@ -271,8 +271,15 @@ function MoodService.refresh(player: Player)
 end
 
 -- Временное событие команды: сразу сдвигает настроение на value и держит поправку цели
--- seconds секунд (key — текст строки в разборе, mood_part_*). Без сотрудников ничего не делает
-function MoodService.addTemporary(player: Player, key: string, value: number, seconds: number)
+-- seconds секунд (key — текст строки в разборе, mood_part_*). Без сотрудников ничего не делает.
+-- noShift — только поправка цели, без сдвига (вернуть после перезахода: значение уже сохранено)
+function MoodService.addTemporary(
+	player: Player,
+	key: string,
+	value: number,
+	seconds: number,
+	noShift: boolean?
+)
 	local profile = DataService.get(player)
 	if not profile or not active(profile) then
 		return
@@ -281,7 +288,7 @@ function MoodService.addTemporary(player: Player, key: string, value: number, se
 	temporary[player] = list
 	table.insert(list, { key = key, value = value, expires = os.clock() + seconds })
 	local data = moodData(profile)
-	if data.value >= 0 then
+	if data.value >= 0 and not noShift then
 		data.value = math.clamp(data.value + value, Mood.min, Mood.max)
 	end
 	tick(player, profile, 0)
