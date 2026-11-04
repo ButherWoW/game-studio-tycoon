@@ -454,6 +454,11 @@ Texts.ru = {
 	item_figurine = "фигурка",
 	item_cactus = "кактус",
 	item_duck = "уточка",
+	-- camera + mobile
+	camera_view_on = "🎥 Вид студии · колёсико — зум",
+	camera_view_on_touch = "🎥 Вид студии · щипок — зум",
+	camera_auto_on = "Авто-вид за ПК: вкл",
+	camera_auto_off = "Авто-вид за ПК: выкл",
 } :: { [string]: string }
 
 Texts.en = {
@@ -859,6 +864,11 @@ Texts.en = {
 	upgrade_skyDesk9 = "Top workstation 9",
 	upgrade_skyDesk10 = "Top workstation 10",
 	upgrade_skyDesk11 = "Top workstation 11",
+	-- camera + mobile
+	camera_view_on = "🎥 Studio view · scroll to zoom",
+	camera_view_on_touch = "🎥 Studio view · pinch to zoom",
+	camera_auto_on = "Auto view at PC: on",
+	camera_auto_off = "Auto view at PC: off",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть
