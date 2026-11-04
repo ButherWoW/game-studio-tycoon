@@ -1,6 +1,6 @@
 # Описание игры для страницы Roblox
 
-Рабочее название — до выбора в #4 (вариант Dev 2: **Garage Game Studio Tycoon**). Обновлено 04.11 под все механики.
+Рабочее название — до выбора в #4 (вариант Dev 2: **Garage Game Studio Tycoon**). Обновлено 04.11: добавлены зарплаты, аренда и банк.
 
 ## RU
 **🎮 Студия из гаража — создай свою игровую империю!**
@@ -9,7 +9,8 @@
 
 ⭐ 10 жанров, 15 тем и сезонные темы — найди идеальное сочетание
 🏢 Гараж → офис → бизнес-центр → небоскрёб, у каждого свой интерьер
-👩‍💻 Нанимай команду, прокачивай навыки и перки, одевай сотрудников
+👩‍💻 Нанимай команду, прокачивай навыки и перки, одевай сотрудников — но плати зарплату и аренду!
+🏦 Деньги кончились? Банк выручит кредитом… который придётся вернуть 😅
 📀 Хиты на полке приносят деньги, пока тебя нет… а соседи могут их украсть! Догони вора 😈
 🏆 Каждый час — игровая выставка: лучшая игра сервера получает $15 000
 🔬 Исследования, задания, награды за вход, праздничные ивенты
@@ -24,7 +25,8 @@ Start on a park bench with a laptop, save up for an old garage and name your stu
 
 ⭐ 10 genres, 15 topics and seasonal topics — find the perfect combo
 🏢 Garage → office → business floor → skyscraper, each with its own interior
-👩‍💻 Hire a team, level up skills and perks, dress up your staff
+👩‍💻 Hire a team, level up skills and perks, dress up your staff — and pay their salaries and rent!
+🏦 Out of cash? The bank has a loan for you… that you'll have to pay back 😅
 📀 Hits on your shelf earn money while you're away… and neighbours can steal them! Catch the thief 😈
 🏆 Every hour — a game expo: the best game on the server wins $15,000
 🔬 Research, quests, daily rewards, holiday events
