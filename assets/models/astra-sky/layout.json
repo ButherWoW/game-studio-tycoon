@@ -1,0 +1,153 @@
+{
+  "source": "origin/main src/shared/Config/Upgrades.luau stage4",
+  "localBaseY": 0,
+  "gameFloorY": 28,
+  "entry": {
+    "x": [
+      -12,
+      12
+    ],
+    "height": 9,
+    "z": 29.75
+  },
+  "elevator": {
+    "min": [
+      -23,
+      0,
+      21
+    ],
+    "max": [
+      -17,
+      7,
+      27
+    ]
+  },
+  "placements": [
+    {
+      "model": "Skyscraper",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    {
+      "model": "SkyDesk",
+      "position": [
+        -3,
+        0,
+        -20
+      ],
+      "yaw": 0
+    },
+    {
+      "model": "SkyDesk",
+      "position": [
+        5,
+        0,
+        -20
+      ],
+      "yaw": 0
+    },
+    {
+      "model": "SkyDesk",
+      "position": [
+        13,
+        0,
+        -20
+      ],
+      "yaw": 0
+    },
+    {
+      "model": "SkyDesk",
+      "position": [
+        21,
+        0,
+        -20
+      ],
+      "yaw": 0
+    },
+    {
+      "model": "SkyDesk",
+      "position": [
+        -18,
+        0,
+        -8
+      ],
+      "yaw": 0
+    },
+    {
+      "model": "SkyDesk",
+      "position": [
+        -9,
+        0,
+        -8
+      ],
+      "yaw": 0
+    },
+    {
+      "model": "SkyDesk",
+      "position": [
+        0,
+        0,
+        -8
+      ],
+      "yaw": 0
+    },
+    {
+      "model": "SkyDesk",
+      "position": [
+        9,
+        0,
+        -8
+      ],
+      "yaw": 0
+    },
+    {
+      "model": "SkyDesk",
+      "position": [
+        18,
+        0,
+        -8
+      ],
+      "yaw": 0
+    },
+    {
+      "model": "SkyDesk",
+      "position": [
+        -6,
+        0,
+        4
+      ],
+      "yaw": 0
+    },
+    {
+      "model": "SkyDesk",
+      "position": [
+        6,
+        0,
+        4
+      ],
+      "yaw": 0
+    },
+    {
+      "model": "SoundStudio",
+      "position": [
+        -18,
+        0,
+        14
+      ],
+      "yaw": 0
+    },
+    {
+      "model": "ArtWall",
+      "position": [
+        15,
+        0,
+        16
+      ],
+      "yaw": 0
+    }
+  ]
+}
