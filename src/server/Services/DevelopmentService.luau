@@ -775,6 +775,11 @@ local function release(player: Player, project: Project)
 	-- Сезонный пропуск (опыт за игру) и гейм-джем (игра по теме недели)
 	hook("SeasonService", "onGameReleased", player, { score = score })
 	hook("GameJamService", "onGameReleased", player, {
+		genreId = project.genreId,
+		topicId = project.topicId,
+		score = score,
+		revenue = revenue,
+	})
 	-- Франшизы (фанаты, кандидаты) и контракт издателя (прогресс)
 	hook("FranchiseService", "onGameReleased", player, {
 		projectId = project.id,

@@ -19,7 +19,7 @@ local QuestWindow = require(script.Parent.QuestWindow)
 
 type Tab = "season" | "jam"
 
-local MENU_SLOT = 15
+local MENU_SLOT = 16
 local ROW_HEIGHT = 64
 local ROW_COLOR = Color3.fromRGB(44, 46, 66)
 local PREMIUM_COLOR = Color3.fromRGB(255, 170, 60)

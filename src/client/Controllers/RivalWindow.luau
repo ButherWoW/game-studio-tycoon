@@ -15,7 +15,7 @@ local ClientState = require(script.Parent.Parent.ClientState)
 local DepthToast = require(script.Parent.Parent.DepthToast)
 local Ui = require(script.Parent.Parent.Ui)
 
-local MENU_SLOT = 18
+local MENU_SLOT = 17
 local ROW_HEIGHT = 40
 local BANNER_HEIGHT = 26
 local BANNER_WIDTH = 400
