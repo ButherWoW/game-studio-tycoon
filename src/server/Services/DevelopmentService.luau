@@ -159,6 +159,7 @@ type Project = {
 	laptop: boolean?, -- начата на ноутбуке в парке: доход × StartPark.laptopRevenueMultiplier
 }
 
+local LEADERSTATS_REVEAL_SECONDS = 4.5 -- сколько клиент раскрывает оценки в окне релиза
 local BASE_DURATION = 30 -- секунд на одну игру в начале
 local MAX_NAME_LENGTH = 30
 local DEFAULT_NAME = "Без названия" -- только если сам фильтр Roblox упал
@@ -558,6 +559,8 @@ local function release(player: Player, project: Project)
 	profile.runBestScore = math.max(profile.runBestScore, score)
 	Formulas.rememberCombo(profile.recentCombos, project.genreId, project.topicId)
 	DataService.addCash(player, revenue)
+	-- В таблице лидеров доход появится вместе с оценкой в окне релиза, а не раньше
+	DataService.holdLeaderstats(player, revenue, LEADERSTATS_REVEAL_SECONDS)
 
 	hook("ResearchService", "onGameReleased", player, score)
 	hook("PerksService", "onGameReleased", player, revenue)
