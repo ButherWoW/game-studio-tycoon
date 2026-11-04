@@ -284,7 +284,11 @@ function ExpoService.start()
 			local endsAt = (os.time() // interval + 1) * interval
 			ReplicatedStorage:SetAttribute("ExpoEndsAt", endsAt)
 			task.wait(math.max(endsAt - os.time(), 1))
-			finishRound(endsAt // interval, minParticipants)
+			-- Ошибка в итогах раунда не должна останавливать выставку до перезапуска сервера
+			local ok, err = pcall(finishRound, endsAt // interval, minParticipants)
+			if not ok then
+				warn("[ExpoService] finishRound failed:", err)
+			end
 		end
 	end)
 end

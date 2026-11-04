@@ -492,6 +492,16 @@ local function onGoHome(player: Player)
 	if not PlotService.ownsGarage(player) then
 		return
 	end
+	-- Во время кражи хита 🏠 не работает: жертва мгновенно вставала у ворот на пути вора
+	-- (ловила его без погони), а вор телепортом сбивал проверку скорости. HitService требует
+	-- PlotService, поэтому берём его лениво, как другие сервисы
+	local hits = script.Parent:FindFirstChild("HitService")
+	if hits and hits:IsA("ModuleScript") then
+		local ok, busy = pcall((require(hits) :: any).inChase, player)
+		if ok and busy == true then
+			return
+		end
+	end
 	sendHome(player)
 end
 

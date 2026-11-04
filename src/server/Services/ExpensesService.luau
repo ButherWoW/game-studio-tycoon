@@ -36,8 +36,9 @@ local function charge(player: Player)
 	if not profile then
 		return
 	end
-	-- В парке до гаража расходов нет
-	if not PlotService.ownsGarage(player) then
+	-- В парке до гаража расходов нет. Без участка (все заняты, игрок в очереди PlotService) студии
+	-- на сервере нет: делать игры нельзя (isAtPc), а зарплаты и аренда съедали бы деньги до забастовки
+	if not PlotService.ownsGarage(player) or not PlotService.getPlot(player) then
 		player:SetAttribute("ExpensesPerMinute", 0)
 		setStrike(player, profile, false)
 		return

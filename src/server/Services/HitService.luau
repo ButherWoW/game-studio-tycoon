@@ -639,6 +639,16 @@ local function checkCarry(carry: Carry)
 	end
 end
 
+-- Игрок сейчас уносит чужой картридж или его картридж уносят (для PlotService: кнопка 🏠)
+function HitService.inChase(player: Player): boolean
+	for _, carry in carries do
+		if carry.thief == player or carry.victim == player then
+			return true
+		end
+	end
+	return false
+end
+
 -- ===== Защита и вход =====
 
 local function onRequestLock(player: Player)

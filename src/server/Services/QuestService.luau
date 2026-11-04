@@ -405,8 +405,14 @@ function QuestService.start()
 			for _, player in Players:GetPlayers() do
 				local profile = DataService.get(player)
 				if profile then
-					trackEarnings(player, profile)
-					sendState(player)
+					-- Ошибка у одного игрока (битые данные заданий) не должна останавливать цикл для всех
+					local ok, err = pcall(function()
+						trackEarnings(player, profile)
+						sendState(player)
+					end)
+					if not ok then
+						warn("[QuestService] poll failed:", err)
+					end
 				end
 			end
 		end
