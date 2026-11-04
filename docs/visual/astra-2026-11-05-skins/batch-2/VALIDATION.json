@@ -1,0 +1,58 @@
+{
+  "studioTested": false,
+  "renderer": "actual UV mapped block rig and exported accessory Part geometry",
+  "skins": {
+    "intern": {
+      "parts": 6,
+      "accessories": 1,
+      "checks": "PASS",
+      "clothing": [
+        585,
+        559
+      ],
+      "preview": [
+        512,
+        512
+      ]
+    },
+    "bug_hunter": {
+      "parts": 17,
+      "accessories": 2,
+      "checks": "PASS",
+      "clothing": [
+        585,
+        559
+      ],
+      "preview": [
+        512,
+        512
+      ]
+    },
+    "speedrunner": {
+      "parts": 8,
+      "accessories": 2,
+      "checks": "PASS",
+      "clothing": [
+        585,
+        559
+      ],
+      "preview": [
+        512,
+        512
+      ]
+    },
+    "retro_gamer": {
+      "parts": 7,
+      "accessories": 2,
+      "checks": "PASS",
+      "clothing": [
+        585,
+        559
+      ],
+      "preview": [
+        512,
+        512
+      ]
+    }
+  }
+}
