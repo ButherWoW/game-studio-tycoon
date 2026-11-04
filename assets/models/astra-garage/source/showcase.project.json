@@ -1,0 +1,51 @@
+{
+  "name": "Astra Garage Showcase",
+  "tree": {
+    "$className": "DataModel",
+    "Workspace": {
+      "$className": "Workspace",
+      "Garage": {
+        "$path": "../Garage_Assembled.rbxmx"
+      },
+      "Spawn": {
+        "$className": "SpawnLocation",
+        "$properties": {
+          "Anchored": true,
+          "Neutral": true,
+          "Transparency": 1,
+          "CanCollide": false,
+          "Size": [
+            4,
+            0.1,
+            4
+          ],
+          "Position": [
+            0,
+            0.3,
+            20
+          ]
+        }
+      }
+    },
+    "Lighting": {
+      "$className": "Lighting",
+      "$properties": {
+        "Brightness": 2,
+        "ClockTime": 15,
+        "Ambient": [
+          0.48,
+          0.43,
+          0.39
+        ],
+        "OutdoorAmbient": [
+          0.57,
+          0.6,
+          0.66
+        ],
+        "EnvironmentDiffuseScale": 1,
+        "EnvironmentSpecularScale": 0.6,
+        "GlobalShadows": true
+      }
+    }
+  }
+}

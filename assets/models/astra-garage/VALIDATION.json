@@ -1,0 +1,136 @@
+{
+  "status": "passed",
+  "tool": "Rojo 7.4.4",
+  "checks": [
+    "All model XML parsed by Roblox-aware Rojo serializer",
+    "All parts anchored; transforms orthonormal; dimensions positive",
+    "All model PrimaryPart references resolve",
+    "All seats touch-enabled",
+    "No scripts or external meshes/textures",
+    "Binary RBXM generated for every model",
+    "Binary RBXL showcase generated"
+  ],
+  "limitation": "Not opened or play-tested in Roblox Studio on this machine. Performance and seating require final Studio check.",
+  "files": [
+    {
+      "file": "models/Chair.rbxm",
+      "partsIncludingPivots": 156,
+      "bytes": 4133,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/Coffee.rbxm",
+      "partsIncludingPivots": 145,
+      "bytes": 3810,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/CoffeeTable.rbxm",
+      "partsIncludingPivots": 61,
+      "bytes": 2132,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/Desk1.rbxm",
+      "partsIncludingPivots": 263,
+      "bytes": 5516,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/Desk2.rbxm",
+      "partsIncludingPivots": 259,
+      "bytes": 4804,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/GarageRoof.rbxm",
+      "partsIncludingPivots": 45,
+      "bytes": 1322,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/GarageWalls.rbxm",
+      "partsIncludingPivots": 369,
+      "bytes": 6214,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/HitShelf.rbxm",
+      "partsIncludingPivots": 8,
+      "bytes": 1372,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/PC1.rbxm",
+      "partsIncludingPivots": 233,
+      "bytes": 4844,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/PCPro.rbxm",
+      "partsIncludingPivots": 314,
+      "bytes": 5299,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/PendantLamp.rbxm",
+      "partsIncludingPivots": 10,
+      "bytes": 1392,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/Plant.rbxm",
+      "partsIncludingPivots": 31,
+      "bytes": 1496,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/Posters.rbxm",
+      "partsIncludingPivots": 45,
+      "bytes": 1986,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/Rug.rbxm",
+      "partsIncludingPivots": 70,
+      "bytes": 1887,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/Sofa.rbxm",
+      "partsIncludingPivots": 281,
+      "bytes": 4377,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/StudioSign.rbxm",
+      "partsIncludingPivots": 72,
+      "bytes": 2040,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "models/WallBench.rbxm",
+      "partsIncludingPivots": 26,
+      "bytes": 1371,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "Garage_Assembled.rbxm",
+      "partsIncludingPivots": 4063,
+      "bytes": 35360,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "Garage_Roof_Optional.rbxm",
+      "partsIncludingPivots": 45,
+      "bytes": 1330,
+      "rojoReadAndBuild": "passed"
+    },
+    {
+      "file": "Upgrades_Import.rbxm",
+      "partsIncludingPivots": 1793,
+      "bytes": 23902,
+      "rojoReadAndBuild": "passed"
+    }
+  ]
+}
