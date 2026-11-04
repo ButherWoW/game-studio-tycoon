@@ -310,6 +310,12 @@ return {
 	stage_office = "Офис",
 	stage_floor = "Офис: 2-ри етаж",
 	stage_skyscraper = "Офис: 3-ти етаж",
+	-- Этажи офиса
+	floor_name_1 = "1-ви етаж",
+	floor_name_2 = "2-ри етаж",
+	floor_name_3 = "3-ти етаж",
+	floor_lift = "Асансьор",
+	floor_sign = "🔒 {floor} е заключен\n{price} · нужни игри: {games}",
 	upgrade_desk1 = "Старо бюро",
 	upgrade_pc1 = "Компютър от битака",
 	upgrade_walls = "Стени и осветление в гаража",

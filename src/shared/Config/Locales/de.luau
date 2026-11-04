@@ -310,6 +310,12 @@ return {
 	stage_office = "Büro",
 	stage_floor = "Büro: 2. Etage",
 	stage_skyscraper = "Büro: 3. Etage",
+	-- Этажи офиса
+	floor_name_1 = "1. Etage",
+	floor_name_2 = "2. Etage",
+	floor_name_3 = "3. Etage",
+	floor_lift = "Aufzug",
+	floor_sign = "🔒 {floor} ist gesperrt\n{price} · benötigte Spiele: {games}",
 	upgrade_desk1 = "Alter Tisch",
 	upgrade_pc1 = "Computer vom Flohmarkt",
 	upgrade_walls = "Wände und Licht in der Garage",

@@ -310,6 +310,12 @@ return {
 	stage_office = "Kancelária",
 	stage_floor = "Kancelária: 2. poschodie",
 	stage_skyscraper = "Kancelária: 3. poschodie",
+	-- Этажи офиса
+	floor_name_1 = "1. poschodie",
+	floor_name_2 = "2. poschodie",
+	floor_name_3 = "3. poschodie",
+	floor_lift = "Výťah",
+	floor_sign = "🔒 {floor} je zamknuté\n{price} · potrebné hry: {games}",
 	upgrade_desk1 = "Starý stôl",
 	upgrade_pc1 = "Počítač z bazáru",
 	upgrade_walls = "Steny a svetlá v garáži",

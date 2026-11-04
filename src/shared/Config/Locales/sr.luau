@@ -309,6 +309,12 @@ return {
 	stage_office = "Канцеларија",
 	stage_floor = "Канцеларија: 2. спрат",
 	stage_skyscraper = "Канцеларија: 3. спрат",
+	-- Этажи офиса
+	floor_name_1 = "1. спрат",
+	floor_name_2 = "2. спрат",
+	floor_name_3 = "3. спрат",
+	floor_lift = "Лифт",
+	floor_sign = "🔒 {floor} је закључан\n{price} · потребно игара: {games}",
 	upgrade_desk1 = "Стари сто",
 	upgrade_pc1 = "Рачунар са бувљака",
 	upgrade_walls = "Зидови и светло у гаражи",

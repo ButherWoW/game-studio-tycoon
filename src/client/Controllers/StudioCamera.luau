@@ -3,7 +3,8 @@
 -- Включается кнопкой в боковом меню (слот 10) и сама, когда игрок садится за свой ПК
 -- (если включён тумблер «авто-вид» рядом с кнопкой). Выход: повторное нажатие, встал из-за ПК,
 -- открыл чужую полку (prompt не на своём участке), респаун.
--- В этом режиме передние стены и потолок своего участка локально полупрозрачные.
+-- В этом режиме передние стены и потолок своего участка локально полупрозрачные,
+-- а этажи офиса выше того, где стоит игрок, спрятаны совсем (виден текущий этаж).
 
 local Players = game:GetService("Players")
 local ProximityPromptService = game:GetService("ProximityPromptService")
@@ -13,12 +14,15 @@ local UserInputService = game:GetService("UserInputService")
 
 local CameraConfig = require(ReplicatedStorage.Shared.Config.Camera)
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
+local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
 local MENU_SLOT = 10
 -- Атрибут игрока (только у себя, на сервер не уходит): включён ли авто-вид при посадке за ПК
 local AUTO_ATTRIBUTE = "AutoStudioView"
+-- Как часто проверять, не сменил ли игрок этаж (лифт), пока включён вид студии
+local FLOOR_POLL = 0.3
 
 local player = Players.LocalPlayer
 
@@ -31,6 +35,10 @@ local tween: Tween? = nil
 local activePlot: BasePart? = nil
 -- Детали, которым поставили прозрачность: исходное значение модификатора (слабые ключи)
 local faded: { [BasePart]: number } = setmetatable({}, { __mode = "k" }) :: any
+-- Таблички и надписи на спрятанных этажах: было ли включено (слабые ключи)
+local hiddenGuis: { [LayerCollector]: boolean } = setmetatable({}, { __mode = "k" }) :: any
+-- Этаж, который сейчас показывает вид студии (1 — гараж или 1-й этаж офиса)
+local viewFloor = 1
 local plotConnection: RBXScriptConnection? = nil
 local menuButton: TextButton? = nil
 local refreshButtons: (() -> ())? = nil
@@ -41,7 +49,7 @@ local FRONT_Z = (function(): number
 	local maxZ = -math.huge
 	for _, upgrade in Upgrades do
 		local position = upgrade.position
-		if position and not upgrade.shellStage and not upgrade.move then
+		if position and not upgrade.shellStage and not upgrade.stage and not upgrade.move then
 			maxZ = math.max(maxZ, position.Z)
 		end
 	end
@@ -59,32 +67,67 @@ function StudioCamera.autoEnabled(): boolean
 	return if type(value) == "boolean" then value else CameraConfig.autoViewDefault
 end
 
+-- Этаж, на котором стоит игрок (по высоте над полом своего участка)
+local function currentFloor(plot: BasePart): number
+	local character = player.Character
+	local root = character and character:FindFirstChild("HumanoidRootPart") :: BasePart?
+	if not root then
+		return 1
+	end
+	local height = plot.CFrame:PointToObjectSpace(root.Position).Y - plot.Size.Y / 2
+	return StudioLayout.floorAt(height)
+end
+
 -- ===== Прозрачность передних стен и потолка =====
 
-local function shouldFade(plot: BasePart, part: BasePart): boolean
+-- Сколько прозрачности дать детали: nil — не трогать, 1 — этаж выше текущего (спрятать)
+local function fadeFor(plot: BasePart, part: BasePart): number?
 	if part == plot then
-		return false
+		return nil
+	end
+	local localPos = plot.CFrame:PointToObjectSpace(part.Position)
+	-- Высота над полом этажа, который показываем
+	local height = localPos.Y - plot.Size.Y / 2 - StudioLayout.floorY(viewFloor)
+	if viewFloor < StudioLayout.FLOOR_COUNT and height >= StudioLayout.FLOOR_HEIGHT - 0.5 then
+		return 1
 	end
 	-- Сотрудники и прочие персонажи на участке — не стены
 	local model = part:FindFirstAncestorOfClass("Model")
 	if model and model:FindFirstChildOfClass("Humanoid") then
-		return false
+		return nil
 	end
-	local localPos = plot.CFrame:PointToObjectSpace(part.Position)
-	local height = localPos.Y - plot.Size.Y / 2
 	if height > CameraConfig.fadeHeight then
-		return true
+		return CameraConfig.fadeTransparency
 	end
-	return localPos.Z > FRONT_Z and part.Size.Y > CameraConfig.frontMinHeight
+	if height >= 0 and localPos.Z > FRONT_Z and part.Size.Y > CameraConfig.frontMinHeight then
+		return CameraConfig.fadeTransparency
+	end
+	return nil
+end
+
+local function hideGuis(part: BasePart)
+	for _, child in part:GetChildren() do
+		if child:IsA("SurfaceGui") or child:IsA("BillboardGui") then
+			if hiddenGuis[child] == nil then
+				hiddenGuis[child] = child.Enabled
+			end
+			child.Enabled = false
+		end
+	end
 end
 
 local function fadePart(plot: BasePart, instance: Instance)
 	if not instance:IsA("BasePart") or faded[instance] ~= nil then
 		return
 	end
-	if shouldFade(plot, instance) then
+	local transparency = fadeFor(plot, instance)
+	if transparency then
 		faded[instance] = instance.LocalTransparencyModifier
-		instance.LocalTransparencyModifier = CameraConfig.fadeTransparency
+		instance.LocalTransparencyModifier = transparency
+		-- Табличка 🔒 и подписи лифта сквозь «спрятанный» этаж видны — гасим их тоже
+		if transparency >= 1 then
+			hideGuis(instance)
+		end
 	end
 end
 
@@ -113,14 +156,21 @@ local function restoreParts()
 		end
 	end
 	table.clear(faded)
+	for gui, enabled in hiddenGuis do
+		if gui.Parent then
+			gui.Enabled = enabled
+		end
+	end
+	table.clear(hiddenGuis)
 end
 
 -- ===== Камера =====
 
 local function viewCFrame(plot: BasePart): CFrame
 	local pitch = math.rad(CameraConfig.pitchDegrees)
+	local floorY = StudioLayout.floorY(viewFloor)
 	local target =
-		plot.CFrame:PointToWorldSpace(Vector3.new(0, plot.Size.Y / 2 + CameraConfig.targetHeight, 0))
+		plot.CFrame:PointToWorldSpace(Vector3.new(0, plot.Size.Y / 2 + floorY + CameraConfig.targetHeight, 0))
 	-- Камера с переднего края участка (+Z локально), над ним под углом pitch
 	local offset = plot.CFrame:VectorToWorldSpace(Vector3.new(0, math.sin(pitch), math.cos(pitch))) * distance
 	return CFrame.lookAt(target + offset, target)
@@ -153,6 +203,7 @@ function StudioCamera.enter()
 	end
 	active = true
 	activePlot = plot
+	viewFloor = currentFloor(plot)
 	distance = CameraConfig.distance
 	savedFov = camera.FieldOfView
 	camera.CameraType = Enum.CameraType.Scriptable
@@ -359,6 +410,23 @@ function StudioCamera.start()
 	-- Участок поменялся (переезд на другой участок) — уходим из вида, чтобы не смотреть на чужой
 	player:GetAttributeChangedSignal("PlotName"):Connect(function()
 		StudioCamera.exit()
+	end)
+
+	-- Поехал на лифте, пока смотришь сверху: показываем новый этаж
+	task.spawn(function()
+		while true do
+			task.wait(FLOOR_POLL)
+			local plot = activePlot
+			if active and plot then
+				local floor = currentFloor(plot)
+				if floor ~= viewFloor then
+					viewFloor = floor
+					restoreParts()
+					fadePlot(plot)
+					moveCamera(CameraConfig.tweenSeconds)
+				end
+			end
+		end
 	end)
 end
 

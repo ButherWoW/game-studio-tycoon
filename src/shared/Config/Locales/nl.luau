@@ -310,6 +310,12 @@ return {
 	stage_office = "Kantoor",
 	stage_floor = "Kantoor: 2e verdieping",
 	stage_skyscraper = "Kantoor: 3e verdieping",
+	-- Этажи офиса
+	floor_name_1 = "1e verdieping",
+	floor_name_2 = "2e verdieping",
+	floor_name_3 = "3e verdieping",
+	floor_lift = "Lift",
+	floor_sign = "🔒 {floor} is op slot\n{price} · games nodig: {games}",
 	upgrade_desk1 = "Oud bureau",
 	upgrade_pc1 = "Computer van de rommelmarkt",
 	upgrade_walls = "Muren en licht in de garage",

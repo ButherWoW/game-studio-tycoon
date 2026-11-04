@@ -2,6 +2,8 @@
 -- Тайкун-кнопки на участке. model — имя модели в ServerStorage.Upgrades.
 -- requires — что должно быть куплено раньше (кнопка появится после этого).
 
+local Stages = require(script.Parent.Stages)
+
 export type Upgrade = {
 	id: string,
 	name: string,
@@ -12,10 +14,11 @@ export type Upgrade = {
 	speed: number?, -- на сколько быстрее делаются игры: 0.05 = −5% времени (сумма, предел в Economy)
 	reviewBonus: number?, -- прибавка к оценке каждой игры (декор и атмосфера)
 	desk: boolean?, -- за этим апгрейдом может сидеть сотрудник (один на стол)
-	-- Начинка помещения этапа: видна, пока студия на этом этапе (после переезда прячется)
+	-- Начинка помещения этапа: видна, пока студия на этом этапе (после переезда прячется).
+	-- Только гараж: этажи офиса стоят друг на друге, их интерьер не прячется
 	shellStage: number?,
-	-- С какого этапа студии предмет виден и продаётся (nil — с гаража). Интерьер офиса, этажа
-	-- и небоскрёба: stage = shellStage = номер этапа — виден только на своём этапе
+	-- С какого этапа студии предмет виден и продаётся (nil — с гаража). Интерьер этажей офиса:
+	-- stage = номер этапа, стоит на высоте своего этажа (Stages.floorY) и остаётся навсегда
 	stage: number?,
 	-- Переезд на следующий этап: кнопка появится, только когда куплен весь интерьер
 	-- и за каждым столом сидит сотрудник (PlotService)
@@ -126,7 +129,7 @@ local Upgrades: { Upgrade } = {
 		reviewBonus = 0.5,
 		position = Vector3.new(0, 0.5, 0),
 		rotation = 0,
-		shellStage = 2,
+		-- Оболочка 1-го этажа: остаётся, когда открываются 2-й и 3-й этажи над ней
 		move = true,
 		name = "Переезд в офис",
 		cost = 6_500,
@@ -159,12 +162,12 @@ local function interior(
 		model = model,
 		requires = requires,
 		stage = stage,
-		shellStage = stage,
 		desk = extra.pointsPerSecond ~= nil,
 		pointsPerSecond = extra.pointsPerSecond,
 		speed = extra.speed,
 		reviewBonus = extra.reviewBonus,
-		position = Vector3.new(x, 0.5, z),
+		-- На полу своего этажа: этажи стоят друг на друге
+		position = Vector3.new(x, 0.5 + Stages[stage].floorY, z),
 		rotation = rotation,
 	}
 end

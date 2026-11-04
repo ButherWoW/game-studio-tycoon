@@ -3,6 +3,8 @@
 -- Общие правила для сервера (PlotService, StaffService) и окна «Команда».
 
 local Upgrades = require(script.Parent.Config.Upgrades)
+local Stages = require(script.Parent.Config.Stages)
+local Texts = require(script.Parent.Config.Texts)
 
 local StudioLayout = {}
 
@@ -34,6 +36,54 @@ function StudioLayout.visibleDesks(upgrades: { [string]: boolean }, studioLevel:
 		end
 	end
 	return result
+end
+
+-- ===== Этажи офиса =====
+-- Этаж N (1..3) — этап N + 1 (гараж — тоже «1-й этаж», но без лифта и других этажей)
+
+StudioLayout.FLOOR_COUNT = #Stages - 1
+StudioLayout.FLOOR_HEIGHT = Stages[3].floorY - Stages[2].floorY
+-- Лифт: зона 6×6 studs на каждом этаже (центр в координатах участка, слева у входа)
+StudioLayout.ELEVATOR = Vector3.new(-20, 0, 24)
+
+-- Сколько этажей открыто при этом studioLevel (гараж — 1)
+function StudioLayout.floorsUnlocked(studioLevel: number): number
+	return math.clamp(math.floor(studioLevel) - 1, 1, StudioLayout.FLOOR_COUNT)
+end
+
+-- Высота пола этажа над полом участка
+function StudioLayout.floorY(floor: number): number
+	local stage = Stages[floor + 1]
+	return if stage then stage.floorY else 0
+end
+
+-- Этап, который открывает этаж (для цены и условий на табличке)
+function StudioLayout.floorStage(floor: number): Stages.Stage?
+	return Stages[floor + 1]
+end
+
+-- На каком этаже предмет (кнопка покупки ставится туда же)
+function StudioLayout.upgradeFloor(upgrade: Upgrades.Upgrade): number
+	return math.max((upgrade.stage or 1) - 1, 1)
+end
+
+-- Этаж по высоте над полом участка (персонаж, деталь)
+function StudioLayout.floorAt(height: number): number
+	return math.clamp(math.floor(height / StudioLayout.FLOOR_HEIGHT) + 1, 1, StudioLayout.FLOOR_COUNT)
+end
+
+-- Подписи этажей: сервер пишет по-русски, клиент (PlotLabels) переписывает на язык игрока
+function StudioLayout.floorName(lang: string, floor: number): string
+	return Texts.format(lang, "floor_name_" .. floor)
+end
+
+function StudioLayout.floorSign(lang: string, floor: number): string
+	local stage = StudioLayout.floorStage(floor)
+	return Texts.format(lang, "floor_sign", {
+		floor = StudioLayout.floorName(lang, floor),
+		price = Texts.money(if stage then stage.cost else 0),
+		games = if stage then stage.gamesRequired else 0,
+	})
 end
 
 local byId: { [string]: Upgrades.Upgrade } = {}

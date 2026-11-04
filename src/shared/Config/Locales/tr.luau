@@ -309,6 +309,12 @@ return {
 	stage_office = "Ofis",
 	stage_floor = "Ofis: 2. kat",
 	stage_skyscraper = "Ofis: 3. kat",
+	-- Этажи офиса
+	floor_name_1 = "1. kat",
+	floor_name_2 = "2. kat",
+	floor_name_3 = "3. kat",
+	floor_lift = "Asansör",
+	floor_sign = "🔒 {floor} kilitli\n{price} · gereken oyun: {games}",
 	upgrade_desk1 = "Eski masa",
 	upgrade_pc1 = "Bit pazarından bilgisayar",
 	upgrade_walls = "Garaj duvarları ve ışıklar",
