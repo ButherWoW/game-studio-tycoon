@@ -54,18 +54,18 @@ Images.medals = {
 -- skin_<id>_pants.png (шаблоны 585×559) и skin_<id>_preview.png (512×512) как Images и вставить
 -- Image ID (не Decal ID!) в shirt / pants / preview напротив id скина
 Images.skins = {
-	hoodie_coder = { shirt = 0, pants = 0, preview = 0 },
-	pixel_artist = { shirt = 0, pants = 0, preview = 0 },
-	sound_nerd = { shirt = 0, pants = 0, preview = 0 },
-	writer = { shirt = 0, pants = 0, preview = 0 },
-	intern = { shirt = 0, pants = 0, preview = 0 },
-	bug_hunter = { shirt = 0, pants = 0, preview = 0 },
-	speedrunner = { shirt = 0, pants = 0, preview = 0 },
-	retro_gamer = { shirt = 0, pants = 0, preview = 0 },
-	neon_streamer = { shirt = 0, pants = 0, preview = 0 }, -- премиум
-	cyber_dev = { shirt = 0, pants = 0, preview = 0 }, -- премиум
-	space_dev = { shirt = 0, pants = 0, preview = 0 }, -- премиум
-	wizard_dev = { shirt = 0, pants = 0, preview = 0 }, -- премиум
+	hoodie_coder = { shirt = 116925253396107, pants = 77040404351690, preview = 0 },
+	pixel_artist = { shirt = 134341234705476, pants = 110913800554979, preview = 0 },
+	sound_nerd = { shirt = 140584770538068, pants = 114882087803012, preview = 0 },
+	writer = { shirt = 94386345570626, pants = 91319320361436, preview = 0 },
+	intern = { shirt = 113270813059869, pants = 120755267901010, preview = 0 },
+	bug_hunter = { shirt = 131441530857371, pants = 81481283222694, preview = 0 },
+	speedrunner = { shirt = 103872155513441, pants = 109156030900915, preview = 0 },
+	retro_gamer = { shirt = 119464023103825, pants = 138364891743589, preview = 0 },
+	neon_streamer = { shirt = 73791546129249, pants = 74152800336888, preview = 0 }, -- премиум
+	cyber_dev = { shirt = 82642398146223, pants = 130561786132954, preview = 0 }, -- премиум
+	space_dev = { shirt = 88596041155611, pants = 121217414786209, preview = 0 }, -- премиум
+	wizard_dev = { shirt = 133948528089059, pants = 84656926980640, preview = 0 }, -- премиум
 } :: { [string]: { shirt: number, pants: number, preview: number } }
 
 return Images
