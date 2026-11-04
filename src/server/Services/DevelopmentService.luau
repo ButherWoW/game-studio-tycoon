@@ -17,6 +17,7 @@ local WordFilter = require(Shared.WordFilter)
 local Genres = require(Shared.Config.Genres)
 local Topics = require(Shared.Config.Topics)
 local Upgrades = require(Shared.Config.Upgrades)
+local Rebirth = require(Shared.Config.Rebirth)
 local Employees = require(Shared.Config.Employees)
 local GamePasses = require(Shared.Config.GamePasses)
 local Research = require(Shared.Config.Research)
@@ -538,7 +539,7 @@ local function release(player: Player, project: Project)
 	if profile.activeAd and profile.activeAd.expiresAt > os.time() then
 		adBonus = profile.activeAd.bonus
 	end
-	local rebirthMultiplier = 1 + 0.5 * profile.rebirths
+	local rebirthMultiplier = Rebirth.multiplier(profile.rebirths)
 	local revenue = Formulas.revenue(score, profile.studioLevel, adBonus, rebirthMultiplier)
 	local shop = shopModifiers(player)
 	local research = researchModifiers(player)

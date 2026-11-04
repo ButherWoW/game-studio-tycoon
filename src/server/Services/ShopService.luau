@@ -17,6 +17,7 @@ local ShopRemotes = require(Shared.ShopRemotes)
 local Formulas = require(Shared.Formulas)
 local GamePasses = require(Shared.Config.GamePasses)
 local Products = require(Shared.Config.Products)
+local Rebirth = require(Shared.Config.Rebirth)
 local DataService = require(script.Parent.DataService)
 
 export type Modifiers = {
@@ -106,7 +107,7 @@ function ShopService.incomePerMinute(player: Player, profile: DataService.Profil
 	local income = Products.income
 	local score = math.max(profile.bestScore, income.minScore)
 	-- Множитель rebirth — как в DevelopmentService.release
-	local rebirthMultiplier = 1 + 0.5 * profile.rebirths
+	local rebirthMultiplier = Rebirth.multiplier(profile.rebirths)
 	local perRelease = Formulas.revenue(score, profile.studioLevel, 0, rebirthMultiplier)
 		* ShopService.getModifiers(player).cashMultiplier
 	return math.max(math.floor(perRelease * income.releasesPerMinute), income.minPerMinute)

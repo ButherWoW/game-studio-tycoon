@@ -42,7 +42,6 @@ local PANTS = Color3.fromRGB(45, 50, 70)
 local ACTION_COOLDOWN = 0.2 -- между запросами навыков/перков/внешности
 local PASS_RECHECK = 4 -- через сколько секунд после покупки геймпасса пересылать команду
 local JOIN_RECHECK = 8 -- геймпассы ShopService грузит асинхронно: перешлём ещё раз после входа
-local PROFILE_WAIT = 30 -- сколько ждать загрузки профиля для атрибута StrikeTipSeen
 
 export type Look = { shirt: number, skin: number, hat: number, item: number }
 export type Info = {
@@ -906,14 +905,15 @@ end
 
 -- Игрок закрыл подсказку о забастовке: больше не показывать
 local function onStrikeTipSeen(player: Player)
-	if throttled(player) then
+	-- Свой простой фильтр: общий throttled() отбрасывал «Понятно» сразу после найма/увольнения
+	if player:GetAttribute("StrikeTipSeen") == true then
 		return
 	end
 	local profile = DataService.get(player)
 	if not profile then
 		return
 	end
-	(profile :: any).strikeTipSeen = true
+	profile.strikeTipSeen = true
 	player:SetAttribute("StrikeTipSeen", true)
 end
 
@@ -1024,18 +1024,10 @@ function StaffService.start()
 				sendStaff(player)
 			end
 		end)
-		-- Видел ли подсказку о забастовке: клиент ждёт этот атрибут, прежде чем её показать
-		task.spawn(function()
-			local started = os.clock()
-			while player.Parent and os.clock() - started < PROFILE_WAIT do
-				local profile = DataService.get(player)
-				if profile then
-					player:SetAttribute("StrikeTipSeen", (profile :: any).strikeTipSeen == true)
-					return
-				end
-				task.wait(0.5)
-			end
-		end)
+	end)
+	-- Видел ли подсказку о забастовке: клиент ждёт этот атрибут, прежде чем её показать
+	DataService.onProfileLoaded(function(player, profile)
+		player:SetAttribute("StrikeTipSeen", profile.strikeTipSeen == true)
 	end)
 	Players.PlayerRemoving:Connect(function(player)
 		local folder = npcFolders[player]

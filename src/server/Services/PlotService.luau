@@ -449,8 +449,23 @@ tryBuy = function(player: Player, upgradeId: string)
 	end
 end
 
+-- Во время кражи хита домой не переносим: жертва мгновенно вставала у ворот на пути вора
+-- (ловила его без погони) — и кнопкой 🏠, и через Reset; вор телепортом сбивал проверку скорости.
+-- HitService требует PlotService, поэтому берём его лениво, как другие сервисы
+local function inChase(player: Player): boolean
+	local hits = script.Parent:FindFirstChild("HitService")
+	if hits and hits:IsA("ModuleScript") then
+		local ok, busy = pcall((require(hits) :: any).inChase, player)
+		return ok and busy == true
+	end
+	return false
+end
+
 -- Перенести персонажа к воротам своего гаража (появление, Rebirth, кнопка 🏠)
 local function sendHome(player: Player)
+	if inChase(player) then
+		return
+	end
 	local plot = getPlot(player)
 	local character = player.Character
 	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
@@ -491,16 +506,6 @@ local function onGoHome(player: Player)
 	lastHome[player] = now
 	if not PlotService.ownsGarage(player) then
 		return
-	end
-	-- Во время кражи хита 🏠 не работает: жертва мгновенно вставала у ворот на пути вора
-	-- (ловила его без погони), а вор телепортом сбивал проверку скорости. HitService требует
-	-- PlotService, поэтому берём его лениво, как другие сервисы
-	local hits = script.Parent:FindFirstChild("HitService")
-	if hits and hits:IsA("ModuleScript") then
-		local ok, busy = pcall((require(hits) :: any).inChase, player)
-		if ok and busy == true then
-			return
-		end
 	end
 	sendHome(player)
 end
