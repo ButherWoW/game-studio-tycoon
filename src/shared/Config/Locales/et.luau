@@ -643,6 +643,8 @@ return {
 	camera_auto_on = "Autovaade arvuti taga: sees",
 	camera_auto_off = "Autovaade arvuti taga: väljas",
 	hud_expenses = "💸 −{amount}/min",
+	payday_paid = "💼 Meeskonna palgapäev: −{amount}",
+	payday_soon = "⚠️ Palgapäev {seconds} s pärast: {amount} — raha ei jätku!",
 	hud_strike = "⚠️ Palkade ja üüri jaoks pole raha — meeskond streigib",
 	team_fire = "🚪 Vallanda",
 	team_fire_confirm = "Kindel? Tagasi {price}",

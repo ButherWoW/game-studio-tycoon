@@ -644,6 +644,8 @@ return {
 	camera_auto_on = "Vedere auto la PC: pornită",
 	camera_auto_off = "Vedere auto la PC: oprită",
 	hud_expenses = "💸 −{amount}/min",
+	payday_paid = "💼 Salariile echipei: −{amount}",
+	payday_soon = "⚠️ Salarii în {seconds} s: {amount} — nu ajung banii!",
 	hud_strike = "⚠️ Nu ai bani de salarii și chirie — echipa e în grevă",
 	team_fire = "🚪 Concediază",
 	team_fire_confirm = "Sigur? Primești înapoi {price}",

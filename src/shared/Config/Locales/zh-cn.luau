@@ -643,6 +643,8 @@ return {
 	camera_auto_on = "坐到电脑前自动切换视角：开",
 	camera_auto_off = "坐到电脑前自动切换视角：关",
 	hud_expenses = "💸 −{amount}/分钟",
+	payday_paid = "💼 团队发工资：−{amount}",
+	payday_soon = "⚠️ {seconds} 秒后发工资 {amount}——钱不够！",
 	hud_strike = "⚠️ 付不起工资和房租——团队罢工了",
 	team_fire = "🚪 解雇",
 	team_fire_confirm = "确定吗？退还 {price}",

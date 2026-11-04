@@ -642,6 +642,8 @@ return {
 	camera_auto_on = "Bilgisayarda otomatik görünüm: açık",
 	camera_auto_off = "Bilgisayarda otomatik görünüm: kapalı",
 	hud_expenses = "💸 −{amount}/dk",
+	payday_paid = "💼 Ekip maaşı: −{amount}",
+	payday_soon = "⚠️ {seconds} sn sonra maaş {amount} — para yetmiyor!",
 	hud_strike = "⚠️ Maaş ve kira için para yok — ekip grevde",
 	team_fire = "🚪 Kov",
 	team_fire_confirm = "Emin misin? {price} iade",

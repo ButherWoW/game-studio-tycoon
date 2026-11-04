@@ -644,6 +644,8 @@ return {
 	camera_auto_on = "Auto pohled u PC: zap.",
 	camera_auto_off = "Auto pohled u PC: vyp.",
 	hud_expenses = "💸 −{amount}/min",
+	payday_paid = "💼 Výplata týmu: −{amount}",
+	payday_soon = "⚠️ Za {seconds} s výplata {amount} — nemáš dost peněz!",
 	hud_strike = "⚠️ Nemáš na výplaty a nájem — tým stávkuje",
 	team_fire = "🚪 Propustit",
 	team_fire_confirm = "Opravdu? Vrátíme {price}",

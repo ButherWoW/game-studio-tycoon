@@ -643,6 +643,8 @@ return {
 	camera_auto_on = "Automaattinäkymä PC:llä: päällä",
 	camera_auto_off = "Automaattinäkymä PC:llä: pois",
 	hud_expenses = "💸 −{amount}/min",
+	payday_paid = "💼 Tiimin palkat: −{amount}",
+	payday_soon = "⚠️ Palkat {seconds} s päästä: {amount} — rahat eivät riitä!",
 	hud_strike = "⚠️ Rahat eivät riitä palkkoihin ja vuokraan — tiimi lakkoilee",
 	team_fire = "🚪 Irtisano",
 	team_fire_confirm = "Varmasti? Saat takaisin {price}",

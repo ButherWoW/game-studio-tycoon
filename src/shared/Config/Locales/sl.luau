@@ -642,6 +642,8 @@ return {
 	camera_auto_on = "Samodejni pogled za računalnikom: vklop",
 	camera_auto_off = "Samodejni pogled za računalnikom: izklop",
 	hud_expenses = "💸 −{amount}/min",
+	payday_paid = "💼 Plače ekipe: −{amount}",
+	payday_soon = "⚠️ Plače čez {seconds} s: {amount} — ni dovolj denarja!",
 	hud_strike = "⚠️ Ni denarja za plače in najemnino — ekipa stavka",
 	team_fire = "🚪 Odpusti",
 	team_fire_confirm = "Res? Vrnemo {price}",

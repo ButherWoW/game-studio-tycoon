@@ -644,6 +644,8 @@ return {
 	camera_auto_on = "Autovisning ved pc: til",
 	camera_auto_off = "Autovisning ved pc: fra",
 	hud_expenses = "💸 −{amount}/min",
+	payday_paid = "💼 Løn til holdet: −{amount}",
+	payday_soon = "⚠️ Løn om {seconds} s: {amount} — ikke nok penge!",
 	hud_strike = "⚠️ Ingen penge til løn og husleje — holdet strejker",
 	team_fire = "🚪 Fyr",
 	team_fire_confirm = "Sikker? {price} tilbage",

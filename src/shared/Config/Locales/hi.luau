@@ -643,6 +643,8 @@ return {
 	camera_auto_on = "PC पर ऑटो व्यू: चालू",
 	camera_auto_off = "PC पर ऑटो व्यू: बंद",
 	hud_expenses = "💸 −{amount}/मिनट",
+	payday_paid = "💼 टीम की तनख्वाह: −{amount}",
+	payday_soon = "⚠️ {seconds} सेकंड में तनख्वाह {amount} — पैसे कम हैं!",
 	hud_strike = "⚠️ वेतन और किराए के पैसे नहीं — टीम हड़ताल पर है",
 	team_fire = "🚪 निकालें",
 	team_fire_confirm = "पक्का? {price} वापस",

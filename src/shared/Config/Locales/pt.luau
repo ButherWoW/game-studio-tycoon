@@ -644,6 +644,8 @@ return {
 	camera_auto_on = "Vista auto no PC: ligada",
 	camera_auto_off = "Vista auto no PC: desligada",
 	hud_expenses = "💸 −{amount}/min",
+	payday_paid = "💼 Salário da equipe: −{amount}",
+	payday_soon = "⚠️ Salário em {seconds} s: {amount} — dinheiro insuficiente!",
 	hud_strike = "⚠️ Sem dinheiro para salários e aluguel — a equipe está em greve",
 	team_fire = "🚪 Demitir",
 	team_fire_confirm = "Certeza? Reembolso de {price}",

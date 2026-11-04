@@ -644,6 +644,8 @@ return {
 	camera_auto_on = "Autovy vid datorn: på",
 	camera_auto_off = "Autovy vid datorn: av",
 	hud_expenses = "💸 −{amount}/min",
+	payday_paid = "💼 Lön till teamet: −{amount}",
+	payday_soon = "⚠️ Lön om {seconds} s: {amount} — inte tillräckligt med pengar!",
 	hud_strike = "⚠️ Inga pengar till löner och hyra — teamet strejkar",
 	team_fire = "🚪 Sparka",
 	team_fire_confirm = "Säker? {price} tillbaka",

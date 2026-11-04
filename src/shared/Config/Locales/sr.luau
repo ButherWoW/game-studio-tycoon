@@ -642,6 +642,8 @@ return {
 	camera_auto_on = "Ауто-поглед за рачунаром: укљ.",
 	camera_auto_off = "Ауто-поглед за рачунаром: искљ.",
 	hud_expenses = "💸 −{amount}/мин",
+	payday_paid = "💼 Плате тима: −{amount}",
+	payday_soon = "⚠️ Плате за {seconds} с: {amount} — нема довољно новца!",
 	hud_strike = "⚠️ Нема новца за плате и закуп — тим штрајкује",
 	team_fire = "🚪 Отпусти",
 	team_fire_confirm = "Сигурно? Враћамо {price}",
