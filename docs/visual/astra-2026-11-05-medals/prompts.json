@@ -1,0 +1,20 @@
+{
+  "tool": "OpenAI built-in ImageGen",
+  "assets": [
+    {
+      "id": "bronze",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-37b7362e-f1c0-40a3-bdbe-93307f24246a.png",
+      "prompt": "Use case: stylized-concept. Asset: bronze achievement medal icon for a child-friendly Roblox studio tycoon, 256x256 final PNG with real transparent background. One centered circular medal hanging from a short folded royal-blue V-shaped ribbon. Round coin face with large embossed five-point star, broad raised circular rim, thick clean outline #1E1E2E, chunky polished cartoon game UI style with simple cel-shaded facets and a small upper-left highlight. Bronze metal #CD7F32. The silhouette occupies 86% of square and is fully inside canvas, no cast shadow outside icon, reads at44px. No text, numerals, letters, logos, watermark, background scenery. This will be the master shape for silver and gold variants."
+    },
+    {
+      "id": "silver",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-643b403c-e5fa-4271-a536-25e6e15fcf8d.png",
+      "prompt": "Use case: precise-object-edit. Input image is the bronze master medal. Make a silver variant by changing ONLY the bronze metal's color to #C0C7D1, with coherent silver highlights and shadows. Preserve exactly the silhouette, size, position, star, round rim, ribbon, outlines and transparent background of the master. Blue ribbon stays identical blue. Same form and geometry. No text or digits. Final asset is transparent PNG256 square."
+    },
+    {
+      "id": "gold",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-abcf6d3f-f658-42bc-83e1-35a602d86c8d.png",
+      "prompt": "Use case: precise-object-edit. Input image is the bronze master medal. Make a gold variant by changing ONLY the bronze metal's color to #FFC93C, with coherent gold highlights and shadows, with a slightly brighter highlight. Preserve exactly the silhouette, size, position, star, round rim, ribbon, outlines and transparent background of the master. Blue ribbon stays identical blue. Same form and geometry. No text or digits. Final asset is transparent PNG256 square."
+    }
+  ]
+}

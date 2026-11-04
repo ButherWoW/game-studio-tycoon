@@ -1,0 +1,41 @@
+{
+  "assets": [
+    {
+      "file": "medal_bronze.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "medal_gold.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "medal_silver.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    }
+  ],
+  "visualReview": "All three checked; common shape, distinct tiers, no text."
+}
