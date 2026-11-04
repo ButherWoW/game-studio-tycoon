@@ -428,7 +428,8 @@ end
 -- заборчики и скамейки Астры (отдельные модели из astra-park и astra-landscape в ServerStorage). Раскладка случайная, но одна и та же
 -- на каждом сервере (свой seed); обходим парк, участки с запасом под кнопки и тропинки
 local OUTER_NAME = "OuterPark"
-local OUTER_GROUND_COLOR = Color3.fromRGB(78, 145, 60)
+-- Как газон парка Астры (MeadowGround #6BBF59, SmoothPlastic): трава везде одинаковая (просьба владельца)
+local OUTER_GROUND_COLOR = Color3.fromRGB(107, 191, 89)
 local OUTER_SEED = 4242
 local OUTER_CELL = 13 -- шаг сетки: в каждой клетке не больше одного предмета
 local OUTER_PARK_CLEAR = 74 -- радиус парка Астры (70) + запас
@@ -498,7 +499,7 @@ local function ensureOuterLandscape()
 	local base = workspace:FindFirstChild("Baseplate")
 	if base and base:IsA("BasePart") then
 		base.Color = OUTER_GROUND_COLOR
-		base.Material = Enum.Material.Grass
+		base.Material = Enum.Material.SmoothPlastic
 	end
 	local templates = {}
 	local total = 0
