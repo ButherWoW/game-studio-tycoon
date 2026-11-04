@@ -207,7 +207,7 @@ return {
 	rebirth_close = "Zatvori",
 	offline_title = "Dok te nije bilo",
 	offline_amount = "+{money}",
-	offline_hint = "Tvoj studio je radio dalje uz pola prihoda",
+	offline_hint = "Tvoj studio je radio dalje, ali uz manji prihod",
 	offline_claim = "Preuzmi",
 	shop_title = "🛒 Trgovina",
 	shop_tab_ads = "Reklame",

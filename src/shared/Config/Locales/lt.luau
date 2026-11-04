@@ -208,7 +208,7 @@ return {
 	rebirth_close = "Uždaryti",
 	offline_title = "Kol tavęs nebuvo",
 	offline_amount = "+{money}",
-	offline_hint = "Studija dirbo be tavęs už pusę pajamų",
+	offline_hint = "Studija dirbo be tavęs, bet už mažesnes pajamas",
 	offline_claim = "Pasiimti",
 	shop_title = "🛒 Parduotuvė",
 	shop_tab_ads = "Reklama",

@@ -208,7 +208,7 @@ return {
 	rebirth_close = "Lukk",
 	offline_title = "Mens du var borte",
 	offline_amount = "+{money}",
-	offline_hint = "Studioet ditt jobbet videre med halv inntekt",
+	offline_hint = "Studioet ditt jobbet videre, men med lavere inntekt",
 	offline_claim = "Hent",
 	shop_title = "🛒 Butikk",
 	shop_tab_ads = "Reklame",

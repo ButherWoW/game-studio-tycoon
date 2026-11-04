@@ -207,7 +207,7 @@ return {
 	rebirth_close = "Kapat",
 	offline_title = "Sen yokken",
 	offline_amount = "+{money}",
-	offline_hint = "Stüdyon yarı gelirle çalışmaya devam etti",
+	offline_hint = "Stüdyon çalışmaya devam etti, ama daha az gelirle",
 	offline_claim = "Al",
 	shop_title = "🛒 Mağaza",
 	shop_tab_ads = "Reklam",
