@@ -63,6 +63,14 @@ local function findButton(root: Instance?, name: string): GuiButton?
 	return nil
 end
 
+-- Место игрока за компьютером на своём участке (Seat «PcSeat» в столе или кресле)
+local function pcSeat(): BasePart?
+	local plots = workspace:FindFirstChild("Plots")
+	local plot = plots and plots:FindFirstChild(tostring(Players.LocalPlayer:GetAttribute("PlotName")))
+	local seat = plot and plot:FindFirstChild("PcSeat", true)
+	return if seat and seat:IsA("BasePart") then seat else nil
+end
+
 local function owns(upgradeId: string): boolean
 	local data = ClientState.data
 	return data ~= nil and data.upgrades ~= nil and data.upgrades[upgradeId] == true
@@ -212,7 +220,11 @@ local function run()
 			if step == STEP_DESK then
 				target3d = plotButton("desk1")
 			elseif step == STEP_OPEN then
-				target2d = findButton(playerGui:FindFirstChild("Hud"), "CreateGameButton")
+				-- Сначала сесть за стол: окно «Создать игру» откроется само
+				target3d = pcSeat()
+				if ClientState.atPc() then
+					target2d = findButton(playerGui:FindFirstChild("Hud"), "CreateGameButton")
+				end
 			elseif step == STEP_START then
 				target2d = findButton(playerGui:FindFirstChild("CreateGameWindow"), "StartButton")
 			elseif step == STEP_WAIT and not owns("pc1") then

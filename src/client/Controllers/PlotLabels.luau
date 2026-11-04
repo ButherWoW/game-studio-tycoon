@@ -37,7 +37,24 @@ local function labelFor(buttonName: string): string?
 	end
 	local name = ClientState.localText("upgrade_" .. id, upgrade.name, upgrade.name)
 	local price = if upgrade.cost <= 0 then ClientState.t("price_free") else Texts.money(upgrade.cost)
-	return (if upgrade.move then "🏢 " else "") .. name .. "\n" .. price
+	-- Что даёт предмет: очки в секунду (оценка), скорость, бонус к оценке
+	local bonuses = {}
+	if upgrade.pointsPerSecond then
+		table.insert(bonuses, ClientState.t("bonus_pps", { value = upgrade.pointsPerSecond }))
+	end
+	local speed = (upgrade :: any).speed
+	if type(speed) == "number" then
+		table.insert(bonuses, ClientState.t("bonus_speed", { value = math.floor(speed * 100 + 0.5) }))
+	end
+	local review = (upgrade :: any).reviewBonus
+	if type(review) == "number" then
+		table.insert(bonuses, ClientState.t("bonus_review", { value = review }))
+	end
+	local line = (if upgrade.move then "🏢 " else "") .. name .. "\n" .. price
+	if #bonuses > 0 then
+		line ..= "\n" .. table.concat(bonuses, " · ")
+	end
+	return line
 end
 
 local function relabel(button: Instance)

@@ -13,6 +13,8 @@ local Topics = require(Shared.Config.Topics)
 local Upgrades = require(Shared.Config.Upgrades)
 local Employees = require(Shared.Config.Employees)
 local DataService = require(script.Parent.DataService)
+local DevEvents = require(Shared.Config.DevEvents)
+local Economy = require(Shared.Config.Economy)
 
 -- Фичи из других веток (тренды, магазин, исследования, задания) подключаются, если модуль есть.
 -- Так порядок мёрджа PR не важен; без модуля множитель 1 и бонус 0.
@@ -39,12 +41,29 @@ local function speedFactor(player: Player): number
 	return if shop and type(shop.devSpeed) == "number" and shop.devSpeed > 0 then shop.devSpeed else 1
 end
 
+-- Сумма бонусов купленных предметов студии (Config/Upgrades: speed, reviewBonus)
+local function upgradeBonus(player: Player, field: "speed" | "reviewBonus"): number
+	local profile = DataService.get(player)
+	local total = 0
+	if profile then
+		for _, upgrade in Upgrades do
+			local value = (upgrade :: any)[field]
+			if profile.upgrades[upgrade.id] and type(value) == "number" then
+				total += value
+			end
+		end
+	end
+	return total
+end
+
 local function durationFactor(player: Player): number
 	local research = researchModifiers(player)
 	local devTime = if research and type(research.devTime) == "number" then research.devTime else 0
-	return math.max(1 + devTime, 0.25) / speedFactor(player)
+	local items = math.min(upgradeBonus(player, "speed"), Economy.maxUpgradeSpeed)
+	return math.max(1 + devTime, 0.25) * (1 - items) / speedFactor(player)
 end
 local StaffService = require(script.Parent.StaffService)
+local PlotService = require(script.Parent.PlotService)
 
 type Focus = { gameplay: number, graphics: number, sound: number, story: number }
 
@@ -56,6 +75,10 @@ type Project = {
 	points: Formulas.Points,
 	elapsed: number,
 	duration: number,
+	-- События разработки (Config/DevEvents): когда следующее, сколько было, текущее без ответа
+	nextEventAt: number,
+	eventsDone: number,
+	event: { def: DevEvents.DevEvent, expiresAt: number }?,
 }
 
 local BASE_DURATION = 30 -- секунд на одну игру в начале
@@ -75,6 +98,8 @@ local PENDING: Project = {
 	points = { gameplay = 0, graphics = 0, sound = 0, story = 0 },
 	elapsed = 0,
 	duration = math.huge,
+	nextEventAt = math.huge,
+	eventsDone = 0,
 }
 
 -- Название увидят другие игроки (релиз, лидерборд), поэтому фильтр обязателен
@@ -176,6 +201,10 @@ local function onStartDevelopment(player: Player, request: any)
 	if projects[player] or type(request) ~= "table" then
 		return
 	end
+	-- Игру делают за компьютером, а не на бегу
+	if not PlotService.isAtPc(player) then
+		return
+	end
 	local profile = DataService.get(player)
 	if not profile then
 		return
@@ -209,6 +238,8 @@ local function onStartDevelopment(player: Player, request: any)
 		points = { gameplay = 0, graphics = 0, sound = 0, story = 0 },
 		elapsed = 0,
 		duration = BASE_DURATION * durationFactor(player),
+		nextEventAt = DevEvents.firstAt,
+		eventsDone = 0,
 	}
 end
 
@@ -218,7 +249,13 @@ local function release(player: Player, project: Project)
 		return
 	end
 
-	local score = Formulas.review(project.genreId, project.topicId, project.points, rng)
+	local score = Formulas.review(
+		project.genreId,
+		project.topicId,
+		project.points,
+		rng,
+		upgradeBonus(player, "reviewBonus")
+	)
 	local TrendService = optional("TrendService")
 	if TrendService then
 		score += TrendService.getBonus(project.genreId, project.topicId)
@@ -281,7 +318,75 @@ local function release(player: Player, project: Project)
 	})
 end
 
+-- Применить выбор события: очки в направление (или по фокусу), время, риск
+local function applyEffect(player: Player, project: Project, effect: DevEvents.Effect): boolean
+	local ok = effect.chance == nil or rng:NextNumber() < effect.chance
+	local work = if ok then effect.work or 0 else effect.failWork or 0
+	if work ~= 0 then
+		local rate = DevelopmentService.pointsRate(player, project.focus)
+		local perSecond = rate.gameplay + rate.graphics + rate.sound + rate.story
+		local amount = perSecond * work
+		local points = project.points :: any
+		if effect.focus and effect.focus ~= "all" and points[effect.focus] ~= nil then
+			points[effect.focus] = math.max(points[effect.focus] + amount, 0)
+		else
+			for key, share in project.focus :: any do
+				points[key] = math.max(points[key] + amount * share, 0)
+			end
+		end
+	end
+	if ok and effect.time then
+		project.duration = math.max(project.duration + effect.time, project.elapsed + 1)
+	end
+	return ok
+end
+
+local function resolveEvent(player: Player, project: Project, choice: string)
+	local active = project.event
+	if not active then
+		return
+	end
+	project.event = nil
+	local effect = if choice == "a" then active.def.a else active.def.b
+	local ok = applyEffect(player, project, effect)
+	Remotes.DevEventResult:FireClient(player, { id = active.def.id, choice = choice, ok = ok })
+end
+
+local function maybeStartEvent(player: Player, project: Project)
+	if project.event then
+		-- Не ответил вовремя — спокойный вариант
+		if project.elapsed >= project.event.expiresAt then
+			resolveEvent(player, project, "b")
+		end
+		return
+	end
+	if project.eventsDone >= DevEvents.maxPerGame or project.elapsed < project.nextEventAt then
+		return
+	end
+	-- Не начинаем событие перед самым релизом: на ответ должно хватить времени
+	if project.elapsed + DevEvents.answerSeconds > project.duration then
+		return
+	end
+	local def = DevEvents.list[rng:NextInteger(1, #DevEvents.list)]
+	project.eventsDone += 1
+	project.nextEventAt = project.elapsed + rng:NextNumber(DevEvents.intervalMin, DevEvents.intervalMax)
+	project.event = { def = def, expiresAt = project.elapsed + DevEvents.answerSeconds }
+	Remotes.DevEvent:FireClient(player, { id = def.id, answerSeconds = DevEvents.answerSeconds })
+end
+
+local function onEventChoice(player: Player, eventId: any, choice: any)
+	local project = projects[player]
+	if not project or project == PENDING or not project.event then
+		return
+	end
+	if eventId ~= project.event.def.id or (choice ~= "a" and choice ~= "b") then
+		return
+	end
+	resolveEvent(player, project, choice)
+end
+
 function DevelopmentService.start()
+	Remotes.DevEventChoice.OnServerEvent:Connect(onEventChoice)
 	Remotes.StartDevelopment.OnServerEvent:Connect(onStartDevelopment)
 	Players.PlayerRemoving:Connect(function(player)
 		projects[player] = nil
@@ -296,6 +401,15 @@ function DevelopmentService.start()
 				if project == PENDING then
 					continue
 				end
+				-- Встал из-за компьютера — разработка на паузе
+				if not PlotService.isAtPc(player) then
+					Remotes.DevelopmentProgress:FireClient(player, {
+						progress = math.min(project.elapsed / project.duration, 1),
+						points = project.points,
+						paused = true,
+					})
+					continue
+				end
 				local rate = DevelopmentService.pointsRate(player, project.focus)
 				project.points.gameplay += rate.gameplay * TICK
 				project.points.graphics += rate.graphics * TICK
@@ -308,7 +422,10 @@ function DevelopmentService.start()
 					points = project.points,
 				})
 
+				maybeStartEvent(player, project)
 				if project.elapsed >= project.duration then
+					-- Событие без ответа к релизу — спокойный вариант
+					resolveEvent(player, project, "b")
 					projects[player] = nil
 					release(player, project)
 				end

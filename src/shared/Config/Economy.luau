@@ -14,6 +14,8 @@ local Economy = {
 	reviewNoise = 0.75,
 	-- Доход = revenueBase * оценка^2 * бонусы
 	revenueBase = 15,
+	-- Предметы студии ускоряют разработку не больше чем на эту долю (сумма speed в Config/Upgrades)
+	maxUpgradeSpeed = 0.5,
 	-- +25% к доходу за каждый уровень студии
 	studioLevelBonus = 0.25,
 }

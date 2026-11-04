@@ -68,6 +68,28 @@ end
 
 local function placeUpgrade(plot: BasePart, upgrade: Upgrades.Upgrade)
 	placeModel(plot, upgrade.model, upgrade.position, upgrade.rotation)
+	-- Купили кресло — табурет у первого стола больше не нужен: место игрока теперь в кресле
+	if upgrade.id == "chair" then
+		local desk = plot:FindFirstChild("Desk1")
+		local stool = desk and desk:FindFirstChild("PcSeat")
+		if stool then
+			stool:Destroy()
+		end
+	elseif upgrade.id == "desk1" and plot:FindFirstChild("Chair") then
+		local stool = (plot:FindFirstChild("Desk1") :: Instance):FindFirstChild("PcSeat")
+		if stool then
+			stool:Destroy()
+		end
+	end
+end
+
+-- Игрок сидит за своим компьютером (Seat «PcSeat» на своём участке)
+function PlotService.isAtPc(player: Player): boolean
+	local plot = getPlot(player)
+	local character = player.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	local seat = humanoid and humanoid.SeatPart
+	return plot ~= nil and seat ~= nil and seat.Name == "PcSeat" and seat:IsDescendantOf(plot)
 end
 
 -- Можно ли переехать на этап stage (без проверки денег и того, что это следующий этап)

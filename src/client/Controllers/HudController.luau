@@ -46,7 +46,10 @@ function HudController.start()
 	local lastPercent = 0
 
 	local create = Ui.button(gui, ClientState.t("hud_create"), Ui.colors.money, function()
-		CreateGameWindow.open()
+		-- Игру делают за компьютером: сначала сесть за свой стол
+		if ClientState.atPc() then
+			CreateGameWindow.open()
+		end
 	end)
 	create.Name = "CreateGameButton" -- по имени его находит туториал
 	create.TextColor3 = Color3.fromRGB(40, 30, 0)
@@ -56,7 +59,10 @@ function HudController.start()
 
 	local function refresh()
 		-- Язык мог смениться: тексты и шрифт, которые не зависят от данных
-		create.Text = ClientState.t("hud_create")
+		local seated = ClientState.atPc()
+		create.Text = ClientState.t(if seated then "hud_create" else "hud_sit")
+		create.BackgroundColor3 = if seated then Ui.colors.money else Ui.colors.locked
+		create.TextColor3 = if seated then Color3.fromRGB(40, 30, 0) else Ui.colors.text
 		local font = Ui.titleFontFor(ClientState.lang)
 		cash.Font, info.Font, progress.Font = font, font, font
 		local data = ClientState.data
@@ -83,7 +89,18 @@ function HudController.start()
 	Remotes.DevelopmentProgress.OnClientEvent:Connect(function(data)
 		progress.Visible = true
 		lastPercent = math.floor(data.progress * 100)
-		progress.Text = ClientState.t("hud_developing", { percent = lastPercent })
+		progress.Text = if data.paused
+			then ClientState.t("hud_paused")
+			else ClientState.t("hud_developing", { percent = lastPercent })
+		progress.TextColor3 = if data.paused then Ui.colors.bad else Ui.colors.text
+	end)
+
+	-- Сел за свой компьютер — сразу открываем «Создать игру»; встал — кнопка подсказывает сесть
+	ClientState.seatChanged:Connect(function(seated: boolean)
+		refresh()
+		if seated and not ClientState.developing then
+			CreateGameWindow.open()
+		end
 	end)
 end
 
