@@ -48,10 +48,14 @@ local StartPark = {
 	-- Не ближе cartridgeClearance к скамейкам, доске, ломбарду, фонтану и спавну,
 	-- и не ближе cartridgeSpacing друг к другу. Не нашлось места за cartridgeTries — старая точка
 	cartridgeAreaMin = 10,
-	cartridgeAreaMax = 52,
+	-- До участков: по всему парку и траве вокруг (просьба владельца — шире, не «по кругу»).
+	-- Участки, место у их кнопок и тропинки StartParkService обходит сам
+	cartridgeAreaMax = 118,
+	cartridgePlotMargin = 6, -- от края участка; спереди (кнопки) — ещё +8
+	cartridgePathClear = 5, -- от оси тропинки к участку
 	cartridgeClearance = 5,
 	cartridgeSpacing = 14,
-	cartridgeTries = 40,
+	cartridgeTries = 80,
 
 	-- Название студии (вводится один раз после покупки гаража), символов после trim
 	studioNameMin = 3,
