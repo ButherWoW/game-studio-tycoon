@@ -33,6 +33,14 @@ local WRITE_ATTEMPTS = 3
 -- Офлайн-победителю: если и повторы не помогли, пробуем ещё позже в фоне (с)
 local LATE_RETRY_DELAYS = { 30, 120, 300 }
 
+-- Победы для достижений (AchievementService, ленивый require: он может и не стартовать)
+local function noteWins(player: Player, wins: number)
+	local module = script.Parent:FindFirstChild("AchievementService")
+	if module and module:IsA("ModuleScript") then
+		pcall((require(module) :: any).note, player, "expoWins", wins)
+	end
+end
+
 local function updateWithRetry(key: string, transform: (any) -> any): (boolean, any)
 	local store = pendingStore
 	if not store then
@@ -148,6 +156,8 @@ local function claimPending(player: Player)
 	end
 	if player.Parent and DataService.get(player) then
 		DataService.addCash(player, amount)
+		-- Копилка — призы побед офлайн: сколько призов, столько побед
+		noteWins(player, math.max(math.floor(amount / Expo.prize + 0.5), 1))
 		task.spawn(DataService.save, player)
 	else
 		-- Вышел, пока шёл запрос: вернуть приз в копилку
@@ -249,6 +259,7 @@ local function finishRound(roundId: number, minParticipants: number)
 			end
 		else
 			DataService.addCash(online, Expo.prize)
+			noteWins(online, 1)
 			task.spawn(DataService.save, online)
 		end
 	else

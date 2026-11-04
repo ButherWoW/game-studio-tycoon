@@ -91,6 +91,20 @@ local function logAnalytics(player: Player, kind: Kind, grade: Grade)
 	end
 end
 
+-- Достижения «идеальные быстрые события» (AchievementService, ленивый require)
+local function noteAchievement(player: Player, grade: Grade)
+	local module = script.Parent:FindFirstChild("AchievementService")
+	if grade ~= "perfect" or not module or not module:IsA("ModuleScript") then
+		return
+	end
+	local ok, err = pcall(function()
+		(require(module) :: any).note(player, "qtePerfect", 1)
+	end)
+	if not ok then
+		warn("[QuickEventService] Achievement failed:", err)
+	end
+end
+
 local function clampedTotal(plan: Plan): number
 	return math.clamp(plan.total, QuickEvents.totalMin, QuickEvents.totalMax)
 end
@@ -229,6 +243,7 @@ local function resolve(player: Player, event: Active)
 		{ id = event.id, grade = grade, delta = delta, total = total }
 	)
 	logAnalytics(player, event.kind, grade)
+	noteAchievement(player, grade)
 end
 
 -- ===== Старт =====
