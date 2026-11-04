@@ -13,6 +13,8 @@ local NAMES = {
 	"UpgradeSkill", -- клиент -> сервер: employeeId, skillKey
 	"SetPerk", -- клиент -> сервер: employeeId, slot, perkId
 	"SetLook", -- клиент -> сервер: employeeId, field ("shirt" | "skin" | "hat" | "item"), index
+	"StaffPower", -- сервер -> клиент: мощность команды (StaffService.power): speed, quality, review, breaks, losses
+	"StaffFeel", -- сервер -> клиент: { kind = "hire" | "arrive" | "skill" | "fire", employeeId, before, after, ... }
 }
 
 local folder: Folder

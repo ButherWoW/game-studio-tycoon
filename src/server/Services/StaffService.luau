@@ -15,6 +15,12 @@
 --   offlineMultiplier(profile)       — офлайн-доход: «Призрачный кодер» ×2, «Ночная смена»
 --   hired(profile)                   — нанятые: employeeId -> стол (SkinService)
 --   refreshNpcs(player)              — пересобрать NPC (SkinService: сменили скин)
+--   power(player)                    — мощность команды для окна и HUD (скорость, оценка по направлениям)
+-- Перерывы (StaffLife): setBreak(player, id, on) — сотрудник на перерыве не даёт очков и перков
+-- (employeesByDesk, deskMultipliers, perkTotals), но прибавка к оценке (reviewBonus) считается по всем
+-- за столами — иначе оценка зависела бы от того, кто отошёл за кофе в момент релиза.
+-- Ощущение команды: найм/навык/увольнение шлют клиенту StaffFeel «было → стало», уволенный NPC
+-- встаёт и уходит с коробкой (StaffLife.leave), настроение получает временную поправку (MoodService).
 -- Скины (SkinService, необязательный): decorate наряжает NPC при сборке, forget — при увольнении.
 --
 -- Увольнение (FireEmployee): сотрудник уходит вместе с навыками и перками, возвращается
@@ -31,6 +37,7 @@ local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Employees = require(ReplicatedStorage.Shared.Config.Employees)
 local Skills = require(ReplicatedStorage.Shared.Config.Skills)
 local Expenses = require(ReplicatedStorage.Shared.Config.Expenses)
+local Mood = require(ReplicatedStorage.Shared.Config.Mood)
 local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local DataService = require(script.Parent.DataService)
@@ -69,6 +76,10 @@ local LOOK_LIMITS: { [string]: { min: number, max: number } } = {
 
 local StaffService = {}
 local npcFolders: { [Player]: Folder } = {}
+-- Кто сейчас на перерыве (StaffLife): employeeId -> true
+local breaks: { [Player]: { [string]: boolean } } = {}
+-- Наняли, NPC ещё строится: после пересборки клиенту уйдёт «arrive» с моделью (конфетти у стола)
+local pendingArrive: { [Player]: { [string]: boolean } } = {}
 local refreshGeneration: { [Player]: number } = {}
 local lastAction: { [Player]: number } = {}
 
@@ -318,12 +329,24 @@ local function seated(profile: DataService.Profile): { [string]: string }
 	return result
 end
 
--- Кто сейчас работает: за столами и не бастует (ExpensesService ставит staffStrike, когда нечем платить)
-local function working(profile: DataService.Profile): { [string]: string }
+-- Кто в строю: за столами и не бастует (ExpensesService ставит staffStrike, когда нечем платить)
+local function active(profile: DataService.Profile): { [string]: string }
 	if (profile :: any).staffStrike == true then
 		return {}
 	end
 	return seated(profile)
+end
+
+-- Кто работает прямо сейчас: в строю и не на перерыве (StaffLife)
+local function working(player: Player, profile: DataService.Profile): { [string]: string }
+	local result = active(profile)
+	local away = breaks[player]
+	if away then
+		for employeeId in away do
+			result[employeeId] = nil
+		end
+	end
+	return result
 end
 
 -- Зарплаты всех нанятых в минуту (Config/Expenses): платим и тем, кто ждёт стол
@@ -347,7 +370,7 @@ function StaffService.employeesByDesk(player: Player): { [string]: Employees.Emp
 	if not profile then
 		return result
 	end
-	for employeeId, deskId in working(profile) do
+	for employeeId, deskId in working(player, profile) do
 		local employee = Employees.get(employeeId)
 		if employee then
 			result[deskId] = employee
@@ -368,7 +391,7 @@ function StaffService.deskMultipliers(player: Player, deskId: string): { [string
 	local info = getInfo(profile)
 	local mentor = 0
 	local atDesk: string? = nil
-	for employeeId, seatId in working(profile) do
+	for employeeId, seatId in working(player, profile) do
 		local employeeInfo = info[employeeId]
 		if seatId == deskId then
 			atDesk = employeeId
@@ -398,7 +421,7 @@ function StaffService.perkTotals(player: Player): PerkTotals
 		return totals
 	end
 	local info = getInfo(profile)
-	for employeeId in working(profile) do
+	for employeeId in working(player, profile) do
 		local employeeInfo = info[employeeId]
 		if employeeInfo then
 			for _, perkId in employeeInfo.perks do
@@ -419,17 +442,31 @@ function StaffService.perkTotals(player: Player): PerkTotals
 	return totals
 end
 
--- Прибавка к оценке каждой игры от команды за столами: легендарный «Мастер Пиксель» (+1)
--- и перк «Перфекционист». Прибавлять к bonus в Formulas.review
-function StaffService.reviewBonus(player: Player): number
-	local profile = DataService.get(player)
-	if not profile then
-		return 0
+-- Оценка по направлениям от навыков команды: уровень × qualityPerLevel; сумма — не выше потолка
+local function teamQuality(
+	members: { [string]: string },
+	info: { [string]: Info }
+): ({ [string]: number }, number)
+	local quality = { gameplay = 0, graphics = 0, sound = 0, story = 0 }
+	local total = 0
+	for employeeId in members do
+		local employeeInfo = info[employeeId]
+		if employeeInfo then
+			for _, key in Skills.keys do
+				local value = (employeeInfo.skills[key] or 0) * Skills.qualityPerLevel
+				quality[key] += value
+				total += value
+			end
+		end
 	end
-	local info = getInfo(profile)
+	return quality, math.min(total, Skills.caps.teamQuality)
+end
+
+-- Прибавка к оценке от состава members: «Мастер Пиксель» (+1), «Перфекционист» и навыки
+local function reviewOf(members: { [string]: string }, info: { [string]: Info }): number
 	local total = 0
 	local perkBonus = 0
-	for employeeId in working(profile) do
+	for employeeId in members do
 		local employee = Employees.get(employeeId)
 		total += if employee then employee.reviewBonus or 0 else 0
 		local employeeInfo = info[employeeId]
@@ -440,7 +477,151 @@ function StaffService.reviewBonus(player: Player): number
 			end
 		end
 	end
-	return total + math.min(perkBonus, Skills.caps.reviewBonus)
+	local _, quality = teamQuality(members, info)
+	return total + math.min(perkBonus, Skills.caps.reviewBonus) + quality
+end
+
+-- Прибавка к оценке каждой игры от команды за столами (перерыв не мешает): легендарный
+-- «Мастер Пиксель» (+1), перк «Перфекционист» и навыки (qualityPerLevel). Прибавлять к bonus в Formulas.review
+function StaffService.reviewBonus(player: Player): number
+	local profile = DataService.get(player)
+	if not profile then
+		return 0
+	end
+	return reviewOf(active(profile), getInfo(profile))
+end
+
+-- ===== Мощность команды (окно «Команда», HUD, «было → стало») =====
+export type Power = {
+	speed: number, -- 0.45 = очков разработки в секунду на 45% больше, чем у тех же столов без команды
+	quality: { [string]: number }, -- прибавка к оценке по направлениям (навыки)
+	review: number, -- вся прибавка команды к оценке игры (reviewBonus)
+	breaks: number, -- сколько сейчас на перерыве
+}
+
+local function moodSpeed(player: Player): number
+	local MoodService = optionalService("MoodService")
+	local ok, value = pcall(function()
+		return if MoodService then MoodService.speedMultiplier(player) else 1
+	end)
+	return if ok and type(value) == "number" and value > 0 then value else 1
+end
+
+-- Мощность состава members (employeeId -> стол) — как DevelopmentService.pointsRate при ровном
+-- фокусе (бонус специализации зависит от фокуса игры — не считаем), с настроением и «Кранчером»
+local function powerOf(
+	profile: DataService.Profile,
+	members: { [string]: string },
+	info: { [string]: Info },
+	mood: number
+): Power
+	local mentor, devTime = 0, 1
+	local byDesk: { [string]: string } = {}
+	for employeeId, deskId in members do
+		byDesk[deskId] = employeeId
+		local employeeInfo = info[employeeId]
+		if employeeInfo then
+			for _, perkId in employeeInfo.perks do
+				local perk = Skills.perk(perkId)
+				if perk then
+					mentor += perk.mentorBonus or 0
+					devTime += perk.devTime or 0
+				end
+			end
+		end
+	end
+	local mentorMult = 1 + math.min(mentor, Skills.caps.mentorBonus)
+	local base, team = 0, 0
+	for _, upgrade in Upgrades do
+		local points = upgrade.pointsPerSecond
+		if points and profile.upgrades[upgrade.id] then
+			base += points
+			local employeeId = byDesk[upgrade.id]
+			local employee = if employeeId then Employees.get(employeeId) else nil
+			local skills = if employeeId and info[employeeId] then info[employeeId].skills else nil
+			local average = 0
+			for _, key in Skills.keys do
+				local level = if skills then skills[key] or 0 else 0
+				average += (1 + Skills.bonusPerLevel * level) / #Skills.keys
+			end
+			team += points * (if employee then employee.multiplier else 1) * average * mentorMult
+		end
+	end
+	local quality = teamQuality(members, info)
+	local speed = if base > 0 then team / base * mood / math.max(devTime, 0.5) - 1 else 0
+	return { speed = speed, quality = quality, review = reviewOf(members, info), breaks = 0 }
+end
+
+-- Мощность команды сейчас. Перерывы не вычитаем: это постоянная сила команды, отдыхающие — в breaks
+function StaffService.power(player: Player): Power
+	local profile = DataService.get(player)
+	if not profile then
+		return {
+			speed = 0,
+			quality = { gameplay = 0, graphics = 0, sound = 0, story = 0 },
+			review = 0,
+			breaks = 0,
+		}
+	end
+	local result = powerOf(profile, active(profile), getInfo(profile), moodSpeed(player))
+	local count = 0
+	for _ in breaks[player] or {} do
+		count += 1
+	end
+	result.breaks = count
+	return result
+end
+
+-- Клиенту: мощность и сколько потеряем без каждого из сотрудников за столами (подтверждение увольнения)
+local function sendPower(player: Player)
+	local profile = DataService.get(player)
+	if not profile then
+		return
+	end
+	local power = StaffService.power(player)
+	local info = getInfo(profile)
+	local members = active(profile)
+	local mood = moodSpeed(player)
+	local losses = {}
+	for employeeId in members do
+		local without = table.clone(members)
+		without[employeeId] = nil
+		local other = powerOf(profile, without, info, mood)
+		losses[employeeId] = { speed = other.speed - power.speed, review = other.review - power.review }
+	end
+	StaffRemotes.StaffPower:FireClient(player, {
+		speed = power.speed,
+		quality = power.quality,
+		review = power.review,
+		breaks = power.breaks,
+		losses = losses,
+	})
+end
+
+-- Перерыв (StaffLife): пока on — стол сотрудника не даёт очков
+function StaffService.setBreak(player: Player, employeeId: string, on: boolean)
+	local away = breaks[player]
+	if on then
+		if not away then
+			away = {}
+			breaks[player] = away
+		end
+		(away :: { [string]: boolean })[employeeId] = true
+	elseif away then
+		away[employeeId] = nil
+	end
+	sendPower(player)
+end
+
+-- Сотрудники за столами и не на забастовке (StaffLife выбирает, кому отдохнуть)
+function StaffService.activeStaff(player: Player): { [string]: string }
+	local profile = DataService.get(player)
+	return if profile then active(profile) else {}
+end
+
+-- Папка NPC игрока на участке (nil — ещё не собрана)
+function StaffService.npcFolder(player: Player): Folder?
+	return npcFolders[player]
 end
 
 -- Множитель офлайн-дохода: легендарный в команде (даже если ждёт стол) и «Ночная смена» за столом
@@ -508,6 +689,8 @@ local function attach(model: Model, size: Vector3, cframe: CFrame, color: Color3
 	if shape then
 		p.Shape = shape
 	end
+	-- Не на суставах: в позе «сидя» остаётся закреплённой (иначе шапка падала сквозь пол)
+	p:SetAttribute("Loose", true)
 	p.Parent = model
 	return p
 end
@@ -732,20 +915,51 @@ end
 -- Поза «сидя» для R15: корень закреплён, остальные детали держатся на суставах; бёдра вперёд на 90°,
 -- колени обратно вниз (отчёт владельца: сотрудники стояли перед мониторами)
 local SIT_ROOT_ABOVE_SEAT = 1.6
-local function poseSitting(model: Model)
-	local root = model:FindFirstChild("HumanoidRootPart")
+local function bendLegs(model: Model, sign: number)
 	for _, part in model:GetDescendants() do
-		if part:IsA("BasePart") then
-			part.Anchored = part == root
-			part.CanCollide = false
-		elseif part:IsA("Motor6D") then
+		if part:IsA("Motor6D") then
 			if part.Name == "LeftHip" or part.Name == "RightHip" then
-				part.C0 = part.C0 * CFrame.Angles(math.rad(90), 0, 0)
+				part.C0 = part.C0 * CFrame.Angles(math.rad(90 * sign), 0, 0)
 			elseif part.Name == "LeftKnee" or part.Name == "RightKnee" then
-				part.C0 = part.C0 * CFrame.Angles(math.rad(-90), 0, 0)
+				part.C0 = part.C0 * CFrame.Angles(math.rad(-90 * sign), 0, 0)
 			end
 		end
 	end
+end
+
+local function poseSitting(model: Model)
+	if model:GetAttribute("Sitting") == true then
+		return
+	end
+	local root = model:FindFirstChild("HumanoidRootPart")
+	for _, part in model:GetDescendants() do
+		if part:IsA("BasePart") then
+			part.Anchored = part == root or part:GetAttribute("Loose") == true
+			part.CanCollide = false
+		end
+	end
+	bendLegs(model, 1)
+	model:SetAttribute("Sitting", true)
+end
+
+-- Встать (StaffLife: перерыв, увольнение): ноги обратно, корень — на высоту стоящего
+function StaffService.poseStanding(model: Model)
+	if model:GetAttribute("Sitting") == true then
+		bendLegs(model, -1)
+		model:SetAttribute("Sitting", false)
+	end
+end
+
+-- Сесть обратно на своё место (после перерыва): поза и точка из атрибутов seatNpc
+function StaffService.sitBack(model: Model, plot: BasePart)
+	local seat = model:GetAttribute("SeatLocal")
+	if typeof(seat) ~= "CFrame" then
+		return
+	end
+	if model:GetAttribute("Chair") == true then
+		poseSitting(model)
+	end
+	model:PivotTo(plot.CFrame * seat)
 end
 
 -- Посадить NPC в кресло стола (если оно есть в модели) или поставить перед столом лицом к нему.
@@ -756,6 +970,13 @@ local function seatNpc(model: Model, plot: BasePart, desk: Upgrades.Upgrade, use
 	local floorY = plot.Size.Y / 2 + position.Y - 0.5
 	local rotation = CFrame.Angles(0, math.rad(desk.rotation or 0), 0)
 	local deskPoint = Vector3.new(position.X, floorY, position.Z)
+	-- Для перерывов и ухода (StaffLife): стол, пол этажа и высота корня стоящего NPC
+	local humanoid = model:FindFirstChildOfClass("Humanoid")
+	local root = model.PrimaryPart
+	local height = (if humanoid then humanoid.HipHeight else 2) + (if root then root.Size.Y / 2 else 1)
+	model:SetAttribute("DeskId", desk.id)
+	model:SetAttribute("FloorY", floorY)
+	model:SetAttribute("StandHeight", height)
 
 	local chair = chairSeatTop(plot, desk)
 	if chair then
@@ -764,7 +985,10 @@ local function seatNpc(model: Model, plot: BasePart, desk: Upgrades.Upgrade, use
 		poseSitting(model)
 		local spot = Vector3.new(seatLocal.X, seatLocal.Y + SIT_ROOT_ABOVE_SEAT, seatLocal.Z)
 		local facing = spot - rotation:VectorToWorldSpace(Vector3.new(0, 0, 1))
-		model:PivotTo(plot.CFrame * CFrame.lookAt(spot, facing))
+		local placement = CFrame.lookAt(spot, facing)
+		model:SetAttribute("Chair", true)
+		model:SetAttribute("SeatLocal", placement)
+		model:PivotTo(plot.CFrame * placement)
 		return
 	end
 
@@ -785,13 +1009,11 @@ local function seatNpc(model: Model, plot: BasePart, desk: Upgrades.Upgrade, use
 	end
 	table.insert(used, seat)
 
-	-- Pivot R15 — HumanoidRootPart: поднимаем на высоту бёдер над полом
-	local humanoid = model:FindFirstChildOfClass("Humanoid")
-	local root = model.PrimaryPart
-	local height = (if humanoid then humanoid.HipHeight else 2) + (if root then root.Size.Y / 2 else 1)
+	-- Pivot R15 — HumanoidRootPart: поднимаем на высоту бёдер над полом (height выше).
 	-- Смотрит на стол: стол «лицом» к +Z, значит NPC смотрит в -Z стола
 	local facing = seat - rotation:VectorToWorldSpace(Vector3.new(0, 0, 1))
 	local placement = CFrame.lookAt(seat, facing) + Vector3.new(0, height, 0)
+	model:SetAttribute("SeatLocal", placement)
 	model:PivotTo(plot.CFrame * placement)
 end
 
@@ -856,6 +1078,7 @@ rebuildNpcs = function(player: Player)
 				skins.decorate(npc, employeeId, profile)
 			end
 			if npc then
+				npc:SetAttribute("EmployeeId", employeeId)
 				seatNpc(npc, plot, upgrade, used)
 				local item = Skills.items[look.item] or "none"
 				if item ~= "none" then
@@ -864,7 +1087,11 @@ rebuildNpcs = function(player: Player)
 						* CFrame.new(position.X, plot.Size.Y / 2 + position.Y - 0.5 + DESK_TOP, position.Z)
 						* CFrame.Angles(0, math.rad(upgrade.rotation or 0), 0)
 						* CFrame.new(DESK_ITEM_OFFSET)
-					buildDeskItem(npc, item, top)
+					-- Отдельной моделью: на перерыв сотрудник уходит без кружки
+					local itemModel = Instance.new("Model")
+					itemModel.Name = "Item_" .. employeeId
+					buildDeskItem(itemModel, item, top)
+					itemModel.Parent = folder
 				end
 				npc.Parent = folder
 			end
@@ -875,12 +1102,33 @@ rebuildNpcs = function(player: Player)
 		folder:Destroy()
 		return
 	end
+	-- Перерывы старых NPC обрываем: новые сидят на местах
+	local life = optionalService("StaffLife")
+	if life then
+		life.reset(player)
+	end
+	breaks[player] = nil
 	local old = npcFolders[player]
 	if old then
 		old:Destroy()
 	end
 	folder.Parent = plot
 	npcFolders[player] = folder
+	sendPower(player)
+	-- Новенькие: клиент празднует у стола (конфетти, «Привет, команда!»)
+	local arrivals = pendingArrive[player]
+	if arrivals then
+		pendingArrive[player] = nil
+		for employeeId in arrivals do
+			local npc = folder:FindFirstChild("Staff_" .. employeeId)
+			if npc then
+				StaffRemotes.StaffFeel:FireClient(
+					player,
+					{ kind = "arrive", employeeId = employeeId, npc = npc }
+				)
+			end
+		end
+	end
 end
 
 -- Пересобрать NPC (SkinService: сменили скин сотрудника)
@@ -896,6 +1144,7 @@ local function onTeamChanged(player: Player)
 	end
 	seatAll(profile)
 	sendStaff(player)
+	sendPower(player)
 	-- Размер команды в снимке данных: условия открытия жанров (shared/UnlockRules)
 	DataService.replicate(player)
 	task.spawn(refreshNpcs, player)
@@ -958,9 +1207,31 @@ local function onHire(player: Player, employeeId: any)
 	if not DataService.trySpend(player, employee.cost) then
 		return
 	end
+	local before = StaffService.power(player)
 	staff[employee.id] = ""
 	getInfo(profile)
+	local arrivals = pendingArrive[player] or {}
+	arrivals[employee.id] = true
+	pendingArrive[player] = arrivals
 	onTeamChanged(player)
+	-- Новичок в команде: временно +настроение (Config/Mood.newcomer)
+	local MoodService = optionalService("MoodService")
+	if MoodService then
+		pcall(
+			MoodService.addTemporary,
+			player,
+			"mood_part_newbie",
+			Mood.newcomer.value,
+			Mood.newcomer.seconds
+		)
+	end
+	StaffRemotes.StaffFeel:FireClient(player, {
+		kind = "hire",
+		employeeId = employee.id,
+		before = before,
+		after = StaffService.power(player),
+		mood = if MoodService then Mood.newcomer.value else 0,
+	})
 	-- Задания «найми сотрудника»
 	local QuestService = optionalService("QuestService")
 	if QuestService then
@@ -987,6 +1258,21 @@ local function onFire(player: Player, employeeId: any)
 	if staff[employee.id] == nil then
 		return
 	end
+	local before = StaffService.power(player)
+	-- NPC не исчезает: встаёт, берёт коробку и уходит к выходу (StaffLife), пересборка его не тронет
+	local life = optionalService("StaffLife")
+	local folder = npcFolders[player]
+	local npc = folder and folder:FindFirstChild("Staff_" .. employee.id)
+	local plot = PlotService.getPlot(player)
+	if life and npc and npc:IsA("Model") and plot then
+		pcall(life.leave, player, npc, plot)
+	end
+	if breaks[player] then
+		breaks[player][employee.id] = nil
+	end
+	if pendingArrive[player] then
+		pendingArrive[player][employee.id] = nil
+	end
 	staff[employee.id] = nil
 	-- getInfo чистит staffInfo уволенных: при повторном найме навыки начнутся с нуля
 	getInfo(profile)
@@ -1006,6 +1292,20 @@ local function onFire(player: Player, employeeId: any)
 	-- Пересадка, StaffChanged, NPC и кнопка переезда — как при найме.
 	-- QuestService не зовём: счётчик заданий «найми» хранит максимум и не уменьшается
 	onTeamChanged(player)
+	-- Коллегу уволили: временно −настроение оставшимся (Config/Mood.fired; без команды — ничего)
+	local MoodService = optionalService("MoodService")
+	local hasTeam = next(staff) ~= nil
+	if MoodService and hasTeam then
+		pcall(MoodService.addTemporary, player, "mood_part_fired", Mood.fired.value, Mood.fired.seconds)
+	end
+	StaffRemotes.StaffFeel:FireClient(player, {
+		kind = "fire",
+		employeeId = employee.id,
+		before = before,
+		after = StaffService.power(player),
+		refund = refund,
+		mood = if MoodService and hasTeam then Mood.fired.value else 0,
+	})
 end
 
 -- Игрок закрыл подсказку о забастовке: больше не показывать
@@ -1038,8 +1338,22 @@ local function onUpgradeSkill(player: Player, employeeId: any, key: any)
 		return
 	end
 	if DataService.trySpend(player, Skills.skillCost(employee.stage, employee.legendary, level)) then
+		local before = StaffService.power(player)
 		info.skills[key] = level + 1
 		sendStaff(player)
+		sendPower(player)
+		-- «Было → стало» и эффект над NPC (клиент: «+1 🎨», вспышка)
+		local folder = npcFolders[player]
+		StaffRemotes.StaffFeel:FireClient(player, {
+			kind = "skill",
+			employeeId = employeeId,
+			key = key,
+			from = level,
+			to = level + 1,
+			before = before,
+			after = StaffService.power(player),
+			npc = folder and folder:FindFirstChild("Staff_" .. employeeId),
+		})
 	end
 end
 
@@ -1074,6 +1388,7 @@ local function onSetPerk(player: Player, employeeId: any, slot: any, perkId: any
 	end
 	info.perks[slot] = perkId
 	sendStaff(player)
+	sendPower(player)
 end
 
 -- Внешность: бесплатно, только индексы из Config/Skills
@@ -1127,6 +1442,7 @@ function StaffService.start()
 		task.delay(JOIN_RECHECK, function()
 			if player.Parent then
 				sendStaff(player)
+				sendPower(player)
 			end
 		end)
 	end)
@@ -1134,12 +1450,23 @@ function StaffService.start()
 	DataService.onProfileLoaded(function(player, profile)
 		player:SetAttribute("StrikeTipSeen", profile.strikeTipSeen == true)
 	end)
+	-- Настроение меняет скорость (и забастовка тоже идёт через него): переслать мощность
+	local MoodService = optionalService("MoodService")
+	if MoodService and MoodService.changed then
+		MoodService.changed:Connect(function(player: Player)
+			if player.Parent then
+				sendPower(player)
+			end
+		end)
+	end
 	Players.PlayerRemoving:Connect(function(player)
 		local folder = npcFolders[player]
 		if folder then
 			folder:Destroy()
 		end
 		npcFolders[player] = nil
+		breaks[player] = nil
+		pendingArrive[player] = nil
 		refreshGeneration[player] = nil
 		lastAction[player] = nil
 		lastLook[player] = nil
