@@ -686,7 +686,8 @@ end
 -- Поставить NPC перед столом лицом к нему. used — уже занятые точки (в координатах участка).
 local function seatNpc(model: Model, plot: BasePart, desk: Upgrades.Upgrade, used: { Vector3 })
 	local position = desk.position or Vector3.zero
-	local floorY = plot.Size.Y / 2
+	-- Пол этажа стола: position.Y = 0.5 (верх участка) + высота этажа (Config/Stages.floorY)
+	local floorY = plot.Size.Y / 2 + position.Y - 0.5
 	local rotation = CFrame.Angles(0, math.rad(desk.rotation or 0), 0)
 	local deskPoint = Vector3.new(position.X, floorY, position.Z)
 
@@ -772,7 +773,7 @@ rebuildNpcs = function(player: Player)
 				if item ~= "none" then
 					local position = upgrade.position or Vector3.zero
 					local top = plot.CFrame
-						* CFrame.new(position.X, plot.Size.Y / 2 + DESK_TOP, position.Z)
+						* CFrame.new(position.X, plot.Size.Y / 2 + position.Y - 0.5 + DESK_TOP, position.Z)
 						* CFrame.Angles(0, math.rad(upgrade.rotation or 0), 0)
 						* CFrame.new(DESK_ITEM_OFFSET)
 					buildDeskItem(npc, item, top)

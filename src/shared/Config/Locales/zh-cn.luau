@@ -310,6 +310,12 @@ return {
 	stage_office = "办公室",
 	stage_floor = "办公室：2楼",
 	stage_skyscraper = "办公室：3楼",
+	-- Этажи офиса
+	floor_name_1 = "1楼",
+	floor_name_2 = "2楼",
+	floor_name_3 = "3楼",
+	floor_lift = "电梯",
+	floor_sign = "🔒 {floor}未开放\n{price} · 需要游戏：{games}",
 	upgrade_desk1 = "旧桌子",
 	upgrade_pc1 = "二手市场电脑",
 	upgrade_walls = "车库墙壁和灯光",

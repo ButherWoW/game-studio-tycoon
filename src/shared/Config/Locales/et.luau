@@ -310,6 +310,12 @@ return {
 	stage_office = "Kontor",
 	stage_floor = "Kontor: 2. korrus",
 	stage_skyscraper = "Kontor: 3. korrus",
+	-- Этажи офиса
+	floor_name_1 = "1. korrus",
+	floor_name_2 = "2. korrus",
+	floor_name_3 = "3. korrus",
+	floor_lift = "Lift",
+	floor_sign = "🔒 {floor} on lukus\n{price} · vaja mänge: {games}",
 	upgrade_desk1 = "Vana laud",
 	upgrade_pc1 = "Kirbuturu arvuti",
 	upgrade_walls = "Garaaži seinad ja valgus",
