@@ -227,6 +227,112 @@ local rng = Random.new()
 
 local spawnCartridge: (spot: BasePart) -> ()
 
+-- Картриджи разбросаны по всему парку, а не стоят кольцом: точка (деталь из CartridgeSpots)
+-- перед каждым появлением переезжает в случайное место. Препятствия считаются один раз в start
+type Obstacle = { position: Vector3, radius: number }
+local parkCenter = Vector3.zero
+local groundY = 0 -- высота земли парка (по точкам из плейса), чтобы не лечь на крышу
+local obstacles: { Obstacle } = {}
+
+local function addObstacle(target: Instance)
+	if target:IsA("Model") then
+		local cf, size = target:GetBoundingBox()
+		table.insert(obstacles, { position = cf.Position, radius = math.max(size.X, size.Z) / 2 })
+	elseif target:IsA("BasePart") then
+		table.insert(
+			obstacles,
+			{ position = target.Position, radius = math.max(target.Size.X, target.Size.Z) / 2 }
+		)
+	end
+end
+
+-- Скамейки, доска, ломбард и прочие модели парка, фонтан и спавн
+local function collectObstacles(folder: Instance, spots: Instance?)
+	obstacles = {}
+	for _, child in folder:GetChildren() do
+		if child == spots then
+			continue
+		end
+		if child:IsA("Folder") then
+			for _, inner in child:GetChildren() do
+				addObstacle(inner)
+			end
+		else
+			addObstacle(child)
+		end
+	end
+	local fountain = workspace:FindFirstChild("Fountain", true)
+	if fountain then
+		addObstacle(fountain)
+	end
+	local spawnPoint = workspace:FindFirstChildWhichIsA("SpawnLocation", true)
+	if spawnPoint then
+		addObstacle(spawnPoint)
+		parkCenter = Vector3.new(spawnPoint.Position.X, 0, spawnPoint.Position.Z)
+	end
+end
+
+local function flatDistance(a: Vector3, b: Vector3): number
+	return Vector3.new(a.X - b.X, 0, a.Z - b.Z).Magnitude
+end
+
+-- Место свободно: в стороне от препятствий и от других картриджей
+local function spotFree(position: Vector3, spot: BasePart): boolean
+	for _, obstacle in obstacles do
+		if flatDistance(position, obstacle.position) < obstacle.radius + StartPark.cartridgeClearance then
+			return false
+		end
+	end
+	local spots = spot.Parent
+	for _, other in if spots then spots:GetChildren() else {} do
+		if
+			other ~= spot
+			and other:IsA("BasePart")
+			and other:FindFirstChild("Cartridge")
+			and flatDistance(position, other.Position) < StartPark.cartridgeSpacing
+		then
+			return false
+		end
+	end
+	return true
+end
+
+-- Случайная точка на земле парка (луч вниз); nil — за cartridgeTries попыток не нашлось
+local function randomSpotPosition(spot: BasePart): Vector3?
+	local params = RaycastParams.new()
+	params.FilterType = Enum.RaycastFilterType.Exclude
+	local ignore: { Instance } = { spot.Parent or spot }
+	for _, player in Players:GetPlayers() do
+		if player.Character then
+			table.insert(ignore, player.Character)
+		end
+	end
+	params.FilterDescendantsInstances = ignore
+	local minR, maxR = StartPark.cartridgeAreaMin, StartPark.cartridgeAreaMax
+	for _ = 1, StartPark.cartridgeTries do
+		-- Равномерно по площади кольца
+		local radius = math.sqrt(rng:NextNumber(minR * minR, maxR * maxR))
+		local angle = rng:NextNumber(0, 2 * math.pi)
+		local flat = parkCenter + Vector3.new(math.cos(angle) * radius, 0, math.sin(angle) * radius)
+		if spotFree(flat, spot) then
+			local hit =
+				workspace:Raycast(Vector3.new(flat.X, groundY + 60, flat.Z), Vector3.new(0, -120, 0), params)
+			if hit and hit.Normal.Y > 0.7 and math.abs(hit.Position.Y - groundY) < 4 then
+				return hit.Position
+			end
+		end
+	end
+	return nil
+end
+
+-- Переставить точку (вместе с её «пятном» на земле), сохранив поворот детали
+local function relocateSpot(spot: BasePart)
+	local position = randomSpotPosition(spot)
+	if position then
+		spot.CFrame = (spot.CFrame - spot.Position) + position + Vector3.new(0, 0.1, 0)
+	end
+end
+
 local function onPickup(player: Player, spot: BasePart, cartridge: BasePart)
 	-- Два игрока нажали одновременно: второй уже не найдёт картридж на месте
 	if cartridge.Parent ~= spot then
@@ -253,6 +359,7 @@ spawnCartridge = function(spot: BasePart)
 	if not spot.Parent or spot:FindFirstChild("Cartridge") then
 		return
 	end
+	relocateSpot(spot)
 	local cartridge = Instance.new("Part")
 	cartridge.Name = "Cartridge"
 	cartridge.Anchored = true
@@ -531,7 +638,16 @@ function StartParkService.start()
 			prompt.Triggered:Connect(onPawn)
 		end
 		local spots = folder:FindFirstChild("CartridgeSpots")
+		collectObstacles(folder, spots)
 		if spots then
+			-- Высота земли — по самой низкой точке из плейса
+			local lowest = math.huge
+			for _, spot in spots:GetChildren() do
+				if spot:IsA("BasePart") then
+					lowest = math.min(lowest, spot.Position.Y)
+				end
+			end
+			groundY = if lowest < math.huge then lowest - 0.1 else 0
 			for _, spot in spots:GetChildren() do
 				if spot:IsA("BasePart") then
 					spawnCartridge(spot)

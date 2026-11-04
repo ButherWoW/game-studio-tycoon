@@ -104,7 +104,7 @@ local function show(info: any)
 	gui = screen
 	Ui.windowOpened()
 
-	local window = Ui.window(screen, "Window", Vector2.new(620, 600))
+	local window = Ui.window(screen, "Window", Vector2.new(620, 636))
 	local body = Instance.new("Frame")
 	body.BackgroundTransparency = 1
 	body.Position = UDim2.fromOffset(16, 12)
@@ -159,6 +159,13 @@ local function show(info: any)
 	repeatLine.TextXAlignment = Enum.TextXAlignment.Center
 	repeatLine.LayoutOrder = 19
 	repeatLine.Visible = false
+
+	-- Сумма быстрых событий разработки (QuickEventService); nil — событий не было
+	local quickBonus = tonumber(info.quickBonus)
+	local quickLine = Ui.label(body, "", 24, nil, Ui.colors.muted)
+	quickLine.TextXAlignment = Enum.TextXAlignment.Center
+	quickLine.LayoutOrder = 18
+	quickLine.Visible = false
 
 	local total = Ui.label(body, "", 44, Ui.titleFontFor(ClientState.lang))
 	total.TextXAlignment = Enum.TextXAlignment.Center
@@ -231,6 +238,16 @@ local function show(info: any)
 			local n = (string.format("%.1f", repeatPenalty):gsub("%.0$", ""))
 			repeatLine.Text = ClientState.t("critic_repeat", { n = n })
 			repeatLine.Visible = true
+		end
+		if quickBonus then
+			local n = string.format("%.2f", math.abs(quickBonus)):gsub("0+$", ""):gsub("%.$", "")
+			quickLine.Text =
+				ClientState.t("qte_release_line", { n = (if quickBonus < 0 then "−" else "+") .. n })
+			quickLine.TextColor3 = if quickBonus > 0
+				then Ui.colors.good
+				elseif quickBonus < 0 then Ui.colors.bad
+				else Ui.colors.muted
+			quickLine.Visible = true
 		end
 		total.Text = ClientState.t("release_score", { score = info.score })
 		total.TextColor3 = Ui.scoreColor(info.score)

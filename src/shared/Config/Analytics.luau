@@ -54,6 +54,7 @@ local Analytics = {
 		gamePass = "GamePassPurchased",
 		product = "ProductPurchased",
 		languageChanged = "LanguageChanged", -- не чаще раза за сессию
+		quickEvent = "QuickEvent", -- быстрое событие разработки; поле — "вид_результат" (timing_perfect)
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
