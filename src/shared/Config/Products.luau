@@ -101,7 +101,7 @@ return {
 	-- «Минута дохода» = доход релиза с оценкой max(рекорд, minScore) × релизов в минуту
 	-- (с бонусами студии, rebirth и ×2 деньги). Так пакеты не обесцениваются (#11).
 	income = {
-		releasesPerMinute = 2, -- BASE_DURATION в DevelopmentService = 30 с
+		releasesPerMinute = 1.6, -- разработка ~37 с (Economy.devSeconds, balance/dev-pacing): пакеты дохода не дорожают
 		minScore = 5, -- новичку считаем как за среднюю игру
 		minPerMinute = 500, -- нижняя граница $ за минуту
 	},

@@ -11,7 +11,8 @@ Research, Offline, Rebirth, HitCartridges, AdCampaigns), поэтому посл
   нанимает лучших доступных сотрудников, ставит им перк «Кранчер», учит исследования;
 - оценка — матожидание по шуму критиков (±reviewNoise), баланс жанра ~0.85, хорошая тема,
   QTE в среднем +0.2, сочетания чередует (штраф за повтор почти не ловит);
-- цикл игры = разработка + ~24 с на выбор/название/QTE/окно релиза (≈30–40 с в гараже);
+- цикл игры = разработка + ~24 с на выбор/название/окно релиза; разработка — как
+  DevelopmentService (Economy.devSeconds / devFloorSeconds): гараж ~45 с, позже ~25–30 с;
 - рекламу «Стримеры» покупает, когда она окупается вдвое; полка хитов заполнена лучшими;
 - день = 2 сессии по 45 мин (1.5 ч игры), между ними офлайн 5 ч и 17.5 ч;
 - в день: ежедневное задание (15 мин дохода) + в среднем ~9 мин наград за вход.
@@ -28,11 +29,11 @@ CFG = ROOT / "src" / "shared" / "Config"
 
 ASSUMPTIONS = {
     "park_minutes": 5.0,  # парк до покупки гаража
-    "overhead_s": 24.0,  # выбор жанра/темы, название, QTE, окно релиза
+    "overhead_s": 24.0,  # выбор жанра/темы, название, окно релиза (QTE идут во время разработки)
     "parallel_handle_s": 20.0,  # минимум секунд на игру, когда идут 2 проекта
     "balance": 0.85,  # попадание в рецепт жанра
     "topic_fit": 1.17,  # средняя «подходящая» тема (1.2 почти всегда, иногда 1.1)
-    "qte": 0.2,  # средний эффект QTE (DevelopmentService, другой агент)
+    "qte": 0.2,  # средний эффект QTE за игру (2–4 события, Config/QuickEvents)
     "repeat": 0.1,  # средний штраф за повтор
     "employee_focus": 1.12,  # спец-бонус + стартовый навык по доле фокуса
     "cruncher_perks": 5,  # сколько сотрудников с перком «Кранчер» (−0.1 к времени каждый)
@@ -130,6 +131,10 @@ def load():
             "studioLevelBonus",
         )
     }
+    # Темп разработки (Economy.devSeconds / devFloorSeconds); в старых конфигах их нет — 30 с линейно
+    for k, default in (("devSeconds", 30.0), ("devFloorSeconds", 0.0), ("devPointsSeconds", 30.0)):
+        m = re.search(rf"\b{k}\s*=\s*([\d_.]+)", eco)
+        economy[k] = num(m.group(1)) if m else default
     economy["criticExpectation"] = num_list(eco, "criticExpectation")
 
     exp = read("Expenses")
@@ -273,14 +278,17 @@ class Sim:
         perks = 1.0
         if not self.strike:
             perks = max(1 - 0.1 * min(len(self.staff), ASSUMPTIONS["cruncher_perks"]), 0.5)
-        return 30 * max(dev * perks, 0.25) * (1 - items)
+        factor = max(dev * perks, 0.25) * (1 - items)
+        e = self.c["eco"]
+        # Как DevelopmentService.devDuration: бонусы сокращают только часть сверх devFloorSeconds
+        return e["devFloorSeconds"] + (e["devSeconds"] - e["devFloorSeconds"]) * factor
 
     def review_bonus(self):
         return sum(u["reviewBonus"] for u in self.c["upgrades"] if u["id"] in self.owned)
 
     def raw_score(self):
         e = self.c["eco"]
-        p = self.pps() * 30
+        p = self.pps() * self.c["eco"]["devPointsSeconds"]
         quality = min(math.log10(1 + p) / e["qualityLogDivisor"], 1)
         raw = 10 * (e["balanceWeight"] * ASSUMPTIONS["balance"] + e["qualityWeight"] * quality)
         raw += (ASSUMPTIONS["topic_fit"] - 1) * e["topicFitStrength"]
@@ -447,7 +455,7 @@ class Sim:
         return len(self.staff) >= len(self.desks())
 
     def mark(self, name):
-        self.marks[name] = (self.t, self.wall, self.games, self.cash)
+        self.marks[name] = (self.t, self.wall, self.games, self.cash, self.duration(), self.games_per_min() * 60)
 
     # --- доход ---
     def exp_s2(self):
@@ -556,13 +564,13 @@ def report(sim, rows, quiet=False):
         ("top_interior", "Интерьер 3-го этажа"),
         ("rebirth", "Хватает на 1-й Rebirth"),
     ]
-    print("Веха                  | игра (актив) | день | игр  | деньги после")
-    print("----------------------|--------------|------|------|-------------")
+    print("Веха                  | игра (актив) | день | игр  | разраб. | игр/ч | деньги после")
+    print("----------------------|--------------|------|------|---------|-------|-------------")
     for key, label in names:
         if key in sim.marks:
-            t, wall, games, cash = sim.marks[key]
+            t, wall, games, cash, dur, gph = sim.marks[key]
             day = int(wall // (24 * 3600)) + 1
-            print(f"{label:<22}| {fmt_t(t):>12} | {day:>4} | {games:>4} | ${cash:,.0f}")
+            print(f"{label:<22}| {fmt_t(t):>12} | {day:>4} | {games:>4} | {dur:5.1f} с | {gph:5.0f} | ${cash:,.0f}")
         else:
             print(f"{label:<22}| {'не дошёл':>12} |      |      |")
     print(f"Офлайн-доход всего: ${sim.offline_total:,.0f}; актив: ${sim.active_income:,.0f}")
