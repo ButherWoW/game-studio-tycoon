@@ -337,7 +337,18 @@ local function active(profile: DataService.Profile): { [string]: string }
 	return seated(profile)
 end
 
--- Кто работает прямо сейчас: в строю и не на перерыве (StaffLife)
+-- События компании (CompanyEventService, необязательный): забастовка-«уход», сломанные столы, прибавки
+local function companyEvents(): any
+	local module = script.Parent:FindFirstChild("CompanyEventService")
+	if not module or not module:IsA("ModuleScript") then
+		return nil
+	end
+	local ok, service = pcall(require, module)
+	return if ok then service else nil
+end
+
+-- Кто работает прямо сейчас: в строю, не на перерыве (StaffLife), стол не сломан и команда
+-- не ушла (события компании)
 local function working(player: Player, profile: DataService.Profile): { [string]: string }
 	local result = active(profile)
 	local away = breaks[player]
@@ -346,18 +357,33 @@ local function working(player: Player, profile: DataService.Profile): { [string]
 			result[employeeId] = nil
 		end
 	end
+	local events = companyEvents()
+	if events then
+		if events.walkout(player) then
+			return {}
+		end
+		for employeeId, deskId in result do
+			if events.isBroken(player, deskId) then
+				result[employeeId] = nil
+			end
+		end
+	end
 	return result
 end
 
 -- Зарплаты всех нанятых в минуту (Config/Expenses): платим и тем, кто ждёт стол
 function StaffService.salaryPerMinute(profile: DataService.Profile): number
 	local info = getInfo(profile)
+	local events = companyEvents()
 	local total = 0
 	for employeeId in getStaff(profile) do
 		local employee = Employees.get(employeeId)
 		if employee then
 			local employeeInfo = info[employeeId]
-			total += Expenses.salary(employee, if employeeInfo then employeeInfo.skills else nil)
+			local pay = Expenses.salary(employee, if employeeInfo then employeeInfo.skills else nil)
+			-- Прибавка, чтобы конкурент не переманил (события компании)
+			local factor = if events then events.salaryFactor(profile, employeeId) else 1
+			total += math.floor(pay * factor)
 		end
 	end
 	return total
@@ -665,10 +691,22 @@ local function sendStaff(player: Player)
 		end
 	end
 	local staff = getStaff(profile)
+	-- Прибавки к зарплате (события компании): окно «Команда» показывает зарплату с ними
+	local events = companyEvents()
+	local raises = {}
+	if events then
+		for employeeId in staff do
+			local factor = events.salaryFactor(profile, employeeId)
+			if factor ~= 1 then
+				raises[employeeId] = factor
+			end
+		end
+	end
 	StaffRemotes.StaffChanged:FireClient(player, staff, {
 		info = getInfo(profile),
 		unlocked = unlocked,
 		now = os.time(),
+		raises = raises,
 	})
 end
 
@@ -1244,19 +1282,17 @@ local function onHire(player: Player, employeeId: any)
 end
 
 -- Уволить: навыки и перки пропадают, освободившийся стол займёт ждущий (seatAll).
--- Во время забастовки тоже можно — это способ уменьшить зарплаты
-local function onFire(player: Player, employeeId: any)
-	if type(employeeId) ~= "string" or throttled(player) then
-		return
-	end
+-- Во время забастовки тоже можно — это способ уменьшить зарплаты.
+-- withRefund = false — сотрудник ушёл сам (переманили, события компании): без возврата
+local function fireEmployee(player: Player, employeeId: string, withRefund: boolean): boolean
 	local employee = Employees.get(employeeId)
 	local profile = DataService.get(player)
 	if not employee or not profile then
-		return
+		return false
 	end
 	local staff = getStaff(profile)
 	if staff[employee.id] == nil then
-		return
+		return false
 	end
 	local before = StaffService.power(player)
 	-- NPC не исчезает: встаёт, берёт коробку и уходит к выходу (StaffLife), пересборка его не тронет
@@ -1280,7 +1316,7 @@ local function onFire(player: Player, employeeId: any)
 	if skins then
 		skins.forget(player, profile, employee.id)
 	end
-	local refund = Employees.refundFor(employee)
+	local refund = if withRefund then Employees.refundFor(employee) else 0
 	if refund > 0 then
 		DataService.addCash(player, refund)
 		-- Возврат за увольнение — не «заработок» для заданий
@@ -1306,6 +1342,78 @@ local function onFire(player: Player, employeeId: any)
 		refund = refund,
 		mood = if MoodService and hasTeam then Mood.fired.value else 0,
 	})
+	return true
+end
+
+local function onFire(player: Player, employeeId: any)
+	if type(employeeId) ~= "string" or throttled(player) then
+		return
+	end
+	fireEmployee(player, employeeId, true)
+end
+
+-- Сотрудник уходит сам (события компании: переманил конкурент) — без возврата денег
+function StaffService.dismiss(player: Player, employeeId: string): boolean
+	return fireEmployee(player, employeeId, false)
+end
+
+-- Бесплатный уровень навыка случайному сотруднику (события компании: конференция).
+-- Сначала его специализация, иначе любой не максимальный навык. nil — учить некого
+function StaffService.grantFreeSkill(player: Player): { employeeId: string, key: string }?
+	local profile = DataService.get(player)
+	if not profile then
+		return nil
+	end
+	local info = getInfo(profile)
+	local options: { { employeeId: string, key: string } } = {}
+	for employeeId in getStaff(profile) do
+		local employee = Employees.get(employeeId)
+		local employeeInfo = info[employeeId]
+		if employee and employeeInfo then
+			local spec = employee.specialization
+			if spec and (employeeInfo.skills[spec] or 0) < Skills.maxLevel then
+				table.insert(options, { employeeId = employeeId, key = spec })
+			else
+				for _, key in Skills.keys do
+					if (employeeInfo.skills[key] or 0) < Skills.maxLevel then
+						table.insert(options, { employeeId = employeeId, key = key })
+						break
+					end
+				end
+			end
+		end
+	end
+	if #options == 0 then
+		return nil
+	end
+	local choice = options[math.random(1, #options)]
+	local before = StaffService.power(player)
+	local level = info[choice.employeeId].skills[choice.key] or 0
+	info[choice.employeeId].skills[choice.key] = level + 1
+	sendStaff(player)
+	sendPower(player)
+	local folder = npcFolders[player]
+	StaffRemotes.StaffFeel:FireClient(player, {
+		kind = "skill",
+		employeeId = choice.employeeId,
+		key = choice.key,
+		from = level,
+		to = level + 1,
+		before = before,
+		after = StaffService.power(player),
+		npc = folder and folder:FindFirstChild("Staff_" .. choice.employeeId),
+	})
+	return choice
+end
+
+-- Переслать клиенту команду и мощность (события компании: прибавка, сломанный стол, уход команды)
+function StaffService.refreshStaff(player: Player)
+	sendStaff(player)
+	sendPower(player)
+end
+
+function StaffService.refreshPower(player: Player)
+	sendPower(player)
 end
 
 -- Игрок закрыл подсказку о забастовке: больше не показывать

@@ -62,6 +62,9 @@ local Analytics = {
 		seizure = "BailiffSeizure", -- приставы забрали предмет за долг; поле — id, значение — выручка
 		code = "CodeRedeemed", -- активирован промокод; поле — код
 		mascot = "MascotPurchased", -- маскот куплен; поле — "id_cash" / "id_robux"
+		-- событие компании; поле — "id_этап": shown/insured (сработало), a/b/auto_a (выбор),
+		-- win/lose (риск), repaired, insurance_bought
+		companyEvent = "CompanyEvent",
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -83,6 +86,7 @@ local Analytics = {
 		SocialService = { transactionType = "TimedReward", sku = "group" },
 		BailiffService = { transactionType = "Seizure", sku = "bailiffs" }, -- продажа предмета за долг
 		CodeService = { transactionType = "TimedReward", sku = "code" },
+		CompanyEventService = { transactionType = "CompanyEvent", sku = "event" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },
@@ -101,6 +105,7 @@ local Analytics = {
 		decor = "Decor", -- декор студии (DecorService), sku — ключ покупки id@этаж
 		skin = "Skin", -- скины сотрудников за $ (SkinService), sku — id скина
 		mascot = "Mascot", -- маскоты за $ (MascotService), sku — id маскота
+		companyEvent = "CompanyEvent", -- потери от событий компании, страховка и починка
 		other = "Other",
 	},
 }

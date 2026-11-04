@@ -16,6 +16,8 @@ local Texts = require(Shared.Config.Texts)
 local StudioLayout = require(Shared.StudioLayout)
 local ClientState = require(script.Parent.Parent.ClientState)
 local StudioState = require(script.Parent.Parent.StudioState)
+local CompanyEventState = require(script.Parent.Parent.CompanyEventState)
+local CompanyEvents = require(Shared.Config.CompanyEvents)
 local Ui = require(script.Parent.Parent.Ui)
 
 type Tab = "interior" | "decor" | "mood"
@@ -133,6 +135,39 @@ local function buildInterior(body: Instance)
 		return
 	end
 	note(body, ClientState.t("studio_interior_hint"), 1)
+	-- Страховка от плохих событий компании (CompanyEventService): цена — минуты дохода
+	local events = CompanyEventState.state
+	local left = CompanyEventState.insuranceLeft()
+	local insuranceText = if left > 0
+		then ClientState.t("cev_insurance_active", { time = CompanyEvents.clock(left) })
+		else ClientState.t("cev_insurance_desc", { time = CompanyEvents.clock(events.insuranceSeconds) })
+	local insurance = row(
+		body,
+		1,
+		"🛡",
+		ClientState.t("cev_insurance_title"),
+		insuranceText,
+		if left > 0 then Ui.colors.good else nil
+	)
+	-- Продлить можно, пока остаток не больше одного срока (как на сервере)
+	priceButton(insurance, events.insurancePrice, CompanyEventState.loaded and left <= 0, function()
+		CompanyEventState.buyInsurance()
+	end)
+	-- Сломанный предмет после потопа: починить здесь же
+	local broken = CompanyEventState.broken()
+	if broken and broken.item then
+		local repair = row(
+			body,
+			1,
+			"🔧",
+			CompanyEventState.upgradeName(broken.item),
+			CompanyEvents.clock(broken.endsAt - CompanyEventState.now()),
+			Ui.colors.bad
+		)
+		priceButton(repair, events.repairCost, true, function()
+			CompanyEventState.repair()
+		end)
+	end
 	if #state.offers == 0 then
 		note(body, ClientState.t("studio_interior_done"), 2)
 		return
@@ -352,6 +387,9 @@ function StudioWindow.start()
 		end
 	end, "menu_studio")
 	StudioState.changed:Connect(function()
+		render()
+	end)
+	CompanyEventState.changed:Connect(function()
 		render()
 	end)
 	-- Деньги поменялись — перекрасить кнопки цены

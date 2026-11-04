@@ -9,6 +9,11 @@ local Debug = {
 	-- (0 — выключено). Не меньше лимита этапа (Config/Bailiffs, 10 000) — приставы приходят сразу,
 	-- меньше — только предупреждение и «разваливающийся» офис. Защита новичка в Studio не действует
 	bailiffsDebt = 0,
+	-- Событие компании (id из Config/CompanyEvents, например "takeover"): в Studio приходит через ~15 с
+	-- после входа с гаражом и потом каждый интервал, без пауз новичка, этапа и кулдауна. nil — обычный режим
+	forceCompanyEvent = nil :: string?,
+	-- Интервал между событиями компании в Studio, секунд (например 30). nil — как в Config/CompanyEvents
+	companyEventInterval = nil :: number?,
 }
 
 return Debug

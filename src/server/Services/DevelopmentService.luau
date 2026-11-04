@@ -69,6 +69,22 @@ local function speedFactor(player: Player): number
 	return if shop and type(shop.devSpeed) == "number" and shop.devSpeed > 0 then shop.devSpeed else 1
 end
 
+-- События компании (CompanyEventService): вызвать функцию, без модуля или при ошибке — default
+local function companyEvent(fnName: string, default: any, ...: any): any
+	local service = optional("CompanyEventService")
+	local fn = service and service[fnName]
+	if type(fn) ~= "function" then
+		return default
+	end
+	local ok, value = pcall(fn, ...)
+	return if ok and value ~= nil then value else default
+end
+
+-- Предмет сломан событием компании (потоп): не даёт очков и бонусов, пока не починят
+local function isBroken(player: Player, upgradeId: string): boolean
+	return companyEvent("isBroken", false, player, upgradeId) == true
+end
+
 -- Сумма бонусов купленных предметов студии (Config/Upgrades: speed, reviewBonus)
 local function upgradeBonus(player: Player, field: "speed" | "reviewBonus"): number
 	local profile = DataService.get(player)
@@ -76,7 +92,11 @@ local function upgradeBonus(player: Player, field: "speed" | "reviewBonus"): num
 	if profile then
 		for _, upgrade in Upgrades do
 			local value = (upgrade :: any)[field]
-			if profile.upgrades[upgrade.id] and type(value) == "number" then
+			if
+				profile.upgrades[upgrade.id]
+				and type(value) == "number"
+				and not isBroken(player, upgrade.id)
+			then
 				total += value
 			end
 		end
@@ -155,7 +175,10 @@ local function scoreBonus(
 	topicId: string,
 	sequel: boolean?
 ): number
+	-- + событие компании для следующей игры (награда, ревью-бомбинг, счастливый баг)
+	local companyBonus = tonumber(companyEvent("scoreBonus", 0, player)) or 0
 	return reviewBonus(player)
+		+ companyBonus
 		- Formulas.criticExpectation(profile.studioLevel)
 		- repeatPenaltyFor(profile, genreId, topicId, sequel)
 end
@@ -367,7 +390,7 @@ function DevelopmentService.pointsRate(player: Player, focus: Focus, tempo: numb
 	local any = false
 	for _, upgrade in Upgrades do
 		local deskPoints = upgrade.pointsPerSecond
-		if profile.upgrades[upgrade.id] and deskPoints then
+		if profile.upgrades[upgrade.id] and deskPoints and not isBroken(player, upgrade.id) then
 			any = true
 			local employee = byDesk[upgrade.id]
 			local base = deskPoints * (if employee then employee.multiplier else 1)
@@ -634,6 +657,8 @@ local function release(player: Player, project: Project)
 			holidayMultiplier = value
 		end
 	end
+	-- События компании: стример, утечка кода, иск, катастрофы (1 — ничего не действует)
+	local companyMultiplier = tonumber(companyEvent("revenueMultiplier", 1, player)) or 1
 	revenue = math.floor(
 		revenue
 			* cashMultiplier
@@ -642,6 +667,7 @@ local function release(player: Player, project: Project)
 			* powerMultiplier
 			* holidayMultiplier
 			* rewardMultiplier
+			* companyMultiplier
 	)
 	-- Маскот «доход»: +N% к доходу релиза
 	revenue = math.floor(revenue * (1 + mascotBonus(player, "revenue")))
@@ -662,6 +688,8 @@ local function release(player: Player, project: Project)
 	project.paid = true
 
 	hook("ResearchService", "onGameReleased", player, score)
+	-- Поправки «следующей игры» событий компании израсходованы
+	hook("CompanyEventService", "onGameReleased", player)
 	hook("PerksService", "onGameReleased", player, revenue)
 	-- Кредит: часть дохода игры уходит в погашение (Config/Loans.repayShare); сколько — для окна релиза
 	local debtBefore = tonumber(player:GetAttribute("LoanDebt")) or 0
@@ -1017,8 +1045,8 @@ local function tickProject(player: Player, project: Project, atPc: boolean)
 	if project.pending or not hasProject(player, project) then
 		return
 	end
-	-- Встал из-за компьютера — разработка на паузе
-	if not atPc then
+	-- Встал из-за компьютера (или событие компании «отключили свет») — разработка на паузе
+	if not atPc or companyEvent("isPaused", false, player) == true then
 		Remotes.DevelopmentProgress:FireClient(player, {
 			id = project.id,
 			progress = math.min(project.elapsed / project.duration, 1),
@@ -1046,6 +1074,53 @@ local function tickProject(player: Player, project: Project, atPc: boolean)
 	if project.elapsed >= project.duration then
 		finishProject(player, project)
 	end
+end
+
+-- Игра в разработке в студии (не ноутбук): событиям компании есть что «уронить» или ускорить
+function DevelopmentService.hasActiveProject(player: Player): boolean
+	for _, project in projects[player] or {} do
+		if not project.pending and not project.laptop and project.elapsed < project.duration then
+			return true
+		end
+	end
+	return false
+end
+
+-- Событие «упал сервер»: игры теряют share длительности прогресса (очки — пропорционально).
+-- Возвращает, сколько игр задело
+function DevelopmentService.rollbackProgress(player: Player, share: number): number
+	local count = 0
+	for _, project in projects[player] or {} do
+		if not project.pending and not project.laptop and project.elapsed > 0 then
+			local lost = math.min(project.duration * math.clamp(share, 0, 1), project.elapsed)
+			local keep = (project.elapsed - lost) / project.elapsed
+			project.elapsed -= lost
+			for key, value in project.points :: any do
+				(project.points :: any)[key] = value * keep
+			end
+			count += 1
+		end
+	end
+	return count
+end
+
+-- Событие «выпустить раньше»: пропустить share оставшегося времени с очками за него
+-- (как «Мгновенно закончить», но частично). Возвращает, сколько игр задело
+function DevelopmentService.rushProjects(player: Player, share: number): number
+	local count = 0
+	for _, project in projects[player] or {} do
+		if not project.pending and not project.laptop and project.elapsed < project.duration then
+			local skip = math.max(project.duration - project.elapsed, 0) * math.clamp(share, 0, 1)
+			local rate = DevelopmentService.pointsRate(player, project.focus, project.tempo)
+			project.points.gameplay += rate.gameplay * skip
+			project.points.graphics += rate.graphics * skip
+			project.points.sound += rate.sound * skip
+			project.points.story += rate.story * skip
+			project.elapsed += skip
+			count += 1
+		end
+	end
+	return count
 end
 
 -- Отменить всю разработку (Rebirth сбрасывает студию — недоделанные игры пропадают,

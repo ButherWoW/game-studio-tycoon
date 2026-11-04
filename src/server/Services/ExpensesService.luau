@@ -59,6 +59,18 @@ local function paySalary(player: Player, profile: DataService.Profile, amount: n
 	player:SetAttribute("PaydayCount", (tonumber(player:GetAttribute("PaydayCount")) or 0) + 1)
 end
 
+-- Множитель аренды от событий компании (CompanyEventService, необязательный): 0 — грант
+local function rentMultiplier(player: Player): number
+	local module = script.Parent:FindFirstChild("CompanyEventService")
+	if not module or not module:IsA("ModuleScript") then
+		return 1
+	end
+	local ok, value = pcall(function()
+		return (require(module) :: any).rentMultiplier(player)
+	end)
+	return if ok and type(value) == "number" and value >= 0 then value else 1
+end
+
 local function reset(player: Player)
 	owedRent[player] = nil
 	salaryAccrued[player] = nil
@@ -81,7 +93,8 @@ local function charge(player: Player)
 		return
 	end
 	local salaryPerMinute = StaffService.salaryPerMinute(profile)
-	local rentPerMinute = Expenses.rentFor(profile.studioLevel)
+	-- Грант (события компании): аренда на время не списывается
+	local rentPerMinute = Expenses.rentFor(profile.studioLevel) * rentMultiplier(player)
 	player:SetAttribute("ExpensesPerMinute", salaryPerMinute + rentPerMinute)
 	local now = os.clock()
 	if not nextPayday[player] then
