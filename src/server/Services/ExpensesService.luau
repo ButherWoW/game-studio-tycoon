@@ -1,9 +1,9 @@
 --!strict
 -- Расходы студии (Config/Expenses): аренда этапа списывается долями каждые tickSeconds, зарплата
 -- команды — раз в paydaySeconds одной суммой (сумма растёт с навыками, Expenses.salary).
--- Не хватает денег на аренду или зарплату — забастовка: profile.staffStrike = true, StaffService
--- выключает бонусы команды (игрок сам продолжает делать игры и выбирается). Долг не копится:
--- невыплаченная зарплата — одна, её пробуем списать каждый тик, пока бастуют зарплата не набегает.
+-- Не хватает денег — расходы всё равно списываются, баланс уходит в минус (долг) до лимита
+-- овердрафта (Config/Bailiffs, DataService.charge). Пока cash < 0 — забастовка: profile.staffStrike
+-- = true, StaffService выключает бонусы команды; упёрлись в лимит — BailiffService (приставы).
 -- Клиенту — атрибуты игрока ExpensesPerMinute, StaffStrike, PaydayAt (серверное время зарплаты),
 -- PaydayAmount (сколько спишут), PaydayPaid и PaydayCount (последняя выплата; клиент показывает тост).
 
@@ -11,6 +11,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Expenses = require(ReplicatedStorage.Shared.Config.Expenses)
+local Bailiffs = require(ReplicatedStorage.Shared.Config.Bailiffs)
 local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService)
 local StaffService = require(script.Parent.StaffService)
@@ -21,8 +22,6 @@ local ExpensesService = {}
 local owedRent: { [Player]: number } = {}
 -- Зарплата, набежавшая с прошлой выплаты
 local salaryAccrued: { [Player]: number } = {}
--- Невыплаченная зарплата (забастовка до её выплаты)
-local salaryDue: { [Player]: number } = {}
 -- Когда следующая зарплата (os.clock)
 local nextPayday: { [Player]: number } = {}
 
@@ -40,35 +39,29 @@ local function setStrike(player: Player, profile: DataService.Profile, strike: b
 	player:SetAttribute("StaffStrike", strike)
 end
 
--- Списать с учётом задания «заработай» (расходы — не «минус заработок»)
-local function spend(player: Player, amount: number): boolean
-	if not DataService.trySpend(player, amount) then
-		return false
-	end
+-- Списать с учётом задания «заработай» (расходы — не «минус заработок»). Приставы: списываем
+-- и в минус, до лимита овердрафта этапа (Config/Bailiffs)
+local function spend(player: Player, profile: DataService.Profile, amount: number)
+	local charged = DataService.charge(player, amount, Bailiffs.limitFor(profile.studioLevel))
 	local reward = script.Parent:FindFirstChild("RewardService")
-	if reward then
-		pcall((require(reward) :: any).noteExpense, player, amount)
+	if reward and charged > 0 then
+		pcall((require(reward) :: any).noteExpense, player, charged)
 	end
-	return true
 end
 
-local function paySalary(player: Player, amount: number): boolean
+local function paySalary(player: Player, profile: DataService.Profile, amount: number)
 	if amount <= 0 then
-		return true
+		return
 	end
-	if not spend(player, amount) then
-		return false
-	end
+	spend(player, profile, amount)
 	player:SetAttribute("PaydayPaid", amount)
 	-- Счётчик: одинаковая сумма два раза подряд тоже должна показать тост
 	player:SetAttribute("PaydayCount", (tonumber(player:GetAttribute("PaydayCount")) or 0) + 1)
-	return true
 end
 
 local function reset(player: Player)
 	owedRent[player] = nil
 	salaryAccrued[player] = nil
-	salaryDue[player] = nil
 	nextPayday[player] = nil
 	player:SetAttribute("PaydayAt", nil)
 	player:SetAttribute("PaydayAmount", nil)
@@ -95,54 +88,42 @@ local function charge(player: Player)
 		nextPayday[player] = now + Expenses.paydaySeconds
 	end
 
-	local ok = true
-	-- Аренда — долями
+	-- Аренда — долями (и в минус: долг, Config/Bailiffs)
 	owedRent[player] = (owedRent[player] or 0) + rentPerMinute * Expenses.tickSeconds / 60
 	local rent = math.floor(owedRent[player])
 	if rent > 0 then
-		if spend(player, rent) then
-			owedRent[player] -= rent
-		else
-			owedRent[player] = 0
-			ok = false
-		end
+		spend(player, profile, rent)
+		owedRent[player] -= rent
 	end
 
-	-- Невыплаченная зарплата: пробуем каждый тик, новая пока не набегает
-	local due = salaryDue[player]
-	if due then
-		if paySalary(player, due) then
-			salaryDue[player] = nil
-			nextPayday[player] = now + Expenses.paydaySeconds
-		else
-			ok = false
-		end
-	else
-		salaryAccrued[player] = (salaryAccrued[player] or 0) + salaryPerMinute * Expenses.tickSeconds / 60
-		if now >= nextPayday[player] then
-			local amount = math.floor(salaryAccrued[player] or 0)
-			salaryAccrued[player] = 0
-			nextPayday[player] = now + Expenses.paydaySeconds
-			if not paySalary(player, amount) then
-				salaryDue[player] = amount
-				ok = false
-			end
-		end
+	-- Зарплата раз в paydaySeconds — тоже и в минус
+	salaryAccrued[player] = (salaryAccrued[player] or 0) + salaryPerMinute * Expenses.tickSeconds / 60
+	if now >= nextPayday[player] then
+		local amount = math.floor(salaryAccrued[player] or 0)
+		salaryAccrued[player] = 0
+		nextPayday[player] = now + Expenses.paydaySeconds
+		paySalary(player, profile, amount)
 	end
 
 	-- Клиенту: когда и сколько (оценка — набежавшее + до конца периода по текущей ставке)
 	local left = math.max(nextPayday[player] - now, 0)
-	local upcoming = salaryDue[player]
-		or math.floor((salaryAccrued[player] or 0) + salaryPerMinute * left / 60)
+	local upcoming = math.floor((salaryAccrued[player] or 0) + salaryPerMinute * left / 60)
 	player:SetAttribute(
 		"PaydayAt",
 		-- Целые секунды: значение не дрожит от тика к тику (клиент предупреждает один раз)
-		if salaryPerMinute > 0 or salaryDue[player]
-			then math.round(workspace:GetServerTimeNow() + left)
-			else nil
+		if salaryPerMinute > 0 then math.round(workspace:GetServerTimeNow() + left) else nil
 	)
 	player:SetAttribute("PaydayAmount", if upcoming > 0 then upcoming else nil)
-	setStrike(player, profile, not ok)
+	-- Бастуют, пока баланс в минусе (долг)
+	setStrike(player, profile, profile.cash < 0)
+end
+
+-- Для BailiffService: долг погашен доходом или приставами — снять забастовку сразу, не ждать тика
+function ExpensesService.syncStrike(player: Player)
+	local profile = DataService.get(player)
+	if profile and (profile :: any).staffStrike == true and profile.cash >= 0 then
+		setStrike(player, profile, false)
+	end
 end
 
 function ExpensesService.start()
@@ -153,7 +134,6 @@ function ExpensesService.start()
 	Players.PlayerRemoving:Connect(function(player)
 		owedRent[player] = nil
 		salaryAccrued[player] = nil
-		salaryDue[player] = nil
 		nextPayday[player] = nil
 	end)
 	task.spawn(function()

@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neonkyltti",
 	decor_aquarium = "Akvaario",
 	decor_arcade = "Pelikone",
+	-- Приставы
+	mood_part_bailiffs = "Velka: toimisto rapistuu",
+	bailiff_warning = "⚖️ Velkaa {debt}. Alle {limit} tulevat ulosottomiehet ja myyvät tavarat {percent} %:lla",
+	bailiff_active = "⚖️ Ulosottomiehet vievät tavaroita! Velkaa {debt}",
+	bailiff_bank = "🏦 Laina",
+	bailiff_pack = "💎 Maksa velka — R$ {price}",
+	bailiff_fire = "👥 Irtisano",
+	bailiff_seized = "⚖️ Ulosottomiehet veivät: {item} (+{amount} velkaan)",
+	bailiff_left = "⚖️ Velka maksettu — ulosottomiehet lähtivät",
 	-- Предложения доната
 	offer_later = "Ei nyt",
 	offer_double_release = "×2 tämän pelin tuloihin — R$ {price}",

@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Letreiro neon",
 	decor_aquarium = "Aquário",
 	decor_arcade = "Fliperama",
+	-- Приставы
+	mood_part_bailiffs = "Dívida: o escritório está caindo aos pedaços",
+	bailiff_warning = "⚖️ Dívida de {debt}. Abaixo de {limit}, os oficiais de justiça vêm e vendem suas coisas por {percent}%",
+	bailiff_active = "⚖️ Os oficiais de justiça estão levando suas coisas! Dívida de {debt}",
+	bailiff_bank = "🏦 Empréstimo",
+	bailiff_pack = "💎 Quitar a dívida — R$ {price}",
+	bailiff_fire = "👥 Demitir",
+	bailiff_seized = "⚖️ Penhorado: {item} (+{amount} para a dívida)",
+	bailiff_left = "⚖️ Dívida quitada — os oficiais de justiça foram embora",
 	-- Предложения доната
 	offer_later = "Agora não",
 	offer_double_release = "×2 na receita deste jogo — R$ {price}",

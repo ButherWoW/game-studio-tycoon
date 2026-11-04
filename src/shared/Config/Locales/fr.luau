@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Enseigne néon",
 	decor_aquarium = "Aquarium",
 	decor_arcade = "Borne d'arcade",
+	-- Приставы
+	mood_part_bailiffs = "Dette : le bureau tombe en ruine",
+	bailiff_warning = "⚖️ Dette de {debt}. Sous {limit}, les huissiers vendront tes affaires à {percent} %",
+	bailiff_active = "⚖️ Les huissiers saisissent tes affaires ! Dette de {debt}",
+	bailiff_bank = "🏦 Prêt",
+	bailiff_pack = "💎 Rembourser — R$ {price}",
+	bailiff_fire = "👥 Licencier",
+	bailiff_seized = "⚖️ Saisi : {item} (+{amount} pour la dette)",
+	bailiff_left = "⚖️ Dette remboursée — les huissiers sont partis",
 	-- Предложения доната
 	offer_later = "Pas maintenant",
 	offer_double_release = "×2 sur les revenus de ce jeu — R$ {price}",

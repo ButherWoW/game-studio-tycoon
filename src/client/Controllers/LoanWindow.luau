@@ -121,6 +121,11 @@ local function show()
 	later.Size = UDim2.new(0.35, 0, 1, 0)
 end
 
+-- Открыть банк из других окон (плашка долга, BailiffBanner)
+function LoanWindow.open()
+	show()
+end
+
 function LoanWindow.start()
 	local player = Players.LocalPlayer
 	local menu = Ui.menuButton(MENU_SLOT, "🏦", show, "menu_bank")

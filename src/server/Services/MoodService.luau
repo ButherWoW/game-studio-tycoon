@@ -16,6 +16,7 @@ local Mood = require(Shared.Config.Mood)
 local Decor = require(Shared.Config.Decor)
 local Posters = require(Shared.Config.Posters)
 local Employees = require(Shared.Config.Employees)
+local Bailiffs = require(Shared.Config.Bailiffs)
 local StudioLayout = require(Shared.StudioLayout)
 local DataService = require(script.Parent.DataService)
 
@@ -144,6 +145,10 @@ local function compute(profile: DataService.Profile, player: Player?): ({ Part }
 	local data = moodData(profile)
 	if (profile :: any).staffStrike == true then
 		table.insert(parts, { key = "mood_part_strike", value = -Mood.strikePenalty })
+	end
+	-- Приставы (Config/Bailiffs): пока баланс в минусе, офис «разваливается»
+	if profile.cash < 0 then
+		table.insert(parts, { key = "mood_part_bailiffs", value = -Bailiffs.moodPenalty })
 	end
 	local aftermath = math.floor(data.aftermath + 0.5)
 	-- Во время забастовки осадок не показываем отдельно: он начнёт таять, когда заплатят

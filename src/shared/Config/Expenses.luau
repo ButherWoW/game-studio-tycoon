@@ -1,7 +1,7 @@
 --!strict
 -- Расходы студии: зарплаты команды (раз в paydaySeconds) и аренда помещения (каждые tickSeconds).
 -- Чем сильнее сотрудник (multiplier) и чем выше прокачаны навыки — тем дороже он стоит в минуту.
--- Денег не хватает — команда бастует (без бонусов сотрудников), долг не копится.
+-- Денег не хватает — баланс уходит в минус (долг, Config/Bailiffs), команда бастует, пока он не погашен.
 
 local Employees = require(script.Parent.Employees)
 local Skills = require(script.Parent.Skills)

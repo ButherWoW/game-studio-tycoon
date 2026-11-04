@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neonfelirat",
 	decor_aquarium = "Akvárium",
 	decor_arcade = "Játékgép",
+	-- Приставы
+	mood_part_bailiffs = "Adósság: szétesik az iroda",
+	bailiff_warning = "⚖️ Adósság: {debt}. {limit} alatt jönnek a végrehajtók, és {percent}%-ért eladják a cuccaidat",
+	bailiff_active = "⚖️ A végrehajtók viszik a cuccaidat! Adósság: {debt}",
+	bailiff_bank = "🏦 Hitel",
+	bailiff_pack = "💎 Adósság rendezése — R$ {price}",
+	bailiff_fire = "👥 Kirúgás",
+	bailiff_seized = "⚖️ A végrehajtók elvitték: {item} (+{amount} az adósságra)",
+	bailiff_left = "⚖️ Adósság rendezve — a végrehajtók elmentek",
 	-- Предложения доната
 	offer_later = "Most nem",
 	offer_double_release = "×2 bevétel ebből a játékból — R$ {price}",

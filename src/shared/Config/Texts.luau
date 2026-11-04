@@ -178,6 +178,15 @@ Texts.ru = {
 	decor_neonSign = "Неоновая вывеска",
 	decor_aquarium = "Аквариум",
 	decor_arcade = "Игровой автомат",
+	-- Приставы
+	mood_part_bailiffs = "Долг: офис разваливается",
+	bailiff_warning = "⚖️ Долг {debt}. Минус больше {limit} — придут приставы и продадут вещи за {percent}%",
+	bailiff_active = "⚖️ Приставы забирают вещи! Долг {debt}",
+	bailiff_bank = "🏦 Кредит",
+	bailiff_pack = "💎 Закрыть долг — R$ {price}",
+	bailiff_fire = "👥 Уволить",
+	bailiff_seized = "⚖️ Приставы забрали: {item} (+{amount} в счёт долга)",
+	bailiff_left = "⚖️ Долг погашен — приставы ушли",
 	-- Предложения доната
 	offer_later = "Не сейчас",
 	offer_double_release = "×2 к доходу этой игры — R$ {price}",
@@ -868,6 +877,15 @@ Texts.en = {
 	decor_neonSign = "Neon sign",
 	decor_aquarium = "Aquarium",
 	decor_arcade = "Arcade machine",
+	-- Приставы
+	mood_part_bailiffs = "Debt: the office is falling apart",
+	bailiff_warning = "⚖️ Debt {debt}. Go below {limit} and bailiffs will sell your stuff for {percent}%",
+	bailiff_active = "⚖️ Bailiffs are taking your stuff! Debt {debt}",
+	bailiff_bank = "🏦 Loan",
+	bailiff_pack = "💎 Pay off debt — R$ {price}",
+	bailiff_fire = "👥 Fire staff",
+	bailiff_seized = "⚖️ Bailiffs took: {item} (+{amount} toward the debt)",
+	bailiff_left = "⚖️ Debt paid off — the bailiffs left",
 	-- Предложения доната
 	offer_later = "Not now",
 	offer_double_release = "×2 this game's revenue — R$ {price}",

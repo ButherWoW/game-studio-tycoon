@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neonschild",
 	decor_aquarium = "Aquarium",
 	decor_arcade = "Spielautomat",
+	-- Приставы
+	mood_part_bailiffs = "Schulden: das Büro verfällt",
+	bailiff_warning = "⚖️ Schulden {debt}. Unter {limit} kommt der Gerichtsvollzieher und verkauft deine Sachen für {percent} %",
+	bailiff_active = "⚖️ Der Gerichtsvollzieher pfändet! Schulden {debt}",
+	bailiff_bank = "🏦 Kredit",
+	bailiff_pack = "💎 Schulden tilgen — R$ {price}",
+	bailiff_fire = "👥 Entlassen",
+	bailiff_seized = "⚖️ Gepfändet: {item} (+{amount} für die Schulden)",
+	bailiff_left = "⚖️ Schulden getilgt — der Gerichtsvollzieher ist weg",
 	-- Предложения доната
 	offer_later = "Nicht jetzt",
 	offer_double_release = "×2 Einnahmen für dieses Spiel — R$ {price}",

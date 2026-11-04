@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neon",
 	decor_aquarium = "Akwarium",
 	decor_arcade = "Automat do gier",
+	-- Приставы
+	mood_part_bailiffs = "Dług: biuro się sypie",
+	bailiff_warning = "⚖️ Dług {debt}. Poniżej {limit} przyjdzie komornik i sprzeda rzeczy za {percent}%",
+	bailiff_active = "⚖️ Komornik zabiera rzeczy! Dług {debt}",
+	bailiff_bank = "🏦 Kredyt",
+	bailiff_pack = "💎 Spłać dług — R$ {price}",
+	bailiff_fire = "👥 Zwolnij",
+	bailiff_seized = "⚖️ Komornik zabrał: {item} (+{amount} na poczet długu)",
+	bailiff_left = "⚖️ Dług spłacony — komornik odszedł",
 	-- Предложения доната
 	offer_later = "Nie teraz",
 	offer_double_release = "×2 do przychodu z tej gry — R$ {price}",

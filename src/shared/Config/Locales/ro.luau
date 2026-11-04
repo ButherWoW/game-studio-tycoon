@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Firmă cu neon",
 	decor_aquarium = "Acvariu",
 	decor_arcade = "Automat arcade",
+	-- Приставы
+	mood_part_bailiffs = "Datorii: biroul se dărâmă",
+	bailiff_warning = "⚖️ Datorie {debt}. Sub {limit} vin executorii și vând lucrurile cu {percent}%",
+	bailiff_active = "⚖️ Executorii iau lucrurile! Datorie {debt}",
+	bailiff_bank = "🏦 Credit",
+	bailiff_pack = "💎 Plătește datoria — R$ {price}",
+	bailiff_fire = "👥 Concediază",
+	bailiff_seized = "⚖️ Executorii au luat: {item} (+{amount} pentru datorie)",
+	bailiff_left = "⚖️ Datoria e plătită — executorii au plecat",
 	-- Предложения доната
 	offer_later = "Nu acum",
 	offer_double_release = "×2 la venitul acestui joc — R$ {price}",
