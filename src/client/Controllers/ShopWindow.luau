@@ -1,6 +1,7 @@
 --!strict
--- Окно «Магазин» (5.4, 5.5): вкладки «Реклама / Геймпассы / Бусты / Постеры / Скины»
--- (постеры — PosterShop, скины сотрудников — SkinShop).
+-- Окно «Магазин» (5.4, 5.5): вкладки «Реклама / Геймпассы / Бусты / Постеры / Скины / Маскоты»
+-- (постеры — PosterShop, скины сотрудников — SkinShop, маскоты — MascotShop).
+-- В шапке — кнопка «🎟 Коды» (CodeWindow).
 -- Клиент только показывает цены и открывает окно покупки Roblox; что куплено и что выдать,
 -- решает сервер (ShopService, MonetizationService). ID 0 = товар ещё не создан: кнопка «Скоро».
 
@@ -20,8 +21,10 @@ local Ui = require(script.Parent.Parent.Ui)
 local PosterShop = require(script.Parent.Parent.PosterShop)
 local SkinShop = require(script.Parent.Parent.SkinShop)
 local OfferShop = require(script.Parent.Parent.OfferShop)
+local MascotShop = require(script.Parent.Parent.MascotShop)
+local CodeWindow = require(script.Parent.Parent.CodeWindow)
 
-type Tab = "ads" | "passes" | "boosts" | "posters" | "skins"
+type Tab = "ads" | "passes" | "boosts" | "posters" | "skins" | "mascots"
 type ShopState = {
 	passes: { [string]: boolean },
 	boosts: { instantFinish: number, patch: number, coffeeUntil: number }?,
@@ -30,7 +33,7 @@ type ShopState = {
 
 local MENU_SLOT = 4
 local ROW_HEIGHT = 72
-local TABS: { Tab } = { "ads", "passes", "boosts", "posters", "skins" }
+local TABS: { Tab } = { "ads", "passes", "boosts", "posters", "skins", "mascots" }
 
 local ShopWindow = {}
 local gui: ScreenGui? = nil
@@ -204,12 +207,18 @@ render = function()
 
 	local title = Ui.label(window, ClientState.t("shop_title"), 36, Ui.titleFont)
 	title.Position = UDim2.fromOffset(16, 10)
-	title.Size = UDim2.new(1, -80, 0, 36)
+	title.Size = UDim2.new(1, -230, 0, 36)
 	local close = Ui.button(window, ClientState.t("create_close"), Ui.colors.locked, function()
 		ShopWindow.close()
 	end)
 	close.Size = UDim2.fromOffset(40, 40)
 	close.Position = UDim2.new(1, -52, 0, 8)
+	-- Промокоды: отдельное маленькое окно поверх магазина
+	local codes = Ui.button(window, ClientState.t("codes_button"), Ui.colors.primary, function()
+		CodeWindow.open()
+	end)
+	codes.Size = UDim2.fromOffset(150, 40)
+	codes.Position = UDim2.new(1, -212, 0, 8)
 
 	local tabs = Instance.new("Frame")
 	tabs.BackgroundTransparency = 1
@@ -256,6 +265,8 @@ render = function()
 		PosterShop.build(body)
 	elseif tab == "skins" then
 		SkinShop.build(body)
+	elseif tab == "mascots" then
+		MascotShop.build(body)
 	else
 		buildBoosts(body)
 	end
@@ -287,10 +298,12 @@ function ShopWindow.open()
 	ShopRemotes.ShopStateRequest:FireServer()
 	PosterShop.request()
 	SkinShop.request()
+	MascotShop.request()
 	OfferShop.request()
 end
 
 function ShopWindow.close()
+	CodeWindow.close()
 	if gui then
 		gui:Destroy()
 		gui = nil
@@ -318,6 +331,9 @@ function ShopWindow.start()
 		render()
 	end)
 	SkinShop.listen(function()
+		render()
+	end)
+	MascotShop.listen(function()
 		render()
 	end)
 	OfferShop.listen(function()

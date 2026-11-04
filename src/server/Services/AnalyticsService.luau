@@ -62,6 +62,7 @@ type SpendSnapshot = {
 	staff: { [string]: boolean },
 	decor: { [string]: boolean },
 	skins: { [string]: boolean },
+	mascots: { [string]: boolean },
 	studioLevel: number,
 	ownsGarage: boolean,
 	ad: any,
@@ -482,6 +483,7 @@ local function snapshot(profile: Profile): SpendSnapshot
 		staff = keySet(p.staff),
 		decor = keySet(if type(p.decor) == "table" then p.decor.owned else nil),
 		skins = keySet(if type(p.skins) == "table" then p.skins.owned else nil),
+		mascots = keySet(if type(p.mascots) == "table" then p.mascots.owned else nil),
 		studioLevel = profile.studioLevel,
 		ownsGarage = p.ownsGarage == true,
 		ad = ad,
@@ -508,6 +510,9 @@ local function classifySpend(player: Player, amount: number, module: string?, be
 	elseif module == "SkinService" then
 		local skins = if type(p.skins) == "table" then p.skins.owned else nil
 		kind, sku = sinks.skin, newKey(before.skins, skins) or "skin"
+	elseif module == "MascotService" then
+		local mascots = if type(p.mascots) == "table" then p.mascots.owned else nil
+		kind, sku = sinks.mascot, newKey(before.mascots, mascots) or "mascot"
 	elseif p.ownsGarage == true and not before.ownsGarage then
 		kind, sku = sinks.move, "garage"
 	elseif profile.studioLevel > before.studioLevel then
@@ -716,6 +721,20 @@ end
 function Analytics.logOffer(player: Player, kind: string, stage: string)
 	if Config.enabled and states[player] then
 		logCustom(player, Config.events.offer, 1, kind .. "_" .. stage)
+	end
+end
+
+-- Активирован промокод (CodeService)
+function Analytics.logCode(player: Player, code: string)
+	if Config.enabled and states[player] then
+		logCustom(player, Config.events.code, 1, code)
+	end
+end
+
+-- Куплен маскот (MascotService): how — "cash" или "robux"
+function Analytics.logMascot(player: Player, mascotId: string, how: string)
+	if Config.enabled and states[player] then
+		logCustom(player, Config.events.mascot, 1, mascotId .. "_" .. how)
 	end
 end
 

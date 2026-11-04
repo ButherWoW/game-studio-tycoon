@@ -111,6 +111,15 @@ local function moodSpeed(player: Player): number
 	return if ok and type(value) == "number" and value > 0 then value else 1
 end
 
+-- Бонус надетого маскота (MascotService): devSpeed / revenue / review, без модуля 0
+local function mascotBonus(player: Player, kind: string): number
+	local MascotService = optional("MascotService")
+	local ok, value = pcall(function()
+		return if MascotService then MascotService.bonus(player, kind) else 0
+	end)
+	return if ok and type(value) == "number" and value == value then math.clamp(value, 0, 1) else 0
+end
+
 local function reviewBonus(player: Player): number
 	local vip = if ownsPass(player, "vipOffice") then GamePasses.effects.vipReviewBonus else 0
 	-- «Мастер Пиксель» +1 и перк «Перфекционист» +0.2
@@ -118,7 +127,11 @@ local function reviewBonus(player: Player): number
 		return (require(script.Parent.StaffService) :: any).reviewBonus(player)
 	end)
 	local staffBonus = if ok and type(staff) == "number" then staff else 0
-	return upgradeBonus(player, "reviewBonus") + vip + staffBonus + moodReviewBonus(player)
+	return upgradeBonus(player, "reviewBonus")
+		+ vip
+		+ staffBonus
+		+ moodReviewBonus(player)
+		+ mascotBonus(player, "review")
 end
 
 -- Всё, что сдвигает оценку до округления: бонусы студии минус ожидания критиков этапа
@@ -177,6 +190,8 @@ local function devTiming(player: Player): (number, number)
 		local floor = Economy.devFloorSeconds
 		-- Бонусы сокращают только часть сверх пола; донат (быстрая разработка, кофе) — после него
 		duration = (floor + (Economy.devSeconds - floor) * durationFactor(player)) / speedFactor(player)
+		-- Маскот «скорость»: +N% к скорости (очки в секунду растут вместе с ней)
+		duration /= 1 + mascotBonus(player, "devSpeed")
 		pointsSeconds = Economy.devPointsSeconds
 	end
 	-- Первые игры игрока — короче: быстрый онбординг
@@ -628,6 +643,8 @@ local function release(player: Player, project: Project)
 			* holidayMultiplier
 			* rewardMultiplier
 	)
+	-- Маскот «доход»: +N% к доходу релиза
+	revenue = math.floor(revenue * (1 + mascotBonus(player, "revenue")))
 
 	local isRecord = profile.gamesReleased > 0 and score > profile.bestScore
 	profile.gamesReleased += 1

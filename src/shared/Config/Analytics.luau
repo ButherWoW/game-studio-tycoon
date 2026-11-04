@@ -59,6 +59,8 @@ local Analytics = {
 		gift = "GiftPurchased", -- подарок за Robux; поле — gift_<id>, значение 1 — другу, 0 — достался себе
 		groupReward = "GroupReward", -- награда за вступление в группу
 		offer = "Offer", -- предложение доната; поле — "вид_этап" (starterPack_shown, floorLock_purchased)
+		code = "CodeRedeemed", -- активирован промокод; поле — код
+		mascot = "MascotPurchased", -- маскот куплен; поле — "id_cash" / "id_robux"
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -78,6 +80,7 @@ local Analytics = {
 		OfferService = { transactionType = "IAP", sku = "offer" },
 		TutorialService = { transactionType = "Onboarding", sku = "tutorial" },
 		SocialService = { transactionType = "TimedReward", sku = "group" },
+		CodeService = { transactionType = "TimedReward", sku = "code" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },
@@ -95,6 +98,7 @@ local Analytics = {
 		penalty = "ThiefPenalty", -- штраф пойманного вора
 		decor = "Decor", -- декор студии (DecorService), sku — ключ покупки id@этаж
 		skin = "Skin", -- скины сотрудников за $ (SkinService), sku — id скина
+		mascot = "Mascot", -- маскоты за $ (MascotService), sku — id маскота
 		other = "Other",
 	},
 }
