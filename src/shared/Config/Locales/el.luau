@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Επιγραφή νέον",
 	decor_aquarium = "Ενυδρείο",
 	decor_arcade = "Μηχάνημα ηλεκτρονικών παιχνιδιών",
+	-- Приставы
+	mood_part_bailiffs = "Χρέος: το γραφείο καταρρέει",
+	bailiff_warning = "⚖️ Χρέος {debt}. Κάτω από {limit} έρχονται οι δικαστικοί επιμελητές και πουλάνε τα πράγματα στο {percent}%",
+	bailiff_active = "⚖️ Οι δικαστικοί επιμελητές παίρνουν πράγματα! Χρέος {debt}",
+	bailiff_bank = "🏦 Δάνειο",
+	bailiff_pack = "💎 Ξόφλησε το χρέος — R$ {price}",
+	bailiff_fire = "👥 Απόλυσε",
+	bailiff_seized = "⚖️ Οι επιμελητές πήραν: {item} (+{amount} για το χρέος)",
+	bailiff_left = "⚖️ Το χρέος ξοφλήθηκε — οι επιμελητές έφυγαν",
 	-- Предложения доната
 	offer_later = "Όχι τώρα",
 	offer_double_release = "×2 στα έσοδα αυτού του παιχνιδιού — R$ {price}",

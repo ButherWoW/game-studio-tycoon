@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neonski natpis",
 	decor_aquarium = "Akvarij",
 	decor_arcade = "Arkadni automat",
+	-- Приставы
+	mood_part_bailiffs = "Dug: ured se raspada",
+	bailiff_warning = "⚖️ Dug {debt}. Ispod {limit} dolaze ovršitelji i prodaju stvari za {percent} %",
+	bailiff_active = "⚖️ Ovršitelji odnose stvari! Dug {debt}",
+	bailiff_bank = "🏦 Kredit",
+	bailiff_pack = "💎 Otplati dug — R$ {price}",
+	bailiff_fire = "👥 Otpusti",
+	bailiff_seized = "⚖️ Ovršitelji su uzeli: {item} (+{amount} za dug)",
+	bailiff_left = "⚖️ Dug otplaćen — ovršitelji su otišli",
 	-- Предложения доната
 	offer_later = "Ne sada",
 	offer_double_release = "×2 prihod ove igre — R$ {price}",

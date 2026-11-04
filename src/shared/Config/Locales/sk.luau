@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neónový nápis",
 	decor_aquarium = "Akvárium",
 	decor_arcade = "Arkádový automat",
+	-- Приставы
+	mood_part_bailiffs = "Dlh: kancelária sa rozpadá",
+	bailiff_warning = "⚖️ Dlh {debt}. Pod {limit} prídu exekútori a predajú veci za {percent} %",
+	bailiff_active = "⚖️ Exekútori berú veci! Dlh {debt}",
+	bailiff_bank = "🏦 Pôžička",
+	bailiff_pack = "💎 Splatiť dlh — R$ {price}",
+	bailiff_fire = "👥 Prepustiť",
+	bailiff_seized = "⚖️ Exekútori zobrali: {item} (+{amount} na dlh)",
+	bailiff_left = "⚖️ Dlh splatený — exekútori odišli",
 	-- Предложения доната
 	offer_later = "Teraz nie",
 	offer_double_release = "×2 k príjmu tejto hry — R$ {price}",

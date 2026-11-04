@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Letrero de neón",
 	decor_aquarium = "Acuario",
 	decor_arcade = "Máquina recreativa",
+	-- Приставы
+	mood_part_bailiffs = "Deuda: la oficina se cae a pedazos",
+	bailiff_warning = "⚖️ Deuda de {debt}. Por debajo de {limit} vendrán los embargadores y venderán tus cosas al {percent} %",
+	bailiff_active = "⚖️ ¡Los embargadores se llevan tus cosas! Deuda de {debt}",
+	bailiff_bank = "🏦 Préstamo",
+	bailiff_pack = "💎 Pagar la deuda — R$ {price}",
+	bailiff_fire = "👥 Despedir",
+	bailiff_seized = "⚖️ Embargado: {item} (+{amount} para la deuda)",
+	bailiff_left = "⚖️ Deuda pagada: los embargadores se fueron",
 	-- Предложения доната
 	offer_later = "Ahora no",
 	offer_double_release = "×2 a los ingresos de este juego — R$ {price}",

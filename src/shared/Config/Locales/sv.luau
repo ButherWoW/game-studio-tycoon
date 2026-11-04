@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neonskylt",
 	decor_aquarium = "Akvarium",
 	decor_arcade = "Arkadmaskin",
+	-- Приставы
+	mood_part_bailiffs = "Skuld: kontoret faller sönder",
+	bailiff_warning = "⚖️ Skuld {debt}. Under {limit} kommer kronofogden och säljer dina saker för {percent} %",
+	bailiff_active = "⚖️ Kronofogden tar dina saker! Skuld {debt}",
+	bailiff_bank = "🏦 Lån",
+	bailiff_pack = "💎 Betala skulden — R$ {price}",
+	bailiff_fire = "👥 Säg upp",
+	bailiff_seized = "⚖️ Kronofogden tog: {item} (+{amount} till skulden)",
+	bailiff_left = "⚖️ Skulden är betald — kronofogden gick",
 	-- Предложения доната
 	offer_later = "Inte nu",
 	offer_double_release = "×2 på intäkterna från det här spelet — R$ {price}",

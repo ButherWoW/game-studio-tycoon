@@ -12,6 +12,7 @@ local RunService = game:GetService("RunService")
 
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local Debug = require(ReplicatedStorage.Shared.Config.Debug)
+local Bailiffs = require(ReplicatedStorage.Shared.Config.Bailiffs)
 
 export type Profile = {
 	cash: number,
@@ -269,7 +270,8 @@ function DataService.replicate(player: Player)
 			leaderstatsHold[player] = nil
 			hold = nil
 		end
-		cashValue.Value = if hold then math.max(p.cash - hold.amount, 0) else p.cash
+		-- Баланс бывает в минусе (долг, Config/Bailiffs): минус показываем как есть, не нулём
+		cashValue.Value = if hold then math.max(p.cash - hold.amount, math.min(p.cash, 0)) else p.cash
 	end
 end
 
@@ -307,6 +309,22 @@ function DataService.trySpend(player: Player, amount: number): boolean
 	p.cash -= amount
 	DataService.replicate(player)
 	return true
+end
+
+-- Обязательный расход (аренда, зарплата — ExpensesService): списывается и в минус, но не ниже
+-- −limit (овердрафт, Config/Bailiffs). Возвращает, сколько списано (остальное сверх лимита — нет).
+-- trySpend при минусе по-прежнему отказывает: покупки в долг невозможны
+function DataService.charge(player: Player, amount: number, limit: number): number
+	local p = profiles[player]
+	if not p or not isFiniteAmount(amount) or amount <= 0 or not isFiniteAmount(limit) then
+		return 0
+	end
+	local charged = math.max(math.min(amount, p.cash + math.max(limit, 0)), 0)
+	if charged > 0 then
+		p.cash -= charged
+		DataService.replicate(player)
+	end
+	return charged
 end
 
 function DataService.save(player: Player): boolean
@@ -416,6 +434,8 @@ local function onPlayerAdded(player: Player)
 		if not isFiniteAmount(profile.cash) then
 			profile.cash = 0
 		end
+		-- Минус (долг, Config/Bailiffs) — не глубже самого большого лимита овердрафта
+		profile.cash = math.max(profile.cash, -Bailiffs.maxLimit())
 	end
 	profiles[player] = profile
 	states[player] = { persistent = persistent, closed = false }

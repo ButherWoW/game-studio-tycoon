@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "霓虹灯牌",
 	decor_aquarium = "水族箱",
 	decor_arcade = "街机",
+	-- Приставы
+	mood_part_bailiffs = "欠债：办公室在衰败",
+	bailiff_warning = "⚖️ 欠债 {debt}。欠款超过 {limit}，法警会来把物品按 {percent}% 的价格卖掉",
+	bailiff_active = "⚖️ 法警正在搬走物品！欠债 {debt}",
+	bailiff_bank = "🏦 贷款",
+	bailiff_pack = "💎 还清欠债 — R$ {price}",
+	bailiff_fire = "👥 解雇",
+	bailiff_seized = "⚖️ 法警搬走了：{item}（+{amount} 抵债）",
+	bailiff_left = "⚖️ 欠债已还清——法警离开了",
 	-- Предложения доната
 	offer_later = "以后再说",
 	offer_double_release = "本作收入×2 — R$ {price}",

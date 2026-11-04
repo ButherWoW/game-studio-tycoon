@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neonbord",
 	decor_aquarium = "Aquarium",
 	decor_arcade = "Arcadekast",
+	-- Приставы
+	mood_part_bailiffs = "Schuld: het kantoor valt uit elkaar",
+	bailiff_warning = "⚖️ Schuld {debt}. Onder {limit} komt de deurwaarder en verkoopt je spullen voor {percent}%",
+	bailiff_active = "⚖️ De deurwaarder neemt je spullen mee! Schuld {debt}",
+	bailiff_bank = "🏦 Lening",
+	bailiff_pack = "💎 Schuld aflossen — R$ {price}",
+	bailiff_fire = "👥 Ontslaan",
+	bailiff_seized = "⚖️ De deurwaarder nam mee: {item} (+{amount} voor de schuld)",
+	bailiff_left = "⚖️ Schuld afgelost — de deurwaarder is weg",
 	-- Предложения доната
 	offer_later = "Niet nu",
 	offer_double_release = "×2 op de inkomsten van deze game — R$ {price}",

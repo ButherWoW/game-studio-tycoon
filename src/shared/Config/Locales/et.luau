@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neoonsilt",
 	decor_aquarium = "Akvaarium",
 	decor_arcade = "Mänguautomaat",
+	-- Приставы
+	mood_part_bailiffs = "Võlg: kontor laguneb",
+	bailiff_warning = "⚖️ Võlg {debt}. Alla {limit} tulevad kohtutäiturid ja müüvad asjad {percent}% eest",
+	bailiff_active = "⚖️ Kohtutäiturid viivad asju! Võlg {debt}",
+	bailiff_bank = "🏦 Laen",
+	bailiff_pack = "💎 Maksa võlg — R$ {price}",
+	bailiff_fire = "👥 Vallanda",
+	bailiff_seized = "⚖️ Kohtutäiturid viisid: {item} (+{amount} võla katteks)",
+	bailiff_left = "⚖️ Võlg makstud — kohtutäiturid lahkusid",
 	-- Предложения доната
 	offer_later = "Mitte praegu",
 	offer_double_release = "×2 selle mängu tulule — R$ {price}",

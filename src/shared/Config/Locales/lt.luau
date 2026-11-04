@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neoninė iškaba",
 	decor_aquarium = "Akvariumas",
 	decor_arcade = "Žaidimų automatas",
+	-- Приставы
+	mood_part_bailiffs = "Skola: biuras griūva",
+	bailiff_warning = "⚖️ Skola {debt}. Žemiau {limit} ateis antstoliai ir parduos daiktus už {percent} %",
+	bailiff_active = "⚖️ Antstoliai išsiveža daiktus! Skola {debt}",
+	bailiff_bank = "🏦 Paskola",
+	bailiff_pack = "💎 Grąžinti skolą — R$ {price}",
+	bailiff_fire = "👥 Atleisti",
+	bailiff_seized = "⚖️ Antstoliai paėmė: {item} (+{amount} skolai)",
+	bailiff_left = "⚖️ Skola grąžinta — antstoliai išėjo",
 	-- Предложения доната
 	offer_later = "Ne dabar",
 	offer_double_release = "×2 šio žaidimo pajamoms — R$ {price}",

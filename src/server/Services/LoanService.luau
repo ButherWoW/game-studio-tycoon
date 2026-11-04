@@ -142,11 +142,14 @@ function LoanService.onGameReleased(player: Player, revenue: number)
 	LoanService.onIncome(player, revenue)
 end
 
--- Любой доход (релиз, офлайн-доход): repayShare уходит в погашение, долг не висит вечно
+-- Любой доход (релиз, офлайн-доход): repayShare уходит в погашение, долг не висит вечно.
+-- Доход уже зачислен: сначала он закрыл минус баланса (долг аренды и зарплат, Config/Bailiffs),
+-- банку — доля только того, что осталось сверх нуля (вместе не съедают весь доход)
 function LoanService.onIncome(player: Player, amount: number)
 	local profile = DataService.get(player)
 	if profile and type(amount) == "number" and amount > 0 and LoanService.debt(profile) > 0 then
-		repay(player, profile, amount * Loans.repayShare)
+		local free = math.min(amount, math.max(profile.cash, 0))
+		repay(player, profile, free * Loans.repayShare)
 	end
 end
 

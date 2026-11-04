@@ -144,7 +144,8 @@ end
 function ClientState.displayCash(): number
 	local data = ClientState.data
 	local cash = if data then tonumber(data.cash) or 0 else 0
-	return if revealPending then math.max(cash - hiddenCash, 0) else cash
+	-- В минусе (долг, Config/Bailiffs) минус не прячем до нуля
+	return if revealPending then math.max(cash - hiddenCash, math.min(cash, 0)) else cash
 end
 
 -- Выполнить после раскрытия оценки (если релиз сейчас раскрывается или вот-вот начнётся)

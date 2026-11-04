@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Insegna al neon",
 	decor_aquarium = "Acquario",
 	decor_arcade = "Cabinato arcade",
+	-- Приставы
+	mood_part_bailiffs = "Debiti: l'ufficio cade a pezzi",
+	bailiff_warning = "⚖️ Debito di {debt}. Sotto {limit} arrivano gli ufficiali giudiziari e vendono le tue cose al {percent}%",
+	bailiff_active = "⚖️ Gli ufficiali giudiziari pignorano! Debito di {debt}",
+	bailiff_bank = "🏦 Prestito",
+	bailiff_pack = "💎 Salda il debito — R$ {price}",
+	bailiff_fire = "👥 Licenzia",
+	bailiff_seized = "⚖️ Pignorato: {item} (+{amount} per il debito)",
+	bailiff_left = "⚖️ Debito saldato — gli ufficiali giudiziari se ne sono andati",
 	-- Предложения доната
 	offer_later = "Non ora",
 	offer_double_release = "×2 alle entrate di questo gioco — R$ {price}",
