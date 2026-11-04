@@ -80,6 +80,11 @@ local function onClaim(player: Player)
 	data.offlinePending = 0
 	player:SetAttribute("OfflinePending", 0)
 	DataService.addCash(player, pending)
+	-- Кредит банка: доля офлайн-дохода тоже идёт в погашение
+	local loan = script.Parent:FindFirstChild("LoanService")
+	if loan then
+		pcall((require(loan) :: any).onIncome, player, pending)
+	end
 end
 
 function OfflineService.start()

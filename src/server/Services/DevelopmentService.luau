@@ -104,8 +104,8 @@ end
 
 -- Всё, что сдвигает оценку до округления: бонусы студии минус ожидания критиков этапа
 -- и штраф за повтор сочетания среди последних игр (отчёт #2: в офисе всегда 9–10)
-local function scoreBonus(
-	player: Player,
+-- Штраф за повтор сочетания с учётом сиквела (его же показывает окно релиза)
+local function repeatPenaltyFor(
 	profile: DataService.Profile,
 	genreId: string,
 	topicId: string,
@@ -113,9 +113,19 @@ local function scoreBonus(
 ): number
 	-- Сиквел геймпасса «Авто-релиз» повторяет сочетание по задумке: штраф за повтор слабее
 	local repeatFactor = if sequel then Economy.sequelRepeatFactor else 1
+	return Formulas.repeatPenalty(profile.recentCombos, genreId, topicId) * repeatFactor
+end
+
+local function scoreBonus(
+	player: Player,
+	profile: DataService.Profile,
+	genreId: string,
+	topicId: string,
+	sequel: boolean?
+): number
 	return reviewBonus(player)
 		- Formulas.criticExpectation(profile.studioLevel)
-		- Formulas.repeatPenalty(profile.recentCombos, genreId, topicId) * repeatFactor
+		- repeatPenaltyFor(profile, genreId, topicId, sequel)
 end
 
 local function durationFactor(player: Player): number
@@ -486,6 +496,8 @@ local function release(player: Player, project: Project)
 		return
 	end
 
+	-- До rememberCombo: сколько сняли за повтор именно этой игры (критик в окне релиза)
+	local repeatPenalty = repeatPenaltyFor(profile, project.genreId, project.topicId, project.sequel)
 	local score = Formulas.review(
 		project.genreId,
 		project.topicId,
@@ -596,6 +608,7 @@ local function release(player: Player, project: Project)
 		loanRepaid = loanRepaid,
 		adBonus = adBonus,
 		isRecord = isRecord,
+		repeatPenalty = repeatPenalty,
 		projectId = project.id,
 		-- Сколько игр ещё в разработке: клиент не прячет прогресс и событие второй игры
 		activeProjects = #(projects[player] or {}),

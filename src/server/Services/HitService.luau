@@ -49,6 +49,7 @@ type Carry = {
 	lastCheck: number,
 }
 
+local DELIVER_SPEED_SLACK = 2 -- studs запаса на лаги при проверке пути перед доставкой
 local CARRY_TICK = 0.1
 local REQUEST_COOLDOWN = 1
 local CARTRIDGE_SIZE = Vector3.new(1.4, 1.6, 0.35)
@@ -634,9 +635,27 @@ local function checkCarry(carry: Carry)
 		local target = shelf.model:GetPivot().Position
 		local offset = Vector3.new(target.X - position.X, 0, target.Z - position.Z)
 		if offset.Magnitude <= HitCartridges.deliverDistance and math.abs(target.Y - position.Y) < 8 then
+			-- Скорость проверяется раз в 0.25 с, а доставка — каждый тик: телепорт к полке между
+			-- проверками не должен засчитаться. Путь от последней точки проверки — не быстрее бега
+			local sinceCheck = now - carry.lastCheck
+			local moved = Vector3.new(position.X - carry.lastPosition.X, 0, position.Z - carry.lastPosition.Z)
+			if moved.Magnitude > HitCartridges.maxCarrySpeed * sinceCheck + DELIVER_SPEED_SLACK then
+				cancelCarry(carry)
+				return
+			end
 			deliver(carry)
 		end
 	end
+end
+
+-- Игрок сейчас уносит чужой картридж или его картридж уносят (для PlotService: кнопка 🏠)
+function HitService.inChase(player: Player): boolean
+	for _, carry in carries do
+		if carry.thief == player or carry.victim == player then
+			return true
+		end
+	end
+	return false
 end
 
 -- ===== Защита и вход =====

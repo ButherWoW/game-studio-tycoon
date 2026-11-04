@@ -189,6 +189,12 @@ function DataService.get(player: Player): Profile?
 	return profiles[player]
 end
 
+-- NaN и ±inf в cash ломают профиль навсегда (NaN < x всегда false — trySpend «списал» бы NaN,
+-- и сохранение запишет мусор). Любая сумма из формул/DataStore проходит эту проверку
+local function isFiniteAmount(amount: any): boolean
+	return type(amount) == "number" and amount == amount and amount > -math.huge and amount < math.huge
+end
+
 -- Доход релиза прячется из таблицы лидеров, пока в окне релиза не открылась оценка (отчёт #2, п. 6)
 local leaderstatsHold: { [Player]: { amount: number, untilAt: number } } = {}
 
@@ -224,6 +230,10 @@ end
 
 -- Показать amount в таблице лидеров только через seconds (вызывает DevelopmentService при релизе)
 function DataService.holdLeaderstats(player: Player, amount: number, seconds: number)
+	-- Профиль уже закрыт (вышел): запись осталась бы в таблице навсегда
+	if not profiles[player] or not isFiniteAmount(amount) or not isFiniteAmount(seconds) then
+		return
+	end
 	local current = leaderstatsHold[player]
 	leaderstatsHold[player] = {
 		amount = amount + (if current and os.clock() < current.untilAt then current.amount else 0),
@@ -238,7 +248,7 @@ end
 
 function DataService.addCash(player: Player, amount: number)
 	local p = profiles[player]
-	if p then
+	if p and isFiniteAmount(amount) then
 		p.cash += amount
 		DataService.replicate(player)
 	end
@@ -246,7 +256,7 @@ end
 
 function DataService.trySpend(player: Player, amount: number): boolean
 	local p = profiles[player]
-	if not p or amount < 0 or p.cash < amount then
+	if not p or not isFiniteAmount(amount) or amount < 0 or p.cash < amount then
 		return false
 	end
 	p.cash -= amount

@@ -31,6 +31,8 @@ function Ui.windowClosed()
 	end
 end
 
+local CLICK_DEBOUNCE = 0.15 -- секунд между срабатываниями одной кнопки
+
 Ui.colors = {
 	primary = Color3.fromRGB(61, 123, 255),
 	money = Color3.fromRGB(255, 201, 60),
@@ -156,9 +158,20 @@ function Ui.button(parent: Instance, text: string, color: Color3, onClick: () ->
 	b.MouseLeave:Connect(function()
 		scale.Scale = 1
 	end)
-	b.Activated:Connect(onClick)
+	-- Кнопка и тач-подушка над ней не должны сработать на одно нажатие дважды
+	-- (иначе подтверждения «нажми ещё раз» проходят сами)
+	local lastClick = 0
+	local function click()
+		local now = os.clock()
+		if now - lastClick < CLICK_DEBOUNCE then
+			return
+		end
+		lastClick = now
+		onClick()
+	end
+	b.Activated:Connect(click)
 	if Ui.touch then
-		Ui.touchPad(b, onClick, scale)
+		Ui.touchPad(b, click, scale)
 	end
 	b.Parent = parent
 	return b

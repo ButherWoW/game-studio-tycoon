@@ -271,7 +271,13 @@ end
 function ExpoService.start()
 	local isStudio = RunService:IsStudio()
 	local interval = if isStudio then Expo.studioIntervalSeconds else Expo.intervalSeconds
-	local minParticipants = if isStudio then Expo.studioMinParticipants else Expo.minParticipants
+	local minParticipants = if isStudio
+		then Expo.studioMinParticipants
+		elseif game.PrivateServerId ~= "" then math.max(
+			Expo.minParticipants,
+			Expo.privateMinParticipants
+		)
+		else Expo.minParticipants
 	Players.PlayerAdded:Connect(function(player)
 		task.spawn(claimPending, player)
 	end)
@@ -284,7 +290,11 @@ function ExpoService.start()
 			local endsAt = (os.time() // interval + 1) * interval
 			ReplicatedStorage:SetAttribute("ExpoEndsAt", endsAt)
 			task.wait(math.max(endsAt - os.time(), 1))
-			finishRound(endsAt // interval, minParticipants)
+			-- Ошибка в итогах раунда не должна останавливать выставку до перезапуска сервера
+			local ok, err = pcall(finishRound, endsAt // interval, minParticipants)
+			if not ok then
+				warn("[ExpoService] finishRound failed:", err)
+			end
 		end
 	end)
 end

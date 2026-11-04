@@ -119,9 +119,14 @@ end
 
 -- Хук DevelopmentService после релиза: часть дохода игры уходит в погашение
 function LoanService.onGameReleased(player: Player, revenue: number)
+	LoanService.onIncome(player, revenue)
+end
+
+-- Любой доход (релиз, офлайн-доход): repayShare уходит в погашение, долг не висит вечно
+function LoanService.onIncome(player: Player, amount: number)
 	local profile = DataService.get(player)
-	if profile and type(revenue) == "number" and revenue > 0 and LoanService.debt(profile) > 0 then
-		repay(player, profile, revenue * Loans.repayShare)
+	if profile and type(amount) == "number" and amount > 0 and LoanService.debt(profile) > 0 then
+		repay(player, profile, amount * Loans.repayShare)
 	end
 end
 
