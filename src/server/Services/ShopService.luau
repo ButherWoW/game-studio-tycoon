@@ -87,6 +87,20 @@ function ShopService.consumeCharge(player: Player, kind: ChargeKind): boolean
 	return true
 end
 
+-- Вернуть заряд, если действие сорвалось после списания (например, релиз упал с ошибкой)
+function ShopService.refundCharge(player: Player, kind: ChargeKind)
+	local profile = DataService.get(player)
+	if not profile then
+		return
+	end
+	if kind == "instantFinish" then
+		profile.boosts.instantFinish += 1
+	elseif kind == "patch" then
+		profile.boosts.patch += 1
+	end
+	pushState(player)
+end
+
 -- Сколько $ студия зарабатывает за минуту (для пакетов «N минут дохода»)
 function ShopService.incomePerMinute(player: Player, profile: DataService.Profile): number
 	local income = Products.income
@@ -178,10 +192,19 @@ local function loadPasses(player: Player)
 	end
 end
 
+-- Событие покупки можно подделать и заспамить: перепроверка у Roblox не чаще раза в 2 с на игрока
+local PASS_EVENT_COOLDOWN = 2
+local lastPassEvent: { [Player]: number } = {}
+
 local function onPassPurchaseFinished(player: Player, gamePassId: number, wasPurchased: boolean)
 	if not wasPurchased then
 		return
 	end
+	local now = os.clock()
+	if (lastPassEvent[player] or 0) + PASS_EVENT_COOLDOWN > now then
+		return
+	end
+	lastPassEvent[player] = now
 	local pass = findPass(gamePassId)
 	local passes = owned[player]
 	if not pass or not passes then

@@ -459,6 +459,8 @@ Texts.ru = {
 	camera_view_on_touch = "🎥 Вид студии · щипок — зум",
 	camera_auto_on = "Авто-вид за ПК: вкл",
 	camera_auto_off = "Авто-вид за ПК: выкл",
+	topic_pumpkins = "Тыквы",
+	topic_newyear = "Новый год",
 } :: { [string]: string }
 
 Texts.en = {

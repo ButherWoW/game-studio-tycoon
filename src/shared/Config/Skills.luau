@@ -158,4 +158,12 @@ function Skills.slots(legendary: boolean?): number
 	return if legendary then Skills.legendaryPerkSlots else Skills.perkSlots
 end
 
+-- Потолки суммы перков по всей команде (аудит №3: без них «Перфекционисты» и «Наставники» складывались бесконечно)
+Skills.caps = {
+	reviewBonus = 0.6, -- «Перфекционист»: не больше +0.6 к оценке
+	trendBonus = 1, -- «Тренд-хантер»: не больше +1
+	mentorBonus = 0.3, -- «Наставник»: не больше +30% к столам
+	offlineBonus = 0.6, -- «Ночная смена»: не больше +60% офлайн-дохода
+}
+
 return Skills

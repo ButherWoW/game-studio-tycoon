@@ -639,13 +639,25 @@ local function onGamePassPurchased(player: Player, gamePassId: number, wasPurcha
 	if not wasPurchased or not states[player] then
 		return
 	end
-	local label = tostring(gamePassId)
+	local label: string? = nil
 	for _, pass in GamePasses.list do
 		if pass.gamePassId == gamePassId then
 			label = pass.id
 		end
 	end
-	logCustom(player, Config.events.gamePass, 1, label)
+	-- Только подтверждённые покупки: ждём, пока ShopService перепроверит владение у Roblox
+	if not label then
+		return
+	end
+	task.delay(3, function()
+		local shop = script.Parent:FindFirstChild("ShopService")
+		local okOwns, owns = pcall(function()
+			return shop and (require(shop) :: any).ownsPass(player, label)
+		end)
+		if okOwns and owns == true and states[player] then
+			logCustom(player, Config.events.gamePass, 1, label :: string)
+		end
+	end)
 end
 
 function Analytics.start()

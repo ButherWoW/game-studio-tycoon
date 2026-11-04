@@ -23,7 +23,8 @@ local lastRequest: { [Player]: number } = {}
 local function freeSet(map: { [string]: any }): { [string]: boolean }
 	local result = {}
 	for id, item in map do
-		if item.unlockCost <= 0 then
+		-- Сезонные темы (Хэллоуин, Новый год) открывает только HolidayService во время ивента
+		if item.unlockCost <= 0 and not item.seasonal then
 			result[id] = true
 		end
 	end
@@ -90,6 +91,10 @@ local function onRequestRebirth(player: Player)
 	-- (иначе их забирали бы после сброса, уже с новым множителем Rebirth)
 	local data = profile :: any
 	data.offlinePending = 0
+	-- Роялти «Издательства» от игр до Rebirth сгорают вместе со студией
+	if type(data.perks) == "table" then
+		data.perks.royalties = {}
+	end
 	player:SetAttribute("OfflinePending", 0)
 	local devModule = script.Parent:FindFirstChild("DevelopmentService")
 	if devModule and devModule:IsA("ModuleScript") then

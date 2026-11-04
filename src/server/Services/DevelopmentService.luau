@@ -347,6 +347,19 @@ local function sanitizeFocus(raw: any): Focus?
 end
 
 -- Жанр и тема существуют и открыты у игрока
+-- Сезонную тему можно брать только во время её праздника
+local function seasonalAllowed(topicId: string): boolean
+	local seasonal = (Topics[topicId] :: any).seasonal
+	if not seasonal then
+		return true
+	end
+	local HolidayService = optional("HolidayService")
+	local ok, current = pcall(function()
+		return HolidayService and HolidayService.current()
+	end)
+	return ok and current == seasonal
+end
+
 local function comboAllowed(profile: DataService.Profile, genreId: any, topicId: any): boolean
 	return type(genreId) == "string"
 		and Genres[genreId] ~= nil
@@ -354,6 +367,7 @@ local function comboAllowed(profile: DataService.Profile, genreId: any, topicId:
 		and type(topicId) == "string"
 		and Topics[topicId] ~= nil
 		and profile.unlockedTopics[topicId] == true
+		and seasonalAllowed(topicId)
 end
 
 -- Начать игру: общие проверки для «Создать игру» и «Авто-релиза».
@@ -449,7 +463,8 @@ local function release(player: Player, project: Project)
 	local score = Formulas.review(project.genreId, project.topicId, project.points, rng, reviewBonus(player))
 	local TrendService = optional("TrendService")
 	if TrendService then
-		local trend = TrendService.getBonus(project.genreId, project.topicId)
+		local okTrend, trendValue = pcall(TrendService.getBonus, project.genreId, project.topicId)
+		local trend = if okTrend and type(trendValue) == "number" then trendValue else 0
 		score += trend
 		-- Перк «Тренд-хантер»: ещё бонус, если игра в тренде
 		if trend > 0 then
@@ -467,8 +482,11 @@ local function release(player: Player, project: Project)
 	end
 	-- Продукт «Патч»: +1 к оценке, заряд тратится только если есть куда расти
 	local ShopService = optional("ShopService")
-	if ShopService and score < 10 and ShopService.consumeCharge(player, "patch") then
-		score += 1
+	if ShopService and score < 10 then
+		local okPatch, used = pcall(ShopService.consumeCharge, player, "patch")
+		if okPatch and used then
+			score += 1
+		end
 	end
 	score = math.clamp(score, 1, 10)
 
@@ -711,6 +729,10 @@ local function onInstantFinish(player: Player, projectId: any)
 	if project.elapsed >= project.duration then
 		return -- и так выходит на следующем тике
 	end
+	-- Как и обычная разработка — только сидя за компьютером
+	if not PlotService.isAtPc(player) then
+		return
+	end
 	local ShopService = optional("ShopService")
 	if not ShopService or not ShopService.consumeCharge(player, "instantFinish") then
 		return
@@ -724,7 +746,15 @@ local function onInstantFinish(player: Player, projectId: any)
 	project.points.sound += rate.sound * remaining
 	project.points.story += rate.story * remaining
 	project.elapsed = project.duration
-	finishProject(player, project)
+	local ok, err = pcall(finishProject, player, project)
+	if not ok then
+		-- Релиз не прошёл — заряд возвращаем, игра остаётся в разработке
+		warn("[DevelopmentService] Instant finish failed:", err)
+		local refund = ShopService.refundCharge
+		if type(refund) == "function" then
+			pcall(refund, player, "instantFinish")
+		end
+	end
 end
 
 -- «Тест-группа»: ожидаемая оценка без случайного разброса ± Research.PREVIEW_SPREAD.

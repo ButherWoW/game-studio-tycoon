@@ -352,7 +352,7 @@ function StaffService.deskMultipliers(player: Player, deskId: string): { [string
 	local skills = if atDesk and info[atDesk] then info[atDesk].skills else nil
 	for _, key in Skills.keys do
 		local level = if skills then skills[key] or 0 else 0
-		result[key] = (1 + Skills.bonusPerLevel * level) * (1 + mentor)
+		result[key] = (1 + Skills.bonusPerLevel * level) * (1 + math.min(mentor, Skills.caps.mentorBonus))
 	end
 	return result
 end
@@ -382,6 +382,8 @@ function StaffService.perkTotals(player: Player): PerkTotals
 		end
 	end
 	totals.devTime = math.max(totals.devTime, 0.5)
+	-- Перки складываются по сотрудникам, но не бесконечно
+	totals.trendBonus = math.min(totals.trendBonus, Skills.caps.trendBonus)
 	return totals
 end
 
@@ -394,6 +396,7 @@ function StaffService.reviewBonus(player: Player): number
 	end
 	local info = getInfo(profile)
 	local total = 0
+	local perkBonus = 0
 	for employeeId in seated(profile) do
 		local employee = Employees.get(employeeId)
 		total += if employee then employee.reviewBonus or 0 else 0
@@ -401,11 +404,11 @@ function StaffService.reviewBonus(player: Player): number
 		if employeeInfo then
 			for _, perkId in employeeInfo.perks do
 				local perk = Skills.perk(perkId)
-				total += if perk then perk.reviewBonus or 0 else 0
+				perkBonus += if perk then perk.reviewBonus or 0 else 0
 			end
 		end
 	end
-	return total
+	return total + math.min(perkBonus, Skills.caps.reviewBonus)
 end
 
 -- Множитель офлайн-дохода: легендарный в команде (даже если ждёт стол) и «Ночная смена» за столом
@@ -429,7 +432,7 @@ function StaffService.offlineMultiplier(profile: DataService.Profile): number
 			end
 		end
 	end
-	return multiplier * (1 + bonus)
+	return multiplier * (1 + math.min(bonus, Skills.caps.offlineBonus))
 end
 
 local function sendStaff(player: Player)
@@ -686,7 +689,31 @@ local function seatNpc(model: Model, plot: BasePart, desk: Upgrades.Upgrade, use
 end
 
 -- Пересадить всех NPC игрока (вход, найм, новый стол, переезд, смена внешности)
+local rebuildNpcs: (player: Player) -> ()
+
+-- Пересборка NPC дорогая (CreateHumanoidModelFromDescription уступает поток): одна за раз
+-- на игрока, а запросы во время сборки склеиваются в одну следующую (против спама SetLook)
+local npcBusy: { [Player]: boolean } = {}
+local npcAgain: { [Player]: boolean } = {}
+
 local function refreshNpcs(player: Player)
+	if npcBusy[player] then
+		npcAgain[player] = true
+		return
+	end
+	npcBusy[player] = true
+	repeat
+		npcAgain[player] = false
+		local ok, err = pcall(rebuildNpcs, player)
+		if not ok then
+			warn("[StaffService] NPC rebuild failed:", err)
+		end
+	until not npcAgain[player] or not player.Parent
+	npcBusy[player] = nil
+	npcAgain[player] = nil
+end
+
+rebuildNpcs = function(player: Player)
 	-- Сборка NPC уступает поток; актуальна только последняя запущенная пересадка
 	local generation = (refreshGeneration[player] or 0) + 1
 	refreshGeneration[player] = generation
@@ -875,10 +902,18 @@ local function onSetPerk(player: Player, employeeId: any, slot: any, perkId: any
 end
 
 -- Внешность: бесплатно, только индексы из Config/Skills
+local LOOK_COOLDOWN = 1 -- смена внешности перестраивает NPC: не чаще раза в секунду
+local lastLook: { [Player]: number } = {}
+
 local function onSetLook(player: Player, employeeId: any, field: any, index: any)
 	if type(employeeId) ~= "string" or type(field) ~= "string" or throttled(player) then
 		return
 	end
+	local now = os.clock()
+	if (lastLook[player] or 0) + LOOK_COOLDOWN > now then
+		return
+	end
+	lastLook[player] = now
 	local limits = LOOK_LIMITS[field]
 	local profile = DataService.get(player)
 	if not limits or not profile or not isInteger(index, limits.min, limits.max) then
