@@ -1,0 +1,58 @@
+{
+  "studioTested": false,
+  "renderer": "actual UV mapped block rig and exported accessory Part geometry",
+  "skins": {
+    "neon_streamer": {
+      "parts": 12,
+      "accessories": 1,
+      "checks": "PASS",
+      "clothing": [
+        585,
+        559
+      ],
+      "preview": [
+        512,
+        512
+      ]
+    },
+    "cyber_dev": {
+      "parts": 5,
+      "accessories": 1,
+      "checks": "PASS",
+      "clothing": [
+        585,
+        559
+      ],
+      "preview": [
+        512,
+        512
+      ]
+    },
+    "space_dev": {
+      "parts": 9,
+      "accessories": 2,
+      "checks": "PASS",
+      "clothing": [
+        585,
+        559
+      ],
+      "preview": [
+        512,
+        512
+      ]
+    },
+    "wizard_dev": {
+      "parts": 12,
+      "accessories": 2,
+      "checks": "PASS",
+      "clothing": [
+        585,
+        559
+      ],
+      "preview": [
+        512,
+        512
+      ]
+    }
+  }
+}
