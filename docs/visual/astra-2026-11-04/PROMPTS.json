@@ -1,0 +1,271 @@
+{
+  "tool": "OpenAI built-in ImageGen",
+  "source_brief": "/Users/erland/projects/game-studio-tycoon/docs/VISUAL.md",
+  "original_V1_prompts": "V1/README.md",
+  "final_correction_prompts": [
+    {
+      "hint": "Generated images are saved to /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286 as /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-b3af9968-e996-4a51-aa64-a6542c6c1a97.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "prompt": "Original Game Studio Tycoon environment concept, landscape 16:9, low-poly cartoon 3D, isometric elevated view of an OUTDOOR PUBLIC PARK ONLY. Entire foreground is open grass and sandy pedestrian paths, no office, no garage, no room, no indoor furniture. Central fountain, wooden park benches with open laptops on them, pictogram job notice board, tiny outdoor pawnshop stall with coin symbol, branching paths to empty square building plots in distance. One simple blue blocky avatar for scale. Sunny day, grass #6BBF59, paths #D9C9A3, bench wood #9C6B3F. No text, no brands, no UI."
+    },
+    {
+      "hint": "Generated images are saved to /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286 as /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-b5486052-ae68-4869-bda6-9429e4a67eca.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "prompt": "Finished game HUD mockup, landscape 1920x1080. Original low-poly cartoon garage game world background viewed third person. ONLY these overlays: top center dark #1E1E2E rounded money panel '$12,345', below compact line 'игр: 7 · −$225/мин · долг $600', below blue progress bar 'Разработка: 45%'. Bottom center large gold #FFC93C button 'Создать игру'. At far left narrow single vertical column of EXACTLY ELEVEN square ICON-ONLY buttons, NO WORD LABELS: flask, two busts, check clipboard, shopping cart, circular arrows, globe, locked cartridge, mischievous mask, party popper, camera, bank. No other UI or text anywhere. The icons column fits fully in screen height with consistent spacing. White rounded bold Cyrillic font. Blue #3D7BFF accents, dark outlines #3E405A. Clear uncluttered layout."
+    },
+    {
+      "hint": "Generated images are saved to /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286 as /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-09e036d8-748a-4f64-9acb-d6eb3f9f1229.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "prompt": "Finished mobile game HUD mockup, extra-wide landscape 844x390 aspect ratio 2.164:1, no device frame. Original low-poly cartoon garage world background viewed third person. ONLY these overlays: compact top center dark #1E1E2E money panel '$12,345', below 'игр: 7 · −$225/мин · долг $600', below compact blue progress bar 'Разработка: 45%'. Bottom center big gold #FFC93C button 'Создать игру'. At far left narrow vertical scroll rail of ELEVEN square ICON-ONLY menu buttons, NO LABELS OR WORDS: flask, two busts, clipboard, cart, circular arrows, globe, locked cartridge, mask, party popper, camera, bank. Very compact column fits within height, icons about 24 screen pixels each. No other UI or text. Keep center of game world open, big readable white rounded Cyrillic text, blue #3D7BFF accents, border #3E405A."
+    }
+  ],
+  "skyscraper_correction": {
+    "hint": "Generated images are saved to /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286 as /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-90b764dc-88f2-415a-a5a1-e50f0c219bcd.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "prompt": "Edit this original low-poly skyscraper office concept. Preserve camera, night city, neon palette #141A2E #7C4DFF #00E5FF, reception, meeting room and blue blocky scale avatar. Add exactly THREE complete additional workstations (desk, blue chair, chunky monitor) in the open office area using available floor space and tidy rows. Existing nine workstations must stay, resulting in twelve total. Keep good circulation and readable furniture. No text or logos. Landscape 16:9."
+  },
+  "effects": [
+    {
+      "hint": "Generated images are saved to /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286 as /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-577f608e-f39c-4ec0-8571-2ee869f8898c.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "prompt": "Use case: stylized-concept. Animation storyboard sheet for original Game Studio Tycoon, landscape 1920x1080 PNG. Exactly four equal panels in a 2x2 grid with thin dark separators. Same camera, scene and characters across panels, chronological left to right top to bottom. Cartoon low-poly 3D, chunky blocky cheerful characters, warm cozy garage, blue #3D7BFF gold #FFC93C dark UI #1E1E2E green #3DDC84 red #FF5A5F. Clear effect stages, child-friendly, no brands, no watermarks, no panel labels. Show release celebration: panel 1 developer finishes at computer, small anticipatory glow; panel 2 confetti bursts and large rating 8/10 springs above monitor with squash and stretch; panel 3 rating floats upward while confetti falls; panel 4 particles fade and normal view returns. Only text 8/10."
+    },
+    {
+      "hint": "Generated images are saved to /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286 as /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-d4641535-43f2-4386-b717-fcb02649fbdd.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "prompt": "Use case: stylized-concept. Animation storyboard sheet for original Game Studio Tycoon, landscape 1920x1080 PNG. Exactly four equal panels in a 2x2 grid with thin dark separators. Same camera, scene and characters across panels, chronological left to right top to bottom. Cartoon low-poly 3D, chunky blocky cheerful characters, warm cozy garage, blue #3D7BFF gold #FFC93C dark UI #1E1E2E green #3DDC84 red #FF5A5F. Clear effect stages, child-friendly, no brands, no watermarks, no panel labels. Show income pickup: panel 1 glowing gold +$ appears at computer monitor; panel 2 gold +$ and three coin particles travel on a curved blue trail toward top-center HUD money counter; panel 3 trail reaches counter and counter briefly pulses gold; panel 4 counter returns to normal. Text only +$ and $12,345."
+    },
+    {
+      "hint": "Generated images are saved to /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286 as /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-6682dabf-8ead-4dae-bd01-7cca82a14c0d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "prompt": "Use case: stylized-concept. Animation storyboard sheet for original Game Studio Tycoon, landscape 1920x1080 PNG. Exactly four equal panels in a 2x2 grid with thin dark separators. Same camera, scene and characters across panels, chronological left to right top to bottom. Cartoon low-poly 3D, chunky blocky cheerful characters, warm cozy garage, blue #3D7BFF gold #FFC93C dark UI #1E1E2E green #3DDC84 red #FF5A5F. Clear effect stages, child-friendly, no brands, no watermarks, no panel labels. Show moving to new studio: panel 1 old cozy garage with developer, blue energy ring expands; panel 2 soft gold-white flash conceals scene; panel 3 new bright office revealed with celebratory blue and gold banner reading exactly Новая студия!; panel 4 banner fades leaving office, no other text."
+    },
+    {
+      "hint": "Generated images are saved to /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286 as /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-2066f0ce-0f22-4b51-ac2f-e57762e433aa.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "prompt": "Use case: stylized-concept. Animation storyboard sheet for original Game Studio Tycoon, landscape 1920x1080 PNG. Exactly four equal panels in a 2x2 grid with thin dark separators. Same camera, scene and characters across panels, chronological left to right top to bottom. Cartoon low-poly 3D, chunky blocky cheerful characters, warm cozy garage, blue #3D7BFF gold #FFC93C dark UI #1E1E2E green #3DDC84 red #FF5A5F. Clear effect stages, child-friendly, no brands, no watermarks, no panel labels. Show harmless employee strike: panel 1 employees in blue pink green purple shirts stop working at garage desks; panel 2 they stand beside desks holding placards with simple exclamation pictograms, no letters; panel 3 top red notification appears reading exactly Команда бастует; panel 4 employees continue peaceful idle pose with red notification held. No anger, violence or scary content."
+    }
+  ],
+  "asset_specs": [
+    {
+      "file": "V1/icon_v1.png",
+      "subject": "Крупный план разработчика за компьютером",
+      "palette": "#FFC93C, #3D7BFF, #A0703C",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V1/icon_v2.png",
+      "subject": "Фронтальный персонаж со звёздами",
+      "palette": "#FFC93C, #3D7BFF, #FFD9A0",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V1/icon_v3.png",
+      "subject": "Рабочее место в открытом гараже",
+      "palette": "#FFC93C, #3D7BFF, #A0703C",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V2/thumb_1_garage.png",
+      "subject": "Гараж и первый успешный релиз",
+      "palette": "#3D7BFF, #FFC93C, #A0703C",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V2/thumb_2_grow.png",
+      "subject": "Рост от гаража до небоскрёба",
+      "palette": "#3D7BFF, #FFC93C, #A0703C",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V2/thumb_3_team.png",
+      "subject": "Команда разработчиков",
+      "palette": "#3D7BFF, #FFC93C, #A0703C",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V2/thumb_4_steal.png",
+      "subject": "Шуточная погоня за картриджем",
+      "palette": "#3D7BFF, #FFC93C, #A0703C",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V2/thumb_5_expo.png",
+      "subject": "Выставка и приз $15,000",
+      "palette": "#3D7BFF, #FFC93C, #A0703C",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V3/menu_research.png",
+      "subject": "Колба исследований",
+      "palette": "#1E1E2E, #3D7BFF, #FFC93C, #3DDC84, #9650DC",
+      "style": "Isolated cartoon sticker, thick dark outline, no text, transparent background"
+    },
+    {
+      "file": "V3/menu_team.png",
+      "subject": "Два сотрудника",
+      "palette": "#1E1E2E, #3D7BFF, #FFC93C, #3DDC84, #9650DC",
+      "style": "Isolated cartoon sticker, thick dark outline, no text, transparent background"
+    },
+    {
+      "file": "V3/menu_quests.png",
+      "subject": "Планшет с галочкой",
+      "palette": "#1E1E2E, #3D7BFF, #FFC93C, #3DDC84, #9650DC",
+      "style": "Isolated cartoon sticker, thick dark outline, no text, transparent background"
+    },
+    {
+      "file": "V3/menu_shop.png",
+      "subject": "Тележка магазина",
+      "palette": "#1E1E2E, #3D7BFF, #FFC93C, #3DDC84, #9650DC",
+      "style": "Isolated cartoon sticker, thick dark outline, no text, transparent background"
+    },
+    {
+      "file": "V3/menu_rebirth.png",
+      "subject": "Круговые стрелки перезапуска",
+      "palette": "#1E1E2E, #3D7BFF, #FFC93C, #3DDC84, #9650DC",
+      "style": "Isolated cartoon sticker, thick dark outline, no text, transparent background"
+    },
+    {
+      "file": "V3/menu_language.png",
+      "subject": "Глобус выбора языка",
+      "palette": "#1E1E2E, #3D7BFF, #FFC93C, #3DDC84, #9650DC",
+      "style": "Isolated cartoon sticker, thick dark outline, no text, transparent background"
+    },
+    {
+      "file": "V3/menu_hits.png",
+      "subject": "Картридж с замком",
+      "palette": "#1E1E2E, #3D7BFF, #FFC93C, #3DDC84, #9650DC",
+      "style": "Isolated cartoon sticker, thick dark outline, no text, transparent background"
+    },
+    {
+      "file": "V3/menu_thieves.png",
+      "subject": "Хитрая маска",
+      "palette": "#1E1E2E, #3D7BFF, #FFC93C, #3DDC84, #9650DC",
+      "style": "Isolated cartoon sticker, thick dark outline, no text, transparent background"
+    },
+    {
+      "file": "V3/menu_holiday.png",
+      "subject": "Праздничная хлопушка",
+      "palette": "#1E1E2E, #3D7BFF, #FFC93C, #3DDC84, #9650DC",
+      "style": "Isolated cartoon sticker, thick dark outline, no text, transparent background"
+    },
+    {
+      "file": "V3/menu_camera.png",
+      "subject": "Кинокамера",
+      "palette": "#1E1E2E, #3D7BFF, #FFC93C, #3DDC84, #9650DC",
+      "style": "Isolated cartoon sticker, thick dark outline, no text, transparent background"
+    },
+    {
+      "file": "V3/menu_bank.png",
+      "subject": "Банк с монетой",
+      "palette": "#1E1E2E, #3D7BFF, #FFC93C, #3DDC84, #9650DC",
+      "style": "Isolated cartoon sticker, thick dark outline, no text, transparent background"
+    },
+    {
+      "file": "V4/hud_desktop.png",
+      "subject": "Игровой HUD — компьютер",
+      "palette": "#1E1E2E, #3E405A, #3D7BFF, #FFC93C, #FFFFFF, #B8BCD0",
+      "style": "Dark rounded game UI, Russian text, gold CTA, blue selection"
+    },
+    {
+      "file": "V4/hud_mobile.png",
+      "subject": "Игровой HUD — телефон",
+      "palette": "#1E1E2E, #3E405A, #3D7BFF, #FFC93C, #FFFFFF, #B8BCD0",
+      "style": "Dark rounded game UI, Russian text, gold CTA, blue selection"
+    },
+    {
+      "file": "V4/create_desktop.png",
+      "subject": "Окно создания игры — компьютер",
+      "palette": "#1E1E2E, #3E405A, #3D7BFF, #FFC93C, #FFFFFF, #B8BCD0",
+      "style": "Dark rounded game UI, Russian text, gold CTA, blue selection"
+    },
+    {
+      "file": "V4/create_mobile.png",
+      "subject": "Окно создания игры — телефон",
+      "palette": "#1E1E2E, #3E405A, #3D7BFF, #FFC93C, #FFFFFF, #B8BCD0",
+      "style": "Dark rounded game UI, Russian text, gold CTA, blue selection"
+    },
+    {
+      "file": "V4/release_desktop.png",
+      "subject": "Оценки критиков и доход — компьютер",
+      "palette": "#1E1E2E, #3E405A, #3D7BFF, #FFC93C, #FFFFFF, #B8BCD0",
+      "style": "Dark rounded game UI, Russian text, gold CTA, blue selection"
+    },
+    {
+      "file": "V4/release_mobile.png",
+      "subject": "Оценки критиков и доход — телефон",
+      "palette": "#1E1E2E, #3E405A, #3D7BFF, #FFC93C, #FFFFFF, #B8BCD0",
+      "style": "Dark rounded game UI, Russian text, gold CTA, blue selection"
+    },
+    {
+      "file": "V4/bank_desktop.png",
+      "subject": "Предложение кредита — компьютер",
+      "palette": "#1E1E2E, #3E405A, #3D7BFF, #FFC93C, #FFFFFF, #B8BCD0",
+      "style": "Dark rounded game UI, Russian text, gold CTA, blue selection"
+    },
+    {
+      "file": "V4/bank_mobile.png",
+      "subject": "Предложение кредита — телефон",
+      "palette": "#1E1E2E, #3E405A, #3D7BFF, #FFC93C, #FFFFFF, #B8BCD0",
+      "style": "Dark rounded game UI, Russian text, gold CTA, blue selection"
+    },
+    {
+      "file": "V4/team_desktop.png",
+      "subject": "Список найма сотрудников — компьютер",
+      "palette": "#1E1E2E, #3E405A, #3D7BFF, #FFC93C, #FFFFFF, #B8BCD0",
+      "style": "Dark rounded game UI, Russian text, gold CTA, blue selection"
+    },
+    {
+      "file": "V4/team_mobile.png",
+      "subject": "Список найма сотрудников — телефон",
+      "palette": "#1E1E2E, #3E405A, #3D7BFF, #FFC93C, #FFFFFF, #B8BCD0",
+      "style": "Dark rounded game UI, Russian text, gold CTA, blue selection"
+    },
+    {
+      "file": "V5/concept_park.png",
+      "subject": "Стартовый парк: ноутбуки, фонтан, доска заданий, ломбард",
+      "palette": "#6BBF59, #D9C9A3, #9C6B3F",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V5/concept_garage_empty.png",
+      "subject": "Пустой гараж с одним рабочим местом",
+      "palette": "#A0703C, #8C8C8C, #FFD9A0",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V5/concept_garage_full.png",
+      "subject": "Гараж с четырьмя рабочими местами, кофе и полкой хитов",
+      "palette": "#A0703C, #8C8C8C, #FFD9A0, #3D7BFF",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V5/concept_office.png",
+      "subject": "Офис на восемь рабочих мест со стеклянной переговоркой",
+      "palette": "#F2F2F2, #C8A27A, #4CAF50",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V5/concept_skyscraper.png",
+      "subject": "Ночной этаж небоскрёба на 12 рабочих мест",
+      "palette": "#141A2E, #7C4DFF, #00E5FF",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V6/fx_release.png",
+      "subject": "Релиз: появление оценки и конфетти",
+      "palette": "#3D7BFF, #FFC93C, #1E1E2E, #3DDC84, #FF5A5F",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V6/fx_money.png",
+      "subject": "Доход: частицы летят к счётчику",
+      "palette": "#3D7BFF, #FFC93C, #1E1E2E, #3DDC84, #FF5A5F",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V6/fx_move.png",
+      "subject": "Переезд: вспышка и новая студия",
+      "palette": "#3D7BFF, #FFC93C, #1E1E2E, #3DDC84, #FF5A5F",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    },
+    {
+      "file": "V6/fx_strike.png",
+      "subject": "Забастовка: сотрудники с табличками и уведомление",
+      "palette": "#3D7BFF, #FFC93C, #1E1E2E, #3DDC84, #FF5A5F",
+      "style": "Original cheerful low-poly cartoon 3D; no existing brands or logos"
+    }
+  ]
+}
