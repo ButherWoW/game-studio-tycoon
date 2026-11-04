@@ -12,6 +12,7 @@ local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local WordFilter = require(ReplicatedStorage.Shared.WordFilter)
 local UnlockRules = require(ReplicatedStorage.Shared.UnlockRules)
+local GameJam = require(ReplicatedStorage.Shared.Config.GameJam)
 local ClientState = require(script.Parent.Parent.ClientState)
 local DevState = require(script.Parent.Parent.DevState)
 local Ui = require(script.Parent.Parent.Ui)
@@ -567,6 +568,16 @@ render = function()
 		return order
 	end
 
+	-- Тема гейм-джема недели (Config/GameJam): игра по ней попадёт в топ джема
+	local jamGenre, jamTopic = GameJam.theme(GameJam.weekIndex())
+	local genre, topic = Genres[jamGenre], Topics[jamTopic]
+	if genre and topic then
+		local jamText = ClientState.t(
+			"create_jam_theme",
+			{ theme = ClientState.localName(genre) .. " + " .. ClientState.localName(topic) }
+		)
+		Ui.label(body, jamText, 22, nil, Ui.colors.money).LayoutOrder = 0
+	end
 	Ui.label(body, ClientState.t("create_name_label"), 22, nil, Ui.colors.muted).LayoutOrder = 1
 
 	Ui.label(body, ClientState.t("create_genre_label"), 22, nil, Ui.colors.muted).LayoutOrder = nextOrder()

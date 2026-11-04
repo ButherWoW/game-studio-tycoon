@@ -675,6 +675,14 @@ local function release(player: Player, project: Project)
 		revenue = revenue,
 		laptop = project.laptop == true,
 	})
+	-- Сезонный пропуск (опыт за игру) и гейм-джем (игра по теме недели)
+	hook("SeasonService", "onGameReleased", player, { score = score })
+	hook("GameJamService", "onGameReleased", player, {
+		genreId = project.genreId,
+		topicId = project.topicId,
+		score = score,
+		revenue = revenue,
+	})
 	-- Предложение «×2 к доходу этой игры» (OfferService запоминает релиз на минуту)
 	hook("OfferService", "onGameReleased", player, {
 		projectId = project.id,
@@ -994,6 +1002,14 @@ end
 
 local TICK = 0.5
 
+local function hackathonSpeed(): number
+	local HackathonService = optional("HackathonService")
+	local ok, value = pcall(function()
+		return if HackathonService then HackathonService.speedMultiplier() else 1
+	end)
+	return if ok and type(value) == "number" and value > 0 then value else 1
+end
+
 -- Один тик одного проекта. Отдельной функцией, чтобы ошибка у одного игрока
 -- (например, в хуке другой фичи) не останавливала разработку у всех
 local function tickProject(player: Player, project: Project, atPc: boolean)
@@ -1011,11 +1027,13 @@ local function tickProject(player: Player, project: Project, atPc: boolean)
 		return
 	end
 	local rate = DevelopmentService.pointsRate(player, project.focus, project.tempo)
-	project.points.gameplay += rate.gameplay * TICK
-	project.points.graphics += rate.graphics * TICK
-	project.points.sound += rate.sound * TICK
-	project.points.story += rate.story * TICK
-	project.elapsed += TICK
+	-- Ночь хакатона (HackathonService): время идёт ×2, очков за игру столько же
+	local step = TICK * hackathonSpeed()
+	project.points.gameplay += rate.gameplay * step
+	project.points.graphics += rate.graphics * step
+	project.points.sound += rate.sound * step
+	project.points.story += rate.story * step
+	project.elapsed += step
 
 	Remotes.DevelopmentProgress:FireClient(player, {
 		id = project.id,

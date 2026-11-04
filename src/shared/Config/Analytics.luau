@@ -59,6 +59,10 @@ local Analytics = {
 		gift = "GiftPurchased", -- подарок за Robux; поле — gift_<id>, значение 1 — другу, 0 — достался себе
 		groupReward = "GroupReward", -- награда за вступление в группу
 		offer = "Offer", -- предложение доната; поле — "вид_этап" (starterPack_shown, floorLock_purchased)
+		seasonTier = "SeasonTier", -- новый уровень сезона; значение — уровень, поле — источник опыта
+		seasonClaim = "SeasonClaim", -- награда сезона; поле — "дорожка_уровень" (free_5, premium_30)
+		jamSubmit = "JamSubmit", -- заявка в гейм-джем; значение — оценка, поле — first / improved
+		hackathon = "Hackathon", -- начался хакатон (на каждого игрока на сервере)
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -78,6 +82,8 @@ local Analytics = {
 		OfferService = { transactionType = "IAP", sku = "offer" },
 		TutorialService = { transactionType = "Onboarding", sku = "tutorial" },
 		SocialService = { transactionType = "TimedReward", sku = "group" },
+		SeasonService = { transactionType = "Season", sku = "season" },
+		GameJamService = { transactionType = "GameJam", sku = "jam" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },

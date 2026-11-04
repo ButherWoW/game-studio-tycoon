@@ -257,6 +257,11 @@ local function resolve(player: Player, event: Active)
 	)
 	logAnalytics(player, event.kind, grade)
 	noteAchievement(player, grade)
+	-- Опыт сезонного пропуска за идеальное событие (SeasonService, ленивый require)
+	local season = script.Parent:FindFirstChild("SeasonService")
+	if grade == "perfect" and season and season:IsA("ModuleScript") then
+		pcall((require(season) :: any).onQuickPerfect, player)
+	end
 end
 
 -- ===== Старт =====
