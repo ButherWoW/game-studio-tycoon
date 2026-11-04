@@ -28,11 +28,22 @@ function RewardFormulas.perMinute(state: IncomeState): number
 	return perGame * 60 / Rewards.secondsPerGame
 end
 
--- Награда «N минут дохода». Без гаража — не больше доли цены гаража: этап парка не пропустить
+-- Потолок награды без гаража: доля цены гаража, больше для наград на больше минут
+function RewardFormulas.parkCap(minutes: number): number
+	local progress = math.clamp(
+		(minutes - Rewards.parkCapBaseMinutes) / (Rewards.parkCapFullMinutes - Rewards.parkCapBaseMinutes),
+		0,
+		1
+	)
+	local multiplier = 1 + (Rewards.parkCapMaxMultiplier - 1) * progress
+	return StartPark.garagePrice * Rewards.parkMaxGarageShare * multiplier
+end
+
+-- Награда «N минут дохода». Без гаража — не больше потолка parkCap: этап парка не пропустить
 function RewardFormulas.incomeForMinutes(state: IncomeState, minutes: number): number
 	local cash = RewardFormulas.perMinute(state) * minutes
 	if not state.ownsGarage then
-		cash = math.min(cash, StartPark.garagePrice * Rewards.parkMaxGarageShare)
+		cash = math.min(cash, RewardFormulas.parkCap(minutes))
 	end
 	return math.max(math.floor(cash), 1)
 end
