@@ -74,6 +74,12 @@ local Analytics = {
 		franchise = "Franchise",
 		contract = "Contract",
 		rivalPassed = "RivalPassed",
+		-- Консоль и стример: платформа релиза (значение — оценка, поле — pc/phone/console),
+		-- этап консоли (значение — номер, поле — "design_started" / "launch_done"),
+		-- стример (поле — assigned / unassigned, значение при снятии — заработано донатами)
+		platform = "Platform",
+		console = "Console",
+		streamer = "Streamer",
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -100,6 +106,8 @@ local Analytics = {
 		GameJamService = { transactionType = "GameJam", sku = "jam" },
 		ContractService = { transactionType = "Contract", sku = "contract" },
 		RivalService = { transactionType = "Reward", sku = "rivalPassed" },
+		ConsoleService = { transactionType = "Console", sku = "royalty" },
+		StreamerService = { transactionType = "Streamer", sku = "donations" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },
