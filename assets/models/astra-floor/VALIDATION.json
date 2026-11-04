@@ -1,0 +1,126 @@
+{
+  "sourceCommit": "c10dcb5",
+  "models": {
+    "Floor": {
+      "parts": 191,
+      "dimensionsXYZ": [
+        60.0,
+        13.0,
+        60.0
+      ],
+      "min": [
+        -30.0,
+        0.0,
+        -30.0
+      ],
+      "max": [
+        30.0,
+        13.0,
+        30.0
+      ],
+      "pointLights": 4
+    },
+    "FloorDesk": {
+      "parts": 190,
+      "dimensionsXYZ": [
+        5.0,
+        4.8,
+        3.83
+      ],
+      "min": [
+        -2.5000000000000004,
+        0.0,
+        -1.9000000000000001
+      ],
+      "max": [
+        2.5000000000000004,
+        4.8,
+        1.93
+      ],
+      "pointLights": 0
+    },
+    "ServerRoom": {
+      "parts": 171,
+      "dimensionsXYZ": [
+        10.0,
+        7.8,
+        4.0
+      ],
+      "min": [
+        -5.0,
+        0.0,
+        -2.0
+      ],
+      "max": [
+        5.0,
+        7.8,
+        2.0
+      ],
+      "pointLights": 0
+    },
+    "Lounge": {
+      "parts": 157,
+      "dimensionsXYZ": [
+        8.0,
+        4.37,
+        8.875
+      ],
+      "min": [
+        -4.0,
+        0.0,
+        -4.7
+      ],
+      "max": [
+        4.0,
+        4.37,
+        4.175
+      ],
+      "pointLights": 0
+    }
+  },
+  "checks": [
+    "part budgets",
+    "dimension limits",
+    "visible base Y=0",
+    "orthonormal transforms",
+    "no peer-model AABB overlaps",
+    "no intersections with shell walls or fixed decor",
+    "3-stud clear desk aprons",
+    "4-stud minimum gaps between desk rows",
+    "6.4-stud server doorway and 6-stud approach",
+    "existing Desk1/PC1/Chair/Coffee/HitShelf reserved volumes",
+    "confirmed 6x6 lift volume X[-23,-17] Z[21,27] Y[0,7] free; 6-stud approach free",
+    "no roof/ceiling slab; wall height 13",
+    "one PointLight per ceiling panel; no desk/rack lights",
+    "58x58 floor slab",
+    "24x9 front aperture",
+    "confirmed floor base Y14 with local pivot Y0",
+    "all shell geometry below next floor Y14"
+  ],
+  "studioTested": false,
+  "elevator": {
+    "status": "confirmed-owner-2026-11-05",
+    "centerXZ": [
+      -20,
+      24
+    ],
+    "width": 6,
+    "depth": 6,
+    "height": 7,
+    "boundsXZ": [
+      -23,
+      -17,
+      21,
+      27
+    ],
+    "floorBasesY": [
+      0,
+      14,
+      28
+    ],
+    "note": "No furniture/walls/lights in lift volume above common floor; game code provides platform/control. Floor model local pivot Y=0, placement Y=14."
+  },
+  "floorBaseY": 14,
+  "binaryConversion": "7 RBXM + RBXL/RBXLX built with Rojo 7.4.4",
+  "limitation": "Not tested in Studio. No gameplay changes or automatic NPC seating. Floor base Y14, pitch14 and lift volume confirmed by owner. No gameplay integration or elevator platform/control included; code supplies those."
+}

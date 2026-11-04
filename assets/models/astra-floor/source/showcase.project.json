@@ -1,0 +1,51 @@
+{
+  "name": "Astra Floor Showcase",
+  "tree": {
+    "$className": "DataModel",
+    "Workspace": {
+      "$className": "Workspace",
+      "Floor": {
+        "$path": "../Floor_Assembled.rbxmx"
+      },
+      "Spawn": {
+        "$className": "SpawnLocation",
+        "$properties": {
+          "Anchored": true,
+          "Neutral": true,
+          "Transparency": 1,
+          "CanCollide": false,
+          "Size": [
+            4,
+            0.1,
+            4
+          ],
+          "Position": [
+            0,
+            0.3,
+            25
+          ]
+        }
+      }
+    },
+    "Lighting": {
+      "$className": "Lighting",
+      "$properties": {
+        "Brightness": 2,
+        "ClockTime": 14,
+        "Ambient": [
+          0.5,
+          0.54,
+          0.6
+        ],
+        "OutdoorAmbient": [
+          0.62,
+          0.68,
+          0.77
+        ],
+        "GlobalShadows": true,
+        "EnvironmentDiffuseScale": 1,
+        "EnvironmentSpecularScale": 0.7
+      }
+    }
+  }
+}
