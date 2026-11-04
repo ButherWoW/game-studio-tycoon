@@ -140,6 +140,7 @@ local function durationFactor(player: Player): number
 end
 local StaffService = require(script.Parent.StaffService)
 local PlotService = require(script.Parent.PlotService)
+local QuickEventService = require(script.Parent.QuickEventService)
 local StartPark = require(Shared.Config.StartPark)
 
 -- «Инди в парке»: пока нет гаража, игры делаются на общем ноутбуке — фиксированные время
@@ -170,6 +171,8 @@ type Project = {
 	paid: boolean?, -- доход релиза уже начислен (повторно не выпускать и заряд не возвращать)
 	releaseFailures: number?, -- сколько раз релиз упал с ошибкой
 	laptop: boolean?, -- начата на ноутбуке в парке: доход × StartPark.laptopRevenueMultiplier
+	-- Сумма быстрых событий (QuickEventService.finish) к оценке; nil — событий не было
+	quickBonus: number?,
 }
 
 local MAX_RELEASE_FAILURES = 3 -- после стольких ошибок релиза игра снимается, чтобы не падать каждый тик
@@ -458,6 +461,8 @@ local function beginProject(
 	project.tempo = if laptop then 1 else 1 / factor
 	project.laptop = laptop
 	project.pending = false
+	-- Быстрые события (Config/QuickEvents); у игр «Авто-релиза» их нет — игрок может быть AFK
+	QuickEventService.plan(player, project.id, project.duration, sequel == true)
 	DevelopmentService.pushState(player)
 end
 
@@ -491,6 +496,7 @@ local function onStartDevelopment(player: Player, request: any)
 	if nameLength > MAX_NAME_LENGTH then
 		rawName = rawName:sub(1, (utf8.offset(rawName, MAX_NAME_LENGTH + 1) or (#rawName + 1)) - 1)
 	end
+	QuickEventService.noteActivity(player)
 	beginProject(player, request.genreId, request.topicId, focus, rawName)
 end
 
@@ -507,7 +513,9 @@ local function release(player: Player, project: Project)
 		project.topicId,
 		project.points,
 		rng,
+		-- + быстрые события (QuickEventService): до округления, как бонусы студии
 		scoreBonus(player, profile, project.genreId, project.topicId, project.sequel)
+			+ (project.quickBonus or 0)
 	)
 	local TrendService = optional("TrendService")
 	if TrendService then
@@ -624,6 +632,7 @@ local function release(player: Player, project: Project)
 		adBonus = adBonus,
 		isRecord = isRecord,
 		repeatPenalty = repeatPenalty,
+		quickBonus = project.quickBonus,
 		projectId = project.id,
 		-- Сколько игр ещё в разработке: клиент не прячет прогресс и событие второй игры
 		activeProjects = #(projects[player] or {}),
@@ -695,6 +704,13 @@ local function maybeStartEvent(player: Player, project: Project)
 		end
 		return
 	end
+	-- Быстрое событие важнее: пока оно идёт (или только что началось), выбор ждёт
+	local choiceActive = projectWithEvent(player) ~= nil
+	if QuickEventService.tick(player, project.id, project.elapsed, project.duration, choiceActive) then
+		-- Выбор — не раньше чем через 2 с после быстрого события (пусть игрок увидит результат)
+		project.nextEventAt = math.max(project.nextEventAt, project.elapsed + 2)
+		return
+	end
 	if project.eventsDone >= DevEvents.maxPerGame or project.elapsed < project.nextEventAt then
 		return
 	end
@@ -724,6 +740,7 @@ local function onEventChoice(player: Player, eventId: any, choice: any)
 	if eventId ~= project.event.def.id or (choice ~= "a" and choice ~= "b") then
 		return
 	end
+	QuickEventService.noteActivity(player)
 	resolveEvent(player, project, choice)
 end
 
@@ -768,6 +785,10 @@ end
 -- Завершить проект: событие без ответа — спокойный вариант, слот освобождается, релиз
 local function finishProject(player: Player, project: Project)
 	resolveEvent(player, project, "b")
+	-- Один раз: при повторе упавшего релиза план событий уже закрыт
+	if project.quickBonus == nil then
+		project.quickBonus = QuickEventService.finish(player, project.id)
+	end
 	if not removeProject(player, project) then
 		return
 	end
@@ -945,6 +966,7 @@ end
 -- иначе они вышли бы уже с новым множителем Rebirth). Ждущие фильтра тоже снимаются
 function DevelopmentService.cancel(player: Player)
 	projects[player] = nil
+	QuickEventService.cancel(player)
 	DevelopmentService.pushState(player)
 end
 

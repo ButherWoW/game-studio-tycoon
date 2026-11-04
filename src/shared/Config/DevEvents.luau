@@ -19,7 +19,7 @@ local DevEvents = {
 	intervalMin = 7,
 	intervalMax = 11,
 	answerSeconds = 6,
-	maxPerGame = 3,
+	maxPerGame = 2, -- было 3: часть событий теперь быстрые (Config/QuickEvents), они в приоритете
 	list = {
 		{ id = "bug", a = { focus = "gameplay", work = 4, time = 2 }, b = { chance = 0.5, failWork = -4 } },
 		{ id = "music", a = { focus = "sound", work = 5 }, b = {} },
