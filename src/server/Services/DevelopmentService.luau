@@ -297,6 +297,15 @@ local function release(player: Player, project: Project)
 			points = p.gameplay + p.graphics + p.sound + p.story,
 		})
 	end
+	local HitService = optional("HitService")
+	if HitService then
+		HitService.onGameReleased(player, {
+			name = project.name,
+			genreId = project.genreId,
+			topicId = project.topicId,
+			score = score,
+		})
+	end
 	local QuestService = optional("QuestService")
 	if QuestService then
 		QuestService.onGameReleased(player, {

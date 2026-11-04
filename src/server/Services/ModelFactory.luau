@@ -575,6 +575,38 @@ builders.Skyscraper = function(m)
 	plant(m, Vector3.new(26, 0, 22))
 end
 
+-- ===== Полка картриджей-хитов (HitService) =====
+-- Два ряда по пять слотов; картриджи ставит HitService по ModelFactory.hitShelfSlot
+local SHELF_ROWS_Y = { 1.2, 3.5 } -- центр картриджа 1.4×1.6 в ряду
+local SHELF_COLUMNS = 5
+local SHELF_STEP = 2
+
+builders.HitShelf = function(m)
+	local wood = rgb(70, 55, 45)
+	-- Задняя стенка, боковины и три доски
+	part(m, Vector3.new(11.2, 5.6, 0.2), Vector3.new(0, 2.8, -0.7), rgb(45, 35, 30))
+	for _, x in { -5.6, 5.6 } do
+		part(m, Vector3.new(0.3, 5.6, 1.6), Vector3.new(x, 2.8, 0), wood, { material = Enum.Material.Wood })
+	end
+	for _, y in { 0.3, 2.6, 4.9 } do
+		part(m, Vector3.new(11, 0.2, 1.6), Vector3.new(0, y, 0), wood, { material = Enum.Material.Wood })
+	end
+	-- Неоновая полоса сверху: полку видно издалека
+	local strip = part(m, Vector3.new(11, 0.3, 0.2), Vector3.new(0, 5.4, 0.7), rgb(255, 80, 200), {
+		material = Enum.Material.Neon,
+		collide = false,
+	})
+	light(strip, rgb(255, 120, 220), 10, 0.6)
+end
+
+-- Место картриджа index (1..10) в координатах модели HitShelf (лицом к +Z)
+function ModelFactory.hitShelfSlot(index: number): CFrame
+	local row = math.floor((index - 1) / SHELF_COLUMNS)
+	local column = (index - 1) % SHELF_COLUMNS
+	local y = SHELF_ROWS_Y[math.min(row + 1, #SHELF_ROWS_Y)]
+	return CFrame.new((column - (SHELF_COLUMNS - 1) / 2) * SHELF_STEP, y, 0.1)
+end
+
 -- Собрать модель по имени; nil — для этого имени билдера нет
 function ModelFactory.build(name: string): Model?
 	local builder = builders[name]
