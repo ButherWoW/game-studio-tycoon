@@ -360,6 +360,17 @@ Texts.ru = {
 	hit_err_steal_back = "Этот хит у тебя недавно украли — сразу назад не забрать",
 	park_jobs_garage = "Подработки — для тех, кто копит на гараж. У тебя уже есть студия!",
 	park_seat_garage = "Ноутбуки в парке — для новичков. Иди в свою студию!",
+	-- paid + research
+	hud_developing_named = "{name}: {percent}%",
+	hud_instant_finish = "⚡ Закончить ({count})",
+	hud_create_slots = "🎮 Создать игру ({busy}/{slots})",
+	hud_auto_on = "🔁 Авто-релиз: вкл",
+	hud_auto_off = "🔁 Авто-релиз: выкл",
+	hud_royalty = "📚 +{amount}/мин",
+	create_preview = "🔮 Тест-группа: примерно {min}–{max}",
+	create_preview_one = "🔮 Тест-группа: примерно {score}",
+	create_preview_wait = "🔮 Тест-группа думает…",
+	create_preview_pick = "🔮 Выбери жанр, тему и фокус — тест-группа оценит",
 } :: { [string]: string }
 
 Texts.en = {
@@ -642,6 +653,17 @@ Texts.en = {
 	hit_err_steal_back = "This hit was stolen from you recently — you cannot take it back right away",
 	park_jobs_garage = "Side jobs are for players saving up for a garage. You already have a studio!",
 	park_seat_garage = "Park laptops are for newcomers. Head to your studio!",
+	-- paid + research
+	hud_developing_named = "{name}: {percent}%",
+	hud_instant_finish = "⚡ Finish ({count})",
+	hud_create_slots = "🎮 Make a game ({busy}/{slots})",
+	hud_auto_on = "🔁 Auto release: on",
+	hud_auto_off = "🔁 Auto release: off",
+	hud_royalty = "📚 +{amount}/min",
+	create_preview = "🔮 Playtest group: about {min}–{max}",
+	create_preview_one = "🔮 Playtest group: about {score}",
+	create_preview_wait = "🔮 The playtest group is thinking…",
+	create_preview_pick = "🔮 Pick a genre, topic and focus — the playtest group will rate it",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть

@@ -113,7 +113,14 @@ function DevEventPopup.start()
 	gui = screen
 	Remotes.DevEvent.OnClientEvent:Connect(show)
 	Remotes.DevEventResult.OnClientEvent:Connect(showResult)
-	Remotes.GameReleased.OnClientEvent:Connect(clear)
+	Remotes.GameReleased.OnClientEvent:Connect(function(info: any)
+		-- Вторая игра ещё в разработке: её событие не прячем (событие вышедшей игры
+		-- сервер закрыл раньше — пришёл DevEventResult)
+		if type(info) == "table" and (tonumber(info.activeProjects) or 0) > 0 then
+			return
+		end
+		clear()
+	end)
 end
 
 return DevEventPopup

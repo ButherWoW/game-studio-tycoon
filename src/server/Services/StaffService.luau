@@ -198,7 +198,10 @@ local function onHire(player: Player, employeeId: any)
 		return
 	end
 	-- TODO(#7, #8, #11): легендарные — после исследований, квестов и геймпасса
-	if employee.legendary or profile.studioLevel < employee.stage then
+	-- РОБО-9000 открывает исследование «ИИ-ассистент» (robotHire)
+	local roboUnlocked = employee.id == "robo"
+		and (require(script.Parent.ResearchService) :: any).getModifiers(player).robotHire == true
+	if (employee.legendary and not roboUnlocked) or profile.studioLevel < employee.stage then
 		return
 	end
 	local staff = getStaff(profile)
