@@ -36,7 +36,7 @@ Skills.startLegendary = 2
 -- Цена «+1» к навыку: costBase[этап сотрудника] × costGrowth ^ текущий уровень
 -- Этажи подорожали (docs/BALANCE.md): навыки сотрудников 2-го и 3-го этажа — цель «между
 -- покупками интерьера», а не мелочь
-Skills.costBase = { 600, 3_000, 40_000, 200_000 }
+Skills.costBase = { 600, 3_000, 46_000, 230_000 }
 Skills.costGrowth = 2
 Skills.legendaryCostStage = 3 -- легендарные бесплатны при найме, навыки — по ценам этажа
 
