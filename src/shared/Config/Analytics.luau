@@ -74,6 +74,10 @@ local Analytics = {
 		franchise = "Franchise",
 		contract = "Contract",
 		rivalPassed = "RivalPassed",
+		-- Совместная разработка и холдинги: поле — этап (invited/accepted/split/noSplit/ended_*;
+		-- created/joined/left/goal_N)
+		coop = "Coop",
+		holding = "Holding",
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -100,6 +104,8 @@ local Analytics = {
 		GameJamService = { transactionType = "GameJam", sku = "jam" },
 		ContractService = { transactionType = "Contract", sku = "contract" },
 		RivalService = { transactionType = "Reward", sku = "rivalPassed" },
+		CoopService = { transactionType = "Coop", sku = "coopShare" }, -- доля гостя совместной игры
+		HoldingService = { transactionType = "Reward", sku = "holdingGoal" }, -- цели недели холдинга
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },

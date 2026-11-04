@@ -1,6 +1,6 @@
 --!strict
--- Окно «🏘 Студии» (кнопка меню — слот 15): вкладки «Студии» (кто на сервере, «Посетить», 👍)
--- и «Рейтинги» (глобальные топы TourService). Плюс плавающая кнопка «👍 Нравится», пока стоишь
+-- Окно «🏘 Студии» (кнопка меню — слот 15): вкладки «Студии» (кто на сервере, «Посетить», 👍),
+-- «Рейтинги» (глобальные топы TourService) и «Холдинги» (HoldingPanel). Плюс плавающая кнопка «👍 Нравится», пока стоишь
 -- на чужом участке, и тосты лайков. Всё проверяет сервер, клиент только показывает и просит.
 
 local Players = game:GetService("Players")
@@ -14,8 +14,9 @@ local TourRemotes = require(Shared.TourRemotes)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local StudioCamera = require(script.Parent.StudioCamera)
+local HoldingPanel = require(script.Parent.Parent.HoldingPanel)
 
-type Tab = "studios" | "ratings"
+type Tab = "studios" | "ratings" | "holdings"
 type Board = "likes" | "value" | "hit"
 
 local MENU_SLOT = 15
@@ -349,6 +350,8 @@ function TourWindow.render()
 	end
 	if tab == "studios" then
 		renderStudios(frame)
+	elseif tab == "holdings" then
+		HoldingPanel.render(frame)
 	else
 		renderRatings(frame)
 	end
@@ -395,13 +398,16 @@ function TourWindow.open()
 	tabsLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	tabsLayout.Parent = tabs
 	tabs.Parent = window
-	for i, name in { "studios", "ratings" } do
+	for i, name in { "studios", "ratings", "holdings" } do
 		local button = Ui.button(tabs, ClientState.t("tour_tab_" .. name), Ui.colors.locked, function()
 			tab = name :: any
+			if name == "holdings" then
+				HoldingPanel.request()
+			end
 			TourWindow.render()
 		end)
 		button.LayoutOrder = i
-		button.Size = UDim2.new(0.5, -4, 1, 0)
+		button.Size = UDim2.new(1 / 3, -6, 1, 0)
 		tabButtons[name] = button
 	end
 
@@ -419,6 +425,9 @@ function TourWindow.open()
 
 	TourWindow.render()
 	TourRemotes.TourRequest:FireServer()
+	if tab == "holdings" then
+		HoldingPanel.request()
+	end
 	task.spawn(function()
 		while gui == screen do
 			task.wait(LIST_REFRESH)
@@ -546,6 +555,11 @@ function TourWindow.start()
 			TourWindow.render()
 		end
 		refreshLikeButton()
+	end)
+	HoldingPanel.changed:Connect(function()
+		if gui and tab == "holdings" then
+			TourWindow.render()
+		end
 	end)
 	TourRemotes.TourBoards.OnClientEvent:Connect(function(data)
 		if type(data) == "table" then

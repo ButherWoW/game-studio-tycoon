@@ -718,6 +718,16 @@ local function release(player: Player, project: Project)
 	)
 	-- Маскот «доход»: +N% к доходу релиза
 	revenue = math.floor(revenue * (1 + mascotBonus(player, "revenue")))
+	-- Совместная разработка (CoopService): доля гостя уходит ему, дальше считаем долю хозяина
+	local coopPartner: Player? = nil
+	local CoopService = optional("CoopService")
+	if CoopService then
+		local okCoop, hostRevenue, partner = pcall(CoopService.settle, player, project.id, revenue)
+		if okCoop and type(hostRevenue) == "number" and hostRevenue >= 0 and hostRevenue <= revenue then
+			revenue = math.floor(hostRevenue)
+			coopPartner = if typeof(partner) == "Instance" and partner:IsA("Player") then partner else nil
+		end
+	end
 
 	local isRecord = profile.gamesReleased > 0 and score > profile.bestScore
 	profile.gamesReleased += 1
@@ -797,6 +807,8 @@ local function release(player: Player, project: Project)
 		score = score,
 		revenue = revenue,
 	})
+	-- Очки недели холдинга (HoldingService); совместная игра двух участников — больше
+	hook("HoldingService", "onGameReleased", player, { coopWith = coopPartner })
 	-- Предложение «×2 к доходу этой игры» (OfferService запоминает релиз на минуту)
 	hook("OfferService", "onGameReleased", player, {
 		projectId = project.id,
@@ -1148,6 +1160,16 @@ local function tickProject(player: Player, project: Project, atPc: boolean)
 	project.points.graphics += rate.graphics * step
 	project.points.sound += rate.sound * step
 	project.points.story += rate.story * step
+	-- Гость совместной разработки (CoopService): его очки — по фокусу проекта
+	local CoopService = optional("CoopService")
+	if CoopService then
+		local okCoop, extra = pcall(CoopService.bonusPoints, player, project.id, project.tempo, step)
+		if okCoop and type(extra) == "number" and extra > 0 and extra < math.huge then
+			for key, share in project.focus :: any do
+				(project.points :: any)[key] += extra * share
+			end
+		end
+	end
 	project.elapsed += step
 
 	Remotes.DevelopmentProgress:FireClient(player, {
@@ -1162,6 +1184,22 @@ local function tickProject(player: Player, project: Project, atPc: boolean)
 	if project.elapsed >= project.duration then
 		finishProject(player, project)
 	end
+end
+
+-- Снимок проекта для совместной разработки (CoopService); nil — проекта нет
+function DevelopmentService.projectInfo(player: Player, projectId: number): any
+	for _, project in projects[player] or {} do
+		if project.id == projectId then
+			return {
+				name = project.name,
+				pending = project.pending,
+				laptop = project.laptop == true,
+				elapsed = project.elapsed,
+				duration = project.duration,
+			}
+		end
+	end
+	return nil
 end
 
 -- Игра в разработке в студии (не ноутбук): событиям компании есть что «уронить» или ускорить
