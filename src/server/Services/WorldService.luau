@@ -17,7 +17,8 @@ local PLOT_COUNT = math.clamp(game:GetService("Players").MaxPlayers, 6, 12)
 local PLOT_SIZE = 60
 local PLOT_THICKNESS = 1
 -- Расстояние от спавна до центра участка: растёт с числом участков, чтобы они не налезали
-local PLOT_RING_RADIUS = math.max(90, PLOT_COUNT * 80 / (2 * math.pi))
+-- Не ближе 102: иначе при 6–7 участках они налезают на парк Астры (Ø140, assets/models/astra-park)
+local PLOT_RING_RADIUS = math.max(102, PLOT_COUNT * 80 / (2 * math.pi))
 -- Земля с запасом за дальним краем участков (полудиагональ участка ≈ 0.71 · PLOT_SIZE)
 local GROUND_SIZE = math.max(512, 2 * (PLOT_RING_RADIUS + PLOT_SIZE) + 40)
 -- Тропинки от спавна к передним краям участков, чтобы было видно, куда идти
@@ -25,6 +26,11 @@ local PATH_WIDTH = 6
 -- Начинаются за скамейками парка, чтобы не идти под ними (при 12 участках тропинки на углах скамеек)
 local PATH_START = StartPark.benchRadius + 6
 local PATH_COLOR = Color3.fromRGB(176, 150, 112)
+-- Парк Астры (модель Park в ServerStorage): свои дорожки до радиуса 69.25, дальше — наши, его цветом
+local LANDSCAPE_NAME = "Park"
+local LANDSCAPE_OBSTACLES = "LandscapeObstacles"
+local LANDSCAPE_PATH_START = 69
+local LANDSCAPE_PATH_COLOR = Color3.fromRGB(217, 201, 163)
 local PLOT_COLOR = Color3.fromRGB(106, 190, 48)
 
 -- Заглушки: размер и цвет по имени модели. Неизвестные модели — серый куб.
@@ -123,6 +129,21 @@ end
 
 -- Тропинки от спавна к передним краям участков (по фактическим участкам, в т. ч. собранным в Studio).
 -- Только визуальные: CanCollide = false, игрок идёт по земле под ними
+-- Шаблон из ServerStorage или ServerStorage.Upgrades (как импортирует Dev 1)
+local function landscapeTemplate(name: string): Instance?
+	local direct = ServerStorage:FindFirstChild(name)
+	if direct then
+		return direct
+	end
+	local upgrades = ServerStorage:FindFirstChild("Upgrades")
+	return upgrades and upgrades:FindFirstChild(name)
+end
+
+local function hasLandscape(): boolean
+	local park = landscapeTemplate(LANDSCAPE_NAME)
+	return park ~= nil and park:IsA("Model")
+end
+
 local function ensurePaths()
 	if workspace:FindFirstChild("PlotPaths") then
 		return
@@ -143,16 +164,17 @@ local function ensurePaths()
 			local front = (plot.CFrame * CFrame.new(0, 0, plot.Size.Z / 2)).Position
 			local target = Vector3.new(front.X, 0, front.Z)
 			local offset = target - center
-			local length = offset.Magnitude - PATH_START
+			local start = if hasLandscape() then LANDSCAPE_PATH_START else PATH_START
+			local length = offset.Magnitude - start
 			if length > 1 then
 				local dir = offset.Unit
-				local from = center + dir * PATH_START
+				local from = center + dir * start
 				local mid = from + dir * (length / 2) + Vector3.new(0, 0.05, 0)
 				local path = makePart(
 					"Path_" .. plot.Name,
 					Vector3.new(PATH_WIDTH, 0.1, length),
 					CFrame.lookAt(mid, mid + dir),
-					PATH_COLOR,
+					if hasLandscape() then LANDSCAPE_PATH_COLOR else PATH_COLOR,
 					folder
 				)
 				path.Material = Enum.Material.Ground
@@ -317,6 +339,40 @@ local function dimImportedLights()
 	end
 end
 
+-- Парк Астры вокруг спавна: модель — рядом со StartPark (не внутри: StartParkService посчитал бы
+-- весь парк одним препятствием), невидимые прокси деревьев/пруда — внутрь StartPark, чтобы
+-- картриджи не появлялись в стволах и в пруду. Pivot парка — центр основания, прокси сдвигаем
+-- на тот же XZ, что и парк
+local function ensureLandscape()
+	local template = landscapeTemplate(LANDSCAPE_NAME)
+	if not template or not template:IsA("Model") or workspace:FindFirstChild(LANDSCAPE_NAME) then
+		return
+	end
+	local spawn = workspace:FindFirstChildWhichIsA("SpawnLocation", true)
+	local center = if spawn and spawn:IsA("BasePart")
+		then Vector3.new(spawn.Position.X, 0, spawn.Position.Z)
+		else Vector3.zero
+	local park = template:Clone()
+	park:PivotTo(CFrame.new(center))
+	park.Parent = workspace
+	local startPark = workspace:FindFirstChild("StartPark")
+	local proxies = landscapeTemplate(LANDSCAPE_OBSTACLES)
+	if
+		startPark
+		and proxies
+		and proxies:IsA("Folder")
+		and not startPark:FindFirstChild(LANDSCAPE_OBSTACLES)
+	then
+		local copy = proxies:Clone()
+		for _, part in copy:GetDescendants() do
+			if part:IsA("BasePart") then
+				part.CFrame = CFrame.new(center) * part.CFrame
+			end
+		end
+		copy.Parent = startPark
+	end
+end
+
 -- Вызывать до PlotService.start()
 function WorldService.start()
 	ensureGround()
@@ -324,6 +380,7 @@ function WorldService.start()
 	ensurePaths()
 	ensureUpgradeModels()
 	ensureStartPark()
+	ensureLandscape()
 	dimImportedLights()
 end
 
