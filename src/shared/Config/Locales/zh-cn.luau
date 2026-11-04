@@ -28,7 +28,7 @@ return {
 	-- Декор и настроение
 	studio_title = "🛋️ 工作室",
 	studio_tab_interior = "🛠 室内设施",
-	studio_tab_decor = "🪴 装饰",
+	studio_tab_decor = "🌿 装饰",
 	studio_tab_mood = "😊 心情",
 	studio_floor_garage = "车库",
 	studio_no_garage = "先买下车库，才有地方布置",

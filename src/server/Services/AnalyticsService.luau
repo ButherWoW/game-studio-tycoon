@@ -248,8 +248,12 @@ local detectors: { [string]: (Player, Profile, PlayerState) -> boolean } = {
 	joined = function()
 		return true
 	end,
+	-- Только ноутбук в парке (общий PcSeat с атрибутом Public), не кресло в своей студии (отчёт #4, P2-6)
 	laptop = function(player)
-		return PlotService.isAtPc(player)
+		local character = player.Character
+		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+		local seat = humanoid and humanoid.SeatPart
+		return seat ~= nil and seat:GetAttribute("Public") == true and PlotService.isAtPc(player)
 	end,
 	firstRelease = function(_, profile)
 		return profile.gamesReleased >= 1
@@ -554,7 +558,15 @@ local function wrapDataService()
 	service.trySpend = function(player: Player, amount: number): boolean
 		local result = originalSpend(player, amount)
 		if result and Config.enabled and type(amount) == "number" and amount > 0 then
+			-- Ближайший Luau-модуль выше по стеку: вызов через pcall даёт кадр «[C]» без имени
+			-- (так покупка декора писалась как Other/unknown — отчёт #4, P2-3)
 			local module = frame(2)
+			for level = 3, 6 do
+				if module then
+					break
+				end
+				module = frame(level)
+			end
 			local ok, err = pcall(function()
 				local profile = DataService.get(player)
 				if not profile then

@@ -28,7 +28,7 @@ return {
 	-- Декор и настроение
 	studio_title = "🛋️ Studija",
 	studio_tab_interior = "🛠 Interjers",
-	studio_tab_decor = "🪴 Dekors",
+	studio_tab_decor = "🌿 Dekors",
 	studio_tab_mood = "😊 Noskaņojums",
 	studio_floor_garage = "Garāža",
 	studio_no_garage = "Vispirms nopērc garāžu — tad būs ko iekārtot",

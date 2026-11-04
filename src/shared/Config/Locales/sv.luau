@@ -28,7 +28,7 @@ return {
 	-- Декор и настроение
 	studio_title = "🛋️ Studio",
 	studio_tab_interior = "🛠 Inredning",
-	studio_tab_decor = "🪴 Dekor",
+	studio_tab_decor = "🌿 Dekor",
 	studio_tab_mood = "😊 Stämning",
 	studio_floor_garage = "Garage",
 	studio_no_garage = "Köp garaget först — sedan finns det något att inreda",

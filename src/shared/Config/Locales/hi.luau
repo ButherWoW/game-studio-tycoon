@@ -28,7 +28,7 @@ return {
 	-- Декор и настроение
 	studio_title = "🛋️ स्टूडियो",
 	studio_tab_interior = "🛠 इंटीरियर",
-	studio_tab_decor = "🪴 सजावट",
+	studio_tab_decor = "🌿 सजावट",
 	studio_tab_mood = "😊 मूड",
 	studio_floor_garage = "गैराज",
 	studio_no_garage = "पहले गैराज खरीदो — फिर सजाने को कुछ होगा",

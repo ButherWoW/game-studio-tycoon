@@ -28,7 +28,7 @@ return {
 	-- Декор и настроение
 	studio_title = "🛋️ Stúdió",
 	studio_tab_interior = "🛠 Berendezés",
-	studio_tab_decor = "🪴 Dekor",
+	studio_tab_decor = "🌿 Dekor",
 	studio_tab_mood = "😊 Hangulat",
 	studio_floor_garage = "Garázs",
 	studio_no_garage = "Előbb vedd meg a garázst — utána lesz mit berendezni",

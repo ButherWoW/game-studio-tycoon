@@ -28,7 +28,7 @@ return {
 	-- Декор и настроение
 	studio_title = "🛋️ Studio",
 	studio_tab_interior = "🛠 Interior",
-	studio_tab_decor = "🪴 Decor",
+	studio_tab_decor = "🌿 Decor",
 	studio_tab_mood = "😊 Moral",
 	studio_floor_garage = "Garaj",
 	studio_no_garage = "Cumpără mai întâi garajul — apoi va fi ce amenaja",
