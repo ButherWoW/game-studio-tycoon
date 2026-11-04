@@ -6,17 +6,17 @@
 local Images = {}
 
 Images.menu = {
-	menu_research = 0, -- menu_research.png, 🔬
-	menu_team = 0, -- menu_team.png, 👥
-	menu_quests = 0, -- menu_quests.png, 📋
-	menu_shop = 0, -- menu_shop.png, 🛒
-	menu_rebirth = 0, -- menu_rebirth.png, ♻️
-	menu_language = 0, -- menu_language.png, 🌐
-	menu_hits = 0, -- menu_hits.png, 🔒
-	menu_thieves = 0, -- menu_thieves.png, 😈
-	menu_holiday = 0, -- menu_holiday.png, 🎉
-	menu_camera = 0, -- menu_camera.png, 🎥
-	menu_bank = 0, -- menu_bank.png, 🏦
+	menu_research = 111519993777789, -- menu_research.png, 🔬
+	menu_team = 77230608397075, -- menu_team.png, 👥
+	menu_quests = 136993744510245, -- menu_quests.png, 📋
+	menu_shop = 137630997422818, -- menu_shop.png, 🛒
+	menu_rebirth = 93873527228508, -- menu_rebirth.png, ♻️
+	menu_language = 126564198254913, -- menu_language.png, 🌐
+	menu_hits = 113373317118331, -- menu_hits.png, 🔒
+	menu_thieves = 92220236077266, -- menu_thieves.png, 😈
+	menu_holiday = 108939585178579, -- menu_holiday.png, 🎉
+	menu_camera = 113053777664719, -- menu_camera.png, 🎥
+	menu_bank = 82427982778270, -- menu_bank.png, 🏦
 	home = 0, -- 🏠, PNG в V3 нет
 } :: { [string]: number }
 
