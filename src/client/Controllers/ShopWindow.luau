@@ -1,5 +1,6 @@
 --!strict
--- Окно «Магазин» (5.4, 5.5): вкладки «Реклама / Геймпассы / Бусты / Постеры» (постеры — PosterShop).
+-- Окно «Магазин» (5.4, 5.5): вкладки «Реклама / Геймпассы / Бусты / Постеры / Скины»
+-- (постеры — PosterShop, скины сотрудников — SkinShop).
 -- Клиент только показывает цены и открывает окно покупки Roblox; что куплено и что выдать,
 -- решает сервер (ShopService, MonetizationService). ID 0 = товар ещё не создан: кнопка «Скоро».
 
@@ -17,8 +18,9 @@ local Texts = require(Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local PosterShop = require(script.Parent.Parent.PosterShop)
+local SkinShop = require(script.Parent.Parent.SkinShop)
 
-type Tab = "ads" | "passes" | "boosts" | "posters"
+type Tab = "ads" | "passes" | "boosts" | "posters" | "skins"
 type ShopState = {
 	passes: { [string]: boolean },
 	boosts: { instantFinish: number, patch: number, coffeeUntil: number }?,
@@ -27,7 +29,7 @@ type ShopState = {
 
 local MENU_SLOT = 4
 local ROW_HEIGHT = 72
-local TABS: { Tab } = { "ads", "passes", "boosts", "posters" }
+local TABS: { Tab } = { "ads", "passes", "boosts", "posters", "skins" }
 
 local ShopWindow = {}
 local gui: ScreenGui? = nil
@@ -251,6 +253,8 @@ render = function()
 		buildPasses(body)
 	elseif tab == "posters" then
 		PosterShop.build(body)
+	elseif tab == "skins" then
+		SkinShop.build(body)
 	else
 		buildBoosts(body)
 	end
@@ -279,6 +283,7 @@ function ShopWindow.open()
 	-- Свежие заряды и доход в минуту (рекорд мог вырасти)
 	ShopRemotes.ShopStateRequest:FireServer()
 	PosterShop.request()
+	SkinShop.request()
 end
 
 function ShopWindow.close()
@@ -306,6 +311,9 @@ function ShopWindow.start()
 		render()
 	end)
 	PosterShop.listen(function()
+		render()
+	end)
+	SkinShop.listen(function()
 		render()
 	end)
 	-- Деньги поменялись — перекрасить кнопки «за $»
