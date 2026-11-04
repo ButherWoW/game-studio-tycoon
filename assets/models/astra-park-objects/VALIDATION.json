@@ -1,0 +1,498 @@
+{
+  "studioTested": false,
+  "components": {
+    "ParkBench": {
+      "parts": 27,
+      "dimensionsXYZ": [
+        5.45,
+        3.88,
+        2.9
+      ],
+      "pointLights": 0
+    },
+    "JobBoard": {
+      "parts": 28,
+      "dimensionsXYZ": [
+        6.9,
+        6.895,
+        0.9
+      ],
+      "pointLights": 0
+    },
+    "Pawnshop": {
+      "parts": 39,
+      "dimensionsXYZ": [
+        9.7,
+        6.575,
+        7.7
+      ],
+      "pointLights": 1
+    },
+    "Fountain": {
+      "parts": 64,
+      "dimensionsXYZ": [
+        10.8,
+        4.9,
+        10.8
+      ],
+      "pointLights": 0
+    }
+  },
+  "collisions": [],
+  "pathFootprints": [],
+  "placements": [
+    {
+      "asset": "ParkBench",
+      "name": "Bench1",
+      "pos": [
+        24.248711305964285,
+        0,
+        13.999999999999998
+      ],
+      "yaw": 60
+    },
+    {
+      "asset": "ParkBench",
+      "name": "Bench2",
+      "pos": [
+        1.7145055188062944e-15,
+        0,
+        28.0
+      ],
+      "yaw": 0
+    },
+    {
+      "asset": "ParkBench",
+      "name": "Bench3",
+      "pos": [
+        -24.248711305964285,
+        0,
+        13.999999999999998
+      ],
+      "yaw": -60
+    },
+    {
+      "asset": "ParkBench",
+      "name": "Bench4",
+      "pos": [
+        -24.24871130596428,
+        0,
+        -14.000000000000004
+      ],
+      "yaw": -120
+    },
+    {
+      "asset": "ParkBench",
+      "name": "Bench5",
+      "pos": [
+        -5.143516556418883e-15,
+        0,
+        -28.0
+      ],
+      "yaw": -180
+    },
+    {
+      "asset": "ParkBench",
+      "name": "Bench6",
+      "pos": [
+        24.248711305964274,
+        0,
+        -14.000000000000012
+      ],
+      "yaw": -240
+    },
+    {
+      "asset": "JobBoard",
+      "name": "JobBoard",
+      "pos": [
+        0,
+        0,
+        17
+      ],
+      "yaw": 180
+    },
+    {
+      "asset": "Pawnshop",
+      "name": "Pawnshop",
+      "pos": [
+        -9.14811439598143,
+        0,
+        -43.03849443228744
+      ],
+      "yaw": 12
+    },
+    {
+      "asset": "Fountain",
+      "name": "Fountain",
+      "pos": [
+        43.466662183008076,
+        0,
+        11.646857029613432
+      ],
+      "yaw": 0
+    }
+  ],
+  "checks": [
+    "native class allowlist",
+    "part budgets and exact footprint limits",
+    "Y0 ground and centered base pivot",
+    "PrimaryPart+PivotOffset reconstruction",
+    "PcSeat identity and Public=true serialized attribute",
+    "seated direction -Z, laptop display +Z",
+    "current bench transforms and revised board/pawn proposed placement",
+    "all Parts checked against existing Park child geometry using conservative OBB SAT",
+    "no overlaps between interactive objects",
+    "central16x16 unobstructed",
+    "one shadowless light per Pawnshop lamp",
+    "all proposed footprints clear of actual path segments/joins",
+    "6stud board/pawn approaches and3stud bench approaches clear of props and spawn plaza"
+  ],
+  "actualPathIntersections": [],
+  "currentConfig": {
+    "status": "INTEGRATION_CHANGE_REQUIRED",
+    "findings": [
+      {
+        "object": "JobBoard",
+        "position": [
+          0,
+          0,
+          12
+        ],
+        "yaw": 180,
+        "pathPartPairs": [
+          [
+            "Post",
+            "GardenWalk_segment"
+          ],
+          [
+            "PostFoot",
+            "GardenWalk_segment"
+          ],
+          [
+            "Board",
+            "GardenWalk_segment"
+          ],
+          [
+            "FrameSide",
+            "GardenWalk_segment"
+          ],
+          [
+            "FrameSide",
+            "GardenWalk_roundJoin"
+          ],
+          [
+            "FrameHorizontal",
+            "GardenWalk_segment"
+          ],
+          [
+            "FrameHorizontal",
+            "GardenWalk_roundJoin"
+          ],
+          [
+            "FrameHorizontal",
+            "GardenWalk_segment"
+          ],
+          [
+            "FrameHorizontal",
+            "GardenWalk_roundJoin"
+          ],
+          [
+            "Header",
+            "GardenWalk_segment"
+          ],
+          [
+            "Header",
+            "GardenWalk_roundJoin"
+          ],
+          [
+            "JobPaper",
+            "GardenWalk_segment"
+          ],
+          [
+            "TaskLine",
+            "GardenWalk_segment"
+          ],
+          [
+            "TaskLine",
+            "GardenWalk_segment"
+          ],
+          [
+            "TaskLine",
+            "GardenWalk_segment"
+          ]
+        ],
+        "status": "INTEGRATION_CHANGE_REQUIRED"
+      },
+      {
+        "object": "Pawnshop",
+        "position": [
+          0,
+          0,
+          -12
+        ],
+        "yaw": 0,
+        "pathPartPairs": [
+          [
+            "Floor",
+            "GardenWalk_segment"
+          ],
+          [
+            "Floor",
+            "GardenWalk_segment"
+          ],
+          [
+            "Floor",
+            "GardenWalk_roundJoin"
+          ],
+          [
+            "BackWall",
+            "GardenWalk_roundJoin"
+          ],
+          [
+            "SideWall",
+            "GardenWalk_segment"
+          ],
+          [
+            "FrontPost",
+            "GardenWalk_segment"
+          ],
+          [
+            "SideWall",
+            "GardenWalk_segment"
+          ],
+          [
+            "SideWall",
+            "GardenWalk_roundJoin"
+          ],
+          [
+            "FrontPost",
+            "GardenWalk_segment"
+          ],
+          [
+            "Roof",
+            "GardenWalk_segment"
+          ],
+          [
+            "Roof",
+            "GardenWalk_segment"
+          ],
+          [
+            "Roof",
+            "GardenWalk_segment"
+          ],
+          [
+            "Roof",
+            "GardenWalk_roundJoin"
+          ],
+          [
+            "Counter",
+            "GardenWalk_segment"
+          ],
+          [
+            "Counter",
+            "GardenWalk_segment"
+          ],
+          [
+            "CounterTop",
+            "GardenWalk_segment"
+          ],
+          [
+            "CounterTop",
+            "GardenWalk_segment"
+          ],
+          [
+            "CounterAccent",
+            "GardenWalk_segment"
+          ],
+          [
+            "CounterAccent",
+            "GardenWalk_segment"
+          ],
+          [
+            "BackShelf",
+            "GardenWalk_segment"
+          ],
+          [
+            "BackShelf",
+            "GardenWalk_roundJoin"
+          ],
+          [
+            "BackShelf",
+            "GardenWalk_segment"
+          ],
+          [
+            "BackShelf",
+            "GardenWalk_roundJoin"
+          ],
+          [
+            "DisplayCartridge",
+            "GardenWalk_segment"
+          ],
+          [
+            "DisplayLabel",
+            "GardenWalk_segment"
+          ],
+          [
+            "SignPanel",
+            "GardenWalk_segment"
+          ]
+        ],
+        "status": "INTEGRATION_CHANGE_REQUIRED"
+      }
+    ]
+  },
+  "approvedProposedLayout": {
+    "status": "PASS",
+    "placements": [
+      {
+        "asset": "ParkBench",
+        "name": "Bench1",
+        "pos": [
+          24.248711305964285,
+          0,
+          13.999999999999998
+        ],
+        "yaw": 60
+      },
+      {
+        "asset": "ParkBench",
+        "name": "Bench2",
+        "pos": [
+          1.7145055188062944e-15,
+          0,
+          28.0
+        ],
+        "yaw": 0
+      },
+      {
+        "asset": "ParkBench",
+        "name": "Bench3",
+        "pos": [
+          -24.248711305964285,
+          0,
+          13.999999999999998
+        ],
+        "yaw": -60
+      },
+      {
+        "asset": "ParkBench",
+        "name": "Bench4",
+        "pos": [
+          -24.24871130596428,
+          0,
+          -14.000000000000004
+        ],
+        "yaw": -120
+      },
+      {
+        "asset": "ParkBench",
+        "name": "Bench5",
+        "pos": [
+          -5.143516556418883e-15,
+          0,
+          -28.0
+        ],
+        "yaw": -180
+      },
+      {
+        "asset": "ParkBench",
+        "name": "Bench6",
+        "pos": [
+          24.248711305964274,
+          0,
+          -14.000000000000012
+        ],
+        "yaw": -240
+      },
+      {
+        "asset": "JobBoard",
+        "name": "JobBoard",
+        "pos": [
+          0,
+          0,
+          17
+        ],
+        "yaw": 180
+      },
+      {
+        "asset": "Pawnshop",
+        "name": "Pawnshop",
+        "pos": [
+          -9.14811439598143,
+          0,
+          -43.03849443228744
+        ],
+        "yaw": 12
+      },
+      {
+        "asset": "Fountain",
+        "name": "Fountain",
+        "pos": [
+          43.466662183008076,
+          0,
+          11.646857029613432
+        ],
+        "yaw": 0
+      }
+    ],
+    "landscapeIntersections": 0,
+    "pathIntersections": 0,
+    "objectIntersections": 0,
+    "aprons": [
+      {
+        "object": "Bench1",
+        "clearWidth": 5.45,
+        "clearDepth": 3,
+        "status": "PASS"
+      },
+      {
+        "object": "Bench2",
+        "clearWidth": 5.45,
+        "clearDepth": 3,
+        "status": "PASS"
+      },
+      {
+        "object": "Bench3",
+        "clearWidth": 5.45,
+        "clearDepth": 3,
+        "status": "PASS"
+      },
+      {
+        "object": "Bench4",
+        "clearWidth": 5.45,
+        "clearDepth": 3,
+        "status": "PASS"
+      },
+      {
+        "object": "Bench5",
+        "clearWidth": 5.45,
+        "clearDepth": 3,
+        "status": "PASS"
+      },
+      {
+        "object": "Bench6",
+        "clearWidth": 5.45,
+        "clearDepth": 3,
+        "status": "PASS"
+      },
+      {
+        "object": "JobBoard",
+        "clearWidth": 6,
+        "clearDepth": 6,
+        "status": "PASS"
+      },
+      {
+        "object": "Pawnshop",
+        "clearWidth": 6,
+        "clearDepth": 6,
+        "status": "PASS"
+      }
+    ],
+    "spawnPlaza16x16": "CLEAR"
+  },
+  "notes": [
+    "Fountain placement is proposed at X43.467,Y0,Z11.647; no current WorldService Fountain builder placement exists. Keep separate and do not place on spawn plaza.",
+    "Offline OBB comparisons conservatively bound spheres/cylinders; no geometric intersections found. Studio avatar/access/raycast validation still needed.",
+    "ModelFactory must clone these templates; do not run fallback builder on top. Preserve Seat Public=true, JobBoard.Board, Pawnshop.Counter."
+  ]
+}
