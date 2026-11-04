@@ -26,6 +26,12 @@ local Rewards = {
 	parkSecondsPerGame = 40,
 	-- Без гаража одна денежная награда — не больше этой доли StartPark.garagePrice (30% -> $225)
 	parkMaxGarageShare = 0.3,
+	-- Отчёт #3: с одним потолком все 7 дней ежедневки давали одинаковые ~$225. Потолок растёт
+	-- с минутами награды: до parkCapBaseMinutes — ×1, к parkCapFullMinutes — ×parkCapMaxMultiplier
+	-- (5 мин $225, 10 мин $270, 20 мин $360, 30 мин $450 — не больше 2× дня 1)
+	parkCapBaseMinutes = 5,
+	parkCapFullMinutes = 30,
+	parkCapMaxMultiplier = 2,
 }
 
 return Rewards

@@ -17,6 +17,8 @@ local REQUEST_COOLDOWN = 1
 
 local LoanService = {}
 local lastRequest: { [Player]: number } = {}
+-- Когда (os.clock) у игрока появился гараж в этой сессии; false — гаража ещё нет
+local garageSince: { [Player]: number | false } = {}
 
 function LoanService.debt(profile: DataService.Profile): number
 	return math.max(math.floor(tonumber((profile :: any).loanDebt) or 0), 0)
@@ -54,9 +56,19 @@ local function repay(player: Player, profile: DataService.Profile, amount: numbe
 	return pay
 end
 
+-- Новичок только что купил гараж (осталось $5): сначала название студии и туториал, банк — позже
+local function inGrace(player: Player, profile: DataService.Profile): boolean
+	local name = (profile :: any).studioName
+	if player:GetAttribute("NeedsStudioName") == true or type(name) ~= "string" or name == "" then
+		return true
+	end
+	local since = garageSince[player]
+	return type(since) == "number" and os.clock() - since < Loans.graceAfterGarage
+end
+
 -- Сколько банк готов дать сейчас (0 — не предлагает)
 local function offerFor(player: Player, profile: DataService.Profile): number
-	if LoanService.debt(profile) > 0 or not PlotService.ownsGarage(player) then
+	if LoanService.debt(profile) > 0 or not PlotService.ownsGarage(player) or inGrace(player, profile) then
 		return 0
 	end
 	local current = tonumber(player:GetAttribute("LoanOffer")) or 0
@@ -74,6 +86,14 @@ local function refresh(player: Player)
 	local profile = DataService.get(player)
 	if not profile then
 		return
+	end
+	-- Гараж уже был при входе — паузы нет; куплен в этой сессии — отсчитываем graceAfterGarage
+	local owns = PlotService.ownsGarage(player)
+	local since = garageSince[player]
+	if since == nil then
+		garageSince[player] = if owns then -math.huge else false
+	elseif since == false and owns then
+		garageSince[player] = os.clock()
 	end
 	player:SetAttribute("LoanDebt", LoanService.debt(profile))
 	player:SetAttribute("LoanOffer", offerFor(player, profile))
@@ -141,6 +161,7 @@ function LoanService.start()
 	LoanRemotes.RepayLoan.OnServerEvent:Connect(onRepay)
 	Players.PlayerRemoving:Connect(function(player)
 		lastRequest[player] = nil
+		garageSince[player] = nil
 	end)
 	task.spawn(function()
 		while true do
