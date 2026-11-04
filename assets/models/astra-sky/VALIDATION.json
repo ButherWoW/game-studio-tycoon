@@ -1,0 +1,106 @@
+{
+  "models": {
+    "Skyscraper": {
+      "parts": 62,
+      "dimensionsXYZ": [
+        60.0,
+        14.0,
+        60.0
+      ],
+      "min": [
+        -30.0,
+        0.0,
+        -30.0
+      ],
+      "max": [
+        30.0,
+        14.0,
+        30.0
+      ],
+      "pointLights": 4,
+      "checks": "PASS"
+    },
+    "SkyDesk": {
+      "parts": 70,
+      "dimensionsXYZ": [
+        4.0,
+        4.775,
+        3.575
+      ],
+      "min": [
+        -2.0,
+        0.0,
+        -1.7875
+      ],
+      "max": [
+        2.0,
+        4.7749999999999995,
+        1.7874999999999999
+      ],
+      "pointLights": 0,
+      "checks": "PASS"
+    },
+    "SoundStudio": {
+      "parts": 91,
+      "dimensionsXYZ": [
+        10.8,
+        7.2,
+        8.6
+      ],
+      "min": [
+        -5.4,
+        -2.7755575615628914e-17,
+        -4.3
+      ],
+      "max": [
+        5.4,
+        7.2,
+        4.3
+      ],
+      "pointLights": 1,
+      "checks": "PASS"
+    },
+    "ArtWall": {
+      "parts": 28,
+      "dimensionsXYZ": [
+        13.5,
+        7.8,
+        0.9
+      ],
+      "min": [
+        -6.75,
+        0.0,
+        -0.45
+      ],
+      "max": [
+        6.75,
+        7.8,
+        0.45
+      ],
+      "pointLights": 0,
+      "checks": "PASS"
+    }
+  },
+  "checks": [
+    "native Parts only; no scripts/meshes/textures",
+    "part/dimension budgets",
+    "base Y0 and PrimaryPart PivotOffset",
+    "all anchored; orthonormal matrices",
+    "peer-model bounds nonintersecting",
+    "furniture clear of shell",
+    "11 Config stage4 desks",
+    "3-stud desk aprons clear",
+    "4-stud minimum horizontal desk gaps",
+    "lift6x6x7 clear",
+    "24x9 front aperture clear",
+    "player/coffee/hits reserved volumes clear",
+    "6.4-stud booth door with6-stud approach",
+    "walls <=13; roof13..14; floor58x58",
+    "one light per ceiling fixture, all Shadows=false",
+    "binary Rojo exports"
+  ],
+  "studioTested": false,
+  "localBaseY": 0,
+  "gamePlacementY": 28,
+  "limitations": "Not Studio/runtime tested. Gameplay code supplies lift, upper-entry glass, employee positioning and stage Y28. Assembled file is a layout reference; import named templates individually or through Upgrades collection."
+}
