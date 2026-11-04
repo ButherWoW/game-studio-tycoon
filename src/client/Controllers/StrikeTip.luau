@@ -9,6 +9,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local OfferClient = require(script.Parent.Parent.OfferClient)
 
 local StrikeTip = {}
 local gui: ScreenGui? = nil
@@ -32,7 +33,9 @@ local function show()
 	gui = screen
 	Ui.windowOpened()
 
-	local window = Ui.window(screen, "Window", Vector2.new(480, 330))
+	-- Пакет дохода, который покрывает зарплату (Config/Offers.strike): ещё одна кнопка
+	local pack = OfferClient.strikePack()
+	local window = Ui.window(screen, "Window", Vector2.new(480, if pack then 392 else 330))
 	local body = Instance.new("Frame")
 	body.BackgroundTransparency = 1
 	body.Position = UDim2.fromOffset(16, 12)
@@ -65,6 +68,24 @@ local function show()
 	end)
 	ok.Size = UDim2.new(0.6, 0, 0, 52)
 	ok.LayoutOrder = 3
+
+	if pack then
+		local product = pack.product
+		OfferClient.track("strike", "shown")
+		local pay = Ui.button(
+			body,
+			ClientState.t("offer_strike_pay", { price = product.robuxPrice }),
+			Ui.colors.good,
+			function()
+				dismissed = true
+				StaffRemotes.StrikeTipSeen:FireServer()
+				close()
+				OfferClient.buyProduct("strike", product.productId)
+			end
+		)
+		pay.Size = UDim2.new(0.8, 0, 0, 52)
+		pay.LayoutOrder = 4
+	end
 end
 
 function StrikeTip.start()

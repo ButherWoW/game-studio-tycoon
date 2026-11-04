@@ -698,6 +698,13 @@ function Analytics.logAchievement(player: Player, id: string)
 	end
 end
 
+-- Предложение доната (OfferService): вид и этап (shown / clicked / purchased) одним полем
+function Analytics.logOffer(player: Player, kind: string, stage: string)
+	if Config.enabled and states[player] then
+		logCustom(player, Config.events.offer, 1, kind .. "_" .. stage)
+	end
+end
+
 function Analytics.start()
 	if not Config.enabled then
 		return

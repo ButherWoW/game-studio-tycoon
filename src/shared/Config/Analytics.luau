@@ -56,6 +56,7 @@ local Analytics = {
 		languageChanged = "LanguageChanged", -- не чаще раза за сессию
 		quickEvent = "QuickEvent", -- быстрое событие разработки; поле — "вид_результат" (timing_perfect)
 		achievement = "Achievement", -- получено достижение; поле — id
+		offer = "Offer", -- предложение доната; поле — "вид_этап" (starterPack_shown, floorLock_purchased)
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -72,6 +73,7 @@ local Analytics = {
 		["StartParkService.onJobFinish"] = { transactionType = "ParkJob", sku = "job" },
 		["StartParkService.onPawn"] = { transactionType = "Pawnshop", sku = "cartridges" },
 		ShopService = { transactionType = "IAP", sku = "incomePack" },
+		OfferService = { transactionType = "IAP", sku = "offer" },
 		TutorialService = { transactionType = "Onboarding", sku = "tutorial" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку

@@ -13,6 +13,7 @@ local ClientState = require(script.Parent.Parent.ClientState)
 local DevState = require(script.Parent.Parent.DevState)
 local Ui = require(script.Parent.Parent.Ui)
 local CreateGameWindow = require(script.Parent.CreateGameWindow)
+local OfferClient = require(script.Parent.Parent.OfferClient)
 
 local HudController = {}
 
@@ -44,7 +45,10 @@ local function plate(parent: Instance, y: number): TextLabel
 end
 
 type Row = { label: TextLabel, finish: TextButton, projectId: number? }
-type Progress = { percent: number, paused: boolean }
+type Progress = { percent: number, paused: boolean, remaining: number? }
+
+-- Купили заряд кнопкой «⚡ Закончить сейчас»: потратить его на этот проект, когда сервер выдаст
+local FINISH_AFTER_PURCHASE_SECONDS = 60
 
 function HudController.start()
 	local gui = Instance.new("ScreenGui")
@@ -66,6 +70,18 @@ function HudController.start()
 	-- Прогресс по id проекта (из DevelopmentProgress)
 	local progressById: { [number]: Progress } = {}
 	local rows: { Row } = {}
+	local pendingFinish: { id: number, untilAt: number }? = nil
+
+	local function usePendingFinish()
+		local pending = pendingFinish
+		if not pending or DevState.instantFinish <= 0 then
+			return
+		end
+		pendingFinish = nil
+		if os.clock() < pending.untilAt then
+			PaidRemotes.InstantFinish:FireServer(pending.id)
+		end
+	end
 
 	local function getRow(index: number): Row
 		local row = rows[index]
@@ -80,6 +96,12 @@ function HudController.start()
 			local id = newRow.projectId
 			if id and DevState.instantFinish > 0 then
 				PaidRemotes.InstantFinish:FireServer(id)
+			elseif id then
+				-- Зарядов нет — предложение купить (Config/Offers.longDev) и сразу потратить
+				OfferClient.buyInstantFinish(function()
+					pendingFinish = { id = id, untilAt = os.clock() + FINISH_AFTER_PURCHASE_SECONDS }
+					usePendingFinish()
+				end)
 			end
 		end)
 		finish.Name = "InstantFinishButton"
@@ -126,9 +148,19 @@ function HudController.start()
 				end
 				row.label.Text = text
 				row.label.TextColor3 = if progress.paused then Ui.colors.bad else Ui.colors.text
-				-- «Мгновенно закончить» — только если есть заряды и не на ноутбуке в парке
-				row.finish.Visible = DevState.instantFinish > 0 and not project.laptop
-				row.finish.Text = ClientState.t("hud_instant_finish", { count = DevState.instantFinish })
+				-- «Мгновенно закончить» — только если есть заряды и не на ноутбуке в парке.
+				-- Зарядов нет, а ждать ещё долго — «⚡ Закончить сейчас» за Robux
+				local charges = DevState.instantFinish > 0
+				local offer = not charges
+					and not progress.paused
+					and OfferClient.longDevOffer(progress.remaining)
+				row.finish.Visible = (charges or offer) and not project.laptop
+				row.finish.Text = if charges
+					then ClientState.t("hud_instant_finish", { count = DevState.instantFinish })
+					else OfferClient.longDevText()
+				if offer and not project.laptop then
+					OfferClient.trackOnce("longDev_" .. project.id, "longDev", "shown")
+				end
 			end
 		end
 		-- Плашки тренда/выставки — сразу под последней видимой строкой HUD
@@ -243,6 +275,7 @@ function HudController.start()
 			end
 		end
 		refresh()
+		usePendingFinish()
 	end)
 	refresh()
 	DevState.request()
@@ -251,7 +284,14 @@ function HudController.start()
 		if type(data) ~= "table" or type(data.id) ~= "number" or type(data.progress) ~= "number" then
 			return
 		end
-		progressById[data.id] = { percent = math.floor(data.progress * 100), paused = data.paused == true }
+		progressById[data.id] = {
+			percent = math.floor(data.progress * 100),
+			paused = data.paused == true,
+			-- Пауза (встал из-за ПК) не присылает остаток — держим последний
+			remaining = if type(data.remaining) == "number"
+				then data.remaining
+				else (progressById[data.id] or {} :: any).remaining,
+		}
 		renderProgress()
 	end)
 
