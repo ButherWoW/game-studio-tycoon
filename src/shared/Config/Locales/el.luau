@@ -643,6 +643,8 @@ return {
 	camera_auto_on = "Αυτόματη θέα στο PC: ναι",
 	camera_auto_off = "Αυτόματη θέα στο PC: όχι",
 	hud_expenses = "💸 −{amount}/λεπ",
+	payday_paid = "💼 Μισθοί ομάδας: −{amount}",
+	payday_soon = "⚠️ Μισθοί σε {seconds} δ: {amount} — δεν φτάνουν τα χρήματα!",
 	hud_strike = "⚠️ Δεν φτάνουν τα λεφτά για μισθούς και ενοίκιο — η ομάδα απεργεί",
 	team_fire = "🚪 Απόλυση",
 	team_fire_confirm = "Σίγουρα; Επιστροφή {price}",

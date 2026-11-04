@@ -643,6 +643,8 @@ return {
 	camera_auto_on = "Tampilan otomatis di PC: aktif",
 	camera_auto_off = "Tampilan otomatis di PC: mati",
 	hud_expenses = "💸 −{amount}/mnt",
+	payday_paid = "💼 Gaji tim: −{amount}",
+	payday_soon = "⚠️ Gajian dalam {seconds} dtk: {amount} — uangnya kurang!",
 	hud_strike = "⚠️ Tak ada uang untuk gaji dan sewa — tim mogok kerja",
 	team_fire = "🚪 Pecat",
 	team_fire_confirm = "Yakin? Kembali {price}",

@@ -644,6 +644,8 @@ return {
 	camera_auto_on = "Auto-weergave bij pc: aan",
 	camera_auto_off = "Auto-weergave bij pc: uit",
 	hud_expenses = "💸 −{amount}/min",
+	payday_paid = "💼 Salaris team: −{amount}",
+	payday_soon = "⚠️ Salaris over {seconds} s: {amount} — te weinig geld!",
 	hud_strike = "⚠️ Geen geld voor salarissen en huur — je team staakt",
 	team_fire = "🚪 Ontslaan",
 	team_fire_confirm = "Zeker? {price} terug",

@@ -643,6 +643,8 @@ return {
 	camera_auto_on = "Auto vaizdas prie PC: įj.",
 	camera_auto_off = "Auto vaizdas prie PC: išj.",
 	hud_expenses = "💸 −{amount}/min",
+	payday_paid = "💼 Komandos atlyginimai: −{amount}",
+	payday_soon = "⚠️ Atlyginimai po {seconds} s: {amount} — neužtenka pinigų!",
 	hud_strike = "⚠️ Nėra pinigų algoms ir nuomai — komanda streikuoja",
 	team_fire = "🚪 Atleisti",
 	team_fire_confirm = "Tikrai? Grąžinsime {price}",

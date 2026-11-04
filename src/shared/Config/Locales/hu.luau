@@ -644,6 +644,8 @@ return {
 	camera_auto_on = "Auto nézet a gépnél: be",
 	camera_auto_off = "Auto nézet a gépnél: ki",
 	hud_expenses = "💸 −{amount}/perc",
+	payday_paid = "💼 Csapatfizetés: −{amount}",
+	payday_soon = "⚠️ Fizetés {seconds} mp múlva: {amount} — nincs elég pénz!",
 	hud_strike = "⚠️ Nincs pénz a fizetésekre és a bérleti díjra — a csapat sztrájkol",
 	team_fire = "🚪 Elbocsátás",
 	team_fire_confirm = "Biztos? {price} visszajár",
