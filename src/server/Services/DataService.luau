@@ -11,6 +11,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
+local Debug = require(ReplicatedStorage.Shared.Config.Debug)
 
 export type Profile = {
 	cash: number,
@@ -307,7 +308,17 @@ local function onPlayerAdded(player: Player)
 	local userId = player.UserId
 	-- Перезашёл на этот же сервер: ждём, пока допишется сохранение прошлой сессии
 	acquire(userId)
-	local status, result = load(userId)
+	-- Studio с тестовыми деньгами: боевой профиль не трогаем совсем (ни чтения с меткой сессии,
+	-- ни записи) — иначе тест доливал $999 999 в настоящее сохранение игрока
+	local testCash = RunService:IsStudio() and (Debug.studioStartCash or 0) > 0
+	local status, result
+	if testCash then
+		status, result =
+			"error",
+			"Studio test cash: профиль не загружается и не сохраняется"
+	else
+		status, result = load(userId)
+	end
 	busy[userId] = nil
 
 	local persistent = true

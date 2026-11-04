@@ -45,6 +45,12 @@ local function applyAd(player: Player, campaign: AdCampaigns.AdCampaign, paid: b
 		DataService.replicate(player)
 		return true
 	end
+	-- Такая же реклама уже идёт: продлеваем, а не перезапускаем (иначе оплаченное время пропадало)
+	if current and current.expiresAt > now and current.bonus == math.min(campaign.bonus, 1) then
+		current.expiresAt += campaign.durationSeconds
+		DataService.replicate(player)
+		return true
+	end
 	profile.activeAd = { bonus = math.min(campaign.bonus, 1), expiresAt = now + campaign.durationSeconds }
 	DataService.replicate(player)
 	return true

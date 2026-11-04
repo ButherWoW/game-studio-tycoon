@@ -45,6 +45,16 @@ local function pushState(player: Player)
 	})
 end
 
+-- Кофе из наград: то же ускорение, что продукт «Кофе», продлевается от конца текущего
+function ShopService.addCoffee(player: Player, seconds: number)
+	local profile = DataService.get(player)
+	if profile and type(seconds) == "number" and seconds > 0 and seconds < math.huge then
+		local boosts = profile.boosts
+		boosts.coffeeUntil = math.max(boosts.coffeeUntil, os.time()) + math.floor(seconds)
+		pushState(player)
+	end
+end
+
 function ShopService.ownsPass(player: Player, passId: GamePasses.PassId): boolean
 	local passes = owned[player]
 	return passes ~= nil and passes[passId] == true
@@ -105,7 +115,8 @@ end
 -- Сколько $ студия зарабатывает за минуту (для пакетов «N минут дохода»)
 function ShopService.incomePerMinute(player: Player, profile: DataService.Profile): number
 	local income = Products.income
-	local score = math.max(profile.bestScore, income.minScore)
+	-- Лучшая оценка с последнего Rebirth, как у наград и офлайн-дохода
+	local score = math.max(profile.runBestScore, income.minScore)
 	-- Множитель rebirth — как в DevelopmentService.release
 	local rebirthMultiplier = Rebirth.multiplier(profile.rebirths)
 	local perRelease = Formulas.revenue(score, profile.studioLevel, 0, rebirthMultiplier)
@@ -235,6 +246,7 @@ function ShopService.start()
 		task.spawn(loadPasses, player)
 	end
 	Players.PlayerRemoving:Connect(function(player)
+		lastPassEvent[player] = nil
 		owned[player] = nil
 		lastRequest[player] = nil
 	end)

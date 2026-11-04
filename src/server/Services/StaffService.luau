@@ -897,6 +897,11 @@ local function onFire(player: Player, employeeId: any)
 	local refund = Employees.refundFor(employee)
 	if refund > 0 then
 		DataService.addCash(player, refund)
+		-- Возврат за увольнение — не «заработок» для заданий
+		local reward = script.Parent:FindFirstChild("RewardService")
+		if reward and reward:IsA("ModuleScript") then
+			pcall((require(reward) :: any).noteNonEarned, player, refund)
+		end
 	end
 	-- Пересадка, StaffChanged, NPC и кнопка переезда — как при найме.
 	-- QuestService не зовём: счётчик заданий «найми» хранит максимум и не уменьшается
@@ -1037,6 +1042,7 @@ function StaffService.start()
 		npcFolders[player] = nil
 		refreshGeneration[player] = nil
 		lastAction[player] = nil
+		lastLook[player] = nil
 	end)
 end
 

@@ -7,7 +7,7 @@ export type Reward = {
 	incomeMinutes: number?, -- деньги: N минут дохода (см. RewardFormulas.incomeForMinutes)
 	researchPoints: number?, -- ОИ, TODO #8: тратить в дереве исследований
 	badge: string?, -- значок, TODO #9: выдать через BadgeService, когда появятся id значков
-	incomeBonus: number?, -- 0.05 = +5% к доходу навсегда, TODO #9: учесть в DevelopmentService
+	incomeBonus: number?, -- 0.05 = +5% к доходу навсегда (DevelopmentService.release)
 	employee: string?, -- id сотрудника, TODO #7: нанять, когда будет система сотрудников
 	coffeeMinutes: number?, -- кофе ×2 к скорости разработки, TODO #10: учесть в DevelopmentService
 	adBonus: number?, -- бесплатная реклама: бонус (0.3 = +30%) ...

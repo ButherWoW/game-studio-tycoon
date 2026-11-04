@@ -210,9 +210,7 @@ end
 
 -- Сколько вернут за увольнение (сервер начисляет, окно «Команда» показывает)
 function Employees.refundFor(hired: Employee): number
-	if hired.legendary then
-		return 0
-	end
+	-- Бесплатные легендарные (за задание или геймпасс) — 0, РОБО-9000 стоит денег — как у всех
 	return math.floor(hired.cost * math.clamp(Employees.fireRefund, 0, 1))
 end
 

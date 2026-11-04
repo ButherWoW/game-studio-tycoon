@@ -68,6 +68,15 @@ function ResearchService.onGameReleased(player: Player, score: number)
 end
 
 -- Множители от изученных узлов (см. Research.Modifiers). Без профиля — нейтральные
+-- Очки исследований из наград (задания, вход, праздники) — в тот же счёт, что и за релизы
+function ResearchService.addPoints(player: Player, points: number)
+	local data = getData(player)
+	if data and type(points) == "number" and points > 0 and points < math.huge then
+		data.points += math.floor(points)
+		replicate(player)
+	end
+end
+
 function ResearchService.getModifiers(player: Player): Research.Modifiers
 	local data = getData(player)
 	return Research.modifiers(if data then data.owned else {})
