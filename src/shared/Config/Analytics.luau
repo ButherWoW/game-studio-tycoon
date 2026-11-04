@@ -84,6 +84,7 @@ local Analytics = {
 		platform = "Platform",
 		console = "Console",
 		streamer = "Streamer",
+		arcade = "Arcade", -- мини-аркада после релиза; поле — "вид_этап" (whack_start, lanes_gold, jump_none)
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -114,6 +115,7 @@ local Analytics = {
 		HoldingService = { transactionType = "Reward", sku = "holdingGoal" }, -- цели недели холдинга
 		ConsoleService = { transactionType = "Console", sku = "royalty" },
 		StreamerService = { transactionType = "Streamer", sku = "donations" },
+		ArcadeService = { transactionType = "Reward", sku = "arcade" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },
