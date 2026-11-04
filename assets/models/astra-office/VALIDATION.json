@@ -1,0 +1,96 @@
+{
+  "sourceCommit": "c6e3f71",
+  "models": {
+    "Office": {
+      "parts": 185,
+      "dimensionsXYZ": [
+        60.0,
+        13.0,
+        60.0
+      ],
+      "min": [
+        -30.0,
+        0.0,
+        -30.0
+      ],
+      "max": [
+        30.0,
+        13.0,
+        30.0
+      ],
+      "pointLights": 4
+    },
+    "OfficeDesk": {
+      "parts": 185,
+      "dimensionsXYZ": [
+        6.0,
+        4.8,
+        3.83
+      ],
+      "min": [
+        -3.0000000000000004,
+        0.0,
+        -1.9000000000000001
+      ],
+      "max": [
+        3.0000000000000004,
+        4.8,
+        1.93
+      ],
+      "pointLights": 0
+    },
+    "Cooler": {
+      "parts": 48,
+      "dimensionsXYZ": [
+        1.92,
+        3.65,
+        1.86
+      ],
+      "min": [
+        -0.87,
+        -6.245004513516506e-17,
+        -0.845
+      ],
+      "max": [
+        1.05,
+        3.65,
+        1.0150000000000001
+      ],
+      "pointLights": 0
+    },
+    "MeetingRoom": {
+      "parts": 77,
+      "dimensionsXYZ": [
+        14.0,
+        7.0,
+        9.96
+      ],
+      "min": [
+        -7.0,
+        0.0,
+        -4.98
+      ],
+      "max": [
+        7.0,
+        7.0,
+        4.98
+      ],
+      "pointLights": 0
+    }
+  },
+  "checks": [
+    "part budgets",
+    "dimension limits",
+    "base Y=0",
+    "orthonormal transforms",
+    "no peer-model AABB overlaps",
+    "no intersections with shell walls or fixed decor",
+    "3-stud clear desk aprons",
+    "4-stud minimum gap between adjacent desk row",
+    "6.4-stud meeting doorway + 6-stud approach",
+    "reserved existing Desk1/PC1/Chair/Coffee/HitShelf footprints"
+  ],
+  "studioTested": false,
+  "binaryConversion": "6 RBXM files + RBXL/RBXLX place built with Rojo 7.4.4",
+  "limitation": "Geometric checks and file parsing passed. Not play-tested in Roblox Studio. StaffService positions NPC at local Z=3.5; included tucked chair is decorative and needs deliberate seating integration if NPC should actually sit in it."
+}
