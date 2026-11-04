@@ -432,6 +432,14 @@ local function release(player: Player, project: Project)
 	if TrendService then
 		score += TrendService.getBonus(project.genreId, project.topicId)
 	end
+	-- Праздник (Хэллоуин: хоррор/призраки/тыквы; Новый год) — бонус к оценке
+	local HolidayService = optional("HolidayService")
+	if HolidayService then
+		local ok, bonus = pcall(HolidayService.reviewBonus, project.genreId, project.topicId)
+		if ok and type(bonus) == "number" then
+			score += bonus
+		end
+	end
 	-- Продукт «Патч»: +1 к оценке, заряд тратится только если есть куда расти
 	local ShopService = optional("ShopService")
 	if ShopService and score < 10 and ShopService.consumeCharge(player, "patch") then
@@ -450,7 +458,25 @@ local function release(player: Player, project: Project)
 	local cashMultiplier = if shop and type(shop.cashMultiplier) == "number" then shop.cashMultiplier else 1
 	local researchMultiplier = if research and type(research.revenue) == "number" then research.revenue else 1
 	local laptopMultiplier = if project.laptop then StartPark.laptopRevenueMultiplier else 1
-	revenue = math.floor(revenue * cashMultiplier * researchMultiplier * laptopMultiplier)
+	-- Мощность студии (сумма очков/с купленной техники): лучше студия — больше продаж.
+	-- Раньше доход зависел только от оценки, и мощный ПК или офис деньги не меняли (отчёт #42)
+	local power = 0
+	for _, upgrade in Upgrades do
+		if profile.upgrades[upgrade.id] and upgrade.pointsPerSecond then
+			power += upgrade.pointsPerSecond
+		end
+	end
+	local powerMultiplier = 1 + math.min(power * Economy.revenuePerPower, Economy.maxPowerBonus)
+	local holidayMultiplier = 1
+	if HolidayService then
+		local ok, value = pcall(HolidayService.revenueMultiplier, project.genreId)
+		if ok and type(value) == "number" and value > 0 then
+			holidayMultiplier = value
+		end
+	end
+	revenue = math.floor(
+		revenue * cashMultiplier * researchMultiplier * laptopMultiplier * powerMultiplier * holidayMultiplier
+	)
 
 	local isRecord = profile.gamesReleased > 0 and score > profile.bestScore
 	profile.gamesReleased += 1

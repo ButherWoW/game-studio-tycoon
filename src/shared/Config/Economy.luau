@@ -14,6 +14,9 @@ local Economy = {
 	reviewNoise = 0.75,
 	-- Доход = revenueBase * оценка^2 * бонусы
 	revenueBase = 20,
+	-- +3% к доходу за каждое очко/с купленной техники (конец гаража ~+27%), не больше +150%
+	revenuePerPower = 0.03,
+	maxPowerBonus = 1.5,
 	-- Предметы студии ускоряют разработку не больше чем на эту долю (сумма speed в Config/Upgrades)
 	maxUpgradeSpeed = 0.5,
 	-- +25% к доходу за каждый уровень студии
