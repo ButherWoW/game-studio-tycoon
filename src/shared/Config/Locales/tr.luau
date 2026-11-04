@@ -593,4 +593,8 @@ return {
 	camera_view_on_touch = "🎥 Stüdyo görünümü · iki parmakla yakınlaştır",
 	camera_auto_on = "Bilgisayarda otomatik görünüm: açık",
 	camera_auto_off = "Bilgisayarda otomatik görünüm: kapalı",
+	hud_expenses = "💸 −{amount}/dk",
+	hud_strike = "⚠️ Maaş ve kira için para yok — ekip grevde",
+	team_salary = "maaş {amount}/dk",
+	team_rent = "kira {amount}/dk",
 }

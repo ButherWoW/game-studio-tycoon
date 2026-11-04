@@ -595,4 +595,8 @@ return {
 	camera_view_on_touch = "🎥 Pohľad na štúdio · roztiahni prsty — zoom",
 	camera_auto_on = "Auto pohľad pri PC: zap.",
 	camera_auto_off = "Auto pohľad pri PC: vyp.",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Nemáš na výplaty a nájom — tím štrajkuje",
+	team_salary = "plat {amount}/min",
+	team_rent = "nájom {amount}/min",
 }

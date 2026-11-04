@@ -595,4 +595,8 @@ return {
 	camera_view_on_touch = "🎥 Vista studio · pizzica per lo zoom",
 	camera_auto_on = "Vista auto al PC: sì",
 	camera_auto_off = "Vista auto al PC: no",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Non puoi pagare stipendi e affitto: il team sciopera",
+	team_salary = "stipendio {amount}/min",
+	team_rent = "affitto {amount}/min",
 }

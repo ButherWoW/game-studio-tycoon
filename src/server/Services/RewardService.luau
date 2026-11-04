@@ -57,6 +57,13 @@ function RewardService.takeRewardCash(player: Player): number
 	return amount
 end
 
+-- Списанные расходы студии: возвращаем их в подсчёт заработка (QuestService)
+function RewardService.noteExpense(player: Player, amount: number)
+	if amount > 0 then
+		rewardCash[player] = (rewardCash[player] or 0) - amount
+	end
+end
+
 function RewardService.forget(player: Player)
 	rewardCash[player] = nil
 end

@@ -595,4 +595,8 @@ return {
 	camera_view_on_touch = "🎥 Studioweergave · knijp om te zoomen",
 	camera_auto_on = "Auto-weergave bij pc: aan",
 	camera_auto_off = "Auto-weergave bij pc: uit",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Geen geld voor salarissen en huur — je team staakt",
+	team_salary = "salaris {amount}/min",
+	team_rent = "huur {amount}/min",
 }

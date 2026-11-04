@@ -595,4 +595,8 @@ return {
 	camera_view_on_touch = "🎥 Vista do estúdio · pince para dar zoom",
 	camera_auto_on = "Vista auto no PC: ligada",
 	camera_auto_off = "Vista auto no PC: desligada",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Sem dinheiro para salários e aluguel — a equipe está em greve",
+	team_salary = "salário {amount}/min",
+	team_rent = "aluguel {amount}/min",
 }

@@ -595,4 +595,8 @@ return {
 	camera_view_on_touch = "🎥 Studioansicht · Finger spreizen zum Zoomen",
 	camera_auto_on = "Auto-Ansicht am PC: an",
 	camera_auto_off = "Auto-Ansicht am PC: aus",
+	hud_expenses = "💸 −{amount}/Min",
+	hud_strike = "⚠️ Kein Geld für Gehälter und Miete — dein Team streikt",
+	team_salary = "Gehalt {amount}/Min",
+	team_rent = "Miete {amount}/Min",
 }

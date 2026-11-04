@@ -595,4 +595,8 @@ return {
 	camera_view_on_touch = "🎥 Studiovy · nyp för att zooma",
 	camera_auto_on = "Autovy vid datorn: på",
 	camera_auto_off = "Autovy vid datorn: av",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Inga pengar till löner och hyra — teamet strejkar",
+	team_salary = "lön {amount}/min",
+	team_rent = "hyra {amount}/min",
 }

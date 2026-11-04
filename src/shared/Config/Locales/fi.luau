@@ -594,4 +594,8 @@ return {
 	camera_view_on_touch = "🎥 Studionäkymä · nipistä zoomataksesi",
 	camera_auto_on = "Automaattinäkymä PC:llä: päällä",
 	camera_auto_off = "Automaattinäkymä PC:llä: pois",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Rahat eivät riitä palkkoihin ja vuokraan — tiimi lakkoilee",
+	team_salary = "palkka {amount}/min",
+	team_rent = "vuokra {amount}/min",
 }

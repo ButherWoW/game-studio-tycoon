@@ -461,6 +461,10 @@ Texts.ru = {
 	camera_auto_off = "Авто-вид за ПК: выкл",
 	topic_pumpkins = "Тыквы",
 	topic_newyear = "Новый год",
+	hud_expenses = "💸 −{amount}/мин",
+	hud_strike = "⚠️ Нечем платить зарплаты и аренду — команда бастует",
+	team_salary = "зарплата {amount}/мин",
+	team_rent = "аренда {amount}/мин",
 } :: { [string]: string }
 
 Texts.en = {
@@ -871,6 +875,10 @@ Texts.en = {
 	camera_view_on_touch = "🎥 Studio view · pinch to zoom",
 	camera_auto_on = "Auto view at PC: on",
 	camera_auto_off = "Auto view at PC: off",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Can't pay salaries and rent — your team is on strike",
+	team_salary = "salary {amount}/min",
+	team_rent = "rent {amount}/min",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть

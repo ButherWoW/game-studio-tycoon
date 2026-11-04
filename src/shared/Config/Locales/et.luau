@@ -594,4 +594,8 @@ return {
 	camera_view_on_touch = "🎥 Stuudio vaade · näpista suumimiseks",
 	camera_auto_on = "Autovaade arvuti taga: sees",
 	camera_auto_off = "Autovaade arvuti taga: väljas",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Palkade ja üüri jaoks pole raha — meeskond streigib",
+	team_salary = "palk {amount}/min",
+	team_rent = "üür {amount}/min",
 }

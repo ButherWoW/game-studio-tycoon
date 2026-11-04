@@ -595,4 +595,8 @@ return {
 	camera_view_on_touch = "🎥 Вигляд студії · щипок — зум",
 	camera_auto_on = "Автовигляд за ПК: увімк.",
 	camera_auto_off = "Автовигляд за ПК: вимк.",
+	hud_expenses = "💸 −{amount}/хв",
+	hud_strike = "⚠️ Нема чим платити зарплати й оренду — команда страйкує",
+	team_salary = "зарплата {amount}/хв",
+	team_rent = "оренда {amount}/хв",
 }

@@ -34,7 +34,14 @@ function OfflineService.earnings(profile: DataService.Profile, seconds: number):
 	local team = if staff and staff:IsA("ModuleScript")
 		then (require(staff) :: any).offlineMultiplier(profile)
 		else 1
-	return math.floor(capped / 60 * perMinute * Offline.rate * team)
+	local gross = capped / 60 * perMinute * Offline.rate * team
+	-- Зарплаты и аренда (ExpensesService) идут и офлайн — в той же доле rate
+	local expenses = script.Parent:FindFirstChild("ExpensesService")
+	local okCost, cost = pcall(function()
+		return if expenses then (require(expenses) :: any).perMinute(profile) else 0
+	end)
+	local spent = if okCost and type(cost) == "number" then capped / 60 * cost * Offline.rate else 0
+	return math.max(math.floor(gross - spent), 0)
 end
 
 local function onPlayerAdded(player: Player)

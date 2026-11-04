@@ -593,4 +593,8 @@ return {
 	camera_view_on_touch = "🎥 Pogled na studio · štipni za zum",
 	camera_auto_on = "Auto-pogled za računalom: uklj.",
 	camera_auto_off = "Auto-pogled za računalom: isklj.",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Nema novca za plaće i najam — tim štrajka",
+	team_salary = "plaća {amount}/min",
+	team_rent = "najam {amount}/min",
 }

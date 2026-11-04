@@ -594,4 +594,8 @@ return {
 	camera_view_on_touch = "🎥 Θέα στούντιο · τσίμπημα για ζουμ",
 	camera_auto_on = "Αυτόματη θέα στο PC: ναι",
 	camera_auto_off = "Αυτόματη θέα στο PC: όχι",
+	hud_expenses = "💸 −{amount}/λεπ",
+	hud_strike = "⚠️ Δεν φτάνουν τα λεφτά για μισθούς και ενοίκιο — η ομάδα απεργεί",
+	team_salary = "μισθός {amount}/λεπ",
+	team_rent = "ενοίκιο {amount}/λεπ",
 }
