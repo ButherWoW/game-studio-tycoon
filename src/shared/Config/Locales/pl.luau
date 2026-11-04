@@ -287,6 +287,12 @@ return {
 	stage_office = "Biuro",
 	stage_floor = "Biuro: 2. piętro",
 	stage_skyscraper = "Biuro: 3. piętro",
+	-- Этажи офиса
+	floor_name_1 = "1. piętro",
+	floor_name_2 = "2. piętro",
+	floor_name_3 = "3. piętro",
+	floor_lift = "Winda",
+	floor_sign = "🔒 {floor}: zamknięte\n{price} · potrzebne gry: {games}",
 	upgrade_desk1 = "Stare biurko",
 	upgrade_pc1 = "Komputer z pchlego targu",
 	upgrade_walls = "Ściany i światło w garażu",

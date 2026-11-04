@@ -363,6 +363,12 @@ Texts.ru = {
 	park_seat_garage = "Ноутбуки в парке — для новичков. Иди в свою студию!",
 	error_name_bad = "Название с плохими словами — придумай другое",
 	move_celebrate = "🎉 Новая студия: {stage}!",
+	-- Этажи офиса
+	floor_name_1 = "1-й этаж",
+	floor_name_2 = "2-й этаж",
+	floor_name_3 = "3-й этаж",
+	floor_lift = "Лифт",
+	floor_sign = "🔒 {floor} закрыт\n{price} · нужно игр: {games}",
 	-- holidays
 	holiday_name_halloween = "Хэллоуин",
 	holiday_name_newyear = "Новый год",
@@ -768,6 +774,12 @@ Texts.en = {
 	park_seat_garage = "Park laptops are for newcomers. Head to your studio!",
 	error_name_bad = "That title has bad words — try another one",
 	move_celebrate = "🎉 New studio: {stage}!",
+	-- Этажи офиса
+	floor_name_1 = "1st floor",
+	floor_name_2 = "2nd floor",
+	floor_name_3 = "3rd floor",
+	floor_lift = "Elevator",
+	floor_sign = "🔒 {floor} is locked\n{price} · games needed: {games}",
 	-- holidays
 	holiday_name_halloween = "Halloween",
 	holiday_name_newyear = "New Year",

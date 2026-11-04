@@ -287,6 +287,12 @@ return {
 	stage_office = "Iroda",
 	stage_floor = "Iroda: 2. emelet",
 	stage_skyscraper = "Iroda: 3. emelet",
+	-- Этажи офиса
+	floor_name_1 = "1. emelet",
+	floor_name_2 = "2. emelet",
+	floor_name_3 = "3. emelet",
+	floor_lift = "Lift",
+	floor_sign = "🔒 {floor}: zárva\n{price} · szükséges játékok: {games}",
 	upgrade_desk1 = "Régi asztal",
 	upgrade_pc1 = "Bolhapiaci számítógép",
 	upgrade_walls = "Garázsfalak és világítás",

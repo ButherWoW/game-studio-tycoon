@@ -287,6 +287,12 @@ return {
 	stage_office = "Birojs",
 	stage_floor = "Birojs: 2. stāvs",
 	stage_skyscraper = "Birojs: 3. stāvs",
+	-- Этажи офиса
+	floor_name_1 = "1. stāvs",
+	floor_name_2 = "2. stāvs",
+	floor_name_3 = "3. stāvs",
+	floor_lift = "Lifts",
+	floor_sign = "🔒 {floor} ir slēgts\n{price} · vajadzīgas spēles: {games}",
 	upgrade_desk1 = "Vecs galds",
 	upgrade_pc1 = "Dators no blusu tirgus",
 	upgrade_walls = "Garāžas sienas un gaisma",

@@ -287,6 +287,12 @@ return {
 	stage_office = "ऑफ़िस",
 	stage_floor = "ऑफ़िस: दूसरी मंज़िल",
 	stage_skyscraper = "ऑफ़िस: तीसरी मंज़िल",
+	-- Этажи офиса
+	floor_name_1 = "पहली मंज़िल",
+	floor_name_2 = "दूसरी मंज़िल",
+	floor_name_3 = "तीसरी मंज़िल",
+	floor_lift = "लिफ़्ट",
+	floor_sign = "🔒 {floor} बंद है\n{price} · ज़रूरी गेम: {games}",
 	upgrade_desk1 = "पुरानी डेस्क",
 	upgrade_pc1 = "कबाड़ बाज़ार का कंप्यूटर",
 	upgrade_walls = "गैराज की दीवारें और लाइट",

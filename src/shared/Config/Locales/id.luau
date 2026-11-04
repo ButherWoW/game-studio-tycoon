@@ -287,6 +287,12 @@ return {
 	stage_office = "Kantor",
 	stage_floor = "Kantor: lantai 2",
 	stage_skyscraper = "Kantor: lantai 3",
+	-- Этажи офиса
+	floor_name_1 = "Lantai 1",
+	floor_name_2 = "Lantai 2",
+	floor_name_3 = "Lantai 3",
+	floor_lift = "Lift",
+	floor_sign = "🔒 {floor} terkunci\n{price} · game dibutuhkan: {games}",
 	upgrade_desk1 = "Meja tua",
 	upgrade_pc1 = "Komputer dari pasar loak",
 	upgrade_walls = "Dinding dan lampu garasi",

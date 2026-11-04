@@ -286,6 +286,12 @@ return {
 	stage_office = "Pisarna",
 	stage_floor = "Pisarna: 2. nadstropje",
 	stage_skyscraper = "Pisarna: 3. nadstropje",
+	-- Этажи офиса
+	floor_name_1 = "1. nadstropje",
+	floor_name_2 = "2. nadstropje",
+	floor_name_3 = "3. nadstropje",
+	floor_lift = "Dvigalo",
+	floor_sign = "🔒 {floor} je zaklenjeno\n{price} · potrebne igre: {games}",
 	upgrade_desk1 = "Stara miza",
 	upgrade_pc1 = "Računalnik z bolšjega trga",
 	upgrade_walls = "Stene in luči v garaži",

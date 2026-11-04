@@ -287,6 +287,12 @@ return {
 	stage_office = "Ufficio",
 	stage_floor = "Ufficio: 2º piano",
 	stage_skyscraper = "Ufficio: 3º piano",
+	-- Этажи офиса
+	floor_name_1 = "1º piano",
+	floor_name_2 = "2º piano",
+	floor_name_3 = "3º piano",
+	floor_lift = "Ascensore",
+	floor_sign = "🔒 {floor}: chiuso\n{price} · giochi richiesti: {games}",
 	upgrade_desk1 = "Vecchia scrivania",
 	upgrade_pc1 = "PC dell'usato",
 	upgrade_walls = "Pareti e luci del garage",

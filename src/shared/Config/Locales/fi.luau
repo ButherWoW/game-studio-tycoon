@@ -287,6 +287,12 @@ return {
 	stage_office = "Toimisto",
 	stage_floor = "Toimisto: 2. kerros",
 	stage_skyscraper = "Toimisto: 3. kerros",
+	-- Этажи офиса
+	floor_name_1 = "1. kerros",
+	floor_name_2 = "2. kerros",
+	floor_name_3 = "3. kerros",
+	floor_lift = "Hissi",
+	floor_sign = "🔒 {floor} on lukittu\n{price} · pelejä tarvitaan: {games}",
 	upgrade_desk1 = "Vanha pöytä",
 	upgrade_pc1 = "Kirpparitietokone",
 	upgrade_walls = "Autotallin seinät ja valot",

@@ -1,12 +1,14 @@
 --!strict
 -- Надписи на кнопках покупки ставит сервер по-русски (он не знает язык игрока).
 -- Здесь клиент переписывает их на свой язык: upgrade_<id> / stage_<id> из Locales + цена.
+-- Так же — подписи этажей офиса (OfficeFloors): табличка 🔒, пульт и подсказки лифта.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local ClientState = require(script.Parent.Parent.ClientState)
 
 local PlotLabels = {}
@@ -71,6 +73,33 @@ local function relabel(button: Instance)
 	end
 end
 
+-- Подписи этажей по атрибутам, которые ставит OfficeFloors
+local function relabelFloor(item: Instance)
+	local lang = ClientState.lang
+	if item:IsA("TextLabel") then
+		local sign = item:GetAttribute("FloorSign")
+		local lift = item:GetAttribute("FloorLift")
+		if type(sign) == "number" then
+			item.Text = StudioLayout.floorSign(lang, sign)
+		elseif type(lift) == "number" then
+			item.Text = "🛗 " .. StudioLayout.floorName(lang, lift)
+		end
+	elseif item:IsA("ProximityPrompt") then
+		local target = item:GetAttribute("FloorTarget")
+		local arrow = item:GetAttribute("FloorArrow")
+		if type(target) == "number" and type(arrow) == "string" then
+			item.ActionText = arrow .. " " .. StudioLayout.floorName(lang, target)
+			item.ObjectText = ClientState.t("floor_lift")
+		end
+	end
+end
+
+local function isFloorText(item: Instance): boolean
+	return item:GetAttribute("FloorSign") ~= nil
+		or item:GetAttribute("FloorLift") ~= nil
+		or item:GetAttribute("FloorTarget") ~= nil
+end
+
 local function relabelAll()
 	local plots = workspace:FindFirstChild("Plots")
 	if not plots then
@@ -79,6 +108,8 @@ local function relabelAll()
 	for _, d in plots:GetDescendants() do
 		if d.Name:sub(1, 4) == "Buy_" then
 			relabel(d)
+		elseif isFloorText(d) then
+			relabelFloor(d)
 		end
 	end
 end
@@ -89,6 +120,12 @@ function PlotLabels.start()
 		if d.Name:sub(1, 4) == "Buy_" then
 			-- BillboardGui прилетает чуть позже самой кнопки
 			task.defer(relabel, d)
+		elseif d:IsA("TextLabel") or d:IsA("ProximityPrompt") then
+			task.defer(function()
+				if isFloorText(d) then
+					relabelFloor(d)
+				end
+			end)
 		end
 	end)
 	ClientState.changed:Connect(relabelAll)

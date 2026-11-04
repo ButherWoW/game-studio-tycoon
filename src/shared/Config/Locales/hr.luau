@@ -286,6 +286,12 @@ return {
 	stage_office = "Ured",
 	stage_floor = "Ured: 2. kat",
 	stage_skyscraper = "Ured: 3. kat",
+	-- Этажи офиса
+	floor_name_1 = "1. kat",
+	floor_name_2 = "2. kat",
+	floor_name_3 = "3. kat",
+	floor_lift = "Dizalo",
+	floor_sign = "🔒 {floor} je zaključan\n{price} · potrebno igara: {games}",
 	upgrade_desk1 = "Stari stol",
 	upgrade_pc1 = "Računalo s buvljaka",
 	upgrade_walls = "Zidovi i svjetlo u garaži",

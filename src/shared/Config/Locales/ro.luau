@@ -287,6 +287,12 @@ return {
 	stage_office = "Birou",
 	stage_floor = "Birou: etajul 2",
 	stage_skyscraper = "Birou: etajul 3",
+	-- Этажи офиса
+	floor_name_1 = "Etajul 1",
+	floor_name_2 = "Etajul 2",
+	floor_name_3 = "Etajul 3",
+	floor_lift = "Lift",
+	floor_sign = "🔒 {floor} e închis\n{price} · jocuri necesare: {games}",
 	upgrade_desk1 = "Masă veche",
 	upgrade_pc1 = "Calculator de la talcioc",
 	upgrade_walls = "Pereți și lumini în garaj",

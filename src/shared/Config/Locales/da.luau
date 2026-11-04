@@ -287,6 +287,12 @@ return {
 	stage_office = "Kontor",
 	stage_floor = "Kontor: 2. sal",
 	stage_skyscraper = "Kontor: 3. sal",
+	-- Этажи офиса
+	floor_name_1 = "1. sal",
+	floor_name_2 = "2. sal",
+	floor_name_3 = "3. sal",
+	floor_lift = "Elevator",
+	floor_sign = "🔒 {floor} er låst\n{price} · spil krævet: {games}",
 	upgrade_desk1 = "Gammelt bord",
 	upgrade_pc1 = "Computer fra loppemarkedet",
 	upgrade_walls = "Vægge og lys i garagen",

@@ -287,6 +287,12 @@ return {
 	stage_office = "Γραφείο",
 	stage_floor = "Γραφείο: 2ος όροφος",
 	stage_skyscraper = "Γραφείο: 3ος όροφος",
+	-- Этажи офиса
+	floor_name_1 = "1ος όροφος",
+	floor_name_2 = "2ος όροφος",
+	floor_name_3 = "3ος όροφος",
+	floor_lift = "Ανελκυστήρας",
+	floor_sign = "🔒 {floor}: κλειδωμένος\n{price} · απαιτούμενα παιχνίδια: {games}",
 	upgrade_desk1 = "Παλιό γραφείο",
 	upgrade_pc1 = "Υπολογιστής από παζάρι",
 	upgrade_walls = "Τοίχοι και φώτα στο γκαράζ",

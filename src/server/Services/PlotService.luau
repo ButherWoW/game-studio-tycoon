@@ -5,6 +5,8 @@
 -- Если их нет в плейсе, WorldService создаёт их сам при старте сервера.
 -- Кнопки-апгрейды на полу создаются из кода: наступил — купил.
 -- Здесь же этапы студии (Config/Stages): studioLevel, переезд и модель этапа на участке.
+-- После гаража — трёхэтажный офис: оболочки всех этажей стоят сразу, «переезд» открывает
+-- следующий этаж, интерьер нижних остаётся (лифты и замки этажей — OfficeFloors).
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -19,6 +21,7 @@ local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
 local StartRemotes = require(ReplicatedStorage.Shared.StartRemotes)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local DataService = require(script.Parent.DataService)
+local OfficeFloors = require(script.Parent.OfficeFloors)
 
 local BUTTON_SIZE = Vector3.new(5, 0.4, 5)
 local BUTTON_SPACING = 7
@@ -42,6 +45,9 @@ local HOME_OUTSIDE = 4 -- studs за передним краем участка
 local HOME_HEIGHT = 3.5 -- над верхом участка: HumanoidRootPart стоящего персонажа
 -- Кнопка 🏠: не чаще раза в HOME_COOLDOWN секунд
 local HOME_COOLDOWN = 2
+-- Лифт между этажами: не чаще раза в LIFT_COOLDOWN секунд, пульт не дальше LIFT_DISTANCE
+local LIFT_COOLDOWN = 1
+local LIFT_DISTANCE = 14
 local CHARACTER_WAIT = 5
 
 local PlotService = {}
@@ -49,6 +55,7 @@ local owners: { [BasePart]: Player } = {}
 local buttons: { [Player]: { [BasePart]: Upgrades.Upgrade } } = {}
 local lastTouch: { [Player]: number } = {}
 local lastHome: { [Player]: number } = {}
+local lastLift: { [Player]: number } = {}
 -- Игроки без участка (все заняты): получат первый освободившийся
 local waiting: { Player } = {}
 
@@ -179,7 +186,10 @@ local function supersededOnPlot(plot: BasePart, modelName: string): boolean
 	return template ~= nil and template:GetAttribute("Generated") ~= true
 end
 
--- Поставить всё купленное и модель текущего этапа
+local onLift: OfficeFloors.LiftHandler
+
+-- Поставить всё купленное и модели этапа: в гараже — гараж, в офисе — все три этажа
+-- (некупленные закрыты, OfficeFloors)
 local function buildPlot(plot: BasePart, profile: DataService.Profile)
 	-- Участок без гаража пустой: только табличка «Гараж продаётся» (refreshButtons)
 	if not profileOwnsGarage(profile) then
@@ -190,10 +200,14 @@ local function buildPlot(plot: BasePart, profile: DataService.Profile)
 			placeUpgrade(plot, upgrade)
 		end
 	end
-	local stage = Stages[profile.studioLevel]
-	if stage and stage.model and not supersededOnPlot(plot, stage.model) then
-		placeModel(plot, stage.model, stage.position, 0)
+	local level = profile.studioLevel
+	for _, stage in Stages do
+		local shown = if stage.level == 1 then level == 1 else level >= 2
+		if shown and stage.model and not supersededOnPlot(plot, stage.model) then
+			placeModel(plot, stage.model, stage.position, 0)
+		end
 	end
+	OfficeFloors.build(plot, level, onLift)
 end
 
 local refreshButtons: (player: Player) -> ()
@@ -236,10 +250,15 @@ local function interiorComplete(profile: DataService.Profile): boolean
 	return true
 end
 
--- За каждым купленным столом текущего этапа сидит сотрудник. Рассадку (staff: сотрудник -> стол,
--- "" — ждёт стол) ведёт StaffService; спрятанные столы прошлых этапов не считаются
+-- За каждым купленным столом текущего (верхнего открытого) этажа сидит сотрудник. Рассадку
+-- (staff: сотрудник -> стол, "" — ждёт стол) ведёт StaffService; столы нижних этажей не считаются
 local function staffFull(profile: DataService.Profile): boolean
-	local desks = StudioLayout.visibleDesks(profile.upgrades, profile.studioLevel)
+	local desks = {}
+	for _, desk in StudioLayout.visibleDesks(profile.upgrades, profile.studioLevel) do
+		if StudioLayout.deskStage(desk) == profile.studioLevel then
+			table.insert(desks, desk)
+		end
+	end
 	if #desks == 0 then
 		return false
 	end
@@ -313,11 +332,13 @@ local function createButton(
 	plot: BasePart,
 	upgrade: Upgrades.Upgrade,
 	index: number,
-	count: number
+	count: number,
+	floor: number
 ): BasePart
 	local x = (index - (count + 1) / 2) * BUTTON_SPACING
 	local z = plot.Size.Z / 2 - BUTTON_EDGE_OFFSET
-	local y = plot.Size.Y / 2 + BUTTON_SIZE.Y / 2
+	-- Ряд кнопок у входа на своём этаже
+	local y = plot.Size.Y / 2 + BUTTON_SIZE.Y / 2 + StudioLayout.floorY(floor)
 
 	local button = Instance.new("Part")
 	button.Name = "Buy_" .. upgrade.id
@@ -331,7 +352,8 @@ local function createButton(
 	local billboard = Instance.new("BillboardGui")
 	billboard.Size = UDim2.fromOffset(200, 60)
 	billboard.StudsOffset = Vector3.new(0, 3, 0)
-	billboard.AlwaysOnTop = true
+	-- Сквозь перекрытия видно только кнопки 1-го этажа (у входа), иначе надписи верхних висят в воздухе
+	billboard.AlwaysOnTop = floor == 1
 	billboard.MaxDistance = 60
 	billboard.Parent = button
 
@@ -397,11 +419,23 @@ refreshButtons = function(player: Player)
 				move = true,
 			} :: Upgrades.Upgrade,
 		}
+	-- Кнопки интерьера — на этаже предмета, кнопка открытия следующего этажа — на верхнем открытом
+	local topFloor = StudioLayout.floorsUnlocked(profile.studioLevel)
+	local byFloor: { [number]: { Upgrades.Upgrade } } = {}
+	for _, upgrade in list do
+		local floor = if upgrade.id:sub(1, 6) == "stage_"
+			then topFloor
+			else math.min(StudioLayout.upgradeFloor(upgrade), topFloor)
+		byFloor[floor] = byFloor[floor] or {}
+		table.insert(byFloor[floor], upgrade)
+	end
 	local playerButtons = {}
-	for i, upgrade in list do
-		local button = createButton(player, plot, upgrade, i, #list)
-		button.Parent = newFolder
-		playerButtons[button] = upgrade
+	for floor, floorList in byFloor do
+		for i, upgrade in floorList do
+			local button = createButton(player, plot, upgrade, i, #floorList, floor)
+			button.Parent = newFolder
+			playerButtons[button] = upgrade
+		end
 	end
 	newFolder.Parent = plot
 	buttons[player] = playerButtons
@@ -487,15 +521,11 @@ local function inChase(player: Player): boolean
 	return false
 end
 
--- Перенести персонажа к воротам своего гаража (появление, Rebirth, кнопка 🏠)
-local function sendHome(player: Player)
-	if inChase(player) then
-		return
-	end
-	local plot = getPlot(player)
+-- Поставить персонажа в точку cframe (мировые координаты)
+local function teleport(player: Player, cframe: CFrame)
 	local character = player.Character
 	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-	if not plot or not character or not humanoid or humanoid.Health <= 0 then
+	if not character or not humanoid or humanoid.Health <= 0 then
 		return
 	end
 	-- Сидящего сначала поднимаем: иначе SeatWeld тянет персонажа обратно к стулу
@@ -507,9 +537,48 @@ local function sendHome(player: Player)
 			weld:Destroy()
 		end
 	end
+	character:PivotTo(cframe)
+end
+
+-- Перенести персонажа к воротам своего гаража (появление, Rebirth, кнопка 🏠) — 1-й этаж
+local function sendHome(player: Player)
+	if inChase(player) then
+		return
+	end
+	local plot = getPlot(player)
+	if not plot then
+		return
+	end
 	-- CFrame участка смотрит на −Z (внутрь), поэтому персонаж сразу стоит лицом к воротам
 	local offset = CFrame.new(0, plot.Size.Y / 2 + HOME_HEIGHT, plot.Size.Z / 2 + HOME_OUTSIDE)
-	character:PivotTo(plot.CFrame * offset)
+	teleport(player, plot.CFrame * offset)
+end
+
+-- Лифт: только свой участок, только открытый этаж, только стоя у пульта
+onLift = function(player: Player, prompt: ProximityPrompt, floor: number)
+	local plot = getPlot(player)
+	local profile = DataService.get(player)
+	if not plot or not profile or not prompt:IsDescendantOf(plot) or inChase(player) then
+		return
+	end
+	if floor < 1 or floor > StudioLayout.floorsUnlocked(profile.studioLevel) or profile.studioLevel < 2 then
+		return
+	end
+	local character = player.Character
+	local root = character and character:FindFirstChild("HumanoidRootPart") :: BasePart?
+	local panel = prompt.Parent
+	if not root or not panel or not panel:IsA("BasePart") then
+		return
+	end
+	if (root.Position - panel.Position).Magnitude > LIFT_DISTANCE then
+		return
+	end
+	local now = os.clock()
+	if (lastLift[player] or 0) + LIFT_COOLDOWN > now then
+		return
+	end
+	lastLift[player] = now
+	teleport(player, OfficeFloors.arrival(plot, floor))
 end
 
 -- Новый персонаж владельца гаража появляется у своего гаража, а не в парке
@@ -619,6 +688,7 @@ function PlotService.start()
 		buttons[player] = nil
 		lastTouch[player] = nil
 		lastHome[player] = nil
+		lastLift[player] = nil
 		local index = table.find(waiting, player)
 		if index then
 			table.remove(waiting, index)

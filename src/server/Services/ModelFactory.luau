@@ -640,7 +640,11 @@ builders.Garage = function(m)
 	cylinder(m, 0.02, 4, Vector3.new(8, 0.11, 10), rgb(60, 60, 60), { collide = false })
 end
 
--- Этап 2: офис — светлый паркет, белые стены с окнами, растения, кулер
+-- Этажи офиса стоят друг на друге (Config/Stages.floorY, шаг 14): стены не выше 13,
+-- крыша только у 3-го этажа (docs/VISUAL.md, V7). Слева у входа (−20, 24) — место лифта 6×6.
+local OFFICE_WALL = 13
+
+-- Этап 2: офис (1-й этаж) — светлый паркет, белые стены с окнами, растения, кулер
 builders.Office = function(m)
 	shell(
 		m,
@@ -648,7 +652,7 @@ builders.Office = function(m)
 		Enum.Material.WoodPlanks,
 		rgb(240, 240, 235),
 		Enum.Material.SmoothPlastic,
-		12
+		OFFICE_WALL
 	)
 	sideWindows(m, -29.2, 6, 5)
 	sideWindows(m, 29.2, 6, 5)
@@ -659,7 +663,7 @@ builders.Office = function(m)
 	})
 	-- Потолочные светильники
 	for _, x in { -14, 0, 14 } do
-		local lamp = part(m, Vector3.new(8, 0.2, 1.2), Vector3.new(x, 11.8, -10), rgb(255, 255, 245), {
+		local lamp = part(m, Vector3.new(8, 0.2, 1.2), Vector3.new(x, 12.8, -10), rgb(255, 255, 245), {
 			material = Enum.Material.Neon,
 		})
 		light(lamp, rgb(255, 250, 235), 24, 1)
@@ -670,9 +674,16 @@ builders.Office = function(m)
 	-- Кулер теперь отдельный апгрейд интерьера офиса (Cooler)
 end
 
--- Этап 3: этаж бизнес-центра — синий ковролин, стеклянные стены, переговорка, диван
+-- Этап 3: 2-й этаж — синий ковролин, стеклянные стены, переговорка, диван
 builders.Floor = function(m)
-	shell(m, rgb(55, 75, 120), Enum.Material.Fabric, rgb(210, 220, 235), Enum.Material.SmoothPlastic, 14)
+	shell(
+		m,
+		rgb(55, 75, 120),
+		Enum.Material.Fabric,
+		rgb(210, 220, 235),
+		Enum.Material.SmoothPlastic,
+		OFFICE_WALL
+	)
 	sideWindows(m, -29.2, 7, 7)
 	sideWindows(m, 29.2, 7, 7)
 	-- Переговорка: стол и стулья слева спереди
@@ -707,48 +718,39 @@ builders.Floor = function(m)
 	)
 	plant(m, Vector3.new(26, 0, 8))
 	for _, x in { -14, 0, 14 } do
-		local lamp = part(m, Vector3.new(10, 0.2, 1.2), Vector3.new(x, 13.8, -8), rgb(235, 245, 255), {
+		local lamp = part(m, Vector3.new(10, 0.2, 1.2), Vector3.new(x, 12.8, -8), rgb(235, 245, 255), {
 			material = Enum.Material.Neon,
 		})
 		light(lamp, rgb(230, 240, 255), 26, 1)
 	end
 end
 
--- Этап 4: небоскрёб — тёмный глянцевый пол, панорамное окно с городом, неон, зал славы
+-- Этап 4: 3-й этаж (модель Skyscraper — имя ради старых плейсов) — тёмный глянцевый пол,
+-- панорамное окно, неон, зал славы и крыша над всем зданием
 builders.Skyscraper = function(m)
 	part(m, Vector3.new(58, 0.1, 58), Vector3.new(0, 0.05, 0), rgb(25, 25, 32), {
 		material = Enum.Material.Marble,
 		reflectance = 0.15,
 	})
 	local wall = rgb(35, 35, 48)
-	part(m, Vector3.new(1, 16, 58), Vector3.new(-29.5, 8, 0), wall)
-	part(m, Vector3.new(1, 16, 58), Vector3.new(29.5, 8, 0), wall)
-	wallWithDoor(m, 29.5, 16, 24, wall)
-	-- Задняя стена — панорамное стекло, за ним силуэты города с огнями окон
-	part(m, Vector3.new(60, 16, 0.4), Vector3.new(0, 8, -29.5), rgb(120, 160, 220), {
+	part(m, Vector3.new(1, OFFICE_WALL, 58), Vector3.new(-29.5, OFFICE_WALL / 2, 0), wall)
+	part(m, Vector3.new(1, OFFICE_WALL, 58), Vector3.new(29.5, OFFICE_WALL / 2, 0), wall)
+	wallWithDoor(m, 29.5, OFFICE_WALL, 24, wall)
+	-- Задняя стена — панорамное стекло (силуэты города убраны: этаж теперь на высоте 28)
+	part(m, Vector3.new(60, OFFICE_WALL, 0.4), Vector3.new(0, OFFICE_WALL / 2, -29.5), rgb(120, 160, 220), {
 		material = Enum.Material.Glass,
 		transparency = 0.6,
 	})
-	local rng = Random.new(42)
-	for x = -26, 26, 6 do
-		local h = rng:NextNumber(10, 26)
-		local building = part(m, Vector3.new(5, h, 5), Vector3.new(x, h / 2 - 4, -38), rgb(20, 22, 35))
-		building.CanCollide = false
-		for wy = 2, h - 2, 3 do
-			if rng:NextNumber() > 0.4 then
-				part(m, Vector3.new(3.6, 0.6, 0.1), Vector3.new(x, wy - 4, -35.45), rgb(255, 220, 120), {
-					material = Enum.Material.Neon,
-					collide = false,
-				})
-			end
-		end
-	end
+	-- Крыша всего здания: поверх стен, в пределах высоты этажа
+	part(m, Vector3.new(60, 1, 60), Vector3.new(0, OFFICE_WALL + 0.5, 0), rgb(70, 72, 80), {
+		material = Enum.Material.Concrete,
+	})
 	-- Неоновые полосы вдоль стен
 	for _, x in { -28.9, 28.9 } do
 		part(
 			m,
 			Vector3.new(0.2, 0.3, 56),
-			Vector3.new(x, 14, 0),
+			Vector3.new(x, 12, 0),
 			rgb(0, 220, 255),
 			{ material = Enum.Material.Neon }
 		)

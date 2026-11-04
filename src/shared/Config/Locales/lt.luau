@@ -287,6 +287,12 @@ return {
 	stage_office = "Biuras",
 	stage_floor = "Biuras: 2 aukštas",
 	stage_skyscraper = "Biuras: 3 aukštas",
+	-- Этажи офиса
+	floor_name_1 = "1 aukštas",
+	floor_name_2 = "2 aukštas",
+	floor_name_3 = "3 aukštas",
+	floor_lift = "Liftas",
+	floor_sign = "🔒 {floor} užrakintas\n{price} · reikia žaidimų: {games}",
 	upgrade_desk1 = "Senas stalas",
 	upgrade_pc1 = "Kompiuteris iš sendaikčių turgaus",
 	upgrade_walls = "Garažo sienos ir šviesa",
