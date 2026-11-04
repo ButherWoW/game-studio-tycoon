@@ -109,15 +109,12 @@ function GiftService.grantProduct(buyer: Player, buyerProfile: DataService.Profi
 		delivered[purchaseId] = true
 		-- Подарок в профиле получателя: сохраняем сразу, не ждём автосейва
 		task.spawn(DataService.save, target)
-		notice(
-			target,
-			{
-				kind = "giftReceived",
-				name = buyer.DisplayName,
-				itemKind = item.itemKind,
-				itemId = item.itemId,
-			}
-		)
+		notice(target, {
+			kind = "giftReceived",
+			name = buyer.DisplayName,
+			itemKind = item.itemKind,
+			itemId = item.itemId,
+		})
 		notice(
 			buyer,
 			{ kind = "giftSent", name = target.DisplayName, itemKind = item.itemKind, itemId = item.itemId }
