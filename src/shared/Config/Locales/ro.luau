@@ -595,4 +595,8 @@ return {
 	camera_view_on_touch = "🎥 Vedere studio · ciupește pentru zoom",
 	camera_auto_on = "Vedere auto la PC: pornită",
 	camera_auto_off = "Vedere auto la PC: oprită",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Nu ai bani de salarii și chirie — echipa e în grevă",
+	team_salary = "salariu {amount}/min",
+	team_rent = "chirie {amount}/min",
 }

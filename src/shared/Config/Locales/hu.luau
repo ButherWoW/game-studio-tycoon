@@ -595,4 +595,8 @@ return {
 	camera_view_on_touch = "🎥 Stúdiónézet · csippents a zoomhoz",
 	camera_auto_on = "Auto nézet a gépnél: be",
 	camera_auto_off = "Auto nézet a gépnél: ki",
+	hud_expenses = "💸 −{amount}/perc",
+	hud_strike = "⚠️ Nincs pénz a fizetésekre és a bérleti díjra — a csapat sztrájkol",
+	team_salary = "fizetés {amount}/perc",
+	team_rent = "bérleti díj {amount}/perc",
 }

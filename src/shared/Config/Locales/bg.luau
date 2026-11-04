@@ -594,4 +594,8 @@ return {
 	camera_view_on_touch = "🎥 Изглед към студиото · щипване — зуум",
 	camera_auto_on = "Авто-изглед на компютъра: вкл.",
 	camera_auto_off = "Авто-изглед на компютъра: изкл.",
+	hud_expenses = "💸 −{amount}/мин",
+	hud_strike = "⚠️ Няма пари за заплати и наем — екипът стачкува",
+	team_salary = "заплата {amount}/мин",
+	team_rent = "наем {amount}/мин",
 }

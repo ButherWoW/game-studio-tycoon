@@ -12,6 +12,7 @@ local Skills = require(ReplicatedStorage.Shared.Config.Skills)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Expenses = require(ReplicatedStorage.Shared.Config.Expenses)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
@@ -116,6 +117,10 @@ local function buildStagePanel(parent: Instance, data: any, order: number)
 	if nextStage.cost > 0 then
 		table.insert(parts, ClientState.t("team_req_money", { price = Texts.money(nextStage.cost) }))
 		ready = ready and data.cash >= nextStage.cost
+	end
+	local rent = Expenses.rentFor(nextStage.level)
+	if rent > 0 then
+		table.insert(parts, ClientState.t("team_rent", { amount = Texts.money(rent) }))
 	end
 	local line = ClientState.t("team_next", { stage = ClientState.localName(nextStage) })
 	local nextLabel = Ui.label(panel, line .. "\n" .. table.concat(parts, " · "), 44, nil, Ui.colors.muted)
@@ -404,6 +409,13 @@ local function buildRow(
 	local role = ClientState.localText("employee_" .. employee.id .. "_role", employee.role, employee.roleEn)
 	local details =
 		ClientState.t("team_multiplier", { mult = employee.multiplier, spec = specName(employee) })
+	-- Зарплата: у нанятого — с учётом вкачанных навыков, у кандидата — стартовая
+	local employeeSkills = info[employee.id] and info[employee.id].skills
+	details ..= " · " .. ClientState.t("team_salary", {
+		amount = Texts.money(
+			Expenses.salary(employee, if type(employeeSkills) == "table" then employeeSkills else nil)
+		),
+	})
 	local deskId = staff[employee.id]
 	if deskId == "" then
 		details ..= " · " .. ClientState.t("team_waiting")

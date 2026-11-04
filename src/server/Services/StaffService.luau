@@ -21,6 +21,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Employees = require(ReplicatedStorage.Shared.Config.Employees)
 local Skills = require(ReplicatedStorage.Shared.Config.Skills)
+local Expenses = require(ReplicatedStorage.Shared.Config.Expenses)
 local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local DataService = require(script.Parent.DataService)
@@ -308,6 +309,28 @@ local function seated(profile: DataService.Profile): { [string]: string }
 	return result
 end
 
+-- Кто сейчас работает: за столами и не бастует (ExpensesService ставит staffStrike, когда нечем платить)
+local function working(profile: DataService.Profile): { [string]: string }
+	if (profile :: any).staffStrike == true then
+		return {}
+	end
+	return seated(profile)
+end
+
+-- Зарплаты всех нанятых в минуту (Config/Expenses): платим и тем, кто ждёт стол
+function StaffService.salaryPerMinute(profile: DataService.Profile): number
+	local info = getInfo(profile)
+	local total = 0
+	for employeeId in getStaff(profile) do
+		local employee = Employees.get(employeeId)
+		if employee then
+			local employeeInfo = info[employeeId]
+			total += Expenses.salary(employee, if employeeInfo then employeeInfo.skills else nil)
+		end
+	end
+	return total
+end
+
 -- deskUpgradeId -> сотрудник за этим столом (для DevelopmentService)
 function StaffService.employeesByDesk(player: Player): { [string]: Employees.Employee }
 	local result = {}
@@ -315,7 +338,7 @@ function StaffService.employeesByDesk(player: Player): { [string]: Employees.Emp
 	if not profile then
 		return result
 	end
-	for employeeId, deskId in seated(profile) do
+	for employeeId, deskId in working(profile) do
 		local employee = Employees.get(employeeId)
 		if employee then
 			result[deskId] = employee
@@ -336,7 +359,7 @@ function StaffService.deskMultipliers(player: Player, deskId: string): { [string
 	local info = getInfo(profile)
 	local mentor = 0
 	local atDesk: string? = nil
-	for employeeId, seatId in seated(profile) do
+	for employeeId, seatId in working(profile) do
 		local employeeInfo = info[employeeId]
 		if seatId == deskId then
 			atDesk = employeeId
@@ -366,7 +389,7 @@ function StaffService.perkTotals(player: Player): PerkTotals
 		return totals
 	end
 	local info = getInfo(profile)
-	for employeeId in seated(profile) do
+	for employeeId in working(profile) do
 		local employeeInfo = info[employeeId]
 		if employeeInfo then
 			for _, perkId in employeeInfo.perks do
@@ -397,7 +420,7 @@ function StaffService.reviewBonus(player: Player): number
 	local info = getInfo(profile)
 	local total = 0
 	local perkBonus = 0
-	for employeeId in seated(profile) do
+	for employeeId in working(profile) do
 		local employee = Employees.get(employeeId)
 		total += if employee then employee.reviewBonus or 0 else 0
 		local employeeInfo = info[employeeId]

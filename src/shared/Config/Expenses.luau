@@ -1,0 +1,41 @@
+--!strict
+-- Расходы студии: зарплаты команды и аренда помещения (ExpensesService списывает каждые tickSeconds).
+-- Чем сильнее сотрудник (multiplier) и чем выше прокачаны навыки — тем дороже он стоит в минуту.
+-- Денег не хватает — команда бастует (без бонусов сотрудников), долг не копится.
+
+local Employees = require(script.Parent.Employees)
+local Skills = require(script.Parent.Skills)
+
+local Expenses = {}
+
+-- Как часто списывать (деньги считаются в $/мин, списываются долями)
+Expenses.tickSeconds = 10
+-- Зарплата в минуту = salaryBase × multiplier² (Мила ×1.5 — $45, Вера ×3 — $180, РОБО ×4 — $480)
+Expenses.salaryBase = 20
+-- +10% к зарплате за каждый уровень навыка, вкачанный сверх стартового
+Expenses.salaryPerSkill = 0.1
+-- Легендарные дороже обычных с тем же множителем
+Expenses.legendaryFactor = 1.5
+-- Аренда в минуту по этапу студии: гараж свой, офис, этаж в бизнес-центре, небоскрёб
+Expenses.rent = { 0, 150, 600, 2_000 }
+
+function Expenses.salary(employee: Employees.Employee, skills: { [string]: number }?): number
+	local start = Skills.start(employee.specialization, employee.legendary)
+	local extra = 0
+	if skills then
+		for _, key in Skills.keys do
+			extra += math.max((tonumber(skills[key]) or 0) - (start[key] or 0), 0)
+		end
+	end
+	local pay = Expenses.salaryBase * employee.multiplier ^ 2 * (1 + Expenses.salaryPerSkill * extra)
+	if employee.legendary then
+		pay *= Expenses.legendaryFactor
+	end
+	return math.floor(pay)
+end
+
+function Expenses.rentFor(studioLevel: number): number
+	return Expenses.rent[math.clamp(studioLevel, 1, #Expenses.rent)] or 0
+end
+
+return Expenses

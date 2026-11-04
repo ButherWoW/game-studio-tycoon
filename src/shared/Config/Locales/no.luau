@@ -594,4 +594,8 @@ return {
 	camera_view_on_touch = "🎥 Studiovisning · knip for å zoome",
 	camera_auto_on = "Autovisning ved PC: på",
 	camera_auto_off = "Autovisning ved PC: av",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Ingen penger til lønn og husleie — teamet streiker",
+	team_salary = "lønn {amount}/min",
+	team_rent = "husleie {amount}/min",
 }

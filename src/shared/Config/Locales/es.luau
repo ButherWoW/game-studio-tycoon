@@ -595,4 +595,8 @@ return {
 	camera_view_on_touch = "🎥 Vista del estudio · pellizca para zoom",
 	camera_auto_on = "Vista auto en el PC: sí",
 	camera_auto_off = "Vista auto en el PC: no",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ No hay dinero para sueldos y alquiler: tu equipo está en huelga",
+	team_salary = "sueldo {amount}/min",
+	team_rent = "alquiler {amount}/min",
 }

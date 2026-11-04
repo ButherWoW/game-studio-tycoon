@@ -173,12 +173,26 @@ function HudController.start()
 				{ amount = Texts.money(DevState.royaltyPerMinute) }
 			)
 		end
+		-- Расходы студии (ExpensesService): зарплаты + аренда, и забастовка, если нечем платить
+		local player = Players.LocalPlayer
+		local expenses = tonumber(player:GetAttribute("ExpensesPerMinute")) or 0
+		if expenses > 0 then
+			line ..= "  ·  " .. ClientState.t("hud_expenses", { amount = Texts.money(expenses) })
+		end
+		local strike = player:GetAttribute("StaffStrike") == true
+		if strike then
+			-- Плашка одна (ниже строки прогресса): пока бастуют — показываем только это
+			line = ClientState.t("hud_strike")
+		end
 		info.Text = line
+		info.TextColor3 = if strike then Ui.colors.bad else Ui.colors.text
 		-- «Создать игру» доступна, пока есть свободный слот
 		create.Visible = DevState.hasFreeSlot()
 	end
 
 	ClientState.changed:Connect(refresh)
+	Players.LocalPlayer:GetAttributeChangedSignal("ExpensesPerMinute"):Connect(refresh)
+	Players.LocalPlayer:GetAttributeChangedSignal("StaffStrike"):Connect(refresh)
 	DevState.changed:Connect(function()
 		-- Проекты, которых больше нет, забываем
 		local alive: { [number]: boolean } = {}

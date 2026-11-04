@@ -594,4 +594,8 @@ return {
 	camera_view_on_touch = "🎥 Studijos vaizdas · suimk pirštais — mastelis",
 	camera_auto_on = "Auto vaizdas prie PC: įj.",
 	camera_auto_off = "Auto vaizdas prie PC: išj.",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Nėra pinigų algoms ir nuomai — komanda streikuoja",
+	team_salary = "alga {amount}/min",
+	team_rent = "nuoma {amount}/min",
 }

@@ -594,4 +594,8 @@ return {
 	camera_view_on_touch = "🎥 工作室视角 · 双指缩放",
 	camera_auto_on = "坐到电脑前自动切换视角：开",
 	camera_auto_off = "坐到电脑前自动切换视角：关",
+	hud_expenses = "💸 −{amount}/分钟",
+	hud_strike = "⚠️ 付不起工资和房租——团队罢工了",
+	team_salary = "工资 {amount}/分钟",
+	team_rent = "房租 {amount}/分钟",
 }

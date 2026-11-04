@@ -594,4 +594,8 @@ return {
 	camera_view_on_touch = "🎥 Tampilan studio · cubit untuk zoom",
 	camera_auto_on = "Tampilan otomatis di PC: aktif",
 	camera_auto_off = "Tampilan otomatis di PC: mati",
+	hud_expenses = "💸 −{amount}/mnt",
+	hud_strike = "⚠️ Tak ada uang untuk gaji dan sewa — tim mogok kerja",
+	team_salary = "gaji {amount}/mnt",
+	team_rent = "sewa {amount}/mnt",
 }

@@ -492,6 +492,8 @@ local function classifySpend(player: Player, amount: number, module: string?, be
 	local kind, sku = sinks.other, module or "unknown"
 	if module == "HitService" then
 		kind, sku = sinks.penalty, "caught"
+	elseif module == "ExpensesService" then
+		kind, sku = sinks.staff, "expenses"
 	elseif p.ownsGarage == true and not before.ownsGarage then
 		kind, sku = sinks.move, "garage"
 	elseif profile.studioLevel > before.studioLevel then

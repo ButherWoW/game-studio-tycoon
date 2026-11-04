@@ -594,4 +594,8 @@ return {
 	camera_view_on_touch = "🎥 Studijas skats · saspied — tālummaiņa",
 	camera_auto_on = "Autoskats pie datora: ieslēgts",
 	camera_auto_off = "Autoskats pie datora: izslēgts",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Nav naudas algām un īrei — komanda streiko",
+	team_salary = "alga {amount}/min",
+	team_rent = "īre {amount}/min",
 }

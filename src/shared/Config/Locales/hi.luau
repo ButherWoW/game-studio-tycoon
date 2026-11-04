@@ -594,4 +594,8 @@ return {
 	camera_view_on_touch = "🎥 स्टूडियो व्यू · ज़ूम के लिए पिंच करो",
 	camera_auto_on = "PC पर ऑटो व्यू: चालू",
 	camera_auto_off = "PC पर ऑटो व्यू: बंद",
+	hud_expenses = "💸 −{amount}/मिनट",
+	hud_strike = "⚠️ वेतन और किराए के पैसे नहीं — टीम हड़ताल पर है",
+	team_salary = "वेतन {amount}/मिनट",
+	team_rent = "किराया {amount}/मिनट",
 }

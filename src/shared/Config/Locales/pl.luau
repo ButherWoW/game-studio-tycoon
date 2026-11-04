@@ -595,4 +595,8 @@ return {
 	camera_view_on_touch = "🎥 Widok studia · uszczypnij — zoom",
 	camera_auto_on = "Auto-widok przy PC: wł.",
 	camera_auto_off = "Auto-widok przy PC: wył.",
+	hud_expenses = "💸 −{amount}/min",
+	hud_strike = "⚠️ Brak pieniędzy na pensje i czynsz — zespół strajkuje",
+	team_salary = "pensja {amount}/min",
+	team_rent = "czynsz {amount}/min",
 }
