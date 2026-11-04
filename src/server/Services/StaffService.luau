@@ -13,6 +13,9 @@
 --   reviewBonus(player)              — прибавка к оценке: «Мастер Пиксель» +1 и «Перфекционист»
 --   perkTotals(player)               — остальные эффекты перков (время, баг, стример, тренд)
 --   offlineMultiplier(profile)       — офлайн-доход: «Призрачный кодер» ×2, «Ночная смена»
+--   hired(profile)                   — нанятые: employeeId -> стол (SkinService)
+--   refreshNpcs(player)              — пересобрать NPC (SkinService: сменили скин)
+-- Скины (SkinService, необязательный): decorate наряжает NPC при сборке, forget — при увольнении.
 --
 -- Увольнение (FireEmployee): сотрудник уходит вместе с навыками и перками, возвращается
 -- Employees.refundFor (доля fireRefund от цены найма; легендарные бесплатные — 0,
@@ -464,6 +467,11 @@ function StaffService.offlineMultiplier(profile: DataService.Profile): number
 	return multiplier * (1 + math.min(bonus, Skills.caps.offlineBonus))
 end
 
+-- Нанятые (employeeId -> стол, "" — ждёт стол); мусор из сохранения чинится как обычно
+function StaffService.hired(profile: DataService.Profile): { [string]: string }
+	return getStaff(profile)
+end
+
 local function sendStaff(player: Player)
 	local profile = DataService.get(player)
 	if not profile then
@@ -756,6 +764,7 @@ rebuildNpcs = function(player: Player)
 	folder.Name = "Staff"
 
 	local info = getInfo(profile)
+	local skins = optionalService("SkinService")
 	local byDesk: { [string]: string } = {}
 	for employeeId, deskId in seated(profile) do
 		byDesk[deskId] = employeeId
@@ -766,7 +775,17 @@ rebuildNpcs = function(player: Player)
 		local employee = employeeId and Employees.get(employeeId)
 		if employeeId and employee then
 			local look = if info[employeeId] then info[employeeId].look else defaultInfo(employee).look
-			local npc = buildNpc(employee, look)
+			-- В скине головной убор из «Внешности» не надеваем: у скина свои аксессуары
+			local skinned = skins ~= nil and skins.skinOf(profile, employeeId) ~= nil
+			local npcLook = look
+			if skinned then
+				npcLook = table.clone(look)
+				npcLook.hat = 1 -- "none"
+			end
+			local npc = buildNpc(employee, npcLook)
+			if npc and skinned then
+				skins.decorate(npc, employeeId, profile)
+			end
 			if npc then
 				seatNpc(npc, plot, upgrade, used)
 				local item = Skills.items[look.item] or "none"
@@ -793,6 +812,11 @@ rebuildNpcs = function(player: Player)
 	end
 	folder.Parent = plot
 	npcFolders[player] = folder
+end
+
+-- Пересобрать NPC (SkinService: сменили скин сотрудника)
+function StaffService.refreshNpcs(player: Player)
+	task.spawn(refreshNpcs, player)
 end
 
 -- Рассадка поменялась (переезд, новый стол, найм): переслать, пересобрать NPC и кнопки
@@ -897,6 +921,10 @@ local function onFire(player: Player, employeeId: any)
 	staff[employee.id] = nil
 	-- getInfo чистит staffInfo уволенных: при повторном найме навыки начнутся с нуля
 	getInfo(profile)
+	local skins = optionalService("SkinService")
+	if skins then
+		skins.forget(player, profile, employee.id)
+	end
 	local refund = Employees.refundFor(employee)
 	if refund > 0 then
 		DataService.addCash(player, refund)

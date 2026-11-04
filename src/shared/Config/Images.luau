@@ -48,4 +48,24 @@ Images.medals = {
 	gold = 70516815676378, -- medal_gold.png
 } :: { [string]: number }
 
+-- Скины сотрудников (docs/VISUAL.md, V12; Config/Skins). 0 — картинки ещё нет: NPC красится
+-- запасными цветами скина, в магазине — цветная карточка с эмодзи.
+-- Dev 1: из docs/visual/astra-2026-11-05-skins/batch-1..3/V12 загрузить skin_<id>_shirt.png и
+-- skin_<id>_pants.png (шаблоны 585×559) и skin_<id>_preview.png (512×512) как Images и вставить
+-- Image ID (не Decal ID!) в shirt / pants / preview напротив id скина
+Images.skins = {
+	hoodie_coder = { shirt = 0, pants = 0, preview = 0 },
+	pixel_artist = { shirt = 0, pants = 0, preview = 0 },
+	sound_nerd = { shirt = 0, pants = 0, preview = 0 },
+	writer = { shirt = 0, pants = 0, preview = 0 },
+	intern = { shirt = 0, pants = 0, preview = 0 },
+	bug_hunter = { shirt = 0, pants = 0, preview = 0 },
+	speedrunner = { shirt = 0, pants = 0, preview = 0 },
+	retro_gamer = { shirt = 0, pants = 0, preview = 0 },
+	neon_streamer = { shirt = 0, pants = 0, preview = 0 }, -- премиум
+	cyber_dev = { shirt = 0, pants = 0, preview = 0 }, -- премиум
+	space_dev = { shirt = 0, pants = 0, preview = 0 }, -- премиум
+	wizard_dev = { shirt = 0, pants = 0, preview = 0 }, -- премиум
+} :: { [string]: { shirt: number, pants: number, preview: number } }
+
 return Images
