@@ -298,10 +298,9 @@ function HitController.start()
 	layout.VerticalAlignment = Enum.VerticalAlignment.Bottom
 	toastFrame.Parent = gui
 
-	-- Тревога — под плашкой выставки (ExpoBanner, y = 180)
-	alarmLabel = Ui.label(gui, "", 40, Ui.titleFontFor(ClientState.lang))
-	alarmLabel.AnchorPoint = Vector2.new(0.5, 0)
-	alarmLabel.Position = UDim2.new(0.5, 0, 0, 290)
+	-- Тревога — в общем стеке плашек под выставкой и её итогами (Ui.bannerStack)
+	alarmLabel = Ui.label(Ui.bannerStack(), "", 40, Ui.titleFontFor(ClientState.lang))
+	alarmLabel.LayoutOrder = 4
 	alarmLabel.Size = UDim2.fromOffset(560, 40)
 	alarmLabel.TextXAlignment = Enum.TextXAlignment.Center
 	alarmLabel.BackgroundTransparency = 0.1

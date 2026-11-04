@@ -2,7 +2,6 @@
 -- Плашка «🔥 В тренде: Хоррор + Призраки, ещё 7:12» под HUD (шаг 4.3).
 -- Тренд выбирает сервер (TrendService) и кладёт в атрибуты ReplicatedStorage.
 
-local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Genres = require(ReplicatedStorage.Shared.Config.Genres)
@@ -10,7 +9,6 @@ local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
-local BANNER_Y = 140 -- HUD занимает y 12..132 (3 плашки по 40 px)
 local BANNER_HEIGHT = 32
 
 local TrendBanner = {}
@@ -21,16 +19,12 @@ local function formatTime(seconds: number): string
 end
 
 function TrendBanner.start()
-	local gui = Instance.new("ScreenGui")
-	gui.Name = "TrendBanner"
-	gui.ResetOnSpawn = false
-	gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
-
-	local banner = Ui.label(gui, "", BANNER_HEIGHT, Ui.titleFont, Color3.fromRGB(255, 160, 70))
+	-- Первая плашка общего стека под HUD (Ui.bannerStack), под ней выставка
+	local banner = Ui.label(Ui.bannerStack(), "", BANNER_HEIGHT, Ui.titleFont, Color3.fromRGB(255, 160, 70))
+	banner.Name = "TrendBanner"
+	banner.LayoutOrder = 1
 	banner.TextXAlignment = Enum.TextXAlignment.Center
-	banner.AnchorPoint = Vector2.new(0.5, 0)
 	banner.Size = UDim2.fromOffset(380, BANNER_HEIGHT)
-	banner.Position = UDim2.new(0.5, 0, 0, BANNER_Y)
 	banner.BackgroundTransparency = 0.25
 	banner.BackgroundColor3 = Ui.colors.panel
 	banner.Visible = false

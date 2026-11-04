@@ -13,7 +13,6 @@ local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local QuestWindow = require(script.Parent.QuestWindow)
 
-local BANNER_Y = 222 -- под плашкой выставки (ExpoBanner, y = 180, высота 34)
 local BANNER_HEIGHT = 32
 local MENU_SLOT = 9
 local TILE_COLUMNS = 7
@@ -334,11 +333,16 @@ function HolidayController.start()
 	screen.ResetOnSpawn = false
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 
-	local banner =
-		Ui.label(screen, "", BANNER_HEIGHT, Ui.titleFontFor(ClientState.lang), Color3.fromRGB(255, 170, 60))
+	local banner = Ui.label(
+		Ui.bannerStack(),
+		"",
+		BANNER_HEIGHT,
+		Ui.titleFontFor(ClientState.lang),
+		Color3.fromRGB(255, 170, 60)
+	)
 	banner.TextXAlignment = Enum.TextXAlignment.Center
-	banner.AnchorPoint = Vector2.new(0.5, 0)
-	banner.Position = UDim2.new(0.5, 0, 0, BANNER_Y)
+	-- В общем стеке плашек под HUD (Ui.bannerStack): тренд 1, выставка 2, итоги 3, праздник 4
+	banner.LayoutOrder = 4
 	banner.Size = UDim2.fromOffset(520, BANNER_HEIGHT)
 	banner.BackgroundTransparency = 0.25
 	banner.BackgroundColor3 = Ui.colors.panel
