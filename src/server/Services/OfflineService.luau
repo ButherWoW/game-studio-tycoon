@@ -42,12 +42,14 @@ function OfflineService.earnings(profile: DataService.Profile, seconds: number):
 		then (require(staff) :: any).offlineMultiplier(profile)
 		else 1
 	local gross = capped / 60 * perMinute * Offline.rate * team
-	-- Зарплаты и аренда (ExpensesService) идут и офлайн — в той же доле rate
+	-- Зарплаты и аренда (ExpensesService) идут и офлайн — в доле rate × expenseShare
 	local expenses = script.Parent:FindFirstChild("ExpensesService")
 	local okCost, cost = pcall(function()
 		return if expenses then (require(expenses) :: any).perMinute(profile) else 0
 	end)
-	local spent = if okCost and type(cost) == "number" then capped / 60 * cost * Offline.rate else 0
+	local spent = if okCost and type(cost) == "number"
+		then capped / 60 * cost * Offline.rate * Offline.expenseShare
+		else 0
 	return math.max(math.floor(gross - spent), 0)
 end
 
@@ -65,7 +67,7 @@ local function onPlayerAdded(player: Player)
 	-- Считаем сразу после загрузки: автосейв перезапишет lastLogout текущим временем.
 	-- lastLogout обновляется и при автосейве, так что «уход» точен до 60 с.
 	local away = os.time() - (tonumber(data.lastLogout) or os.time())
-	-- Несобранный доход не копится сверх одного максимального ухода (8 ч)
+	-- Несобранный доход не копится сверх одного максимального ухода (Offline.maxSeconds)
 	local pending = math.min(
 		(tonumber(data.offlinePending) or 0) + OfflineService.earnings(profile, away),
 		OfflineService.earnings(profile, Offline.maxSeconds)

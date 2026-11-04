@@ -208,7 +208,7 @@ return {
 	rebirth_close = "Tutup",
 	offline_title = "Selama kamu pergi",
 	offline_amount = "+{money}",
-	offline_hint = "Studiomu tetap bekerja dengan setengah penghasilan",
+	offline_hint = "Studiomu tetap bekerja, tapi dengan penghasilan lebih kecil",
 	offline_claim = "Ambil",
 	shop_title = "🛒 Toko",
 	shop_tab_ads = "Iklan",

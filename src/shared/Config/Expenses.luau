@@ -16,8 +16,10 @@ Expenses.salaryBase = 20
 Expenses.salaryPerSkill = 0.1
 -- Легендарные дороже обычных с тем же множителем
 Expenses.legendaryFactor = 1.5
--- Аренда в минуту по этапу студии: гараж свой, офис, этаж в бизнес-центре, небоскрёб
-Expenses.rent = { 0, 150, 600, 2_000 }
+-- Аренда в минуту по этапу студии: гараж свой, 1-й, 2-й, 3-й этаж офиса.
+-- Баланс после гаража (docs/BALANCE.md): расходы ~4% дохода в офисе, ~10% на 2-м этаже,
+-- ~18% на 3-м — заметны, но активный игрок всегда в плюсе (не хватит — забастовка, кредит)
+Expenses.rent = { 0, 500, 3_000, 8_000 }
 
 function Expenses.salary(employee: Employees.Employee, skills: { [string]: number }?): number
 	local start = Skills.start(employee.specialization, employee.legendary)

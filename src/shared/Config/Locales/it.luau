@@ -208,7 +208,7 @@ return {
 	rebirth_close = "Chiudi",
 	offline_title = "Mentre eri via",
 	offline_amount = "+{money}",
-	offline_hint = "Il tuo studio ha continuato a lavorare con metà dei guadagni",
+	offline_hint = "Il tuo studio ha continuato a lavorare, ma con meno guadagni",
 	offline_claim = "Riscuoti",
 	shop_title = "🛒 Negozio",
 	shop_tab_ads = "Pubblicità",

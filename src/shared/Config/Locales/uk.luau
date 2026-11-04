@@ -208,7 +208,7 @@ return {
 	rebirth_close = "Закрити",
 	offline_title = "Поки тебе не було",
 	offline_amount = "+{money}",
-	offline_hint = "Студія працювала без тебе за половину доходу",
+	offline_hint = "Студія працювала без тебе, але з меншим доходом",
 	offline_claim = "Забрати",
 	shop_title = "🛒 Магазин",
 	shop_tab_ads = "Реклама",

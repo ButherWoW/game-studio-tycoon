@@ -208,7 +208,7 @@ return {
 	rebirth_close = "Sluiten",
 	offline_title = "Terwijl je weg was",
 	offline_amount = "+{money}",
-	offline_hint = "Je studio werkte door met de helft van het inkomen",
+	offline_hint = "Je studio werkte door, maar met minder inkomen",
 	offline_claim = "Ophalen",
 	shop_title = "🛒 Winkel",
 	shop_tab_ads = "Reclame",

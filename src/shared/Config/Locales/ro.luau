@@ -208,7 +208,7 @@ return {
 	rebirth_close = "Închide",
 	offline_title = "Cât ai lipsit",
 	offline_amount = "+{money}",
-	offline_hint = "Studioul a lucrat fără tine, la jumătate de venit",
+	offline_hint = "Studioul a lucrat fără tine, dar cu venit mai mic",
 	offline_claim = "Ia banii",
 	shop_title = "🛒 Magazin",
 	shop_tab_ads = "Reclame",

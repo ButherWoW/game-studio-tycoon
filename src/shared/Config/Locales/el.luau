@@ -208,7 +208,7 @@ return {
 	rebirth_close = "Κλείσιμο",
 	offline_title = "Όσο έλειπες",
 	offline_amount = "+{money}",
-	offline_hint = "Το στούντιο δούλευε χωρίς εσένα με τα μισά έσοδα",
+	offline_hint = "Το στούντιο δούλευε χωρίς εσένα, αλλά με λιγότερα έσοδα",
 	offline_claim = "Πάρ' τα",
 	shop_title = "🛒 Κατάστημα",
 	shop_tab_ads = "Διαφημίσεις",

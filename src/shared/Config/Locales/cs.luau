@@ -208,7 +208,7 @@ return {
 	rebirth_close = "Zavřít",
 	offline_title = "Během tvé pauzy",
 	offline_amount = "+{money}",
-	offline_hint = "Studio pracovalo bez tebe za poloviční příjem",
+	offline_hint = "Studio pracovalo bez tebe, ale s nižším příjmem",
 	offline_claim = "Vyzvednout",
 	shop_title = "🛒 Obchod",
 	shop_tab_ads = "Reklama",

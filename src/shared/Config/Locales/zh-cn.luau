@@ -208,7 +208,7 @@ return {
 	rebirth_close = "关闭",
 	offline_title = "你不在的时候",
 	offline_amount = "+{money}",
-	offline_hint = "工作室在你离开时以一半收入继续运转",
+	offline_hint = "你离开时工作室仍在运转，但收入较低",
 	offline_claim = "领取",
 	shop_title = "🛒 商店",
 	shop_tab_ads = "广告",

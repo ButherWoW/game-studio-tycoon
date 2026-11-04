@@ -208,7 +208,7 @@ return {
 	rebirth_close = "Bezárás",
 	offline_title = "Amíg nem voltál itt",
 	offline_amount = "+{money}",
-	offline_hint = "A stúdió nélküled is dolgozott, fél bevétellel",
+	offline_hint = "A stúdió nélküled is dolgozott, de kisebb bevétellel",
 	offline_claim = "Begyűjtés",
 	shop_title = "🛒 Bolt",
 	shop_tab_ads = "Reklám",

@@ -208,7 +208,7 @@ return {
 	rebirth_close = "Sulje",
 	offline_title = "Kun olit poissa",
 	offline_amount = "+{money}",
-	offline_hint = "Studiosi jatkoi töitä puolilla tuloilla",
+	offline_hint = "Studiosi jatkoi töitä, mutta pienemmillä tuloilla",
 	offline_claim = "Lunasta",
 	shop_title = "🛒 Kauppa",
 	shop_tab_ads = "Mainokset",
