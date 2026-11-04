@@ -362,6 +362,11 @@ Texts.ru = {
 	park_seat_garage = "Ноутбуки в парке — для новичков. Иди в свою студию!",
 	error_name_bad = "Название с плохими словами — придумай другое",
 	move_celebrate = "🎉 Новая студия: {stage}!",
+	-- camera + mobile
+	camera_view_on = "🎥 Вид студии · колёсико — зум",
+	camera_view_on_touch = "🎥 Вид студии · щипок — зум",
+	camera_auto_on = "Авто-вид за ПК: вкл",
+	camera_auto_off = "Авто-вид за ПК: выкл",
 } :: { [string]: string }
 
 Texts.en = {
@@ -646,6 +651,11 @@ Texts.en = {
 	park_seat_garage = "Park laptops are for newcomers. Head to your studio!",
 	error_name_bad = "That title has bad words — try another one",
 	move_celebrate = "🎉 New studio: {stage}!",
+	-- camera + mobile
+	camera_view_on = "🎥 Studio view · scroll to zoom",
+	camera_view_on_touch = "🎥 Studio view · pinch to zoom",
+	camera_auto_on = "Auto view at PC: on",
+	camera_auto_off = "Auto view at PC: off",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть
