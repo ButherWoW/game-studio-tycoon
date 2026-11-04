@@ -426,7 +426,8 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 	end
 	-- Слот задаёт порядок сверху вниз: 1 исследования, 2 команда, 3 задания, 4 магазин, 5 rebirth,
 	-- 6 язык, 7 хиты, 8 воры, 9 праздничный ивент (видна только во время ивента), 10 вид студии,
-	-- 11 банк (с долгом), 12 домой (к своему участку)
+	-- 11 банк (с долгом), 12 домой (к своему участку), 13 студия (интерьер, декор, настроение),
+	-- 14 достижения
 	local b = Ui.button(menuColumn :: Frame, icon, Ui.colors.panel, onClick)
 	b.Name = "Slot" .. slot
 	b.LayoutOrder = slot

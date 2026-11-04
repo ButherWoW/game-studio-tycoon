@@ -167,6 +167,13 @@ local function show(info: any)
 	quickLine.LayoutOrder = 18
 	quickLine.Visible = false
 
+	-- Настроение команды (MoodService): ±0.2 к оценке; 0 — строки нет
+	local moodBonus = tonumber(info.moodBonus) or 0
+	local moodLine = Ui.label(body, "", 24, nil, Ui.colors.muted)
+	moodLine.TextXAlignment = Enum.TextXAlignment.Center
+	moodLine.LayoutOrder = 17
+	moodLine.Visible = false
+
 	local total = Ui.label(body, "", 44, Ui.titleFontFor(ClientState.lang))
 	total.TextXAlignment = Enum.TextXAlignment.Center
 	total.LayoutOrder = 20
@@ -248,6 +255,13 @@ local function show(info: any)
 				elseif quickBonus < 0 then Ui.colors.bad
 				else Ui.colors.muted
 			quickLine.Visible = true
+		end
+		if moodBonus ~= 0 then
+			local n = string.format("%.1f", math.abs(moodBonus)):gsub("%.0$", "")
+			moodLine.Text =
+				ClientState.t("mood_release_line", { n = (if moodBonus < 0 then "−" else "+") .. n })
+			moodLine.TextColor3 = if moodBonus > 0 then Ui.colors.good else Ui.colors.bad
+			moodLine.Visible = true
 		end
 		total.Text = ClientState.t("release_score", { score = info.score })
 		total.TextColor3 = Ui.scoreColor(info.score)

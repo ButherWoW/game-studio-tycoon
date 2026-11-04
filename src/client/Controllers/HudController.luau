@@ -8,6 +8,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local PaidRemotes = require(ReplicatedStorage.Shared.PaidRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local StudioState = require(script.Parent.Parent.StudioState)
 local ClientState = require(script.Parent.Parent.ClientState)
 local DevState = require(script.Parent.Parent.DevState)
 local Ui = require(script.Parent.Parent.Ui)
@@ -54,6 +55,13 @@ function HudController.start()
 	local cash = plate(gui, 12)
 	cash.TextColor3 = Ui.colors.money
 	local info = plate(gui, 52)
+	-- Настроение команды (MoodService, атрибут TeamMood): только когда есть сотрудники;
+	-- строки прогресса разработки тогда сдвигаются на строку ниже
+	local mood = plate(gui, FIRST_PROGRESS_Y)
+	mood.Visible = false
+	local function progressTop(): number
+		return FIRST_PROGRESS_Y + (if mood.Visible then ROW_HEIGHT else 0)
+	end
 
 	-- Прогресс по id проекта (из DevelopmentProgress)
 	local progressById: { [number]: Progress } = {}
@@ -64,7 +72,7 @@ function HudController.start()
 		if row then
 			return row
 		end
-		local y = FIRST_PROGRESS_Y + (index - 1) * ROW_HEIGHT
+		local y = progressTop() + (index - 1) * ROW_HEIGHT
 		local label = plate(gui, y)
 		label.Visible = false
 		local newRow: Row
@@ -100,6 +108,9 @@ function HudController.start()
 				shown = i
 			end
 			row.finish.Visible = false
+			local y = progressTop() + (i - 1) * ROW_HEIGHT
+			row.label.Position = UDim2.new(0.5, 0, 0, y)
+			row.finish.Position = UDim2.new(0.5, PLATE_WIDTH / 2 + 8, 0, y)
 			if project and progress then
 				row.label.Font = font
 				local text: string
@@ -121,7 +132,7 @@ function HudController.start()
 			end
 		end
 		-- Плашки тренда/выставки — сразу под последней видимой строкой HUD
-		Ui.setBannerTop(FIRST_PROGRESS_Y + shown * ROW_HEIGHT + 2)
+		Ui.setBannerTop(progressTop() + shown * ROW_HEIGHT + 2)
 	end
 
 	local create = Ui.button(gui, ClientState.t("hud_create"), Ui.colors.money, function()
@@ -200,6 +211,17 @@ function HudController.start()
 		end
 		info.Text = line
 		info.TextColor3 = if strike then Ui.colors.bad else Ui.colors.text
+		local moodValue = tonumber(player:GetAttribute("TeamMood"))
+		local moodShown = moodValue ~= nil
+		mood.Font = font
+		if moodValue then
+			mood.Text = ClientState.t("hud_mood", { value = moodValue })
+			mood.TextColor3 = StudioState.moodColor(moodValue)
+		end
+		if mood.Visible ~= moodShown then
+			mood.Visible = moodShown
+			renderProgress()
+		end
 		-- «Создать игру» доступна, пока есть свободный слот
 		create.Visible = DevState.hasFreeSlot()
 	end
@@ -208,6 +230,7 @@ function HudController.start()
 	Players.LocalPlayer:GetAttributeChangedSignal("ExpensesPerMinute"):Connect(refresh)
 	Players.LocalPlayer:GetAttributeChangedSignal("StaffStrike"):Connect(refresh)
 	Players.LocalPlayer:GetAttributeChangedSignal("LoanDebt"):Connect(refresh)
+	Players.LocalPlayer:GetAttributeChangedSignal("TeamMood"):Connect(refresh)
 	DevState.changed:Connect(function()
 		-- Проекты, которых больше нет, забываем
 		local alive: { [number]: boolean } = {}

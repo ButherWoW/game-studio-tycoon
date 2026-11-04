@@ -60,6 +60,7 @@ type SpendSnapshot = {
 	genres: { [string]: boolean },
 	topics: { [string]: boolean },
 	staff: { [string]: boolean },
+	decor: { [string]: boolean },
 	studioLevel: number,
 	ownsGarage: boolean,
 	ad: any,
@@ -474,6 +475,7 @@ local function snapshot(profile: Profile): SpendSnapshot
 		genres = keySet(profile.unlockedGenres),
 		topics = keySet(profile.unlockedTopics),
 		staff = keySet(p.staff),
+		decor = keySet(if type(p.decor) == "table" then p.decor.owned else nil),
 		studioLevel = profile.studioLevel,
 		ownsGarage = p.ownsGarage == true,
 		ad = ad,
@@ -494,6 +496,9 @@ local function classifySpend(player: Player, amount: number, module: string?, be
 		kind, sku = sinks.penalty, "caught"
 	elseif module == "ExpensesService" then
 		kind, sku = sinks.staff, "expenses"
+	elseif module == "DecorService" then
+		local decor = if type(p.decor) == "table" then p.decor.owned else nil
+		kind, sku = sinks.decor, newKey(before.decor, decor) or "decor"
 	elseif p.ownsGarage == true and not before.ownsGarage then
 		kind, sku = sinks.move, "garage"
 	elseif profile.studioLevel > before.studioLevel then

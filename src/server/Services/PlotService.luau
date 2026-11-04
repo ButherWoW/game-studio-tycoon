@@ -665,6 +665,73 @@ function PlotService.refreshButtons(player: Player)
 	refreshButtons(player)
 end
 
+-- Окно «Студия» (DecorService): некупленный интерьер открытых этажей и переезд с причиной замка.
+-- Покупка из окна — тот же BuyUpgrade -> tryBuy, что у кнопок на полу (те же проверки)
+export type Offer = {
+	id: string,
+	cost: number,
+	floor: number,
+	move: boolean?,
+	stage: number?, -- переезд на этап (кнопка stage_<id>)
+	lock: string?, -- ключ текста причины; nil — можно купить
+	lockVars: { [string]: any }?,
+}
+
+local function moveLock(profile: DataService.Profile): (string?, { [string]: any }?)
+	if not interiorComplete(profile) then
+		return "studio_lock_interior", nil
+	elseif not staffFull(profile) then
+		return "studio_lock_staff", nil
+	end
+	return nil, nil
+end
+
+function PlotService.studioOffers(player: Player): { Offer }
+	local result: { Offer } = {}
+	local profile = DataService.get(player)
+	if not profile or not getPlot(player) or not profileOwnsGarage(profile) then
+		return result
+	end
+	local topFloor = StudioLayout.floorsUnlocked(profile.studioLevel)
+	for _, upgrade in Upgrades do
+		if profile.upgrades[upgrade.id] or not isVisible(upgrade, profile) then
+			continue
+		end
+		local offer: Offer = {
+			id = upgrade.id,
+			cost = upgrade.cost,
+			floor = math.min(StudioLayout.upgradeFloor(upgrade), topFloor),
+			move = upgrade.move,
+		}
+		if upgrade.requires and not profile.upgrades[upgrade.requires] then
+			offer.lock, offer.lockVars = "studio_lock_requires", { id = upgrade.requires }
+		elseif upgrade.move then
+			offer.lock, offer.lockVars = moveLock(profile)
+		end
+		table.insert(result, offer)
+	end
+	local nextStage = Stages[profile.studioLevel + 1]
+	if nextStage and nextStage.cost > 0 then
+		local offer: Offer = {
+			id = "stage_" .. nextStage.id,
+			cost = nextStage.cost,
+			floor = topFloor,
+			move = true,
+			stage = nextStage.level,
+		}
+		if nextStage.requiresUpgrade and not profile.upgrades[nextStage.requiresUpgrade] then
+			offer.lock, offer.lockVars = "studio_lock_requires", { id = nextStage.requiresUpgrade }
+		elseif profile.gamesReleased < nextStage.gamesRequired then
+			offer.lock, offer.lockVars =
+				"studio_lock_games", { have = profile.gamesReleased, need = nextStage.gamesRequired }
+		else
+			offer.lock, offer.lockVars = moveLock(profile)
+		end
+		table.insert(result, offer)
+	end
+	return result
+end
+
 local function onBuyUpgrade(player: Player, upgradeId: any)
 	if type(upgradeId) ~= "string" then
 		return

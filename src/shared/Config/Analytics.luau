@@ -88,6 +88,7 @@ local Analytics = {
 		staff = "Staff",
 		ad = "Ad",
 		penalty = "ThiefPenalty", -- штраф пойманного вора
+		decor = "Decor", -- декор студии (DecorService), sku — ключ покупки id@этаж
 		other = "Other",
 	},
 }
