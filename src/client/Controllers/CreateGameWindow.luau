@@ -17,9 +17,15 @@ local Ui = require(script.Parent.Parent.Ui)
 
 local FOCUS_KEYS = { "gameplay", "graphics", "sound", "story" }
 local MAX_FOCUS = 10
-local UNLOCK_CONFIRM_SECONDS = 3
+local UNLOCK_CONFIRM_SECONDS = 5
 -- Примерная оценка («Тест-группа»): не чаще, чем принимает сервер (0.5 с)
 local PREVIEW_REQUEST_GAP = 0.6
+-- Сетка жанров/тем: высоту считаем сами. С AutomaticSize вложенных рамок список
+-- не успевал пересчитать высоту, и строка «Что скажут критики?» наезжала
+-- на «На что тратим силы» (отчёт #2, п. 10)
+local GRID_COLUMNS = 5
+local CARD_HEIGHT = 40
+local CARD_GAP = 6
 
 type Item = { id: string, name: string, nameEn: string, unlockCost: number }
 
@@ -80,17 +86,17 @@ local function buildGrid(
 	list: { Item },
 	unlockedSet: { [string]: boolean },
 	selected: string?
-)
+): number
 	local grid = Instance.new("Frame")
 	grid.BackgroundTransparency = 1
-	grid.Size = UDim2.fromScale(1, 0)
-	grid.AutomaticSize = Enum.AutomaticSize.Y
+	grid.Size = UDim2.fromScale(1, 1)
 	local layout = Instance.new("UIGridLayout")
-	layout.CellSize = UDim2.new(0.2, -6, 0, 40)
-	layout.CellPadding = UDim2.fromOffset(6, 6)
+	layout.CellSize = UDim2.new(1 / GRID_COLUMNS, -CARD_GAP, 0, CARD_HEIGHT)
+	layout.CellPadding = UDim2.fromOffset(CARD_GAP, CARD_GAP)
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
 	layout.Parent = grid
 
+	local shown = 0
 	for i, item in list do
 		local unlocked = unlockedSet[item.id] == true
 		-- Сезонную тему показываем, только пока идёт её ивент (сервер открыл её игроку)
@@ -115,8 +121,11 @@ local function buildGrid(
 			onCardClick(kind, item, unlocked)
 		end)
 		card.LayoutOrder = i
+		shown += 1
 	end
 	grid.Parent = parent
+	local rows = math.max(math.ceil(shown / GRID_COLUMNS), 1)
+	return rows * CARD_HEIGHT + (rows - 1) * CARD_GAP
 end
 
 local function focusTotal(): number
@@ -359,23 +368,24 @@ render = function()
 	Ui.label(body, ClientState.t("create_genre_label"), 22, nil, Ui.colors.muted).LayoutOrder = nextOrder()
 	local genreHolder = Instance.new("Frame")
 	genreHolder.BackgroundTransparency = 1
-	genreHolder.Size = UDim2.fromScale(1, 0)
-	genreHolder.AutomaticSize = Enum.AutomaticSize.Y
 	genreHolder.LayoutOrder = nextOrder()
 	genreHolder.Parent = body
-	buildGrid(genreHolder, "genre", GENRE_LIST, data.unlockedGenres, selectedGenre)
+	local genreHeight = buildGrid(genreHolder, "genre", GENRE_LIST, data.unlockedGenres, selectedGenre)
+	genreHolder.Size = UDim2.new(1, 0, 0, genreHeight)
 
 	Ui.label(body, ClientState.t("create_topic_label"), 22, nil, Ui.colors.muted).LayoutOrder = nextOrder()
 	local topicHolder = Instance.new("Frame")
 	topicHolder.BackgroundTransparency = 1
-	topicHolder.Size = UDim2.fromScale(1, 0)
-	topicHolder.AutomaticSize = Enum.AutomaticSize.Y
 	topicHolder.LayoutOrder = nextOrder()
 	topicHolder.Parent = body
-	buildGrid(topicHolder, "topic", TOPIC_LIST, data.unlockedTopics, selectedTopic)
+	local topicHeight = buildGrid(topicHolder, "topic", TOPIC_LIST, data.unlockedTopics, selectedTopic)
+	topicHolder.Size = UDim2.new(1, 0, 0, topicHeight)
 
 	local hintText, hintColor = comboHint()
-	Ui.label(body, hintText, 24, Ui.titleFontFor(ClientState.lang), hintColor).LayoutOrder = nextOrder()
+	local hint = Ui.label(body, hintText, 24, Ui.titleFontFor(ClientState.lang), hintColor)
+	hint.LayoutOrder = nextOrder()
+	-- Пустая подсказка (жанр/тема не выбраны) не занимает место
+	hint.Visible = hintText ~= ""
 
 	Ui.label(body, ClientState.t("create_focus_label"), 22, nil, Ui.colors.muted).LayoutOrder = nextOrder()
 	Ui.label(body, ClientState.t("create_focus_hint"), 18, Enum.Font.GothamMedium, Ui.colors.muted).LayoutOrder =

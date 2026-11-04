@@ -21,7 +21,7 @@ return {
 	focus_sound = "Ήχος",
 	focus_story = "Ιστορία",
 	create_start = "Έναρξη ανάπτυξης",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Ξεκλείδωμα για {price};",
 	create_combo_great = "Τέλειος συνδυασμός!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Διαφήμιση +30% για {price}",
 	release_close = "Κλείσιμο",
 	release_best = "Νέο ρεκόρ στούντιο!",
+	release_loan_repaid = "🏦 −{money} για αποπληρωμή δανείου",
 
 	-- Genres
 	genre_action = "Δράση",

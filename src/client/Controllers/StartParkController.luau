@@ -469,7 +469,7 @@ local function openNameWindow()
 	if nameGui then
 		return
 	end
-	-- Закрыть без названия нельзя: кнопки «✕» нет. Вышел из игры — спросим при следующем входе
+	-- Закрыть без названия нельзя: кнопки «×» нет. Вышел из игры — спросим при следующем входе
 	local screen, frame =
 		windowWithTitle("StudioNameWindow", ClientState.t("studio_name_title"), Vector2.new(440, 250), 25)
 	nameGui = screen
@@ -524,6 +524,24 @@ local function openNameWindow()
 	done.AnchorPoint = Vector2.new(0.5, 1)
 	done.Position = UDim2.new(0.5, 0, 1, -14)
 	done.Size = UDim2.fromOffset(180, 46)
+end
+
+-- Окно спрашивает название при входе, а сохранённый язык приходит позже: пересобрать его
+-- на новом языке, не теряя набранный текст (отчёт #2, п. 3)
+local function relocalizeNameWindow()
+	local screen = nameGui
+	if not screen then
+		return
+	end
+	local box = screen:FindFirstChild("NameBox", true)
+	local typed = if box and box:IsA("TextBox") then box.Text else ""
+	closeNameWindow()
+	openNameWindow()
+	local newScreen = nameGui
+	local newBox = newScreen and newScreen:FindFirstChild("NameBox", true)
+	if newBox and newBox:IsA("TextBox") then
+		newBox.Text = typed
+	end
 end
 
 local function checkNaming()
@@ -601,6 +619,7 @@ function StartParkController.start()
 		end
 	end)
 	player:GetAttributeChangedSignal("NeedsStudioName"):Connect(checkNaming)
+	ClientState.langChanged:Connect(relocalizeNameWindow)
 	checkNaming()
 
 	-- Таблички парка и кнопка гаража появляются и пересоздаются — переводим новые

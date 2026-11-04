@@ -21,7 +21,7 @@ return {
 	focus_sound = "Garsas",
 	focus_story = "Siužetas",
 	create_start = "Pradėti kūrimą",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Atrakinti už {price}?",
 	create_combo_great = "Puikus derinys!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Reklama +30% už {price}",
 	release_close = "Uždaryti",
 	release_best = "Naujas studijos rekordas!",
+	release_loan_repaid = "🏦 −{money} paskolai grąžinti",
 
 	-- Genres
 	genre_action = "Veiksmas",

@@ -21,7 +21,7 @@ return {
 	focus_sound = "Sunet",
 	focus_story = "Poveste",
 	create_start = "Începe dezvoltarea",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Deblochezi pentru {price}?",
 	create_combo_great = "Combinație super!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Reclamă +30% pentru {price}",
 	release_close = "Închide",
 	release_best = "Nou record al studioului!",
+	release_loan_repaid = "🏦 −{money} pentru rambursarea creditului",
 
 	-- Genres
 	genre_action = "Acțiune",

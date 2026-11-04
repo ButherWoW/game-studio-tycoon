@@ -528,8 +528,10 @@ local function release(player: Player, project: Project)
 
 	hook("ResearchService", "onGameReleased", player, score)
 	hook("PerksService", "onGameReleased", player, revenue)
-	-- Кредит: часть дохода игры уходит в погашение (Config/Loans.repayShare)
+	-- Кредит: часть дохода игры уходит в погашение (Config/Loans.repayShare); сколько — для окна релиза
+	local debtBefore = tonumber(player:GetAttribute("LoanDebt")) or 0
 	hook("LoanService", "onGameReleased", player, revenue)
+	local loanRepaid = math.max(debtBefore - (tonumber(player:GetAttribute("LoanDebt")) or 0), 0)
 	local p = project.points
 	hook("ExpoService", "onGameReleased", player, {
 		name = project.name,
@@ -555,6 +557,7 @@ local function release(player: Player, project: Project)
 		topicId = project.topicId,
 		score = score,
 		revenue = revenue,
+		loanRepaid = loanRepaid,
 		adBonus = adBonus,
 		isRecord = isRecord,
 		projectId = project.id,

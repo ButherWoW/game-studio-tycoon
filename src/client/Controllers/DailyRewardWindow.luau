@@ -16,6 +16,8 @@ local DailyRewardWindow = {}
 local gui: ScreenGui? = nil
 -- Автопоказ один раз на состояние: закрыл без получения — не всплывает снова при каждом запросе
 local shownDay: number? = nil
+-- День в открытом окне: перерисовать его, когда придёт сохранённый язык
+local openDay = 1
 
 local function close()
 	if gui then
@@ -27,6 +29,7 @@ end
 
 local function show(day: number)
 	close()
+	openDay = day
 	local screen = Instance.new("ScreenGui")
 	screen.Name = "DailyRewardWindow"
 	screen.ResetOnSpawn = false
@@ -36,11 +39,11 @@ local function show(day: number)
 	Ui.windowOpened()
 
 	local window = Ui.window(screen, "Window", Vector2.new(760, 380))
-	local title = Ui.label(window, ClientState.t("daily_reward_title"), 40, Ui.titleFont)
+	local title = Ui.label(window, ClientState.t("daily_reward_title"), 40, Ui.titleFontFor(ClientState.lang))
 	title.TextXAlignment = Enum.TextXAlignment.Center
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -80, 0, 40)
-	local closeButton = Ui.button(window, "✕", Ui.colors.bad, close)
+	local closeButton = Ui.button(window, "×", Ui.colors.bad, close)
 	closeButton.AnchorPoint = Vector2.new(1, 0)
 	closeButton.Position = UDim2.new(1, -12, 0, 10)
 	closeButton.Size = UDim2.fromOffset(40, 40)
@@ -66,7 +69,12 @@ local function show(day: number)
 			elseif i < day then Ui.colors.locked
 			else Color3.fromRGB(44, 46, 66)
 		Ui.corner(tile, 10)
-		local dayLabel = Ui.label(tile, ClientState.t("daily_reward_day", { day = i }), 26, Ui.titleFont)
+		local dayLabel = Ui.label(
+			tile,
+			ClientState.t("daily_reward_day", { day = i }),
+			26,
+			Ui.titleFontFor(ClientState.lang)
+		)
 		dayLabel.TextXAlignment = Enum.TextXAlignment.Center
 		dayLabel.Position = UDim2.fromOffset(4, 6)
 		dayLabel.Size = UDim2.new(1, -8, 0, 26)
@@ -114,6 +122,12 @@ function DailyRewardWindow.start()
 		end
 		shownDay = utcDay
 		show(state.day)
+	end)
+	-- Окно всплывает при входе, сохранённый язык приходит позже (отчёт #2, п. 3)
+	ClientState.langChanged:Connect(function()
+		if gui then
+			show(openDay)
+		end
 	end)
 	-- QuestWindow при старте уже запросил данные; сервер ответит и сам при загрузке профиля
 end

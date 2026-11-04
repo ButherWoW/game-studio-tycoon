@@ -110,7 +110,7 @@ Texts.ru = {
 	focus_sound = "Звук",
 	focus_story = "Сюжет",
 	create_start = "Начать разработку",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Открыть за {price}?",
 	create_combo_great = "Отличное сочетание!",
@@ -134,6 +134,7 @@ Texts.ru = {
 	release_ad = "📢 Реклама +30% за {price}",
 	release_close = "Закрыть",
 	release_best = "Новый рекорд студии!",
+	release_loan_repaid = "🏦 −{money} в погашение кредита",
 
 	-- staff
 	team_title = "Команда",
@@ -177,9 +178,9 @@ Texts.ru = {
 	tutorial_ok = "Готово",
 	-- retention
 	trend_banner = "🔥 В тренде: {genre} + {topic}, ещё {time}",
-	rebirth_title = "♻️ Rebirth",
-	rebirth_count = "Ребёрзов: {count} · доход ×{mult}",
-	rebirth_next = "После ребёрза доход ×{mult} навсегда",
+	rebirth_title = "♻️ Перерождение",
+	rebirth_count = "Перерождений: {count} · доход ×{mult}",
+	rebirth_next = "После перерождения доход ×{mult} навсегда",
 	rebirth_need_office = "Переезд в офис",
 	rebirth_need_cash = "Деньги: {price}",
 	rebirth_resets = "Сбросится: деньги (останется $100), апгрейды, открытые жанры и темы",
@@ -499,7 +500,7 @@ Texts.en = {
 	focus_sound = "Sound",
 	focus_story = "Story",
 	create_start = "Start development",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Unlock for {price}?",
 	create_combo_great = "Great combo!",
@@ -521,6 +522,7 @@ Texts.en = {
 	release_ad = "📢 Ads +30% for {price}",
 	release_close = "Close",
 	release_best = "New studio record!",
+	release_loan_repaid = "🏦 −{money} went to the loan",
 
 	-- staff
 	team_title = "Team",
@@ -913,11 +915,22 @@ function Texts.format(lang: Lang, key: string, vars: { [string]: any }?): string
 	return text
 end
 
+-- Неразрывный пробел (U+00A0) между разрядами: «$3 000» не рвётся на «$3» / «000» в кнопках
+-- (отчёт #2, п. 12). Глиф есть в GothamBold и FredokaOne
+local MONEY_SEPARATOR = utf8.char(0x00A0)
+
 -- $12 500
 function Texts.money(amount: number): string
-	local digits = tostring(math.floor(amount))
-	local grouped = digits:reverse():gsub("(%d%d%d)", "%1 "):reverse():gsub("^ ", "")
-	return "$" .. grouped
+	local digits = tostring(math.abs(math.floor(amount)))
+	local head = #digits % 3
+	local parts = {}
+	if head > 0 then
+		table.insert(parts, digits:sub(1, head))
+	end
+	for i = head + 1, #digits, 3 do
+		table.insert(parts, digits:sub(i, i + 2))
+	end
+	return (if amount < 0 then "-$" else "$") .. table.concat(parts, MONEY_SEPARATOR)
 end
 
 return Texts

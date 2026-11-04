@@ -12,6 +12,7 @@ local Ui = require(script.Parent.Parent.Ui)
 
 local OfflineWindow = {}
 local gui: ScreenGui? = nil
+local shownAmount = 0
 
 local function close()
 	if gui then
@@ -23,6 +24,7 @@ end
 
 local function show(amount: number)
 	close()
+	shownAmount = amount
 	local screen = Instance.new("ScreenGui")
 	screen.Name = "OfflineWindow"
 	screen.ResetOnSpawn = false
@@ -40,14 +42,14 @@ local function show(amount: number)
 	layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	body.Parent = window
 
-	local title = Ui.label(body, ClientState.t("offline_title"), 36, Ui.titleFont)
+	local title = Ui.label(body, ClientState.t("offline_title"), 36, Ui.titleFontFor(ClientState.lang))
 	title.TextXAlignment = Enum.TextXAlignment.Center
 	title.LayoutOrder = 1
 	local money = Ui.label(
 		body,
 		ClientState.t("offline_amount", { money = Texts.money(amount) }),
 		56,
-		Ui.titleFont,
+		Ui.titleFontFor(ClientState.lang),
 		Ui.colors.money
 	)
 	money.TextXAlignment = Enum.TextXAlignment.Center
@@ -77,6 +79,12 @@ function OfflineWindow.start()
 		end
 	end
 	player:GetAttributeChangedSignal("OfflinePending"):Connect(check)
+	-- Окно открывается при входе, а сохранённый язык приходит позже — перерисовать (отчёт #2, п. 3)
+	ClientState.langChanged:Connect(function()
+		if gui then
+			show(shownAmount)
+		end
+	end)
 	check()
 end
 

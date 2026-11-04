@@ -37,6 +37,14 @@ local ARROW = "⬇"
 local ARROW_SIZE = 48
 local BOB_HEIGHT = 8
 local BOB_SPEED = 4
+-- Плашка внизу экрана; если поверх неё окно «Создать игру» / «Релиз» — ставим её под окно
+-- или над ним, а если места нет — убираем за окно (отчёт #2, п. 4: закрывала ползунки и кнопки)
+local PLATE_HEIGHT = 56
+local PLATE_BOTTOM = 92
+local PLATE_GAP = 8
+local PLATE_ORDER = 30 -- над HUD и обычными окнами
+local PLATE_BEHIND_ORDER = 5 -- под окнами «Создать игру» (10) и «Релиз» (20)
+local TUTORIAL_WINDOWS = { "CreateGameWindow", "ReleaseWindow" }
 
 local TutorialController = {}
 
@@ -170,18 +178,24 @@ local function run()
 	local gui = Instance.new("ScreenGui")
 	gui.Name = "Tutorial"
 	gui.ResetOnSpawn = false
-	gui.DisplayOrder = 30 -- поверх окон «Создать игру» (10) и «Релиз» (20)
+	gui.DisplayOrder = PLATE_ORDER
 	gui.Parent = playerGui
+	-- Стрелки — отдельно и всегда поверх окон: они показывают на кнопки внутри них
+	local arrowGui = Instance.new("ScreenGui")
+	arrowGui.Name = "TutorialArrow"
+	arrowGui.ResetOnSpawn = false
+	arrowGui.DisplayOrder = PLATE_ORDER
+	arrowGui.Parent = playerGui
 
 	local plate = Instance.new("Frame")
 	plate.AnchorPoint = Vector2.new(0.5, 1)
-	plate.Position = UDim2.new(0.5, 0, 1, -92)
-	plate.Size = UDim2.new(0.9, 0, 0, 56)
+	plate.Position = UDim2.new(0.5, 0, 1, -PLATE_BOTTOM)
+	plate.Size = UDim2.new(0.9, 0, 0, PLATE_HEIGHT)
 	plate.BackgroundColor3 = Ui.colors.panel
 	plate.BackgroundTransparency = 0.1
 	Ui.corner(plate)
 	local limit = Instance.new("UISizeConstraint")
-	limit.MaxSize = Vector2.new(640, 56)
+	limit.MaxSize = Vector2.new(640, PLATE_HEIGHT)
 	limit.Parent = plate
 	local stroke = Instance.new("UIStroke")
 	stroke.Thickness = 2
@@ -210,7 +224,7 @@ local function run()
 	action.Size = UDim2.fromOffset(120, 40)
 
 	-- Стрелка к кнопке интерфейса
-	local arrow2d = Ui.label(gui, ARROW, ARROW_SIZE, Ui.titleFont, Ui.colors.money)
+	local arrow2d = Ui.label(arrowGui, ARROW, ARROW_SIZE, Ui.titleFont, Ui.colors.money)
 	arrow2d.TextXAlignment = Enum.TextXAlignment.Center
 	arrow2d.AnchorPoint = Vector2.new(0.5, 1)
 	arrow2d.Size = UDim2.fromOffset(ARROW_SIZE, ARROW_SIZE)
@@ -234,7 +248,42 @@ local function run()
 		highlight.Adornee = target
 		highlight.Parent = target
 		billboard.Adornee = target
-		billboard.Parent = if target then gui else nil
+		billboard.Parent = if target then arrowGui else nil
+	end
+
+	-- Плашка не должна закрывать окно обучения: под окном, над ним или за ним
+	local function placePlate()
+		local window: GuiObject? = nil
+		for _, name in TUTORIAL_WINDOWS do
+			local screen = playerGui:FindFirstChild(name)
+			local frame = screen and screen:FindFirstChild("Window")
+			if frame and frame:IsA("GuiObject") and frame.Visible then
+				window = frame
+			end
+		end
+		local screenHeight = gui.AbsoluteSize.Y
+		if not window or screenHeight <= 0 then
+			plate.AnchorPoint = Vector2.new(0.5, 1)
+			plate.Position = UDim2.new(0.5, 0, 1, -PLATE_BOTTOM)
+			gui.DisplayOrder = PLATE_ORDER
+			return
+		end
+		local top = window.AbsolutePosition.Y
+		local bottom = top + window.AbsoluteSize.Y
+		if screenHeight - bottom >= PLATE_HEIGHT + PLATE_GAP * 2 then
+			plate.AnchorPoint = Vector2.new(0.5, 0)
+			plate.Position = UDim2.new(0.5, 0, 0, bottom + PLATE_GAP)
+			gui.DisplayOrder = PLATE_ORDER
+		elseif top >= PLATE_HEIGHT + PLATE_GAP * 2 then
+			plate.AnchorPoint = Vector2.new(0.5, 1)
+			plate.Position = UDim2.new(0.5, 0, 0, top - PLATE_GAP)
+			gui.DisplayOrder = PLATE_ORDER
+		else
+			-- Места нет (низкий экран): плашка уходит за окно, стрелка остаётся сверху
+			plate.AnchorPoint = Vector2.new(0.5, 1)
+			plate.Position = UDim2.new(0.5, 0, 1, -PLATE_BOTTOM)
+			gui.DisplayOrder = PLATE_BEHIND_ORDER
+		end
 	end
 
 	local function point2d(target: GuiButton?, t: number)
@@ -327,6 +376,7 @@ local function run()
 				end
 			end
 			plate.Visible = not covered
+			placePlate()
 			if covered then
 				target2d, target3d = nil, nil
 			end
@@ -342,6 +392,7 @@ local function run()
 		highlight:Destroy()
 		billboard:Destroy()
 		gui:Destroy()
+		arrowGui:Destroy()
 		running = false
 	end)
 end

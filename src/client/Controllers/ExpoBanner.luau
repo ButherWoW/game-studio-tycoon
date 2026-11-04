@@ -10,7 +10,12 @@ local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
--- Плашка и итоги — в общем стеке под HUD (Ui.bannerStack): тренд 1, выставка 2, итоги 3
+-- Плашка и итоги — в общем стеке под HUD (Ui.bannerStack): тренд 1, выставка 2, итоги 3.
+-- Размеры небольшие: стек не должен закрывать студию (отчёт #2, п. 14)
+local BANNER_HEIGHT = 28
+local BANNER_WIDTH = 400
+local RESULT_HEIGHT = 52
+local RESULT_WIDTH = 420
 
 local ExpoBanner = {}
 
@@ -24,10 +29,10 @@ local function showResult(stack: Frame, result: any)
 	if old then
 		old:Destroy()
 	end
-	local panel = Ui.label(stack, "", 64, Ui.titleFontFor(ClientState.lang))
+	local panel = Ui.label(stack, "", RESULT_HEIGHT, Ui.titleFontFor(ClientState.lang))
 	panel.Name = "ExpoResult"
 	panel.LayoutOrder = 3
-	panel.Size = UDim2.fromOffset(460, 64)
+	panel.Size = UDim2.fromOffset(RESULT_WIDTH, RESULT_HEIGHT)
 	panel.BackgroundTransparency = 0.1
 	panel.BackgroundColor3 = Ui.colors.panel
 	panel.TextXAlignment = Enum.TextXAlignment.Center
@@ -57,10 +62,10 @@ end
 
 function ExpoBanner.start()
 	local stack = Ui.bannerStack()
-	local banner = Ui.label(stack, "", 34, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
+	local banner = Ui.label(stack, "", BANNER_HEIGHT, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
 	banner.Name = "ExpoBanner"
 	banner.LayoutOrder = 2
-	banner.Size = UDim2.fromOffset(460, 34)
+	banner.Size = UDim2.fromOffset(BANNER_WIDTH, BANNER_HEIGHT)
 	banner.BackgroundTransparency = 0.25
 	banner.BackgroundColor3 = Ui.colors.panel
 	banner.TextXAlignment = Enum.TextXAlignment.Center
@@ -75,6 +80,7 @@ function ExpoBanner.start()
 			local endsAt = ReplicatedStorage:GetAttribute("ExpoEndsAt")
 			if type(endsAt) == "number" then
 				banner.Visible = true
+				banner.Font = Ui.titleFontFor(ClientState.lang)
 				local leaderGame = ReplicatedStorage:GetAttribute("ExpoLeaderGame")
 				local vars = {
 					time = timeLeft(endsAt),

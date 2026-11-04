@@ -30,7 +30,7 @@ local function panel(height: number): Frame
 	frame.Position = UDim2.new(0.5, 0, 1, -96) -- над кнопкой «Создать игру»
 	frame.Size = UDim2.fromOffset(440, height)
 	frame.BackgroundColor3 = Ui.colors.panel
-	frame.BackgroundTransparency = 0.05
+	frame.BackgroundTransparency = 0
 	Ui.corner(frame)
 	local stroke = Instance.new("UIStroke")
 	stroke.Thickness = 2

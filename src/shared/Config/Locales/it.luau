@@ -21,7 +21,7 @@ return {
 	focus_sound = "Sonoro",
 	focus_story = "Storia",
 	create_start = "Inizia lo sviluppo",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Sbloccare per {price}?",
 	create_combo_great = "Ottima combo!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Spot +30% per {price}",
 	release_close = "Chiudi",
 	release_best = "Nuovo record dello studio!",
+	release_loan_repaid = "🏦 −{money} per rimborsare il prestito",
 
 	-- Genres
 	genre_action = "Azione",

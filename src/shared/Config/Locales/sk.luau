@@ -21,7 +21,7 @@ return {
 	focus_sound = "Zvuk",
 	focus_story = "Príbeh",
 	create_start = "Začať vývoj",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Odomknúť za {price}?",
 	create_combo_great = "Skvelá kombinácia!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Reklama +30% za {price}",
 	release_close = "Zavrieť",
 	release_best = "Nový rekord štúdia!",
+	release_loan_repaid = "🏦 −{money} na splátku úveru",
 
 	-- Genres
 	genre_action = "Akcia",
