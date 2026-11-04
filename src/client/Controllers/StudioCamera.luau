@@ -102,7 +102,8 @@ local function fadeFor(plot: BasePart, part: BasePart): number?
 	local localPos = plot.CFrame:PointToObjectSpace(part.Position)
 	-- Высота над полом этажа, который показываем
 	local height = localPos.Y - plot.Size.Y / 2 - StudioLayout.floorY(viewFloor)
-	if viewFloor < StudioLayout.FLOOR_COUNT and height >= StudioLayout.FLOOR_HEIGHT - 0.5 then
+	-- Стены этажа — до 13, перекрытие следующего (OfficeFloors) — центр на 13.5: порог между ними
+	if viewFloor < StudioLayout.FLOOR_COUNT and height >= StudioLayout.FLOOR_HEIGHT - 0.75 then
 		return 1
 	end
 	-- Сотрудники и прочие персонажи на участке — не стены

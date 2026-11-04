@@ -20,6 +20,10 @@ local GLASS_SIZE = Vector3.new(24, 9, 0.4) -- проём передней сте
 local WRAP_COLOR = Color3.fromRGB(45, 50, 65)
 local WRAP_THICKNESS = 0.3
 local PLOT_HALF = 30 -- участок 60×60
+-- Перекрытие между этажами: пол этажей Астры — лист 0.02 stud, сквозь него снизу была видна мебель
+-- этажа выше, а между верхом стен (13) и полом следующего (14) оставалась щель (тест владельца)
+local SLAB_THICKNESS = 0.98
+local SLAB_COLOR = Color3.fromRGB(235, 236, 240) -- потолок снизу светлый
 local PROMPT_DISTANCE = 8
 -- Клавиши подсказок по номеру целевого этажа: подсказки видны все сразу
 local PROMPT_KEYS = { Enum.KeyCode.One, Enum.KeyCode.Two, Enum.KeyCode.Three }
@@ -119,6 +123,19 @@ local function buildElevator(
 	end
 end
 
+-- Плотное перекрытие под этажом 2 и 3: верх чуть ниже пола оболочки (без мерцания), низ — над стенами
+local function buildSlab(model: Model, plot: BasePart, floor: number)
+	local y = StudioLayout.floorY(floor)
+	local slab = makePart(
+		model,
+		"FloorSlab",
+		Vector3.new(PLOT_HALF * 2, SLAB_THICKNESS, PLOT_HALF * 2),
+		at(plot, 0, y - 0.01 - SLAB_THICKNESS / 2, 0),
+		SLAB_COLOR
+	)
+	slab.Material = Enum.Material.Concrete
+end
+
 -- Открытый верхний этаж: стекло в проёме передней стены, чтобы не выпасть на улицу
 local function buildGlass(model: Model, plot: BasePart, floor: number)
 	local y = StudioLayout.floorY(floor)
@@ -215,6 +232,9 @@ function OfficeFloors.build(plot: BasePart, studioLevel: number, onLift: LiftHan
 		local model = Instance.new("Model")
 		model.Name = "OfficeFloor" .. floor
 		model:SetAttribute("Floor", floor)
+		if floor > 1 then
+			buildSlab(model, plot, floor)
+		end
 		if floor <= unlocked then
 			buildElevator(model, plot, floor, unlocked, onLift)
 			if floor > 1 then
