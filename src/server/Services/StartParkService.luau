@@ -261,6 +261,11 @@ local function collectObstacles(folder: Instance, spots: Instance?)
 			addObstacle(child)
 		end
 	end
+	-- Деревья, камни и скамейки вокруг парка (WorldService.ensureOuterLandscape)
+	local outer = workspace:FindFirstChild("OuterPark")
+	for _, prop in if outer then outer:GetChildren() else {} do
+		addObstacle(prop)
+	end
 	local fountain = workspace:FindFirstChild("Fountain", true)
 	if fountain then
 		addObstacle(fountain)
@@ -277,7 +282,38 @@ local function flatDistance(a: Vector3, b: Vector3): number
 end
 
 -- Место свободно: в стороне от препятствий и от других картриджей
+-- Точка на участке игрока, у его кнопок или на тропинке к нему (туда картриджи не кладём)
+local function onPlotOrPath(position: Vector3): boolean
+	local plots = workspace:FindFirstChild("Plots")
+	for _, plot in if plots then plots:GetChildren() else {} do
+		if plot:IsA("BasePart") then
+			local here = plot.CFrame:PointToObjectSpace(position)
+			local margin = StartPark.cartridgePlotMargin
+			if
+				math.abs(here.X) < plot.Size.X / 2 + margin
+				and here.Z > -plot.Size.Z / 2 - margin
+				and here.Z < plot.Size.Z / 2 + margin + 8
+			then
+				return true
+			end
+		end
+	end
+	local paths = workspace:FindFirstChild("PlotPaths")
+	for _, path in if paths then paths:GetChildren() else {} do
+		if path:IsA("BasePart") then
+			local here = path.CFrame:PointToObjectSpace(position)
+			if math.abs(here.X) < StartPark.cartridgePathClear and math.abs(here.Z) < path.Size.Z / 2 then
+				return true
+			end
+		end
+	end
+	return false
+end
+
 local function spotFree(position: Vector3, spot: BasePart): boolean
+	if onPlotOrPath(position) then
+		return false
+	end
 	for _, obstacle in obstacles do
 		if flatDistance(position, obstacle.position) < obstacle.radius + StartPark.cartridgeClearance then
 			return false
