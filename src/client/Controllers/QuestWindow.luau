@@ -40,12 +40,13 @@ function QuestWindow.describeReward(reward: Rewards.Reward): string
 	if reward.incomeMinutes then
 		local data = ClientState.data
 		local money = if data
-			then RewardFormulas.incomeForMinutes(
-				data.bestScore,
-				data.studioLevel,
-				data.rebirths,
-				reward.incomeMinutes
-			)
+			then RewardFormulas.incomeForMinutes({
+				-- Как RewardService.incomeState на сервере
+				score = tonumber(data.runBestScore) or 0,
+				studioLevel = data.studioLevel,
+				rebirths = data.rebirths,
+				ownsGarage = Players.LocalPlayer:GetAttribute("OwnsGarage") == true,
+			}, reward.incomeMinutes)
 			else 0
 		table.insert(
 			parts,
@@ -315,7 +316,7 @@ function QuestWindow.open()
 	local title = Ui.label(window, ClientState.t("quests_title"), 40, Ui.titleFont)
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -80, 0, 40)
-	local close = Ui.button(window, "✕", Ui.colors.bad, QuestWindow.close)
+	local close = Ui.button(window, "×", Ui.colors.bad, QuestWindow.close)
 	close.AnchorPoint = Vector2.new(1, 0)
 	close.Position = UDim2.new(1, -12, 0, 10)
 	close.Size = UDim2.fromOffset(40, 40)

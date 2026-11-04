@@ -21,7 +21,7 @@ return {
 	focus_sound = "Lyd",
 	focus_story = "Historie",
 	create_start = "Start utviklingen",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Låse opp for {price}?",
 	create_combo_great = "Kjempebra kombo!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Reklame +30% for {price}",
 	release_close = "Lukk",
 	release_best = "Ny studiorekord!",
+	release_loan_repaid = "🏦 −{money} til nedbetaling av lånet",
 
 	-- Genres
 	genre_action = "Action",

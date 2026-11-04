@@ -19,6 +19,11 @@ function Ui.windowOpened()
 	TextChatService.ChatWindowConfiguration.Enabled = false
 end
 
+-- Открыто ли сейчас хоть одно окно игры (HUD не открывает «Создать игру» поверх него)
+function Ui.anyWindowOpen(): boolean
+	return openWindows > 0
+end
+
 function Ui.windowClosed()
 	openWindows = math.max(openWindows - 1, 0)
 	if openWindows == 0 then
@@ -100,7 +105,8 @@ function Ui.window(parent: Instance, name: string, maxSize: Vector2): Frame
 		end)
 	end
 	frame.BackgroundColor3 = Ui.colors.panel
-	frame.BackgroundTransparency = 0.05
+	-- Непрозрачный фон: сквозь полупрозрачный просвечивали цифры HUD (отчёт #2, п. 9)
+	frame.BackgroundTransparency = 0
 	Ui.corner(frame)
 	local stroke = Instance.new("UIStroke")
 	stroke.Thickness = 2
@@ -295,7 +301,8 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> ()): TextButto
 		end
 	end
 	-- Слот задаёт порядок сверху вниз: 1 исследования, 2 команда, 3 задания, 4 магазин, 5 rebirth,
-	-- 6 язык, 7 хиты, 8 воры, 9 праздничный ивент (видна только во время ивента), 10 вид студии
+	-- 6 язык, 7 хиты, 8 воры, 9 праздничный ивент (видна только во время ивента), 10 вид студии,
+	-- 11 банк (с долгом), 12 домой (у владельца гаража)
 	local b = Ui.button(menuColumn :: Frame, icon, Ui.colors.panel, onClick)
 	b.Name = "Slot" .. slot
 	b.LayoutOrder = slot
@@ -305,13 +312,16 @@ end
 
 -- Общий стек плашек под HUD (тренд, выставка, итоги выставки, тревога): каждая плашка
 -- кладётся сюда со своим LayoutOrder, скрытые не занимают места — плашки не наезжают друг на друга.
--- HUD занимает y 12..132 (3 плашки по 40 px), стек начинается ниже.
-local BANNER_TOP = 140
+-- Стек прижат к низу HUD: деньги и строка игр — y 12..86, под ними строки прогресса
+-- разработки. HUD сообщает, где кончается (Ui.setBannerTop), — плашки не висят посреди
+-- экрана над студией (отчёт #2, п. 14)
+local BANNER_TOP = 94
 local BANNER_GAP = 6
 -- Низкий экран (телефон в альбомной): плашки стека чуть меньше, чтобы не дойти до кнопки «Создать игру»
 local SHORT_SCREEN = 500
 local SHORT_SCALE = 0.8
 local bannerStack: Frame? = nil
+local bannerTop = BANNER_TOP
 
 function Ui.bannerStack(): Frame
 	local existing = bannerStack
@@ -327,7 +337,7 @@ function Ui.bannerStack(): Frame
 	stack.Name = "Stack"
 	stack.BackgroundTransparency = 1
 	stack.AnchorPoint = Vector2.new(0.5, 0)
-	stack.Position = UDim2.new(0.5, 0, 0, BANNER_TOP)
+	stack.Position = UDim2.new(0.5, 0, 0, bannerTop)
 	stack.Size = UDim2.new(1, 0, 0, 0)
 	stack.AutomaticSize = Enum.AutomaticSize.Y
 	local layout = Ui.list(stack, BANNER_GAP)
@@ -348,6 +358,15 @@ function Ui.bannerStack(): Frame
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	bannerStack = stack
 	return stack
+end
+
+-- Верх стека плашек (px от верха экрана): HUD зовёт, когда меняется число строк прогресса
+function Ui.setBannerTop(y: number)
+	bannerTop = math.max(y, BANNER_TOP)
+	local stack = bannerStack
+	if stack then
+		stack.Position = UDim2.new(0.5, 0, 0, bannerTop)
+	end
 end
 
 function Ui.list(parent: Instance, padding: number)

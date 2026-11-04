@@ -102,6 +102,22 @@ local function reviewBonus(player: Player): number
 	return upgradeBonus(player, "reviewBonus") + vip + staffBonus
 end
 
+-- Всё, что сдвигает оценку до округления: бонусы студии минус ожидания критиков этапа
+-- и штраф за повтор сочетания среди последних игр (отчёт #2: в офисе всегда 9–10)
+local function scoreBonus(
+	player: Player,
+	profile: DataService.Profile,
+	genreId: string,
+	topicId: string,
+	sequel: boolean?
+): number
+	-- Сиквел геймпасса «Авто-релиз» повторяет сочетание по задумке: штраф за повтор слабее
+	local repeatFactor = if sequel then Economy.sequelRepeatFactor else 1
+	return reviewBonus(player)
+		- Formulas.criticExpectation(profile.studioLevel)
+		- Formulas.repeatPenalty(profile.recentCombos, genreId, topicId) * repeatFactor
+end
+
 local function durationFactor(player: Player): number
 	local research = researchModifiers(player)
 	-- Research.modifiers отдаёт множители: 1 = без изменений, 0.9 = на 10% быстрее
@@ -139,6 +155,7 @@ type Project = {
 	eventsDone: number,
 	tempo: number, -- скорость разработки на момент старта (см. pointsRate)
 	event: { def: DevEvents.DevEvent, expiresAt: number }?,
+	sequel: boolean?, -- сиквел от «Авто-релиза» (слабее штраф за повтор)
 	laptop: boolean?, -- начата на ноутбуке в парке: доход × StartPark.laptopRevenueMultiplier
 }
 
@@ -372,7 +389,14 @@ end
 
 -- Начать игру: общие проверки для «Создать игру» и «Авто-релиза».
 -- rawName уже очищен (TextSafe) и обрезан; здесь он проходит фильтр Roblox
-local function beginProject(player: Player, genreId: string, topicId: string, focus: Focus, rawName: string)
+local function beginProject(
+	player: Player,
+	genreId: string,
+	topicId: string,
+	focus: Focus,
+	rawName: string,
+	sequel: boolean?
+)
 	-- Игру делают за компьютером, а не на бегу
 	if not PlotService.isAtPc(player) then
 		return
@@ -401,6 +425,7 @@ local function beginProject(player: Player, genreId: string, topicId: string, fo
 		nextEventAt = math.huge,
 		eventsDone = 0,
 		tempo = 1,
+		sequel = sequel == true,
 	}
 	table.insert(list, project)
 	DevelopmentService.pushState(player)
@@ -460,7 +485,13 @@ local function release(player: Player, project: Project)
 		return
 	end
 
-	local score = Formulas.review(project.genreId, project.topicId, project.points, rng, reviewBonus(player))
+	local score = Formulas.review(
+		project.genreId,
+		project.topicId,
+		project.points,
+		rng,
+		scoreBonus(player, profile, project.genreId, project.topicId, project.sequel)
+	)
 	local TrendService = optional("TrendService")
 	if TrendService then
 		local okTrend, trendValue = pcall(TrendService.getBonus, project.genreId, project.topicId)
@@ -524,12 +555,16 @@ local function release(player: Player, project: Project)
 	local isRecord = profile.gamesReleased > 0 and score > profile.bestScore
 	profile.gamesReleased += 1
 	profile.bestScore = math.max(profile.bestScore, score)
+	profile.runBestScore = math.max(profile.runBestScore, score)
+	Formulas.rememberCombo(profile.recentCombos, project.genreId, project.topicId)
 	DataService.addCash(player, revenue)
 
 	hook("ResearchService", "onGameReleased", player, score)
 	hook("PerksService", "onGameReleased", player, revenue)
-	-- Кредит: часть дохода игры уходит в погашение (Config/Loans.repayShare)
+	-- Кредит: часть дохода игры уходит в погашение (Config/Loans.repayShare); сколько — для окна релиза
+	local debtBefore = tonumber(player:GetAttribute("LoanDebt")) or 0
 	hook("LoanService", "onGameReleased", player, revenue)
+	local loanRepaid = math.max(debtBefore - (tonumber(player:GetAttribute("LoanDebt")) or 0), 0)
 	local p = project.points
 	hook("ExpoService", "onGameReleased", player, {
 		name = project.name,
@@ -555,6 +590,7 @@ local function release(player: Player, project: Project)
 		topicId = project.topicId,
 		score = score,
 		revenue = revenue,
+		loanRepaid = loanRepaid,
 		adBonus = adBonus,
 		isRecord = isRecord,
 		projectId = project.id,
@@ -693,7 +729,8 @@ local function maybeAutoRelease(player: Player, project: Project)
 		project.genreId,
 		project.topicId,
 		table.clone(project.focus),
-		sequelName(project.name)
+		sequelName(project.name),
+		true
 	)
 end
 
@@ -788,7 +825,8 @@ local function onPreviewRequest(player: Player, request: any)
 		sound = rate.sound * duration,
 		story = rate.story * duration,
 	}
-	local score = Formulas.review(genreId, topicId, points, NO_NOISE, reviewBonus(player))
+	local score =
+		Formulas.review(genreId, topicId, points, NO_NOISE, scoreBonus(player, profile, genreId, topicId))
 	local TrendService = optional("TrendService")
 	if TrendService then
 		score += TrendService.getBonus(genreId, topicId)

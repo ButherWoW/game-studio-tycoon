@@ -21,7 +21,7 @@ return {
 	focus_sound = "Heli",
 	focus_story = "Lugu",
 	create_start = "Alusta arendust",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Ava hinnaga {price}?",
 	create_combo_great = "Suurepärane kombo!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Reklaam +30% hinnaga {price}",
 	release_close = "Sulge",
 	release_best = "Stuudio uus rekord!",
+	release_loan_repaid = "🏦 −{money} laenu tagasimakseks",
 
 	-- Genres
 	genre_action = "Märul",

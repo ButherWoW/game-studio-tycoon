@@ -192,7 +192,7 @@ render = function()
 	pointsLabel.Size = UDim2.new(0.5, -72, 0, 30)
 	pointsLabel.TextXAlignment = Enum.TextXAlignment.Right
 
-	local close = Ui.button(window, "✕", Ui.colors.locked, function()
+	local close = Ui.button(window, "×", Ui.colors.locked, function()
 		ResearchWindow.close()
 	end)
 	close.Size = UDim2.fromOffset(40, 40)

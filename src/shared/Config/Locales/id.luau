@@ -21,7 +21,7 @@ return {
 	focus_sound = "Suara",
 	focus_story = "Cerita",
 	create_start = "Mulai bikin",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Buka seharga {price}?",
 	create_combo_great = "Kombinasi keren!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Iklan +30% seharga {price}",
 	release_close = "Tutup",
 	release_best = "Rekor baru studio!",
+	release_loan_repaid = "🏦 −{money} untuk cicilan pinjaman",
 
 	-- Genres
 	genre_action = "Aksi",

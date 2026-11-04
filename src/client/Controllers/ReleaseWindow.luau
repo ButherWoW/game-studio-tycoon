@@ -21,6 +21,8 @@ local CRITIC_SPREAD = { -1, 0, 0, 1 } -- сумма 0: среднее равно
 
 local ReleaseWindow = {}
 local gui: ScreenGui? = nil
+-- Токен ClientState.beginReveal текущего окна: HUD и тост хита ждут раскрытия оценки
+local revealToken: number? = nil
 local rng = Random.new()
 
 local function band(score: number): string
@@ -63,7 +65,16 @@ local function socialAd(): AdCampaigns.AdCampaign?
 	return nil
 end
 
+local function revealed()
+	local token = revealToken
+	if token then
+		revealToken = nil
+		ClientState.markRevealed(token)
+	end
+end
+
 local function close()
+	revealed()
 	if gui then
 		gui:Destroy()
 		gui = nil
@@ -76,6 +87,10 @@ local function show(info: any)
 	if type(info) ~= "table" or type(info.score) ~= "number" then
 		return
 	end
+	local revenue = tonumber(info.revenue) or 0
+	local loanRepaid = math.max(tonumber(info.loanRepaid) or 0, 0)
+	-- Деньги уже начислены сервером: HUD покажет их вместе с итогом, а не до оценок
+	revealToken = ClientState.beginReveal(revenue - loanRepaid)
 	local genre = Genres[info.genreId]
 	local topic = Topics[info.topicId]
 	local genreName = if genre then ClientState.localName(genre) else ""
@@ -144,11 +159,15 @@ local function show(info: any)
 	local money = Ui.label(body, "", 32, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
 	money.TextXAlignment = Enum.TextXAlignment.Center
 	money.LayoutOrder = 21
+	local loan = Ui.label(body, "", 24, nil, Ui.colors.bad)
+	loan.TextXAlignment = Enum.TextXAlignment.Center
+	loan.LayoutOrder = 22
+	loan.Visible = false
 
 	local buttons = Instance.new("Frame")
 	buttons.BackgroundTransparency = 1
 	buttons.Size = UDim2.new(1, 0, 0, 48)
-	buttons.LayoutOrder = 22
+	buttons.LayoutOrder = 23
 	local buttonsLayout = Instance.new("UIListLayout")
 	buttonsLayout.FillDirection = Enum.FillDirection.Horizontal
 	buttonsLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -208,7 +227,7 @@ local function show(info: any)
 		scale.Parent = total
 		TweenService:Create(scale, TweenInfo.new(0.3, Enum.EasingStyle.Back), { Scale = 1 }):Play()
 
-		local moneyText = ClientState.t("release_revenue", { money = Texts.money(info.revenue) })
+		local moneyText = ClientState.t("release_revenue", { money = Texts.money(revenue) })
 		if type(info.adBonus) == "number" and info.adBonus > 0 then
 			moneyText ..= "  (" .. ClientState.t(
 				"release_ad_bonus",
@@ -219,7 +238,13 @@ local function show(info: any)
 			moneyText ..= "\n" .. ClientState.t("release_best")
 		end
 		money.Text = moneyText
+		-- Часть дохода ушла банку (LoanService): показываем, сколько, чтобы сумма сходилась с HUD
+		if loanRepaid > 0 then
+			loan.Text = ClientState.t("release_loan_repaid", { money = Texts.money(loanRepaid) })
+			loan.Visible = true
+		end
 		buttons.Visible = true
+		revealed()
 	end)
 end
 

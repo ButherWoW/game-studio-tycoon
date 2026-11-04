@@ -51,7 +51,7 @@ function RebirthWindow.open()
 	Ui.list(body, 8)
 	body.Parent = window
 
-	local title = Ui.label(body, ClientState.t("rebirth_title"), 40, Ui.titleFont)
+	local title = Ui.label(body, ClientState.t("rebirth_title"), 40, Ui.titleFontFor(ClientState.lang))
 	title.TextXAlignment = Enum.TextXAlignment.Center
 	title.LayoutOrder = 1
 	local count = Ui.label(body, "", 24, nil, Ui.colors.muted)

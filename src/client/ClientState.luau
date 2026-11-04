@@ -41,6 +41,10 @@ ClientState.lang = languageFromLocale(LocalizationService.RobloxLocaleId) :: Tex
 ClientState.knownCombos = {} :: { [string]: number }
 
 local changed = Instance.new("BindableEvent")
+-- Отдельный сигнал смены языка: окна, которые открываются при входе (название студии,
+-- офлайн-доход, награда за вход, банк), перерисовываются, когда придёт сохранённый язык (отчёт #2, п. 3)
+local langChangedEvent = Instance.new("BindableEvent")
+ClientState.langChanged = langChangedEvent.Event
 local seatChangedEvent = Instance.new("BindableEvent")
 ClientState.seatChanged = seatChangedEvent.Event
 
@@ -91,8 +95,67 @@ function ClientState.setLang(code: string, save: boolean?)
 	end
 	if code ~= ClientState.lang then
 		ClientState.lang = code
+		langChangedEvent:Fire()
 		changed:Fire()
 	end
+end
+
+-- ===== Без спойлеров на релизе (отчёт #2, п. 6) =====
+-- Сервер начисляет доход до того, как окно релиза откроет оценки. Пока окно «раскрывает»
+-- оценку, HUD показывает деньги без дохода этой игры, а тост «хит» ждёт раскрытия.
+local REVEAL_TIMEOUT = 15 -- окно так и не сказало «раскрыто» — всё равно показываем
+-- Тост хита приходит раньше GameReleased: столько ждём, не начнётся ли раскрытие
+local REVEAL_GRACE = 0.3
+
+local hiddenCash = 0
+local revealToken = 0
+local revealPending = false
+local afterReveal: { () -> () } = {}
+
+-- Окно релиза начало показ: прячем доход (revenue − погашение кредита) до markRevealed
+function ClientState.beginReveal(hidden: number): number
+	revealToken += 1
+	hiddenCash += math.max(hidden, 0)
+	revealPending = true
+	local token = revealToken
+	task.delay(REVEAL_TIMEOUT, function()
+		ClientState.markRevealed(token)
+	end)
+	changed:Fire()
+	return token
+end
+
+-- Оценка показана (или окно закрыто): деньги в HUD и отложенные тосты — сразу
+function ClientState.markRevealed(token: number)
+	if token ~= revealToken or not revealPending then
+		return
+	end
+	revealPending = false
+	hiddenCash = 0
+	local queued = afterReveal
+	afterReveal = {}
+	changed:Fire()
+	for _, callback in queued do
+		task.spawn(callback)
+	end
+end
+
+-- Деньги для HUD: без дохода релиза, оценку которого игрок ещё не увидел
+function ClientState.displayCash(): number
+	local data = ClientState.data
+	local cash = if data then tonumber(data.cash) or 0 else 0
+	return if revealPending then math.max(cash - hiddenCash, 0) else cash
+end
+
+-- Выполнить после раскрытия оценки (если релиз сейчас раскрывается или вот-вот начнётся)
+function ClientState.afterReveal(callback: () -> ())
+	task.delay(REVEAL_GRACE, function()
+		if revealPending then
+			table.insert(afterReveal, callback)
+		else
+			callback()
+		end
+	end)
 end
 
 -- Текст из конфига на языке игрока: перевод по ключу из Locales, иначе поля ru/en конфига

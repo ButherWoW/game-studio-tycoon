@@ -21,7 +21,7 @@ return {
 	focus_sound = "Skaņa",
 	focus_story = "Sižets",
 	create_start = "Sākt izstrādi",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Atvērt par {price}?",
 	create_combo_great = "Lieliska kombinācija!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Reklāma +30% par {price}",
 	release_close = "Aizvērt",
 	release_best = "Jauns studijas rekords!",
+	release_loan_repaid = "🏦 −{money} kredīta atmaksai",
 
 	-- Genres
 	genre_action = "Asa sižeta",

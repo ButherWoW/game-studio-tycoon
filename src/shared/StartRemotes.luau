@@ -18,6 +18,8 @@ local NAMES = {
 	-- Название студии: окно открывает атрибут игрока NeedsStudioName = true
 	"SetStudioName", -- клиент -> сервер: name
 	"StudioNameResult", -- сервер -> клиент: { ok, name?, reason? ("length" | "filtered" | "error") }
+	-- Кнопка 🏠 в меню: перенести персонажа к воротам своего гаража
+	"GoHome", -- клиент -> сервер: (без данных)
 }
 
 local folder: Folder

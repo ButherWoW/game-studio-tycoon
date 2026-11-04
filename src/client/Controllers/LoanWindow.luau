@@ -54,7 +54,7 @@ local function show()
 	body.Parent = window
 
 	local percent = math.floor(Loans.repayShare * 100)
-	local title = Ui.label(body, ClientState.t("loan_title"), 36, Ui.titleFont)
+	local title = Ui.label(body, ClientState.t("loan_title"), 36, Ui.titleFontFor(ClientState.lang))
 	title.TextXAlignment = Enum.TextXAlignment.Center
 	title.LayoutOrder = 1
 
@@ -78,8 +78,13 @@ local function show()
 	local line = Ui.label(body, text, 26, Enum.Font.GothamMedium)
 	line.TextXAlignment = Enum.TextXAlignment.Center
 	line.LayoutOrder = 2
-	local money =
-		Ui.label(body, amountText, 52, Ui.titleFont, if debt > 0 then Ui.colors.bad else Ui.colors.money)
+	local money = Ui.label(
+		body,
+		amountText,
+		52,
+		Ui.titleFontFor(ClientState.lang),
+		if debt > 0 then Ui.colors.bad else Ui.colors.money
+	)
 	money.TextXAlignment = Enum.TextXAlignment.Center
 	money.LayoutOrder = 3
 	local hint = Ui.label(body, hintText, 40, Enum.Font.GothamMedium, Ui.colors.muted)
@@ -135,6 +140,12 @@ function LoanWindow.start()
 	end
 	player:GetAttributeChangedSignal("LoanOffer"):Connect(check)
 	player:GetAttributeChangedSignal("LoanDebt"):Connect(check)
+	-- Предложение может всплыть при входе, до прихода сохранённого языка (отчёт #2, п. 3)
+	ClientState.langChanged:Connect(function()
+		if gui then
+			show()
+		end
+	end)
 	check()
 end
 

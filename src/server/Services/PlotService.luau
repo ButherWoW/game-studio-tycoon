@@ -34,11 +34,20 @@ local MOVE_BUTTON_SIZE = Vector3.new(8, 0.5, 8)
 local COLOR_MOVE = Color3.fromRGB(255, 201, 60)
 -- Табличка «Гараж продаётся» — кнопка Buy_garage (не апгрейд из Config, а покупка самого гаража)
 local GARAGE_ID = "garage"
+-- Точка появления владельца гаража: снаружи перед воротами (передний край участка +Z), лицом внутрь
+local HOME_OUTSIDE = 4 -- studs за передним краем участка
+local HOME_HEIGHT = 3.5 -- над верхом участка: HumanoidRootPart стоящего персонажа
+-- Кнопка 🏠: не чаще раза в HOME_COOLDOWN секунд
+local HOME_COOLDOWN = 2
+local CHARACTER_WAIT = 5
 
 local PlotService = {}
 local owners: { [BasePart]: Player } = {}
 local buttons: { [Player]: { [BasePart]: Upgrades.Upgrade } } = {}
 local lastTouch: { [Player]: number } = {}
+local lastHome: { [Player]: number } = {}
+-- Игроки без участка (все заняты): получат первый освободившийся
+local waiting: { Player } = {}
 
 -- Участок собран заново (вход игрока, переезд): StaffService пересаживает NPC
 local plotChanged = Instance.new("BindableEvent")
@@ -440,6 +449,52 @@ tryBuy = function(player: Player, upgradeId: string)
 	end
 end
 
+-- Перенести персонажа к воротам своего гаража (появление, Rebirth, кнопка 🏠)
+local function sendHome(player: Player)
+	local plot = getPlot(player)
+	local character = player.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	if not plot or not character or not humanoid or humanoid.Health <= 0 then
+		return
+	end
+	-- Сидящего сначала поднимаем: иначе SeatWeld тянет персонажа обратно к стулу
+	local seat = humanoid.SeatPart
+	if seat then
+		humanoid.Sit = false
+		local weld = seat:FindFirstChild("SeatWeld")
+		if weld then
+			weld:Destroy()
+		end
+	end
+	-- CFrame участка смотрит на −Z (внутрь), поэтому персонаж сразу стоит лицом к воротам
+	local offset = CFrame.new(0, plot.Size.Y / 2 + HOME_HEIGHT, plot.Size.Z / 2 + HOME_OUTSIDE)
+	character:PivotTo(plot.CFrame * offset)
+end
+
+-- Новый персонаж владельца гаража появляется у своего гаража, а не в парке
+local function onCharacterAdded(player: Player, character: Model)
+	if not character:WaitForChild("HumanoidRootPart", CHARACTER_WAIT) then
+		return
+	end
+	-- Ждём кадр: SpawnLocation ставит персонажа на себя уже после CharacterAdded
+	task.wait()
+	if player.Character == character and PlotService.ownsGarage(player) then
+		sendHome(player)
+	end
+end
+
+local function onGoHome(player: Player)
+	local now = os.clock()
+	if (lastHome[player] or 0) + HOME_COOLDOWN > now then
+		return
+	end
+	lastHome[player] = now
+	if not PlotService.ownsGarage(player) then
+		return
+	end
+	sendHome(player)
+end
+
 local function assignPlot(player: Player)
 	local plotsFolder = workspace:FindFirstChild("Plots")
 	if not plotsFolder then
@@ -466,11 +521,19 @@ local function assignPlot(player: Player)
 				DataService.replicate(player)
 				refreshButtons(player)
 				plotChanged:Fire(player)
+				-- Персонаж появился раньше, чем загрузился профиль: переносим к гаражу сейчас
+				if profileOwnsGarage(profile) then
+					sendHome(player)
+				end
 			end)
 			return
 		end
 	end
-	warn("[PlotService] No free plots")
+	-- Участков меньше, чем мест на сервере (WorldService): ждём, пока кто-нибудь выйдет
+	warn("[PlotService] No free plots, player waits:", player.Name)
+	if not table.find(waiting, player) then
+		table.insert(waiting, player)
+	end
 end
 
 onMoveStudio = function(player: Player)
@@ -501,14 +564,26 @@ local function onBuyUpgrade(player: Player, upgradeId: any)
 	tryBuy(player, upgradeId)
 end
 
+local function onPlayerAdded(player: Player)
+	player.CharacterAdded:Connect(function(character)
+		onCharacterAdded(player, character)
+	end)
+	assignPlot(player)
+end
+
 function PlotService.start()
-	Players.PlayerAdded:Connect(assignPlot)
+	Players.PlayerAdded:Connect(onPlayerAdded)
 	for _, player in Players:GetPlayers() do
-		assignPlot(player)
+		onPlayerAdded(player)
 	end
 	Players.PlayerRemoving:Connect(function(player)
 		buttons[player] = nil
 		lastTouch[player] = nil
+		lastHome[player] = nil
+		local index = table.find(waiting, player)
+		if index then
+			table.remove(waiting, index)
+		end
 		local plot = getPlot(player)
 		if plot then
 			owners[plot] = nil
@@ -517,9 +592,15 @@ function PlotService.start()
 					child:Destroy()
 				end
 			end
+			-- Освободившийся участок — первому из очереди
+			local nextPlayer = table.remove(waiting, 1)
+			if nextPlayer and nextPlayer.Parent then
+				assignPlot(nextPlayer)
+			end
 		end
 	end)
 	Remotes.BuyUpgrade.OnServerEvent:Connect(onBuyUpgrade)
+	StartRemotes.GoHome.OnServerEvent:Connect(onGoHome)
 	StaffRemotes.MoveStudio.OnServerEvent:Connect(onMoveStudio)
 
 	-- Один общий цикл: зелёная кнопка — денег хватает, серая — нет

@@ -21,7 +21,7 @@ return {
 	focus_sound = "Ses",
 	focus_story = "Hikâye",
 	create_start = "Geliştirmeye başla",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "{price} karşılığında açılsın mı?",
 	create_combo_great = "Harika ikili!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Reklam +%30, fiyat: {price}",
 	release_close = "Kapat",
 	release_best = "Yeni stüdyo rekoru!",
+	release_loan_repaid = "🏦 −{money} kredi ödemesine gitti",
 
 	-- Genres
 	genre_action = "Aksiyon",

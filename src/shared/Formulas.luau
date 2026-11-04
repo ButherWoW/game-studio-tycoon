@@ -33,7 +33,8 @@ function Formulas.topicFit(topicId: string, genreId: string): number
 end
 
 -- Оценка 1..10. rng передаётся снаружи, чтобы формулу можно было тестировать.
--- bonus — прибавка к оценке до округления (декор и техника студии, Config/Upgrades.reviewBonus)
+-- bonus — прибавка к оценке до округления (декор и техника студии, Config/Upgrades.reviewBonus);
+-- DevelopmentService вычитает из неё criticExpectation и repeatPenalty
 function Formulas.review(
 	genreId: string,
 	topicId: string,
@@ -51,6 +52,41 @@ function Formulas.review(
 	raw += rng:NextNumber(-Economy.reviewNoise, Economy.reviewNoise)
 	raw += bonus or 0
 	return math.clamp(math.floor(raw + 0.5), 1, 10)
+end
+
+-- Ключ сочетания для истории повторов
+function Formulas.comboKey(genreId: string, topicId: string): string
+	return genreId .. "/" .. topicId
+end
+
+-- Сколько вычесть из оценки (до округления) на этапе studioLevel: ожидания критиков от студии
+function Formulas.criticExpectation(studioLevel: number): number
+	local list = Economy.criticExpectation
+	return list[math.clamp(math.floor(studioLevel), 1, #list)] or 0
+end
+
+-- Штраф за повтор: history — сочетания последних игр (Formulas.comboKey), новые в конце.
+-- За каждое совпадение среди последних Economy.repeatHistory — repeatPenalty, не больше repeatPenaltyMax
+function Formulas.repeatPenalty(history: { string }?, genreId: string, topicId: string): number
+	if not history then
+		return 0
+	end
+	local key = Formulas.comboKey(genreId, topicId)
+	local count = 0
+	for i = math.max(#history - Economy.repeatHistory + 1, 1), #history do
+		if history[i] == key then
+			count += 1
+		end
+	end
+	return math.min(count * Economy.repeatPenalty, Economy.repeatPenaltyMax)
+end
+
+-- Запомнить сочетание выпущенной игры; храним только последние Economy.repeatHistory
+function Formulas.rememberCombo(history: { string }, genreId: string, topicId: string)
+	table.insert(history, Formulas.comboKey(genreId, topicId))
+	while #history > Economy.repeatHistory do
+		table.remove(history, 1)
+	end
 end
 
 -- Доход от релиза. adBonus: 0.3 = +30%. rebirthMultiplier >= 1.

@@ -1,9 +1,10 @@
 --!strict
 -- Награды «N минут дохода» (задания #9, награды за вход #10).
--- Минута дохода = доход за релиз с лучшей оценкой игрока × релизов в минуту.
+-- Минута дохода = доход за релиз с лучшей оценкой с последнего Rebirth × релизов в минуту;
+-- без гаража — доход ноутбука в парке (RewardFormulas).
 
 export type Reward = {
-	incomeMinutes: number?, -- деньги: N минут дохода (см. Rewards.incomeForMinutes)
+	incomeMinutes: number?, -- деньги: N минут дохода (см. RewardFormulas.incomeForMinutes)
 	researchPoints: number?, -- ОИ, TODO #8: тратить в дереве исследований
 	badge: string?, -- значок, TODO #9: выдать через BadgeService, когда появятся id значков
 	incomeBonus: number?, -- 0.05 = +5% к доходу навсегда, TODO #9: учесть в DevelopmentService
@@ -21,6 +22,10 @@ local Rewards = {
 	secondsPerGame = 30,
 	-- +50% за каждый Rebirth (как в DevelopmentService)
 	rebirthBonus = 0.5,
+	-- Без гаража: одна игра на ноутбуке в парке с учётом подхода и окон (StartPark.laptopDuration = 20)
+	parkSecondsPerGame = 40,
+	-- Без гаража одна денежная награда — не больше этой доли StartPark.garagePrice (30% -> $225)
+	parkMaxGarageShare = 0.3,
 }
 
 return Rewards

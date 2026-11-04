@@ -27,6 +27,33 @@ pcall(function()
 	pendingStore = DataStoreService:GetDataStore("ExpoPrizes_v1")
 end)
 
+-- Запись в ExpoPrizes с повтором, как DataService.write: 3 попытки, пауза 1 с, 2 с.
+-- Отчёт #2 п. 8: одна ошибка AccessForbidden — и приз раунда пропадал
+local WRITE_ATTEMPTS = 3
+-- Офлайн-победителю: если и повторы не помогли, пробуем ещё позже в фоне (с)
+local LATE_RETRY_DELAYS = { 30, 120, 300 }
+
+local function updateWithRetry(key: string, transform: (any) -> any): (boolean, any)
+	local store = pendingStore
+	if not store then
+		return false, "DataStore unavailable"
+	end
+	local lastErr: any = nil
+	for attempt = 1, WRITE_ATTEMPTS do
+		local ok, err = pcall(function()
+			store:UpdateAsync(key, transform :: any)
+		end)
+		if ok then
+			return true, nil
+		end
+		lastErr = err
+		if attempt < WRITE_ATTEMPTS then
+			task.wait(attempt)
+		end
+	end
+	return false, lastErr
+end
+
 local function better(a: Entry, b: Entry?): boolean
 	if not b then
 		return true
@@ -67,20 +94,19 @@ end
 
 -- Приз победителю, который уже вышел: копим в DataStore до его входа
 local function savePending(userId: number, amount: number)
-	local store = pendingStore
-	if not store then
+	if not pendingStore then
 		return
 	end
-	local ok, err = pcall(function()
-		store:UpdateAsync("user_" .. userId, function(old)
-			local data = if type(old) == "table" then old else { amount = tonumber(old) or 0 }
-			data.amount = (tonumber(data.amount) or 0) + amount
-			return data
-		end)
+	local ok, err = updateWithRetry("user_" .. userId, function(old)
+		local data = if type(old) == "table" then old else { amount = tonumber(old) or 0 }
+		data.amount = (tonumber(data.amount) or 0) + amount
+		return data
 	end)
 	if not ok then
 		warn(
 			"[ExpoService] Не удалось сохранить приз офлайн-победителю:",
+			userId,
+			amount,
 			err
 		)
 	end
@@ -100,17 +126,23 @@ local function claimPending(player: Player)
 		return
 	end
 	local amount = 0
-	local ok = pcall(function()
-		store:UpdateAsync("user_" .. player.UserId, function(old)
-			local data = if type(old) == "table" then old else { amount = tonumber(old) or 0 }
-			amount = tonumber(data.amount) or 0
-			if amount <= 0 then
-				return nil
-			end
-			data.amount = 0
-			return data
-		end)
+	local ok, err = updateWithRetry("user_" .. player.UserId, function(old)
+		local data = if type(old) == "table" then old else { amount = tonumber(old) or 0 }
+		amount = tonumber(data.amount) or 0
+		if amount <= 0 then
+			return nil
+		end
+		data.amount = 0
+		return data
 	end)
+	if not ok then
+		-- Приз остался в копилке: заберём при следующем входе
+		warn(
+			"[ExpoService] Не удалось забрать приз выставки:",
+			player.UserId,
+			err
+		)
+	end
 	if not ok or amount <= 0 then
 		return
 	end
@@ -123,35 +155,55 @@ local function claimPending(player: Player)
 	end
 end
 
--- Отметить победу в раунде во всех серверах сразу. true — приз этому игроку можно выдать
--- (в этом раунде он ещё не выигрывал); toPending — положить приз в копилку для офлайн-игрока
-local function claimRound(userId: number, roundId: number, toPending: boolean): boolean
-	local store = pendingStore
-	if not store then
+-- Отметить победу в раунде во всех серверах сразу. toPending — положить приз в копилку
+-- для офлайн-игрока. "ok" — приз можно выдать (в этом раунде он ещё не выигрывал),
+-- "duplicate" — уже выиграл на другом сервере, "error" — DataStore не ответил и после повторов
+local function claimRound(userId: number, roundId: number, toPending: boolean): string
+	if not pendingStore then
 		-- Нет DataStore (Studio без API Services): выдаём только онлайн-игроку
-		return not toPending
+		return if toPending then "error" else "ok"
 	end
 	local allowed = false
-	local ok, err = pcall(function()
-		store:UpdateAsync("user_" .. userId, function(old)
-			local data = if type(old) == "table" then old else { amount = tonumber(old) or 0 }
-			if data.lastRound == roundId then
-				allowed = false
-				return nil
-			end
-			allowed = true
-			data.lastRound = roundId
-			if toPending then
-				data.amount = (tonumber(data.amount) or 0) + Expo.prize
-			end
-			return data
-		end)
+	local ok, err = updateWithRetry("user_" .. userId, function(old)
+		local data = if type(old) == "table" then old else { amount = tonumber(old) or 0 }
+		if data.lastRound == roundId then
+			allowed = false
+			return nil
+		end
+		allowed = true
+		data.lastRound = roundId
+		if toPending then
+			data.amount = (tonumber(data.amount) or 0) + Expo.prize
+		end
+		return data
 	end)
 	if not ok then
-		warn("[ExpoService] Не удалось записать победу в выставке:", err)
-		return false
+		warn(
+			"[ExpoService] Не удалось записать победу в выставке:",
+			userId,
+			roundId,
+			err
+		)
+		return "error"
 	end
-	return allowed
+	return if allowed then "ok" else "duplicate"
+end
+
+-- Офлайн-победитель, а DataStore не ответил: пробуем записать приз ещё несколько раз позже
+local function claimRoundLater(userId: number, roundId: number)
+	for _, delay in LATE_RETRY_DELAYS do
+		task.wait(delay)
+		local result = claimRound(userId, roundId, true)
+		if result ~= "error" then
+			return
+		end
+	end
+	warn(
+		"[ExpoService] Приз выставки не сохранён после всех повторов:",
+		userId,
+		roundId,
+		Expo.prize
+	)
 end
 
 local function finishRound(roundId: number, minParticipants: number)
@@ -173,12 +225,39 @@ local function finishRound(roundId: number, minParticipants: number)
 	end
 	local online = Players:GetPlayerByUserId(winner.userId)
 	if online and DataService.get(online) then
-		if not claimRound(winner.userId, roundId, false) then
+		local result = claimRound(winner.userId, roundId, false)
+		if result == "duplicate" then
 			return
 		end
-		DataService.addCash(online, Expo.prize)
-	elseif not claimRound(winner.userId, roundId, true) then
-		return
+		-- "error": всё равно выдаём онлайн-победителю. Дубль почти невозможен: раунд кончается
+		-- одновременно везде, а профиль открыт только на одном сервере (метка сессии DataService).
+		-- Лишний приз возможен, только если он же победил офлайн на другом сервере И здесь
+		-- DataStore сбоит — игрок этим не управляет, а потерять честный приз хуже
+		if result == "error" then
+			warn(
+				"[ExpoService] Победа не отмечена в DataStore, приз выдаём по данным сервера:",
+				winner.userId,
+				roundId
+			)
+		end
+		if not online.Parent or not DataService.get(online) then
+			-- Вышел, пока ждали DataStore: приз — в копилку (раунд уже отмечен — просто сумму)
+			if result == "ok" then
+				task.spawn(savePending, winner.userId, Expo.prize)
+			elseif pendingStore then
+				task.spawn(claimRoundLater, winner.userId, roundId)
+			end
+		else
+			DataService.addCash(online, Expo.prize)
+			task.spawn(DataService.save, online)
+		end
+	else
+		local result = claimRound(winner.userId, roundId, true)
+		if result == "duplicate" or (result == "error" and not pendingStore) then
+			return
+		elseif result == "error" then
+			task.spawn(claimRoundLater, winner.userId, roundId)
+		end
 	end
 	ExpoRemotes.ExpoResult:FireAllClients({
 		winner = winner.displayName,

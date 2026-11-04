@@ -1,0 +1,35 @@
+--!strict
+-- Кнопка 🏠 в боковом меню (слот 12): перенести персонажа к воротам своего гаража.
+-- Видна только владельцу гаража (атрибут игрока OwnsGarage). Проверки — на сервере (PlotService).
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local StartRemotes = require(ReplicatedStorage.Shared.StartRemotes)
+local Ui = require(script.Parent.Parent.Ui)
+
+local MENU_SLOT = 12
+-- Сервер всё равно режет чаще раза в 2 с; здесь — чтобы не слать лишнего
+local CLICK_COOLDOWN = 1
+
+local HomeButton = {}
+
+function HomeButton.start()
+	local player = Players.LocalPlayer
+	local lastClick = 0
+	local menu = Ui.menuButton(MENU_SLOT, "🏠", function()
+		local now = os.clock()
+		if now - lastClick < CLICK_COOLDOWN then
+			return
+		end
+		lastClick = now
+		StartRemotes.GoHome:FireServer()
+	end)
+	local function refresh()
+		menu.Visible = player:GetAttribute("OwnsGarage") == true
+	end
+	player:GetAttributeChangedSignal("OwnsGarage"):Connect(refresh)
+	refresh()
+end
+
+return HomeButton

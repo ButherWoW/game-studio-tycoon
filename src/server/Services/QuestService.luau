@@ -118,7 +118,7 @@ local function rollDaily(player: Player, profile: DataService.Profile, day: numb
 		local quest = Quests.dailyPool[indices[n]]
 		local target = quest.target
 		if quest.kind == "earnIncome" then
-			target = RewardService.incomeForMinutes(profile, quest.target)
+			target = RewardService.incomeTarget(player, profile, quest.target)
 		end
 		table.insert(daily.ids, quest.id)
 		table.insert(daily.targets, target)
@@ -347,6 +347,27 @@ function QuestService.onGameReleased(player: Player, info: ReleaseInfo)
 		end
 	end
 	sendState(player)
+end
+
+-- RebirthService после сброса студии: невыполненные «Заработай N минут дохода» пересчитываем
+-- под новый (меньший) доход и начинаем с нуля — заработок старой студии сюда не идёт.
+-- Денежные награды заданий и так считаются при выдаче по доходу с последнего Rebirth
+function QuestService.onRebirth(player: Player)
+	local profile = DataService.get(player)
+	if not profile then
+		return
+	end
+	local daily = dailyData(player, profile)
+	for i, id in daily.ids do
+		local quest = Quests.findDaily(id)
+		if quest and quest.kind == "earnIncome" and not daily.claimed[i] then
+			daily.targets[i] = RewardService.incomeTarget(player, profile, quest.target)
+			daily.progress[i] = 0
+		end
+	end
+	-- Деньги до Rebirth не должны попасть в заработок как «рост cash»
+	lastCash[player] = profile.cash
+	sendState(player, true)
 end
 
 -- TODO #7: система сотрудников вызывает при найме/увольнении
