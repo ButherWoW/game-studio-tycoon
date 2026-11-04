@@ -40,12 +40,13 @@ function QuestWindow.describeReward(reward: Rewards.Reward): string
 	if reward.incomeMinutes then
 		local data = ClientState.data
 		local money = if data
-			then RewardFormulas.incomeForMinutes(
-				data.bestScore,
-				data.studioLevel,
-				data.rebirths,
-				reward.incomeMinutes
-			)
+			then RewardFormulas.incomeForMinutes({
+				-- Как RewardService.incomeState на сервере
+				score = tonumber(data.runBestScore) or 0,
+				studioLevel = data.studioLevel,
+				rebirths = data.rebirths,
+				ownsGarage = Players.LocalPlayer:GetAttribute("OwnsGarage") == true,
+			}, reward.incomeMinutes)
 			else 0
 		table.insert(
 			parts,

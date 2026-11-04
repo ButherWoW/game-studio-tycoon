@@ -102,6 +102,19 @@ local function reviewBonus(player: Player): number
 	return upgradeBonus(player, "reviewBonus") + vip + staffBonus
 end
 
+-- Всё, что сдвигает оценку до округления: бонусы студии минус ожидания критиков этапа
+-- и штраф за повтор сочетания среди последних игр (отчёт #2: в офисе всегда 9–10)
+local function scoreBonus(
+	player: Player,
+	profile: DataService.Profile,
+	genreId: string,
+	topicId: string
+): number
+	return reviewBonus(player)
+		- Formulas.criticExpectation(profile.studioLevel)
+		- Formulas.repeatPenalty(profile.recentCombos, genreId, topicId)
+end
+
 local function durationFactor(player: Player): number
 	local research = researchModifiers(player)
 	-- Research.modifiers отдаёт множители: 1 = без изменений, 0.9 = на 10% быстрее
@@ -460,7 +473,13 @@ local function release(player: Player, project: Project)
 		return
 	end
 
-	local score = Formulas.review(project.genreId, project.topicId, project.points, rng, reviewBonus(player))
+	local score = Formulas.review(
+		project.genreId,
+		project.topicId,
+		project.points,
+		rng,
+		scoreBonus(player, profile, project.genreId, project.topicId)
+	)
 	local TrendService = optional("TrendService")
 	if TrendService then
 		local okTrend, trendValue = pcall(TrendService.getBonus, project.genreId, project.topicId)
@@ -524,6 +543,8 @@ local function release(player: Player, project: Project)
 	local isRecord = profile.gamesReleased > 0 and score > profile.bestScore
 	profile.gamesReleased += 1
 	profile.bestScore = math.max(profile.bestScore, score)
+	profile.runBestScore = math.max(profile.runBestScore, score)
+	Formulas.rememberCombo(profile.recentCombos, project.genreId, project.topicId)
 	DataService.addCash(player, revenue)
 
 	hook("ResearchService", "onGameReleased", player, score)
@@ -788,7 +809,8 @@ local function onPreviewRequest(player: Player, request: any)
 		sound = rate.sound * duration,
 		story = rate.story * duration,
 	}
-	local score = Formulas.review(genreId, topicId, points, NO_NOISE, reviewBonus(player))
+	local score =
+		Formulas.review(genreId, topicId, points, NO_NOISE, scoreBonus(player, profile, genreId, topicId))
 	local TrendService = optional("TrendService")
 	if TrendService then
 		score += TrendService.getBonus(genreId, topicId)

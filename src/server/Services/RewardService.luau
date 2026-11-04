@@ -8,6 +8,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Rewards = require(ReplicatedStorage.Shared.Config.Rewards)
 local RewardFormulas = require(ReplicatedStorage.Shared.RewardFormulas)
 local DataService = require(script.Parent.DataService)
+local PlotService = require(script.Parent.PlotService)
 
 export type RewardStore = {
 	researchPoints: number, -- TODO #8
@@ -46,8 +47,24 @@ function RewardService.store(profile: DataService.Profile): RewardStore
 	return store :: RewardStore
 end
 
-function RewardService.incomeForMinutes(profile: DataService.Profile, minutes: number): number
-	return RewardFormulas.incomeForMinutes(profile.bestScore, profile.studioLevel, profile.rebirths, minutes)
+-- Состояние для RewardFormulas. Гараж — по флагу PlotService (тот же атрибут OwnsGarage видит клиент)
+function RewardService.incomeState(player: Player, profile: DataService.Profile): RewardFormulas.IncomeState
+	return {
+		score = profile.runBestScore,
+		studioLevel = profile.studioLevel,
+		rebirths = profile.rebirths,
+		ownsGarage = PlotService.ownsGarage(player),
+	}
+end
+
+-- Деньги награды «N минут дохода» (без гаража — с потолком от цены гаража)
+function RewardService.incomeForMinutes(player: Player, profile: DataService.Profile, minutes: number): number
+	return RewardFormulas.incomeForMinutes(RewardService.incomeState(player, profile), minutes)
+end
+
+-- Цель задания «Заработай N минут дохода» (без потолка)
+function RewardService.incomeTarget(player: Player, profile: DataService.Profile, minutes: number): number
+	return RewardFormulas.incomeTarget(RewardService.incomeState(player, profile), minutes)
 end
 
 -- Забрать накопленные деньги из наград (QuestService вычитает их из заработка)
@@ -119,7 +136,7 @@ function RewardService.grant(player: Player, reward: Rewards.Reward)
 	end
 
 	if reward.incomeMinutes then
-		local cash = RewardService.incomeForMinutes(profile, reward.incomeMinutes)
+		local cash = RewardService.incomeForMinutes(player, profile, reward.incomeMinutes)
 		rewardCash[player] = (rewardCash[player] or 0) + cash
 		DataService.addCash(player, cash) -- внутри replicate
 	else

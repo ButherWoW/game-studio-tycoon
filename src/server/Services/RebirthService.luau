@@ -1,7 +1,8 @@
 --!strict
 -- Rebirth (шаг 4.4): с этапа «офис» за Config/Rebirth.cost(rebirths) игрок начинает заново.
--- Сбрасываем деньги, апгрейды, открытые жанры/темы; сохраняем rebirths (+1), bestScore,
--- gamesReleased. Множитель дохода (1 + 0.5 × rebirths) применяет DevelopmentService.
+-- Сбрасываем деньги, апгрейды, открытые жанры/темы и runBestScore (по нему считаются награды
+-- «N минут дохода»); сохраняем rebirths (+1), bestScore, gamesReleased.
+-- Множитель дохода (1 + 0.5 × rebirths) применяет DevelopmentService.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
@@ -80,6 +81,8 @@ local function onRequestRebirth(player: Player)
 	profile.upgrades = {}
 	profile.unlockedGenres = freeSet(Genres)
 	profile.unlockedTopics = freeSet(Topics)
+	-- Награды «N минут дохода» — по новой студии, а не по рекорду до Rebirth (отчёт #2)
+	profile.runBestScore = 0
 	-- Жанры, открытые исследованиями, остаются: исследования Rebirth не сбрасывает
 	local research = (profile :: any).research
 	if type(research) == "table" and type(research.owned) == "table" then
@@ -109,6 +112,11 @@ local function onRequestRebirth(player: Player)
 	DataService.replicate(player)
 
 	rebuildPlot(player)
+	-- Задания «Заработай N минут дохода» — под новый доход (после rebuild: там studioLevel = 1)
+	local questModule = script.Parent:FindFirstChild("QuestService")
+	if questModule and questModule:IsA("ModuleScript") then
+		(require(questModule) :: any).onRebirth(player)
+	end
 	RetentionRemotes.RebirthResult:FireClient(player, { ok = true, rebirths = profile.rebirths })
 
 	-- Возвращаем персонажа на точку появления — к пустому гаражу

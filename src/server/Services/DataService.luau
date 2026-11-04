@@ -21,6 +21,10 @@ export type Profile = {
 	unlockedTopics: { [string]: boolean },
 	gamesReleased: number,
 	bestScore: number,
+	-- Лучшая оценка с последнего Rebirth: по ней считаются награды «N минут дохода»
+	runBestScore: number,
+	-- Сочетания жанр/тема последних игр (Formulas.comboKey): штраф за повтор в оценке
+	recentCombos: { string },
 	activeAd: { bonus: number, expiresAt: number }?,
 	-- Купленные за Robux разовые эффекты (ShopService): заряды и конец действия кофе
 	boosts: { instantFinish: number, patch: number, coffeeUntil: number },
@@ -72,6 +76,8 @@ local function defaultProfile(): Profile
 		unlockedTopics = { space = true, fantasy = true, zombies = true },
 		gamesReleased = 0,
 		bestScore = 0,
+		runBestScore = 0,
+		recentCombos = {},
 		activeAd = nil,
 		boosts = { instantFinish = 0, patch = 0, coffeeUntil = 0 },
 		processedReceipts = {},
@@ -198,6 +204,7 @@ function DataService.replicate(player: Player)
 		unlockedTopics = p.unlockedTopics,
 		gamesReleased = p.gamesReleased,
 		bestScore = p.bestScore,
+		runBestScore = p.runBestScore,
 		activeAd = p.activeAd,
 	})
 	local leaderstats = player:FindFirstChild("leaderstats")
@@ -292,6 +299,13 @@ local function onPlayerAdded(player: Player)
 			if k ~= "_session" then
 				(profile :: any)[k] = v
 			end
+		end
+		-- Старые сохранения без runBestScore: до первого Rebirth это bestScore, после — с нуля
+		if result.runBestScore == nil then
+			profile.runBestScore = if profile.rebirths == 0 then profile.bestScore else 0
+		end
+		if type(profile.recentCombos) ~= "table" then
+			profile.recentCombos = {}
 		end
 	end
 	profiles[player] = profile
