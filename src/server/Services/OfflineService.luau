@@ -46,7 +46,11 @@ local function onPlayerAdded(player: Player)
 	-- Считаем сразу после загрузки: автосейв перезапишет lastLogout текущим временем.
 	-- lastLogout обновляется и при автосейве, так что «уход» точен до 60 с.
 	local away = os.time() - (tonumber(data.lastLogout) or os.time())
-	local pending = (tonumber(data.offlinePending) or 0) + OfflineService.earnings(profile, away)
+	-- Несобранный доход не копится сверх одного максимального ухода (8 ч)
+	local pending = math.min(
+		(tonumber(data.offlinePending) or 0) + OfflineService.earnings(profile, away),
+		OfflineService.earnings(profile, Offline.maxSeconds)
+	)
 	data.offlinePending = pending
 	player:SetAttribute("OfflinePending", pending)
 end

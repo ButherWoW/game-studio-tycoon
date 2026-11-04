@@ -169,6 +169,19 @@ local builders: { [string]: (Model) -> () } = {}
 
 -- ===== Мебель апгрейдов =====
 
+-- Место игрока за компьютером. Seat сажает лицом к своему -Z; facing = поворот вокруг Y
+local function pcSeat(m: Model, center: Vector3, size: Vector3, color: Color3, facing: number)
+	local seat = Instance.new("Seat")
+	seat.Name = "PcSeat"
+	seat.Anchored = true
+	seat.Size = size
+	seat.CFrame = CFrame.new(center) * CFrame.Angles(0, facing, 0)
+	seat.Color = color
+	seat.Material = Enum.Material.Wood
+	seat.TopSurface = Enum.SurfaceType.Smooth
+	seat.Parent = m
+end
+
 -- Старый деревянный стол: столешница на высоте 3 (монитор PC1 ставится на y = 3)
 builders.Desk1 = function(m)
 	local wood = rgb(150, 105, 60)
@@ -180,6 +193,9 @@ builders.Desk1 = function(m)
 			})
 		end
 	end
+	-- Табурет перед столом: на нём игрок сидит, пока не купит кресло (сидит лицом к столу, −Z)
+	cylinder(m, 1.4, 0.3, Vector3.new(0, 0.7, 2.8), rgb(120, 85, 50))
+	pcSeat(m, Vector3.new(0, 1.55, 2.8), Vector3.new(1.6, 0.3, 1.6), rgb(150, 105, 60), 0)
 	-- Стопка бумаг и кружка: гаражный бардак
 	part(m, Vector3.new(1, 0.25, 1.3), Vector3.new(2, 3.12, 0.4), rgb(240, 240, 230))
 	cylinder(m, 0.6, 0.5, Vector3.new(-2.3, 3.3, 0.6), rgb(220, 70, 60))
@@ -237,7 +253,8 @@ builders.Chair = function(m)
 		rgb(90, 90, 95),
 		{ material = Enum.Material.Metal }
 	)
-	part(m, Vector3.new(2, 0.45, 2), Vector3.new(0, 1.7, 0), black)
+	-- Сиденье — Seat; кресло стоит повёрнутым на 180°, поэтому Seat разворачиваем к столу (+Z модели)
+	pcSeat(m, Vector3.new(0, 1.7, 0), Vector3.new(2, 0.45, 2), black, math.pi)
 	part(m, Vector3.new(1.4, 0.06, 1.6), Vector3.new(0, 1.95, 0), red)
 	part(m, Vector3.new(2, 3, 0.4), Vector3.new(0, 3.35, -0.85), black)
 	part(m, Vector3.new(1.2, 2.6, 0.05), Vector3.new(0, 3.35, -0.63), red)

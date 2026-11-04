@@ -11,6 +11,9 @@ local NAMES = {
 	"BuyUpgrade", -- клиент -> сервер: upgradeId
 	"BuyAdCampaignWithCash", -- клиент -> сервер: campaignId
 	"UnlockContent", -- клиент -> сервер: kind ("genre" | "topic"), id
+	"DevEvent", -- сервер -> клиент: { id, answerSeconds } — событие разработки с выбором a/b
+	"DevEventChoice", -- клиент -> сервер: id, "a" | "b"
+	"DevEventResult", -- сервер -> клиент: { id, choice, ok }
 	"DataChanged", -- сервер -> клиент: снимок публичных данных игрока
 }
 

@@ -10,10 +10,12 @@ local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local ModelFactory = require(script.Parent.ModelFactory)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 
-local PLOT_COUNT = 6
+-- Участок каждому: не меньше 6 и не меньше максимума игроков на сервере
+local PLOT_COUNT = math.max(6, game:GetService("Players").MaxPlayers)
 local PLOT_SIZE = 60
 local PLOT_THICKNESS = 1
-local PLOT_RING_RADIUS = 90 -- расстояние от спавна до центра участка
+-- Расстояние от спавна до центра участка: растёт с числом участков, чтобы они не налезали
+local PLOT_RING_RADIUS = math.max(90, PLOT_COUNT * 80 / (2 * math.pi))
 local PLOT_COLOR = Color3.fromRGB(106, 190, 48)
 
 -- Заглушки: размер и цвет по имени модели. Неизвестные модели — серый куб.

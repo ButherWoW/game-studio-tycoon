@@ -89,12 +89,14 @@ function RewardService.grant(player: Player, reward: Rewards.Reward)
 	end
 	if reward.adBonus and reward.adMinutes then
 		-- Как в MonetizationService: бонусы не складываются, берём больший, время продлеваем
-		local bonus = reward.adBonus
+		-- Бесплатная реклама не продлевает более сильную: тогда продлеваем сильную на равноценное время
 		local current = profile.activeAd
-		if current and current.expiresAt > now then
-			bonus = math.max(bonus, current.bonus)
+		if current and current.expiresAt > now and current.bonus > reward.adBonus then
+			current.expiresAt += math.floor(reward.adMinutes * 60 * reward.adBonus / current.bonus)
+		else
+			profile.activeAd =
+				{ bonus = math.min(reward.adBonus, 1), expiresAt = now + reward.adMinutes * 60 }
 		end
-		profile.activeAd = { bonus = math.min(bonus, 1), expiresAt = now + reward.adMinutes * 60 }
 	end
 
 	if reward.incomeMinutes then

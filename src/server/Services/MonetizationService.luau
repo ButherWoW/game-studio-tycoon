@@ -26,20 +26,28 @@ local function rememberReceipt(profile: DataService.Profile, purchaseId: string)
 	end
 end
 
-local function applyAd(player: Player, campaign: AdCampaigns.AdCampaign)
+-- paid = куплено за Robux: деньги уже списаны, отказать нельзя
+local function applyAd(player: Player, campaign: AdCampaigns.AdCampaign, paid: boolean?): boolean
 	local profile = DataService.get(player)
 	if not profile then
 		return
 	end
 	local now = os.time()
 	local current = profile.activeAd
-	-- Бонусы не складываются: берём больший, время продлеваем
-	local bonus = campaign.bonus
-	if current and current.expiresAt > now then
-		bonus = math.max(bonus, current.bonus)
+	-- Бонусы не складываются. Слабая реклама не продлевает сильную (иначе дешёвая кампания
+	-- за $ держала бы купленные за Robux +100% бесконечно): пока идёт сильная — отказ
+	if current and current.expiresAt > now and current.bonus > campaign.bonus then
+		if not paid then
+			return false
+		end
+		-- Купил слабую за Robux поверх сильной: продлеваем сильную на «равноценное» время
+		current.expiresAt += math.floor(campaign.durationSeconds * campaign.bonus / current.bonus)
+		DataService.replicate(player)
+		return true
 	end
-	profile.activeAd = { bonus = math.min(bonus, 1), expiresAt = now + campaign.durationSeconds }
+	profile.activeAd = { bonus = math.min(campaign.bonus, 1), expiresAt = now + campaign.durationSeconds }
 	DataService.replicate(player)
+	return true
 end
 
 local function findByProduct(productId: number): AdCampaigns.AdCampaign?
@@ -67,7 +75,7 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 	-- Диспетчер по productId: реклама здесь, остальные продукты — ShopService
 	local campaign = findByProduct(receipt.ProductId)
 	if campaign then
-		applyAd(player, campaign)
+		applyAd(player, campaign, true)
 	elseif not ShopService.grantProduct(player, profile, receipt.ProductId) then
 		warn("[Monetization] Unknown product", receipt.ProductId)
 		return Enum.ProductPurchaseDecision.NotProcessedYet
@@ -87,6 +95,12 @@ local function onBuyWithCash(player: Player, campaignId: any)
 	end
 	for _, c in AdCampaigns do
 		if c.id == campaignId and c.cashCost then
+			-- Слабую рекламу поверх более сильной не продаём: деньги не списываем
+			local profile = DataService.get(player)
+			local current = profile and profile.activeAd
+			if current and current.expiresAt > os.time() and current.bonus > c.bonus then
+				return
+			end
 			if DataService.trySpend(player, c.cashCost) then
 				applyAd(player, c)
 			end

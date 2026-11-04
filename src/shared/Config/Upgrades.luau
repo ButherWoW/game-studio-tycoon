@@ -8,7 +8,9 @@ export type Upgrade = {
 	cost: number,
 	model: string,
 	requires: string?,
-	pointsPerSecond: number?, -- рабочее место добавляет очки разработки
+	pointsPerSecond: number?, -- рабочее место добавляет очки разработки (больше очков — выше оценка)
+	speed: number?, -- на сколько быстрее делаются игры: 0.05 = −5% времени (сумма, предел в Economy)
+	reviewBonus: number?, -- прибавка к оценке каждой игры (декор и атмосфера)
 	desk: boolean?, -- за этим апгрейдом может сидеть сотрудник (один на стол)
 	-- Начинка помещения этапа: видна, пока студия на этом этапе (после переезда прячется)
 	shellStage: number?,
@@ -25,7 +27,7 @@ export type Upgrade = {
 local Upgrades: { Upgrade } = {
 	{
 		id = "desk1",
-		desk = true,
+		-- Стол игрока: за ним он сам сидит и делает игры (PcSeat), сотрудников сюда не сажаем
 		position = Vector3.new(-12, 0.5, -20),
 		rotation = 0,
 		name = "Старый стол",
@@ -35,6 +37,7 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "pc1",
+		speed = 0.05,
 		position = Vector3.new(-12, 3.5, -21),
 		rotation = 0,
 		name = "Компьютер с барахолки",
@@ -45,6 +48,8 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "walls",
+		speed = 0.05,
+		reviewBonus = 0.2,
 		position = Vector3.new(0, 0.5, 0),
 		rotation = 0,
 		shellStage = 1,
@@ -55,7 +60,8 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "chair",
-		position = Vector3.new(-12, 0.5, -15),
+		speed = 0.05,
+		position = Vector3.new(-12, 0.5, -17.2),
 		rotation = 180,
 		name = "Геймерское кресло",
 		cost = 500,
@@ -65,6 +71,7 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "desk2",
+		speed = 0.05,
 		desk = true,
 		position = Vector3.new(4, 0.5, -20),
 		rotation = 0,
@@ -76,6 +83,7 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "coffee",
+		speed = 0.1,
 		position = Vector3.new(25, 0.5, -24),
 		rotation = -90,
 		name = "Кофемашина",
@@ -86,6 +94,7 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "posters",
+		reviewBonus = 0.3,
 		position = Vector3.new(0, 3.5, -28.8),
 		rotation = 0,
 		name = "Постеры и неоновая вывеска",
@@ -95,6 +104,7 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "pcpro",
+		speed = 0.1,
 		position = Vector3.new(4, 3.5, -21),
 		rotation = 0,
 		name = "Мощный ПК",
@@ -105,6 +115,8 @@ local Upgrades: { Upgrade } = {
 	},
 	{
 		id = "office",
+		speed = 0.1,
+		reviewBonus = 0.5,
 		position = Vector3.new(0, 0.5, 0),
 		rotation = 0,
 		shellStage = 2,

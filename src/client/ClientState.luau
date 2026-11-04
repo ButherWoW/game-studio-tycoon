@@ -9,6 +9,7 @@ local LanguageRemotes = require(ReplicatedStorage.Shared.LanguageRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
+local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 
 local ClientState = {}
 
@@ -40,6 +41,36 @@ ClientState.lang = languageFromLocale(LocalizationService.RobloxLocaleId) :: Tex
 ClientState.knownCombos = {} :: { [string]: number }
 
 local changed = Instance.new("BindableEvent")
+local seatChangedEvent = Instance.new("BindableEvent")
+ClientState.seatChanged = seatChangedEvent.Event
+
+-- Сидит ли игрок за своим компьютером (Seat «PcSeat» на своём участке, см. PlotService.isAtPc)
+function ClientState.atPc(): boolean
+	local player = game:GetService("Players").LocalPlayer
+	local character = player.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	local seat = humanoid and humanoid.SeatPart
+	if not seat or seat.Name ~= "PcSeat" then
+		return false
+	end
+	local plots = workspace:FindFirstChild("Plots")
+	local plot = plots and plots:FindFirstChild(tostring(player:GetAttribute("PlotName")))
+	return plot ~= nil and seat:IsDescendantOf(plot)
+end
+
+local function watchSeat(character: Model)
+	local humanoid = character:WaitForChild("Humanoid") :: Humanoid
+	humanoid:GetPropertyChangedSignal("SeatPart"):Connect(function()
+		seatChangedEvent:Fire(ClientState.atPc())
+	end)
+end
+do
+	local player = game:GetService("Players").LocalPlayer
+	if player.Character then
+		task.spawn(watchSeat, player.Character)
+	end
+	player.CharacterAdded:Connect(watchSeat)
+end
 ClientState.changed = changed.Event
 
 function ClientState.t(key: string, vars: { [string]: any }?): string
@@ -60,6 +91,11 @@ function ClientState.setLang(code: string, save: boolean?)
 	end
 end
 
+-- Текст из конфига на языке игрока: перевод по ключу из Locales, иначе поля ru/en конфига
+function ClientState.localText(key: string, ru: string, en: string): string
+	return Texts.lookup(ClientState.lang, key) or (if ClientState.lang == "ru" then ru else en)
+end
+
 -- Имя жанра или темы на языке игрока: перевод genre_<id>/topic_<id>, иначе name/nameEn
 function ClientState.localName(item: { name: string, nameEn: string }): string
 	local id = (item :: any).id
@@ -67,6 +103,7 @@ function ClientState.localName(item: { name: string, nameEn: string }): string
 		then nil
 		elseif (Genres :: any)[id] == item then "genre_"
 		elseif (Topics :: any)[id] == item then "topic_"
+		elseif (Stages :: any)[(item :: any).level] == item then "stage_"
 		else nil
 	if prefix then
 		local translated = Texts.lookup(ClientState.lang, prefix .. id)

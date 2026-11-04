@@ -8,6 +8,7 @@ local Players = game:GetService("Players")
 
 local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
+local Research = require(ReplicatedStorage.Shared.Config.Research)
 local Rebirth = require(ReplicatedStorage.Shared.Config.Rebirth)
 local RetentionRemotes = require(ReplicatedStorage.Shared.RetentionRemotes)
 local DataService = require(script.Parent.DataService)
@@ -76,6 +77,24 @@ local function onRequestRebirth(player: Player)
 	profile.upgrades = {}
 	profile.unlockedGenres = freeSet(Genres)
 	profile.unlockedTopics = freeSet(Topics)
+	-- Жанры, открытые исследованиями, остаются: исследования Rebirth не сбрасывает
+	local research = (profile :: any).research
+	if type(research) == "table" and type(research.owned) == "table" then
+		for _, node in Research.list do
+			if research.owned[node.id] and node.effect.unlockGenre then
+				profile.unlockedGenres[node.effect.unlockGenre] = true
+			end
+		end
+	end
+	-- Несобранный офлайн-доход и недоделанная игра сгорают вместе со студией
+	-- (иначе их забирали бы после сброса, уже с новым множителем Rebirth)
+	local data = profile :: any
+	data.offlinePending = 0
+	player:SetAttribute("OfflinePending", 0)
+	local devModule = script.Parent:FindFirstChild("DevelopmentService")
+	if devModule and devModule:IsA("ModuleScript") then
+		(require(devModule) :: any).cancel(player)
+	end
 	DataService.replicate(player)
 
 	rebuildPlot(player)

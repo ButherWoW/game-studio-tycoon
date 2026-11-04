@@ -12,16 +12,27 @@ local PROFILE_WAIT_SECONDS = 15
 
 local LanguageService = {}
 
+-- Один ожидающий запрос на игрока: спам запросами до загрузки профиля не плодит потоки
+local waiting: { [Player]: boolean } = {}
+
 local function onGetLanguage(player: Player): string?
-	-- Профиль грузится из DataStore асинхронно — ждём его, пока игрок в игре
-	local deadline = os.clock() + PROFILE_WAIT_SECONDS
-	local profile = DataService.get(player)
-	while not profile and os.clock() < deadline and player.Parent == Players do
-		task.wait(0.25)
-		profile = DataService.get(player)
+	if waiting[player] then
+		return nil
 	end
-	local lang = profile and (profile :: any).lang
-	return if Texts.isLanguage(lang) then lang else nil
+	waiting[player] = true
+	local ok, lang = pcall(function()
+		-- Профиль грузится из DataStore асинхронно — ждём его, пока игрок в игре
+		local deadline = os.clock() + PROFILE_WAIT_SECONDS
+		local profile = DataService.get(player)
+		while not profile and os.clock() < deadline and player.Parent == Players do
+			task.wait(0.25)
+			profile = DataService.get(player)
+		end
+		local saved = profile and (profile :: any).lang
+		return if Texts.isLanguage(saved) then saved else nil
+	end)
+	waiting[player] = nil
+	return if ok then lang else nil
 end
 
 local function onSetLanguage(player: Player, code: any)

@@ -184,7 +184,14 @@ local function onPassPurchaseFinished(player: Player, gamePassId: number, wasPur
 	end
 	local pass = findPass(gamePassId)
 	local passes = owned[player]
-	if pass and passes then
+	if not pass or not passes then
+		return
+	end
+	-- Событие покупки не доказывает владение: перепроверяем у Roblox
+	local ok, owns = pcall(function()
+		return MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePassId)
+	end)
+	if ok and owns and owned[player] == passes then
 		passes[pass.id] = true
 		pushState(player)
 	end

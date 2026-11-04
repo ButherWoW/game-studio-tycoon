@@ -180,10 +180,21 @@ local function comboHint(): (string, Color3)
 end
 
 local nameText = ""
+-- Кнопка старта текущего окна: обновляем её на лету, пока игрок печатает название
+-- (полная перерисовка снесла бы поле ввода вместе с фокусом)
+local startButton: TextButton? = nil
+
+local MIN_NAME_LENGTH = 2
+
+local function trimmedName(): string
+	return (nameText:gsub("^%s+", ""):gsub("%s+$", ""))
+end
 
 local function startError(): string?
 	if ClientState.developing then
 		return ClientState.t("error_busy")
+	elseif utf8.len(trimmedName()) == nil or (utf8.len(trimmedName()) :: number) < MIN_NAME_LENGTH then
+		return ClientState.t("error_name_empty")
 	elseif not selectedGenre then
 		return ClientState.t("error_pick_genre")
 	elseif not selectedTopic then
@@ -241,6 +252,13 @@ render = function()
 	nameBox.BackgroundColor3 = Color3.fromRGB(44, 46, 66)
 	nameBox.TextColor3 = Ui.colors.text
 	nameBox.PlaceholderText = ClientState.t("create_name_placeholder")
+	-- Не длиннее, чем примет сервер (30 символов)
+	nameBox:GetPropertyChangedSignal("Text"):Connect(function()
+		local length = utf8.len(nameBox.Text)
+		if length and length > 30 then
+			nameBox.Text = nameBox.Text:sub(1, (utf8.offset(nameBox.Text, 31) or (#nameBox.Text + 1)) - 1)
+		end
+	end)
 	nameBox.Font = Ui.bodyFont
 	nameBox.TextScaled = true
 	nameBox.ClearTextOnFocus = false
@@ -249,6 +267,14 @@ render = function()
 	Ui.corner(nameBox, 10)
 	nameBox:GetPropertyChangedSignal("Text"):Connect(function()
 		nameText = nameBox.Text
+		local button = startButton
+		if button and button.Parent then
+			local err = startError()
+			button.Text = err or ClientState.t("create_start")
+			button.BackgroundColor3 = if err then Ui.colors.locked else Ui.colors.money
+			button.TextColor3 = if err then Ui.colors.muted else Color3.fromRGB(40, 30, 0)
+			button:SetAttribute("Ready", err == nil)
+		end
 	end)
 	nameBox.Parent = body
 
@@ -290,7 +316,7 @@ render = function()
 				return
 			end
 			Remotes.StartDevelopment:FireServer({
-				name = nameText,
+				name = trimmedName(),
 				genreId = selectedGenre,
 				topicId = selectedTopic,
 				focus = table.clone(focus),
@@ -299,6 +325,7 @@ render = function()
 		end
 	)
 	start.Name = "StartButton"
+	startButton = start
 	-- Туториал смотрит на атрибут, а не на текст: тексты переводятся
 	start:SetAttribute("Ready", err == nil)
 	start.TextColor3 = if err then Ui.colors.muted else Color3.fromRGB(40, 30, 0)

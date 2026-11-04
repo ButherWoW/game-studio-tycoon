@@ -33,7 +33,14 @@ function Formulas.topicFit(topicId: string, genreId: string): number
 end
 
 -- Оценка 1..10. rng передаётся снаружи, чтобы формулу можно было тестировать.
-function Formulas.review(genreId: string, topicId: string, points: Points, rng: Random): number
+-- bonus — прибавка к оценке до округления (декор и техника студии, Config/Upgrades.reviewBonus)
+function Formulas.review(
+	genreId: string,
+	topicId: string,
+	points: Points,
+	rng: Random,
+	bonus: number?
+): number
 	local total = points.gameplay + points.graphics + points.sound + points.story
 	-- больше очков — лучше, но с затуханием
 	local quality = math.min(math.log10(1 + total) / Economy.qualityLogDivisor, 1)
@@ -42,6 +49,7 @@ function Formulas.review(genreId: string, topicId: string, points: Points, rng: 
 	-- Тема — бонус или штраф, а не множитель всей оценки
 	raw += (Formulas.topicFit(topicId, genreId) - 1) * Economy.topicFitStrength
 	raw += rng:NextNumber(-Economy.reviewNoise, Economy.reviewNoise)
+	raw += bonus or 0
 	return math.clamp(math.floor(raw + 0.5), 1, 10)
 end
 

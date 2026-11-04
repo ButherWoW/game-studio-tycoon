@@ -130,13 +130,24 @@ local function buildAds(body: Instance)
 	note.LayoutOrder = #AdCampaigns + 1
 end
 
-local function localized(
-	item: { name: string, nameEn: string, description: string, descriptionEn: string }
-): (string, string)
-	if ClientState.lang == "en" then
-		return item.nameEn, item.descriptionEn
+local function localized(item: {
+	id: string,
+	name: string,
+	nameEn: string,
+	description: string,
+	descriptionEn: string,
+}): (string, string)
+	-- Ключи переводов: pass_<id> для геймпассов, product_<id> для продуктов
+	local prefix = "product_"
+	for _, pass in GamePasses.list do
+		if pass.id == item.id then
+			prefix = "pass_"
+			break
+		end
 	end
-	return item.name, item.description
+	local key = prefix .. item.id
+	return ClientState.localText(key, item.name, item.nameEn),
+		ClientState.localText(key .. "_desc", item.description, item.descriptionEn)
 end
 
 local function buildPasses(body: Instance)
