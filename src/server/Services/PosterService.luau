@@ -286,6 +286,23 @@ function PosterService.ownsIn(profile: DataService.Profile, posterId: string): b
 	return data(profile).owned[posterId] == true
 end
 
+-- Забрать постер (обмен, TradeService): снять со стены. false — его и не было
+function PosterService.revokePoster(player: Player, profile: DataService.Profile, posterId: string): boolean
+	local posters = data(profile)
+	if not posters.owned[posterId] then
+		return false
+	end
+	posters.owned[posterId] = nil
+	for slotId, id in posters.equipped do
+		if id == posterId then
+			posters.equipped[slotId] = nil
+		end
+	end
+	place(player)
+	pushState(player)
+	return true
+end
+
 local function throttled(player: Player): boolean
 	local now = os.clock()
 	if (lastAction[player] or 0) + ACTION_COOLDOWN > now then

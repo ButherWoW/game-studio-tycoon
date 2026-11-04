@@ -74,6 +74,10 @@ local Analytics = {
 		franchise = "Franchise",
 		contract = "Contract",
 		rivalPassed = "RivalPassed",
+		-- Уведомления, друзья, обмен: поле — этап; у обмена значение — число предметов
+		notifyPrompt = "NotifyPrompt", -- shown / unavailable
+		referral = "Referral", -- joined_<источник> / new / inviter / inviter_capped / invite_sent
+		trade = "Trade", -- started / done / cancelled
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -100,6 +104,7 @@ local Analytics = {
 		GameJamService = { transactionType = "GameJam", sku = "jam" },
 		ContractService = { transactionType = "Contract", sku = "contract" },
 		RivalService = { transactionType = "Reward", sku = "rivalPassed" },
+		ReferralService = { transactionType = "TimedReward", sku = "referral" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },
