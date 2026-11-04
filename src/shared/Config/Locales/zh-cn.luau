@@ -384,4 +384,5 @@ return {
 	devevent_streamer_title = "📺 有主播注意到了游戏",
 	devevent_streamer_a = "展示试玩版",
 	devevent_streamer_b = "还太早",
+	error_name_empty = "给你的游戏起个名字",
 }

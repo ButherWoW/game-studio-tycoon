@@ -83,7 +83,8 @@ type Project = {
 
 local BASE_DURATION = 30 -- секунд на одну игру в начале
 local MAX_NAME_LENGTH = 30
-local DEFAULT_NAME = "Без названия"
+local DEFAULT_NAME = "Без названия" -- только если сам фильтр Roblox упал
+local MIN_NAME_LENGTH = 2
 
 local DevelopmentService = {}
 local projects: { [Player]: Project } = {}
@@ -221,7 +222,19 @@ local function onStartDevelopment(player: Player, request: any)
 	if not focus then
 		return
 	end
-	local rawName = if type(request.name) == "string" then request.name:sub(1, MAX_NAME_LENGTH) else ""
+	-- Без названия игру не создать (клиент тоже не даёт нажать «Начать»)
+	-- Длинную строку сразу отбрасываем: в 30 символах UTF-8 не больше 120 байт
+	if type(request.name) ~= "string" or #request.name > MAX_NAME_LENGTH * 4 then
+		return
+	end
+	local rawName = (request.name:gsub("^%s+", ""):gsub("%s+$", ""))
+	local nameLength = utf8.len(rawName)
+	if nameLength == nil or nameLength < MIN_NAME_LENGTH then
+		return
+	end
+	if nameLength > MAX_NAME_LENGTH then
+		rawName = rawName:sub(1, (utf8.offset(rawName, MAX_NAME_LENGTH + 1) or (#rawName + 1)) - 1)
+	end
 
 	-- Фильтр уступает поток: занимаем слот заранее, чтобы второй запрос не прошёл
 	projects[player] = PENDING

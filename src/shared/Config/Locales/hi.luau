@@ -384,4 +384,5 @@ return {
 	devevent_streamer_title = "📺 एक स्ट्रीमर ने गेम देखा",
 	devevent_streamer_a = "डेमो दिखाओ",
 	devevent_streamer_b = "अभी जल्दी है",
+	error_name_empty = "अपने गेम का नाम रखो",
 }

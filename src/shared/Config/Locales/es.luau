@@ -384,4 +384,5 @@ return {
 	devevent_streamer_title = "📺 Un streamer se fijó en el juego",
 	devevent_streamer_a = "Enseñar una demo",
 	devevent_streamer_b = "Aún es pronto",
+	error_name_empty = "Ponle nombre a tu juego",
 }

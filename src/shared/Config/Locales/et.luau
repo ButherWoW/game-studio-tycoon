@@ -384,4 +384,5 @@ return {
 	devevent_streamer_title = "📺 Striimija märkas mängu",
 	devevent_streamer_a = "Näita demo",
 	devevent_streamer_b = "Liiga vara",
+	error_name_empty = "Pane oma mängule nimi",
 }

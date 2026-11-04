@@ -275,6 +275,7 @@ Texts.ru = {
 	devevent_streamer_title = "📺 Стример заметил игру",
 	devevent_streamer_a = "Показать демо",
 	devevent_streamer_b = "Пока рано",
+	error_name_empty = "Придумай название игры",
 } :: { [string]: string }
 
 Texts.en = {
@@ -472,6 +473,7 @@ Texts.en = {
 	upgrade_posters = "Posters and neon sign",
 	upgrade_pcpro = "Powerful PC",
 	upgrade_office = "Move to an office",
+	error_name_empty = "Name your game",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть

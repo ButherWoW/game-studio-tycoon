@@ -384,4 +384,5 @@ return {
 	devevent_streamer_title = "📺 Egy streamer kiszúrta a játékot",
 	devevent_streamer_a = "Mutassunk demót",
 	devevent_streamer_b = "Még korai",
+	error_name_empty = "Adj nevet a játékodnak",
 }

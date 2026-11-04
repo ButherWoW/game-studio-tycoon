@@ -383,4 +383,5 @@ return {
 	devevent_streamer_title = "📺 Bir yayıncı oyunu fark etti",
 	devevent_streamer_a = "Demo göster",
 	devevent_streamer_b = "Çok erken",
+	error_name_empty = "Oyununa bir isim ver",
 }
