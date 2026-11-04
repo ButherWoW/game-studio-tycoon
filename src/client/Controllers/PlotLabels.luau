@@ -26,12 +26,7 @@ local function labelFor(buttonName: string): string?
 		for _, stage in Stages do
 			if stage.id == stageId then
 				local name = ClientState.localName(stage)
-				return "🏢 "
-					.. ClientState.t("team_move")
-					.. ": "
-					.. name
-					.. "\n"
-					.. Texts.money(stage.cost)
+				return ClientState.t("team_move") .. ": " .. name .. "\n" .. Texts.money(stage.cost)
 			end
 		end
 		return nil
