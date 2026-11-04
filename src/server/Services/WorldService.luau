@@ -11,12 +11,20 @@ local ModelFactory = require(script.Parent.ModelFactory)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
 
--- Участок каждому: не меньше 6 и не меньше максимума игроков на сервере
-local PLOT_COUNT = math.max(6, game:GetService("Players").MaxPlayers)
+-- Участок каждому игроку, но не больше 12: при MaxPlayers = 60 кольцо уходило на ~760 studs,
+-- за край земли (отчёт #2, п. 1). Лишние игроки ждут освободившийся участок (PlotService)
+local PLOT_COUNT = math.clamp(game:GetService("Players").MaxPlayers, 6, 12)
 local PLOT_SIZE = 60
 local PLOT_THICKNESS = 1
 -- Расстояние от спавна до центра участка: растёт с числом участков, чтобы они не налезали
 local PLOT_RING_RADIUS = math.max(90, PLOT_COUNT * 80 / (2 * math.pi))
+-- Земля с запасом за дальним краем участков (полудиагональ участка ≈ 0.71 · PLOT_SIZE)
+local GROUND_SIZE = math.max(512, 2 * (PLOT_RING_RADIUS + PLOT_SIZE) + 40)
+-- Тропинки от спавна к передним краям участков, чтобы было видно, куда идти
+local PATH_WIDTH = 6
+-- Начинаются за скамейками парка, чтобы не идти под ними (при 12 участках тропинки на углах скамеек)
+local PATH_START = StartPark.benchRadius + 6
+local PATH_COLOR = Color3.fromRGB(176, 150, 112)
 local PLOT_COLOR = Color3.fromRGB(106, 190, 48)
 
 -- Заглушки: размер и цвет по имени модели. Неизвестные модели — серый куб.
@@ -51,15 +59,25 @@ local function makePart(name: string, size: Vector3, cframe: CFrame, color: Colo
 end
 
 local function ensureGround()
-	if not workspace:FindFirstChild("Baseplate") then
+	local existing = workspace:FindFirstChild("Baseplate")
+	if not existing then
 		local base = makePart(
 			"Baseplate",
-			Vector3.new(512, 2, 512),
+			Vector3.new(GROUND_SIZE, 2, GROUND_SIZE),
 			CFrame.new(0, -1, 0),
 			Color3.fromRGB(90, 90, 95),
 			workspace
 		)
 		base.Locked = true
+	elseif existing:IsA("BasePart") and (existing.Size.X < GROUND_SIZE or existing.Size.Z < GROUND_SIZE) then
+		-- Baseplate из Studio меньше кольца участков: расширяем, иначе участки висят над пустотой
+		local cf = existing.CFrame
+		existing.Size = Vector3.new(
+			math.max(existing.Size.X, GROUND_SIZE),
+			existing.Size.Y,
+			math.max(existing.Size.Z, GROUND_SIZE)
+		)
+		existing.CFrame = cf
 	end
 	if not workspace:FindFirstChildWhichIsA("SpawnLocation", true) then
 		local spawn = Instance.new("SpawnLocation")
@@ -101,6 +119,50 @@ local function ensurePlots()
 			folder :: Instance
 		)
 	end
+end
+
+-- Тропинки от спавна к передним краям участков (по фактическим участкам, в т. ч. собранным в Studio).
+-- Только визуальные: CanCollide = false, игрок идёт по земле под ними
+local function ensurePaths()
+	if workspace:FindFirstChild("PlotPaths") then
+		return
+	end
+	local plots = workspace:FindFirstChild("Plots")
+	if not plots then
+		return
+	end
+	local spawn = workspace:FindFirstChildWhichIsA("SpawnLocation", true)
+	local center = if spawn and spawn:IsA("BasePart")
+		then Vector3.new(spawn.Position.X, 0, spawn.Position.Z)
+		else Vector3.zero
+	local folder = Instance.new("Folder")
+	folder.Name = "PlotPaths"
+	for _, plot in plots:GetChildren() do
+		if plot:IsA("BasePart") then
+			-- Передний край участка — локальная +Z (там вход и кнопки)
+			local front = (plot.CFrame * CFrame.new(0, 0, plot.Size.Z / 2)).Position
+			local target = Vector3.new(front.X, 0, front.Z)
+			local offset = target - center
+			local length = offset.Magnitude - PATH_START
+			if length > 1 then
+				local dir = offset.Unit
+				local from = center + dir * PATH_START
+				local mid = from + dir * (length / 2) + Vector3.new(0, 0.05, 0)
+				local path = makePart(
+					"Path_" .. plot.Name,
+					Vector3.new(PATH_WIDTH, 0.1, length),
+					CFrame.lookAt(mid, mid + dir),
+					PATH_COLOR,
+					folder
+				)
+				path.Material = Enum.Material.Ground
+				path.CanCollide = false
+				path.CanQuery = false
+				path.CanTouch = false
+			end
+		end
+	end
+	folder.Parent = workspace
 end
 
 -- Заглушки строятся центром основания в (0,0,0): место на участке задаёт
@@ -222,9 +284,13 @@ local function ensureStartPark()
 	folder.Parent = workspace
 end
 
--- Свет гаража вдвое тусклее (просьба владельца). Касается и модели, импортированной в Studio
--- (Garage из Creator Store): её лампы ослабляем один раз при старте сервера
-local GARAGE_LIGHT_SCALE = 0.5
+-- Свет гаража тусклее (просьба владельца). Касается и модели, импортированной в Studio
+-- (Garage из Creator Store): её лампы ослабляем один раз при старте сервера.
+-- Отчёт #2, п. 16: при 0.5 лампы всё ещё давали пересвеченные пятна на полу — режем сильнее,
+-- ограничиваем яркость и дальность и включаем тени, чтобы свет не пробивал всё насквозь
+local GARAGE_LIGHT_SCALE = 0.3
+local GARAGE_LIGHT_MAX_BRIGHTNESS = 0.4
+local GARAGE_LIGHT_MAX_RANGE = 16
 local DIMMED_MODELS = { "Garage" }
 
 local function dimImportedLights()
@@ -238,7 +304,11 @@ local function dimImportedLights()
 			model:SetAttribute("LightsDimmed", true)
 			for _, d in model:GetDescendants() do
 				if d:IsA("Light") then
-					d.Brightness *= GARAGE_LIGHT_SCALE
+					d.Brightness = math.min(d.Brightness * GARAGE_LIGHT_SCALE, GARAGE_LIGHT_MAX_BRIGHTNESS)
+					d.Shadows = true
+					if d:IsA("PointLight") or d:IsA("SpotLight") or d:IsA("SurfaceLight") then
+						d.Range = math.min(d.Range, GARAGE_LIGHT_MAX_RANGE)
+					end
 				end
 			end
 		end
@@ -249,6 +319,7 @@ end
 function WorldService.start()
 	ensureGround()
 	ensurePlots()
+	ensurePaths()
 	ensureUpgradeModels()
 	ensureStartPark()
 	dimImportedLights()

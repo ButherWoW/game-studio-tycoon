@@ -307,7 +307,11 @@ end
 
 -- ===== Название студии =====
 
-local SIGN_OFFSET = CFrame.new(0, 13.5, 30) -- над воротами гаража (передняя стена z = 29.5)
+-- Над воротами гаража (передняя стена z = 29.5, высота 12). Отчёт #2, п. 15: доска 22×3.2 на 13.5
+-- закрывала обзор у передней кнопки — теперь меньше и выше, на двух стойках над стеной
+local SIGN_OFFSET = CFrame.new(0, 17, 29.5)
+local SIGN_SIZE = Vector2.new(14, 2.2)
+local SIGN_WALL_TOP = 12
 
 -- Вывеска на постерах и табличка у входа на участке игрока. Табличка — модель, поэтому
 -- PlotService.rebuild её сносит, а plotChanged ставит заново
@@ -340,22 +344,36 @@ local function applyStudioSigns(player: Player)
 	signBoard.CanCollide = false
 	signBoard.CanQuery = false
 	signBoard.CanTouch = false
-	signBoard.Size = Vector3.new(22, 3.2, 0.5)
+	signBoard.Size = Vector3.new(SIGN_SIZE.X, SIGN_SIZE.Y, 0.4)
 	signBoard.Color = Color3.fromRGB(28, 26, 40)
 	signBoard.Material = Enum.Material.SmoothPlastic
 	signBoard.CFrame = plot.CFrame * SIGN_OFFSET
 	signBoard.Parent = model
-	for _, y in { 1.75, -1.75 } do
+	for _, y in { SIGN_SIZE.Y / 2 + 0.1, -SIGN_SIZE.Y / 2 - 0.1 } do
 		local strip = Instance.new("Part")
 		strip.Anchored = true
 		strip.CanCollide = false
 		strip.CanQuery = false
 		strip.CanTouch = false
-		strip.Size = Vector3.new(22.4, 0.25, 0.6)
+		strip.Size = Vector3.new(SIGN_SIZE.X + 0.3, 0.2, 0.5)
 		strip.Color = Color3.fromRGB(255, 201, 60)
 		strip.Material = Enum.Material.Neon
 		strip.CFrame = signBoard.CFrame * CFrame.new(0, y, 0)
 		strip.Parent = model
+	end
+	-- Стойки от верха стены до низа доски
+	local postHeight = SIGN_OFFSET.Position.Y - SIGN_SIZE.Y / 2 - SIGN_WALL_TOP
+	for _, x in { -SIGN_SIZE.X / 2 + 1.5, SIGN_SIZE.X / 2 - 1.5 } do
+		local post = Instance.new("Part")
+		post.Anchored = true
+		post.CanCollide = false
+		post.CanQuery = false
+		post.CanTouch = false
+		post.Size = Vector3.new(0.3, postHeight, 0.3)
+		post.Color = Color3.fromRGB(60, 60, 65)
+		post.Material = Enum.Material.Metal
+		post.CFrame = signBoard.CFrame * CFrame.new(x, -SIGN_SIZE.Y / 2 - postHeight / 2, 0)
+		post.Parent = model
 	end
 	for _, face in { Enum.NormalId.Front, Enum.NormalId.Back } do
 		local gui = Instance.new("SurfaceGui")

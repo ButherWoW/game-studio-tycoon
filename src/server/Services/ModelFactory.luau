@@ -61,12 +61,13 @@ local function cylinder(
 	return p
 end
 
-local function light(p: BasePart, color: Color3, range: number, brightness: number)
+local function light(p: BasePart, color: Color3, range: number, brightness: number): PointLight
 	local l = Instance.new("PointLight")
 	l.Color = color
 	l.Range = range
 	l.Brightness = brightness
 	l.Parent = p
+	return l
 end
 
 -- Ровная дверь/проём в стене из двух боковых кусков и перемычки
@@ -341,8 +342,10 @@ builders.GarageWalls = function(m)
 			material = Enum.Material.Neon,
 			shape = Enum.PartType.Ball,
 		})
-		-- Свет вдвое тусклее прежнего (просьба владельца: в гараже было слишком ярко)
-		light(bulb, rgb(255, 220, 160), 22, 0.6)
+		-- Свет тусклее (просьба владельца). Отчёт #2, п. 16: при 0.6 / 22 на полу были пересвеченные
+		-- белые пятна — ещё вдвое тусклее, короче и с тенями
+		local bulbLight = light(bulb, rgb(255, 220, 160), 16, 0.3)
+		bulbLight.Shadows = true
 	end
 	-- Стеллаж у левой стены с коробками
 	local metal = rgb(120, 125, 130)
