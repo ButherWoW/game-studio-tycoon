@@ -3,6 +3,8 @@
 -- Вход — ExpoService.onGameReleased из DevelopmentService.release.
 -- Ушедший игрок остаётся в зачёте до конца часа; если он победил офлайн,
 -- приз ждёт его в DataStore и начисляется при следующем входе.
+-- Против фарма: раунды идут по часам одновременно на всех серверах, нужен минимум
+-- участников, и один игрок получает не больше одного приза за раунд во всех серверах.
 
 local DataStoreService = game:GetService("DataStoreService")
 local Players = game:GetService("Players")
@@ -71,7 +73,9 @@ local function savePending(userId: number, amount: number)
 	end
 	local ok, err = pcall(function()
 		store:UpdateAsync("user_" .. userId, function(old)
-			return (tonumber(old) or 0) + amount
+			local data = if type(old) == "table" then old else { amount = tonumber(old) or 0 }
+			data.amount = (tonumber(data.amount) or 0) + amount
+			return data
 		end)
 	end)
 	if not ok then
@@ -87,27 +91,75 @@ local function claimPending(player: Player)
 	if not store then
 		return
 	end
+	-- Сначала дождаться профиля: если игрока кикнет защита сессий или он выйдет,
+	-- приз должен остаться в копилке, а не пропасть
+	while not DataService.get(player) and player.Parent do
+		task.wait(0.2)
+	end
+	if not DataService.get(player) then
+		return
+	end
 	local amount = 0
 	local ok = pcall(function()
 		store:UpdateAsync("user_" .. player.UserId, function(old)
-			amount = tonumber(old) or 0
-			return if amount > 0 then 0 else nil
+			local data = if type(old) == "table" then old else { amount = tonumber(old) or 0 }
+			amount = tonumber(data.amount) or 0
+			if amount <= 0 then
+				return nil
+			end
+			data.amount = 0
+			return data
 		end)
 	end)
 	if not ok or amount <= 0 then
 		return
 	end
-	-- Профиль грузится асинхронно в DataService
-	while not DataService.get(player) and player.Parent do
-		task.wait(0.2)
-	end
-	if DataService.get(player) then
+	if player.Parent and DataService.get(player) then
 		DataService.addCash(player, amount)
+		task.spawn(DataService.save, player)
+	else
+		-- Вышел, пока шёл запрос: вернуть приз в копилку
+		task.spawn(savePending, player.UserId, amount)
 	end
 end
 
-local function finishRound()
+-- Отметить победу в раунде во всех серверах сразу. true — приз этому игроку можно выдать
+-- (в этом раунде он ещё не выигрывал); toPending — положить приз в копилку для офлайн-игрока
+local function claimRound(userId: number, roundId: number, toPending: boolean): boolean
+	local store = pendingStore
+	if not store then
+		-- Нет DataStore (Studio без API Services): выдаём только онлайн-игроку
+		return not toPending
+	end
+	local allowed = false
+	local ok, err = pcall(function()
+		store:UpdateAsync("user_" .. userId, function(old)
+			local data = if type(old) == "table" then old else { amount = tonumber(old) or 0 }
+			if data.lastRound == roundId then
+				allowed = false
+				return nil
+			end
+			allowed = true
+			data.lastRound = roundId
+			if toPending then
+				data.amount = (tonumber(data.amount) or 0) + Expo.prize
+			end
+			return data
+		end)
+	end)
+	if not ok then
+		warn("[ExpoService] Не удалось записать победу в выставке:", err)
+		return false
+	end
+	return allowed
+end
+
+local function finishRound(roundId: number, minParticipants: number)
 	local winner = leader
+	local participants = 0
+	for _ in best do
+		participants += 1
+	end
 	table.clear(best)
 	leader = nil
 	publishLeader()
@@ -115,11 +167,18 @@ local function finishRound()
 		ExpoRemotes.ExpoResult:FireAllClients({ prize = Expo.prize })
 		return
 	end
+	if participants < minParticipants then
+		ExpoRemotes.ExpoResult:FireAllClients({ prize = Expo.prize, tooFew = true, need = minParticipants })
+		return
+	end
 	local online = Players:GetPlayerByUserId(winner.userId)
 	if online and DataService.get(online) then
+		if not claimRound(winner.userId, roundId, false) then
+			return
+		end
 		DataService.addCash(online, Expo.prize)
-	else
-		task.spawn(savePending, winner.userId, Expo.prize)
+	elseif not claimRound(winner.userId, roundId, true) then
+		return
 	end
 	ExpoRemotes.ExpoResult:FireAllClients({
 		winner = winner.displayName,
@@ -131,7 +190,9 @@ local function finishRound()
 end
 
 function ExpoService.start()
-	local interval = if RunService:IsStudio() then Expo.studioIntervalSeconds else Expo.intervalSeconds
+	local isStudio = RunService:IsStudio()
+	local interval = if isStudio then Expo.studioIntervalSeconds else Expo.intervalSeconds
+	local minParticipants = if isStudio then Expo.studioMinParticipants else Expo.minParticipants
 	Players.PlayerAdded:Connect(function(player)
 		task.spawn(claimPending, player)
 	end)
@@ -140,9 +201,11 @@ function ExpoService.start()
 	end
 	task.spawn(function()
 		while true do
-			ReplicatedStorage:SetAttribute("ExpoEndsAt", os.time() + interval)
-			task.wait(interval)
-			finishRound()
+			-- Раунд кончается на границе часа одновременно на всех серверах: номер раунда общий
+			local endsAt = (os.time() // interval + 1) * interval
+			ReplicatedStorage:SetAttribute("ExpoEndsAt", endsAt)
+			task.wait(math.max(endsAt - os.time(), 1))
+			finishRound(endsAt // interval, minParticipants)
 		end
 	end)
 end

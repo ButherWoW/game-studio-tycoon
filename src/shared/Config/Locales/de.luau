@@ -385,4 +385,5 @@ return {
 	devevent_streamer_a = "Demo zeigen",
 	devevent_streamer_b = "Zu früh",
 	error_name_empty = "Gib deinem Spiel einen Namen",
+	expo_too_few = "🏆 Keine Messe diesmal: mindestens {need} Spieler müssen mitmachen",
 }

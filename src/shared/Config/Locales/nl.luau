@@ -385,4 +385,5 @@ return {
 	devevent_streamer_a = "Demo laten zien",
 	devevent_streamer_b = "Te vroeg",
 	error_name_empty = "Geef je game een naam",
+	expo_too_few = "🏆 Geen beurs deze keer: minstens {need} spelers moeten meedoen",
 }

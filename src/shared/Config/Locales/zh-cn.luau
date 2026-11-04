@@ -385,4 +385,5 @@ return {
 	devevent_streamer_a = "展示试玩版",
 	devevent_streamer_b = "还太早",
 	error_name_empty = "给你的游戏起个名字",
+	expo_too_few = "🏆 本次展会未举行：至少需要 {need} 名玩家参加",
 }

@@ -385,4 +385,5 @@ return {
 	devevent_streamer_a = "Tunjukkan demo",
 	devevent_streamer_b = "Terlalu cepat",
 	error_name_empty = "Beri nama gamemu",
+	expo_too_few = "🏆 Pameran batal: perlu minimal {need} peserta",
 }

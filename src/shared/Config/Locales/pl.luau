@@ -385,4 +385,5 @@ return {
 	devevent_streamer_a = "Pokaż demo",
 	devevent_streamer_b = "Za wcześnie",
 	error_name_empty = "Wymyśl nazwę gry",
+	expo_too_few = "🏆 Wystawa się nie odbyła: potrzeba co najmniej {need} uczestników",
 }

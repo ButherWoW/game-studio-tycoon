@@ -385,4 +385,5 @@ return {
 	devevent_streamer_a = "Mutassunk demót",
 	devevent_streamer_b = "Még korai",
 	error_name_empty = "Adj nevet a játékodnak",
+	expo_too_few = "🏆 Most nem volt kiállítás: legalább {need} résztvevő kell",
 }

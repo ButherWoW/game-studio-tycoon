@@ -385,4 +385,5 @@ return {
 	devevent_streamer_a = "Показати демо",
 	devevent_streamer_b = "Поки зарано",
 	error_name_empty = "Придумай назву гри",
+	expo_too_few = "🏆 Виставка не відбулася: потрібно щонайменше {need} учасники",
 }

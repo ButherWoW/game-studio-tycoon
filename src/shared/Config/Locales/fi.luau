@@ -385,4 +385,5 @@ return {
 	devevent_streamer_a = "Näytä demo",
 	devevent_streamer_b = "Liian aikaista",
 	error_name_empty = "Keksi pelillesi nimi",
+	expo_too_few = "🏆 Messuja ei pidetty: tarvitaan vähintään {need} osallistujaa",
 }

@@ -23,6 +23,18 @@ local function optional(name: string): any
 	return if module and module:IsA("ModuleScript") then require(module) :: any else nil
 end
 
+-- Вызвать функцию модуля другой фичи; её ошибка не должна ломать релиз игры
+local function hook(name: string, fnName: string, ...: any)
+	local module = optional(name)
+	local fn = module and module[fnName]
+	if type(fn) == "function" then
+		local ok, err = pcall(fn, ...)
+		if not ok then
+			warn("[DevelopmentService] Hook " .. name .. "." .. fnName .. " failed:", err)
+		end
+	end
+end
+
 local function shopModifiers(player: Player): any
 	local ShopService = optional("ShopService")
 	return if ShopService then ShopService.getModifiers(player) else nil
@@ -58,9 +70,10 @@ end
 
 local function durationFactor(player: Player): number
 	local research = researchModifiers(player)
-	local devTime = if research and type(research.devTime) == "number" then research.devTime else 0
+	-- Research.modifiers отдаёт множители: 1 = без изменений, 0.9 = на 10% быстрее
+	local devTime = if research and type(research.devTime) == "number" then research.devTime else 1
 	local items = math.min(upgradeBonus(player, "speed"), Economy.maxUpgradeSpeed)
-	return math.max(1 + devTime, 0.25) * (1 - items) / speedFactor(player)
+	return math.max(devTime, 0.25) * (1 - items) / speedFactor(player)
 end
 local StaffService = require(script.Parent.StaffService)
 local PlotService = require(script.Parent.PlotService)
@@ -78,6 +91,7 @@ type Project = {
 	-- События разработки (Config/DevEvents): когда следующее, сколько было, текущее без ответа
 	nextEventAt: number,
 	eventsDone: number,
+	tempo: number, -- скорость разработки на момент старта (см. pointsRate)
 	event: { def: DevEvents.DevEvent, expiresAt: number }?,
 }
 
@@ -101,6 +115,7 @@ local PENDING: Project = {
 	duration = math.huge,
 	nextEventAt = math.huge,
 	eventsDone = 0,
+	tempo = 1,
 }
 
 -- Название увидят другие игроки (релиз, лидерборд), поэтому фильтр обязателен
@@ -124,7 +139,9 @@ local FOCUS_KEYS = { "gameplay", "graphics", "sound", "story" }
 -- Очки в секунду по направлениям с учётом сотрудников. Каждый стол даёт pointsPerSecond,
 -- сотрудник за ним умножает это на свой multiplier, а в своё направление — ещё на
 -- (1 + specBonus), если в фокусе оно >= specThreshold. Формулы оценки не меняются.
-function DevelopmentService.pointsRate(player: Player, focus: Focus): Formulas.Points
+-- tempo — во сколько раз быстрее идёт разработка (фиксируется при старте проекта, чтобы
+-- ускорение, купленное посреди игры, не давало лишних очков при прежней длительности)
+function DevelopmentService.pointsRate(player: Player, focus: Focus, tempo: number?): Formulas.Points
 	local rate = { gameplay = 0, graphics = 0, sound = 0, story = 0 }
 	local profile = DataService.get(player)
 	if not profile then
@@ -155,16 +172,17 @@ function DevelopmentService.pointsRate(player: Player, focus: Focus): Formulas.P
 		end
 	end
 	-- Ускорение сокращает время, поэтому очки в секунду растут так же: за игру их столько же
-	local tempo = 1 / durationFactor(player)
+	local speedUp = tempo or 1 / durationFactor(player)
 	local research = researchModifiers(player)
+	-- Множители из исследований: 1 = без изменений, 1.1 = +10%
 	local graphics = if research and type(research.graphicsPoints) == "number"
 		then research.graphicsPoints
-		else 0
-	local sound = if research and type(research.soundPoints) == "number" then research.soundPoints else 0
-	rate.gameplay *= tempo
-	rate.graphics *= tempo * (1 + graphics)
-	rate.sound *= tempo * (1 + sound)
-	rate.story *= tempo
+		else 1
+	local sound = if research and type(research.soundPoints) == "number" then research.soundPoints else 1
+	rate.gameplay *= speedUp
+	rate.graphics *= speedUp * graphics
+	rate.sound *= speedUp * sound
+	rate.story *= speedUp
 	return rate
 end
 
@@ -243,6 +261,7 @@ local function onStartDevelopment(player: Player, request: any)
 		return
 	end
 
+	local factor = durationFactor(player)
 	projects[player] = {
 		name = name,
 		genreId = genreId,
@@ -250,9 +269,10 @@ local function onStartDevelopment(player: Player, request: any)
 		focus = focus,
 		points = { gameplay = 0, graphics = 0, sound = 0, story = 0 },
 		elapsed = 0,
-		duration = BASE_DURATION * durationFactor(player),
+		duration = BASE_DURATION * factor,
 		nextEventAt = DevEvents.firstAt,
 		eventsDone = 0,
+		tempo = 1 / factor,
 	}
 end
 
@@ -289,36 +309,27 @@ local function release(player: Player, project: Project)
 	local shop = shopModifiers(player)
 	local research = researchModifiers(player)
 	local cashMultiplier = if shop and type(shop.cashMultiplier) == "number" then shop.cashMultiplier else 1
-	local researchBonus = if research and type(research.revenue) == "number" then research.revenue else 0
-	revenue = math.floor(revenue * cashMultiplier * (1 + researchBonus))
+	local researchMultiplier = if research and type(research.revenue) == "number" then research.revenue else 1
+	revenue = math.floor(revenue * cashMultiplier * researchMultiplier)
 
 	local isRecord = profile.gamesReleased > 0 and score > profile.bestScore
 	profile.gamesReleased += 1
 	profile.bestScore = math.max(profile.bestScore, score)
 	DataService.addCash(player, revenue)
 
-	local ResearchService = optional("ResearchService")
-	if ResearchService then
-		ResearchService.onGameReleased(player, score)
-	end
-	local ExpoService = optional("ExpoService")
-	if ExpoService then
-		local p = project.points
-		ExpoService.onGameReleased(player, {
-			name = project.name,
-			score = score,
-			points = p.gameplay + p.graphics + p.sound + p.story,
-		})
-	end
-	local QuestService = optional("QuestService")
-	if QuestService then
-		QuestService.onGameReleased(player, {
-			genreId = project.genreId,
-			topicId = project.topicId,
-			score = score,
-			focus = project.focus,
-		})
-	end
+	hook("ResearchService", "onGameReleased", player, score)
+	local p = project.points
+	hook("ExpoService", "onGameReleased", player, {
+		name = project.name,
+		score = score,
+		points = p.gameplay + p.graphics + p.sound + p.story,
+	})
+	hook("QuestService", "onGameReleased", player, {
+		genreId = project.genreId,
+		topicId = project.topicId,
+		score = score,
+		focus = project.focus,
+	})
 
 	Remotes.GameReleased:FireClient(player, {
 		name = project.name,
@@ -336,7 +347,7 @@ local function applyEffect(player: Player, project: Project, effect: DevEvents.E
 	local ok = effect.chance == nil or rng:NextNumber() < effect.chance
 	local work = if ok then effect.work or 0 else effect.failWork or 0
 	if work ~= 0 then
-		local rate = DevelopmentService.pointsRate(player, project.focus)
+		local rate = DevelopmentService.pointsRate(player, project.focus, project.tempo)
 		local perSecond = rate.gameplay + rate.graphics + rate.sound + rate.story
 		local amount = perSecond * work
 		local points = project.points :: any
@@ -398,6 +409,50 @@ local function onEventChoice(player: Player, eventId: any, choice: any)
 	resolveEvent(player, project, choice)
 end
 
+local TICK = 0.5
+
+-- Один тик одного проекта. Отдельной функцией, чтобы ошибка у одного игрока
+-- (например, в хуке другой фичи) не останавливала разработку у всех
+local function tickProject(player: Player, project: Project)
+	if project == PENDING then
+		return
+	end
+	-- Встал из-за компьютера — разработка на паузе
+	if not PlotService.isAtPc(player) then
+		Remotes.DevelopmentProgress:FireClient(player, {
+			progress = math.min(project.elapsed / project.duration, 1),
+			points = project.points,
+			paused = true,
+		})
+		return
+	end
+	local rate = DevelopmentService.pointsRate(player, project.focus, project.tempo)
+	project.points.gameplay += rate.gameplay * TICK
+	project.points.graphics += rate.graphics * TICK
+	project.points.sound += rate.sound * TICK
+	project.points.story += rate.story * TICK
+	project.elapsed += TICK
+
+	Remotes.DevelopmentProgress:FireClient(player, {
+		progress = math.min(project.elapsed / project.duration, 1),
+		points = project.points,
+	})
+
+	maybeStartEvent(player, project)
+	if project.elapsed >= project.duration then
+		-- Событие без ответа к релизу — спокойный вариант
+		resolveEvent(player, project, "b")
+		projects[player] = nil
+		release(player, project)
+	end
+end
+
+-- Отменить текущую разработку (Rebirth сбрасывает студию — недоделанная игра пропадает,
+-- иначе она вышла бы уже с новым множителем Rebirth)
+function DevelopmentService.cancel(player: Player)
+	projects[player] = nil
+end
+
 function DevelopmentService.start()
 	Remotes.DevEventChoice.OnServerEvent:Connect(onEventChoice)
 	Remotes.StartDevelopment.OnServerEvent:Connect(onStartDevelopment)
@@ -407,40 +462,16 @@ function DevelopmentService.start()
 
 	-- Один общий цикл вместо таймера на каждого игрока
 	task.spawn(function()
-		local TICK = 0.5
 		while true do
 			task.wait(TICK)
 			for player, project in projects do
-				if project == PENDING then
-					continue
-				end
-				-- Встал из-за компьютера — разработка на паузе
-				if not PlotService.isAtPc(player) then
-					Remotes.DevelopmentProgress:FireClient(player, {
-						progress = math.min(project.elapsed / project.duration, 1),
-						points = project.points,
-						paused = true,
-					})
-					continue
-				end
-				local rate = DevelopmentService.pointsRate(player, project.focus)
-				project.points.gameplay += rate.gameplay * TICK
-				project.points.graphics += rate.graphics * TICK
-				project.points.sound += rate.sound * TICK
-				project.points.story += rate.story * TICK
-				project.elapsed += TICK
-
-				Remotes.DevelopmentProgress:FireClient(player, {
-					progress = math.min(project.elapsed / project.duration, 1),
-					points = project.points,
-				})
-
-				maybeStartEvent(player, project)
-				if project.elapsed >= project.duration then
-					-- Событие без ответа к релизу — спокойный вариант
-					resolveEvent(player, project, "b")
-					projects[player] = nil
-					release(player, project)
+				local ok, err = pcall(tickProject, player, project)
+				if not ok then
+					warn("[DevelopmentService] Tick failed for", player.Name, err)
+					-- Сломанный проект убираем, чтобы ошибка не повторялась каждые полсекунды
+					if projects[player] == project then
+						projects[player] = nil
+					end
 				end
 			end
 		end

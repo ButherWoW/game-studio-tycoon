@@ -34,7 +34,10 @@ local function showResult(gui: ScreenGui, result: any)
 	panel.TextXAlignment = Enum.TextXAlignment.Center
 	Ui.corner(panel, 12)
 	local isMe = result.winnerId == Players.LocalPlayer.UserId
-	if result.winner then
+	if result.tooFew then
+		panel.TextColor3 = Ui.colors.muted
+		panel.Text = ClientState.t("expo_too_few", { need = result.need })
+	elseif result.winner then
 		panel.TextColor3 = if isMe then Ui.colors.good else Ui.colors.money
 		panel.Text = ClientState.t(if isMe then "expo_you_won" else "expo_winner", {
 			player = result.winner,

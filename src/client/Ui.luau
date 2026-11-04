@@ -135,23 +135,64 @@ end
 -- Боковое меню слева посередине (слева сверху чат, справа сверху список игроков).
 -- Слоты, чтобы фичи не спорили за место: 1 исследования, 2 сотрудники, 3 задания,
 -- 4 магазин, 5 rebirth, 6 язык. order внутри слота не нужен — один слот, одна кнопка.
-local menuGui: ScreenGui? = nil
+local menuColumn: Frame? = nil
 local MENU_BUTTON = 52
+local MENU_GAP = 8
+-- Сверху HUD и плашки, снизу кнопка «Создать игру»: столько по высоте меню не занимает
+local MENU_RESERVED = 200
+
+-- Колонка кнопок сама уменьшается, если все не влезают по высоте (телефон в альбомной)
+local function fitMenu(column: Frame, scale: UIScale)
+	local camera = workspace.CurrentCamera
+	local count = 0
+	for _, child in column:GetChildren() do
+		if child:IsA("GuiButton") then
+			count += 1
+		end
+	end
+	local needed = count * (MENU_BUTTON + MENU_GAP)
+	local available = (if camera then camera.ViewportSize.Y else 720) - MENU_RESERVED
+	scale.Scale = if needed > 0 then math.clamp(available / needed, 0.55, 1) else 1
+end
 
 function Ui.menuButton(slot: number, icon: string, onClick: () -> ()): TextButton
-	if not menuGui then
+	if not menuColumn then
 		local Players = game:GetService("Players")
 		local screen = Instance.new("ScreenGui")
 		screen.Name = "SideMenu"
 		screen.ResetOnSpawn = false
+		local column = Instance.new("Frame")
+		column.Name = "Column"
+		column.BackgroundTransparency = 1
+		column.AnchorPoint = Vector2.new(0, 0.5)
+		column.Position = UDim2.new(0, 12, 0.5, 0)
+		column.Size = UDim2.fromOffset(MENU_BUTTON, 0)
+		column.AutomaticSize = Enum.AutomaticSize.Y
+		local layout = Instance.new("UIListLayout")
+		layout.SortOrder = Enum.SortOrder.LayoutOrder
+		layout.Padding = UDim.new(0, MENU_GAP)
+		layout.Parent = column
+		local scale = Instance.new("UIScale")
+		scale.Parent = column
+		column.Parent = screen
 		screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
-		menuGui = screen
+		menuColumn = column
+		column.ChildAdded:Connect(function()
+			fitMenu(column, scale)
+		end)
+		local camera = workspace.CurrentCamera
+		if camera then
+			camera:GetPropertyChangedSignal("ViewportSize"):Connect(function()
+				fitMenu(column, scale)
+			end)
+		end
 	end
-	local b = Ui.button(menuGui :: ScreenGui, icon, Ui.colors.panel, onClick)
+	-- Слот задаёт порядок сверху вниз: 1 исследования, 2 команда, 3 задания, 4 магазин, 5 rebirth,
+	-- 6 язык, 7 хиты, 8 воры
+	local b = Ui.button(menuColumn :: Frame, icon, Ui.colors.panel, onClick)
 	b.Name = "Slot" .. slot
-	b.AnchorPoint = Vector2.new(0, 0.5)
+	b.LayoutOrder = slot
 	b.Size = UDim2.fromOffset(MENU_BUTTON, MENU_BUTTON)
-	b.Position = UDim2.new(0, 12, 0.5, (slot - 3.5) * (MENU_BUTTON + 8))
 	return b
 end
 

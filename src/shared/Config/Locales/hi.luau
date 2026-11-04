@@ -385,4 +385,5 @@ return {
 	devevent_streamer_a = "डेमो दिखाओ",
 	devevent_streamer_b = "अभी जल्दी है",
 	error_name_empty = "अपने गेम का नाम रखो",
+	expo_too_few = "🏆 इस बार प्रदर्शनी नहीं हुई: कम से कम {need} खिलाड़ी चाहिए",
 }

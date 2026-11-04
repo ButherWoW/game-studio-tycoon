@@ -385,4 +385,5 @@ return {
 	devevent_streamer_a = "Vis en demo",
 	devevent_streamer_b = "For tidligt",
 	error_name_empty = "Giv dit spil et navn",
+	expo_too_few = "🏆 Ingen messe denne gang: mindst {need} spillere skal være med",
 }

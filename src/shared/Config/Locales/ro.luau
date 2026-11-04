@@ -385,4 +385,5 @@ return {
 	devevent_streamer_a = "Arată un demo",
 	devevent_streamer_b = "E prea devreme",
 	error_name_empty = "Dă un nume jocului tău",
+	expo_too_few = "🏆 Expoziția nu a avut loc: e nevoie de cel puțin {need} participanți",
 }

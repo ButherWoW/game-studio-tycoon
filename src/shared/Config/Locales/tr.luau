@@ -384,4 +384,5 @@ return {
 	devevent_streamer_a = "Demo göster",
 	devevent_streamer_b = "Çok erken",
 	error_name_empty = "Oyununa bir isim ver",
+	expo_too_few = "🏆 Fuar yapılmadı: en az {need} katılımcı gerekiyor",
 }

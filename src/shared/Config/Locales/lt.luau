@@ -385,4 +385,5 @@ return {
 	devevent_streamer_a = "Parodyti demo",
 	devevent_streamer_b = "Dar per anksti",
 	error_name_empty = "Sugalvok žaidimo pavadinimą",
+	expo_too_few = "🏆 Paroda neįvyko: reikia bent {need} dalyvių",
 }
