@@ -1,0 +1,58 @@
+{
+  "generator": "OpenAI built-in ImageGen",
+  "kind": "V8 standard currency posters",
+  "width": 768,
+  "height": 1024,
+  "opaque": true,
+  "visualReview": "All eight reviewed; original child-friendly graphic illustrations without text, brands, frames or weapons.",
+  "posters": [
+    {
+      "id": "pixelHero",
+      "file": "poster_pixelHero.png",
+      "prompt": "Use case: stylized-concept. Asset type: original videogame shop wall poster for Game Studio Tycoon. Portrait 3:4 PNG, target 768x1024, opaque full-bleed background. Cohesive budget poster collection: polished flat graphic illustration, exactly four main solid colors, crisp simple edges, bold large silhouette, minimal background geometry, readable from far away on a phone. No gradient, no glossy rendering, no 3D render, no texture noise. Child friendly and cheerful. No text, letters, numbers, logos, brands, watermarks, border, frame, signature, weapons, scary content. Entire art must be original, do not imitate recognizable existing game characters or games. Primary request: an original small square-headed pixel hero in a gold rain poncho with a square backpack, joyfully leaping between three chunky floating blue platforms. Clear energetic diagonal jump, simple square sparkle shapes. The hero has no hat, no overalls, no moustache, no red costume. No pipes, question blocks or finish flags. Palette only navy #152746, royal blue #244BB0, golden yellow #FFC93C and warm ivory #F2F2F2. Mostly blue background, hero is the central large focal point.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-93ec6e89-510f-4c00-ba74-b6c0abae96da.png"
+    },
+    {
+      "id": "puzzleBlocks",
+      "file": "poster_puzzleBlocks.png",
+      "prompt": "Use case: stylized-concept. Asset type: original videogame shop wall poster for Game Studio Tycoon. Portrait 3:4 PNG, target 768x1024, opaque full-bleed background. Cohesive budget poster collection: polished flat graphic illustration, exactly four main solid colors, crisp simple edges, bold large silhouette, minimal background geometry, readable from far away on a phone. No gradient, no glossy rendering, no 3D render, no texture noise. Child friendly and cheerful. No text, letters, numbers, logos, brands, watermarks, border, frame, signature, weapons, scary content. Entire art must be original, do not imitate recognizable existing game characters or games. Primary request: playful falling colored puzzle blocks, large original irregular chunky square clusters tumbling diagonally toward a simple stepped stack, a few square motion marks. A bold geometric composition, no game board UI, no recognisable game logo or familiar letter-shaped pieces. Palette only burnt orange #D66B24, coral #EC6A83, deep navy #23304E and warm ivory #F3E6C9. Orange background with large distinct blocks and clean negative space.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-6538d8f1-d9b5-40fe-b0b7-efc4eec820c3.png"
+    },
+    {
+      "id": "turboRacer",
+      "file": "poster_turboRacer.png",
+      "prompt": "Use case: stylized-concept. Asset type: original videogame shop wall poster for Game Studio Tycoon. Portrait 3:4 PNG, target 768x1024, opaque full-bleed background. Cohesive budget poster collection: polished flat graphic illustration, exactly four main solid colors, crisp simple edges, bold large silhouette, minimal background geometry, readable from far away on a phone. No gradient, no glossy rendering, no 3D render, no texture noise. Child friendly and cheerful. No text, letters, numbers, logos, brands, watermarks, border, frame, signature, weapons, scary content. Entire art must be original, do not imitate recognizable existing game characters or games. Primary request: original cheerful toy racing car speeding around a sweeping S-shaped track, viewed from above three-quarter graphic perspective, thick wide tires, distinctive rounded compact car shape with no real-world manufacturer cues, two large motion streaks. Palette only bright red #E64B45, navy #23304E, golden yellow #FFC93C and ivory #F3E6C9. Red is dominant; track curves fill the lower half and car is a large readable focal point.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-0faae24b-4faf-4f47-b92d-13bbdf25dc06.png"
+    },
+    {
+      "id": "starBlaster",
+      "file": "poster_starBlaster.png",
+      "prompt": "Use case: stylized-concept. Asset type: original videogame shop wall poster for Game Studio Tycoon. Portrait 3:4 PNG, target 768x1024, opaque full-bleed background. Cohesive budget poster collection: polished flat graphic illustration, exactly four main solid colors, crisp simple edges, bold large silhouette, minimal background geometry, readable from far away on a phone. No gradient, no glossy rendering, no 3D render, no texture noise. Child friendly and cheerful. No text, letters, numbers, logos, brands, watermarks, border, frame, signature, weapons, scary content. Entire art must be original, do not imitate recognizable existing game characters or games. Primary request: original friendly compact rocket with rounded bulbous body, single round cockpit and three broad stubby fins flying upward through an arrangement of large stars and simple soft polygon asteroids. Adventure and exploration, no fighting or weapons. Palette only midnight blue #152746, blue #3974C7, golden yellow #FFC93C and ivory #F2F2F2. Dark blue background, bold ivory rocket and gold flame, simple original star composition.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-a659fcbb-1275-41e6-8918-a3cce1ccc9c2.png"
+    },
+    {
+      "id": "ninjaCat",
+      "file": "poster_ninjaCat.png",
+      "prompt": "Use case: stylized-concept. Asset type: original videogame shop wall poster for Game Studio Tycoon. Portrait 3:4 PNG, target 768x1024, opaque full-bleed background. Cohesive budget poster collection: polished flat graphic illustration, exactly four main solid colors, crisp simple edges, bold large silhouette, minimal background geometry, readable from far away on a phone. No gradient, no glossy rendering, no 3D render, no texture noise. Child friendly and cheerful. No text, letters, numbers, logos, brands, watermarks, border, frame, signature, weapons, scary content. Entire art must be original, do not imitate recognizable existing game characters or games. Primary request: a friendly original ninja cat with big round eyes, triangular ears and curling tail, wearing a simple purple face mask and scarf, leaping playfully between two city rooftops at dusk. No weapons, no threatening pose, no borrowed characters. Palette only charcoal #252B3C, purple #8653B4, coral pink #EC7D9E and warm ivory #F3E6C9. Large ivory cat silhouette and scarf against charcoal background, minimal rooftop geometry.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-076e0eb5-a2ba-47f4-9f83-6f04b10c58f2.png"
+    },
+    {
+      "id": "ghostManor",
+      "file": "poster_ghostManor.png",
+      "prompt": "Use case: stylized-concept. Asset type: original videogame shop wall poster for Game Studio Tycoon. Portrait 3:4 PNG, target 768x1024, opaque full-bleed background. Cohesive budget poster collection: polished flat graphic illustration, exactly four main solid colors, crisp simple edges, bold large silhouette, minimal background geometry, readable from far away on a phone. No gradient, no glossy rendering, no 3D render, no texture noise. Child friendly and cheerful. No text, letters, numbers, logos, brands, watermarks, border, frame, signature, weapons, scary content. Entire art must be original, do not imitate recognizable existing game characters or games. Primary request: a whimsical wonky little manor with three friendly rounded ghosts peeking from windows and floating above the roof. Ghosts smile and wave, one looks surprised in a silly way, no horror. Bold central house silhouette, a crescent moon, minimal shapes. Palette only deep purple #4B3477, lavender #AD91D0, mint #A5D9B5 and warm ivory #F3E6C9. Purple background, ivory ghosts, gentle child-friendly mood.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-29e61528-3692-45b4-8357-21e4edc59583.png"
+    },
+    {
+      "id": "robotArena",
+      "file": "poster_robotArena.png",
+      "prompt": "Use case: stylized-concept. Asset type: original videogame shop wall poster for Game Studio Tycoon. Portrait 3:4 PNG, target 768x1024, opaque full-bleed background. Cohesive budget poster collection: polished flat graphic illustration, exactly four main solid colors, crisp simple edges, bold large silhouette, minimal background geometry, readable from far away on a phone. No gradient, no glossy rendering, no 3D render, no texture noise. Child friendly and cheerful. No text, letters, numbers, logos, brands, watermarks, border, frame, signature, weapons, scary content. Entire art must be original, do not imitate recognizable existing game characters or games. Primary request: two cute original chunky toy robots facing each other on a circular arena, happily giving a high five, with square confetti above them. One robot round-bodied, one box-bodied, distinct silhouettes, no weapons, no battle damage, no branded robots. Palette only cool gray #CDD1D5, dark navy #283345, cyan #46BED1 and orange #EE9A48. Simple gray background, robots large and central.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-95c73399-2fdb-4775-834c-7a8640fb5bfa.png"
+    },
+    {
+      "id": "dragonValley",
+      "file": "poster_dragonValley.png",
+      "prompt": "Use case: stylized-concept. Asset type: original videogame shop wall poster for Game Studio Tycoon. Portrait 3:4 PNG, target 768x1024, opaque full-bleed background. Cohesive budget poster collection: polished flat graphic illustration, exactly four main solid colors, crisp simple edges, bold large silhouette, minimal background geometry, readable from far away on a phone. No gradient, no glossy rendering, no 3D render, no texture noise. Child friendly and cheerful. No text, letters, numbers, logos, brands, watermarks, border, frame, signature, weapons, scary content. Entire art must be original, do not imitate recognizable existing game characters or games. Primary request: an original friendly dragon gliding above a lush valley of large rounded hills and a winding river, happy expression, small rounded horns, broad simple wings, curved tail, no scary teeth, no fire attacks. Dragon is the large central silhouette, valley is minimal layered graphic shapes. Palette only forest green #315C43, light green #8DBE70, warm orange #E7A15C and ivory #F3E6C9. Green-dominant background, orange dragon for contrast.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-29183030-3445-4c81-914d-be1aeba4ffff.png"
+    }
+  ]
+}
