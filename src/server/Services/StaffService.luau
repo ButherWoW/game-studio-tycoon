@@ -691,13 +691,82 @@ local function buildNpc(employee: Employees.Employee, look: Look): Model?
 	return model
 end
 
--- Поставить NPC перед столом лицом к нему. used — уже занятые точки (в координатах участка).
+-- Сидушка кресла в модели стола на участке (у столов Астры: BlueSeat_* / SeatCushion; PcSeat игрока
+-- не трогаем). Возвращает центр верха сидушки в мировых координатах или nil — кресла нет
+local function chairSeatTop(plot: BasePart, desk: Upgrades.Upgrade): Vector3?
+	local position = desk.position or Vector3.zero
+	local deskWorld =
+		plot.CFrame:PointToWorldSpace(Vector3.new(position.X, plot.Size.Y / 2 + position.Y - 0.5, position.Z))
+	local model: Model? = nil
+	for _, child in plot:GetChildren() do
+		if child:IsA("Model") and child.Name == desk.model then
+			local pivot = child:GetPivot().Position
+			if Vector3.new(pivot.X - deskWorld.X, 0, pivot.Z - deskWorld.Z).Magnitude < 1 then
+				model = child
+				break
+			end
+		end
+	end
+	if not model then
+		return nil
+	end
+	local minX, maxX, minZ, maxZ, top = math.huge, -math.huge, math.huge, -math.huge, -math.huge
+	for _, part in model:GetDescendants() do
+		if
+			part:IsA("BasePart")
+			and part.Name ~= "PcSeat"
+			and string.find(string.lower(part.Name), "seat")
+		then
+			local p = part.Position
+			minX, maxX = math.min(minX, p.X), math.max(maxX, p.X)
+			minZ, maxZ = math.min(minZ, p.Z), math.max(maxZ, p.Z)
+			top = math.max(top, p.Y + part.Size.Y / 2)
+		end
+	end
+	if top == -math.huge then
+		return nil
+	end
+	return Vector3.new((minX + maxX) / 2, top, (minZ + maxZ) / 2)
+end
+
+-- Поза «сидя» для R15: корень закреплён, остальные детали держатся на суставах; бёдра вперёд на 90°,
+-- колени обратно вниз (отчёт владельца: сотрудники стояли перед мониторами)
+local SIT_ROOT_ABOVE_SEAT = 1.6
+local function poseSitting(model: Model)
+	local root = model:FindFirstChild("HumanoidRootPart")
+	for _, part in model:GetDescendants() do
+		if part:IsA("BasePart") then
+			part.Anchored = part == root
+			part.CanCollide = false
+		elseif part:IsA("Motor6D") then
+			if part.Name == "LeftHip" or part.Name == "RightHip" then
+				part.C0 = part.C0 * CFrame.Angles(math.rad(90), 0, 0)
+			elseif part.Name == "LeftKnee" or part.Name == "RightKnee" then
+				part.C0 = part.C0 * CFrame.Angles(math.rad(-90), 0, 0)
+			end
+		end
+	end
+end
+
+-- Посадить NPC в кресло стола (если оно есть в модели) или поставить перед столом лицом к нему.
+-- used — уже занятые точки (в координатах участка)
 local function seatNpc(model: Model, plot: BasePart, desk: Upgrades.Upgrade, used: { Vector3 })
 	local position = desk.position or Vector3.zero
 	-- Пол этажа стола: position.Y = 0.5 (верх участка) + высота этажа (Config/Stages.floorY)
 	local floorY = plot.Size.Y / 2 + position.Y - 0.5
 	local rotation = CFrame.Angles(0, math.rad(desk.rotation or 0), 0)
 	local deskPoint = Vector3.new(position.X, floorY, position.Z)
+
+	local chair = chairSeatTop(plot, desk)
+	if chair then
+		local seatLocal = plot.CFrame:PointToObjectSpace(chair)
+		table.insert(used, Vector3.new(seatLocal.X, floorY, seatLocal.Z))
+		poseSitting(model)
+		local spot = Vector3.new(seatLocal.X, seatLocal.Y + SIT_ROOT_ABOVE_SEAT, seatLocal.Z)
+		local facing = spot - rotation:VectorToWorldSpace(Vector3.new(0, 0, 1))
+		model:PivotTo(plot.CFrame * CFrame.lookAt(spot, facing))
+		return
+	end
 
 	local seat = deskPoint + rotation:VectorToWorldSpace(Vector3.new(0, 0, SEAT_DISTANCE))
 	for _, shift in SEAT_SIDE_SHIFTS do
