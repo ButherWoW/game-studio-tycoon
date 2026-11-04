@@ -59,6 +59,9 @@ local Analytics = {
 		gift = "GiftPurchased", -- подарок за Robux; поле — gift_<id>, значение 1 — другу, 0 — достался себе
 		groupReward = "GroupReward", -- награда за вступление в группу
 		offer = "Offer", -- предложение доната; поле — "вид_этап" (starterPack_shown, floorLock_purchased)
+		-- событие компании; поле — "id_этап": shown/insured (сработало), a/b/auto_a (выбор),
+		-- win/lose (риск), repaired, insurance_bought
+		companyEvent = "CompanyEvent",
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -78,6 +81,7 @@ local Analytics = {
 		OfferService = { transactionType = "IAP", sku = "offer" },
 		TutorialService = { transactionType = "Onboarding", sku = "tutorial" },
 		SocialService = { transactionType = "TimedReward", sku = "group" },
+		CompanyEventService = { transactionType = "CompanyEvent", sku = "event" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },
@@ -95,6 +99,7 @@ local Analytics = {
 		penalty = "ThiefPenalty", -- штраф пойманного вора
 		decor = "Decor", -- декор студии (DecorService), sku — ключ покупки id@этаж
 		skin = "Skin", -- скины сотрудников за $ (SkinService), sku — id скина
+		companyEvent = "CompanyEvent", -- потери от событий компании, страховка и починка
 		other = "Other",
 	},
 }

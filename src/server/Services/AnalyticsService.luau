@@ -502,6 +502,8 @@ local function classifySpend(player: Player, amount: number, module: string?, be
 		kind, sku = sinks.penalty, "caught"
 	elseif module == "ExpensesService" then
 		kind, sku = sinks.staff, "expenses"
+	elseif module == "CompanyEventService" then
+		kind, sku = sinks.companyEvent, "event"
 	elseif module == "DecorService" then
 		local decor = if type(p.decor) == "table" then p.decor.owned else nil
 		kind, sku = sinks.decor, newKey(before.decor, decor) or "decor"
@@ -716,6 +718,13 @@ end
 function Analytics.logOffer(player: Player, kind: string, stage: string)
 	if Config.enabled and states[player] then
 		logCustom(player, Config.events.offer, 1, kind .. "_" .. stage)
+	end
+end
+
+-- Событие компании (CompanyEventService): id и этап одним полем
+function Analytics.logCompanyEvent(player: Player, id: string, stage: string)
+	if Config.enabled and states[player] then
+		logCustom(player, Config.events.companyEvent, 1, id .. "_" .. stage)
 	end
 end
 
