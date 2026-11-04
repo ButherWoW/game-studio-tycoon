@@ -33,13 +33,13 @@
     {
       "file": "models/Desk1.rbxm",
       "partsIncludingPivots": 263,
-      "bytes": 5670,
+      "bytes": 5516,
       "rojoReadAndBuild": "passed"
     },
     {
       "file": "models/Desk2.rbxm",
       "partsIncludingPivots": 259,
-      "bytes": 4952,
+      "bytes": 4804,
       "rojoReadAndBuild": "passed"
     },
     {
@@ -51,13 +51,13 @@
     {
       "file": "models/GarageWalls.rbxm",
       "partsIncludingPivots": 369,
-      "bytes": 6219,
+      "bytes": 6214,
       "rojoReadAndBuild": "passed"
     },
     {
       "file": "models/HitShelf.rbxm",
-      "partsIncludingPivots": 294,
-      "bytes": 3933,
+      "partsIncludingPivots": 8,
+      "bytes": 1372,
       "rojoReadAndBuild": "passed"
     },
     {
@@ -117,7 +117,7 @@
     {
       "file": "Garage_Assembled.rbxm",
       "partsIncludingPivots": 4063,
-      "bytes": 35452,
+      "bytes": 35360,
       "rojoReadAndBuild": "passed"
     },
     {
@@ -128,8 +128,8 @@
     },
     {
       "file": "Upgrades_Import.rbxm",
-      "partsIncludingPivots": 1785,
-      "bytes": 23816,
+      "partsIncludingPivots": 1793,
+      "bytes": 23902,
       "rojoReadAndBuild": "passed"
     }
   ]

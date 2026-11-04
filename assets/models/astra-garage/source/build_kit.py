@@ -26,8 +26,12 @@ def rounded(m,n,p,s,c='dark',rad=.07,**kw):
  # Exact rounded cuboid as 3 slabs, 12 edge cylinders and 8 corner spheres.
  rad=min(rad,min(s)/2-.001)
  if rad<.015:return box(m,n,p,s,c,**kw)
- R=kw.pop('r',I);inner=[v-2*rad for v in s]
- def emit(nm,off,sz,sh='box',rr=I):return part(m,n+nm,add(p,mv(R,off)),sz,c,sh,mul(R,rr),**kw)
+ R=kw.pop('r',I);inner=[v-2*rad for v in s];lit=[kw.pop('light',None)]
+ # One PointLight per rounded object: on the first slab only (23 lights per desk lamp hit mobile)
+ def emit(nm,off,sz,sh='box',rr=I):
+  extra={'light':lit.pop()} if lit and lit[0] else {}
+  if lit and not lit[0]:lit.pop()
+  return part(m,n+nm,add(p,mv(R,off)),sz,c,sh,mul(R,rr),**kw,**extra)
  for a in range(3):
   sz=inner.copy();sz[a]=s[a];emit('_core'+str(a),(0,0,0),sz)
  for axis in range(3):
@@ -222,8 +226,16 @@ def rug():
  for z in range(-10,11):box(m,'Weave',(0,.124,z),(19.9,.009,.016),'31579E')
  return m
 
-def shelf():
+def shelf(decor=False):
  m=model('HitShelf')
+ if not decor:
+  # Game template: slots from ModelFactory.hitShelfSlot (2 rows x 5, step 2, cartridges 1.4x1.6
+  # centred at Y 1.2 / 3.5, Z 0.1). The game places real hit cartridges itself.
+  box(m,'Back',(0,2.85,-.7),(11.2,5.7,.2),'darkwood',mat='Wood')
+  for x in (-5.6,5.6):box(m,'Upright',(x,2.95,0),(.3,5.9,1.7),'wood',mat='Wood',collide=True)
+  for y in (.3,2.6,4.9):box(m,'Shelf',(0,y,0),(11,.2,1.6),'top',mat='Wood',collide=True)
+  box(m,'TopLight',(0,4.7,.65),(10.4,.09,.13),'warm',mat='Neon',light=(14,.35,'warm'))
+  return m
  box(m,'Back',(0,3.55,-.8),(7.3,6.8,.26),'darkwood',mat='Wood')
  for x in (-3.5,3.5):box(m,'Upright',(x,3.6,0),(.28,7.2,1.7),'wood',mat='Wood',collide=True)
  for y in (.2,2.35,4.5,6.65):box(m,'Shelf',(0,y,0),(7.3,.22,1.8),'top',mat='Wood',collide=True)
@@ -315,17 +327,18 @@ def garage():
  # rear wall and two sectional garage doors, as in reference.
  box(m,'RearWall',(0,6.5,-29.5),(60,13,1),'wood',mat='Wood',collide=True)
  for yy in (1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,11,12.1):box(m,'RearSiding',(0,yy,-28.985),(59.6,.025,.016),'darkwood')
- for x in (-11,11):
-  box(m,'DoorDarkRecess',(x,5.15,-28.89),(20.3,10.3,.13),'dark')
+ # Doors at the sides of the rear wall: the centre stays free for Posters (Config: X 0, Z -28.8)
+ for x in (-17.6,17.6):
+  box(m,'DoorDarkRecess',(x,5.15,-28.89),(14.3,10.3,.13),'dark')
   for k in range(7):
    y=.75+k*1.47
-   box(m,'DoorPanel',(x,y,-28.73),(19.65,1.37,.15),'999B9E',mat='Metal',collide=True)
-   for xx in (-8.9,8.9):
+   box(m,'DoorPanel',(x,y,-28.73),(13.65,1.37,.15),'999B9E',mat='Metal',collide=True)
+   for xx in (-5.9,5.9):
     box(m,'DoorHinge',(x+xx,y,-28.59),(.18,.32,.09),'silver')
-  for dx in (-6.5,-2.2,2.2,6.5):
-   box(m,'WindowGasket',(x+dx,8.14,-28.61),(3.63,.98,.07),'dark')
-   box(m,'DoorWindow',(x+dx,8.14,-28.55),(3.33,.74,.06),'8BBED2',mat='Glass',alpha=.15)
-  for dx in (-10.3,10.3):box(m,'DoorRail',(x+dx,5.4,-28.35),(.14,10.8,.2),'silver',mat='Metal')
+  for dx in (-4.65,-1.55,1.55,4.65):
+   box(m,'WindowGasket',(x+dx,8.14,-28.61),(2.75,.98,.07),'dark')
+   box(m,'DoorWindow',(x+dx,8.14,-28.55),(2.45,.74,.06),'8BBED2',mat='Glass',alpha=.15)
+  for dx in (-7.3,7.3):box(m,'DoorRail',(x+dx,5.4,-28.35),(.14,10.8,.2),'silver',mat='Metal')
   rounded(m,'DoorHandle',(x,1.65,-28.49),(1.35,.15,.18),'dark',rad=.04)
  # front open facade: no wall or collider across entrance.
  for x in (-29.5,29.5):box(m,'FrontCorner',(x,6.5,29),(1.2,13,1.2),'darkwood',mat='Wood',collide=True)
@@ -372,7 +385,7 @@ for i,(x,z,yaw) in enumerate([(-11.5,-12,0),(11.5,-12,0),(-11.5,1,0),(11.5,1,0)]
  put(FULL,ASSETS['PCPro'] if i==3 else ASSETS['PC1'],(x,3,z-.8),yaw,f'Workstation{i+1}_PC')
  put(FULL,ASSETS['Chair'],(x,0,z+3.1),180,f'Workstation{i+1}_Chair')
 put(FULL,ASSETS['Coffee'],(-18.5,0,-6),90)
-put(FULL,ASSETS['HitShelf'],(18.8,0,-4),-90)
+put(FULL,shelf(True),(18.8,0,-4),-90)
 put(FULL,ASSETS['Posters'],(-21.64,2.1,-13),90)
 put(FULL,ASSETS['Sofa'],(0,0,15.4),180)
 put(FULL,ASSETS['CoffeeTable'],(0,0,11))
@@ -380,7 +393,7 @@ put(FULL,ASSETS['Rug'],(0,.01,7))
 for p in [(-18.8,0,-18.5),(18.8,0,-18.5),(-18.8,0,18.5),(18.8,0,18.5)]:put(FULL,ASSETS['Plant'],p)
 # Nested, disabled seats for scene staging? Functional seats remain enabled, intentional.
 UPGRADES=model('Upgrades')
-for n in ['Desk1','PC1','GarageWalls','Chair','Desk2','Coffee','Posters','PCPro']:put(UPGRADES,ASSETS[n])
+for n in ['Desk1','PC1','GarageWalls','Chair','Desk2','Coffee','Posters','PCPro','HitShelf']:put(UPGRADES,ASSETS[n])
 
 # Native Roblox XML export: no scripts, no network texture/mesh IDs.
 MAT={'SmoothPlastic':272,'Neon':288,'Wood':512,'WoodPlanks':528,'Metal':1088,'Concrete':816,'Glass':1568}
@@ -417,7 +430,7 @@ def write_part(p,parent,referent=None):
  if p['cls']=='Part':prop(pr,'token','shape',{'box':1,'ball':0,'cyl':2}[p['shape']])
  if p['cls']=='Seat':prop(pr,'bool','Disabled','false')
  if p.get('light'):
-  ra,br,co=p['light'];li=ET.SubElement(it,'Item',{'class':'PointLight','referent':refid()});lp=ET.SubElement(li,'Properties');prop(lp,'string','Name','WarmLight');prop(lp,'float','Range',ra);prop(lp,'float','Brightness',br);prop(lp,'bool','Shadows','true')
+  ra,br,co=p['light'];li=ET.SubElement(it,'Item',{'class':'PointLight','referent':refid()});lp=ET.SubElement(li,'Properties');prop(lp,'string','Name','WarmLight');prop(lp,'float','Range',ra);prop(lp,'float','Brightness',br);prop(lp,'bool','Shadows','true' if ra>=30 else 'false')
   e=ET.SubElement(lp,'Color3',{'name':'Color'})
   for k,v in zip('RGB',rgb(co)):ET.SubElement(e,k).text=str(v/255)
  return it
