@@ -8,6 +8,10 @@
 -- (Office, Floor, Skyscraper) ставятся сразу после покупки office; некупленный этаж закрыт
 -- (PlotService), «переезд» на этаж его открывает. studioLevel 2/3/4 = открыто этажей 1/2/3.
 -- floorY — высота пола этажа над полом участка; этажи стоят друг на друге через FLOOR_HEIGHT.
+-- Баланс после гаража (владелец: «не пройти за день»; tools/balance_sim.py, docs/BALANCE.md):
+-- 2-й этаж ~2.5–3 ч игры (2-й день), 3-й этаж ~12–13 ч (~9-й день при 1.5 ч/день).
+-- gamesRequired — защита от «прошёл ожиданием»: офлайн-доход денег даёт, а игр — нет
+-- (~170 игр в час у активного игрока: 350 ≈ 2 ч, 1800 ≈ 10 ч игры).
 
 export type Stage = {
 	level: number,
@@ -53,8 +57,8 @@ local Stages: { Stage } = {
 		id = "floor",
 		name = "Офис: 2-й этаж",
 		nameEn = "Office: 2nd floor",
-		cost = 60_000,
-		gamesRequired = 10,
+		cost = 1_300_000,
+		gamesRequired = 350,
 		model = "Floor",
 		position = Vector3.new(0, 0.5 + FLOOR_HEIGHT, 0),
 		floorY = FLOOR_HEIGHT,
@@ -65,8 +69,8 @@ local Stages: { Stage } = {
 		id = "skyscraper",
 		name = "Офис: 3-й этаж",
 		nameEn = "Office: 3rd floor",
-		cost = 400_000,
-		gamesRequired = 40,
+		cost = 6_000_000,
+		gamesRequired = 1800,
 		model = "Skyscraper",
 		position = Vector3.new(0, 0.5 + 2 * FLOOR_HEIGHT, 0),
 		floorY = 2 * FLOOR_HEIGHT,

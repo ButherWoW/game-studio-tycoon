@@ -1,6 +1,8 @@
 --!strict
 -- Сотрудники (issue #7). Сотрудник садится за свободный стол (купленный апгрейд с pointsPerSecond)
 -- и умножает очки этого стола. stage — с какого этапа студии можно нанять (Config/Stages).
+-- Цены офиса и этажей подняты вместе с интерьером (docs/BALANCE.md): сотрудник — ~2 мин
+-- дохода своего этажа в начале этапа, как стол.
 
 export type Specialization = "gameplay" | "graphics" | "sound" | "story"
 
@@ -119,11 +121,11 @@ Employees.list = {
 		"game designer",
 		"gameplay",
 		2,
-		10_000,
+		25_000,
 		2
 	),
-	employee("sara", "Сара", "Sara", "3D-художница", "3D artist", "graphics", 2, 10_000, 2),
-	employee("max", "Макс", "Max", "композитор", "composer", "sound", 2, 12_000, 2),
+	employee("sara", "Сара", "Sara", "3D-художница", "3D artist", "graphics", 2, 25_000, 2),
+	employee("max", "Макс", "Max", "композитор", "composer", "sound", 2, 30_000, 2),
 	employee(
 		"nika",
 		"Ника",
@@ -132,13 +134,13 @@ Employees.list = {
 		"narrative designer",
 		"story",
 		2,
-		12_000,
+		30_000,
 		2
 	),
 	-- Этаж
-	employee("den", "Ден", "Den", "техлид", "tech lead", "gameplay", 3, 40_000, 3),
-	employee("aya", "Ая", "Aya", "арт-директор", "art director", "graphics", 3, 40_000, 3),
-	employee("leo", "Лео", "Leo", "саунд-директор", "sound director", "sound", 3, 45_000, 3),
+	employee("den", "Ден", "Den", "техлид", "tech lead", "gameplay", 3, 150_000, 3),
+	employee("aya", "Ая", "Aya", "арт-директор", "art director", "graphics", 3, 150_000, 3),
+	employee("leo", "Лео", "Leo", "саунд-директор", "sound director", "sound", 3, 175_000, 3),
 	employee(
 		"vera",
 		"Вера",
@@ -147,13 +149,13 @@ Employees.list = {
 		"lead writer",
 		"story",
 		3,
-		45_000,
+		175_000,
 		3
 	),
 } :: { Employee }
 
 -- Легендарные (legendary = true): нанимаются, только когда открыты.
--- TODO(#8): robo — исследование «ИИ-ассистент» + $250 000 (небоскрёб).
+-- TODO(#8): robo — исследование «ИИ-ассистент» + $2 500 000 (3-й этаж).
 -- ghost — квест «Выпусти 100 игр» (награда employee = "ghost_coder"): ×2 к столу и офлайн-доход ×2.
 -- legend — геймпасс legendaryEmployee: ×2 к столу и +1 к оценке каждой игры.
 -- ghost и legend — с гаража (stage = 1): награду и покупку видно сразу, садятся за любой стол.
@@ -165,7 +167,7 @@ local robo = employee(
 	"AI assistant",
 	nil,
 	4,
-	250_000,
+	2_500_000,
 	4
 )
 local ghost = employee(

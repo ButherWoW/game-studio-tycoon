@@ -208,7 +208,7 @@ return {
 	rebirth_close = "बंद करो",
 	offline_title = "जब तुम नहीं थे",
 	offline_amount = "+{money}",
-	offline_hint = "तुम्हारा स्टूडियो आधी कमाई पर काम करता रहा",
+	offline_hint = "तुम्हारा स्टूडियो काम करता रहा, लेकिन कम कमाई पर",
 	offline_claim = "ले लो",
 	shop_title = "🛒 शॉप",
 	shop_tab_ads = "विज्ञापन",

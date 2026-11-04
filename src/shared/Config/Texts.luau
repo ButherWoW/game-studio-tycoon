@@ -215,7 +215,7 @@ Texts.ru = {
 	rebirth_close = "Закрыть",
 	offline_title = "Пока тебя не было",
 	offline_amount = "+{money}",
-	offline_hint = "Студия работала без тебя за половину дохода",
+	offline_hint = "Студия работала без тебя, но с меньшим доходом",
 	offline_claim = "Забрать",
 	-- shop
 	shop_title = "🛒 Магазин",
@@ -659,7 +659,7 @@ Texts.en = {
 	rebirth_close = "Close",
 	offline_title = "While you were away",
 	offline_amount = "+{money}",
-	offline_hint = "Your studio kept working at half income",
+	offline_hint = "Your studio kept working, but at a lower income",
 	offline_claim = "Claim",
 	-- shop
 	shop_title = "🛒 Shop",

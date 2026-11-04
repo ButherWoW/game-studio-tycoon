@@ -208,7 +208,7 @@ return {
 	rebirth_close = "Stäng",
 	offline_title = "Medan du var borta",
 	offline_amount = "+{money}",
-	offline_hint = "Din studio fortsatte jobba med halv inkomst",
+	offline_hint = "Din studio fortsatte jobba, men med lägre inkomst",
 	offline_claim = "Hämta",
 	shop_title = "🛒 Butik",
 	shop_tab_ads = "Reklam",
