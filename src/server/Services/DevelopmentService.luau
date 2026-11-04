@@ -324,6 +324,12 @@ local function release(player: Player, project: Project)
 		score = score,
 		points = p.gameplay + p.graphics + p.sound + p.story,
 	})
+	hook("HitService", "onGameReleased", player, {
+		name = project.name,
+		genreId = project.genreId,
+		topicId = project.topicId,
+		score = score,
+	})
 	hook("QuestService", "onGameReleased", player, {
 		genreId = project.genreId,
 		topicId = project.topicId,
