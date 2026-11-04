@@ -10,7 +10,7 @@
 --   по событиям: score9 (игр 9+), hitGames (игр >= HitCartridges.minScore), combos (разных
 --     жанр/тема), qtePerfect (идеальных быстрых событий), earned (доход с релизов), expoWins,
 --     loansRepaid, strikes (пережитых забастовок), days (дней со входом), flops (игр с оценкой
---     <= 2), laptopStars (игр 8+ на ноутбуке в парке).
+--     <= 2), laptopStars (игр 8+ на ноутбуке в парке), likesReceived (лайков студии, TourService).
 -- tier: 1 бронза, 2 серебро, 3 золото (nil — без медали).
 -- badgeId > 0 — ещё и значок Roblox (BadgeService); id заведёт Dev 1.
 -- hidden — до получения в окне «???».
@@ -399,6 +399,37 @@ Achievements.list = {
 	),
 	ach("days_7", "special", "days", 7, 1, "Неделя в деле", "One Week In", { coffeeMinutes = 15 }),
 	ach("days_30", "special", "days", 30, 3, "Верный фанат", "Loyal Fan", { incomeMinutes = 15 }),
+	-- Лайки студии от посетителей (TourService)
+	ach(
+		"likes_10",
+		"special",
+		"likesReceived",
+		10,
+		1,
+		"Уютная студия",
+		"Cozy Studio",
+		{ coffeeMinutes = 10 }
+	),
+	ach(
+		"likes_100",
+		"special",
+		"likesReceived",
+		100,
+		2,
+		"Звезда района",
+		"Local Star",
+		{ incomeMinutes = 15 }
+	),
+	ach(
+		"likes_1000",
+		"special",
+		"likesReceived",
+		1000,
+		3,
+		"Культовая студия",
+		"Cult Studio",
+		{ researchPoints = 25 }
+	),
 	-- Секретные
 	ach("flop", "special", "flops", 1, nil, "Это провал", "Total Flop", { coffeeMinutes = 5 }, true),
 	ach(

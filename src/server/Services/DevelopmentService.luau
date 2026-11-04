@@ -662,6 +662,11 @@ local function release(player: Player, project: Project)
 		topicId = project.topicId,
 		score = score,
 	})
+	-- Лучший хит недели для рейтинга (TourService)
+	hook("TourService", "onGameReleased", player, {
+		score = score,
+		points = p.gameplay + p.graphics + p.sound + p.story,
+	})
 	hook("QuestService", "onGameReleased", player, {
 		genreId = project.genreId,
 		topicId = project.topicId,
