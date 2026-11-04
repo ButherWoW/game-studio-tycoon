@@ -462,6 +462,16 @@ Texts.en = {
 	devevent_streamer_title = "📺 A streamer noticed the game",
 	devevent_streamer_a = "Show a demo",
 	devevent_streamer_b = "Too early",
+	-- upgrades (на кнопках участка; сервер пишет по-русски, клиент переводит)
+	upgrade_desk1 = "Old desk",
+	upgrade_pc1 = "Thrift-shop computer",
+	upgrade_walls = "Garage walls and light",
+	upgrade_chair = "Gaming chair",
+	upgrade_desk2 = "Second desk with PC",
+	upgrade_coffee = "Coffee machine",
+	upgrade_posters = "Posters and neon sign",
+	upgrade_pcpro = "Powerful PC",
+	upgrade_office = "Move to an office",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть
