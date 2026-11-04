@@ -13,6 +13,7 @@ local StartRemotes = require(ReplicatedStorage.Shared.StartRemotes)
 local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService)
 local TextSafe = require(ReplicatedStorage.Shared.TextSafe)
+local WordFilter = require(ReplicatedStorage.Shared.WordFilter)
 
 local PROFILE_WAIT = 0.2
 local REQUEST_COOLDOWN = 0.3 -- секунд между запросами заказов одного игрока
@@ -330,33 +331,54 @@ local function applyStudioSigns(player: Player)
 		neon.Text = name
 	end
 
+	-- Настоящая вывеска над воротами: тёмная доска с неоновой рамкой и названием с обеих сторон
 	local model = Instance.new("Model")
 	model.Name = "StudioSign"
-	local anchor = Instance.new("Part")
-	anchor.Name = "Anchor"
-	anchor.Anchored = true
-	anchor.CanCollide = false
-	anchor.CanQuery = false
-	anchor.CanTouch = false
-	anchor.Transparency = 1
-	anchor.Size = Vector3.new(1, 1, 1)
-	anchor.CFrame = plot.CFrame * SIGN_OFFSET
-	anchor.Parent = model
-	local billboard = Instance.new("BillboardGui")
-	billboard.Size = UDim2.fromOffset(260, 44)
-	billboard.MaxDistance = 90
-	billboard.Parent = anchor
-	local label = Instance.new("TextLabel")
-	label.Size = UDim2.fromScale(1, 1)
-	label.BackgroundColor3 = Color3.fromRGB(30, 30, 46)
-	label.BackgroundTransparency = 0.2
-	label.TextColor3 = Color3.fromRGB(255, 201, 60)
-	label.Font = Enum.Font.GothamBold
-	label.TextScaled = true
-	label.Text = "🏠 " .. name
-	label.Parent = billboard
-	local corner = Instance.new("UICorner")
-	corner.Parent = label
+	local signBoard = Instance.new("Part")
+	signBoard.Name = "Board"
+	signBoard.Anchored = true
+	signBoard.CanCollide = false
+	signBoard.CanQuery = false
+	signBoard.CanTouch = false
+	signBoard.Size = Vector3.new(22, 3.2, 0.5)
+	signBoard.Color = Color3.fromRGB(28, 26, 40)
+	signBoard.Material = Enum.Material.SmoothPlastic
+	signBoard.CFrame = plot.CFrame * SIGN_OFFSET
+	signBoard.Parent = model
+	for _, y in { 1.75, -1.75 } do
+		local strip = Instance.new("Part")
+		strip.Anchored = true
+		strip.CanCollide = false
+		strip.CanQuery = false
+		strip.CanTouch = false
+		strip.Size = Vector3.new(22.4, 0.25, 0.6)
+		strip.Color = Color3.fromRGB(255, 201, 60)
+		strip.Material = Enum.Material.Neon
+		strip.CFrame = signBoard.CFrame * CFrame.new(0, y, 0)
+		strip.Parent = model
+	end
+	for _, face in { Enum.NormalId.Front, Enum.NormalId.Back } do
+		local gui = Instance.new("SurfaceGui")
+		gui.Face = face
+		gui.LightInfluence = 0
+		gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+		gui.PixelsPerStud = 40
+		gui.Parent = signBoard
+		local label = Instance.new("TextLabel")
+		label.Name = "StudioName"
+		label.Size = UDim2.fromScale(1, 1)
+		label.BackgroundTransparency = 1
+		label.TextColor3 = Color3.fromRGB(255, 201, 60)
+		label.Font = Enum.Font.GothamBold
+		label.TextScaled = true
+		label.Text = name
+		label.Parent = gui
+	end
+	local glow = Instance.new("PointLight")
+	glow.Color = Color3.fromRGB(255, 201, 60)
+	glow.Range = 10
+	glow.Brightness = 0.6
+	glow.Parent = signBoard
 	model.Parent = plot
 end
 
@@ -392,6 +414,11 @@ local function onSetStudioName(player: Player, raw: any)
 		or length > StartPark.studioNameMax
 	then
 		StartRemotes.StudioNameResult:FireClient(player, { ok = false, reason = "length" })
+		return
+	end
+	-- Свой фильтр мата: отвечаем как на фильтр Roblox — «придумай другое название»
+	if not WordFilter.isClean(name) then
+		StartRemotes.StudioNameResult:FireClient(player, { ok = false, reason = "filtered" })
 		return
 	end
 

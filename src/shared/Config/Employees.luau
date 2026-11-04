@@ -14,7 +14,11 @@ export type Employee = {
 	multiplier: number,
 	cost: number,
 	stage: number,
-	legendary: boolean?, -- нанять пока нельзя: условия не реализованы
+	legendary: boolean?, -- нанять можно, только когда открыт (unlockReward / unlockPass)
+	unlockReward: string?, -- id из profile.rewards.employees (награда квеста, RewardService)
+	unlockPass: string?, -- геймпасс из Config/GamePasses (ShopService.ownsPass)
+	reviewBonus: number?, -- прибавка к оценке каждой игры, пока сидит за столом
+	offlineMultiplier: number?, -- множитель офлайн-дохода, пока в команде
 }
 
 local Employees = {}
@@ -144,10 +148,11 @@ Employees.list = {
 	),
 } :: { Employee }
 
--- Легендарные — небоскрёб. Условия найма ещё не реализованы, поэтому legendary = true:
--- TODO(#8): robo — исследование «ИИ-ассистент» + $250 000.
--- TODO(#7): ghost — квест «Выпусти 100 игр», эффект — офлайн-доход ×2 (пока просто ×2 к столу).
--- TODO(#11): legend — геймпасс «Легендарный сотрудник», эффект +1 к оценке (пока просто ×2 к столу).
+-- Легендарные (legendary = true): нанимаются, только когда открыты.
+-- TODO(#8): robo — исследование «ИИ-ассистент» + $250 000 (небоскрёб).
+-- ghost — квест «Выпусти 100 игр» (награда employee = "ghost_coder"): ×2 к столу и офлайн-доход ×2.
+-- legend — геймпасс legendaryEmployee: ×2 к столу и +1 к оценке каждой игры.
+-- ghost и legend — с гаража (stage = 1): награду и покупку видно сразу, садятся за любой стол.
 local robo = employee(
 	"robo",
 	"РОБО-9000",
@@ -168,8 +173,10 @@ local ghost = employee(
 	nil,
 	2,
 	0,
-	4
+	1
 )
+ghost.unlockReward = "ghost_coder"
+ghost.offlineMultiplier = 2
 local legend = employee(
 	"legend",
 	"Мастер Пиксель",
@@ -179,8 +186,10 @@ local legend = employee(
 	nil,
 	2,
 	0,
-	4
+	1
 )
+legend.unlockPass = "legendaryEmployee"
+legend.reviewBonus = 1
 for _, e in { robo, ghost, legend } do
 	e.legendary = true
 	table.insert(Employees.list, e)

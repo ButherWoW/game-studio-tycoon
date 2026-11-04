@@ -87,5 +87,13 @@ return {
 		doubleCashMultiplier = 2,
 		-- −25% времени разработки = скорость ×(1 / 0.75)
 		fastDevTimeFactor = 0.75,
+		-- «Второй слот проекта»: столько игр одновременно (исследование «Второй проект» — то же)
+		extraSlotProjects = 2,
+		-- VIP-офис: прибавка к оценке каждой игры (как reviewBonus предметов студии)
+		vipReviewBonus = 0.3,
+		-- Золотая табличка VIP над участком: смещение от центра участка и размер, в studs
+		vipSignOffset = Vector3.new(0, 14, 0),
+		vipSignSize = Vector3.new(8, 2.5, 0.4),
+		vipSignColor = Color3.fromRGB(255, 201, 60),
 	},
 }

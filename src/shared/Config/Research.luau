@@ -39,6 +39,17 @@ Research.BRANCHES = branches
 -- Сколько ОИ даёт выпущенная игра: оценка 1–10 как есть
 Research.POINTS_PER_SCORE = 1
 
+-- «Тест-группа»: примерная оценка в окне «Создать игру» — ожидаемая оценка ± PREVIEW_SPREAD
+Research.PREVIEW_SPREAD = 1
+
+-- «Издательство»: роялти с последних выпущенных игр, пока игрок онлайн.
+-- В минуту = share × сумма дохода последних maxGames игр; выплата раз в intervalSeconds
+Research.PUBLISHING = {
+	share = 0.01,
+	maxGames = 10,
+	intervalSeconds = 60,
+}
+
 local nodes: { Node } = {
 	-- Жанровая ветка: второй, «бесплатный» путь к жанрам (за деньги они тоже открываются)
 	{

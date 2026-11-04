@@ -17,12 +17,15 @@ local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
 local StartRemotes = require(ReplicatedStorage.Shared.StartRemotes)
+local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local DataService = require(script.Parent.DataService)
 
 local BUTTON_SIZE = Vector3.new(5, 0.4, 5)
 local BUTTON_SPACING = 7
 local BUTTON_EDGE_OFFSET = 5 -- от переднего края участка
 local TOUCH_COOLDOWN = 0.5
+-- Новая кнопка срабатывает только после того, как игрок отошёл от неё дальше этого
+local ARM_DISTANCE = 4.5
 local COLOR_REFRESH = 0.5
 local COLOR_AFFORDABLE = Color3.fromRGB(61, 220, 132)
 local COLOR_EXPENSIVE = Color3.fromRGB(70, 72, 90)
@@ -144,9 +147,10 @@ local function normalizeStage(profile: DataService.Profile): boolean
 	return level ~= old
 end
 
--- Начинка прошлых этапов (гаражные стеллажи, офисные стены) после переезда не нужна
+-- Начинка прошлых этапов (гаражные стеллажи, офисные стены) после переезда не нужна,
+-- интерьер следующих этапов появляется только после переезда (Upgrade.stage)
 local function isVisible(upgrade: Upgrades.Upgrade, profile: DataService.Profile): boolean
-	return upgrade.shellStage == nil or upgrade.shellStage >= profile.studioLevel
+	return StudioLayout.isVisible(upgrade, profile.studioLevel)
 end
 
 -- Поставить всё купленное и модель текущего этапа
@@ -206,19 +210,28 @@ local function interiorComplete(profile: DataService.Profile): boolean
 	return true
 end
 
--- За каждым купленным столом сидит сотрудник
+-- За каждым купленным столом текущего этапа сидит сотрудник. Рассадку (staff: сотрудник -> стол,
+-- "" — ждёт стол) ведёт StaffService; спрятанные столы прошлых этапов не считаются
 local function staffFull(profile: DataService.Profile): boolean
-	local desks = 0
-	for _, upgrade in Upgrades do
-		if upgrade.desk and profile.upgrades[upgrade.id] then
-			desks += 1
+	local desks = StudioLayout.visibleDesks(profile.upgrades, profile.studioLevel)
+	if #desks == 0 then
+		return false
+	end
+	local staff = (profile :: any).staff
+	local seated: { [string]: boolean } = {}
+	if type(staff) == "table" then
+		for _, deskId in staff do
+			if type(deskId) == "string" then
+				seated[deskId] = true
+			end
 		end
 	end
-	local hired = 0
-	for _ in ((profile :: any).staff or {}) :: { [string]: string } do
-		hired += 1
+	for _, desk in desks do
+		if not seated[desk.id] then
+			return false
+		end
 	end
-	return desks > 0 and hired >= desks
+	return true
 end
 
 local function readyToMove(profile: DataService.Profile): boolean
@@ -300,9 +313,15 @@ local function createButton(
 		.. formatPrice(upgrade.cost)
 	label.Parent = billboard
 
+	-- Новая кнопка появляется там, где стоит игрок: пока он не отойдёт, она «не взведена»,
+	-- иначе стоя на месте покупались подряд компьютер, кресло и стены (отчёт #42)
+	button:SetAttribute("Armed", false)
 	button.Touched:Connect(function(hit: BasePart)
 		local character = hit.Parent
 		if not character or Players:GetPlayerFromCharacter(character) ~= player then
+			return
+		end
+		if button:GetAttribute("Armed") ~= true then
 			return
 		end
 		local now = os.clock()
@@ -398,14 +417,16 @@ tryBuy = function(player: Player, upgradeId: string)
 			if upgrade.requires and not profile.upgrades[upgrade.requires] then
 				return
 			end
+			-- Интерьер другого этапа (BuyUpgrade может прийти с клиента в обход кнопок)
+			if not isVisible(upgrade, profile) then
+				return
+			end
 			if upgrade.move and not readyToMove(profile) then
 				return
 			end
 			if DataService.trySpend(player, upgrade.cost) then
 				profile.upgrades[upgrade.id] = true
-				if isVisible(upgrade, profile) then
-					placeUpgrade(plot, upgrade)
-				end
+				placeUpgrade(plot, upgrade)
 				if normalizeStage(profile) then
 					PlotService.rebuild(player)
 				end
@@ -508,7 +529,16 @@ function PlotService.start()
 			for player, playerButtons in buttons do
 				local profile = DataService.get(player)
 				if profile then
+					local character = player.Character
+					local root = character and character:FindFirstChild("HumanoidRootPart") :: BasePart?
 					for button, upgrade in playerButtons do
+						-- Взводим кнопку, когда игрок отошёл от неё (или его нет рядом)
+						if button:GetAttribute("Armed") ~= true then
+							local offset = if root then root.Position - button.Position else nil
+							if not offset or Vector3.new(offset.X, 0, offset.Z).Magnitude > ARM_DISTANCE then
+								button:SetAttribute("Armed", true)
+							end
+						end
 						local ready = if upgrade.move then COLOR_MOVE else COLOR_AFFORDABLE
 						button.Color = if profile.cash >= upgrade.cost then ready else COLOR_EXPENSIVE
 					end

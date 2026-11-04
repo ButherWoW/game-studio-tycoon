@@ -222,12 +222,36 @@ local function ensureStartPark()
 	folder.Parent = workspace
 end
 
+-- Свет гаража вдвое тусклее (просьба владельца). Касается и модели, импортированной в Studio
+-- (Garage из Creator Store): её лампы ослабляем один раз при старте сервера
+local GARAGE_LIGHT_SCALE = 0.5
+local DIMMED_MODELS = { "Garage" }
+
+local function dimImportedLights()
+	local folder = ServerStorage:FindFirstChild("Upgrades")
+	if not folder then
+		return
+	end
+	for _, name in DIMMED_MODELS do
+		local model = folder:FindFirstChild(name)
+		if model and not model:GetAttribute("LightsDimmed") then
+			model:SetAttribute("LightsDimmed", true)
+			for _, d in model:GetDescendants() do
+				if d:IsA("Light") then
+					d.Brightness *= GARAGE_LIGHT_SCALE
+				end
+			end
+		end
+	end
+end
+
 -- Вызывать до PlotService.start()
 function WorldService.start()
 	ensureGround()
 	ensurePlots()
 	ensureUpgradeModels()
 	ensureStartPark()
+	dimImportedLights()
 end
 
 return WorldService

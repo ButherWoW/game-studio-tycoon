@@ -13,9 +13,25 @@ local ORDER = {
 	"UnlockService",
 }
 
+-- Ошибка в одном модуле не должна ронять весь сервер (иначе пустой мир без HUD): пишем warn и идём дальше
+local function startModule(module: ModuleScript)
+	local ok, err = pcall(function()
+		local service = require(module) :: any
+		if type(service) == "table" and type(service.start) == "function" then
+			service.start()
+		end
+	end)
+	if not ok then
+		warn("[Game Studio Tycoon] Service " .. module.Name .. " failed to start:", err)
+	end
+end
+
 local started: { [string]: boolean } = {}
 for _, name in ORDER do
-	require(Services:FindFirstChild(name) :: ModuleScript).start()
+	local module = Services:FindFirstChild(name)
+	if module and module:IsA("ModuleScript") then
+		startModule(module)
+	end
 	started[name] = true
 end
 
@@ -29,10 +45,7 @@ table.sort(rest, function(a, b)
 	return a.Name < b.Name
 end)
 for _, module in rest do
-	local service = require(module) :: any
-	if type(service) == "table" and type(service.start) == "function" then
-		service.start()
-	end
+	startModule(module)
 end
 
 print("[Game Studio Tycoon] Server started")

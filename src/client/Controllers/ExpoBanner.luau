@@ -10,7 +10,7 @@ local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
-local BANNER_Y = 180 -- под плашкой трендов (TrendBanner, y = 140)
+-- Плашка и итоги — в общем стеке под HUD (Ui.bannerStack): тренд 1, выставка 2, итоги 3
 
 local ExpoBanner = {}
 
@@ -19,15 +19,14 @@ local function timeLeft(endsAt: number): string
 	return string.format("%d:%02d", left // 60, left % 60)
 end
 
-local function showResult(gui: ScreenGui, result: any)
-	local old = gui:FindFirstChild("ExpoResult")
+local function showResult(stack: Frame, result: any)
+	local old = stack:FindFirstChild("ExpoResult")
 	if old then
 		old:Destroy()
 	end
-	local panel = Ui.label(gui, "", 64, Ui.titleFontFor(ClientState.lang))
+	local panel = Ui.label(stack, "", 64, Ui.titleFontFor(ClientState.lang))
 	panel.Name = "ExpoResult"
-	panel.AnchorPoint = Vector2.new(0.5, 0)
-	panel.Position = UDim2.new(0.5, 0, 0, BANNER_Y + 44)
+	panel.LayoutOrder = 3
 	panel.Size = UDim2.fromOffset(460, 64)
 	panel.BackgroundTransparency = 0.1
 	panel.BackgroundColor3 = Ui.colors.panel
@@ -57,14 +56,10 @@ local function showResult(gui: ScreenGui, result: any)
 end
 
 function ExpoBanner.start()
-	local gui = Instance.new("ScreenGui")
-	gui.Name = "ExpoBanner"
-	gui.ResetOnSpawn = false
-	gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
-
-	local banner = Ui.label(gui, "", 34, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
-	banner.AnchorPoint = Vector2.new(0.5, 0)
-	banner.Position = UDim2.new(0.5, 0, 0, BANNER_Y)
+	local stack = Ui.bannerStack()
+	local banner = Ui.label(stack, "", 34, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
+	banner.Name = "ExpoBanner"
+	banner.LayoutOrder = 2
 	banner.Size = UDim2.fromOffset(460, 34)
 	banner.BackgroundTransparency = 0.25
 	banner.BackgroundColor3 = Ui.colors.panel
@@ -72,7 +67,7 @@ function ExpoBanner.start()
 	Ui.corner(banner, 10)
 
 	ExpoRemotes.ExpoResult.OnClientEvent:Connect(function(result)
-		showResult(gui, result)
+		showResult(stack, result)
 	end)
 
 	task.spawn(function()

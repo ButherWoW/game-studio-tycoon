@@ -337,11 +337,12 @@ builders.GarageWalls = function(m)
 	-- Две подвесные лампы
 	for _, x in { -12, 12 } do
 		part(m, Vector3.new(0.1, 3, 0.1), Vector3.new(x, 10.5, -8), rgb(40, 40, 40))
-		local bulb = part(m, Vector3.new(1, 1, 1), Vector3.new(x, 8.8, -8), rgb(255, 230, 170), {
+		local bulb = part(m, Vector3.new(1, 1, 1), Vector3.new(x, 8.8, -8), rgb(200, 180, 135), {
 			material = Enum.Material.Neon,
 			shape = Enum.PartType.Ball,
 		})
-		light(bulb, rgb(255, 220, 160), 28, 1.2)
+		-- Свет вдвое тусклее прежнего (просьба владельца: в гараже было слишком ярко)
+		light(bulb, rgb(255, 220, 160), 22, 0.6)
 	end
 	-- Стеллаж у левой стены с коробками
 	local metal = rgb(120, 125, 130)
@@ -403,6 +404,213 @@ builders.GarageWalls = function(m)
 	box(m, Vector3.new(25.5, 1.76, 24.5), 1.5, rgb(200, 160, 110))
 end
 
+-- ===== Интерьер офиса, этажа и небоскрёба (Config/Upgrades, задача 3.7) =====
+-- Столы: столешница на высоте 3, монитор экраном к +Z (сотрудник садится со стороны +Z)
+
+local function monitor(m: Model, at: Vector3, width: number, frame: Color3, screen: Color3)
+	part(m, Vector3.new(0.3, 0.8, 0.3), at + Vector3.new(0, 0.4, 0), frame)
+	part(m, Vector3.new(width, 1.3, 0.15), at + Vector3.new(0, 1.45, 0), frame)
+	part(m, Vector3.new(width - 0.2, 1.1, 0.05), at + Vector3.new(0, 1.45, 0.1), screen, {
+		material = Enum.Material.Neon,
+	})
+end
+
+-- Офисный стол: дерево, тумба, монитор, клавиатура
+builders.OfficeDesk = function(m)
+	local wood = rgb(170, 125, 80)
+	part(m, Vector3.new(6, 0.3, 3), Vector3.new(0, 2.85, 0), wood, { material = Enum.Material.WoodPlanks })
+	for _, x in { -2.8, 2.8 } do
+		part(m, Vector3.new(0.3, 2.7, 2.8), Vector3.new(x, 1.35, 0), rgb(140, 100, 65), {
+			material = Enum.Material.Wood,
+		})
+	end
+	part(m, Vector3.new(1.6, 2.2, 2.4), Vector3.new(-1.6, 1.1, 0), rgb(150, 110, 70))
+	monitor(m, Vector3.new(0, 3, -0.8), 2.4, rgb(35, 35, 40), rgb(90, 170, 255))
+	part(m, Vector3.new(2, 0.12, 0.6), Vector3.new(0, 3.06, 0.6), rgb(35, 35, 40))
+end
+
+-- Кулер с водой и стаканчиками; лицом к +Z
+builders.Cooler = function(m)
+	part(m, Vector3.new(1.4, 3, 1.4), Vector3.new(0, 1.5, 0), rgb(230, 230, 235))
+	cylinder(m, 1.6, 1.2, Vector3.new(0, 3.8, 0), rgb(120, 190, 255), { transparency = 0.3 })
+	part(m, Vector3.new(0.3, 0.2, 0.2), Vector3.new(-0.3, 2.2, 0.75), rgb(60, 120, 255))
+	part(m, Vector3.new(0.3, 0.2, 0.2), Vector3.new(0.3, 2.2, 0.75), rgb(255, 80, 80))
+	cylinder(m, 0.8, 0.5, Vector3.new(1.1, 0.4, 0), rgb(240, 240, 240))
+end
+
+-- Переговорка: стол, шесть стульев, экран на стойке
+builders.MeetingRoom = function(m)
+	part(m, Vector3.new(9, 0.3, 4), Vector3.new(0, 2.85, 0), rgb(245, 245, 245))
+	for _, x in { -3.5, 3.5 } do
+		part(m, Vector3.new(0.6, 2.7, 0.6), Vector3.new(x, 1.35, 0), rgb(90, 95, 105), {
+			material = Enum.Material.Metal,
+		})
+	end
+	for _, x in { -3, 0, 3 } do
+		chairSimple(m, Vector3.new(x, 0, 3.2), rgb(200, 80, 70), 1)
+		chairSimple(m, Vector3.new(x, 0, -3.2), rgb(200, 80, 70), -1)
+	end
+	-- Экран на стойке у торца стола
+	part(m, Vector3.new(0.4, 4, 0.4), Vector3.new(-6.5, 2, 0), rgb(40, 40, 45))
+	part(m, Vector3.new(0.3, 2.6, 4.4), Vector3.new(-6.5, 4.6, 0), rgb(25, 25, 30))
+	part(m, Vector3.new(0.05, 2.3, 4.1), Vector3.new(-6.3, 4.6, 0), rgb(110, 200, 255), {
+		material = Enum.Material.Neon,
+	})
+end
+
+-- Стол этажа: белый, на металлической раме, два монитора
+builders.FloorDesk = function(m)
+	part(m, Vector3.new(6, 0.25, 3), Vector3.new(0, 2.9, 0), rgb(245, 245, 248))
+	for _, x in { -2.8, 2.8 } do
+		part(m, Vector3.new(0.25, 2.8, 2.6), Vector3.new(x, 1.4, 0), rgb(80, 85, 95), {
+			material = Enum.Material.Metal,
+		})
+	end
+	for _, x in { -1.1, 1.1 } do
+		monitor(m, Vector3.new(x, 3, -0.8), 2, rgb(30, 30, 35), rgb(70, 140, 255))
+	end
+	part(m, Vector3.new(2.2, 0.12, 0.6), Vector3.new(0, 3.08, 0.6), rgb(30, 30, 35))
+	-- Перегородка сзади
+	part(m, Vector3.new(6, 2, 0.2), Vector3.new(0, 3.9, -1.6), rgb(60, 80, 130), {
+		material = Enum.Material.Fabric,
+	})
+end
+
+-- Серверная: три стойки с мигающими огнями за стеклом; лицом к +Z, ширина по X 8
+builders.ServerRoom = function(m)
+	for _, x in { -2.6, 0, 2.6 } do
+		part(m, Vector3.new(2.2, 6, 2.4), Vector3.new(x, 3, 0), rgb(30, 32, 40), {
+			material = Enum.Material.Metal,
+		})
+		for y = 1, 5 do
+			local color = if (y + math.floor(x)) % 2 == 0 then rgb(80, 255, 120) else rgb(60, 160, 255)
+			part(m, Vector3.new(1.6, 0.1, 0.05), Vector3.new(x, y, 1.22), color, {
+				material = Enum.Material.Neon,
+			})
+		end
+	end
+	part(m, Vector3.new(8.4, 6.4, 0.2), Vector3.new(0, 3.2, 1.6), rgb(170, 210, 240), {
+		material = Enum.Material.Glass,
+		transparency = 0.6,
+	})
+	light(part(m, Vector3.new(8, 0.2, 2), Vector3.new(0, 6.2, 0), rgb(40, 40, 50)), rgb(80, 200, 255), 12, 1)
+end
+
+-- Зона отдыха: ковёр, кресла-мешки, столик с консолью, телевизор
+builders.Lounge = function(m)
+	part(m, Vector3.new(12, 0.05, 8), Vector3.new(0, 0.13, 0), rgb(240, 160, 70), {
+		material = Enum.Material.Fabric,
+		collide = false,
+	})
+	local colors = { rgb(230, 70, 90), rgb(70, 160, 255), rgb(120, 210, 90) }
+	for i, x in { -4, 0, 4 } do
+		part(m, Vector3.new(2.6, 1.8, 2.6), Vector3.new(x, 0.9, 1.8), colors[i], {
+			material = Enum.Material.Fabric,
+			shape = Enum.PartType.Ball,
+		})
+	end
+	part(
+		m,
+		Vector3.new(3, 1.2, 1.6),
+		Vector3.new(0, 0.6, -1),
+		rgb(120, 85, 55),
+		{ material = Enum.Material.Wood }
+	)
+	part(m, Vector3.new(1.2, 0.3, 0.8), Vector3.new(0, 1.35, -1), rgb(240, 240, 240))
+	-- Телевизор на стойке, экраном к креслам
+	part(m, Vector3.new(0.4, 3, 0.4), Vector3.new(0, 1.5, -3.6), rgb(40, 40, 45))
+	part(m, Vector3.new(6, 3.4, 0.3), Vector3.new(0, 4.4, -3.6), rgb(20, 20, 25))
+	part(m, Vector3.new(5.6, 3, 0.05), Vector3.new(0, 4.4, -3.4), rgb(255, 120, 60), {
+		material = Enum.Material.Neon,
+	})
+end
+
+-- Стол небоскрёба: тёмное стекло, неоновая кромка, изогнутый широкий монитор
+builders.SkyDesk = function(m)
+	part(m, Vector3.new(6, 0.25, 3), Vector3.new(0, 2.9, 0), rgb(30, 30, 40), {
+		material = Enum.Material.Glass,
+		reflectance = 0.2,
+	})
+	part(m, Vector3.new(6, 0.1, 0.1), Vector3.new(0, 2.8, 1.5), rgb(0, 220, 255), {
+		material = Enum.Material.Neon,
+	})
+	for _, x in { -2.7, 2.7 } do
+		part(m, Vector3.new(0.3, 2.8, 2.6), Vector3.new(x, 1.4, 0), rgb(50, 50, 65), {
+			material = Enum.Material.Metal,
+		})
+	end
+	monitor(m, Vector3.new(0, 3, -0.8), 3.6, rgb(20, 20, 25), rgb(200, 60, 255))
+	part(m, Vector3.new(2.4, 0.12, 0.6), Vector3.new(0, 3.08, 0.6), rgb(20, 20, 25))
+	part(m, Vector3.new(2.3, 0.02, 0.5), Vector3.new(0, 3.15, 0.6), rgb(0, 220, 255), {
+		material = Enum.Material.Neon,
+	})
+end
+
+-- Студия звукозаписи: стеклянная будка с микрофоном и пульт перед ней; 12×8
+builders.SoundStudio = function(m)
+	local wall = rgb(45, 40, 60)
+	part(m, Vector3.new(12, 7, 0.4), Vector3.new(0, 3.5, 3.8), wall, { material = Enum.Material.Fabric })
+	for _, x in { -5.8, 5.8 } do
+		part(m, Vector3.new(0.4, 7, 7.6), Vector3.new(x, 3.5, 0), wall, { material = Enum.Material.Fabric })
+	end
+	-- Стеклянная перегородка будки
+	part(m, Vector3.new(11.2, 7, 0.2), Vector3.new(0, 3.5, -0.5), rgb(170, 210, 240), {
+		material = Enum.Material.Glass,
+		transparency = 0.5,
+	})
+	-- Микрофон в будке
+	part(
+		m,
+		Vector3.new(0.2, 4, 0.2),
+		Vector3.new(0, 2, 2),
+		rgb(60, 60, 65),
+		{ material = Enum.Material.Metal }
+	)
+	part(m, Vector3.new(0.6, 0.9, 0.6), Vector3.new(0, 4.3, 2), rgb(180, 180, 190), {
+		material = Enum.Material.Metal,
+		shape = Enum.PartType.Ball,
+	})
+	-- Пульт снаружи
+	part(m, Vector3.new(6, 2.6, 2), Vector3.new(0, 1.3, -2.6), rgb(35, 35, 45))
+	for i = 0, 7 do
+		part(
+			m,
+			Vector3.new(0.3, 0.1, 1.2),
+			Vector3.new(-2.6 + i * 0.75, 2.65, -2.6),
+			Color3.fromHSV(i / 8, 0.7, 1),
+			{
+				material = Enum.Material.Neon,
+			}
+		)
+	end
+	local sign = part(m, Vector3.new(4, 0.8, 0.2), Vector3.new(0, 7.6, 3.6), rgb(255, 60, 60), {
+		material = Enum.Material.Neon,
+	})
+	light(sign, rgb(255, 60, 60), 10, 1)
+end
+
+-- Арт-стена: щит с цветными «картинами» и подсветкой; ширина 12, лицом к +Z
+builders.ArtWall = function(m)
+	part(m, Vector3.new(12, 7, 0.5), Vector3.new(0, 3.5, 0), rgb(245, 245, 240))
+	local rng = Random.new(7)
+	for i = 0, 5 do
+		local col = i % 3
+		local row = math.floor(i / 3)
+		local w = rng:NextNumber(2.4, 3.2)
+		local h = rng:NextNumber(1.8, 2.6)
+		local x = -4 + col * 4
+		local y = 2 + row * 3
+		part(m, Vector3.new(w + 0.2, h + 0.2, 0.1), Vector3.new(x, y, 0.3), rgb(30, 30, 30))
+		part(m, Vector3.new(w, h, 0.05), Vector3.new(x, y, 0.38), Color3.fromHSV(rng:NextNumber(), 0.6, 0.95))
+	end
+	for _, x in { -4, 0, 4 } do
+		local spot = part(m, Vector3.new(0.6, 0.3, 0.6), Vector3.new(x, 7.3, 0.6), rgb(255, 245, 210), {
+			material = Enum.Material.Neon,
+		})
+		light(spot, rgb(255, 240, 200), 8, 0.8)
+	end
+end
+
 -- ===== Помещения этапов (на весь участок) =====
 
 -- Этап 1: гараж — бетонный пол, кирпичные стены, поднятые ворота на входе
@@ -456,9 +664,7 @@ builders.Office = function(m)
 	plant(m, Vector3.new(-26, 0, -26))
 	plant(m, Vector3.new(26, 0, 20))
 	plant(m, Vector3.new(-26, 0, 20))
-	-- Кулер с водой
-	part(m, Vector3.new(1.4, 3, 1.4), Vector3.new(26, 1.5, -12), rgb(230, 230, 235))
-	cylinder(m, 1.6, 1.2, Vector3.new(26, 3.8, -12), rgb(120, 190, 255), { transparency = 0.3 })
+	-- Кулер теперь отдельный апгрейд интерьера офиса (Cooler)
 end
 
 -- Этап 3: этаж бизнес-центра — синий ковролин, стеклянные стены, переговорка, диван
@@ -710,6 +916,97 @@ builders.Pawnshop = function(m)
 	end
 	local sign = part(m, Vector3.new(6, 1.2, 0.3), Vector3.new(0, 7.1, 1.6), rgb(40, 40, 50))
 	signText(sign, Enum.NormalId.Front, "park_pawn_sign", "📦 ЛОМБАРД", rgb(255, 201, 60))
+end
+
+-- ===== Праздничный декор (HolidayService, Config/Holidays) =====
+
+-- Тыква: три шара-дольки, хвостик и светящееся лицо спереди (+Z)
+builders.Pumpkin = function(m)
+	local orange = rgb(255, 125, 20)
+	for _, x in { -0.5, 0, 0.5 } do
+		part(m, Vector3.new(2.2, 2.2, 2.2), Vector3.new(x, 1.1, 0), orange, { shape = Enum.PartType.Ball })
+	end
+	part(m, Vector3.new(0.3, 0.7, 0.3), Vector3.new(0, 2.45, 0), rgb(70, 120, 40), {
+		material = Enum.Material.Wood,
+	})
+	local glow = rgb(255, 230, 90)
+	for _, x in { -0.45, 0.45 } do
+		part(
+			m,
+			Vector3.new(0.4, 0.4, 0.1),
+			Vector3.new(x, 1.45, 1.02),
+			glow,
+			{ material = Enum.Material.Neon }
+		)
+	end
+	local mouth = part(m, Vector3.new(1.1, 0.25, 0.1), Vector3.new(0, 0.8, 1.0), glow, {
+		material = Enum.Material.Neon,
+	})
+	light(mouth, rgb(255, 150, 40), 8, 1)
+end
+
+-- Ёлка: ствол, ярусы-цилиндры, шарики, звезда и подарки у основания
+builders.HolidayTree = function(m)
+	cylinder(m, 2, 1.2, Vector3.new(0, 1, 0), rgb(110, 70, 40), { material = Enum.Material.Wood })
+	local green = rgb(40, 130, 60)
+	local tiers = { { 8, 3.2 }, { 6.2, 5.2 }, { 4.4, 7 }, { 2.4, 8.6 } }
+	local colors = { rgb(255, 60, 60), rgb(255, 210, 60), rgb(80, 160, 255), rgb(240, 240, 255) }
+	for i, tier in tiers do
+		local diameter, y = tier[1], tier[2]
+		cylinder(m, 2, diameter, Vector3.new(0, y, 0), green, { material = Enum.Material.Grass })
+		-- Шарики по краю яруса
+		for k = 1, 6 do
+			local angle = math.rad(k * 60 + i * 25)
+			local r = diameter / 2
+			part(
+				m,
+				Vector3.new(0.6, 0.6, 0.6),
+				Vector3.new(math.cos(angle) * r, y - 0.6, math.sin(angle) * r),
+				colors[(k + i) % #colors + 1],
+				{ material = Enum.Material.Neon, shape = Enum.PartType.Ball }
+			)
+		end
+	end
+	local star = part(m, Vector3.new(1.2, 1.2, 1.2), Vector3.new(0, 10.2, 0), rgb(255, 220, 60), {
+		material = Enum.Material.Neon,
+		shape = Enum.PartType.Ball,
+	})
+	light(star, rgb(255, 220, 120), 18, 1.2)
+	local gifts = {
+		{ at = Vector3.new(2.6, 0, 3.2), color = rgb(220, 50, 60) },
+		{ at = Vector3.new(-3, 0, 2.4), color = rgb(60, 150, 255) },
+		{ at = Vector3.new(0.4, 0, -3.4), color = rgb(250, 200, 60) },
+	}
+	for _, gift in gifts do
+		local at = gift.at
+		part(m, Vector3.new(1.4, 1.2, 1.4), at + Vector3.new(0, 0.6, 0), gift.color)
+		part(m, Vector3.new(1.45, 1.25, 0.25), at + Vector3.new(0, 0.6, 0), rgb(255, 255, 255))
+	end
+end
+
+-- Оранжевая неон-вывеска у участка (косметика за квест Хэллоуина), лицом к +Z
+builders.HalloweenSign = function(m)
+	local post = rgb(40, 35, 45)
+	for _, x in { -2.6, 2.6 } do
+		part(m, Vector3.new(0.4, 7, 0.4), Vector3.new(x, 3.5, 0), post, { material = Enum.Material.Metal })
+	end
+	local board = part(m, Vector3.new(6, 2, 0.3), Vector3.new(0, 6.6, 0), rgb(255, 120, 20), {
+		material = Enum.Material.Neon,
+	})
+	light(board, rgb(255, 130, 30), 14, 1)
+	-- Без TextKey: надпись одинаковая на всех языках
+	local gui = Instance.new("SurfaceGui")
+	gui.Face = Enum.NormalId.Front
+	gui.LightInfluence = 0
+	gui.Parent = board
+	local label = Instance.new("TextLabel")
+	label.Size = UDim2.fromScale(1, 1)
+	label.BackgroundTransparency = 1
+	label.Font = Enum.Font.FredokaOne
+	label.TextScaled = true
+	label.TextColor3 = rgb(40, 20, 10)
+	label.Text = "🎃 BOO! 🎃"
+	label.Parent = gui
 end
 
 -- Собрать модель по имени; nil — для этого имени билдера нет

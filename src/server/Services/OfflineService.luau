@@ -29,7 +29,12 @@ function OfflineService.earnings(profile: DataService.Profile, seconds: number):
 		Rebirth.multiplier(profile.rebirths)
 	)
 	local perMinute = perGame / Offline.gameMinutes
-	return math.floor(capped / 60 * perMinute * Offline.rate)
+	-- Команда: «Призрачный кодер» ×2, перк «Ночная смена» (StaffService)
+	local staff = script.Parent:FindFirstChild("StaffService")
+	local team = if staff and staff:IsA("ModuleScript")
+		then (require(staff) :: any).offlineMultiplier(profile)
+		else 1
+	return math.floor(capped / 60 * perMinute * Offline.rate * team)
 end
 
 local function onPlayerAdded(player: Player)

@@ -1,5 +1,8 @@
 --!strict
 -- Разработка и релиз игр. Всё считается на сервере.
+-- У игрока список проектов: обычно 1 слот, 2 — с геймпассом «Второй слот» или исследованием
+-- «Второй проект» (одна механика, см. slotCount). Здесь же «Мгновенно закончить», «Авто-релиз»,
+-- VIP-бонус к оценке и примерная оценка «Тест-группы» (5.9, 3.8).
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
@@ -7,12 +10,16 @@ local TextService = game:GetService("TextService")
 
 local Shared = ReplicatedStorage.Shared
 local Remotes = require(Shared.Remotes)
+local PaidRemotes = require(Shared.PaidRemotes)
 local Formulas = require(Shared.Formulas)
 local TextSafe = require(Shared.TextSafe)
+local WordFilter = require(Shared.WordFilter)
 local Genres = require(Shared.Config.Genres)
 local Topics = require(Shared.Config.Topics)
 local Upgrades = require(Shared.Config.Upgrades)
 local Employees = require(Shared.Config.Employees)
+local GamePasses = require(Shared.Config.GamePasses)
+local Research = require(Shared.Config.Research)
 local DataService = require(script.Parent.DataService)
 local DevEvents = require(Shared.Config.DevEvents)
 local Economy = require(Shared.Config.Economy)
@@ -46,6 +53,12 @@ local function researchModifiers(player: Player): any
 	return if ResearchService then ResearchService.getModifiers(player) else nil
 end
 
+-- Куплен ли геймпасс (через ShopService.ownsPass; без модуля — нет)
+local function ownsPass(player: Player, passId: GamePasses.PassId): boolean
+	local ShopService = optional("ShopService")
+	return ShopService ~= nil and ShopService.ownsPass(player, passId) == true
+end
+
 -- Время разработки: исследование «Удобный движок» (devTime -0.1) и бусты скорости магазина.
 -- Скорость сокращает время, а не добавляет очки, поэтому оценка от ускорения не падает:
 -- очки в секунду умножаются на ту же скорость (см. цикл в start).
@@ -69,12 +82,34 @@ local function upgradeBonus(player: Player, field: "speed" | "reviewBonus"): num
 	return total
 end
 
+-- Прибавка к оценке до округления: предметы студии + VIP-офис
+-- Перки сотрудников (StaffService.perkTotals): devTime, bugAlwaysWins, streamerMultiplier, trendBonus
+local function perks(player: Player): any
+	-- StaffService подключается ниже по файлу: берём модуль по требованию (require кэшируется)
+	local ok, totals = pcall(function()
+		return (require(script.Parent.StaffService) :: any).perkTotals(player)
+	end)
+	return if ok and type(totals) == "table" then totals else {}
+end
+
+local function reviewBonus(player: Player): number
+	local vip = if ownsPass(player, "vipOffice") then GamePasses.effects.vipReviewBonus else 0
+	-- «Мастер Пиксель» +1 и перк «Перфекционист» +0.2
+	local ok, staff = pcall(function()
+		return (require(script.Parent.StaffService) :: any).reviewBonus(player)
+	end)
+	local staffBonus = if ok and type(staff) == "number" then staff else 0
+	return upgradeBonus(player, "reviewBonus") + vip + staffBonus
+end
+
 local function durationFactor(player: Player): number
 	local research = researchModifiers(player)
 	-- Research.modifiers отдаёт множители: 1 = без изменений, 0.9 = на 10% быстрее
 	local devTime = if research and type(research.devTime) == "number" then research.devTime else 1
 	local items = math.min(upgradeBonus(player, "speed"), Economy.maxUpgradeSpeed)
-	return math.max(devTime, 0.25) * (1 - items) / speedFactor(player)
+	-- Перк «Кранчер» и подобные: множитель времени (0.9 = −10%)
+	local perkTime = tonumber(perks(player).devTime) or 1
+	return math.max(devTime * perkTime, 0.25) * (1 - items) / speedFactor(player)
 end
 local StaffService = require(script.Parent.StaffService)
 local PlotService = require(script.Parent.PlotService)
@@ -89,6 +124,9 @@ end
 type Focus = { gameplay: number, graphics: number, sound: number, story: number }
 
 type Project = {
+	id: number,
+	-- true, пока название проходит фильтр: слот занят, но очки не идут (защита от гонки)
+	pending: boolean,
 	name: string,
 	genreId: string,
 	topicId: string,
@@ -108,24 +146,98 @@ local BASE_DURATION = 30 -- секунд на одну игру в начале
 local MAX_NAME_LENGTH = 30
 local DEFAULT_NAME = "Без названия" -- только если сам фильтр Roblox упал
 local MIN_NAME_LENGTH = 2
+local ACTION_COOLDOWN = 0.5 -- «Мгновенно закончить»: секунд между запросами
+local PREVIEW_COOLDOWN = 0.5 -- примерная оценка: секунд между запросами
+local STATE_COOLDOWN = 1 -- DevStateRequest
 
 local DevelopmentService = {}
-local projects: { [Player]: Project } = {}
+local projects: { [Player]: { Project } } = {}
+local lastAction: { [Player]: number } = {}
+local lastPreview: { [Player]: number } = {}
+local lastStateRequest: { [Player]: number } = {}
+local nextProjectId = 0
 local rng = Random.new()
 
--- Заглушка, пока название проходит фильтр: слот занят, но очки не идут
-local PENDING: Project = {
-	name = "",
-	genreId = "",
-	topicId = "",
-	focus = { gameplay = 0, graphics = 0, sound = 0, story = 0 },
-	points = { gameplay = 0, graphics = 0, sound = 0, story = 0 },
-	elapsed = 0,
-	duration = math.huge,
-	nextEventAt = math.huge,
-	eventsDone = 0,
-	tempo = 1,
-}
+-- Для примерной оценки: без случайного разброса
+local NO_NOISE = {
+	NextNumber = function(_self: any, _min: number, _max: number): number
+		return 0
+	end,
+} :: any
+
+local function cooldownPassed(map: { [Player]: number }, player: Player, seconds: number): boolean
+	local now = os.clock()
+	local last = map[player]
+	if last and now - last < seconds then
+		return false
+	end
+	map[player] = now
+	return true
+end
+
+local function listOf(player: Player): { Project }
+	local list = projects[player]
+	if not list then
+		list = {}
+		projects[player] = list
+	end
+	return list
+end
+
+local function removeProject(player: Player, project: Project): boolean
+	local list = projects[player]
+	local index = list and table.find(list, project)
+	if not list or not index then
+		return false
+	end
+	table.remove(list, index)
+	return true
+end
+
+local function hasProject(player: Player, project: Project): boolean
+	local list = projects[player]
+	return list ~= nil and table.find(list, project) ~= nil
+end
+
+-- Сколько игр игрок может делать одновременно. Ноутбук в парке один — там всегда 1
+function DevelopmentService.slotCount(player: Player): number
+	if onLaptop(player) then
+		return 1
+	end
+	local research = researchModifiers(player)
+	local fromResearch = if research and type(research.projectSlots) == "number"
+		then math.floor(research.projectSlots)
+		else 1
+	local fromPass = if ownsPass(player, "extraSlot") then GamePasses.effects.extraSlotProjects else 1
+	return math.max(1, fromResearch, fromPass)
+end
+
+-- Снимок для HUD: слоты, проекты, заряды, авто-релиз, роялти
+function DevelopmentService.pushState(player: Player)
+	local profile = DataService.get(player)
+	if not profile or not player.Parent then
+		return
+	end
+	local list = projects[player] or {}
+	local active = {}
+	for _, project in list do
+		if not project.pending then
+			table.insert(active, { id = project.id, name = project.name, laptop = project.laptop == true })
+		end
+	end
+	local research = researchModifiers(player)
+	local Perks = optional("PerksService")
+	PaidRemotes.DevState:FireClient(player, {
+		slots = DevelopmentService.slotCount(player),
+		busy = #list,
+		projects = active,
+		instantFinish = profile.boosts.instantFinish,
+		autoReleaseOwned = ownsPass(player, "autoRelease"),
+		autoReleaseOn = Perks ~= nil and Perks.isAutoReleaseOn(player) == true,
+		reviewPreview = research ~= nil and research.reviewPreview == true,
+		royaltyPerMinute = if Perks then Perks.royaltyPerMinute(player) else 0,
+	})
+end
 
 -- Название увидят другие игроки (релиз, лидерборд), поэтому фильтр обязателен
 local function filterName(player: Player, rawName: string): string
@@ -170,13 +282,16 @@ function DevelopmentService.pointsRate(player: Player, focus: Focus, tempo: numb
 			any = true
 			local employee = byDesk[upgrade.id]
 			local base = deskPoints * (if employee then employee.multiplier else 1)
+			-- Навыки сотрудника за этим столом и перк «Наставник» соседей
+			local okMult, deskMult = pcall(StaffService.deskMultipliers, player, upgrade.id)
+			local mult: any = if okMult and type(deskMult) == "table" then deskMult else {}
 			for _, key in FOCUS_KEYS do
 				local share = (focus :: any)[key] :: number
 				local bonus = 1
 				if employee and employee.specialization == key and share >= Employees.specThreshold then
 					bonus += Employees.specBonus
 				end
-				(rate :: any)[key] += base * share * bonus
+				(rate :: any)[key] += base * share * bonus * (tonumber(mult[key]) or 1)
 			end
 		end
 	end
@@ -231,24 +346,87 @@ local function sanitizeFocus(raw: any): Focus?
 	}
 end
 
-local function onStartDevelopment(player: Player, request: any)
-	if projects[player] or type(request) ~= "table" then
-		return
+-- Жанр и тема существуют и открыты у игрока
+-- Сезонную тему можно брать только во время её праздника
+local function seasonalAllowed(topicId: string): boolean
+	local seasonal = (Topics[topicId] :: any).seasonal
+	if not seasonal then
+		return true
 	end
+	local HolidayService = optional("HolidayService")
+	local ok, current = pcall(function()
+		return HolidayService and HolidayService.current()
+	end)
+	return ok and current == seasonal
+end
+
+local function comboAllowed(profile: DataService.Profile, genreId: any, topicId: any): boolean
+	return type(genreId) == "string"
+		and Genres[genreId] ~= nil
+		and profile.unlockedGenres[genreId] == true
+		and type(topicId) == "string"
+		and Topics[topicId] ~= nil
+		and profile.unlockedTopics[topicId] == true
+		and seasonalAllowed(topicId)
+end
+
+-- Начать игру: общие проверки для «Создать игру» и «Авто-релиза».
+-- rawName уже очищен (TextSafe) и обрезан; здесь он проходит фильтр Roblox
+local function beginProject(player: Player, genreId: string, topicId: string, focus: Focus, rawName: string)
 	-- Игру делают за компьютером, а не на бегу
 	if not PlotService.isAtPc(player) then
 		return
 	end
 	local profile = DataService.get(player)
-	if not profile then
+	if not profile or not comboAllowed(profile, genreId, topicId) then
+		return
+	end
+	local list = listOf(player)
+	if #list >= DevelopmentService.slotCount(player) then
 		return
 	end
 
-	local genreId, topicId = request.genreId, request.topicId
-	if type(genreId) ~= "string" or not Genres[genreId] or not profile.unlockedGenres[genreId] then
+	-- Фильтр уступает поток: занимаем слот заранее, чтобы второй запрос не прошёл
+	nextProjectId += 1
+	local project: Project = {
+		id = nextProjectId,
+		pending = true,
+		name = "",
+		genreId = genreId,
+		topicId = topicId,
+		focus = focus,
+		points = { gameplay = 0, graphics = 0, sound = 0, story = 0 },
+		elapsed = 0,
+		duration = math.huge,
+		nextEventAt = math.huge,
+		eventsDone = 0,
+		tempo = 1,
+	}
+	table.insert(list, project)
+	DevelopmentService.pushState(player)
+
+	local name = filterName(player, rawName)
+	-- Пока ждали фильтр, слот могли снять (Rebirth, выход)
+	if not hasProject(player, project) or not player.Parent then
 		return
 	end
-	if type(topicId) ~= "string" or not Topics[topicId] or not profile.unlockedTopics[topicId] then
+	local laptop = onLaptop(player)
+	local factor = durationFactor(player)
+	project.name = name
+	project.duration = if laptop then StartPark.laptopDuration else BASE_DURATION * factor
+	project.nextEventAt = DevEvents.firstAt
+	project.tempo = if laptop then 1 else 1 / factor
+	project.laptop = laptop
+	project.pending = false
+	DevelopmentService.pushState(player)
+end
+
+local function onStartDevelopment(player: Player, request: any)
+	if type(request) ~= "table" then
+		return
+	end
+	local profile = DataService.get(player)
+	if not profile or not comboAllowed(profile, request.genreId, request.topicId) then
 		return
 	end
 	local focus = sanitizeFocus(request.focus)
@@ -266,32 +444,14 @@ local function onStartDevelopment(player: Player, request: any)
 	if not rawName or not nameLength or TextSafe.visibleLength(rawName) < MIN_NAME_LENGTH then
 		return
 	end
+	-- Свой фильтр мата поверх фильтра Roblox (тот слабо ловит русский мат и молчит в Studio)
+	if not WordFilter.isClean(rawName) then
+		return
+	end
 	if nameLength > MAX_NAME_LENGTH then
 		rawName = rawName:sub(1, (utf8.offset(rawName, MAX_NAME_LENGTH + 1) or (#rawName + 1)) - 1)
 	end
-
-	-- Фильтр уступает поток: занимаем слот заранее, чтобы второй запрос не прошёл
-	projects[player] = PENDING
-	local name = filterName(player, rawName)
-	if projects[player] ~= PENDING or not player.Parent then
-		return
-	end
-	local laptop = onLaptop(player)
-
-	local factor = durationFactor(player)
-	projects[player] = {
-		name = name,
-		genreId = genreId,
-		topicId = topicId,
-		focus = focus,
-		points = { gameplay = 0, graphics = 0, sound = 0, story = 0 },
-		elapsed = 0,
-		duration = if laptop then StartPark.laptopDuration else BASE_DURATION * factor,
-		nextEventAt = DevEvents.firstAt,
-		eventsDone = 0,
-		tempo = if laptop then 1 else 1 / factor,
-		laptop = laptop,
-	}
+	beginProject(player, request.genreId, request.topicId, focus, rawName)
 end
 
 local function release(player: Player, project: Project)
@@ -300,21 +460,33 @@ local function release(player: Player, project: Project)
 		return
 	end
 
-	local score = Formulas.review(
-		project.genreId,
-		project.topicId,
-		project.points,
-		rng,
-		upgradeBonus(player, "reviewBonus")
-	)
+	local score = Formulas.review(project.genreId, project.topicId, project.points, rng, reviewBonus(player))
 	local TrendService = optional("TrendService")
 	if TrendService then
-		score += TrendService.getBonus(project.genreId, project.topicId)
+		local okTrend, trendValue = pcall(TrendService.getBonus, project.genreId, project.topicId)
+		local trend = if okTrend and type(trendValue) == "number" then trendValue else 0
+		score += trend
+		-- Перк «Тренд-хантер»: ещё бонус, если игра в тренде
+		if trend > 0 then
+			score += tonumber(perks(player).trendBonus) or 0
+		end
+		score = math.floor(score + 0.5)
+	end
+	-- Праздник (Хэллоуин: хоррор/призраки/тыквы; Новый год) — бонус к оценке
+	local HolidayService = optional("HolidayService")
+	if HolidayService then
+		local ok, bonus = pcall(HolidayService.reviewBonus, project.genreId, project.topicId)
+		if ok and type(bonus) == "number" then
+			score += bonus
+		end
 	end
 	-- Продукт «Патч»: +1 к оценке, заряд тратится только если есть куда расти
 	local ShopService = optional("ShopService")
-	if ShopService and score < 10 and ShopService.consumeCharge(player, "patch") then
-		score += 1
+	if ShopService and score < 10 then
+		local okPatch, used = pcall(ShopService.consumeCharge, player, "patch")
+		if okPatch and used then
+			score += 1
+		end
 	end
 	score = math.clamp(score, 1, 10)
 
@@ -329,7 +501,25 @@ local function release(player: Player, project: Project)
 	local cashMultiplier = if shop and type(shop.cashMultiplier) == "number" then shop.cashMultiplier else 1
 	local researchMultiplier = if research and type(research.revenue) == "number" then research.revenue else 1
 	local laptopMultiplier = if project.laptop then StartPark.laptopRevenueMultiplier else 1
-	revenue = math.floor(revenue * cashMultiplier * researchMultiplier * laptopMultiplier)
+	-- Мощность студии (сумма очков/с купленной техники): лучше студия — больше продаж.
+	-- Раньше доход зависел только от оценки, и мощный ПК или офис деньги не меняли (отчёт #42)
+	local power = 0
+	for _, upgrade in Upgrades do
+		if profile.upgrades[upgrade.id] and upgrade.pointsPerSecond then
+			power += upgrade.pointsPerSecond
+		end
+	end
+	local powerMultiplier = 1 + math.min(power * Economy.revenuePerPower, Economy.maxPowerBonus)
+	local holidayMultiplier = 1
+	if HolidayService then
+		local ok, value = pcall(HolidayService.revenueMultiplier, project.genreId)
+		if ok and type(value) == "number" and value > 0 then
+			holidayMultiplier = value
+		end
+	end
+	revenue = math.floor(
+		revenue * cashMultiplier * researchMultiplier * laptopMultiplier * powerMultiplier * holidayMultiplier
+	)
 
 	local isRecord = profile.gamesReleased > 0 and score > profile.bestScore
 	profile.gamesReleased += 1
@@ -337,6 +527,7 @@ local function release(player: Player, project: Project)
 	DataService.addCash(player, revenue)
 
 	hook("ResearchService", "onGameReleased", player, score)
+	hook("PerksService", "onGameReleased", player, revenue)
 	local p = project.points
 	hook("ExpoService", "onGameReleased", player, {
 		name = project.name,
@@ -364,13 +555,29 @@ local function release(player: Player, project: Project)
 		revenue = revenue,
 		adBonus = adBonus,
 		isRecord = isRecord,
+		projectId = project.id,
+		-- Сколько игр ещё в разработке: клиент не прячет прогресс и событие второй игры
+		activeProjects = #(projects[player] or {}),
 	})
 end
 
 -- Применить выбор события: очки в направление (или по фокусу), время, риск
-local function applyEffect(player: Player, project: Project, effect: DevEvents.Effect): boolean
-	local ok = effect.chance == nil or rng:NextNumber() < effect.chance
+local function applyEffect(
+	player: Player,
+	project: Project,
+	effect: DevEvents.Effect,
+	eventId: string?
+): boolean
+	local perk = perks(player)
+	-- Перк «Багоборец»: событие «баг» всегда заканчивается удачно
+	local ok = effect.chance == nil
+		or (eventId == "bug" and perk.bugAlwaysWins == true)
+		or rng:NextNumber() < effect.chance
 	local work = if ok then effect.work or 0 else effect.failWork or 0
+	-- Перк «Хайпожор»: стример даёт больше
+	if eventId == "streamer" and work > 0 then
+		work *= tonumber(perk.streamerMultiplier) or 1
+	end
 	if work ~= 0 then
 		local rate = DevelopmentService.pointsRate(player, project.focus, project.tempo)
 		local perSecond = rate.gameplay + rate.graphics + rate.sound + rate.story
@@ -397,8 +604,18 @@ local function resolveEvent(player: Player, project: Project, choice: string)
 	end
 	project.event = nil
 	local effect = if choice == "a" then active.def.a else active.def.b
-	local ok = applyEffect(player, project, effect)
+	local ok = applyEffect(player, project, effect, active.def.id)
 	Remotes.DevEventResult:FireClient(player, { id = active.def.id, choice = choice, ok = ok })
+end
+
+-- Активное событие игрока (одно на игрока, даже при двух проектах)
+local function projectWithEvent(player: Player): Project?
+	for _, project in projects[player] or {} do
+		if project.event then
+			return project
+		end
+	end
+	return nil
 end
 
 local function maybeStartEvent(player: Player, project: Project)
@@ -416,16 +633,23 @@ local function maybeStartEvent(player: Player, project: Project)
 	if project.elapsed + DevEvents.answerSeconds > project.duration then
 		return
 	end
+	-- У второй игры событие подождёт, пока игрок ответит на первое
+	if projectWithEvent(player) then
+		return
+	end
 	local def = DevEvents.list[rng:NextInteger(1, #DevEvents.list)]
 	project.eventsDone += 1
 	project.nextEventAt = project.elapsed + rng:NextNumber(DevEvents.intervalMin, DevEvents.intervalMax)
 	project.event = { def = def, expiresAt = project.elapsed + DevEvents.answerSeconds }
-	Remotes.DevEvent:FireClient(player, { id = def.id, answerSeconds = DevEvents.answerSeconds })
+	Remotes.DevEvent:FireClient(
+		player,
+		{ id = def.id, answerSeconds = DevEvents.answerSeconds, projectId = project.id }
+	)
 end
 
 local function onEventChoice(player: Player, eventId: any, choice: any)
-	local project = projects[player]
-	if not project or project == PENDING or not project.event then
+	local project = projectWithEvent(player)
+	if not project or not project.event or project.pending then
 		return
 	end
 	if eventId ~= project.event.def.id or (choice ~= "a" and choice ~= "b") then
@@ -434,17 +658,166 @@ local function onEventChoice(player: Player, eventId: any, choice: any)
 	resolveEvent(player, project, choice)
 end
 
+-- «Сиквел»: «Игра» -> «Игра 2», «Игра 2» -> «Игра 3»; не длиннее MAX_NAME_LENGTH
+local function sequelName(name: string): string
+	local base, number = name:match("^(.-)%s+(%d+)$")
+	local nextNumber = if base and base ~= "" and number then (tonumber(number) or 1) + 1 else 2
+	local baseName = if base and base ~= "" and number then base else name
+	local suffix = " " .. tostring(math.min(nextNumber, 999))
+	local maxBase = MAX_NAME_LENGTH - #suffix
+	local length = utf8.len(baseName)
+	if not length then
+		baseName = DEFAULT_NAME
+	elseif length > maxBase then
+		baseName = baseName:sub(1, (utf8.offset(baseName, maxBase + 1) or (#baseName + 1)) - 1)
+	end
+	return baseName .. suffix
+end
+
+-- Геймпасс «Авто-релиз»: следующая игра с тем же жанром, темой, фокусом и названием-сиквелом.
+-- Все обычные проверки (за ПК, слот, жанр открыт, фильтр названия) — в beginProject
+local function maybeAutoRelease(player: Player, project: Project)
+	if not ownsPass(player, "autoRelease") then
+		return
+	end
+	local Perks = optional("PerksService")
+	if not Perks or not Perks.isAutoReleaseOn(player) or not PlotService.isAtPc(player) then
+		return
+	end
+	-- defer: фильтр названия уступает поток, а мы ещё внутри цикла тиков
+	task.defer(
+		beginProject,
+		player,
+		project.genreId,
+		project.topicId,
+		table.clone(project.focus),
+		sequelName(project.name)
+	)
+end
+
+-- Завершить проект: событие без ответа — спокойный вариант, слот освобождается, релиз
+local function finishProject(player: Player, project: Project)
+	resolveEvent(player, project, "b")
+	if not removeProject(player, project) then
+		return
+	end
+	release(player, project)
+	DevelopmentService.pushState(player)
+	maybeAutoRelease(player, project)
+end
+
+-- «Мгновенно закончить»: заряд из ShopService, очки за оставшееся время, сразу релиз.
+-- Без yield между проверкой и выдачей: двойной клик не потратит два заряда
+local function onInstantFinish(player: Player, projectId: any)
+	if type(projectId) ~= "number" or projectId ~= projectId then
+		return
+	end
+	if not cooldownPassed(lastAction, player, ACTION_COOLDOWN) then
+		return
+	end
+	local project: Project? = nil
+	for _, candidate in projects[player] or {} do
+		if candidate.id == projectId then
+			project = candidate
+			break
+		end
+	end
+	-- На ноутбуке в парке не работает
+	if not project or project.pending or project.laptop or onLaptop(player) then
+		return
+	end
+	if project.elapsed >= project.duration then
+		return -- и так выходит на следующем тике
+	end
+	-- Как и обычная разработка — только сидя за компьютером
+	if not PlotService.isAtPc(player) then
+		return
+	end
+	local ShopService = optional("ShopService")
+	if not ShopService or not ShopService.consumeCharge(player, "instantFinish") then
+		return
+	end
+	-- Сначала событие (спокойный вариант может сдвинуть время), потом очки за остаток
+	resolveEvent(player, project, "b")
+	local remaining = math.max(project.duration - project.elapsed, 0)
+	local rate = DevelopmentService.pointsRate(player, project.focus, project.tempo)
+	project.points.gameplay += rate.gameplay * remaining
+	project.points.graphics += rate.graphics * remaining
+	project.points.sound += rate.sound * remaining
+	project.points.story += rate.story * remaining
+	project.elapsed = project.duration
+	local ok, err = pcall(finishProject, player, project)
+	if not ok then
+		-- Релиз не прошёл — заряд возвращаем, игра остаётся в разработке
+		warn("[DevelopmentService] Instant finish failed:", err)
+		local refund = ShopService.refundCharge
+		if type(refund) == "function" then
+			pcall(refund, player, "instantFinish")
+		end
+	end
+end
+
+-- «Тест-группа»: ожидаемая оценка без случайного разброса ± Research.PREVIEW_SPREAD.
+-- Очки — как если бы вся разработка шла с текущими очками/с, без событий
+local function onPreviewRequest(player: Player, request: any)
+	if type(request) ~= "table" or not cooldownPassed(lastPreview, player, PREVIEW_COOLDOWN) then
+		return
+	end
+	local profile = DataService.get(player)
+	local research = researchModifiers(player)
+	if not profile or not research or research.reviewPreview ~= true then
+		return
+	end
+	local genreId, topicId = request.genreId, request.topicId
+	if not comboAllowed(profile, genreId, topicId) then
+		return
+	end
+	local focus = sanitizeFocus(request.focus)
+	if not focus then
+		return
+	end
+	local laptop = onLaptop(player)
+	local factor = durationFactor(player)
+	local duration = if laptop then StartPark.laptopDuration else BASE_DURATION * factor
+	local rate = DevelopmentService.pointsRate(player, focus, if laptop then 1 else 1 / factor)
+	local points = {
+		gameplay = rate.gameplay * duration,
+		graphics = rate.graphics * duration,
+		sound = rate.sound * duration,
+		story = rate.story * duration,
+	}
+	local score = Formulas.review(genreId, topicId, points, NO_NOISE, reviewBonus(player))
+	local TrendService = optional("TrendService")
+	if TrendService then
+		score += TrendService.getBonus(genreId, topicId)
+	end
+	score = math.clamp(score, 1, 10)
+	PaidRemotes.ReviewPreview:FireClient(player, {
+		genreId = genreId,
+		topicId = topicId,
+		min = math.max(score - Research.PREVIEW_SPREAD, 1),
+		max = math.min(score + Research.PREVIEW_SPREAD, 10),
+	})
+end
+
+local function onStateRequest(player: Player)
+	if cooldownPassed(lastStateRequest, player, STATE_COOLDOWN) then
+		DevelopmentService.pushState(player)
+	end
+end
+
 local TICK = 0.5
 
 -- Один тик одного проекта. Отдельной функцией, чтобы ошибка у одного игрока
 -- (например, в хуке другой фичи) не останавливала разработку у всех
-local function tickProject(player: Player, project: Project)
-	if project == PENDING then
+local function tickProject(player: Player, project: Project, atPc: boolean)
+	if project.pending or not hasProject(player, project) then
 		return
 	end
 	-- Встал из-за компьютера — разработка на паузе
-	if not PlotService.isAtPc(player) then
+	if not atPc then
 		Remotes.DevelopmentProgress:FireClient(player, {
+			id = project.id,
 			progress = math.min(project.elapsed / project.duration, 1),
 			points = project.points,
 			paused = true,
@@ -459,43 +832,58 @@ local function tickProject(player: Player, project: Project)
 	project.elapsed += TICK
 
 	Remotes.DevelopmentProgress:FireClient(player, {
+		id = project.id,
 		progress = math.min(project.elapsed / project.duration, 1),
 		points = project.points,
 	})
 
 	maybeStartEvent(player, project)
 	if project.elapsed >= project.duration then
-		-- Событие без ответа к релизу — спокойный вариант
-		resolveEvent(player, project, "b")
-		projects[player] = nil
-		release(player, project)
+		finishProject(player, project)
 	end
 end
 
--- Отменить текущую разработку (Rebirth сбрасывает студию — недоделанная игра пропадает,
--- иначе она вышла бы уже с новым множителем Rebirth)
+-- Отменить всю разработку (Rebirth сбрасывает студию — недоделанные игры пропадают,
+-- иначе они вышли бы уже с новым множителем Rebirth). Ждущие фильтра тоже снимаются
 function DevelopmentService.cancel(player: Player)
 	projects[player] = nil
+	DevelopmentService.pushState(player)
 end
 
 function DevelopmentService.start()
 	Remotes.DevEventChoice.OnServerEvent:Connect(onEventChoice)
 	Remotes.StartDevelopment.OnServerEvent:Connect(onStartDevelopment)
+	PaidRemotes.InstantFinish.OnServerEvent:Connect(onInstantFinish)
+	PaidRemotes.ReviewPreviewRequest.OnServerEvent:Connect(onPreviewRequest)
+	PaidRemotes.DevStateRequest.OnServerEvent:Connect(onStateRequest)
 	Players.PlayerRemoving:Connect(function(player)
 		projects[player] = nil
+		lastAction[player] = nil
+		lastPreview[player] = nil
+		lastStateRequest[player] = nil
 	end)
 
-	-- Один общий цикл вместо таймера на каждого игрока
+	-- Один общий цикл вместо таймера на каждого игрока. Снимок списков: релиз и авто-релиз
+	-- меняют их во время обхода
 	task.spawn(function()
 		while true do
 			task.wait(TICK)
-			for player, project in projects do
-				local ok, err = pcall(tickProject, player, project)
-				if not ok then
-					warn("[DevelopmentService] Tick failed for", player.Name, err)
-					-- Сломанный проект убираем, чтобы ошибка не повторялась каждые полсекунды
-					if projects[player] == project then
-						projects[player] = nil
+			local snapshot: { [Player]: { Project } } = {}
+			for player, list in projects do
+				if #list > 0 then
+					snapshot[player] = table.clone(list)
+				end
+			end
+			for player, list in snapshot do
+				local atPc = PlotService.isAtPc(player)
+				for _, project in list do
+					local ok, err = pcall(tickProject, player, project, atPc)
+					if not ok then
+						warn("[DevelopmentService] Tick failed for", player.Name, err)
+						-- Сломанный проект убираем, чтобы ошибка не повторялась каждые полсекунды
+						if removeProject(player, project) then
+							pcall(DevelopmentService.pushState, player)
+						end
 					end
 				end
 			end

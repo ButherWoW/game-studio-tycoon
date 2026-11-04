@@ -7,7 +7,10 @@ local RunService = game:GetService("RunService")
 local NAMES = {
 	"HireEmployee", -- клиент -> сервер: employeeId
 	"MoveStudio", -- клиент -> сервер: без аргументов, переезд на следующий этап
-	"StaffChanged", -- сервер -> клиент: { [employeeId]: deskUpgradeId }
+	"StaffChanged", -- сервер -> клиент: { [employeeId]: deskUpgradeId ("" — ждёт стол) }, { info, unlocked, now }
+	"UpgradeSkill", -- клиент -> сервер: employeeId, skillKey
+	"SetPerk", -- клиент -> сервер: employeeId, slot, perkId
+	"SetLook", -- клиент -> сервер: employeeId, field ("shirt" | "skin" | "hat" | "item"), index
 }
 
 local folder: Folder

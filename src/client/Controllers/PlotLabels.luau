@@ -35,7 +35,9 @@ local function labelFor(buttonName: string): string?
 	if not upgrade then
 		return nil
 	end
-	local name = ClientState.localText("upgrade_" .. id, upgrade.name, upgrade.name)
+	-- Нет перевода в Locales (новые апгрейды) — английское название из Texts.en, не русское
+	local name =
+		ClientState.localText("upgrade_" .. id, upgrade.name, Texts.en["upgrade_" .. id] or upgrade.name)
 	local price = if upgrade.cost <= 0 then ClientState.t("price_free") else Texts.money(upgrade.cost)
 	-- Что даёт предмет: очки в секунду (оценка), скорость, бонус к оценке
 	local bonuses = {}
