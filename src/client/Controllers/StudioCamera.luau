@@ -78,6 +78,20 @@ local function currentFloor(plot: BasePart): number
 	return StudioLayout.floorAt(height)
 end
 
+-- Включил вид, стоя на своём участке: уйдёт с него — выходим из вида
+local enteredInside = false
+
+-- Стоит ли игрок над своим участком (а не перед входом или в парке)
+local function insidePlot(plot: BasePart): boolean
+	local character = player.Character
+	local root = character and character:FindFirstChild("HumanoidRootPart") :: BasePart?
+	if not root then
+		return false
+	end
+	local here = plot.CFrame:PointToObjectSpace(root.Position)
+	return math.abs(here.X) <= plot.Size.X / 2 and math.abs(here.Z) <= plot.Size.Z / 2
+end
+
 -- ===== Прозрачность передних стен и потолка =====
 
 -- Сколько прозрачности дать детали: nil — не трогать, 1 — этаж выше текущего (спрятать)
@@ -203,6 +217,7 @@ function StudioCamera.enter()
 	end
 	active = true
 	activePlot = plot
+	enteredInside = insidePlot(plot)
 	viewFloor = currentFloor(plot)
 	distance = CameraConfig.distance
 	savedFov = camera.FieldOfView
@@ -417,7 +432,10 @@ function StudioCamera.start()
 		while true do
 			task.wait(FLOOR_POLL)
 			local plot = activePlot
-			if active and plot then
+			if active and plot and enteredInside and not insidePlot(plot) then
+				-- Ушёл со своего участка (телепорт, 🏠, прыжок): вид этажа больше не к месту
+				StudioCamera.exit()
+			elseif active and plot then
 				local floor = currentFloor(plot)
 				if floor ~= viewFloor then
 					viewFloor = floor

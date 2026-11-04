@@ -7,6 +7,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local StartRemotes = require(ReplicatedStorage.Shared.StartRemotes)
 local Ui = require(script.Parent.Parent.Ui)
+local StudioCamera = require(script.Parent.StudioCamera)
 
 local MENU_SLOT = 12
 -- Сервер всё равно режет чаще раза в 2 с; здесь — чтобы не слать лишнего
@@ -23,6 +24,9 @@ function HomeButton.start()
 			return
 		end
 		lastClick = now
+		-- Вид сверху показывает только свой этаж: после переноса ко входу он прятал бы верхние
+		-- этажи (отчёт владельца) — выходим из него
+		StudioCamera.exit()
 		StartRemotes.GoHome:FireServer()
 	end, "home")
 	-- Пока участок не выдан (все заняты) — вести некуда
