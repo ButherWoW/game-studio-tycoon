@@ -373,6 +373,133 @@ local function ensureLandscape()
 	end
 end
 
+-- Пустая земля вокруг парка и между участками: трава + деревья, кусты и клумбы Астры
+-- (отдельные модели из astra-park в ServerStorage). Раскладка случайная, но одна и та же
+-- на каждом сервере (свой seed); обходим парк, участки с запасом под кнопки и тропинки
+local OUTER_NAME = "OuterPark"
+local OUTER_GROUND_COLOR = Color3.fromRGB(78, 145, 60)
+local OUTER_SEED = 4242
+local OUTER_CELL = 13 -- шаг сетки: в каждой клетке не больше одного предмета
+local OUTER_PARK_CLEAR = 74 -- радиус парка Астры (70) + запас
+local OUTER_PLOT_MARGIN = 8 -- запас вокруг участка 60×60
+local OUTER_PLOT_FRONT = 14 -- спереди (+Z) — кнопки покупки и табличка гаража
+local OUTER_PATH_CLEAR = 7 -- от оси тропинки
+local OUTER_EDGE = 10 -- от края земли
+-- Что сажаем: имя модели, вес, разброс масштаба
+local OUTER_PROPS = {
+	{ name = "TreeBroadleaf", weight = 5, scale = { 0.85, 1.3 } },
+	{ name = "TreePine", weight = 4, scale = { 0.85, 1.4 } },
+	{ name = "TreeBirch", weight = 3, scale = { 0.85, 1.2 } },
+	{ name = "Bush", weight = 4, scale = { 0.8, 1.4 } },
+	{ name = "Flowerbed", weight = 1, scale = { 1, 1 } },
+}
+local OUTER_FILL = 0.55 -- доля клеток с предметом
+
+local function outerBlocked(point: Vector3, center: Vector3): boolean
+	local flat = Vector3.new(point.X - center.X, 0, point.Z - center.Z)
+	if flat.Magnitude < OUTER_PARK_CLEAR then
+		return true
+	end
+	local plots = workspace:FindFirstChild("Plots")
+	if plots then
+		for _, plot in plots:GetChildren() do
+			if plot:IsA("BasePart") then
+				local here = plot.CFrame:PointToObjectSpace(point)
+				local half = plot.Size / 2
+				if
+					math.abs(here.X) < half.X + OUTER_PLOT_MARGIN
+					and here.Z > -half.Z - OUTER_PLOT_MARGIN
+					and here.Z < half.Z + OUTER_PLOT_FRONT
+				then
+					return true
+				end
+			end
+		end
+	end
+	local paths = workspace:FindFirstChild("PlotPaths")
+	if paths then
+		for _, path in paths:GetChildren() do
+			if path:IsA("BasePart") then
+				local here = path.CFrame:PointToObjectSpace(point)
+				if
+					math.abs(here.X) < OUTER_PATH_CLEAR
+					and math.abs(here.Z) < path.Size.Z / 2 + OUTER_PATH_CLEAR
+				then
+					return true
+				end
+			end
+		end
+	end
+	return false
+end
+
+local function ensureOuterLandscape()
+	if workspace:FindFirstChild(OUTER_NAME) or not hasLandscape() then
+		return
+	end
+	local base = workspace:FindFirstChild("Baseplate")
+	if base and base:IsA("BasePart") then
+		base.Color = OUTER_GROUND_COLOR
+		base.Material = Enum.Material.Grass
+	end
+	local templates = {}
+	local total = 0
+	for _, prop in OUTER_PROPS do
+		local template = landscapeTemplate(prop.name)
+		if template and template:IsA("Model") then
+			table.insert(templates, { model = template, weight = prop.weight, scale = prop.scale })
+			total += prop.weight
+		end
+	end
+	if total <= 0 then
+		return
+	end
+	local spawn = workspace:FindFirstChildWhichIsA("SpawnLocation", true)
+	local center = if spawn and spawn:IsA("BasePart")
+		then Vector3.new(spawn.Position.X, 0, spawn.Position.Z)
+		else Vector3.zero
+	local groundY = if base and base:IsA("BasePart") then base.Position.Y + base.Size.Y / 2 else 0
+	local half = (if base and base:IsA("BasePart") then math.min(base.Size.X, base.Size.Z) else GROUND_SIZE)
+			/ 2
+		- OUTER_EDGE
+	local random = Random.new(OUTER_SEED)
+	local folder = Instance.new("Folder")
+	folder.Name = OUTER_NAME
+	local cells = math.floor(half / OUTER_CELL)
+	for ix = -cells, cells - 1 do
+		for iz = -cells, cells - 1 do
+			-- random вызываем всегда одинаково — раскладка не зависит от того, что клетка занята
+			local fill = random:NextNumber()
+			local pick = random:NextNumber() * total
+			local jitterX, jitterZ = random:NextNumber(0.15, 0.85), random:NextNumber(0.15, 0.85)
+			local yaw, scaleRoll = random:NextNumber(0, 2 * math.pi), random:NextNumber()
+			local point = Vector3.new(
+				center.X + (ix + jitterX) * OUTER_CELL,
+				groundY,
+				center.Z + (iz + jitterZ) * OUTER_CELL
+			)
+			if fill < OUTER_FILL and not outerBlocked(point, center) then
+				local chosen = templates[#templates]
+				for _, entry in templates do
+					pick -= entry.weight
+					if pick <= 0 then
+						chosen = entry
+						break
+					end
+				end
+				local model = chosen.model:Clone()
+				local scale = chosen.scale[1] + (chosen.scale[2] - chosen.scale[1]) * scaleRoll
+				if scale ~= 1 then
+					model:ScaleTo(scale)
+				end
+				model:PivotTo(CFrame.new(point) * CFrame.Angles(0, yaw, 0))
+				model.Parent = folder
+			end
+		end
+	end
+	folder.Parent = workspace
+end
+
 -- Вызывать до PlotService.start()
 function WorldService.start()
 	ensureGround()
@@ -381,6 +508,7 @@ function WorldService.start()
 	ensureUpgradeModels()
 	ensureStartPark()
 	ensureLandscape()
+	ensureOuterLandscape()
 	dimImportedLights()
 end
 
