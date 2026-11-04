@@ -1,7 +1,11 @@
 from build_objects import *
 from render_geometry import preview
 import subprocess,sys,itertools
-sys.path.insert(0,str(ROOT.parent/'roblox-park-kit'/'source'))
+# Workspace output name and repository asset name are both supported.
+park_sources=[ROOT.parent/'astra-park'/'source',ROOT.parent/'roblox-park-kit'/'source']
+park_source=next((p for p in park_sources if (p/'build_park.py').exists()),None)
+assert park_source is not None,'Expected sibling astra-park/source/build_park.py (existing Park kit)'
+sys.path.insert(0,str(park_source))
 # Existing Park source only supplies landscape, unchanged.
 import build_park as park
 from PIL import Image,ImageDraw
