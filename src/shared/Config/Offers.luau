@@ -13,6 +13,7 @@ export type OfferKind =
 	| "longDev"
 	| "starterPack"
 	| "dailyDeal"
+	| "contract"
 
 -- Что можно продать в «Сделке дня»: продукт из Config/Products, премиум-постер или премиум-скин.
 -- id — ключ в Products.deals
@@ -28,6 +29,8 @@ local Offers = {
 		longDev = true,
 		starterPack = true,
 		dailyDeal = true,
+		-- Не донат: предложение контракта издателя (ContractService) — окно по тем же правилам
+		contract = true,
 	} :: { [string]: boolean },
 
 	-- Показывать предложения, у которых productId/gamePassId ещё 0 (кнопка «Скоро»).

@@ -774,6 +774,23 @@ function Analytics.logCompanyEvent(player: Player, id: string, stage: string)
 	end
 end
 
+-- Сезон, гейм-джем, хакатон (SeasonService, GameJamService, HackathonService): ключ из Config.events
+function Analytics.logLiveOps(player: Player, eventKey: string, value: number, field: string?)
+	local name = (Config.events :: any)[eventKey]
+	if Config.enabled and states[player] and type(name) == "string" then
+		logCustom(player, name, value, field)
+	end
+end
+
+-- Франшизы, контракты, обгон конкурента (FranchiseService, ContractService, RivalService):
+-- eventKey — ключ Config.events, field — этап или id
+function Analytics.logDepth(player: Player, eventKey: string, field: string)
+	local eventName = (Config.events :: any)[eventKey]
+	if Config.enabled and states[player] and type(eventName) == "string" then
+		logCustom(player, eventName, 1, field)
+	end
+end
+
 function Analytics.start()
 	if not Config.enabled then
 		return

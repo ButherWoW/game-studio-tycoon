@@ -249,6 +249,9 @@ type Project = {
 	laptop: boolean?, -- начата на ноутбуке в парке: доход × StartPark.laptopRevenueMultiplier
 	-- Сумма быстрых событий (QuickEventService.finish) к оценке; nil — событий не было
 	quickBonus: number?,
+	-- Продолжение франшизы (FranchiseService): id и «та же тема» (штраф за повтор как у сиквела)
+	franchiseId: number?,
+	franchiseCombo: boolean?,
 }
 
 local MAX_RELEASE_FAILURES = 3 -- после стольких ошибок релиза игра снимается, чтобы не падать каждый тик
@@ -486,6 +489,44 @@ local function comboAllowed(profile: DataService.Profile, genreId: any, topicId:
 		and seasonalAllowed(topicId)
 end
 
+-- Франшиза продолжения (FranchiseService.validate): id или nil (обычная игра) и «та же тема»
+local function franchiseFor(
+	player: Player,
+	franchiseId: any,
+	genreId: string,
+	topicId: string
+): (number?, boolean)
+	local FranchiseService = optional("FranchiseService")
+	if franchiseId == nil or not FranchiseService then
+		return nil, false
+	end
+	local ok, id, sameTopic = pcall(FranchiseService.validate, player, franchiseId, genreId, topicId)
+	if not ok or type(id) ~= "number" then
+		return nil, false
+	end
+	return id, sameTopic == true
+end
+
+-- Множитель дохода от франшизы (FranchiseService) и хита конкурента (RivalService); 1 — без них
+local function depthMultiplier(player: Player, project: Project, score: number): (number, any)
+	local multiplier, details = 1, nil
+	local FranchiseService = optional("FranchiseService")
+	if FranchiseService and project.franchiseId then
+		local ok, value, info = pcall(FranchiseService.revenueMultiplier, player, project.franchiseId, score)
+		if ok and type(value) == "number" and value > 0 then
+			multiplier, details = value, info
+		end
+	end
+	local RivalService = optional("RivalService")
+	if RivalService then
+		local ok, value = pcall(RivalService.genreMultiplier, project.genreId)
+		if ok and type(value) == "number" and value > 0 then
+			multiplier *= value
+		end
+	end
+	return multiplier, details
+end
+
 -- Начать игру: общие проверки для «Создать игру» и «Авто-релиза».
 -- rawName уже очищен (TextSafe) и обрезан; здесь он проходит фильтр Roblox
 local function beginProject(
@@ -494,7 +535,8 @@ local function beginProject(
 	topicId: string,
 	focus: Focus,
 	rawName: string,
-	sequel: boolean?
+	sequel: boolean?,
+	franchiseId: any?
 )
 	-- Игру делают за компьютером, а не на бегу
 	if not PlotService.isAtPc(player) then
@@ -526,6 +568,7 @@ local function beginProject(
 		tempo = 1,
 		sequel = sequel == true,
 	}
+	project.franchiseId, project.franchiseCombo = franchiseFor(player, franchiseId, genreId, topicId)
 	table.insert(list, project)
 	DevelopmentService.pushState(player)
 
@@ -577,7 +620,7 @@ local function onStartDevelopment(player: Player, request: any)
 		rawName = rawName:sub(1, (utf8.offset(rawName, MAX_NAME_LENGTH + 1) or (#rawName + 1)) - 1)
 	end
 	QuickEventService.noteActivity(player)
-	beginProject(player, request.genreId, request.topicId, focus, rawName)
+	beginProject(player, request.genreId, request.topicId, focus, rawName, nil, request.franchiseId)
 end
 
 local function release(player: Player, project: Project)
@@ -587,14 +630,15 @@ local function release(player: Player, project: Project)
 	end
 
 	-- До rememberCombo: сколько сняли за повтор именно этой игры (критик в окне релиза)
-	local repeatPenalty = repeatPenaltyFor(profile, project.genreId, project.topicId, project.sequel)
+	local sequelLike = project.sequel or project.franchiseCombo
+	local repeatPenalty = repeatPenaltyFor(profile, project.genreId, project.topicId, sequelLike)
 	local score = Formulas.review(
 		project.genreId,
 		project.topicId,
 		project.points,
 		rng,
 		-- + быстрые события (QuickEventService): до округления, как бонусы студии
-		scoreBonus(player, profile, project.genreId, project.topicId, project.sequel)
+		scoreBonus(player, profile, project.genreId, project.topicId, sequelLike)
 			+ (project.quickBonus or 0)
 	)
 	local TrendService = optional("TrendService")
@@ -659,8 +703,11 @@ local function release(player: Player, project: Project)
 	end
 	-- События компании: стример, утечка кода, иск, катастрофы (1 — ничего не действует)
 	local companyMultiplier = tonumber(companyEvent("revenueMultiplier", 1, player)) or 1
+	-- Франшиза (хайп/усталость) и хит конкурента в жанре
+	local depth, franchiseDetails = depthMultiplier(player, project, score)
 	revenue = math.floor(
 		revenue
+			* depth
 			* cashMultiplier
 			* researchMultiplier
 			* laptopMultiplier
@@ -707,6 +754,11 @@ local function release(player: Player, project: Project)
 		topicId = project.topicId,
 		score = score,
 	})
+	-- Лучший хит недели для рейтинга (TourService)
+	hook("TourService", "onGameReleased", player, {
+		score = score,
+		points = p.gameplay + p.graphics + p.sound + p.story,
+	})
 	hook("QuestService", "onGameReleased", player, {
 		genreId = project.genreId,
 		topicId = project.topicId,
@@ -719,6 +771,31 @@ local function release(player: Player, project: Project)
 		score = score,
 		revenue = revenue,
 		laptop = project.laptop == true,
+	})
+	-- Сезонный пропуск (опыт за игру) и гейм-джем (игра по теме недели)
+	hook("SeasonService", "onGameReleased", player, { score = score })
+	hook("GameJamService", "onGameReleased", player, {
+		genreId = project.genreId,
+		topicId = project.topicId,
+		score = score,
+		revenue = revenue,
+	})
+	-- Франшизы (фанаты, кандидаты) и контракт издателя (прогресс)
+	hook("FranchiseService", "onGameReleased", player, {
+		projectId = project.id,
+		name = project.name,
+		genreId = project.genreId,
+		topicId = project.topicId,
+		score = score,
+		franchiseId = project.franchiseId,
+		multiplier = depth,
+		details = franchiseDetails,
+	})
+	hook("ContractService", "onGameReleased", player, {
+		genreId = project.genreId,
+		topicId = project.topicId,
+		score = score,
+		revenue = revenue,
 	})
 	-- Предложение «×2 к доходу этой игры» (OfferService запоминает релиз на минуту)
 	hook("OfferService", "onGameReleased", player, {
@@ -892,7 +969,8 @@ local function maybeAutoRelease(player: Player, project: Project)
 		project.topicId,
 		table.clone(project.focus),
 		sequelName(project.name),
-		true
+		true,
+		project.franchiseId
 	)
 end
 
@@ -1039,6 +1117,14 @@ end
 
 local TICK = 0.5
 
+local function hackathonSpeed(): number
+	local HackathonService = optional("HackathonService")
+	local ok, value = pcall(function()
+		return if HackathonService then HackathonService.speedMultiplier() else 1
+	end)
+	return if ok and type(value) == "number" and value > 0 then value else 1
+end
+
 -- Один тик одного проекта. Отдельной функцией, чтобы ошибка у одного игрока
 -- (например, в хуке другой фичи) не останавливала разработку у всех
 local function tickProject(player: Player, project: Project, atPc: boolean)
@@ -1056,11 +1142,13 @@ local function tickProject(player: Player, project: Project, atPc: boolean)
 		return
 	end
 	local rate = DevelopmentService.pointsRate(player, project.focus, project.tempo)
-	project.points.gameplay += rate.gameplay * TICK
-	project.points.graphics += rate.graphics * TICK
-	project.points.sound += rate.sound * TICK
-	project.points.story += rate.story * TICK
-	project.elapsed += TICK
+	-- Ночь хакатона (HackathonService): время идёт ×2, очков за игру столько же
+	local step = TICK * hackathonSpeed()
+	project.points.gameplay += rate.gameplay * step
+	project.points.graphics += rate.graphics * step
+	project.points.sound += rate.sound * step
+	project.points.story += rate.story * step
+	project.elapsed += step
 
 	Remotes.DevelopmentProgress:FireClient(player, {
 		id = project.id,

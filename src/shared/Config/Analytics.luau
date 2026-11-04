@@ -65,6 +65,15 @@ local Analytics = {
 		-- событие компании; поле — "id_этап": shown/insured (сработало), a/b/auto_a (выбор),
 		-- win/lose (риск), repaired, insurance_bought
 		companyEvent = "CompanyEvent",
+		seasonTier = "SeasonTier", -- новый уровень сезона; значение — уровень, поле — источник опыта
+		seasonClaim = "SeasonClaim", -- награда сезона; поле — "дорожка_уровень" (free_5, premium_30)
+		jamSubmit = "JamSubmit", -- заявка в гейм-джем; значение — оценка, поле — first / improved
+		hackathon = "Hackathon", -- начался хакатон (на каждого игрока на сервере)
+		-- Франшизы и контракты: поле — этап (created; offered/accepted/declined/expired/completed/failed)
+		-- или id обогнанной студии
+		franchise = "Franchise",
+		contract = "Contract",
+		rivalPassed = "RivalPassed",
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -87,6 +96,10 @@ local Analytics = {
 		BailiffService = { transactionType = "Seizure", sku = "bailiffs" }, -- продажа предмета за долг
 		CodeService = { transactionType = "TimedReward", sku = "code" },
 		CompanyEventService = { transactionType = "CompanyEvent", sku = "event" },
+		SeasonService = { transactionType = "Season", sku = "season" },
+		GameJamService = { transactionType = "GameJam", sku = "jam" },
+		ContractService = { transactionType = "Contract", sku = "contract" },
+		RivalService = { transactionType = "Reward", sku = "rivalPassed" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },
