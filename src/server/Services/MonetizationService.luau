@@ -15,6 +15,7 @@ local SkinService = require(script.Parent.SkinService)
 local GiftService = require(script.Parent.GiftService)
 local OfferService = require(script.Parent.OfferService)
 local MascotService = require(script.Parent.MascotService)
+local SeasonService = require(script.Parent.SeasonService)
 
 local MonetizationService = {}
 
@@ -96,6 +97,7 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 		and not MascotService.grantProduct(player, profile, receipt.ProductId)
 		and not ShopService.grantProduct(player, profile, receipt.ProductId)
 		and not OfferService.grantProduct(player, profile, receipt.ProductId)
+		and not SeasonService.grantProduct(player, profile, receipt.ProductId)
 	then
 		warn("[Monetization] Unknown product", receipt.ProductId)
 		return Enum.ProductPurchaseDecision.NotProcessedYet

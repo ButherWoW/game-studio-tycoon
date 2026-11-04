@@ -14,6 +14,13 @@ local Debug = {
 	forceCompanyEvent = nil :: string?,
 	-- Интервал между событиями компании в Studio, секунд (например 30). nil — как в Config/CompanyEvents
 	companyEventInterval = nil :: number?,
+	-- Сезон и гейм-джем, хакатон (только Studio; nil/false/1 — как на живых серверах)
+	seasonForceIndex = nil :: number?, -- номер сезона вместо текущего (0 — первый): проверить сброс
+	seasonXpMultiplier = 1, -- ×опыт сезона, чтобы пройти уровни быстро (например 20)
+	seasonForcePremium = false, -- премиум-дорожка без покупки
+	jamForceWeek = nil :: number?, -- номер недели джема (другая тема)
+	jamStudioWeekSeconds = nil :: number?, -- короткая «неделя» (например 300): проверить награды за джем
+	hackathonForce = false, -- хакатон идёт всё время
 }
 
 return Debug

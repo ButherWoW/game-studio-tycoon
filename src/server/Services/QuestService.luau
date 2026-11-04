@@ -286,6 +286,11 @@ local function onClaim(player: Player, kind: any, id: any)
 		end
 		daily.claimed[index] = true
 		RewardService.grant(player, Quests.dailyReward)
+		-- Опыт сезонного пропуска (SeasonService, если есть)
+		local season = script.Parent:FindFirstChild("SeasonService")
+		if season and season:IsA("ModuleScript") then
+			pcall((require(season) :: any).onDailyClaimed, player)
+		end
 	else
 		return
 	end
