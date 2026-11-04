@@ -35,6 +35,24 @@ local changedEvent = Instance.new("BindableEvent")
 -- Разбор настроения игрока поменялся (DecorService пересылает окно «Студия»)
 MoodService.changed = changedEvent.Event
 local lastSignature: { [Player]: string } = {}
+-- Временные поправки цели (найм, увольнение): не сохраняются, живут seconds секунд
+type Temporary = { key: string, value: number, expires: number }
+local temporary: { [Player]: { Temporary } } = {}
+
+-- Действующие поправки игрока (просроченные выбрасываем)
+local function activeTemporary(player: Player?): { Temporary }
+	local list = player and temporary[player]
+	if not list then
+		return {}
+	end
+	local now = os.clock()
+	for i = #list, 1, -1 do
+		if list[i].expires <= now then
+			table.remove(list, i)
+		end
+	end
+	return list
+end
 
 type MoodData = { value: number, aftermath: number }
 
@@ -92,7 +110,7 @@ function MoodService.decorOwned(profile: DataService.Profile): { [string]: boole
 end
 
 -- Цель и из чего она сложилась
-local function compute(profile: DataService.Profile): ({ Part }, number, number)
+local function compute(profile: DataService.Profile, player: Player?): ({ Part }, number, number)
 	local parts: { Part } = { { key = "mood_part_base", value = Mood.base } }
 	local amenities = 0
 	for id, points in Mood.upgrades do
@@ -132,6 +150,19 @@ local function compute(profile: DataService.Profile): ({ Part }, number, number)
 	if aftermath > 0 and (profile :: any).staffStrike ~= true then
 		table.insert(parts, { key = "mood_part_aftermath", value = -aftermath })
 	end
+	-- Временные события команды (Config/Mood.newcomer / fired): одинаковые складываются в одну строку
+	local sums: { [string]: number } = {}
+	local order: { string } = {}
+	for _, entry in activeTemporary(player) do
+		if sums[entry.key] == nil then
+			sums[entry.key] = 0
+			table.insert(order, entry.key)
+		end
+		sums[entry.key] += entry.value
+	end
+	for _, key in order do
+		table.insert(parts, { key = key, value = sums[key] })
+	end
 	local target = 0
 	for _, part in parts do
 		target += part.value
@@ -152,7 +183,7 @@ local function tick(player: Player, profile: DataService.Profile, dt: number)
 	else
 		data.aftermath = math.max(data.aftermath - Mood.aftermathDecayPerMinute * dt / 60, 0)
 	end
-	local parts, target, staff = compute(profile)
+	local parts, target, staff = compute(profile, player)
 	if staff == 0 or data.value < 0 then
 		-- Нет команды (или первый вход): нанятый сотрудник придёт в уже сложившуюся атмосферу
 		data.value = target
@@ -202,7 +233,7 @@ function MoodService.breakdown(player: Player): Breakdown?
 	if not profile then
 		return nil
 	end
-	local parts, target, staff = compute(profile)
+	local parts, target, staff = compute(profile, player)
 	local data = moodData(profile)
 	local value = if data.value >= 0 then data.value else target
 	return {
@@ -224,12 +255,30 @@ function MoodService.refresh(player: Player)
 	end
 end
 
+-- Временное событие команды: сразу сдвигает настроение на value и держит поправку цели
+-- seconds секунд (key — текст строки в разборе, mood_part_*). Без сотрудников ничего не делает
+function MoodService.addTemporary(player: Player, key: string, value: number, seconds: number)
+	local profile = DataService.get(player)
+	if not profile or not active(profile) then
+		return
+	end
+	local list = temporary[player] or {}
+	temporary[player] = list
+	table.insert(list, { key = key, value = value, expires = os.clock() + seconds })
+	local data = moodData(profile)
+	if data.value >= 0 then
+		data.value = math.clamp(data.value + value, Mood.min, Mood.max)
+	end
+	tick(player, profile, 0)
+end
+
 function MoodService.start()
 	DataService.onProfileLoaded(function(player: Player, profile: DataService.Profile)
 		tick(player, profile, 0)
 	end)
 	Players.PlayerRemoving:Connect(function(player)
 		lastSignature[player] = nil
+		temporary[player] = nil
 	end)
 	task.spawn(function()
 		local last = os.clock()

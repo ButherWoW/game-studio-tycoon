@@ -177,6 +177,13 @@ local function show(info: any)
 	moodLine.LayoutOrder = 17
 	moodLine.Visible = false
 
+	-- Команда (навыки, перки, легендарные — StaffService.reviewBonus); 0 — строки нет
+	local teamBonus = tonumber(info.teamBonus) or 0
+	local teamLine = Ui.label(body, "", 24, nil, Ui.colors.good)
+	teamLine.TextXAlignment = Enum.TextXAlignment.Center
+	teamLine.LayoutOrder = 16
+	teamLine.Visible = false
+
 	local total = Ui.label(body, "", 44, Ui.titleFontFor(ClientState.lang))
 	total.TextXAlignment = Enum.TextXAlignment.Center
 	total.LayoutOrder = 20
@@ -265,6 +272,13 @@ local function show(info: any)
 				ClientState.t("mood_release_line", { n = (if moodBonus < 0 then "−" else "+") .. n })
 			moodLine.TextColor3 = if moodBonus > 0 then Ui.colors.good else Ui.colors.bad
 			moodLine.Visible = true
+		end
+		if math.abs(teamBonus) >= 0.005 then
+			local n = string.format("%.2f", math.abs(teamBonus)):gsub("0+$", ""):gsub("%.$", "")
+			teamLine.Text =
+				ClientState.t("release_team_line", { n = (if teamBonus < 0 then "−" else "+") .. n })
+			teamLine.TextColor3 = if teamBonus > 0 then Ui.colors.good else Ui.colors.bad
+			teamLine.Visible = true
 		end
 		total.Text = ClientState.t("release_score", { score = info.score })
 		total.TextColor3 = Ui.scoreColor(info.score)

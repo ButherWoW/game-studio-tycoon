@@ -19,6 +19,7 @@ local ClientState = require(script.Parent.Parent.ClientState)
 local StudioState = require(script.Parent.Parent.StudioState)
 local Ui = require(script.Parent.Parent.Ui)
 local SkinShop = require(script.Parent.Parent.SkinShop)
+local StaffPower = require(script.Parent.Parent.StaffPower)
 
 local MENU_SLOT = 2
 local ROW_COLOR = Color3.fromRGB(44, 46, 66)
@@ -213,6 +214,7 @@ local function buildMoodPanel(parent: Instance, order: number)
 	)
 	head.LayoutOrder = order
 	local lines = StudioState.moodLines(mood)
+	table.insert(lines, ClientState.t("mood_breaks_hint"))
 	table.insert(lines, ClientState.t("mood_team_hint"))
 	local label = Ui.label(parent, table.concat(lines, "\n"), 22 * #lines, nil, Ui.colors.muted)
 	label.TextScaled = false
@@ -220,6 +222,58 @@ local function buildMoodPanel(parent: Instance, order: number)
 	label.TextWrapped = true
 	label.TextYAlignment = Enum.TextYAlignment.Top
 	label.LayoutOrder = order + 1
+end
+
+-- Мощность команды (StaffPower с сервера): скорость, прибавка к оценке по направлениям, перерывы.
+-- Наверху окна: любой найм, навык и увольнение сразу видно в цифрах
+local function buildPowerPanel(parent: Instance, order: number)
+	local power = StaffPower.power
+	local hasStaff = next(staff) ~= nil
+	if not power or not hasStaff then
+		local hint = Ui.label(parent, ClientState.t("staff_power_none"), 24, nil, Ui.colors.muted)
+		hint.TextScaled = false
+		hint.TextSize = 17
+		hint.TextWrapped = true
+		hint.LayoutOrder = order
+		return
+	end
+	local panel = Instance.new("Frame")
+	panel.BackgroundColor3 = ROW_COLOR
+	panel.Size = UDim2.new(1, 0, 0, 0)
+	panel.AutomaticSize = Enum.AutomaticSize.Y
+	panel.LayoutOrder = order
+	Ui.corner(panel, 10)
+	local padding = Instance.new("UIPadding")
+	padding.PaddingTop = UDim.new(0, 8)
+	padding.PaddingBottom = UDim.new(0, 8)
+	padding.PaddingLeft = UDim.new(0, 12)
+	padding.PaddingRight = UDim.new(0, 12)
+	padding.Parent = panel
+	Ui.list(panel, 2)
+	panel.Parent = parent
+	local speed = Ui.label(
+		panel,
+		ClientState.t("staff_power_title", { speed = StaffPower.percent(power.speed) }),
+		28,
+		Ui.titleFontFor(ClientState.lang),
+		if power.speed >= 0 then Ui.colors.good else Ui.colors.bad
+	)
+	speed.LayoutOrder = 1
+	local lines = { ClientState.t("staff_power_review", { n = StaffPower.score(power.review) }) }
+	local quality = StaffPower.qualityLine(power)
+	if quality ~= "" then
+		table.insert(lines, ClientState.t("staff_power_quality", { list = quality }))
+	end
+	if power.breaks > 0 then
+		table.insert(lines, ClientState.t("staff_power_breaks", { count = power.breaks }))
+	end
+	table.insert(lines, ClientState.t("staff_power_hint"))
+	local label = Ui.label(panel, table.concat(lines, "\n"), 22 * #lines, nil, Ui.colors.text)
+	label.TextScaled = false
+	label.TextSize = 17
+	label.TextWrapped = true
+	label.TextYAlignment = Enum.TextYAlignment.Top
+	label.LayoutOrder = 2
 end
 
 local function header(parent: Instance, text: string, order: number)
@@ -476,7 +530,17 @@ local function buildRow(
 	elseif deskId then
 		details ..= " · " .. ClientState.t("team_seated", { desk = upgradeName(deskId) })
 	end
-	local sub = Ui.label(row, role .. " · " .. details, 54, nil, Ui.colors.muted)
+	-- Подтверждение увольнения: что потеряем (с сервера, StaffPower.losses) вместо описания
+	local armedNow = fireArmed == employee.id and os.clock() - fireArmedAt <= FIRE_CONFIRM_SECONDS
+	local loss = StaffPower.power and StaffPower.power.losses[employee.id]
+	local subText = role .. " · " .. details
+	if armedNow and loss then
+		subText = ClientState.t(
+			"team_fire_loss",
+			{ speed = StaffPower.percent(loss.speed), review = StaffPower.score(loss.review) }
+		)
+	end
+	local sub = Ui.label(row, subText, 54, nil, if armedNow and loss then Ui.colors.bad else Ui.colors.muted)
 	sub.TextScaled = false
 	sub.TextSize = SMALL_TEXT
 	sub.TextWrapped = true
@@ -616,6 +680,7 @@ render = function()
 	Ui.list(body, 8)
 	body.Parent = window
 
+	buildPowerPanel(body, 0)
 	buildStagePanel(body, data, 1)
 	buildDeskPanel(body, data, 2)
 	buildMoodPanel(body, 3)
@@ -709,6 +774,9 @@ function TeamWindow.start()
 		render()
 	end)
 	SkinShop.listen(function()
+		render()
+	end)
+	StaffPower.changed:Connect(function()
 		render()
 	end)
 end

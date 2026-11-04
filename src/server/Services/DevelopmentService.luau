@@ -695,6 +695,8 @@ local function release(player: Player, project: Project)
 		quickBonus = project.quickBonus,
 		-- Настроение команды в оценке (уже внутри score); 0 — строку в окне не показываем
 		moodBonus = moodReviewBonus(player),
+		-- Команда в оценке (StaffService.reviewBonus: навыки, перки, легендарные; уже внутри score)
+		teamBonus = StaffService.reviewBonus(player),
 		projectId = project.id,
 		-- Сколько игр ещё в разработке: клиент не прячет прогресс и событие второй игры
 		activeProjects = #(projects[player] or {}),
