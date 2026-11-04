@@ -16,6 +16,7 @@ local GameJam = require(ReplicatedStorage.Shared.Config.GameJam)
 local ClientState = require(script.Parent.Parent.ClientState)
 local DevState = require(script.Parent.Parent.DevState)
 local FranchiseClient = require(script.Parent.Parent.FranchiseClient)
+local ConsoleClient = require(script.Parent.Parent.ConsoleClient)
 local Ui = require(script.Parent.Parent.Ui)
 
 local FOCUS_KEYS = { "gameplay", "graphics", "sound", "story" }
@@ -440,6 +441,7 @@ local function contentKey(): string
 		lockKey(data),
 		tostring(combo),
 		FranchiseClient.key(),
+		ConsoleClient.key(),
 	}, "|")
 end
 local shownKey = ""
@@ -515,6 +517,7 @@ local function buildShell(screen: ScreenGui)
 			topicId = selectedTopic,
 			focus = table.clone(focus),
 			franchiseId = FranchiseClient.selected,
+			platform = ConsoleClient.selectedPlatform,
 		})
 		CreateGameWindow.close()
 	end)
@@ -618,6 +621,10 @@ render = function()
 	-- Пустая подсказка (жанр/тема не выбраны) не занимает место
 	hint.Visible = hintText ~= ""
 
+	-- Платформа: ПК, телефоны (офис), своя консоль (ConsoleClient)
+	ConsoleClient.buildPicker(body, nextOrder(), selectedGenre, showHint)
+	order += 2
+
 	Ui.label(body, ClientState.t("create_focus_label"), 22, nil, Ui.colors.muted).LayoutOrder = nextOrder()
 	Ui.label(body, ClientState.t("create_focus_hint"), 18, Enum.Font.GothamMedium, Ui.colors.muted).LayoutOrder =
 		nextOrder()
@@ -674,6 +681,11 @@ function CreateGameWindow.start()
 		end
 	end)
 	FranchiseClient.changed:Connect(function()
+		if gui and contentKey() ~= shownKey then
+			render()
+		end
+	end)
+	ConsoleClient.changed:Connect(function()
 		if gui and contentKey() ~= shownKey then
 			render()
 		end

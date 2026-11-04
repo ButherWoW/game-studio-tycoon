@@ -45,6 +45,17 @@ local function hook(name: string, fnName: string, ...: any)
 	end
 end
 
+-- Число из модуля другой фичи (платформы, стример); без модуля, при ошибке или мусоре — default
+local function hookNumber(name: string, fnName: string, default: number, ...: any): number
+	local module = optional(name)
+	local fn = module and module[fnName]
+	if type(fn) ~= "function" then
+		return default
+	end
+	local ok, value = pcall(fn, ...)
+	return if ok and type(value) == "number" and value == value and value >= 0 then value else default
+end
+
 local function shopModifiers(player: Player): any
 	local ShopService = optional("ShopService")
 	return if ShopService then ShopService.getModifiers(player) else nil
@@ -252,6 +263,7 @@ type Project = {
 	-- Продолжение франшизы (FranchiseService): id и «та же тема» (штраф за повтор как у сиквела)
 	franchiseId: number?,
 	franchiseCombo: boolean?,
+	platform: string?, -- платформа (ConsoleService.platformFor): "pc" | "phone" | "console"
 }
 
 local MAX_RELEASE_FAILURES = 3 -- после стольких ошибок релиза игра снимается, чтобы не падать каждый тик
@@ -390,10 +402,21 @@ function DevelopmentService.pointsRate(player: Player, focus: Focus, tempo: numb
 		return rate
 	end
 	local byDesk = StaffService.employeesByDesk(player)
+	-- Стол стримера (StreamerService) очков не даёт
+	local Streamer = optional("StreamerService")
+	local okStream, streamDesk = pcall(function()
+		return if Streamer then Streamer.deskOf(player) else nil
+	end)
+	local skipDesk = if okStream and type(streamDesk) == "string" then streamDesk else nil
 	local any = false
 	for _, upgrade in Upgrades do
 		local deskPoints = upgrade.pointsPerSecond
-		if profile.upgrades[upgrade.id] and deskPoints and not isBroken(player, upgrade.id) then
+		if
+			profile.upgrades[upgrade.id]
+			and deskPoints
+			and upgrade.id ~= skipDesk
+			and not isBroken(player, upgrade.id)
+		then
 			any = true
 			local employee = byDesk[upgrade.id]
 			local base = deskPoints * (if employee then employee.multiplier else 1)
@@ -536,7 +559,8 @@ local function beginProject(
 	focus: Focus,
 	rawName: string,
 	sequel: boolean?,
-	franchiseId: any?
+	franchiseId: any?,
+	platform: any?
 )
 	-- Игру делают за компьютером, а не на бегу
 	if not PlotService.isAtPc(player) then
@@ -569,6 +593,11 @@ local function beginProject(
 		sequel = sequel == true,
 	}
 	project.franchiseId, project.franchiseCombo = franchiseFor(player, franchiseId, genreId, topicId)
+	local Console = optional("ConsoleService")
+	local okPlatform, platformId = pcall(function()
+		return if Console then Console.platformFor(player, platform) else "pc"
+	end)
+	project.platform = if okPlatform and type(platformId) == "string" then platformId else "pc"
 	table.insert(list, project)
 	DevelopmentService.pushState(player)
 
@@ -620,7 +649,16 @@ local function onStartDevelopment(player: Player, request: any)
 		rawName = rawName:sub(1, (utf8.offset(rawName, MAX_NAME_LENGTH + 1) or (#rawName + 1)) - 1)
 	end
 	QuickEventService.noteActivity(player)
-	beginProject(player, request.genreId, request.topicId, focus, rawName, nil, request.franchiseId)
+	beginProject(
+		player,
+		request.genreId,
+		request.topicId,
+		focus,
+		rawName,
+		nil,
+		request.franchiseId,
+		request.platform
+	)
 end
 
 local function release(player: Player, project: Project)
@@ -640,6 +678,8 @@ local function release(player: Player, project: Project)
 		-- + быстрые события (QuickEventService): до округления, как бонусы студии
 		scoreBonus(player, profile, project.genreId, project.topicId, sequelLike)
 			+ (project.quickBonus or 0)
+			-- + платформа (своя консоль: чаще хиты)
+			+ hookNumber("ConsoleService", "scoreBonus", 0, project.platform)
 	)
 	local TrendService = optional("TrendService")
 	if TrendService then
@@ -718,6 +758,11 @@ local function release(player: Player, project: Project)
 	)
 	-- Маскот «доход»: +N% к доходу релиза
 	revenue = math.floor(revenue * (1 + mascotBonus(player, "revenue")))
+	-- Платформа (жанр × доля рынка своей консоли) и хайп стримера (тратится этим релизом)
+	local platformMultiplier =
+		hookNumber("ConsoleService", "revenueMultiplier", 1, player, project.platform, project.genreId)
+	local hypeMultiplier = hookNumber("StreamerService", "consumeHype", 1, player)
+	revenue = math.floor(revenue * platformMultiplier * hypeMultiplier)
 	-- Совместная разработка (CoopService): доля гостя уходит ему, дальше считаем долю хозяина
 	local coopPartner: Player? = nil
 	local CoopService = optional("CoopService")
@@ -809,6 +854,13 @@ local function release(player: Player, project: Project)
 	})
 	-- Очки недели холдинга (HoldingService); совместная игра двух участников — больше
 	hook("HoldingService", "onGameReleased", player, { coopWith = coopPartner })
+	-- Своя консоль (этапы, доля рынка) и стример (слава, хайп)
+	hook("ConsoleService", "onGameReleased", player, {
+		platform = project.platform,
+		score = score,
+		genreId = project.genreId,
+	})
+	hook("StreamerService", "onGameReleased", player, { score = score })
 	-- Предложение «×2 к доходу этой игры» (OfferService запоминает релиз на минуту)
 	hook("OfferService", "onGameReleased", player, {
 		projectId = project.id,
@@ -832,6 +884,7 @@ local function release(player: Player, project: Project)
 		-- Команда в оценке (StaffService.reviewBonus: навыки, перки, легендарные; уже внутри score)
 		teamBonus = StaffService.reviewBonus(player),
 		projectId = project.id,
+		platform = project.platform,
 		-- Сколько игр ещё в разработке: клиент не прячет прогресс и событие второй игры
 		activeProjects = #(projects[player] or {}),
 	})
@@ -982,7 +1035,8 @@ local function maybeAutoRelease(player: Player, project: Project)
 		table.clone(project.focus),
 		sequelName(project.name),
 		true,
-		project.franchiseId
+		project.franchiseId,
+		project.platform
 	)
 end
 
