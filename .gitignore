@@ -11,3 +11,4 @@ sourcemap.json
 Thumbs.db
 .vscode/*
 !.vscode/extensions.json
+.claude/worktrees/
