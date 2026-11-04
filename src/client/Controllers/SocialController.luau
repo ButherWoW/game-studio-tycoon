@@ -106,15 +106,32 @@ local function onNotice(notice: any)
 	end
 end
 
--- Чат: префикс VIP. Колбэк один на игру — больше никто его не ставит
+-- Тег холдинга «[Название]» (атрибут HoldingName ставит HoldingService). Название прошло фильтр,
+-- но в RichText спецсимволы экранируем
+local function holdingPrefix(speaker: Player): string
+	local name = speaker:GetAttribute("HoldingName")
+	if type(name) ~= "string" or name == "" then
+		return ""
+	end
+	local safe = name:gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;"):gsub('"', "&quot;")
+	return '<font color="#8CC8FF">[' .. safe .. "]</font> "
+end
+
+-- Чат: префиксы VIP и холдинга. Колбэк один на игру — больше никто его не ставит,
+-- новые теги добавлять сюда
 local function onIncomingMessage(message: TextChatMessage): TextChatMessageProperties?
 	local source = message.TextSource
 	local speaker = source and Players:GetPlayerByUserId(source.UserId)
-	if not speaker or speaker:GetAttribute("IsVip") ~= true then
+	if not speaker then
+		return nil
+	end
+	local prefix = (if speaker:GetAttribute("IsVip") == true then VIP_PREFIX else "")
+		.. holdingPrefix(speaker)
+	if prefix == "" then
 		return nil
 	end
 	local properties = Instance.new("TextChatMessageProperties")
-	properties.PrefixText = VIP_PREFIX .. message.PrefixText
+	properties.PrefixText = prefix .. message.PrefixText
 	return properties
 end
 
