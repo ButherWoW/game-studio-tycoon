@@ -1,0 +1,98 @@
+{
+  "RockSmall": {
+    "parts": 3,
+    "dimensionsXYZ": [
+      1.32,
+      0.9,
+      0.96
+    ],
+    "baseY": 0,
+    "pivot": "center_base",
+    "classes": [
+      "Model",
+      "Part"
+    ],
+    "lights": 0,
+    "checks": "PASS"
+  },
+  "RockMedium": {
+    "parts": 3,
+    "dimensionsXYZ": [
+      2.2,
+      1.5,
+      1.6
+    ],
+    "baseY": 0,
+    "pivot": "center_base",
+    "classes": [
+      "Model",
+      "Part"
+    ],
+    "lights": 0,
+    "checks": "PASS"
+  },
+  "RockLarge": {
+    "parts": 3,
+    "dimensionsXYZ": [
+      3.63,
+      2.475,
+      2.64
+    ],
+    "baseY": 0,
+    "pivot": "center_base",
+    "classes": [
+      "Model",
+      "Part"
+    ],
+    "lights": 0,
+    "checks": "PASS"
+  },
+  "Hedge": {
+    "parts": 9,
+    "dimensionsXYZ": [
+      7.55,
+      2.64,
+      1.8
+    ],
+    "baseY": 0,
+    "pivot": "center_base",
+    "classes": [
+      "Model",
+      "Part"
+    ],
+    "lights": 0,
+    "checks": "PASS"
+  },
+  "FenceSection": {
+    "parts": 10,
+    "dimensionsXYZ": [
+      5.98,
+      3.12,
+      0.38
+    ],
+    "baseY": 0,
+    "pivot": "center_base",
+    "classes": [
+      "Model",
+      "Part"
+    ],
+    "lights": 0,
+    "checks": "PASS"
+  },
+  "StreetBench": {
+    "parts": 14,
+    "dimensionsXYZ": [
+      5.8,
+      2.77,
+      1.715
+    ],
+    "baseY": 0,
+    "pivot": "center_base",
+    "classes": [
+      "Model",
+      "Part"
+    ],
+    "lights": 0,
+    "checks": "PASS"
+  }
+}
