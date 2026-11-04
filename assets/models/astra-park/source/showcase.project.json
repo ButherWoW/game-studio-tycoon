@@ -1,0 +1,51 @@
+{
+  "name": "Astra Park Showcase",
+  "tree": {
+    "$className": "DataModel",
+    "Workspace": {
+      "$className": "Workspace",
+      "Park": {
+        "$path": "../models/Park.rbxmx"
+      },
+      "Spawn": {
+        "$className": "SpawnLocation",
+        "$properties": {
+          "Anchored": true,
+          "Neutral": true,
+          "Transparency": 1,
+          "CanCollide": false,
+          "Size": [
+            8,
+            0.1,
+            8
+          ],
+          "Position": [
+            0,
+            0.2,
+            0
+          ]
+        }
+      }
+    },
+    "Lighting": {
+      "$className": "Lighting",
+      "$properties": {
+        "Brightness": 2,
+        "ClockTime": 14,
+        "Ambient": [
+          0.52,
+          0.56,
+          0.52
+        ],
+        "OutdoorAmbient": [
+          0.64,
+          0.7,
+          0.68
+        ],
+        "GlobalShadows": true,
+        "EnvironmentDiffuseScale": 1,
+        "EnvironmentSpecularScale": 0.5
+      }
+    }
+  }
+}

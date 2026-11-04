@@ -1,0 +1,225 @@
+{
+  "sourceCommit": "5cf9cd6",
+  "parkParts": 577,
+  "trees": 31,
+  "species": {
+    "TreeBroadleaf": 14,
+    "TreePine": 7,
+    "TreeBirch": 10
+  },
+  "components": {
+    "TreeBroadleaf": {
+      "parts": 7,
+      "dimensionsXYZ": [
+        8.1,
+        16.6,
+        6.8
+      ],
+      "min": [
+        -4.05,
+        0.0,
+        -3.4
+      ],
+      "max": [
+        4.05,
+        16.599999999999998,
+        3.4
+      ],
+      "pointLights": 0
+    },
+    "TreeBirch": {
+      "parts": 8,
+      "dimensionsXYZ": [
+        5.5,
+        18.6,
+        4.5
+      ],
+      "min": [
+        -2.5,
+        0.0,
+        -2.25
+      ],
+      "max": [
+        3.0,
+        18.6,
+        2.25
+      ],
+      "pointLights": 0
+    },
+    "TreePine": {
+      "parts": 6,
+      "dimensionsXYZ": [
+        6.2,
+        17.95,
+        6.2
+      ],
+      "min": [
+        -3.1,
+        0.0,
+        -3.1
+      ],
+      "max": [
+        3.1,
+        17.95,
+        3.1
+      ],
+      "pointLights": 0
+    },
+    "Bush": {
+      "parts": 2,
+      "dimensionsXYZ": [
+        3.1,
+        1.7,
+        2.02
+      ],
+      "min": [
+        -1.55,
+        0.0,
+        -0.95
+      ],
+      "max": [
+        1.5499999999999998,
+        1.7,
+        1.0699999999999998
+      ],
+      "pointLights": 0
+    },
+    "Flowerbed": {
+      "parts": 17,
+      "dimensionsXYZ": [
+        3.8,
+        1.22,
+        3.8
+      ],
+      "min": [
+        -1.9,
+        -1.1102230246251565e-16,
+        -1.9
+      ],
+      "max": [
+        1.9,
+        1.22,
+        1.9
+      ],
+      "pointLights": 0
+    },
+    "ParkLamp": {
+      "parts": 5,
+      "dimensionsXYZ": [
+        1.05,
+        8.21,
+        1.05
+      ],
+      "min": [
+        -0.525,
+        -2.7755575615628914e-17,
+        -0.525
+      ],
+      "max": [
+        0.525,
+        8.21,
+        0.525
+      ],
+      "pointLights": 1
+    },
+    "ParkBin": {
+      "parts": 3,
+      "dimensionsXYZ": [
+        1.05,
+        1.7,
+        1.05
+      ],
+      "min": [
+        -0.525,
+        0.0,
+        -0.525
+      ],
+      "max": [
+        0.525,
+        1.7,
+        0.525
+      ],
+      "pointLights": 0
+    },
+    "PondBridge": {
+      "parts": 52,
+      "dimensionsXYZ": [
+        16.85,
+        2.77,
+        14.26
+      ],
+      "min": [
+        -8.424999999999999,
+        0.0,
+        -7.13
+      ],
+      "max": [
+        8.424999999999999,
+        2.77,
+        7.130000000000002
+      ],
+      "pointLights": 0
+    },
+    "Park": {
+      "parts": 577,
+      "dimensionsXYZ": [
+        140.0,
+        20.20923,
+        140.0
+      ],
+      "min": [
+        -70.0,
+        -4.288236432614667e-15,
+        -70.0
+      ],
+      "max": [
+        70.0,
+        20.209225753017108,
+        70.0
+      ],
+      "pointLights": 8
+    }
+  },
+  "checks": [
+    "140-stud ground diameter",
+    "clear 16x16 spawn plaza above shared ground",
+    "three tree species; all installed trees height10..25",
+    "no footprint overlaps between landscape props",
+    "no tall props in six bench/board/pawn reserves",
+    "no tree/bush/bed/light/bin footprints on paths",
+    "bridge is deliberate walkable crossing above pond",
+    "all props within radius69; clear of current 12-plot ring; explicit min-ring102 requirement for 6/7 plots",
+    "grass clearings in inner/middle/outer artifact bands",
+    "one shadowless light per lamp",
+    "part budgets/transforms/base pivots",
+    "all native models round-tripped through Rojo",
+    "all PrimaryPart+PivotOffset transforms reconstructed and verified; no added invisible pivot Parts"
+  ],
+  "studioTested": false,
+  "plotIntegration": {
+    "designPlotCount": 12,
+    "current12PlotRadius": 152.78874536821954,
+    "minimumRecommendedPlotRingRadius": 102,
+    "smallServerNote": "WorldService currently gives 6/7 plots radius90 (front60), which overlaps a diameter140 park. Dev2 must increase minimum ring radius or adapt landscape before use on such servers."
+  },
+  "artifactSampling": {
+    "areaMin": 10,
+    "areaMax": 52,
+    "clearance": 5,
+    "spacing": 14,
+    "triesPerSpot": 40,
+    "sampleCount": 20000,
+    "freeAllSurfacesFraction": 0.31245,
+    "freeGrassFraction": 0.124,
+    "freeGrassSamplesByRadius": {
+      "10-24": 394,
+      "24-38": 144,
+      "38-52": 1942
+    },
+    "trials": 200,
+    "trialsWithAllSixPlaced": 200,
+    "note": "Offline geometric simulation using conservative obstacle circles. Not a Studio raycast/play test. No fixed spawn points are exported."
+  },
+  "binaryConversion": "9 model RBXM + 1 Folder RBXM + RBXL/RBXLX showcase",
+  "limitation": "Not tested in Studio. Gameplay integration, obstacle registry timing, path blending to actual plot entrances, FPS and artifact raycasts need Dev1/Dev2 checks. Park asset itself does not add laptops/jobs/pawn gameplay."
+}
