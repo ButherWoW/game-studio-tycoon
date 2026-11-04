@@ -1,6 +1,7 @@
 --!strict
 -- Окно «Команда» (3.3 + 3.5 + 3.7): найм, переезд студии, столы по этапам, легендарные,
--- навыки, перки и внешность сотрудников (кнопка ✏️), увольнение (два нажатия «Уволить»).
+-- навыки, перки, внешность и скин сотрудников (кнопка ✏️; скины — SkinShop), увольнение
+-- (два нажатия «Уволить»).
 -- Клиент только показывает и просит; цену, этап, свободный стол и всё остальное проверяет сервер.
 
 local Players = game:GetService("Players")
@@ -17,6 +18,7 @@ local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local ClientState = require(script.Parent.Parent.ClientState)
 local StudioState = require(script.Parent.Parent.StudioState)
 local Ui = require(script.Parent.Parent.Ui)
+local SkinShop = require(script.Parent.Parent.SkinShop)
 
 local MENU_SLOT = 2
 local ROW_COLOR = Color3.fromRGB(44, 46, 66)
@@ -416,6 +418,10 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 			b.Size = UDim2.fromOffset(40, 32)
 		end
 	end
+
+	-- Скин (открытые в магазине стили, один и тот же — на сколько угодно сотрудников)
+	Ui.label(frame, ClientState.t("team_skin"), 24, Ui.titleFont).LayoutOrder = nextOrder()
+	SkinShop.buildPicker(frame, employee.id, nextOrder())
 end
 
 local function buildRow(
@@ -436,6 +442,10 @@ local function buildRow(
 	local swatch = Instance.new("Frame")
 	local look = info[employee.id] and info[employee.id].look
 	local shirt = if look and (tonumber(look.shirt) or 0) > 0 then Skills.shirts[look.shirt] else nil
+	local skin = SkinShop.skinOf(employee.id)
+	if skin then
+		shirt = skin.shirt
+	end
 	swatch.BackgroundColor3 = shirt or Employees.shirtColors[employee.specialization or "all"]
 	swatch.Size = UDim2.new(0, 8, 1, -16)
 	swatch.Position = UDim2.fromOffset(8, 8)
@@ -656,6 +666,7 @@ function TeamWindow.open()
 	Ui.windowOpened()
 	render()
 	StudioState.request()
+	SkinShop.request()
 end
 
 function TeamWindow.close()
@@ -695,6 +706,9 @@ function TeamWindow.start()
 		render()
 	end)
 	StudioState.changed:Connect(function()
+		render()
+	end)
+	SkinShop.listen(function()
 		render()
 	end)
 end

@@ -44,6 +44,9 @@ export type Profile = {
 	},
 	-- Декор студии (DecorService): купленное по ключу "<id>@<этаж>"
 	decor: { owned: { [string]: boolean } },
+	-- Скины сотрудников (SkinService): открытые стили и кто что носит (employeeId -> skinId).
+	-- Rebirth не сбрасывает owned; assigned чистится по нанятым
+	skins: { owned: { [string]: boolean }, assigned: { [string]: string } },
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
@@ -102,6 +105,7 @@ local function defaultProfile(): Profile
 		posters = { owned = {}, equipped = {} },
 		achievements = { done = {}, stats = {}, combos = {} },
 		decor = { owned = {} },
+		skins = { owned = {}, assigned = {} },
 		processedReceipts = {},
 		receiptLog = {},
 		lastLogout = os.time(),

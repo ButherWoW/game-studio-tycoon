@@ -367,3 +367,28 @@ Roblox-тайкун **«Build Your Game Studio Tycoon»** (по-русски «�
 **Дальше:**
 - Dev 1 загружает шаблоны как Images и присылает ID;
 - Dev 2 делает магазин скинов (как постеры: за $ и за Robux) и надевает скин на сотрудника.
+
+**Сдано (05.11):** `docs/visual/astra-2026-11-05-skins/batch-1..3/V12` (PR #93–#95), по 4 скина в пачке.
+
+#### Как используется в игре (магазин скинов, Dev 2)
+
+- Конфиг — `src/shared/Config/Skins.luau`: 8 скинов за $ (`hoodie_coder` $5 000, `pixel_artist` $10 000, `sound_nerd` $20 000, `writer` $35 000, `intern` $50 000, `bug_hunter` $75 000, `speedrunner` $100 000, `retro_gamer` $150 000) и 4 за Robux (`neon_streamer` 79, `cyber_dev` 99, `space_dev` 129, `wizard_dev` 149 R$ — цены предварительные, решает владелец).
+- Купить — магазин 🛒, вкладка «👕 Скины». Купленный скин — открытый стиль: его можно надеть на сколько угодно сотрудников («Команда» 👥 → ✏️ → «👕 Скин», там же «Свой вид»). Rebirth скины не забирает.
+- Наряд NPC (`SkinService.decorate`, зовёт `StaffService` при сборке): торс и рукава красятся основным цветом рубашки, ноги — цветом штанов (цвета из `manifest.json`); если в `Config/Images.skins` есть ID — поверх надеваются `Shirt`/`Pants` с этими шаблонами; аксессуары — клоны `Accessory` из `ServerStorage.Skins.Skin_<id>` через `Humanoid:AddAccessory`. Головной убор из «Внешности» в скине не надевается (у скина свои аксессуары).
+- В магазине превью — `Images.skins[id].preview`; пока 0 — цветная карточка с эмодзи.
+- Пока ID нет, всё работает на запасных цветах: можно тестировать сразу.
+
+#### Dev 1: что загрузить и куда вписать
+
+1. **24 картинки одежды + 12 превью** из `docs/visual/astra-2026-11-05-skins/batch-1..3/V12/`: `skin_<id>_shirt.png`, `skin_<id>_pants.png` (585×559) и `skin_<id>_preview.png` (512×512) — загрузить как Images (Creator Hub → Development Items) и вписать **Image ID** (не Decal ID) в `src/shared/Config/Images.luau` → `Images.skins[<id>] = { shirt = …, pants = …, preview = … }`. Для `ShirtTemplate`/`PantsTemplate` годится ID картинки; если на NPC одежда не появится — загрузить как Classic Shirt/Pants и вписать их ID.
+2. **12 моделей аксессуаров**: в Studio создать папку `ServerStorage.Skins`, импортировать каждый `skin_<id>_acc.rbxmx` (это Model с 1–2 `Accessory` внутри) и переименовать в `Skin_<id>` (старое имя `skin_<id>_acc` тоже найдётся). Внутрь ничего не перекладывать: код сам берёт детей-`Accessory`.
+3. **4 Developer Products** в Creator Dashboard → вписать ID в `productId` в `Config/Skins.luau`:
+
+| id | Название | Цена |
+| --- | --- | --- |
+| `neon_streamer` | Neon Streamer skin | 79 R$ |
+| `cyber_dev` | Cyber Dev skin | 99 R$ |
+| `space_dev` | Space Dev skin | 129 R$ |
+| `wizard_dev` | Code Wizard skin | 149 R$ |
+
+4. Проверить на настоящих NPC: посадка аксессуаров (голова, спина, лицо) в позе у стола, швы рубашки/штанов, читаемость на телефоне.
