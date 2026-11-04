@@ -1,0 +1,58 @@
+{
+  "studioTested": false,
+  "renderer": "actual UV mapped block rig and exported accessory Part geometry",
+  "skins": {
+    "hoodie_coder": {
+      "parts": 11,
+      "accessories": 1,
+      "checks": "PASS",
+      "clothing": [
+        585,
+        559
+      ],
+      "preview": [
+        512,
+        512
+      ]
+    },
+    "pixel_artist": {
+      "parts": 5,
+      "accessories": 1,
+      "checks": "PASS",
+      "clothing": [
+        585,
+        559
+      ],
+      "preview": [
+        512,
+        512
+      ]
+    },
+    "sound_nerd": {
+      "parts": 8,
+      "accessories": 1,
+      "checks": "PASS",
+      "clothing": [
+        585,
+        559
+      ],
+      "preview": [
+        512,
+        512
+      ]
+    },
+    "writer": {
+      "parts": 15,
+      "accessories": 2,
+      "checks": "PASS",
+      "clothing": [
+        585,
+        559
+      ],
+      "preview": [
+        512,
+        512
+      ]
+    }
+  }
+}
