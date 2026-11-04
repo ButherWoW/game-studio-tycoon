@@ -42,6 +42,8 @@ export type Profile = {
 		combos: { [string]: boolean },
 		backfilled: boolean?,
 	},
+	-- Декор студии (DecorService): купленное по ключу "<id>@<этаж>"
+	decor: { owned: { [string]: boolean } },
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
@@ -99,6 +101,7 @@ local function defaultProfile(): Profile
 		boosts = { instantFinish = 0, patch = 0, coffeeUntil = 0 },
 		posters = { owned = {}, equipped = {} },
 		achievements = { done = {}, stats = {}, combos = {} },
+		decor = { owned = {} },
 		processedReceipts = {},
 		receiptLog = {},
 		lastLogout = os.time(),

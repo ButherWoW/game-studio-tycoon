@@ -94,6 +94,23 @@ local function perks(player: Player): any
 	return if ok and type(totals) == "table" then totals else {}
 end
 
+-- Настроение команды (MoodService): ±0.2 к оценке и множитель скорости; без сотрудников 0 и 1
+local function moodReviewBonus(player: Player): number
+	local MoodService = optional("MoodService")
+	local ok, value = pcall(function()
+		return if MoodService then MoodService.reviewBonus(player) else 0
+	end)
+	return if ok and type(value) == "number" then value else 0
+end
+
+local function moodSpeed(player: Player): number
+	local MoodService = optional("MoodService")
+	local ok, value = pcall(function()
+		return if MoodService then MoodService.speedMultiplier(player) else 1
+	end)
+	return if ok and type(value) == "number" and value > 0 then value else 1
+end
+
 local function reviewBonus(player: Player): number
 	local vip = if ownsPass(player, "vipOffice") then GamePasses.effects.vipReviewBonus else 0
 	-- «Мастер Пиксель» +1 и перк «Перфекционист» +0.2
@@ -101,7 +118,7 @@ local function reviewBonus(player: Player): number
 		return (require(script.Parent.StaffService) :: any).reviewBonus(player)
 	end)
 	local staffBonus = if ok and type(staff) == "number" then staff else 0
-	return upgradeBonus(player, "reviewBonus") + vip + staffBonus
+	return upgradeBonus(player, "reviewBonus") + vip + staffBonus + moodReviewBonus(player)
 end
 
 -- Всё, что сдвигает оценку до округления: бонусы студии минус ожидания критиков этапа
@@ -137,7 +154,7 @@ local function durationFactor(player: Player): number
 	local items = math.min(upgradeBonus(player, "speed"), Economy.maxUpgradeSpeed)
 	-- Перк «Кранчер» и подобные: множитель времени (0.9 = −10%)
 	local perkTime = tonumber(perks(player).devTime) or 1
-	return math.max(devTime * perkTime, 0.25) * (1 - items) / speedFactor(player)
+	return math.max(devTime * perkTime, 0.25) * (1 - items) / (speedFactor(player) * moodSpeed(player))
 end
 local StaffService = require(script.Parent.StaffService)
 local PlotService = require(script.Parent.PlotService)
@@ -646,6 +663,8 @@ local function release(player: Player, project: Project)
 		isRecord = isRecord,
 		repeatPenalty = repeatPenalty,
 		quickBonus = project.quickBonus,
+		-- Настроение команды в оценке (уже внутри score); 0 — строку в окне не показываем
+		moodBonus = moodReviewBonus(player),
 		projectId = project.id,
 		-- Сколько игр ещё в разработке: клиент не прячет прогресс и событие второй игры
 		activeProjects = #(projects[player] or {}),

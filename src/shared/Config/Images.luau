@@ -18,6 +18,7 @@ Images.menu = {
 	menu_camera = 113053777664719, -- menu_camera.png, 🎥
 	menu_bank = 82427982778270, -- menu_bank.png, 🏦
 	menu_achievements = 0, -- menu_achievements.png, 🏆 (V10)
+	menu_studio = 0, -- menu_studio.png, 🛋️ (окно «Студия»: декор и настроение), PNG ещё нет
 	home = 0, -- 🏠, PNG в V3 нет
 } :: { [string]: number }
 
