@@ -239,6 +239,12 @@ Texts.ru = {
 	daily_reward_day = "День {day}",
 	daily_reward_claim = "День {day} — забрать",
 	daily_reward_hint = "Заходи каждый день: пропуск начинает серию заново",
+	-- expo
+	expo_banner = "🏆 Выставка через {time} · приз {prize}",
+	expo_banner_leader = "🏆 Выставка через {time} · лидер: «{name}» {score}/10 ({player})",
+	expo_winner = "🏆 Выставку выиграла «{name}» ({player}), {score}/10! Приз {prize}",
+	expo_you_won = "🏆 Твоя «{name}» выиграла выставку! +{prize}",
+	expo_no_games = "🏆 Выставка прошла без игр. Выпусти игру — и приз твой!",
 } :: { [string]: string }
 
 Texts.en = {
@@ -390,6 +396,12 @@ Texts.en = {
 	daily_reward_day = "Day {day}",
 	daily_reward_claim = "Day {day} — claim",
 	daily_reward_hint = "Come back every day: missing one restarts the streak",
+	-- expo
+	expo_banner = "🏆 Game expo in {time} · prize {prize}",
+	expo_banner_leader = "🏆 Expo in {time} · leader: “{name}” {score}/10 ({player})",
+	expo_winner = "🏆 “{name}” by {player} won the expo with {score}/10! Prize {prize}",
+	expo_you_won = "🏆 Your “{name}” won the expo! +{prize}",
+	expo_no_games = "🏆 No games at this expo. Release one and the prize is yours!",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть

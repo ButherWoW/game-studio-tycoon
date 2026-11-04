@@ -251,6 +251,15 @@ local function release(player: Player, project: Project)
 	if ResearchService then
 		ResearchService.onGameReleased(player, score)
 	end
+	local ExpoService = optional("ExpoService")
+	if ExpoService then
+		local p = project.points
+		ExpoService.onGameReleased(player, {
+			name = project.name,
+			score = score,
+			points = p.gameplay + p.graphics + p.sound + p.story,
+		})
+	end
 	local QuestService = optional("QuestService")
 	if QuestService then
 		QuestService.onGameReleased(player, {
