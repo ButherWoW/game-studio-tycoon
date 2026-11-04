@@ -60,10 +60,14 @@ local carries: { [Player]: Carry } = {} -- по вору
 local carriedIds: { [string]: Carry } = {}
 local leaving: { [Player]: boolean } = {}
 -- Таймеры на os.clock(); клиенту отправляем остаток в секундах
-local lockedUntil: { [Player]: number } = {}
-local lockReadyAt: { [Player]: number } = {}
-local immuneUntil: { [Player]: number } = {}
-local stealReadyAt: { [Player]: number } = {}
+local lockedUntil: { [number]: number } = {}
+local lockReadyAt: { [number]: number } = {}
+local immuneUntil: { [number]: number } = {}
+local stealReadyAt: { [number]: number } = {}
+-- Таймеры выше — по UserId и не чистятся при выходе: перезаход их не сбрасывает
+-- Пара «вор → жертва» (ключ "thief:victim") и начало удержания prompt у каждого вора
+local pairReadyAt: { [string]: number } = {}
+local holdStarted: { [Player]: number } = {}
 local lastRequest: { [Player]: number } = {}
 local cachedTemplate: Model? = nil
 
@@ -170,7 +174,7 @@ local function isNewbie(profile: DataService.Profile): boolean
 end
 
 local function promptsOpen(player: Player, profile: DataService.Profile): boolean
-	return (lockedUntil[player] or 0) <= os.clock() and not isNewbie(profile)
+	return (lockedUntil[player.UserId] or 0) <= os.clock() and not isNewbie(profile)
 end
 
 local function sendState(player: Player)
@@ -184,8 +188,8 @@ local function sendState(player: Player)
 		count = #activeHits(profile),
 		slots = capacity(profile),
 		income = incomeOf(profile),
-		lockLeft = math.max((lockedUntil[player] or 0) - now, 0),
-		lockReadyIn = math.max((lockReadyAt[player] or 0) - now, 0),
+		lockLeft = math.max((lockedUntil[player.UserId] or 0) - now, 0),
+		lockReadyIn = math.max((lockReadyAt[player.UserId] or 0) - now, 0),
 		lockSeconds = HitCartridges.lockSeconds,
 		newbieGames = HitCartridges.newbieGames,
 		steals = stats.steals,
@@ -262,6 +266,9 @@ local function addPrompt(owner: Player, profile: DataService.Profile, part: Base
 	-- Клиент прячет prompt у хозяина локально; «Open» — серверное состояние для пересчёта
 	prompt:SetAttribute("Open", open)
 	prompt:SetAttribute("HitOwner", owner.UserId)
+	prompt.PromptButtonHoldBegan:Connect(function(thief: Player)
+		holdStarted[thief] = os.clock()
+	end)
 	prompt.Triggered:Connect(function(thief: Player)
 		tryStartSteal(thief, owner, hit.id, part)
 	end)
@@ -417,11 +424,20 @@ local function deliver(carry: Carry)
 	cleanup(carry)
 	local hit = table.remove(victimHits, index) :: Hit
 	hit.stolenFrom = carry.victim.DisplayName
+	local record = hit :: any
+	record.stolenFromId = carry.victim.UserId
+	record.stolenAt = os.time()
+	-- В статистику «Главных воров» картридж идёт один раз на вора: перекладывание туда-сюда не накручивает
+	record.thieves = if type(record.thieves) == "table" then record.thieves else {}
+	local firstTime = record.thieves[tostring(carry.thief.UserId)] == nil
+	record.thieves[tostring(carry.thief.UserId)] = true
 	addHit(thiefProfile, hit)
-	immuneUntil[carry.victim] = os.clock() + HitCartridges.victimImmunity
+	immuneUntil[carry.victim.UserId] = os.clock() + HitCartridges.victimImmunity
 	local stats = ThiefBoardService.stats(thiefProfile)
-	stats.steals += 1
-	stats.stolenIncome += HitCartridges.income(hit.score)
+	if firstTime then
+		stats.steals += 1
+		stats.stolenIncome += HitCartridges.income(hit.score)
+	end
 	ThiefBoardService.changed(carry.thief)
 	toast(carry.thief, "hit_stolen_by_you", { name = hit.name, player = carry.victim.DisplayName })
 	toast(carry.victim, "hit_lost", { name = hit.name, player = carry.thief.DisplayName })
@@ -450,17 +466,28 @@ tryStartSteal = function(thief: Player, owner: Player, hitId: string, source: Ba
 	elseif isNewbie(ownerProfile) then
 		toast(thief, "hit_err_victim_newbie")
 		return
-	elseif (lockedUntil[owner] or 0) > now then
+	elseif (lockedUntil[owner.UserId] or 0) > now then
 		toast(thief, "hit_err_locked")
 		return
-	elseif (immuneUntil[owner] or 0) > now then
-		toast(thief, "hit_err_immune", { seconds = math.ceil(immuneUntil[owner] - now) })
+	elseif (immuneUntil[owner.UserId] or 0) > now then
+		toast(thief, "hit_err_immune", { seconds = math.ceil(immuneUntil[owner.UserId] - now) })
 		return
-	elseif (stealReadyAt[thief] or 0) > now then
-		toast(thief, "hit_err_cooldown", { seconds = math.ceil(stealReadyAt[thief] - now) })
+	elseif (stealReadyAt[thief.UserId] or 0) > now then
+		toast(thief, "hit_err_cooldown", { seconds = math.ceil(stealReadyAt[thief.UserId] - now) })
 		return
 	elseif carriedIds[hitId] then
 		toast(thief, "hit_err_busy")
+		return
+	elseif (pairReadyAt[thief.UserId .. ":" .. owner.UserId] or 0) > now then
+		toast(thief, "hit_err_pair", {
+			minutes = math.ceil((pairReadyAt[thief.UserId .. ":" .. owner.UserId] - now) / 60),
+		})
+		return
+	end
+	-- Prompt держат HoldDuration секунд; fireproximityprompt без удержания не проходит
+	local began = holdStarted[thief]
+	holdStarted[thief] = nil
+	if not began or now - began < HitCartridges.holdDuration - 0.3 then
 		return
 	end
 	-- Картридж должен стоять на полке хозяина прямо сейчас
@@ -474,6 +501,15 @@ tryStartSteal = function(thief: Player, owner: Player, hitId: string, source: Ba
 	if not hit or not shelves[thief] then
 		return
 	end
+	-- Свой же картридж, отобранный недавно, обратно не утащить: пинг-понг на альтах
+	local taken = hit :: any
+	if
+		taken.stolenFromId == thief.UserId
+		and (tonumber(taken.stolenAt) or 0) + HitCartridges.stealBackCooldown > os.time()
+	then
+		toast(thief, "hit_err_steal_back")
+		return
+	end
 	local character = thief.Character
 	local humanoid, root = getRoot(character)
 	if not humanoid or not root or not character then
@@ -484,7 +520,8 @@ tryStartSteal = function(thief: Player, owner: Player, hitId: string, source: Ba
 		return
 	end
 
-	stealReadyAt[thief] = now + HitCartridges.thiefCooldown
+	stealReadyAt[thief.UserId] = now + HitCartridges.thiefCooldown
+	pairReadyAt[thief.UserId .. ":" .. owner.UserId] = now + HitCartridges.pairCooldown
 	local part = makeCartridge(hit)
 	part.Name = "CarriedHit"
 	part.Anchored = false
@@ -574,8 +611,21 @@ local function checkCarry(carry: Carry)
 		carry.lastPosition = position
 		carry.lastCheck = now
 	end
+	-- Полёт: под вором нет пола ближе maxCarryHeight — кража отменяется
+	local params = RaycastParams.new()
+	params.FilterType = Enum.RaycastFilterType.Exclude
+	params.FilterDescendantsInstances = { root.Parent :: Instance }
+	if not workspace:Raycast(position, Vector3.new(0, -HitCartridges.maxCarryHeight, 0), params) then
+		cancelCarry(carry)
+		return
+	end
 	local _, victimRoot = getRoot(victim.Character)
-	if victimRoot and (victimRoot.Position - position).Magnitude <= HitCartridges.catchDistance then
+	local gap = if victimRoot then victimRoot.Position - position else nil
+	if
+		gap
+		and Vector3.new(gap.X, 0, gap.Z).Magnitude <= HitCartridges.catchDistance
+		and math.abs(gap.Y) <= HitCartridges.catchHeight
+	then
 		caught(carry)
 		return
 	end
@@ -597,12 +647,12 @@ local function onRequestLock(player: Player)
 		return
 	end
 	local now = os.clock()
-	if (lockReadyAt[player] or 0) > now then
+	if (lockReadyAt[player.UserId] or 0) > now then
 		sendState(player)
 		return
 	end
-	lockedUntil[player] = now + HitCartridges.lockSeconds
-	lockReadyAt[player] = now + HitCartridges.lockCooldown
+	lockedUntil[player.UserId] = now + HitCartridges.lockSeconds
+	lockReadyAt[player.UserId] = now + HitCartridges.lockCooldown
 	refreshPrompts(player)
 	sendState(player)
 	task.delay(HitCartridges.lockSeconds + 0.1, function()
@@ -670,11 +720,8 @@ local function onPlayerRemoving(player: Player)
 		shelf.model:Destroy()
 	end
 	shelves[player] = nil
-	lockedUntil[player] = nil
-	lockReadyAt[player] = nil
-	immuneUntil[player] = nil
-	stealReadyAt[player] = nil
 	lastRequest[player] = nil
+	holdStarted[player] = nil
 	-- Обработчики, начатые до выхода, ещё могут спросить leaving
 	task.delay(30, function()
 		leaving[player] = nil

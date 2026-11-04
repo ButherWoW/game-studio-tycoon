@@ -551,6 +551,10 @@ function StartParkController.start()
 				ClientState.t("job_paid", { money = Texts.money(tonumber(result.pay) or 0) }),
 				Ui.colors.good
 			)
+		elseif result.reason == "garage_seat" then
+			toast(ClientState.t("park_seat_garage"), Ui.colors.muted)
+		elseif result.reason == "garage" then
+			toast(ClientState.t("park_jobs_garage"), Ui.colors.muted)
 		else
 			toast(ClientState.t("job_failed"), Ui.colors.bad)
 		end

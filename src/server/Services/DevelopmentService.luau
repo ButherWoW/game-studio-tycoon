@@ -8,6 +8,7 @@ local TextService = game:GetService("TextService")
 local Shared = ReplicatedStorage.Shared
 local Remotes = require(Shared.Remotes)
 local Formulas = require(Shared.Formulas)
+local TextSafe = require(Shared.TextSafe)
 local Genres = require(Shared.Config.Genres)
 local Topics = require(Shared.Config.Topics)
 local Upgrades = require(Shared.Config.Upgrades)
@@ -259,9 +260,10 @@ local function onStartDevelopment(player: Player, request: any)
 	if type(request.name) ~= "string" or #request.name > MAX_NAME_LENGTH * 4 then
 		return
 	end
-	local rawName = (request.name:gsub("^%s+", ""):gsub("%s+$", ""))
-	local nameLength = utf8.len(rawName)
-	if nameLength == nil or nameLength < MIN_NAME_LENGTH then
+	-- Невидимые символы и «Zalgo» вырезаем: название игры видят все (выставка, хиты)
+	local rawName = TextSafe.clean(request.name)
+	local nameLength = rawName and utf8.len(rawName)
+	if not rawName or not nameLength or TextSafe.visibleLength(rawName) < MIN_NAME_LENGTH then
 		return
 	end
 	if nameLength > MAX_NAME_LENGTH then

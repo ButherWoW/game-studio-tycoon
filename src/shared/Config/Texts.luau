@@ -356,6 +356,10 @@ Texts.ru = {
 	tutorial_first_game = "🎮 Сделай первую игру: жанр, тема, фокус — и в разработку",
 	tutorial_save = "💰 Накопи на гараж ({price}): заказы на доске и картриджи тоже платят",
 	tutorial_buy_garage = "🏠 Купи гараж: наступи на табличку на своём участке",
+	hit_err_pair = "У этого игрока ты уже крал — подожди {minutes} мин",
+	hit_err_steal_back = "Этот хит у тебя недавно украли — сразу назад не забрать",
+	park_jobs_garage = "Подработки — для тех, кто копит на гараж. У тебя уже есть студия!",
+	park_seat_garage = "Ноутбуки в парке — для новичков. Иди в свою студию!",
 } :: { [string]: string }
 
 Texts.en = {
@@ -634,6 +638,10 @@ Texts.en = {
 	tutorial_first_game = "🎮 Make your first game: genre, topic, focus — and start",
 	tutorial_save = "💰 Save up for the garage ({price}): jobs on the board and cartridges pay too",
 	tutorial_buy_garage = "🏠 Buy the garage: step on the sign on your plot",
+	hit_err_pair = "You already stole from this player — wait {minutes} min",
+	hit_err_steal_back = "This hit was stolen from you recently — you cannot take it back right away",
+	park_jobs_garage = "Side jobs are for players saving up for a garage. You already have a studio!",
+	park_seat_garage = "Park laptops are for newcomers. Head to your studio!",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть

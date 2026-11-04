@@ -12,6 +12,7 @@ local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
 local StartRemotes = require(ReplicatedStorage.Shared.StartRemotes)
 local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService)
+local TextSafe = require(ReplicatedStorage.Shared.TextSafe)
 
 local PROFILE_WAIT = 0.2
 local REQUEST_COOLDOWN = 0.3 -- секунд между запросами заказов одного игрока
@@ -162,6 +163,11 @@ local function onJobStart(player: Player, jobId: any)
 	end
 	dropExpired(player, profile)
 	if activeJobs[player] then
+		return
+	end
+	-- Подработки — только для тех, кто копит на первый гараж (иначе это вечный AFK-фарм)
+	if PlotService.ownsGarage(player) then
+		StartRemotes.JobResult:FireClient(player, { id = jobId, ok = false, pay = 0, reason = "garage" })
 		return
 	end
 	if (tonumber(jobReadyAt(profile)[jobId]) or 0) > os.time() then
@@ -363,10 +369,6 @@ local function refreshNaming(player: Player)
 	player:SetAttribute("NeedsStudioName", PlotService.ownsGarage(player) and not hasStudioName(profile))
 end
 
-local function trim(s: string): string
-	return (s:gsub("^%s+", ""):gsub("%s+$", ""))
-end
-
 local function onSetStudioName(player: Player, raw: any)
 	if type(raw) ~= "string" or #raw > 200 or naming[player] then
 		return
@@ -380,9 +382,15 @@ local function onSetStudioName(player: Player, raw: any)
 	if not profile or not PlotService.ownsGarage(player) or hasStudioName(profile) then
 		return
 	end
-	local name = trim((raw:gsub("%c", " ")))
-	local length = utf8.len(name)
-	if not length or length < StartPark.studioNameMin or length > StartPark.studioNameMax then
+	-- Убираем невидимые символы, «Zalgo» и экзотические пробелы; видимых должно быть не меньше минимума
+	local name = TextSafe.clean(raw)
+	local length = name and utf8.len(name)
+	if
+		not name
+		or not length
+		or TextSafe.visibleLength(name) < StartPark.studioNameMin
+		or length > StartPark.studioNameMax
+	then
 		StartRemotes.StudioNameResult:FireClient(player, { ok = false, reason = "length" })
 		return
 	end
@@ -427,7 +435,30 @@ local function onPlayerAdded(player: Player)
 	end
 end
 
+-- Общие ноутбуки — для тех, кто копит на гараж: владельца гаража со скамейки поднимаем,
+-- иначе альты и старички занимают все места и новичкам негде делать игры
+local function guardPublicSeat(seat: Instance)
+	if not seat:IsA("Seat") or seat.Name ~= "PcSeat" or seat:GetAttribute("Public") ~= true then
+		return
+	end
+	seat:GetPropertyChangedSignal("Occupant"):Connect(function()
+		local humanoid = seat.Occupant
+		local player = humanoid and Players:GetPlayerFromCharacter(humanoid.Parent)
+		if player and humanoid and PlotService.ownsGarage(player) then
+			humanoid.Sit = false
+			StartRemotes.JobResult:FireClient(
+				player,
+				{ id = "", ok = false, pay = 0, reason = "garage_seat" }
+			)
+		end
+	end)
+end
+
 function StartParkService.start()
+	for _, d in workspace:GetDescendants() do
+		guardPublicSeat(d)
+	end
+	workspace.DescendantAdded:Connect(guardPublicSeat)
 	local folder = park()
 	if not folder then
 		warn("[StartParkService] workspace.StartPark not found: park is disabled")
