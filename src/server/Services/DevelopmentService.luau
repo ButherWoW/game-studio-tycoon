@@ -147,6 +147,7 @@ local function scoreBonus(
 		- repeatPenaltyFor(profile, genreId, topicId, sequel)
 end
 
+-- Множитель времени без доната: предметы, исследования, перки, настроение (1 = базовое время)
 local function durationFactor(player: Player): number
 	local research = researchModifiers(player)
 	-- Research.modifiers отдаёт множители: 1 = без изменений, 0.9 = на 10% быстрее
@@ -154,7 +155,7 @@ local function durationFactor(player: Player): number
 	local items = math.min(upgradeBonus(player, "speed"), Economy.maxUpgradeSpeed)
 	-- Перк «Кранчер» и подобные: множитель времени (0.9 = −10%)
 	local perkTime = tonumber(perks(player).devTime) or 1
-	return math.max(devTime * perkTime, 0.25) * (1 - items) / (speedFactor(player) * moodSpeed(player))
+	return math.max(devTime * perkTime, 0.25) * (1 - items) / moodSpeed(player)
 end
 local StaffService = require(script.Parent.StaffService)
 local PlotService = require(script.Parent.PlotService)
@@ -165,6 +166,25 @@ local StartPark = require(Shared.Config.StartPark)
 -- и очки в секунду (бонусы студии, магазина и исследований не действуют), доход ниже
 local function onLaptop(player: Player): boolean
 	return not PlotService.ownsGarage(player)
+end
+
+-- Длительность новой игры (с) и темп (во сколько раз быстрее базовой скорости идут очки).
+-- Очки за игру не зависят от длительности: темп = секунды очков / длительность (Config/Economy)
+local function devTiming(player: Player): (number, number)
+	-- Ноутбук: время фиксировано, бонусы студии и магазина не действуют
+	local duration: number, pointsSeconds: number = StartPark.laptopDuration, StartPark.laptopPointsSeconds
+	if not onLaptop(player) then
+		local floor = Economy.devFloorSeconds
+		-- Бонусы сокращают только часть сверх пола; донат (быстрая разработка, кофе) — после него
+		duration = (floor + (Economy.devSeconds - floor) * durationFactor(player)) / speedFactor(player)
+		pointsSeconds = Economy.devPointsSeconds
+	end
+	-- Первые игры игрока — короче: быстрый онбординг
+	local profile = DataService.get(player)
+	if profile and profile.gamesReleased < Economy.firstGames then
+		duration = math.min(duration, Economy.firstGameSeconds)
+	end
+	return duration, pointsSeconds / duration
 end
 
 type Focus = { gameplay: number, graphics: number, sound: number, story: number }
@@ -195,7 +215,6 @@ type Project = {
 
 local MAX_RELEASE_FAILURES = 3 -- после стольких ошибок релиза игра снимается, чтобы не падать каждый тик
 local LEADERSTATS_REVEAL_SECONDS = 4.5 -- сколько клиент раскрывает оценки в окне релиза
-local BASE_DURATION = 30 -- секунд на одну игру в начале
 local MAX_NAME_LENGTH = 30
 local DEFAULT_NAME = "Без названия" -- только если сам фильтр Roblox упал
 local MIN_NAME_LENGTH = 2
@@ -322,8 +341,10 @@ function DevelopmentService.pointsRate(player: Player, focus: Focus, tempo: numb
 		return rate
 	end
 	if onLaptop(player) then
+		-- Темп ноутбука: laptopPointsSeconds / laptopDuration (очки за игру не зависят от длительности)
+		local laptopTempo = tempo or StartPark.laptopPointsSeconds / StartPark.laptopDuration
 		for _, key in FOCUS_KEYS do
-			(rate :: any)[key] = (focus :: any)[key] * StartPark.laptopPointsPerSecond
+			(rate :: any)[key] = (focus :: any)[key] * StartPark.laptopPointsPerSecond * laptopTempo
 		end
 		return rate
 	end
@@ -355,7 +376,11 @@ function DevelopmentService.pointsRate(player: Player, focus: Focus, tempo: numb
 		end
 	end
 	-- Ускорение сокращает время, поэтому очки в секунду растут так же: за игру их столько же
-	local speedUp = tempo or 1 / durationFactor(player)
+	local speedUp = tempo
+	if not speedUp then
+		local _, current = devTiming(player)
+		speedUp = current
+	end
 	local research = researchModifiers(player)
 	-- Множители из исследований: 1 = без изменений, 1.1 = +10%
 	local graphics = if research and type(research.graphicsPoints) == "number"
@@ -471,13 +496,12 @@ local function beginProject(
 	if not hasProject(player, project) or not player.Parent then
 		return
 	end
-	local laptop = onLaptop(player)
-	local factor = durationFactor(player)
+	local duration, tempo = devTiming(player)
 	project.name = name
-	project.duration = if laptop then StartPark.laptopDuration else BASE_DURATION * factor
+	project.duration = duration
 	project.nextEventAt = DevEvents.firstAt
-	project.tempo = if laptop then 1 else 1 / factor
-	project.laptop = laptop
+	project.tempo = tempo
+	project.laptop = onLaptop(player)
 	project.pending = false
 	-- Быстрые события (Config/QuickEvents); у игр «Авто-релиза» их нет — игрок может быть AFK
 	QuickEventService.plan(player, project.id, project.duration, sequel == true)
@@ -754,10 +778,15 @@ local function maybeStartEvent(player: Player, project: Project)
 	if projectWithEvent(player) then
 		return
 	end
+	-- Быстрые события в приоритете: не рядом с ними (QuickEvents.minGap)
+	if not QuickEventService.choiceAllowed(player) then
+		return
+	end
 	local def = DevEvents.list[rng:NextInteger(1, #DevEvents.list)]
 	project.eventsDone += 1
 	project.nextEventAt = project.elapsed + rng:NextNumber(DevEvents.intervalMin, DevEvents.intervalMax)
 	project.event = { def = def, expiresAt = project.elapsed + DevEvents.answerSeconds }
+	QuickEventService.noteChoice(player)
 	Remotes.DevEvent:FireClient(
 		player,
 		{ id = def.id, answerSeconds = DevEvents.answerSeconds, projectId = project.id }
@@ -912,10 +941,8 @@ local function onPreviewRequest(player: Player, request: any)
 	if not focus then
 		return
 	end
-	local laptop = onLaptop(player)
-	local factor = durationFactor(player)
-	local duration = if laptop then StartPark.laptopDuration else BASE_DURATION * factor
-	local rate = DevelopmentService.pointsRate(player, focus, if laptop then 1 else 1 / factor)
+	local duration, tempo = devTiming(player)
+	local rate = DevelopmentService.pointsRate(player, focus, tempo)
 	local points = {
 		gameplay = rate.gameplay * duration,
 		graphics = rate.graphics * duration,

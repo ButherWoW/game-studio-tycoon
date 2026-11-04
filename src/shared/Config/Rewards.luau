@@ -18,12 +18,14 @@ export type Reward = {
 local Rewards = {
 	-- Оценка, от которой считается доход, не ниже этой (новичок с оценкой 2 тоже получает ощутимо)
 	minScore = 5,
-	-- Длительность разработки одной игры, с (как BASE_DURATION в DevelopmentService)
-	secondsPerGame = 30,
+	-- «Минута дохода» = доход релиза × 60 / secondsPerGame. Было 30 (длительность игры); с 05.11
+	-- игры длиннее, а Economy.revenueBase ×1.25 — 30 × 1.25, чтобы награды остались прежними
+	secondsPerGame = 37.5,
 	-- +50% за каждый Rebirth (как в DevelopmentService)
 	rebirthBonus = 0.5,
-	-- Без гаража: одна игра на ноутбуке в парке с учётом подхода и окон (StartPark.laptopDuration = 20)
-	parkSecondsPerGame = 40,
+	-- Без гаража: одна игра на ноутбуке в парке с учётом подхода и окон (StartPark.laptopDuration = 35;
+	-- было 40 при 20 с — доход ноутбука в минуту тот же)
+	parkSecondsPerGame = 55,
 	-- Без гаража одна денежная награда — не больше этой доли StartPark.garagePrice (30% -> $225)
 	parkMaxGarageShare = 0.3,
 	-- Отчёт #3: с одним потолком все 7 дней ежедневки давали одинаковые ~$225. Потолок растёт

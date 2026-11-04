@@ -15,11 +15,25 @@ local Economy = {
 	topicFitStrength = 3,
 	-- Случайный разброс оценки, ±
 	reviewNoise = 0.75,
-	-- Доход = revenueBase * оценка^2 * бонусы
-	revenueBase = 20,
+	-- Доход = revenueBase * оценка^2 * бонусы. 05.11: 20 → 25 вместе с более долгой разработкой
+	-- (devSeconds): игр в час меньше на ~20–30%, доход за игру выше — темп вех прежний
+	-- (tools/balance_sim.py, docs/BALANCE.md). Минуты дохода: Rewards.secondsPerGame, Offline.gameMinutes
+	revenueBase = 25,
 	-- +3% к доходу за каждое очко/с купленной техники (конец гаража ~+27%), не больше +150%
 	revenuePerPower = 0.03,
 	maxPowerBonus = 1.5,
+	-- Темп разработки (отзыв владельца 05.11: «игры делаются очень быстро»). Время игры:
+	-- devFloorSeconds + (devSeconds − devFloorSeconds) × множитель скорости (предметы, исследования,
+	-- перки, настроение). Бонусы сокращают только часть сверх devFloorSeconds: без доната игра
+	-- не быстрее ~25 с. Геймпасс «Быстрая разработка» и кофе делят результат (после пола).
+	devSeconds = 45,
+	devFloorSeconds = 20,
+	-- Очки за игру считаются как за столько секунд при базовой скорости (было BASE_DURATION = 30):
+	-- длиннее разработка — не выше оценка
+	devPointsSeconds = 30,
+	-- Первые firstGames игр игрока — не дольше firstGameSeconds (быстрый онбординг)
+	firstGames = 2,
+	firstGameSeconds = 25,
 	-- Предметы студии ускоряют разработку не больше чем на эту долю (сумма speed в Config/Upgrades)
 	maxUpgradeSpeed = 0.5,
 	-- +50% к доходу за каждый уровень студии (было +25%; подняли вместе с criticExpectation,

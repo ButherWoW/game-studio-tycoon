@@ -12,6 +12,8 @@
 -- 2-й этаж ~2.5–3 ч игры (2-й день), 3-й этаж ~12–13 ч (~9-й день при 1.5 ч/день).
 -- gamesRequired — защита от «прошёл ожиданием»: офлайн-доход денег даёт, а игр — нет
 -- (~170 игр в час у активного игрока: 350 ≈ 2 ч, 1800 ≈ 10 ч игры).
+-- 05.11 разработка длиннее (Economy.devSeconds): ~140–145 игр в час вместо ~180, поэтому
+-- 400 → 310 и 2070 → 1670 игр (×0.77 / ×0.81) — ворота держат то же время игры.
 
 export type Stage = {
 	level: number,
@@ -58,7 +60,7 @@ local Stages: { Stage } = {
 		name = "Офис: 2-й этаж",
 		nameEn = "Office: 2nd floor",
 		cost = 1_500_000,
-		gamesRequired = 400,
+		gamesRequired = 310,
 		model = "Floor",
 		position = Vector3.new(0, 0.5 + FLOOR_HEIGHT, 0),
 		floorY = FLOOR_HEIGHT,
@@ -70,7 +72,7 @@ local Stages: { Stage } = {
 		name = "Офис: 3-й этаж",
 		nameEn = "Office: 3rd floor",
 		cost = 6_900_000,
-		gamesRequired = 2070,
+		gamesRequired = 1670,
 		model = "Skyscraper",
 		position = Vector3.new(0, 0.5 + 2 * FLOOR_HEIGHT, 0),
 		floorY = 2 * FLOOR_HEIGHT,
