@@ -43,6 +43,15 @@ local StartPark = {
 	cartridgeRespawn = 120,
 	cartridgePrice = 25, -- ломбард платит за каждый
 	maxCartridges = 20, -- больше в инвентаре не помещается
+	-- Где появляются картриджи: случайная точка по всему парку (StartParkService.randomSpotPosition),
+	-- в кольце cartridgeAreaMin..cartridgeAreaMax от спавна (за ним уже участки).
+	-- Не ближе cartridgeClearance к скамейкам, доске, ломбарду, фонтану и спавну,
+	-- и не ближе cartridgeSpacing друг к другу. Не нашлось места за cartridgeTries — старая точка
+	cartridgeAreaMin = 10,
+	cartridgeAreaMax = 52,
+	cartridgeClearance = 5,
+	cartridgeSpacing = 14,
+	cartridgeTries = 40,
 
 	-- Название студии (вводится один раз после покупки гаража), символов после trim
 	studioNameMin = 3,
@@ -52,7 +61,7 @@ local StartPark = {
 	benchCount = 6,
 	benchRadius = 28,
 	boardRadius = 12,
-	cartridgeRadius = 42,
+	cartridgeRadius = 42, -- только начальная раскладка точек (WorldService), дальше — случайно
 }
 
 return StartPark

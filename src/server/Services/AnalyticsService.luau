@@ -662,6 +662,13 @@ local function onGamePassPurchased(player: Player, gamePassId: number, wasPurcha
 	end)
 end
 
+-- Быстрое событие разработки (QuickEventService): вид и результат одним полем
+function Analytics.logQuickEvent(player: Player, kind: string, grade: string)
+	if Config.enabled and states[player] then
+		logCustom(player, Config.events.quickEvent, 1, kind .. "_" .. grade)
+	end
+end
+
 function Analytics.start()
 	if not Config.enabled then
 		return
