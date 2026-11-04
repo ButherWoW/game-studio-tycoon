@@ -15,6 +15,7 @@ local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local Expenses = require(ReplicatedStorage.Shared.Config.Expenses)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local ClientState = require(script.Parent.Parent.ClientState)
+local StudioState = require(script.Parent.Parent.StudioState)
 local Ui = require(script.Parent.Parent.Ui)
 
 local MENU_SLOT = 2
@@ -191,6 +192,32 @@ local function buildDeskPanel(parent: Instance, data: any, order: number)
 	label.TextSize = 17
 	label.TextYAlignment = Enum.TextYAlignment.Top
 	label.LayoutOrder = order
+end
+
+-- Настроение команды (MoodService): значение, цель и из чего сложилось — только при сотрудниках
+local function buildMoodPanel(parent: Instance, order: number)
+	local mood = StudioState.state.mood
+	if not mood or not mood.active then
+		return
+	end
+	local head = Ui.label(
+		parent,
+		ClientState.t("mood_title", { value = mood.value })
+			.. "  "
+			.. ClientState.t("mood_target", { value = mood.target }),
+		28,
+		Ui.titleFontFor(ClientState.lang),
+		StudioState.moodColor(mood.value)
+	)
+	head.LayoutOrder = order
+	local lines = StudioState.moodLines(mood)
+	table.insert(lines, ClientState.t("mood_team_hint"))
+	local label = Ui.label(parent, table.concat(lines, "\n"), 22 * #lines, nil, Ui.colors.muted)
+	label.TextScaled = false
+	label.TextSize = 17
+	label.TextWrapped = true
+	label.TextYAlignment = Enum.TextYAlignment.Top
+	label.LayoutOrder = order + 1
 end
 
 local function header(parent: Instance, text: string, order: number)
@@ -581,6 +608,7 @@ render = function()
 
 	buildStagePanel(body, data, 1)
 	buildDeskPanel(body, data, 2)
+	buildMoodPanel(body, 3)
 	local free, total = deskCounts(data)
 	local anyDesk = total > 0
 	-- Сотрудники по этапам, легендарные — отдельной группой в конце
@@ -627,6 +655,7 @@ function TeamWindow.open()
 	scrollPosition = Vector2.zero
 	Ui.windowOpened()
 	render()
+	StudioState.request()
 end
 
 function TeamWindow.close()
@@ -663,6 +692,9 @@ function TeamWindow.start()
 		render()
 	end)
 	ClientState.changed:Connect(function()
+		render()
+	end)
+	StudioState.changed:Connect(function()
 		render()
 	end)
 end

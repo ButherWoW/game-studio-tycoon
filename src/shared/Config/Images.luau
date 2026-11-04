@@ -17,6 +17,7 @@ Images.menu = {
 	menu_holiday = 108939585178579, -- menu_holiday.png, 🎉
 	menu_camera = 113053777664719, -- menu_camera.png, 🎥
 	menu_bank = 82427982778270, -- menu_bank.png, 🏦
+	menu_studio = 0, -- menu_studio.png, 🛋️ (окно «Студия»: декор и настроение), PNG ещё нет
 	home = 0, -- 🏠, PNG в V3 нет
 } :: { [string]: number }
 

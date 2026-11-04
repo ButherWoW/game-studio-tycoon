@@ -32,6 +32,8 @@ export type Profile = {
 	boosts: { instantFinish: number, patch: number, coffeeUntil: number },
 	-- Постеры (PosterService): купленные и какой висит на каком месте стены (slotId -> posterId)
 	posters: { owned: { [string]: boolean }, equipped: { [string]: string } },
+	-- Декор студии (DecorService): купленное по ключу "<id>@<этаж>"
+	decor: { owned: { [string]: boolean } },
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
@@ -86,6 +88,7 @@ local function defaultProfile(): Profile
 		activeAd = nil,
 		boosts = { instantFinish = 0, patch = 0, coffeeUntil = 0 },
 		posters = { owned = {}, equipped = {} },
+		decor = { owned = {} },
 		processedReceipts = {},
 		receiptLog = {},
 		lastLogout = os.time(),
