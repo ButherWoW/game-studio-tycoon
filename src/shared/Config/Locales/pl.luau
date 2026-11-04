@@ -28,7 +28,7 @@ return {
 	-- Декор и настроение
 	studio_title = "🛋️ Studio",
 	studio_tab_interior = "🛠 Wnętrze",
-	studio_tab_decor = "🪴 Dekoracje",
+	studio_tab_decor = "🌿 Dekoracje",
 	studio_tab_mood = "😊 Nastrój",
 	studio_floor_garage = "Garaż",
 	studio_no_garage = "Najpierw kup garaż — wtedy będzie co urządzać",

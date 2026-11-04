@@ -28,7 +28,7 @@ return {
 	-- Декор и настроение
 	studio_title = "🛋️ Studio",
 	studio_tab_interior = "🛠 Interior",
-	studio_tab_decor = "🪴 Dekorasi",
+	studio_tab_decor = "🌿 Dekorasi",
 	studio_tab_mood = "😊 Suasana hati",
 	studio_floor_garage = "Garasi",
 	studio_no_garage = "Beli garasi dulu — baru ada yang bisa ditata",

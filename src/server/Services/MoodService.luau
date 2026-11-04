@@ -43,16 +43,15 @@ local function moodData(profile: DataService.Profile): MoodData
 	local raw = p.mood
 	if type(raw) ~= "table" then
 		raw = {}
+		p.mood = raw
 	end
+	-- Правим на месте: tick держит ссылку на эту таблицу и между вызовами compute()
+	-- (новая таблица теряла бы записанное значение — отчёт #4, P1-1). −1 — «ещё не считали»
 	local value = tonumber(raw.value)
+	raw.value = if value and value == value and value >= 0 then math.clamp(value, Mood.min, Mood.max) else -1
 	local aftermath = tonumber(raw.aftermath) or 0
-	local clean = {
-		-- NaN из сохранения превращаем в базу
-		value = if value and value == value then math.clamp(value, Mood.min, Mood.max) else -1,
-		aftermath = if aftermath == aftermath then math.clamp(aftermath, 0, Mood.strikeAftermath) else 0,
-	}
-	p.mood = clean
-	return clean
+	raw.aftermath = if aftermath == aftermath then math.clamp(aftermath, 0, Mood.strikeAftermath) else 0
+	return raw :: MoodData
 end
 
 -- Нанятые сотрудники (и те, кто ждёт стол): StaffService хранит profile.staff

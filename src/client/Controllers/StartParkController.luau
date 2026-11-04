@@ -524,6 +524,12 @@ local function openNameWindow()
 	done.AnchorPoint = Vector2.new(0.5, 1)
 	done.Position = UDim2.new(0.5, 0, 1, -14)
 	done.Size = UDim2.fromOffset(180, 46)
+	-- Курсор сразу в поле: первый клик не уходит «в пустоту» (отчёт #4, P2-4)
+	task.defer(function()
+		if box.Parent then
+			box:CaptureFocus()
+		end
+	end)
 end
 
 -- Окно спрашивает название при входе, а сохранённый язык приходит позже: пересобрать его
@@ -544,9 +550,28 @@ local function relocalizeNameWindow()
 	end
 end
 
+-- Окно названия не открываем поверх другого окна (два модальных разом — отчёт #4, P2-4):
+-- ждём, пока игрок закроет текущее
+local namingWait = false
 local function checkNaming()
 	if player:GetAttribute("NeedsStudioName") == true then
-		openNameWindow()
+		if nameGui or namingWait then
+			return
+		end
+		if not Ui.anyWindowOpen() then
+			openNameWindow()
+			return
+		end
+		namingWait = true
+		task.spawn(function()
+			while Ui.anyWindowOpen() and player:GetAttribute("NeedsStudioName") == true do
+				task.wait(0.5)
+			end
+			namingWait = false
+			if player:GetAttribute("NeedsStudioName") == true then
+				openNameWindow()
+			end
+		end)
 	else
 		closeNameWindow()
 	end

@@ -113,7 +113,7 @@ Texts.ru = {
 	-- Декор и настроение
 	studio_title = "🛋️ Студия",
 	studio_tab_interior = "🛠 Интерьер",
-	studio_tab_decor = "🪴 Декор",
+	studio_tab_decor = "🌿 Декор",
 	studio_tab_mood = "😊 Настроение",
 	studio_floor_garage = "Гараж",
 	studio_no_garage = "Сначала купи гараж — тогда будет что обустраивать",
@@ -721,7 +721,7 @@ Texts.en = {
 	-- Декор и настроение
 	studio_title = "🛋️ Studio",
 	studio_tab_interior = "🛠 Interior",
-	studio_tab_decor = "🪴 Decor",
+	studio_tab_decor = "🌿 Decor",
 	studio_tab_mood = "😊 Mood",
 	studio_floor_garage = "Garage",
 	studio_no_garage = "Buy the garage first — then there's something to furnish",

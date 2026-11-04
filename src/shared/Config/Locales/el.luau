@@ -28,7 +28,7 @@ return {
 	-- Декор и настроение
 	studio_title = "🛋️ Στούντιο",
 	studio_tab_interior = "🛠 Εσωτερικό",
-	studio_tab_decor = "🪴 Διακόσμηση",
+	studio_tab_decor = "🌿 Διακόσμηση",
 	studio_tab_mood = "😊 Διάθεση",
 	studio_floor_garage = "Γκαράζ",
 	studio_no_garage = "Αγόρασε πρώτα το γκαράζ — μετά θα έχεις τι να επιπλώσεις",

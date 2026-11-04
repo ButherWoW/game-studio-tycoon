@@ -28,7 +28,7 @@ return {
 	-- Декор и настроение
 	studio_title = "🛋️ Studio",
 	studio_tab_interior = "🛠 Sisustus",
-	studio_tab_decor = "🪴 Koristeet",
+	studio_tab_decor = "🌿 Koristeet",
 	studio_tab_mood = "😊 Mieliala",
 	studio_floor_garage = "Autotalli",
 	studio_no_garage = "Osta ensin autotalli — sitten on mitä sisustaa",

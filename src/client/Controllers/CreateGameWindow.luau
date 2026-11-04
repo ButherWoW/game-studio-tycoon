@@ -62,9 +62,44 @@ local TOPIC_LIST = sortedByCost(Topics)
 
 local render: () -> ()
 
-local function onCardClick(kind: string, item: Item, unlocked: boolean, available: boolean)
-	-- Условия открытия не выполнены: покупки нет, карточка только показывает причину
-	if not unlocked and not available then
+-- Причина замка крупно над окном (на карточке 40 px она нечитаема на телефоне — отчёт #4, P2-5)
+local HINT_SECONDS = 3
+local hintToken = 0
+local function showHint(text: string)
+	local screen = gui
+	if not screen then
+		return
+	end
+	local old = screen:FindFirstChild("LockHint")
+	if old then
+		old:Destroy()
+	end
+	hintToken += 1
+	local token = hintToken
+	local label = Ui.label(screen, text, 40, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
+	label.Name = "LockHint"
+	label.TextXAlignment = Enum.TextXAlignment.Center
+	label.AnchorPoint = Vector2.new(0.5, 0)
+	label.Position = UDim2.new(0.5, 0, 0, 8)
+	label.Size = UDim2.new(0.9, 0, 0, 40)
+	label.BackgroundColor3 = Ui.colors.panel
+	label.BackgroundTransparency = 0.1
+	label.ZIndex = 50
+	Ui.corner(label, 10)
+	local limit = Instance.new("UISizeConstraint")
+	limit.MaxSize = Vector2.new(640, 40)
+	limit.Parent = label
+	task.delay(HINT_SECONDS, function()
+		if hintToken == token and label.Parent then
+			label:Destroy()
+		end
+	end)
+end
+
+local function onCardClick(kind: string, item: Item, unlocked: boolean, reason: string?)
+	-- Условия открытия не выполнены: покупки нет, по нажатию — причина крупно
+	if not unlocked and reason then
+		showHint("🔒 " .. reason)
 		return
 	end
 	if unlocked then
@@ -136,8 +171,9 @@ local function buildGrid(
 			then nil
 			else UnlockRules.firstReason(ClientState.lang, item, ClientState.data)
 		if reason then
+			-- На карточке только замок и название, причина — по нажатию (showHint)
 			color = Ui.colors.locked
-			text ..= "\n" .. reason
+			text = "🔒 " .. text
 		elseif not unlocked then
 			color = Ui.colors.locked
 			text = if pendingUnlock == key
@@ -150,7 +186,7 @@ local function buildGrid(
 			color = Ui.colors.good
 		end
 		local card = Ui.button(grid, text, color, function()
-			onCardClick(kind, item, unlocked, reason == nil)
+			onCardClick(kind, item, unlocked, reason)
 		end)
 		card.LayoutOrder = i
 		if reason then
