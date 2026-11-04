@@ -21,7 +21,7 @@ return {
 	focus_sound = "Hang",
 	focus_story = "Történet",
 	create_start = "Fejlesztés indítása",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Feloldod? Ára: {price}",
 	create_combo_great = "Szuper páros!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Reklám +30%, ára: {price}",
 	release_close = "Bezárás",
 	release_best = "Új stúdiórekord!",
+	release_loan_repaid = "🏦 −{money} a hitel törlesztésére",
 
 	-- Genres
 	genre_action = "Akció",

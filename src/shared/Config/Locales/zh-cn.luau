@@ -21,7 +21,7 @@ return {
 	focus_sound = "音效",
 	focus_story = "剧情",
 	create_start = "开始开发",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "花 {price} 解锁？",
 	create_combo_great = "绝妙组合！",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 广告 +30%，花费 {price}",
 	release_close = "关闭",
 	release_best = "工作室新纪录！",
+	release_loan_repaid = "🏦 −{money} 用于偿还贷款",
 
 	-- Genres
 	genre_action = "动作",

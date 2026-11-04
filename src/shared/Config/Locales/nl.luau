@@ -21,7 +21,7 @@ return {
 	focus_sound = "Geluid",
 	focus_story = "Verhaal",
 	create_start = "Start ontwikkeling",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Ontgrendelen voor {price}?",
 	create_combo_great = "Toffe combo!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Reclame +30% voor {price}",
 	release_close = "Sluiten",
 	release_best = "Nieuw studiorecord!",
+	release_loan_repaid = "🏦 −{money} naar aflossing van de lening",
 
 	-- Genres
 	genre_action = "Actie",

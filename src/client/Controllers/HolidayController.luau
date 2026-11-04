@@ -13,7 +13,7 @@ local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local QuestWindow = require(script.Parent.QuestWindow)
 
-local BANNER_HEIGHT = 32
+local BANNER_HEIGHT = 26
 local MENU_SLOT = 9
 local TILE_COLUMNS = 7
 
@@ -296,7 +296,7 @@ local function open()
 		Ui.label(window, holiday.icon .. " " .. holidayName(holiday), 40, Ui.titleFontFor(ClientState.lang))
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -80, 0, 40)
-	local closeButton = Ui.button(window, "✕", Ui.colors.bad, close)
+	local closeButton = Ui.button(window, "×", Ui.colors.bad, close)
 	closeButton.AnchorPoint = Vector2.new(1, 0)
 	closeButton.Position = UDim2.new(1, -12, 0, 10)
 	closeButton.Size = UDim2.fromOffset(40, 40)
@@ -341,9 +341,10 @@ function HolidayController.start()
 		Color3.fromRGB(255, 170, 60)
 	)
 	banner.TextXAlignment = Enum.TextXAlignment.Center
-	-- В общем стеке плашек под HUD (Ui.bannerStack): тренд 1, выставка 2, итоги 3, праздник 4
-	banner.LayoutOrder = 4
-	banner.Size = UDim2.fromOffset(520, BANNER_HEIGHT)
+	-- В общем стеке плашек под HUD (Ui.bannerStack): тренд 1, выставка 2, итоги 3,
+	-- тревога о воре 4 (HitController), праздник 5
+	banner.LayoutOrder = 5
+	banner.Size = UDim2.fromOffset(440, BANNER_HEIGHT)
 	banner.BackgroundTransparency = 0.25
 	banner.BackgroundColor3 = Ui.colors.panel
 	banner.Visible = false

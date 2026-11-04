@@ -21,6 +21,11 @@ local MENU_SLOT = 2
 local ROW_COLOR = Color3.fromRGB(44, 46, 66)
 local DETAIL_COLOR = Color3.fromRGB(36, 38, 56)
 local LOOK_FIELDS = { "shirt", "skin", "hat", "item" }
+-- Мелкий текст карточек (роль, зарплата, условия этапа): фиксированный размер с переносом.
+-- TextScaled ужимал длинную строку до 7–8 px (отчёт #2, п. 11)
+local SMALL_TEXT = 16
+local ROW_HEIGHT = 96
+local STAGE_PANEL_HEIGHT = 132
 
 local TeamWindow = {}
 local gui: ScreenGui? = nil
@@ -74,7 +79,7 @@ local render: () -> ()
 local function buildStagePanel(parent: Instance, data: any, order: number)
 	local panel = Instance.new("Frame")
 	panel.BackgroundColor3 = ROW_COLOR
-	panel.Size = UDim2.new(1, 0, 0, 96)
+	panel.Size = UDim2.new(1, 0, 0, STAGE_PANEL_HEIGHT)
 	panel.LayoutOrder = order
 	Ui.corner(panel, 10)
 	panel.Parent = parent
@@ -123,9 +128,16 @@ local function buildStagePanel(parent: Instance, data: any, order: number)
 		table.insert(parts, ClientState.t("team_rent", { amount = Texts.money(rent) }))
 	end
 	local line = ClientState.t("team_next", { stage = ClientState.localName(nextStage) })
-	local nextLabel = Ui.label(panel, line .. "\n" .. table.concat(parts, " · "), 44, nil, Ui.colors.muted)
+	local nextLabel = Ui.label(panel, line .. "\n" .. table.concat(parts, " · "), 80, nil, Ui.colors.muted)
+	-- Текст — в левых 60%, кнопка «Переезд» — в правых 35%: «Следующий этап…» не уходит
+	-- под кнопку (отчёт #2, п. 13)
+	nextLabel.TextScaled = false
+	nextLabel.TextSize = SMALL_TEXT + 1
+	nextLabel.TextWrapped = true
+	nextLabel.TextYAlignment = Enum.TextYAlignment.Top
+	nextLabel.ClipsDescendants = true
 	nextLabel.Position = UDim2.fromOffset(12, 40)
-	nextLabel.Size = UDim2.new(0.65, -12, 0, 44)
+	nextLabel.Size = UDim2.new(0.6, -12, 0, 84)
 
 	local move = Ui.button(
 		panel,
@@ -137,9 +149,9 @@ local function buildStagePanel(parent: Instance, data: any, order: number)
 			end
 		end
 	)
-	move.AnchorPoint = Vector2.new(1, 0.5)
-	move.Position = UDim2.new(1, -12, 0.5, 14)
-	move.Size = UDim2.new(0.35, -12, 0, 44)
+	move.AnchorPoint = Vector2.new(1, 0)
+	move.Position = UDim2.new(1, -12, 0, 48)
+	move.Size = UDim2.new(0.35, -12, 0, 48)
 	if not ready then
 		move.TextColor3 = Ui.colors.muted
 	end
@@ -298,7 +310,8 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 		grid.AutomaticSize = Enum.AutomaticSize.Y
 		grid.LayoutOrder = nextOrder()
 		local layout = Instance.new("UIGridLayout")
-		layout.CellSize = UDim2.new(0.25, -6, 0, 52)
+		-- Два столбца: в четырёх описание перка ужималось до нечитаемого
+		layout.CellSize = UDim2.new(0.5, -6, 0, 60)
 		layout.CellPadding = UDim2.fromOffset(6, 6)
 		layout.SortOrder = Enum.SortOrder.LayoutOrder
 		layout.Parent = grid
@@ -384,7 +397,7 @@ local function buildRow(
 )
 	local row = Instance.new("Frame")
 	row.BackgroundColor3 = ROW_COLOR
-	row.Size = UDim2.new(1, -8, 0, 64)
+	row.Size = UDim2.new(1, -8, 0, ROW_HEIGHT)
 	row.LayoutOrder = order
 	Ui.corner(row, 10)
 	row.Parent = parent
@@ -405,7 +418,7 @@ local function buildRow(
 		Ui.titleFont
 	)
 	name.Position = UDim2.fromOffset(24, 6)
-	name.Size = UDim2.new(0.5, -24, 0, 26)
+	name.Size = UDim2.new(0.62, -84, 0, 26)
 	local role = ClientState.localText("employee_" .. employee.id .. "_role", employee.role, employee.roleEn)
 	local details =
 		ClientState.t("team_multiplier", { mult = employee.multiplier, spec = specName(employee) })
@@ -422,9 +435,14 @@ local function buildRow(
 	elseif deskId then
 		details ..= " · " .. ClientState.t("team_seated", { desk = upgradeName(deskId) })
 	end
-	local sub = Ui.label(row, role .. " · " .. details, 20, nil, Ui.colors.muted)
+	local sub = Ui.label(row, role .. " · " .. details, 54, nil, Ui.colors.muted)
+	sub.TextScaled = false
+	sub.TextSize = SMALL_TEXT
+	sub.TextWrapped = true
+	sub.TextYAlignment = Enum.TextYAlignment.Top
+	sub.ClipsDescendants = true
 	sub.Position = UDim2.fromOffset(24, 36)
-	sub.Size = UDim2.new(0.6, -24, 0, 20)
+	sub.Size = UDim2.new(0.62, -84, 0, 54)
 
 	local text: string
 	local color = Ui.colors.locked

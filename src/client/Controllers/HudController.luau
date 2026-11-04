@@ -18,6 +18,9 @@ local HudController = {}
 local PLATE_WIDTH = 300
 local ROW_HEIGHT = 40 -- шаг между плашками
 local FIRST_PROGRESS_Y = 92
+-- Переезд/пересборка комнаты: сервер заново сажает игрока за ПК — окно само не открываем
+-- столько секунд (отчёт #2, п. 7)
+local REBUILD_QUIET_SECONDS = 4
 
 local function plate(parent: Instance, y: number): TextLabel
 	local l = Ui.label(parent, "", 34, Ui.titleFontFor(ClientState.lang))
@@ -86,12 +89,16 @@ function HudController.start()
 		local font = Ui.titleFontFor(ClientState.lang)
 		local list = DevState.projects
 		local count = math.max(#list, #rows)
+		local shown = 0
 		for i = 1, count do
 			local row = getRow(i)
 			local project = list[i]
 			local progress = project and progressById[project.id]
 			row.projectId = if project then project.id else nil
 			row.label.Visible = project ~= nil and progress ~= nil
+			if row.label.Visible then
+				shown = i
+			end
 			row.finish.Visible = false
 			if project and progress then
 				row.label.Font = font
@@ -113,6 +120,8 @@ function HudController.start()
 				row.finish.Text = ClientState.t("hud_instant_finish", { count = DevState.instantFinish })
 			end
 		end
+		-- Плашки тренда/выставки — сразу под последней видимой строкой HUD
+		Ui.setBannerTop(FIRST_PROGRESS_Y + shown * ROW_HEIGHT + 2)
 	end
 
 	local create = Ui.button(gui, ClientState.t("hud_create"), Ui.colors.money, function()
@@ -162,7 +171,8 @@ function HudController.start()
 		if not data then
 			return
 		end
-		cash.Text = ClientState.t("hud_cash", { cash = Texts.money(data.cash):sub(2) })
+		-- Доход релиза появляется вместе с оценкой в окне релиза, а не раньше (отчёт #2, п. 6)
+		cash.Text = ClientState.t("hud_cash", { cash = Texts.money(ClientState.displayCash()):sub(2) })
 		local line = ClientState.t("hud_games", { count = data.gamesReleased })
 		if data.activeAd and data.activeAd.expiresAt > os.time() then
 			line ..= "  ·  " .. ClientState.t("hud_ad", { percent = math.floor(data.activeAd.bonus * 100) })
@@ -229,10 +239,43 @@ function HudController.start()
 		end
 	end)
 
-	-- Сел за свой компьютер — сразу открываем «Создать игру»; встал — кнопка подсказывает сесть
+	-- Переезд или пересборка комнаты: этап сменился или кресло, на котором сидел, удалено
+	local quietUntil = 0
+	local lastLevel: number? = nil
+	ClientState.changed:Connect(function()
+		local data = ClientState.data
+		local level = data and tonumber(data.studioLevel)
+		if level and lastLevel and level ~= lastLevel then
+			quietUntil = os.clock() + REBUILD_QUIET_SECONDS
+		end
+		lastLevel = level or lastLevel
+	end)
+	local currentSeat: Instance? = nil
+	local function seatPart(): Instance?
+		local character = Players.LocalPlayer.Character
+		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+		return humanoid and humanoid.SeatPart
+	end
+
+	-- Сел за свой компьютер — сразу открываем «Создать игру»; встал — кнопка подсказывает сесть.
+	-- Не открываем поверх другого окна (команда, магазин…) и сразу после переезда
 	ClientState.seatChanged:Connect(function(seated: boolean)
 		refresh()
-		if seated and DevState.hasFreeSlot() then
+		if not seated then
+			local old = currentSeat
+			currentSeat = nil
+			task.defer(function()
+				if old and not old:IsDescendantOf(workspace) then
+					quietUntil = os.clock() + REBUILD_QUIET_SECONDS
+				end
+			end)
+			return
+		end
+		currentSeat = seatPart()
+		if os.clock() < quietUntil or Ui.anyWindowOpen() then
+			return
+		end
+		if DevState.hasFreeSlot() then
 			CreateGameWindow.open()
 		end
 	end)

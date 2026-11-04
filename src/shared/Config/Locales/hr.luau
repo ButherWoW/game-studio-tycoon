@@ -21,7 +21,7 @@ return {
 	focus_sound = "Zvuk",
 	focus_story = "Priča",
 	create_start = "Počni razvoj",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Otključaj za {price}?",
 	create_combo_great = "Odlična kombinacija!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Reklame +30% za {price}",
 	release_close = "Zatvori",
 	release_best = "Novi rekord studija!",
+	release_loan_repaid = "🏦 −{money} za otplatu kredita",
 
 	-- Genres
 	genre_action = "Akcija",

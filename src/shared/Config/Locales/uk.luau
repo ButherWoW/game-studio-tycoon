@@ -21,7 +21,7 @@ return {
 	focus_sound = "Звук",
 	focus_story = "Сюжет",
 	create_start = "Почати розробку",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Відкрити за {price}?",
 	create_combo_great = "Чудове поєднання!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Реклама +30% за {price}",
 	release_close = "Закрити",
 	release_best = "Новий рекорд студії!",
+	release_loan_repaid = "🏦 −{money} на погашення кредиту",
 
 	-- Genres
 	genre_action = "Екшн",

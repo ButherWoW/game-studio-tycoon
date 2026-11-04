@@ -21,7 +21,7 @@ return {
 	focus_sound = "Ääni",
 	focus_story = "Tarina",
 	create_start = "Aloita kehitys",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Avataanko hintaan {price}?",
 	create_combo_great = "Loistava yhdistelmä!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Mainos +30% hintaan {price}",
 	release_close = "Sulje",
 	release_best = "Studion uusi ennätys!",
+	release_loan_repaid = "🏦 −{money} lainan lyhennykseen",
 
 	-- Genres
 	genre_action = "Toiminta",

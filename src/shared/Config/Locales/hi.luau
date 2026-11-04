@@ -21,7 +21,7 @@ return {
 	focus_sound = "साउंड",
 	focus_story = "कहानी",
 	create_start = "बनाना शुरू करो",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "{price} में अनलॉक करें?",
 	create_combo_great = "ज़बरदस्त कॉम्बो!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 ऐड +30%, {price} में",
 	release_close = "बंद करो",
 	release_best = "स्टूडियो का नया रिकॉर्ड!",
+	release_loan_repaid = "🏦 −{money} कर्ज़ चुकाने में गए",
 
 	-- Genres
 	genre_action = "एक्शन",

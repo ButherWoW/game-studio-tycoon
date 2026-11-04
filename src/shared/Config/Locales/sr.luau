@@ -21,7 +21,7 @@ return {
 	focus_sound = "Звук",
 	focus_story = "Прича",
 	create_start = "Почни развој",
-	create_close = "✕",
+	create_close = "×",
 	create_locked = "🔒 {price}",
 	create_unlock_ask = "Откључај за {price}?",
 	create_combo_great = "Одлична комбинација!",
@@ -41,6 +41,7 @@ return {
 	release_ad = "📢 Реклама +30% за {price}",
 	release_close = "Затвори",
 	release_best = "Нови рекорд студија!",
+	release_loan_repaid = "🏦 −{money} за отплату кредита",
 
 	-- Genres
 	genre_action = "Акција",

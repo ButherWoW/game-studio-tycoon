@@ -328,9 +328,17 @@ function HitController.start()
 		end
 	end)
 	HitRemotes.HitToast.OnClientEvent:Connect(function(data)
-		if type(data) == "table" and type(data.key) == "string" then
-			showToast(ClientState.t(data.key, data.vars), TOAST_COLORS[data.key])
+		if type(data) ~= "table" or type(data.key) ~= "string" then
+			return
 		end
+		if data.key == "hit_new" or data.key == "hit_shelf_full" then
+			-- «Хит! ★8» не спойлерит оценку: ждём, пока окно релиза её откроет (отчёт #2, п. 6)
+			ClientState.afterReveal(function()
+				showToast(ClientState.t(data.key, data.vars), TOAST_COLORS[data.key])
+			end)
+			return
+		end
+		showToast(ClientState.t(data.key, data.vars), TOAST_COLORS[data.key])
 	end)
 	HitRemotes.HitAlarm.OnClientEvent:Connect(function(info)
 		if type(info) ~= "table" then
