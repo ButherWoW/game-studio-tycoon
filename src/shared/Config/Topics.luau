@@ -1,9 +1,12 @@
 --!strict
 -- Темы игр и их совместимость с жанрами.
 -- 1.2 = отлично, 1.1 = хорошо, 0.8 = так себе, 0.7 = плохо. Не указан жанр -> 1.0.
--- Список и цены — issue #2.
+-- Список и цены — issue #2. requires — условия открытия, как у жанров (shared/UnlockRules):
+-- пока не выполнены, тему нельзя купить. Бесплатные (unlockCost = 0) открыты со старта.
 -- seasonal = id ивента (Config/Holidays): тема открыта бесплатно только во время ивента
 -- (HolidayService выдаёт и забирает её), не продаётся и не попадает в тренды.
+
+local Genres = require(script.Parent.Genres)
 
 export type Topic = {
 	id: string,
@@ -12,6 +15,7 @@ export type Topic = {
 	fit: { [string]: number },
 	unlockCost: number,
 	seasonal: string?,
+	requires: Genres.Requires?,
 }
 
 local Topics: { [string]: Topic } = {
@@ -42,6 +46,7 @@ local Topics: { [string]: Topic } = {
 		nameEn = "Pets",
 		fit = { casual = 1.2, simulation = 1.2, puzzle = 1.1, action = 0.8, horror = 0.7 },
 		unlockCost = 800,
+		requires = { gamesReleased = 2 },
 	},
 	cars = {
 		id = "cars",
@@ -49,6 +54,7 @@ local Topics: { [string]: Topic } = {
 		nameEn = "Cars",
 		fit = { racing = 1.2, simulation = 1.2, casual = 1.1, horror = 0.8, rpg = 0.7 },
 		unlockCost = 800,
+		requires = { gamesReleased = 4 },
 	},
 	cooking = {
 		id = "cooking",
@@ -56,6 +62,7 @@ local Topics: { [string]: Topic } = {
 		nameEn = "Cooking",
 		fit = { casual = 1.2, simulation = 1.2, puzzle = 1.1, action = 0.7, horror = 0.7 },
 		unlockCost = 800,
+		requires = { genreGames = { genre = "casual", count = 3 } },
 	},
 	pirates = {
 		id = "pirates",
@@ -63,6 +70,7 @@ local Topics: { [string]: Topic } = {
 		nameEn = "Pirates",
 		fit = { adventure = 1.2, action = 1.1, strategy = 0.8, racing = 0.8, sports = 0.7 },
 		unlockCost = 1_500,
+		requires = { bestScore = 6 },
 	},
 	business = {
 		id = "business",
@@ -70,6 +78,7 @@ local Topics: { [string]: Topic } = {
 		nameEn = "Business",
 		fit = { simulation = 1.2, strategy = 1.1, action = 0.7, horror = 0.7 },
 		unlockCost = 1_500,
+		requires = { studioLevel = 2 },
 	},
 	school = {
 		id = "school",
@@ -77,6 +86,7 @@ local Topics: { [string]: Topic } = {
 		nameEn = "School",
 		fit = { simulation = 1.2, casual = 1.1, horror = 1.1, racing = 0.8, strategy = 0.7 },
 		unlockCost = 1_500,
+		requires = { studioLevel = 2 },
 	},
 	ninja = {
 		id = "ninja",
@@ -84,6 +94,7 @@ local Topics: { [string]: Topic } = {
 		nameEn = "Ninja",
 		fit = { action = 1.2, rpg = 1.1, sports = 0.8, simulation = 0.7 },
 		unlockCost = 3_000,
+		requires = { hits = 3 },
 	},
 	robots = {
 		id = "robots",
@@ -91,6 +102,7 @@ local Topics: { [string]: Topic } = {
 		nameEn = "Robots",
 		fit = { action = 1.2, strategy = 1.2, puzzle = 1.1, sports = 0.7 },
 		unlockCost = 3_000,
+		requires = { studioLevel = 3 },
 	},
 	football = {
 		id = "football",
@@ -98,6 +110,7 @@ local Topics: { [string]: Topic } = {
 		nameEn = "Football",
 		fit = { sports = 1.2, casual = 1.1, simulation = 1.1, rpg = 0.7, horror = 0.7 },
 		unlockCost = 3_000,
+		requires = { studioLevel = 3 },
 	},
 	superheroes = {
 		id = "superheroes",
@@ -105,6 +118,7 @@ local Topics: { [string]: Topic } = {
 		nameEn = "Superheroes",
 		fit = { action = 1.2, rpg = 1.2, strategy = 0.8, puzzle = 0.7 },
 		unlockCost = 5_000,
+		requires = { bestScore = 9 },
 	},
 	detective = {
 		id = "detective",
@@ -112,6 +126,7 @@ local Topics: { [string]: Topic } = {
 		nameEn = "Detective",
 		fit = { adventure = 1.2, puzzle = 1.2, horror = 1.1, racing = 0.7, sports = 0.7 },
 		unlockCost = 5_000,
+		requires = { studioLevel = 4 },
 	},
 	ghosts = {
 		id = "ghosts",
@@ -119,6 +134,7 @@ local Topics: { [string]: Topic } = {
 		nameEn = "Ghosts",
 		fit = { horror = 1.2, adventure = 1.1, sports = 0.7, racing = 0.7 },
 		unlockCost = 5_000,
+		requires = { studioLevel = 4 },
 	},
 	pumpkins = {
 		id = "pumpkins",

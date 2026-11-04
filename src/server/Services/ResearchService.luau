@@ -8,6 +8,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Research = require(ReplicatedStorage.Shared.Config.Research)
 local Genres = require(ReplicatedStorage.Shared.Config.Genres)
+local UnlockRules = require(ReplicatedStorage.Shared.UnlockRules)
 local ResearchRemotes = require(ReplicatedStorage.Shared.ResearchRemotes)
 local DataService = require(script.Parent.DataService)
 
@@ -98,6 +99,17 @@ local function onBuy(player: Player, nodeId: any)
 		return
 	end
 	if data.owned[nodeId] or not Research.requirementsMet(node, data.owned) or data.points < node.cost then
+		return
+	end
+	-- Узел жанра: пока не выполнены условия жанра (shared/UnlockRules), не изучается.
+	-- Жанр уже открыт (куплен или старое сохранение) — узел можно изучить ради цепочки
+	local lockedGenre = node.effect.unlockGenre
+	if
+		lockedGenre
+		and Genres[lockedGenre]
+		and not profile.unlockedGenres[lockedGenre]
+		and not UnlockRules.check(Genres[lockedGenre], profile)
+	then
 		return
 	end
 

@@ -26,6 +26,9 @@ export type Profile = {
 	runBestScore: number,
 	-- Сочетания жанр/тема последних игр (Formulas.comboKey): штраф за повтор в оценке
 	recentCombos: { string },
+	-- Для условий открытия жанров/тем (shared/UnlockRules): игр по жанрам и хитов за всё время
+	genreGames: { [string]: number },
+	hitsReleased: number,
 	strikeTipSeen: boolean?, -- закрыл подсказку о первой забастовке (StaffService)
 	activeAd: { bonus: number, expiresAt: number }?,
 	-- Купленные за Robux разовые эффекты (ShopService): заряды и конец действия кофе
@@ -82,6 +85,8 @@ local function defaultProfile(): Profile
 		bestScore = 0,
 		runBestScore = 0,
 		recentCombos = {},
+		genreGames = {},
+		hitsReleased = 0,
 		strikeTipSeen = false,
 		activeAd = nil,
 		boosts = { instantFinish = 0, patch = 0, coffeeUntil = 0 },
@@ -205,6 +210,18 @@ end
 local loadedCallbacks: { (Player, Profile) -> () } = {}
 local leaderstatsHold: { [Player]: { amount: number, untilAt: number } } = {}
 
+-- Размер команды (staff ведёт StaffService) — для условий открытия на клиенте
+local function employeeCount(p: Profile): number
+	local staff = (p :: any).staff
+	local count = 0
+	if type(staff) == "table" then
+		for _ in staff do
+			count += 1
+		end
+	end
+	return count
+end
+
 -- Отправить клиенту публичный снимок данных (без квитанций)
 function DataService.replicate(player: Player)
 	local p = profiles[player]
@@ -221,6 +238,9 @@ function DataService.replicate(player: Player)
 		gamesReleased = p.gamesReleased,
 		bestScore = p.bestScore,
 		runBestScore = p.runBestScore,
+		genreGames = p.genreGames,
+		hitsReleased = p.hitsReleased,
+		employees = employeeCount(p),
 		activeAd = p.activeAd,
 	})
 	local leaderstats = player:FindFirstChild("leaderstats")
@@ -356,6 +376,22 @@ local function onPlayerAdded(player: Player)
 		end
 		if type(profile.recentCombos) ~= "table" then
 			profile.recentCombos = {}
+		end
+		if type(profile.genreGames) ~= "table" then
+			profile.genreGames = {}
+		end
+		-- Старые сохранения без счётчика хитов: считаем свои картриджи на полке
+		if type(profile.hitsReleased) ~= "number" then
+			local own = 0
+			local hits = (profile :: any).hits
+			if type(hits) == "table" then
+				for _, hit in hits do
+					if type(hit) == "table" and hit.creatorId == userId then
+						own += 1
+					end
+				end
+			end
+			profile.hitsReleased = own
 		end
 		-- Сохранения до защиты addCash/trySpend могли получить NaN или ±inf: с ними trySpend
 		-- пропускал любые траты бесплатно. Чиним при загрузке
