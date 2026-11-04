@@ -61,6 +61,11 @@ local StartPark = {
 	benchCount = 6,
 	benchRadius = 28,
 	boardRadius = 12,
+	-- Раскладка Астры для её парка (assets/models/astra-park-objects/README.md): старые точки доски и
+	-- ломбарда (радиус 12) легли бы на её дорожки. От центра спавна, yaw — поворот лица (+Z) в градусах
+	landscapeBoard = { position = Vector3.new(0, 0, 17), yaw = 180 },
+	landscapePawnshop = { position = Vector3.new(-9.148114, 0, -43.038494), yaw = 12 },
+	landscapeFountain = { position = Vector3.new(43.466662, 0, 11.646857), yaw = 0 },
 	cartridgeRadius = 42, -- только начальная раскладка точек (WorldService), дальше — случайно
 }
 
