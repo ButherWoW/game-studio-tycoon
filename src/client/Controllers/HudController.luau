@@ -11,6 +11,7 @@ local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local StudioState = require(script.Parent.Parent.StudioState)
 local ClientState = require(script.Parent.Parent.ClientState)
 local DevState = require(script.Parent.Parent.DevState)
+local StaffPower = require(script.Parent.Parent.StaffPower)
 local Ui = require(script.Parent.Parent.Ui)
 local CreateGameWindow = require(script.Parent.CreateGameWindow)
 
@@ -59,8 +60,13 @@ function HudController.start()
 	-- строки прогресса разработки тогда сдвигаются на строку ниже
 	local mood = plate(gui, FIRST_PROGRESS_Y)
 	mood.Visible = false
+	-- Мощность команды (StaffPower) — пока идёт разработка и есть сотрудники: «👥 ⚡ +45% · ⭐ +0.4 · ☕ 2»
+	local power = plate(gui, FIRST_PROGRESS_Y)
+	power.Visible = false
 	local function progressTop(): number
-		return FIRST_PROGRESS_Y + (if mood.Visible then ROW_HEIGHT else 0)
+		return FIRST_PROGRESS_Y
+			+ (if mood.Visible then ROW_HEIGHT else 0)
+			+ (if power.Visible then ROW_HEIGHT else 0)
 	end
 
 	-- Прогресс по id проекта (из DevelopmentProgress)
@@ -222,6 +228,18 @@ function HudController.start()
 			mood.Visible = moodShown
 			renderProgress()
 		end
+		local staffPower = StaffPower.power
+		local powerShown = moodShown and staffPower ~= nil and #DevState.projects > 0
+		power.Font = font
+		power.Position = UDim2.new(0.5, 0, 0, FIRST_PROGRESS_Y + (if moodShown then ROW_HEIGHT else 0))
+		if staffPower then
+			power.Text = StaffPower.compact(staffPower)
+			power.TextColor3 = if staffPower.breaks > 0 then Ui.colors.money else Ui.colors.text
+		end
+		if power.Visible ~= powerShown then
+			power.Visible = powerShown
+			renderProgress()
+		end
 		-- «Создать игру» доступна, пока есть свободный слот
 		create.Visible = DevState.hasFreeSlot()
 	end
@@ -231,6 +249,7 @@ function HudController.start()
 	Players.LocalPlayer:GetAttributeChangedSignal("StaffStrike"):Connect(refresh)
 	Players.LocalPlayer:GetAttributeChangedSignal("LoanDebt"):Connect(refresh)
 	Players.LocalPlayer:GetAttributeChangedSignal("TeamMood"):Connect(refresh)
+	StaffPower.changed:Connect(refresh)
 	DevState.changed:Connect(function()
 		-- Проекты, которых больше нет, забываем
 		local alive: { [number]: boolean } = {}
