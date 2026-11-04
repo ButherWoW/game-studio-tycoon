@@ -71,4 +71,21 @@ Images.skins = {
 -- VIP (docs/VISUAL.md, V14): текстура искр над золотой вывеской. 0 — стандартная искра Roblox
 Images.vip = 0
 
+-- Маскоты (docs/VISUAL.md, V16; Config/Mascots). 0 — иконки ещё нет: на карточке эмодзи.
+-- Dev 1: загрузить mascot_<id>_icon.png (256×256) как Image и вставить Image ID напротив id
+Images.mascots = {
+	pixel_cat = 0,
+	bug_beetle = 0,
+	coffee_cup = 0,
+	floppy_dog = 0,
+	cloud_ghost = 0,
+	controller_bunny = 0,
+	robo_owl = 0,
+	slime_star = 0,
+	neon_fox = 0,
+	dragon_byte = 0,
+	golden_trophy = 0,
+	cosmic_whale = 0,
+} :: { [string]: number }
+
 return Images

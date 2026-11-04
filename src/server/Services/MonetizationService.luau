@@ -14,6 +14,7 @@ local PosterService = require(script.Parent.PosterService)
 local SkinService = require(script.Parent.SkinService)
 local GiftService = require(script.Parent.GiftService)
 local OfferService = require(script.Parent.OfferService)
+local MascotService = require(script.Parent.MascotService)
 
 local MonetizationService = {}
 
@@ -92,6 +93,7 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 		not GiftService.grantProduct(player, profile, receipt)
 		and not PosterService.grantProduct(player, profile, receipt.ProductId)
 		and not SkinService.grantProduct(player, profile, receipt.ProductId)
+		and not MascotService.grantProduct(player, profile, receipt.ProductId)
 		and not ShopService.grantProduct(player, profile, receipt.ProductId)
 		and not OfferService.grantProduct(player, profile, receipt.ProductId)
 	then

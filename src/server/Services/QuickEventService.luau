@@ -31,6 +31,7 @@ type Active = {
 	phase: number,
 	sequence: { string },
 	inputs: { Input },
+	perfectScale: number?, -- маскот «Отлично»: окно «Отлично» шире (1.1 = +10%)
 }
 
 -- События одной игры: моменты (секунды разработки), сколько уже было, сумма эффектов,
@@ -118,6 +119,18 @@ local function noteAchievement(player: Player, grade: Grade)
 	end
 end
 
+-- Маскот «Отлично» (MascotService, ленивый require): доля, на которую шире окно «Отлично»
+local function mascotPerfect(player: Player): number
+	local module = script.Parent:FindFirstChild("MascotService")
+	if not module or not module:IsA("ModuleScript") then
+		return 0
+	end
+	local ok, value = pcall(function()
+		return (require(module) :: any).bonus(player, "perfect")
+	end)
+	return if ok and type(value) == "number" and value == value then math.clamp(value, 0, 0.5) else 0
+end
+
 local function clampedTotal(plan: Plan): number
 	return math.clamp(plan.total, QuickEvents.totalMin, QuickEvents.totalMax)
 end
@@ -141,7 +154,7 @@ local function gradeTiming(event: Active): Grade
 	end
 	local value =
 		QuickEvents.sweep(at - event.startedAt - event.leadIn, QuickEvents.timing.period, event.phase)
-	return QuickEvents.zoneGrade(value, event.zoneCenter, event.zoneWidth)
+	return QuickEvents.zoneGrade(value, event.zoneCenter, event.zoneWidth, event.perfectScale)
 end
 
 -- Каждому удару — ближайшее неиспользованное нажатие; лишние нажатия снимают очки (против спама)
@@ -166,7 +179,7 @@ local function gradeRhythm(event: Active): Grade
 		if best and bestError <= cfg.goodWindow then
 			used[best] = true
 			matched += 1
-			points += if bestError <= cfg.perfectWindow then 2 else 1
+			points += if bestError <= cfg.perfectWindow * (event.perfectScale or 1) then 2 else 1
 		end
 	end
 	points -= #taps - matched
@@ -192,7 +205,8 @@ local function gradeSequence(event: Active): Grade
 	end
 	if correct == length then
 		local last = event.inputs[length].at
-		return if last - event.openAt <= QuickEvents.sequence.perfectSeconds then "perfect" else "good"
+		local perfectSeconds = QuickEvents.sequence.perfectSeconds * (event.perfectScale or 1)
+		return if last - event.openAt <= perfectSeconds then "perfect" else "good"
 	elseif correct >= length - 1 then
 		return "good"
 	end
@@ -218,7 +232,7 @@ local function gradeHold(event: Active): Grade
 	if value > 1 then
 		return "miss"
 	end
-	return QuickEvents.zoneGrade(value, event.zoneCenter, event.zoneWidth)
+	return QuickEvents.zoneGrade(value, event.zoneCenter, event.zoneWidth, event.perfectScale)
 end
 
 local function gradeOf(event: Active): Grade
@@ -292,6 +306,7 @@ local function startEvent(player: Player, projectId: number)
 		phase = rng:NextNumber(),
 		sequence = {},
 		inputs = {},
+		perfectScale = 1 + mascotPerfect(player),
 	}
 	if kind == "timing" then
 		event.zoneCenter = rng:NextNumber(QuickEvents.timing.zoneMin, QuickEvents.timing.zoneMax)
@@ -322,7 +337,7 @@ local function startEvent(player: Player, projectId: number)
 		expiresAt = event.expiresAt,
 		zoneCenter = event.zoneCenter,
 		zoneWidth = event.zoneWidth,
-		perfectShare = QuickEvents.perfectShare,
+		perfectShare = QuickEvents.perfectShareFor(event.perfectScale),
 		phase = event.phase,
 		period = QuickEvents.timing.period,
 		beats = QuickEvents.rhythm.beats,
