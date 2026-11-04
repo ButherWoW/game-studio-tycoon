@@ -345,6 +345,26 @@ function MascotService.grantMascot(player: Player, profile: DataService.Profile,
 	return true
 end
 
+-- Забрать маскота (обмен, TradeService): только купленного/выданного (owned), не за достижение
+-- или группу. Был надет — снимаем. false — его и не было
+function MascotService.revokeMascot(player: Player, profile: DataService.Profile, mascotId: string): boolean
+	local d = data(profile)
+	if not d.owned[mascotId] then
+		return false
+	end
+	d.owned[mascotId] = nil
+	-- data() каждый раз собирает новую таблицу: после owns() берём её заново
+	if not MascotService.owns(profile, mascotId) then
+		local fresh = data(profile)
+		if fresh.equipped == mascotId then
+			fresh.equipped = nil
+		end
+	end
+	refreshPet(player)
+	pushState(player)
+	return true
+end
+
 -- Маскот за Robux (зовёт MonetizationService.ProcessReceipt). false — это не маскот.
 -- Повторная выдача безопасна: маскот просто остаётся открытым
 function MascotService.grantProduct(player: Player, profile: DataService.Profile, productId: number): boolean

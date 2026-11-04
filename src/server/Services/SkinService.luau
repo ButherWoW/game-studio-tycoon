@@ -229,6 +229,27 @@ function SkinService.ownsSkin(profile: DataService.Profile, skinId: string): boo
 	return data(profile).owned[skinId] == true
 end
 
+-- Забрать скин (обмен, TradeService): снять со всех сотрудников. false — его и не было
+function SkinService.revokeSkin(player: Player, profile: DataService.Profile, skinId: string): boolean
+	local skins = data(profile)
+	if not skins.owned[skinId] then
+		return false
+	end
+	skins.owned[skinId] = nil
+	local worn = false
+	for employeeId, id in skins.assigned do
+		if id == skinId then
+			skins.assigned[employeeId] = nil
+			worn = true
+		end
+	end
+	pushState(player)
+	if worn then
+		StaffService.refreshNpcs(player)
+	end
+	return true
+end
+
 local function throttled(map: { [Player]: number }, player: Player, cooldown: number): boolean
 	local now = os.clock()
 	if (map[player] or 0) + cooldown > now then

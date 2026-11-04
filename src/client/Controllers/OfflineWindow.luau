@@ -7,6 +7,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local RetentionRemotes = require(ReplicatedStorage.Shared.RetentionRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Offline = require(ReplicatedStorage.Shared.Config.Offline)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
@@ -22,6 +23,23 @@ local function close()
 	end
 end
 
+-- «Тебя не было 3 ч 20 мин» (+ «копится не больше 4 ч», если упёрлись в лимит)
+local function awayText(): string?
+	local away = Players.LocalPlayer:GetAttribute("OfflineAway")
+	if type(away) ~= "number" or away <= 0 then
+		return nil
+	end
+	local minutes = math.floor(away / 60)
+	local duration = if minutes >= 60
+		then ClientState.t("offline_time_hm", { h = minutes // 60, m = minutes % 60 })
+		else ClientState.t("offline_time_m", { m = minutes })
+	local text = ClientState.t("offline_away", { time = duration })
+	if away > Offline.maxSeconds then
+		text ..= " · " .. ClientState.t("offline_capped", { hours = Offline.maxSeconds // 3600 })
+	end
+	return text
+end
+
 local function show(amount: number)
 	close()
 	shownAmount = amount
@@ -33,7 +51,8 @@ local function show(amount: number)
 	gui = screen
 	Ui.windowOpened()
 
-	local window = Ui.window(screen, "Window", Vector2.new(440, 280))
+	local away = awayText()
+	local window = Ui.window(screen, "Window", Vector2.new(440, if away then 316 else 280))
 	local body = Instance.new("Frame")
 	body.BackgroundTransparency = 1
 	body.Position = UDim2.fromOffset(16, 12)
@@ -54,16 +73,21 @@ local function show(amount: number)
 	)
 	money.TextXAlignment = Enum.TextXAlignment.Center
 	money.LayoutOrder = 2
+	if away then
+		local awayLabel = Ui.label(body, away, 24, Enum.Font.GothamBold, Ui.colors.text)
+		awayLabel.TextXAlignment = Enum.TextXAlignment.Center
+		awayLabel.LayoutOrder = 3
+	end
 	local hint = Ui.label(body, ClientState.t("offline_hint"), 22, Enum.Font.GothamMedium, Ui.colors.muted)
 	hint.TextXAlignment = Enum.TextXAlignment.Center
-	hint.LayoutOrder = 3
+	hint.LayoutOrder = 4
 
 	local claim = Ui.button(body, ClientState.t("offline_claim"), Ui.colors.good, function()
 		RetentionRemotes.ClaimOffline:FireServer()
 		close()
 	end)
 	claim.Size = UDim2.new(0.6, 0, 0, 52)
-	claim.LayoutOrder = 4
+	claim.LayoutOrder = 5
 end
 
 function OfflineWindow.start()
