@@ -78,6 +78,8 @@ local function onPlayerAdded(player: Player)
 		math.floor(OfflineService.earnings(profile, Offline.maxSeconds) * premium)
 	)
 	data.offlinePending = pending
+	-- Сколько не было (окно «Пока тебя не было» показывает время и лимит Offline.maxSeconds)
+	player:SetAttribute("OfflineAway", if away >= Offline.minSeconds then away else 0)
 	player:SetAttribute("OfflinePending", pending)
 end
 
