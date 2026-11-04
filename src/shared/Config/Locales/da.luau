@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neonskilt",
 	decor_aquarium = "Akvarium",
 	decor_arcade = "Arkademaskine",
+	-- Приставы
+	mood_part_bailiffs = "Gæld: kontoret falder fra hinanden",
+	bailiff_warning = "⚖️ Gæld {debt}. Under {limit} kommer fogeden og sælger dine ting for {percent} %",
+	bailiff_active = "⚖️ Fogeden tager dine ting! Gæld {debt}",
+	bailiff_bank = "🏦 Lån",
+	bailiff_pack = "💎 Betal gælden — R$ {price}",
+	bailiff_fire = "👥 Fyr ansatte",
+	bailiff_seized = "⚖️ Fogeden tog: {item} (+{amount} til gælden)",
+	bailiff_left = "⚖️ Gælden er betalt — fogeden gik",
 	-- Предложения доната
 	offer_later = "Ikke nu",
 	offer_double_release = "×2 på dette spils indtægt — R$ {price}",

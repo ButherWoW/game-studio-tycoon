@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neonskilt",
 	decor_aquarium = "Akvarium",
 	decor_arcade = "Arkademaskin",
+	-- Приставы
+	mood_part_bailiffs = "Gjeld: kontoret faller fra hverandre",
+	bailiff_warning = "⚖️ Gjeld {debt}. Under {limit} kommer namsmannen og selger tingene dine for {percent} %",
+	bailiff_active = "⚖️ Namsmannen tar tingene dine! Gjeld {debt}",
+	bailiff_bank = "🏦 Lån",
+	bailiff_pack = "💎 Betal gjelden — R$ {price}",
+	bailiff_fire = "👥 Si opp",
+	bailiff_seized = "⚖️ Namsmannen tok: {item} (+{amount} til gjelden)",
+	bailiff_left = "⚖️ Gjelden er betalt — namsmannen dro",
 	-- Предложения доната
 	offer_later = "Ikke nå",
 	offer_double_release = "×2 på inntekten fra dette spillet — R$ {price}",

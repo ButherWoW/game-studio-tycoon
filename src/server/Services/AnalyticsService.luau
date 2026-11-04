@@ -596,6 +596,26 @@ local function wrapDataService()
 		end
 		return result
 	end
+
+	-- Расходы в минус (ExpensesService → DataService.charge, Config/Bailiffs): та же категория, что
+	-- расходы через trySpend раньше
+	local originalCharge = service.charge
+	if type(originalCharge) == "function" then
+		service.charge = function(player: Player, amount: number, limit: number): number
+			local charged = originalCharge(player, amount, limit)
+			if Config.enabled and type(charged) == "number" and charged > 0 then
+				pcall(
+					addToBucket,
+					player,
+					Enum.AnalyticsEconomyFlowType.Sink,
+					Config.sinks.staff,
+					"expenses",
+					charged
+				)
+			end
+			return charged
+		end
+	end
 end
 
 -- ===== Игроки =====
@@ -716,6 +736,13 @@ end
 function Analytics.logOffer(player: Player, kind: string, stage: string)
 	if Config.enabled and states[player] then
 		logCustom(player, Config.events.offer, 1, kind .. "_" .. stage)
+	end
+end
+
+-- Приставы забрали предмет (BailiffService): поле — id предмета, значение — выручка
+function Analytics.logSeizure(player: Player, itemId: string, value: number)
+	if Config.enabled and states[player] then
+		logCustom(player, Config.events.seizure, value, itemId)
 	end
 end
 

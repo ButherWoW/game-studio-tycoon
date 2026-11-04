@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Неонова вивіска",
 	decor_aquarium = "Акваріум",
 	decor_arcade = "Ігровий автомат",
+	-- Приставы
+	mood_part_bailiffs = "Борг: офіс розвалюється",
+	bailiff_warning = "⚖️ Борг {debt}. Мінус понад {limit} — прийдуть виконавці й продадуть речі за {percent}%",
+	bailiff_active = "⚖️ Виконавці забирають речі! Борг {debt}",
+	bailiff_bank = "🏦 Кредит",
+	bailiff_pack = "💎 Закрити борг — R$ {price}",
+	bailiff_fire = "👥 Звільнити",
+	bailiff_seized = "⚖️ Виконавці забрали: {item} (+{amount} у рахунок боргу)",
+	bailiff_left = "⚖️ Борг погашено — виконавці пішли",
 	-- Предложения доната
 	offer_later = "Не зараз",
 	offer_double_release = "×2 до доходу цієї гри — R$ {price}",

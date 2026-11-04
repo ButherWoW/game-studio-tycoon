@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "नियॉन साइन",
 	decor_aquarium = "एक्वेरियम",
 	decor_arcade = "आर्केड मशीन",
+	-- Приставы
+	mood_part_bailiffs = "कर्ज़: ऑफ़िस टूट रहा है",
+	bailiff_warning = "⚖️ कर्ज़ {debt}। {limit} से नीचे गए तो कुर्की वाले आकर सामान {percent}% में बेच देंगे",
+	bailiff_active = "⚖️ कुर्की वाले सामान ले जा रहे हैं! कर्ज़ {debt}",
+	bailiff_bank = "🏦 लोन",
+	bailiff_pack = "💎 कर्ज़ चुकाओ — R$ {price}",
+	bailiff_fire = "👥 निकालो",
+	bailiff_seized = "⚖️ कुर्की वाले ले गए: {item} (+{amount} कर्ज़ में)",
+	bailiff_left = "⚖️ कर्ज़ चुक गया — कुर्की वाले चले गए",
 	-- Предложения доната
 	offer_later = "अभी नहीं",
 	offer_double_release = "इस गेम की कमाई ×2 — R$ {price}",

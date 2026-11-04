@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Papan neon",
 	decor_aquarium = "Akuarium",
 	decor_arcade = "Mesin arkade",
+	-- Приставы
+	mood_part_bailiffs = "Utang: kantor mulai rusak",
+	bailiff_warning = "⚖️ Utang {debt}. Di bawah {limit}, juru sita datang dan menjual barangmu seharga {percent}%",
+	bailiff_active = "⚖️ Juru sita mengambil barangmu! Utang {debt}",
+	bailiff_bank = "🏦 Pinjaman",
+	bailiff_pack = "💎 Lunasi utang — R$ {price}",
+	bailiff_fire = "👥 Pecat",
+	bailiff_seized = "⚖️ Juru sita mengambil: {item} (+{amount} untuk utang)",
+	bailiff_left = "⚖️ Utang lunas — juru sita pergi",
 	-- Предложения доната
 	offer_later = "Nanti saja",
 	offer_double_release = "×2 pendapatan game ini — R$ {price}",

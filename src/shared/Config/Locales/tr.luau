@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neon tabela",
 	decor_aquarium = "Akvaryum",
 	decor_arcade = "Atari makinesi",
+	-- Приставы
+	mood_part_bailiffs = "Borç: ofis dökülüyor",
+	bailiff_warning = "⚖️ Borç {debt}. {limit} altına inersen icra memurları gelip eşyaları %{percent}'e satar",
+	bailiff_active = "⚖️ İcra memurları eşyaları alıyor! Borç {debt}",
+	bailiff_bank = "🏦 Kredi",
+	bailiff_pack = "💎 Borcu kapat — R$ {price}",
+	bailiff_fire = "👥 Kov",
+	bailiff_seized = "⚖️ İcra memurları aldı: {item} (borca +{amount})",
+	bailiff_left = "⚖️ Borç kapandı — icra memurları gitti",
 	-- Предложения доната
 	offer_later = "Şimdi değil",
 	offer_double_release = "Bu oyunun gelirine ×2 — R$ {price}",

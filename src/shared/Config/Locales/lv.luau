@@ -93,6 +93,15 @@ return {
 	decor_neonSign = "Neona izkārtne",
 	decor_aquarium = "Akvārijs",
 	decor_arcade = "Spēļu automāts",
+	-- Приставы
+	mood_part_bailiffs = "Parāds: birojs brūk",
+	bailiff_warning = "⚖️ Parāds {debt}. Zem {limit} ieradīsies tiesu izpildītāji un pārdos mantas par {percent}%",
+	bailiff_active = "⚖️ Tiesu izpildītāji ņem mantas! Parāds {debt}",
+	bailiff_bank = "🏦 Kredīts",
+	bailiff_pack = "💎 Nomaksāt parādu — R$ {price}",
+	bailiff_fire = "👥 Atlaist",
+	bailiff_seized = "⚖️ Tiesu izpildītāji paņēma: {item} (+{amount} parāda segšanai)",
+	bailiff_left = "⚖️ Parāds nomaksāts — tiesu izpildītāji aizgāja",
 	-- Предложения доната
 	offer_later = "Ne tagad",
 	offer_double_release = "×2 šīs spēles ienākumiem — R$ {price}",

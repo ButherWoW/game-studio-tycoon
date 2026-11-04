@@ -221,7 +221,11 @@ function HudController.start()
 			return
 		end
 		-- Доход релиза появляется вместе с оценкой в окне релиза, а не раньше (отчёт #2, п. 6)
-		cash.Text = ClientState.t("hud_cash", { cash = Texts.money(ClientState.displayCash()):sub(2) })
+		-- Минус (долг, Config/Bailiffs) — красным: «-$ 4 200»
+		local shown = ClientState.displayCash()
+		cash.Text = (if shown < 0 then "-" else "")
+			.. ClientState.t("hud_cash", { cash = Texts.money(math.abs(shown)):sub(2) })
+		cash.TextColor3 = if shown < 0 then Ui.colors.bad else Ui.colors.money
 		local line = ClientState.t("hud_games", { count = data.gamesReleased })
 		if data.activeAd and data.activeAd.expiresAt > os.time() then
 			line ..= "  ·  " .. ClientState.t("hud_ad", { percent = math.floor(data.activeAd.bonus * 100) })
