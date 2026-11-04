@@ -2,6 +2,29 @@
 -- Polish (pl). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Plakaty",
+	posters_hint = "Zwykłe kosztują $, premium kosztują Robux. Plakaty wiszą na ścianach studia",
+	posters_no_slots = "Najpierw kup garaż — plakaty wiszą na jego ścianach",
+	posters_hang = "Powieś",
+	posters_hung = "✓ Wisi",
+	posters_pick = "Gdzie powiesić „{name}”?",
+	posters_slot = "Miejsce {n}",
+	posters_remove = "Zdejmij",
+	posters_cancel = "Anuluj",
+	poster_pixelHero = "Pikselowy bohater",
+	poster_puzzleBlocks = "Klockowa łamigłówka",
+	poster_turboRacer = "Turbo kierowca",
+	poster_starBlaster = "Gwiezdny blaster",
+	poster_ninjaCat = "Kot ninja",
+	poster_ghostManor = "Wesołe duchy",
+	poster_robotArena = "Arena robotów",
+	poster_dragonValley = "Dolina smoków",
+	poster_neonCity = "Neonowe miasto",
+	poster_crystalKingdom = "Kryształowe królestwo",
+	poster_mechTitan = "Mech tytan",
+	poster_galaxyLegends = "Legendy galaktyki",
+	poster_goldenController = "Złoty pad",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Gry: {count}",

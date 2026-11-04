@@ -2,6 +2,29 @@
 -- Finnish (fi). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Julisteet",
+	posters_hint = "Tavalliset maksavat $, premium-julisteet Robuxeja. Julisteet roikkuvat studion seinillä",
+	posters_no_slots = "Osta ensin autotalli — julisteet roikkuvat sen seinillä",
+	posters_hang = "Ripusta",
+	posters_hung = "✓ Seinällä",
+	posters_pick = 'Mihin ripustetaan "{name}"?',
+	posters_slot = "Paikka {n}",
+	posters_remove = "Ota alas",
+	posters_cancel = "Peruuta",
+	poster_pixelHero = "Pikselisankari",
+	poster_puzzleBlocks = "Palikkapulma",
+	poster_turboRacer = "Turbokuski",
+	poster_starBlaster = "Tähtiblasteri",
+	poster_ninjaCat = "Ninjakissa",
+	poster_ghostManor = "Kummituskartano",
+	poster_robotArena = "Robottiareena",
+	poster_dragonValley = "Lohikäärmelaakso",
+	poster_neonCity = "Neonkaupunki",
+	poster_crystalKingdom = "Kristallivaltakunta",
+	poster_mechTitan = "Mekatitaani",
+	poster_galaxyLegends = "Galaksin legendat",
+	poster_goldenController = "Kultainen ohjain",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Pelit: {count}",

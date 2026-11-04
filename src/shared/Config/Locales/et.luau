@@ -2,6 +2,29 @@
 -- Estonian (et). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Plakatid",
+	posters_hint = "Tavalised maksavad $, premium maksavad Robuxe. Plakatid ripuvad stuudio seintel",
+	posters_no_slots = "Osta enne garaaž — plakatid ripuvad selle seintel",
+	posters_hang = "Riputa",
+	posters_hung = "✓ Ripub",
+	posters_pick = "Kuhu riputada „{name}“?",
+	posters_slot = "Koht {n}",
+	posters_remove = "Võta maha",
+	posters_cancel = "Tühista",
+	poster_pixelHero = "Pikslikangelane",
+	poster_puzzleBlocks = "Klotsimõistatus",
+	poster_turboRacer = "Turbosõitja",
+	poster_starBlaster = "Tähelaskur",
+	poster_ninjaCat = "Ninjakass",
+	poster_ghostManor = "Kummitusmõis",
+	poster_robotArena = "Robotiareen",
+	poster_dragonValley = "Draakonite org",
+	poster_neonCity = "Neoonlinn",
+	poster_crystalKingdom = "Kristallkuningriik",
+	poster_mechTitan = "Mehhatitaan",
+	poster_galaxyLegends = "Galaktika legendid",
+	poster_goldenController = "Kuldne pult",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Mänge: {count}",

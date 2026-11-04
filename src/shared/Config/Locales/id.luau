@@ -2,6 +2,29 @@
 -- Indonesian (id). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Poster",
+	posters_hint = "Poster biasa dibeli dengan $, premium dengan Robux. Poster dipasang di dinding studio",
+	posters_no_slots = "Beli garasi dulu — poster dipasang di dindingnya",
+	posters_hang = "Pasang",
+	posters_hung = "✓ Terpasang",
+	posters_pick = 'Pasang "{name}" di mana?',
+	posters_slot = "Tempat {n}",
+	posters_remove = "Lepas",
+	posters_cancel = "Batal",
+	poster_pixelHero = "Pahlawan Piksel",
+	poster_puzzleBlocks = "Teka-teki Balok",
+	poster_turboRacer = "Pembalap Turbo",
+	poster_starBlaster = "Blaster Bintang",
+	poster_ninjaCat = "Kucing Ninja",
+	poster_ghostManor = "Rumah Hantu Ceria",
+	poster_robotArena = "Arena Robot",
+	poster_dragonValley = "Lembah Naga",
+	poster_neonCity = "Kota Neon",
+	poster_crystalKingdom = "Kerajaan Kristal",
+	poster_mechTitan = "Titan Mekanik",
+	poster_galaxyLegends = "Legenda Galaksi",
+	poster_goldenController = "Stik Emas",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Game: {count}",

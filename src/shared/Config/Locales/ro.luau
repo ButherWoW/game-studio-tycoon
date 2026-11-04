@@ -2,6 +2,29 @@
 -- Romanian (ro). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Postere",
+	posters_hint = "Cele obișnuite costă $, cele premium costă Robux. Posterele stau pe pereții studioului",
+	posters_no_slots = "Cumpără mai întâi garajul — posterele stau pe pereții lui",
+	posters_hang = "Agață",
+	posters_hung = "✓ Agățat",
+	posters_pick = "Unde agăți „{name}”?",
+	posters_slot = "Locul {n}",
+	posters_remove = "Dă jos",
+	posters_cancel = "Anulează",
+	poster_pixelHero = "Eroul pixelat",
+	poster_puzzleBlocks = "Puzzle cu blocuri",
+	poster_turboRacer = "Turbo pilot",
+	poster_starBlaster = "Blasterul stelar",
+	poster_ninjaCat = "Pisica ninja",
+	poster_ghostManor = "Conacul fantomelor",
+	poster_robotArena = "Arena roboților",
+	poster_dragonValley = "Valea dragonilor",
+	poster_neonCity = "Orașul neon",
+	poster_crystalKingdom = "Regatul de cristal",
+	poster_mechTitan = "Titanul mecanic",
+	poster_galaxyLegends = "Legendele galaxiei",
+	poster_goldenController = "Controlerul de aur",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Jocuri: {count}",

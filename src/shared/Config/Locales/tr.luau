@@ -2,6 +2,29 @@
 -- Turkish (tr). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Posterler",
+	posters_hint = "Normal posterler $ ile, premium olanlar Robux ile alınır. Posterler stüdyonun duvarlarında asılı durur",
+	posters_no_slots = "Önce garajı satın al — posterler onun duvarlarına asılır",
+	posters_hang = "As",
+	posters_hung = "✓ Asılı",
+	posters_pick = '"{name}" nereye asılsın?',
+	posters_slot = "Yer {n}",
+	posters_remove = "İndir",
+	posters_cancel = "İptal",
+	poster_pixelHero = "Piksel Kahraman",
+	poster_puzzleBlocks = "Blok Bulmaca",
+	poster_turboRacer = "Turbo Yarışçı",
+	poster_starBlaster = "Yıldız Blaster",
+	poster_ninjaCat = "Ninja Kedi",
+	poster_ghostManor = "Hayalet Konağı",
+	poster_robotArena = "Robot Arenası",
+	poster_dragonValley = "Ejderha Vadisi",
+	poster_neonCity = "Neon Şehir",
+	poster_crystalKingdom = "Kristal Krallık",
+	poster_mechTitan = "Mekanik Titan",
+	poster_galaxyLegends = "Galaksi Efsaneleri",
+	poster_goldenController = "Altın Kumanda",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Oyunlar: {count}",

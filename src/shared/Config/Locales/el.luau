@@ -2,6 +2,29 @@
 -- Greek (el). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Αφίσες",
+	posters_hint = "Οι απλές κοστίζουν $, οι premium κοστίζουν Robux. Οι αφίσες κρέμονται στους τοίχους του στούντιο",
+	posters_no_slots = "Αγόρασε πρώτα το γκαράζ — οι αφίσες κρέμονται στους τοίχους του",
+	posters_hang = "Κρέμασε",
+	posters_hung = "✓ Κρέμεται",
+	posters_pick = "Πού να κρεμαστεί το «{name}»;",
+	posters_slot = "Θέση {n}",
+	posters_remove = "Κατέβασε",
+	posters_cancel = "Άκυρο",
+	poster_pixelHero = "Ήρωας πίξελ",
+	poster_puzzleBlocks = "Παζλ με τουβλάκια",
+	poster_turboRacer = "Τούρμπο οδηγός",
+	poster_starBlaster = "Αστρικό μπλάστερ",
+	poster_ninjaCat = "Γάτα νίντζα",
+	poster_ghostManor = "Έπαυλη φαντασμάτων",
+	poster_robotArena = "Αρένα ρομπότ",
+	poster_dragonValley = "Κοιλάδα δράκων",
+	poster_neonCity = "Πόλη νέον",
+	poster_crystalKingdom = "Κρυστάλλινο βασίλειο",
+	poster_mechTitan = "Μηχανικός τιτάνας",
+	poster_galaxyLegends = "Θρύλοι του γαλαξία",
+	poster_goldenController = "Χρυσό χειριστήριο",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Παιχνίδια: {count}",

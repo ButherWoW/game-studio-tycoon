@@ -2,6 +2,29 @@
 -- Croatian (hr). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Posteri",
+	posters_hint = "Obični koštaju $, premium koštaju Robux. Posteri vise na zidovima studija",
+	posters_no_slots = "Prvo kupi garažu — posteri vise na njezinim zidovima",
+	posters_hang = "Objesi",
+	posters_hung = "✓ Visi",
+	posters_pick = "Gdje objesiti „{name}”?",
+	posters_slot = "Mjesto {n}",
+	posters_remove = "Skini",
+	posters_cancel = "Odustani",
+	poster_pixelHero = "Pikselni junak",
+	poster_puzzleBlocks = "Blok slagalica",
+	poster_turboRacer = "Turbo vozač",
+	poster_starBlaster = "Zvjezdani blaster",
+	poster_ninjaCat = "Mačak nindža",
+	poster_ghostManor = "Veseli duhovi",
+	poster_robotArena = "Arena robota",
+	poster_dragonValley = "Dolina zmajeva",
+	poster_neonCity = "Neonski grad",
+	poster_crystalKingdom = "Kristalno kraljevstvo",
+	poster_mechTitan = "Meh titan",
+	poster_galaxyLegends = "Legende galaksije",
+	poster_goldenController = "Zlatni kontroler",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Igre: {count}",

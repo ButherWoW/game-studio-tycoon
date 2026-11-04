@@ -2,6 +2,29 @@
 -- Slovak (sk). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Plagáty",
+	posters_hint = "Obyčajné stoja $, prémiové stoja Robux. Plagáty visia na stenách štúdia",
+	posters_no_slots = "Najprv kúp garáž — plagáty visia na jej stenách",
+	posters_hang = "Zavesiť",
+	posters_hung = "✓ Visí",
+	posters_pick = "Kam zavesiť „{name}“?",
+	posters_slot = "Miesto {n}",
+	posters_remove = "Zvesiť",
+	posters_cancel = "Zrušiť",
+	poster_pixelHero = "Pixelový hrdina",
+	poster_puzzleBlocks = "Kockový hlavolam",
+	poster_turboRacer = "Turbo pretekár",
+	poster_starBlaster = "Hviezdny blaster",
+	poster_ninjaCat = "Mačka nindža",
+	poster_ghostManor = "Veselí duchovia",
+	poster_robotArena = "Aréna robotov",
+	poster_dragonValley = "Dračie údolie",
+	poster_neonCity = "Neónové mesto",
+	poster_crystalKingdom = "Krištáľové kráľovstvo",
+	poster_mechTitan = "Mech titan",
+	poster_galaxyLegends = "Legendy galaxie",
+	poster_goldenController = "Zlatý ovládač",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Hry: {count}",

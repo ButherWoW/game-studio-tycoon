@@ -2,6 +2,29 @@
 -- Bulgarian (bg). Keys and {placeholders} as in Texts.en; missing keys fall back to English.
 
 return {
+	-- Постеры
+	shop_tab_posters = "🖼 Плакати",
+	posters_hint = "Обикновените са за $, премиум — за Robux. Плакатите висят по стените на студиото",
+	posters_no_slots = "Първо купи гаража — плакатите висят по стените му",
+	posters_hang = "Закачи",
+	posters_hung = "✓ Закачен",
+	posters_pick = "Къде да закачиш „{name}“?",
+	posters_slot = "Място {n}",
+	posters_remove = "Свали",
+	posters_cancel = "Отказ",
+	poster_pixelHero = "Пикселен герой",
+	poster_puzzleBlocks = "Блоков пъзел",
+	poster_turboRacer = "Турбо състезател",
+	poster_starBlaster = "Звезден бластер",
+	poster_ninjaCat = "Котка нинджа",
+	poster_ghostManor = "Весели призраци",
+	poster_robotArena = "Арена на роботи",
+	poster_dragonValley = "Долина на драконите",
+	poster_neonCity = "Неонов град",
+	poster_crystalKingdom = "Кристално кралство",
+	poster_mechTitan = "Мех титан",
+	poster_galaxyLegends = "Легенди на галактиката",
+	poster_goldenController = "Златен контролер",
 	-- Interface
 	hud_cash = "$ {cash}",
 	hud_games = "Игри: {count}",
