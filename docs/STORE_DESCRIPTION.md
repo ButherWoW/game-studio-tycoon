@@ -1,6 +1,6 @@
 # Описание игры для страницы Roblox
 
-Рабочее название — до выбора в #4 (вариант Dev 2: **Garage Game Studio Tycoon**). Обновлено 04.11: добавлены зарплаты, аренда и банк.
+Название — **Build Your Game Studio Tycoon** (выбрал владелец 05.11, #4); русская локализация названия — «Создай свою игровую студию». Обновлено 04.11: добавлены зарплаты, аренда и банк.
 
 ## RU
 **🎮 Студия из гаража — создай свою игровую империю!**
@@ -19,7 +19,7 @@
 Ставь 👍 и ⭐, чтобы не пропустить обновления!
 
 ## EN
-**🎮 Garage Game Studio Tycoon — build your game dev empire!**
+**🎮 Build Your Game Studio Tycoon — build your game dev empire!**
 
 Start on a park bench with a laptop, save up for an old garage and name your studio. Pick a genre and a topic, balance gameplay, graphics, sound and story, make choices while your game is in development — then wait for the critics!
 
