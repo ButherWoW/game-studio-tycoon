@@ -41,6 +41,8 @@ end
 local function replicate(player: Player)
 	local data = getData(player)
 	if data then
+		-- Окно «Команда» по атрибуту показывает, что РОБО-9000 можно нанять
+		player:SetAttribute("RobotHire", Research.modifiers(data.owned).robotHire)
 		ResearchRemotes.ResearchChanged:FireClient(player, {
 			points = data.points,
 			owned = data.owned,

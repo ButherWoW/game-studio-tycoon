@@ -164,7 +164,10 @@ local function buildRow(
 	local canHire = false
 	if staff[employee.id] then
 		text, color = ClientState.t("team_hired"), Ui.colors.good
-	elseif employee.legendary then
+	elseif
+		employee.legendary
+		and not (employee.id == "robo" and Players.LocalPlayer:GetAttribute("RobotHire") == true)
+	then
 		text = ClientState.t("team_soon")
 	elseif (tonumber(data.studioLevel) or 1) < employee.stage then
 		local stage = Stages[employee.stage]

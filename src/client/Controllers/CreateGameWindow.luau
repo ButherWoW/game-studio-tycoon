@@ -6,16 +6,20 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
+local PaidRemotes = require(ReplicatedStorage.Shared.PaidRemotes)
 local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local WordFilter = require(ReplicatedStorage.Shared.WordFilter)
 local ClientState = require(script.Parent.Parent.ClientState)
+local DevState = require(script.Parent.Parent.DevState)
 local Ui = require(script.Parent.Parent.Ui)
 
 local FOCUS_KEYS = { "gameplay", "graphics", "sound", "story" }
 local MAX_FOCUS = 10
 local UNLOCK_CONFIRM_SECONDS = 3
+-- Примерная оценка («Тест-группа»): не чаще, чем принимает сервер (0.5 с)
+local PREVIEW_REQUEST_GAP = 0.6
 
 type Item = { id: string, name: string, nameEn: string, unlockCost: number }
 
@@ -196,7 +200,7 @@ local function trimmedName(): string
 end
 
 local function startError(): string?
-	if ClientState.developing then
+	if not DevState.hasFreeSlot() then
 		return ClientState.t("error_busy")
 	elseif utf8.len(trimmedName()) == nil or (utf8.len(trimmedName()) :: number) < MIN_NAME_LENGTH then
 		return ClientState.t("error_name_empty")
@@ -210,6 +214,80 @@ local function startError(): string?
 		return ClientState.t("error_focus_empty")
 	end
 	return nil
+end
+
+-- «Тест-группа»: примерная оценка считается на сервере, клиент только показывает
+local previewLabel: TextLabel? = nil
+local preview: { key: string, min: number, max: number }? = nil
+local previewSentKey: string? = nil
+local previewScheduled = false
+local lastPreviewSent = 0
+
+local function previewKey(): string?
+	if not selectedGenre or not selectedTopic or focusTotal() <= 0 then
+		return nil
+	end
+	local parts = { selectedGenre :: string, selectedTopic :: string }
+	for _, key in FOCUS_KEYS do
+		table.insert(parts, tostring(focus[key]))
+	end
+	return table.concat(parts, "/")
+end
+
+local function updatePreviewLabel()
+	local label = previewLabel
+	if not label or not label.Parent then
+		return
+	end
+	local key = previewKey()
+	label.Visible = DevState.reviewPreview
+	local current = preview
+	if not key then
+		label.Text = ClientState.t("create_preview_pick")
+		label.TextColor3 = Ui.colors.muted
+	elseif current and current.key == key then
+		label.Text = if current.min == current.max
+			then ClientState.t("create_preview_one", { score = current.min })
+			else ClientState.t("create_preview", { min = current.min, max = current.max })
+		label.TextColor3 = Ui.scoreColor((current.min + current.max) / 2)
+	else
+		label.Text = ClientState.t("create_preview_wait")
+		label.TextColor3 = Ui.colors.muted
+	end
+end
+
+local function requestPreview()
+	local key = previewKey()
+	if not DevState.reviewPreview or not key or key == previewSentKey or previewScheduled then
+		return
+	end
+	previewScheduled = true
+	task.delay(math.max(0, lastPreviewSent + PREVIEW_REQUEST_GAP - os.clock()), function()
+		previewScheduled = false
+		local current = previewKey()
+		if not gui or not current or current == previewSentKey then
+			return
+		end
+		previewSentKey = current
+		lastPreviewSent = os.clock()
+		PaidRemotes.ReviewPreviewRequest:FireServer({
+			genreId = selectedGenre,
+			topicId = selectedTopic,
+			focus = table.clone(focus),
+		})
+	end)
+end
+
+-- Кнопка «Начать» без полной перерисовки (поле названия не теряет фокус)
+local function updateStartButton()
+	local button = startButton
+	if button and button.Parent then
+		local err = startError()
+		button.Text = err or ClientState.t("create_start")
+		button.BackgroundColor3 = if err then Ui.colors.locked else Ui.colors.money
+		button.TextColor3 = if err then Ui.colors.muted else Color3.fromRGB(40, 30, 0)
+		button:SetAttribute("Ready", err == nil)
+	end
 end
 
 render = function()
@@ -274,14 +352,7 @@ render = function()
 	Ui.corner(nameBox, 10)
 	nameBox:GetPropertyChangedSignal("Text"):Connect(function()
 		nameText = nameBox.Text
-		local button = startButton
-		if button and button.Parent then
-			local err = startError()
-			button.Text = err or ClientState.t("create_start")
-			button.BackgroundColor3 = if err then Ui.colors.locked else Ui.colors.money
-			button.TextColor3 = if err then Ui.colors.muted else Color3.fromRGB(40, 30, 0)
-			button:SetAttribute("Ready", err == nil)
-		end
+		updateStartButton()
 	end)
 	nameBox.Parent = body
 
@@ -312,6 +383,13 @@ render = function()
 	for _, key in FOCUS_KEYS do
 		buildFocusRow(body, key, nextOrder())
 	end
+
+	local previewText = Ui.label(body, "", 26, Ui.titleFontFor(ClientState.lang), Ui.colors.muted)
+	previewText.Name = "ReviewPreview"
+	previewText.LayoutOrder = nextOrder()
+	previewLabel = previewText
+	updatePreviewLabel()
+	requestPreview()
 
 	local err = startError()
 	local start = Ui.button(
@@ -356,6 +434,9 @@ function CreateGameWindow.open()
 end
 
 function CreateGameWindow.close()
+	-- Очки/с могли измениться, пока окно закрыто: при следующем открытии спросить заново
+	preview = nil
+	previewSentKey = nil
 	if gui then
 		gui:Destroy()
 		gui = nil
@@ -367,6 +448,23 @@ function CreateGameWindow.start()
 	-- Деньги или открытые жанры поменялись — перерисовать открытое окно
 	ClientState.changed:Connect(function()
 		render()
+	end)
+	-- Слот освободился/занялся, открылась тест-группа — обновить на месте
+	DevState.changed:Connect(function()
+		updateStartButton()
+		updatePreviewLabel()
+		requestPreview()
+	end)
+	PaidRemotes.ReviewPreview.OnClientEvent:Connect(function(result: any)
+		if type(result) ~= "table" or type(result.min) ~= "number" or type(result.max) ~= "number" then
+			return
+		end
+		local key = previewSentKey
+		-- Ответ на последний запрос: жанр и тема должны совпадать с отправленными
+		if key and result.genreId == selectedGenre and result.topicId == selectedTopic then
+			preview = { key = key, min = result.min, max = result.max }
+			updatePreviewLabel()
+		end
 	end)
 end
 

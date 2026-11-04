@@ -392,6 +392,17 @@ Texts.ru = {
 	holiday_none = "Сейчас ивентов нет",
 	trophy_souvenir_cartridge = "Картридж-сувенир",
 	trophy_golden_cartridge = "Золотой картридж",
+	-- paid + research
+	hud_developing_named = "{name}: {percent}%",
+	hud_instant_finish = "⚡ Закончить ({count})",
+	hud_create_slots = "🎮 Создать игру ({busy}/{slots})",
+	hud_auto_on = "🔁 Авто-релиз: вкл",
+	hud_auto_off = "🔁 Авто-релиз: выкл",
+	hud_royalty = "📚 +{amount}/мин",
+	create_preview = "🔮 Тест-группа: примерно {min}–{max}",
+	create_preview_one = "🔮 Тест-группа: примерно {score}",
+	create_preview_wait = "🔮 Тест-группа думает…",
+	create_preview_pick = "🔮 Выбери жанр, тему и фокус — тест-группа оценит",
 } :: { [string]: string }
 
 Texts.en = {
@@ -708,6 +719,17 @@ Texts.en = {
 	trophy_golden_cartridge = "Golden cartridge",
 	topic_pumpkins = "Pumpkins",
 	topic_newyear = "New Year",
+	-- paid + research
+	hud_developing_named = "{name}: {percent}%",
+	hud_instant_finish = "⚡ Finish ({count})",
+	hud_create_slots = "🎮 Make a game ({busy}/{slots})",
+	hud_auto_on = "🔁 Auto release: on",
+	hud_auto_off = "🔁 Auto release: off",
+	hud_royalty = "📚 +{amount}/min",
+	create_preview = "🔮 Playtest group: about {min}–{max}",
+	create_preview_one = "🔮 Playtest group: about {score}",
+	create_preview_wait = "🔮 The playtest group is thinking…",
+	create_preview_pick = "🔮 Pick a genre, topic and focus — the playtest group will rate it",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть
