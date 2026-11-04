@@ -45,6 +45,11 @@ local function pushState(player: Player)
 	})
 end
 
+-- Прислать клиенту свежее состояние магазина (после выдачи из OfferService)
+function ShopService.refresh(player: Player)
+	pushState(player)
+end
+
 -- Кофе из наград: то же ускорение, что продукт «Кофе», продлевается от конца текущего
 function ShopService.addCoffee(player: Player, seconds: number)
 	local profile = DataService.get(player)
@@ -143,6 +148,12 @@ function ShopService.grantProduct(player: Player, profile: DataService.Profile, 
 	if not product then
 		return false
 	end
+	ShopService.applyProduct(player, profile, product)
+	return true
+end
+
+-- Эффект продукта без квитанции (сделка дня и замены в OfferService). Сохраняет вызывающий
+function ShopService.applyProduct(player: Player, profile: DataService.Profile, product: Products.Product)
 	local boosts = profile.boosts
 	if product.kind == "instantFinish" then
 		boosts.instantFinish += 1
@@ -158,7 +169,16 @@ function ShopService.grantProduct(player: Player, profile: DataService.Profile, 
 	end
 	DataService.replicate(player)
 	pushState(player)
-	return true
+end
+
+-- Продукт по id из Config/Products.list (для OfferService)
+function ShopService.productById(id: string): Products.Product?
+	for _, product in Products.list do
+		if product.id == id then
+			return product
+		end
+	end
+	return nil
 end
 
 local function findPass(gamePassId: number): GamePasses.GamePass?

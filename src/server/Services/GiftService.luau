@@ -111,7 +111,12 @@ function GiftService.grantProduct(buyer: Player, buyerProfile: DataService.Profi
 		task.spawn(DataService.save, target)
 		notice(
 			target,
-			{ kind = "giftReceived", name = buyer.DisplayName, itemKind = item.itemKind, itemId = item.itemId }
+			{
+				kind = "giftReceived",
+				name = buyer.DisplayName,
+				itemKind = item.itemKind,
+				itemId = item.itemId,
+			}
 		)
 		notice(
 			buyer,

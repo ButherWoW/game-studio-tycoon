@@ -256,6 +256,16 @@ function PosterService.grantProduct(player: Player, profile: DataService.Profile
 	return true
 end
 
+-- Выдать постер по id (сделка дня). false — уже куплен или такого нет
+function PosterService.grantPoster(player: Player, profile: DataService.Profile, posterId: string): boolean
+	local poster = Posters.get(posterId)
+	if not poster or data(profile).owned[poster.id] then
+		return false
+	end
+	grant(player, profile, poster)
+	return true
+end
+
 function PosterService.owns(player: Player, posterId: string): boolean
 	local profile = DataService.get(player)
 	return profile ~= nil and data(profile).owned[posterId] == true

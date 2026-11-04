@@ -58,6 +58,7 @@ local Analytics = {
 		achievement = "Achievement", -- получено достижение; поле — id
 		gift = "GiftPurchased", -- подарок за Robux; поле — gift_<id>, значение 1 — другу, 0 — достался себе
 		groupReward = "GroupReward", -- награда за вступление в группу
+		offer = "Offer", -- предложение доната; поле — "вид_этап" (starterPack_shown, floorLock_purchased)
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -74,6 +75,7 @@ local Analytics = {
 		["StartParkService.onJobFinish"] = { transactionType = "ParkJob", sku = "job" },
 		["StartParkService.onPawn"] = { transactionType = "Pawnshop", sku = "cartridges" },
 		ShopService = { transactionType = "IAP", sku = "incomePack" },
+		OfferService = { transactionType = "IAP", sku = "offer" },
 		TutorialService = { transactionType = "Onboarding", sku = "tutorial" },
 		SocialService = { transactionType = "TimedReward", sku = "group" },
 	} :: { [string]: EconomyTag },
