@@ -713,6 +713,97 @@ builders.Pawnshop = function(m)
 	signText(sign, Enum.NormalId.Front, "park_pawn_sign", "📦 ЛОМБАРД", rgb(255, 201, 60))
 end
 
+-- ===== Праздничный декор (HolidayService, Config/Holidays) =====
+
+-- Тыква: три шара-дольки, хвостик и светящееся лицо спереди (+Z)
+builders.Pumpkin = function(m)
+	local orange = rgb(255, 125, 20)
+	for _, x in { -0.5, 0, 0.5 } do
+		part(m, Vector3.new(2.2, 2.2, 2.2), Vector3.new(x, 1.1, 0), orange, { shape = Enum.PartType.Ball })
+	end
+	part(m, Vector3.new(0.3, 0.7, 0.3), Vector3.new(0, 2.45, 0), rgb(70, 120, 40), {
+		material = Enum.Material.Wood,
+	})
+	local glow = rgb(255, 230, 90)
+	for _, x in { -0.45, 0.45 } do
+		part(
+			m,
+			Vector3.new(0.4, 0.4, 0.1),
+			Vector3.new(x, 1.45, 1.02),
+			glow,
+			{ material = Enum.Material.Neon }
+		)
+	end
+	local mouth = part(m, Vector3.new(1.1, 0.25, 0.1), Vector3.new(0, 0.8, 1.0), glow, {
+		material = Enum.Material.Neon,
+	})
+	light(mouth, rgb(255, 150, 40), 8, 1)
+end
+
+-- Ёлка: ствол, ярусы-цилиндры, шарики, звезда и подарки у основания
+builders.HolidayTree = function(m)
+	cylinder(m, 2, 1.2, Vector3.new(0, 1, 0), rgb(110, 70, 40), { material = Enum.Material.Wood })
+	local green = rgb(40, 130, 60)
+	local tiers = { { 8, 3.2 }, { 6.2, 5.2 }, { 4.4, 7 }, { 2.4, 8.6 } }
+	local colors = { rgb(255, 60, 60), rgb(255, 210, 60), rgb(80, 160, 255), rgb(240, 240, 255) }
+	for i, tier in tiers do
+		local diameter, y = tier[1], tier[2]
+		cylinder(m, 2, diameter, Vector3.new(0, y, 0), green, { material = Enum.Material.Grass })
+		-- Шарики по краю яруса
+		for k = 1, 6 do
+			local angle = math.rad(k * 60 + i * 25)
+			local r = diameter / 2
+			part(
+				m,
+				Vector3.new(0.6, 0.6, 0.6),
+				Vector3.new(math.cos(angle) * r, y - 0.6, math.sin(angle) * r),
+				colors[(k + i) % #colors + 1],
+				{ material = Enum.Material.Neon, shape = Enum.PartType.Ball }
+			)
+		end
+	end
+	local star = part(m, Vector3.new(1.2, 1.2, 1.2), Vector3.new(0, 10.2, 0), rgb(255, 220, 60), {
+		material = Enum.Material.Neon,
+		shape = Enum.PartType.Ball,
+	})
+	light(star, rgb(255, 220, 120), 18, 1.2)
+	local gifts = {
+		{ at = Vector3.new(2.6, 0, 3.2), color = rgb(220, 50, 60) },
+		{ at = Vector3.new(-3, 0, 2.4), color = rgb(60, 150, 255) },
+		{ at = Vector3.new(0.4, 0, -3.4), color = rgb(250, 200, 60) },
+	}
+	for _, gift in gifts do
+		local at = gift.at
+		part(m, Vector3.new(1.4, 1.2, 1.4), at + Vector3.new(0, 0.6, 0), gift.color)
+		part(m, Vector3.new(1.45, 1.25, 0.25), at + Vector3.new(0, 0.6, 0), rgb(255, 255, 255))
+	end
+end
+
+-- Оранжевая неон-вывеска у участка (косметика за квест Хэллоуина), лицом к +Z
+builders.HalloweenSign = function(m)
+	local post = rgb(40, 35, 45)
+	for _, x in { -2.6, 2.6 } do
+		part(m, Vector3.new(0.4, 7, 0.4), Vector3.new(x, 3.5, 0), post, { material = Enum.Material.Metal })
+	end
+	local board = part(m, Vector3.new(6, 2, 0.3), Vector3.new(0, 6.6, 0), rgb(255, 120, 20), {
+		material = Enum.Material.Neon,
+	})
+	light(board, rgb(255, 130, 30), 14, 1)
+	-- Без TextKey: надпись одинаковая на всех языках
+	local gui = Instance.new("SurfaceGui")
+	gui.Face = Enum.NormalId.Front
+	gui.LightInfluence = 0
+	gui.Parent = board
+	local label = Instance.new("TextLabel")
+	label.Size = UDim2.fromScale(1, 1)
+	label.BackgroundTransparency = 1
+	label.Font = Enum.Font.FredokaOne
+	label.TextScaled = true
+	label.TextColor3 = rgb(40, 20, 10)
+	label.Text = "🎃 BOO! 🎃"
+	label.Parent = gui
+end
+
 -- Собрать модель по имени; nil — для этого имени билдера нет
 function ModelFactory.build(name: string): Model?
 	local builder = builders[name]

@@ -27,7 +27,8 @@ local function showResult(gui: ScreenGui, result: any)
 	local panel = Ui.label(gui, "", 64, Ui.titleFontFor(ClientState.lang))
 	panel.Name = "ExpoResult"
 	panel.AnchorPoint = Vector2.new(0.5, 0)
-	panel.Position = UDim2.new(0.5, 0, 0, BANNER_Y + 44)
+	-- Ниже плашки праздничного ивента (HolidayController, y = 222)
+	panel.Position = UDim2.new(0.5, 0, 0, BANNER_Y + 82)
 	panel.Size = UDim2.fromOffset(460, 64)
 	panel.BackgroundTransparency = 0.1
 	panel.BackgroundColor3 = Ui.colors.panel

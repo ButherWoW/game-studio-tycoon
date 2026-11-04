@@ -89,6 +89,10 @@ local function buildGrid(
 
 	for i, item in list do
 		local unlocked = unlockedSet[item.id] == true
+		-- Сезонную тему показываем, только пока идёт её ивент (сервер открыл её игроку)
+		if not unlocked and (item :: any).seasonal then
+			continue
+		end
 		local key = kind .. "/" .. item.id
 		local text = ClientState.localName(item)
 		local color = Ui.colors.primary
