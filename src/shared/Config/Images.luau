@@ -41,4 +41,11 @@ Images.posters = {
 	goldenController = 0, -- poster_goldenController.png, премиум
 } :: { [string]: number }
 
+-- Медали достижений (V10, Астра #88): окно 🏆 вместо 🥉🥈🥇
+Images.medals = {
+	bronze = 71752753521866, -- medal_bronze.png
+	silver = 95715963709982, -- medal_silver.png
+	gold = 70516815676378, -- medal_gold.png
+} :: { [string]: number }
+
 return Images

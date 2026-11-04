@@ -1,22 +1,22 @@
 # Запуск: группа, Discord, короткие видео (шаги 6.2 и 6.3)
 
-Рабочее название — **Game Studio Tycoon**. Если в #4 выберут другое, заменить его в текстах ниже.
+Название — **Build Your Game Studio Tycoon** (выбрал владелец 05.11, #4). По-русски в локализации Roblox: «Создай свою игровую студию».
 Описание для страницы игры — в `docs/STORE_DESCRIPTION.md`. Картинки для группы и видео — в `docs/visual/astra-2026-11-04/`: аватар группы — `V1/icon_v2.png`, обложка — `V2/thumb_2_grow.png`.
 
 ---
 
 ## 1. Группа Roblox
 
-**Название:** Game Studio Tycoon Fans
+**Название:** Build Your Game Studio Fans
 **Короткое описание (RU):**
-> Официальная группа Game Studio Tycoon 🎮 Новости обновлений, коды, ивенты и конкурсы. Вступай — участникам группы бонусы в игре!
+> Официальная группа Build Your Game Studio Tycoon 🎮 Новости обновлений, коды, ивенты и конкурсы. Вступай — участникам группы бонусы в игре!
 
 **Short description (EN):**
-> Official Game Studio Tycoon group 🎮 Update news, codes, events and contests. Join for in-game bonuses!
+> Official Build Your Game Studio Tycoon group 🎮 Update news, codes, events and contests. Join for in-game bonuses!
 
 **Описание группы (RU):**
 ```
-🎮 Добро пожаловать в Game Studio Tycoon!
+🎮 Добро пожаловать в Build Your Game Studio Tycoon!
 Начни с ноутбука в парке и построй игровую империю: гараж → трёхэтажный офис.
 
 ✅ Новости и обновления — каждые 2 недели
@@ -29,7 +29,7 @@
 
 **Group description (EN):**
 ```
-🎮 Welcome to Game Studio Tycoon!
+🎮 Welcome to Build Your Game Studio Tycoon!
 Start with a laptop in the park and build a game empire: garage → three-storey office.
 
 ✅ News and updates every 2 weeks
@@ -48,7 +48,7 @@ Rules: no insults, spam or ads. Rule breakers get banned.
 
 ## 2. Discord-сервер
 
-**Название:** Game Studio Tycoon
+**Название:** Build Your Game Studio Tycoon
 
 **Каналы:**
 

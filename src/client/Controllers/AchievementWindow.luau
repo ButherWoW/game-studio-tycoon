@@ -8,6 +8,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local AchievementRemotes = require(ReplicatedStorage.Shared.AchievementRemotes)
 local Achievements = require(ReplicatedStorage.Shared.Config.Achievements)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local QuestWindow = require(script.Parent.QuestWindow)
@@ -16,6 +17,8 @@ local MENU_SLOT = 14
 local ROW_HEIGHT = 84
 local TOAST_SECONDS = 3.5
 local TIER_ICONS = { "🥉", "🥈", "🥇" }
+-- Картинки медалей по уровню (Config/Images.medals); id 0 — эмодзи
+local TIER_MEDALS = { "bronze", "silver", "gold" }
 
 local player = Players.LocalPlayer
 
@@ -66,6 +69,17 @@ local function row(parent: Instance, order: number, a: Achievements.Achievement)
 	iconLabel.TextXAlignment = Enum.TextXAlignment.Center
 	iconLabel.Position = UDim2.fromOffset(6, 6)
 	iconLabel.Size = UDim2.fromOffset(48, 44)
+	local medalId = if not secret and a.tier then Images.medals[TIER_MEDALS[a.tier] or ""] or 0 else 0
+	if medalId > 0 then
+		iconLabel.Text = ""
+		local image = Instance.new("ImageLabel")
+		image.BackgroundTransparency = 1
+		image.Size = UDim2.fromScale(1, 1)
+		image.ScaleType = Enum.ScaleType.Fit
+		image.Image = "rbxassetid://" .. medalId
+		image.ImageTransparency = if done then 0 else 0.45
+		image.Parent = iconLabel
+	end
 	if not done then
 		iconLabel.TextTransparency = 0.45
 	end
