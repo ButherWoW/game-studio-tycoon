@@ -78,6 +78,12 @@ local Analytics = {
 		-- created/joined/left/goal_N)
 		coop = "Coop",
 		holding = "Holding",
+		-- Консоль и стример: платформа релиза (значение — оценка, поле — pc/phone/console),
+		-- этап консоли (значение — номер, поле — "design_started" / "launch_done"),
+		-- стример (поле — assigned / unassigned, значение при снятии — заработано донатами)
+		platform = "Platform",
+		console = "Console",
+		streamer = "Streamer",
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -106,6 +112,8 @@ local Analytics = {
 		RivalService = { transactionType = "Reward", sku = "rivalPassed" },
 		CoopService = { transactionType = "Coop", sku = "coopShare" }, -- доля гостя совместной игры
 		HoldingService = { transactionType = "Reward", sku = "holdingGoal" }, -- цели недели холдинга
+		ConsoleService = { transactionType = "Console", sku = "royalty" },
+		StreamerService = { transactionType = "Streamer", sku = "donations" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },

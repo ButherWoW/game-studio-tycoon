@@ -20,6 +20,7 @@ local StudioState = require(script.Parent.Parent.StudioState)
 local Ui = require(script.Parent.Parent.Ui)
 local SkinShop = require(script.Parent.Parent.SkinShop)
 local StaffPower = require(script.Parent.Parent.StaffPower)
+local ConsoleClient = require(script.Parent.Parent.ConsoleClient)
 
 local MENU_SLOT = 2
 local ROW_COLOR = Color3.fromRGB(44, 46, 66)
@@ -342,6 +343,8 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 		return n
 	end
 
+	-- Стример (StreamerService): назначить или снять
+	ConsoleClient.streamerButton(frame, employee.id, nextOrder())
 	-- Навыки
 	Ui.label(frame, ClientState.t("team_skills", { level = level }), 24, Ui.titleFont).LayoutOrder =
 		nextOrder()
@@ -535,6 +538,10 @@ local function buildRow(
 		details ..= " · " .. ClientState.t("team_waiting")
 	elseif deskId then
 		details ..= " · " .. ClientState.t("team_seated", { desk = upgradeName(deskId) })
+	end
+	local streamTag = ConsoleClient.streamerTag(employee.id)
+	if streamTag then
+		details ..= " · " .. streamTag
 	end
 	-- Подтверждение увольнения: что потеряем (с сервера, StaffPower.losses) вместо описания
 	local armedNow = fireArmed == employee.id and os.clock() - fireArmedAt <= FIRE_CONFIRM_SECONDS
@@ -785,6 +792,15 @@ function TeamWindow.start()
 	end)
 	StaffPower.changed:Connect(function()
 		render()
+	end)
+	-- Стримера назначили или сняли (донаты каждые 10 с окно не перерисовывают)
+	local shownStreamer: string? = nil
+	ConsoleClient.changed:Connect(function()
+		local current = ConsoleClient.streamerId()
+		if current ~= shownStreamer then
+			shownStreamer = current
+			render()
+		end
 	end)
 end
 

@@ -334,7 +334,13 @@ local function active(profile: DataService.Profile): { [string]: string }
 	if (profile :: any).staffStrike == true then
 		return {}
 	end
-	return seated(profile)
+	local result = seated(profile)
+	-- Стример (StreamerService) сидит за столом, но не разрабатывает: ни очков, ни перков, ни оценки
+	local streamer = (profile :: any).streamer
+	if type(streamer) == "table" and type(streamer.employeeId) == "string" then
+		result[streamer.employeeId] = nil
+	end
+	return result
 end
 
 -- События компании (CompanyEventService, необязательный): забастовка-«уход», сломанные столы, прибавки

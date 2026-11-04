@@ -58,6 +58,9 @@ export type Profile = {
 	franchises: any?,
 	contracts: any?,
 	rivals: any?,
+	-- Своя консоль и стример (ConsoleService, StreamerService); формат проверяют сервисы
+	console: any?,
+	streamer: any?,
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
@@ -123,6 +126,8 @@ local function defaultProfile(): Profile
 		franchises = { list = {}, candidates = {}, nextId = 1 },
 		contracts = { done = 0, failed = 0 },
 		rivals = { minutes = 0, passed = {} },
+		console = { stage = 0, started = false, progress = 0, share = 0, earned = 0 },
+		streamer = { hype = 0, earned = 0, scores = {} },
 		processedReceipts = {},
 		receiptLog = {},
 		lastLogout = os.time(),

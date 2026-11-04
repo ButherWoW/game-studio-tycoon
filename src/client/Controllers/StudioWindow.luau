@@ -1,7 +1,8 @@
 --!strict
 -- Окно «🛋️ Студия»: вкладки «Интерьер» (то же, что кнопки на полу, — покупка через BuyUpgrade
--- с теми же проверками на сервере), «Декор» (Config/Decor, DecorService) и «Настроение»
--- (разбор MoodService). Клиент только показывает и просит; цены и замки проверяет сервер.
+-- с теми же проверками на сервере), «Декор» (Config/Decor, DecorService), «Настроение»
+-- (разбор MoodService) и «Консоль» (своя консоль и стример, ConsoleClient).
+-- Клиент только показывает и просит; цены и замки проверяет сервер.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -19,13 +20,14 @@ local StudioState = require(script.Parent.Parent.StudioState)
 local CompanyEventState = require(script.Parent.Parent.CompanyEventState)
 local CompanyEvents = require(Shared.Config.CompanyEvents)
 local Ui = require(script.Parent.Parent.Ui)
+local ConsoleClient = require(script.Parent.Parent.ConsoleClient)
 
-type Tab = "interior" | "decor" | "mood"
+type Tab = "interior" | "decor" | "mood" | "console"
 
 local MENU_SLOT = 13
 local ROW_HEIGHT = 72
 local ROW_COLOR = Color3.fromRGB(44, 46, 66)
-local TABS: { Tab } = { "interior", "decor", "mood" }
+local TABS: { Tab } = { "interior", "decor", "mood", "console" }
 
 local StudioWindow = {}
 local gui: ScreenGui? = nil
@@ -343,6 +345,9 @@ render = function()
 		buildInterior(body)
 	elseif tab == "decor" then
 		buildDecor(body)
+	elseif tab == "console" then
+		-- Своя консоль и стример (ConsoleClient)
+		ConsoleClient.buildTab(body)
 	else
 		buildMood(body)
 	end
@@ -368,6 +373,7 @@ function StudioWindow.open()
 	Ui.windowOpened()
 	render()
 	StudioState.request()
+	ConsoleClient.request()
 end
 
 function StudioWindow.close()
@@ -391,6 +397,11 @@ function StudioWindow.start()
 	end)
 	CompanyEventState.changed:Connect(function()
 		render()
+	end)
+	ConsoleClient.changed:Connect(function()
+		if tab == "console" then
+			render()
+		end
 	end)
 	-- Деньги поменялись — перекрасить кнопки цены
 	ClientState.changed:Connect(function()

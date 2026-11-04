@@ -25,6 +25,12 @@ local Debug = {
 	-- даже в гараже; хит конкурента — через 20 с после старта сервера
 	contractForceOffer = false,
 	rivalForceHit = false,
+	-- Своя консоль и стример (только Studio): консоль открыта на любом этапе, этапы бесплатные;
+	-- этапу хватает consoleStageGames игр (nil — как в Config/Console); хайп и донаты стримера
+	-- идут в streamerSpeed раз быстрее (например 10)
+	consoleForceUnlock = false,
+	consoleStageGames = nil :: number?,
+	streamerSpeed = 1,
 }
 
 return Debug
