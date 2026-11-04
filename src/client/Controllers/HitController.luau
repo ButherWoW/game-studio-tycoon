@@ -285,7 +285,8 @@ function HitController.start()
 	local gui = Instance.new("ScreenGui")
 	gui.Name = "HitToasts"
 	gui.ResetOnSpawn = false
-	gui.DisplayOrder = 12
+	-- Под окнами (10+): тост не рисуется поверх открытого окна (отчёт #3, P2-7)
+	gui.DisplayOrder = 4
 	gui.Parent = player:WaitForChild("PlayerGui")
 
 	-- Тосты над кнопкой «Создать игру»
@@ -314,7 +315,7 @@ function HitController.start()
 		else
 			openWindow()
 		end
-	end)
+	end, "menu_hits")
 
 	HitRemotes.HitState.OnClientEvent:Connect(function(data)
 		if type(data) ~= "table" then

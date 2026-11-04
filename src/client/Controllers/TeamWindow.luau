@@ -644,7 +644,7 @@ function TeamWindow.start()
 		else
 			TeamWindow.open()
 		end
-	end)
+	end, "menu_team")
 	StaffRemotes.StaffChanged.OnClientEvent:Connect(function(newStaff: any, extra: any)
 		if type(newStaff) ~= "table" then
 			return

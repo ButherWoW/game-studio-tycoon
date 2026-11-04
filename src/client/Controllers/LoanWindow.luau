@@ -123,7 +123,7 @@ end
 
 function LoanWindow.start()
 	local player = Players.LocalPlayer
-	local menu = Ui.menuButton(MENU_SLOT, "🏦", show)
+	local menu = Ui.menuButton(MENU_SLOT, "🏦", show, "menu_bank")
 	-- Предложение всплывает один раз за «провал» денег; снимется (LoanOffer = 0) — снова взведётся
 	local offered = false
 	local function check()

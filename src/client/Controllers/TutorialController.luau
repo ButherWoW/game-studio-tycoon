@@ -20,6 +20,8 @@ local player = Players.LocalPlayer
 local STEP_DESK, STEP_OPEN, STEP_PICK, STEP_START, STEP_WAIT, STEP_RELEASE, STEP_DONE = 1, 2, 3, 4, 5, 6, 7
 -- «Инди в парке»: шаги до покупки гаража
 local STEP_LAPTOP, STEP_FIRST_GAME, STEP_SAVE, STEP_BUY_GARAGE = 8, 9, 10, 11
+-- Делать сейчас нечего (игра в разработке, всё нужное куплено): плашку прячем
+local STEP_IDLE = 0
 local STEP_TEXT = {
 	"tutorial_desk",
 	"tutorial_open",
@@ -136,7 +138,12 @@ local function currentStep(playerGui: Instance): number
 		if data and (tonumber(data.gamesReleased) or 0) > 0 then
 			return if (tonumber(data.cash) or 0) >= StartPark.garagePrice then STEP_BUY_GARAGE else STEP_SAVE
 		end
-		if ClientState.developing or ClientState.atPc() then
+		-- Игра уже в разработке: «Сделай первую игру» не висит (отчёт #3, P2-6);
+		-- встал из-за ноутбука — разработка ждёт, зовём обратно
+		if ClientState.developing then
+			return if ClientState.atPc() then STEP_IDLE else STEP_LAPTOP
+		end
+		if ClientState.atPc() then
 			return STEP_FIRST_GAME
 		end
 		return STEP_LAPTOP
@@ -149,7 +156,8 @@ local function currentStep(playerGui: Instance): number
 		return STEP_DONE
 	end
 	if ClientState.developing then
-		return STEP_WAIT
+		-- Компьютер уже куплен — совет «купи компьютер» пропускаем (отчёт #3, P2-6)
+		return if owns("pc1") then STEP_IDLE else STEP_WAIT
 	end
 	if not owns("desk1") then
 		return STEP_DESK
@@ -304,10 +312,10 @@ local function run()
 		end
 	end)
 	local finalAt: number? = nil
-	local shownStep = 0
+	local shownStep = -1
 	-- Сменили язык: подсказка перерисуется на следующем шаге цикла, кнопка — сразу
 	local langConn = ClientState.langChanged:Connect(function()
-		shownStep = 0
+		shownStep = -1
 		hint.Font = Ui.titleFontFor(ClientState.lang)
 		action.Text = ClientState.t(if finalAt then "tutorial_ok" else "tutorial_skip")
 	end)
@@ -317,7 +325,7 @@ local function run()
 		while not finished and player:GetAttribute("TutorialActive") == true do
 			local now = os.clock()
 			local step = currentStep(playerGui)
-			if step ~= shownStep then
+			if step ~= shownStep and step ~= STEP_IDLE then
 				shownStep = step
 				hint.Text = ClientState.t(STEP_TEXT[step], {
 					money = Texts.money(Tutorial.reward),
@@ -383,7 +391,7 @@ local function run()
 					end
 				end
 			end
-			plate.Visible = not covered
+			plate.Visible = not covered and step ~= STEP_IDLE
 			placePlate()
 			if covered then
 				target2d, target3d = nil, nil

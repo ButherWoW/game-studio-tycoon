@@ -504,9 +504,7 @@ local function onGoHome(player: Player)
 		return
 	end
 	lastHome[player] = now
-	if not PlotService.ownsGarage(player) then
-		return
-	end
+	-- Без гаража тоже ведём к своему участку: новичок находит табличку «Гараж продаётся» (отчёт #3, P1-1)
 	sendHome(player)
 end
 

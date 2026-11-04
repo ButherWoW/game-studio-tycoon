@@ -408,7 +408,7 @@ function QuestWindow.start()
 		else
 			QuestWindow.open()
 		end
-	end)
+	end, "menu_quests")
 	QuestRemotes.QuestState.OnClientEvent:Connect(function(state)
 		if type(state) == "table" then
 			questState = state
