@@ -627,6 +627,13 @@ local function release(player: Player, project: Project)
 		score = score,
 		focus = project.focus,
 	})
+	hook("AchievementService", "onGameReleased", player, {
+		genreId = project.genreId,
+		topicId = project.topicId,
+		score = score,
+		revenue = revenue,
+		laptop = project.laptop == true,
+	})
 
 	Remotes.GameReleased:FireClient(player, {
 		name = project.name,

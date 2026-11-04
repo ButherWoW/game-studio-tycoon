@@ -669,6 +669,13 @@ function Analytics.logQuickEvent(player: Player, kind: string, grade: string)
 	end
 end
 
+-- Получено достижение (AchievementService): id одним полем
+function Analytics.logAchievement(player: Player, id: string)
+	if Config.enabled and states[player] then
+		logCustom(player, Config.events.achievement, 1, id)
+	end
+end
+
 function Analytics.start()
 	if not Config.enabled then
 		return

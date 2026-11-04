@@ -17,6 +17,7 @@ Images.menu = {
 	menu_holiday = 108939585178579, -- menu_holiday.png, 🎉
 	menu_camera = 113053777664719, -- menu_camera.png, 🎥
 	menu_bank = 82427982778270, -- menu_bank.png, 🏦
+	menu_achievements = 0, -- menu_achievements.png, 🏆 (V10)
 	home = 0, -- 🏠, PNG в V3 нет
 } :: { [string]: number }
 

@@ -55,6 +55,7 @@ local Analytics = {
 		product = "ProductPurchased",
 		languageChanged = "LanguageChanged", -- не чаще раза за сессию
 		quickEvent = "QuickEvent", -- быстрое событие разработки; поле — "вид_результат" (timing_perfect)
+		achievement = "Achievement", -- получено достижение; поле — id
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -65,6 +66,7 @@ local Analytics = {
 		["HitService.caught"] = { transactionType = "ThiefCatch", sku = "penalty" },
 		ExpoService = { transactionType = "Expo", sku = "prize" },
 		QuestService = { transactionType = "Quest", sku = "quest" },
+		AchievementService = { transactionType = "Achievement", sku = "achievement" },
 		DailyRewardService = { transactionType = "TimedReward", sku = "daily" },
 		OfflineService = { transactionType = "TimedReward", sku = "offline" },
 		["StartParkService.onJobFinish"] = { transactionType = "ParkJob", sku = "job" },

@@ -35,6 +35,13 @@ export type Profile = {
 	boosts: { instantFinish: number, patch: number, coffeeUntil: number },
 	-- Постеры (PosterService): купленные и какой висит на каком месте стены (slotId -> posterId)
 	posters: { owned: { [string]: boolean }, equipped: { [string]: string } },
+	-- Достижения (AchievementService): получено, счётчики, сочетания; Rebirth не сбрасывает
+	achievements: {
+		done: { [string]: number },
+		stats: { [string]: number },
+		combos: { [string]: boolean },
+		backfilled: boolean?,
+	},
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
@@ -91,6 +98,7 @@ local function defaultProfile(): Profile
 		activeAd = nil,
 		boosts = { instantFinish = 0, patch = 0, coffeeUntil = 0 },
 		posters = { owned = {}, equipped = {} },
+		achievements = { done = {}, stats = {}, combos = {} },
 		processedReceipts = {},
 		receiptLog = {},
 		lastLogout = os.time(),
