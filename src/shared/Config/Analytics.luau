@@ -69,6 +69,11 @@ local Analytics = {
 		seasonClaim = "SeasonClaim", -- награда сезона; поле — "дорожка_уровень" (free_5, premium_30)
 		jamSubmit = "JamSubmit", -- заявка в гейм-джем; значение — оценка, поле — first / improved
 		hackathon = "Hackathon", -- начался хакатон (на каждого игрока на сервере)
+		-- Франшизы и контракты: поле — этап (created; offered/accepted/declined/expired/completed/failed)
+		-- или id обогнанной студии
+		franchise = "Franchise",
+		contract = "Contract",
+		rivalPassed = "RivalPassed",
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -93,6 +98,8 @@ local Analytics = {
 		CompanyEventService = { transactionType = "CompanyEvent", sku = "event" },
 		SeasonService = { transactionType = "Season", sku = "season" },
 		GameJamService = { transactionType = "GameJam", sku = "jam" },
+		ContractService = { transactionType = "Contract", sku = "contract" },
+		RivalService = { transactionType = "Reward", sku = "rivalPassed" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },

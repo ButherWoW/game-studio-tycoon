@@ -15,6 +15,7 @@ local UnlockRules = require(ReplicatedStorage.Shared.UnlockRules)
 local GameJam = require(ReplicatedStorage.Shared.Config.GameJam)
 local ClientState = require(script.Parent.Parent.ClientState)
 local DevState = require(script.Parent.Parent.DevState)
+local FranchiseClient = require(script.Parent.Parent.FranchiseClient)
 local Ui = require(script.Parent.Parent.Ui)
 
 local FOCUS_KEYS = { "gameplay", "graphics", "sound", "story" }
@@ -106,6 +107,7 @@ local function onCardClick(kind: string, item: Item, unlocked: boolean, reason: 
 	if unlocked then
 		if kind == "genre" then
 			selectedGenre = item.id
+			FranchiseClient.genrePicked(item.id)
 		else
 			selectedTopic = item.id
 		end
@@ -437,6 +439,7 @@ local function contentKey(): string
 		idList(data and data.unlockedTopics),
 		lockKey(data),
 		tostring(combo),
+		FranchiseClient.key(),
 	}, "|")
 end
 local shownKey = ""
@@ -511,6 +514,7 @@ local function buildShell(screen: ScreenGui)
 			genreId = selectedGenre,
 			topicId = selectedTopic,
 			focus = table.clone(focus),
+			franchiseId = FranchiseClient.selected,
 		})
 		CreateGameWindow.close()
 	end)
@@ -578,6 +582,18 @@ render = function()
 		)
 		Ui.label(body, jamText, 22, nil, Ui.colors.money).LayoutOrder = 0
 	end
+	-- «📚 Франшизы» над названием: продолжение подставляет жанр, тему и название «… 2»
+	FranchiseClient.build(body, 0, function(f: any)
+		if f then
+			selectedGenre = f.genreId
+			if data.unlockedTopics and data.unlockedTopics[f.topicId] then
+				selectedTopic = f.topicId
+			end
+			nameText = FranchiseClient.sequelName(tostring(f.lastName or f.name))
+			box.Text = nameText
+		end
+		render()
+	end)
 	Ui.label(body, ClientState.t("create_name_label"), 22, nil, Ui.colors.muted).LayoutOrder = 1
 
 	Ui.label(body, ClientState.t("create_genre_label"), 22, nil, Ui.colors.muted).LayoutOrder = nextOrder()
@@ -632,6 +648,7 @@ function CreateGameWindow.open()
 	gui = screen
 	pendingUnlock = nil
 	Ui.windowOpened()
+	FranchiseClient.request()
 	render()
 end
 
@@ -652,6 +669,11 @@ function CreateGameWindow.start()
 	-- Открытые жанры/темы, итог пары или язык поменялись — перерисовать открытое окно
 	-- (на одни деньги не перерисовываем: см. contentKey)
 	ClientState.changed:Connect(function()
+		if gui and contentKey() ~= shownKey then
+			render()
+		end
+	end)
+	FranchiseClient.changed:Connect(function()
 		if gui and contentKey() ~= shownKey then
 			render()
 		end

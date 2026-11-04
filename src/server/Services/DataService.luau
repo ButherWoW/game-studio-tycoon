@@ -54,6 +54,10 @@ export type Profile = {
 	codes: { [string]: number },
 	-- Маскоты (MascotService): открытые и надетый. Rebirth не сбрасывает
 	mascots: { owned: { [string]: boolean }, equipped: string? },
+	-- Франшизы и контракты (FranchiseService, ContractService, RivalService); формат проверяют сервисы
+	franchises: any?,
+	contracts: any?,
+	rivals: any?,
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
@@ -116,6 +120,9 @@ local function defaultProfile(): Profile
 		offers = { firstJoin = os.time(), starterBought = false, starterShown = false, starterBadge = false },
 		codes = {},
 		mascots = { owned = {}, equipped = nil },
+		franchises = { list = {}, candidates = {}, nextId = 1 },
+		contracts = { done = 0, failed = 0 },
+		rivals = { minutes = 0, passed = {} },
 		processedReceipts = {},
 		receiptLog = {},
 		lastLogout = os.time(),

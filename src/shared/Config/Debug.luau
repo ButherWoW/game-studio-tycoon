@@ -21,6 +21,10 @@ local Debug = {
 	jamForceWeek = nil :: number?, -- номер недели джема (другая тема)
 	jamStudioWeekSeconds = nil :: number?, -- короткая «неделя» (например 300): проверить награды за джем
 	hackathonForce = false, -- хакатон идёт всё время
+	-- Франшизы и контракты (только Studio): контракт предлагается через 15 с и потом раз в минуту,
+	-- даже в гараже; хит конкурента — через 20 с после старта сервера
+	contractForceOffer = false,
+	rivalForceHit = false,
 }
 
 return Debug

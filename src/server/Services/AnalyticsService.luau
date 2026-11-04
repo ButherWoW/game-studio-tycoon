@@ -782,6 +782,15 @@ function Analytics.logLiveOps(player: Player, eventKey: string, value: number, f
 	end
 end
 
+-- Франшизы, контракты, обгон конкурента (FranchiseService, ContractService, RivalService):
+-- eventKey — ключ Config.events, field — этап или id
+function Analytics.logDepth(player: Player, eventKey: string, field: string)
+	local eventName = (Config.events :: any)[eventKey]
+	if Config.enabled and states[player] and type(eventName) == "string" then
+		logCustom(player, eventName, 1, field)
+	end
+end
+
 function Analytics.start()
 	if not Config.enabled then
 		return
