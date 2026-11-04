@@ -7,6 +7,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Research = require(ReplicatedStorage.Shared.Config.Research)
 local ResearchRemotes = require(ReplicatedStorage.Shared.ResearchRemotes)
+local Genres = require(ReplicatedStorage.Shared.Config.Genres)
+local UnlockRules = require(ReplicatedStorage.Shared.UnlockRules)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
@@ -41,9 +43,23 @@ local function requiredNames(node: Research.Node): string
 	return table.concat(names, ", ")
 end
 
+-- Узел жанра, условия которого ещё не выполнены (shared/UnlockRules): причины, иначе nil.
+-- Уже открытый жанр (куплен) узел не блокирует — как на сервере
+local function genreLockReason(node: Research.Node): string?
+	local genreId = node.effect.unlockGenre
+	local data = ClientState.data
+	local genre = genreId and (Genres :: any)[genreId]
+	if owned[node.id] or not genre or not data or (data.unlockedGenres and data.unlockedGenres[genreId]) then
+		return nil
+	end
+	local reasons = UnlockRules.reasons(ClientState.lang, genre, data)
+	return if reasons ~= "" then reasons else nil
+end
+
 local function buildCard(parent: Instance, node: Research.Node, order: number)
 	local isOwned = owned[node.id] == true
-	local available = not isOwned and Research.requirementsMet(node, owned)
+	local lockReason = genreLockReason(node)
+	local available = not isOwned and Research.requirementsMet(node, owned) and lockReason == nil
 	local affordable = available and points >= node.cost
 
 	local card = Instance.new("Frame")
@@ -94,6 +110,12 @@ local function buildCard(parent: Instance, node: Research.Node, order: number)
 		local status = Ui.label(card, ClientState.t("research_owned"), 26, Ui.titleFont, Ui.colors.good)
 		status.Size = bottom
 		status.Position = bottomPos
+	elseif lockReason and Research.requirementsMet(node, owned) then
+		-- Ранние этапы: жанр откроется по прогрессу, ОИ не помогут
+		local status = Ui.label(card, lockReason, 26, nil, Ui.colors.muted)
+		status.Size = bottom
+		status.Position = bottomPos
+		status.TextWrapped = true
 	elseif not available then
 		local status = Ui.label(
 			card,
@@ -280,7 +302,12 @@ function ResearchWindow.start()
 			end
 		end
 		table.sort(genres)
-		return ClientState.lang .. "|" .. table.concat(genres, ",")
+		-- Причины замков узлов жанров: перерисовать, когда условие продвинулось
+		local locks = {}
+		for _, node in Research.list do
+			table.insert(locks, genreLockReason(node) or "")
+		end
+		return ClientState.lang .. "|" .. table.concat(genres, ",") .. "|" .. table.concat(locks, ",")
 	end
 	local lastKey = stateKey()
 	ClientState.changed:Connect(function()

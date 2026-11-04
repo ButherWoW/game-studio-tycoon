@@ -24,6 +24,7 @@ local Research = require(Shared.Config.Research)
 local DataService = require(script.Parent.DataService)
 local DevEvents = require(Shared.Config.DevEvents)
 local Economy = require(Shared.Config.Economy)
+local HitCartridges = require(Shared.Config.HitCartridges)
 
 -- Фичи из других веток (тренды, магазин, исследования, задания) подключаются, если модуль есть.
 -- Так порядок мёрджа PR не важен; без модуля множитель 1 и бонус 0.
@@ -592,6 +593,11 @@ local function release(player: Player, project: Project)
 	profile.bestScore = math.max(profile.bestScore, score)
 	profile.runBestScore = math.max(profile.runBestScore, score)
 	Formulas.rememberCombo(profile.recentCombos, project.genreId, project.topicId)
+	-- Счётчики для условий открытия жанров/тем (shared/UnlockRules)
+	profile.genreGames[project.genreId] = (profile.genreGames[project.genreId] or 0) + 1
+	if score >= HitCartridges.minScore then
+		profile.hitsReleased += 1
+	end
 	-- Сначала прячем доход в таблице лидеров, потом начисляем: addCash сразу обновляет leaderstats
 	DataService.holdLeaderstats(player, revenue, LEADERSTATS_REVEAL_SECONDS)
 	DataService.addCash(player, revenue)

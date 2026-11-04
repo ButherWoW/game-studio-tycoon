@@ -11,6 +11,7 @@ local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local WordFilter = require(ReplicatedStorage.Shared.WordFilter)
+local UnlockRules = require(ReplicatedStorage.Shared.UnlockRules)
 local ClientState = require(script.Parent.Parent.ClientState)
 local DevState = require(script.Parent.Parent.DevState)
 local Ui = require(script.Parent.Parent.Ui)
@@ -30,7 +31,7 @@ local CARD_GAP = 6
 -- не влезала, сетка уходила в лишний ряд и снова наезжала на строки ниже (отчёт #3, P1-3)
 local CARD_SLACK = 2
 
-type Item = { id: string, name: string, nameEn: string, unlockCost: number }
+type Item = { id: string, name: string, nameEn: string, unlockCost: number, requires: Genres.Requires? }
 
 local CreateGameWindow = {}
 
@@ -61,7 +62,11 @@ local TOPIC_LIST = sortedByCost(Topics)
 
 local render: () -> ()
 
-local function onCardClick(kind: string, item: Item, unlocked: boolean)
+local function onCardClick(kind: string, item: Item, unlocked: boolean, available: boolean)
+	-- Условия открытия не выполнены: покупки нет, карточка только показывает причину
+	if not unlocked and not available then
+		return
+	end
 	if unlocked then
 		if kind == "genre" then
 			selectedGenre = item.id
@@ -126,7 +131,14 @@ local function buildGrid(
 		local key = kind .. "/" .. item.id
 		local text = ClientState.localName(item)
 		local color = Ui.colors.primary
-		if not unlocked then
+		-- Ранние этапы: жанр/тема открывается только по условиям (shared/UnlockRules)
+		local reason = if unlocked
+			then nil
+			else UnlockRules.firstReason(ClientState.lang, item, ClientState.data)
+		if reason then
+			color = Ui.colors.locked
+			text ..= "\n" .. reason
+		elseif not unlocked then
 			color = Ui.colors.locked
 			text = if pendingUnlock == key
 				then ClientState.t("create_unlock_ask", { price = Texts.money(item.unlockCost) })
@@ -138,9 +150,13 @@ local function buildGrid(
 			color = Ui.colors.good
 		end
 		local card = Ui.button(grid, text, color, function()
-			onCardClick(kind, item, unlocked)
+			onCardClick(kind, item, unlocked, reason == nil)
 		end)
 		card.LayoutOrder = i
+		if reason then
+			card.TextColor3 = Ui.colors.muted
+			card.AutoButtonColor = false
+		end
 		shown += 1
 	end
 	grid.Parent = parent
@@ -358,6 +374,21 @@ local function idList(set: { [string]: boolean }?): string
 	return table.concat(ids, ",")
 end
 
+-- Причины замков закрытых карточек: перерисовать, когда условие продвинулось или выполнилось
+local function lockKey(data: any): string
+	local parts: { string } = {}
+	local function add(list: { Item }, set: any)
+		for _, item in list do
+			if not (type(set) == "table" and set[item.id]) then
+				table.insert(parts, UnlockRules.firstReason(ClientState.lang, item, data) or "+")
+			end
+		end
+	end
+	add(GENRE_LIST, data and data.unlockedGenres)
+	add(TOPIC_LIST, data and data.unlockedTopics)
+	return table.concat(parts, ",")
+end
+
 local function contentKey(): string
 	local data = ClientState.data
 	local combo = if selectedGenre and selectedTopic
@@ -367,6 +398,7 @@ local function contentKey(): string
 		ClientState.lang,
 		idList(data and data.unlockedGenres),
 		idList(data and data.unlockedTopics),
+		lockKey(data),
 		tostring(combo),
 	}, "|")
 end
