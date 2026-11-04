@@ -1,6 +1,6 @@
 --!strict
 -- Кнопка 🏠 в боковом меню (слот 12): перенести персонажа к воротам своего гаража.
--- Видна только владельцу гаража (атрибут игрока OwnsGarage). Проверки — на сервере (PlotService).
+-- Видна всем: без гаража ведёт к своему участку с табличкой «Гараж продаётся». Проверки — на сервере (PlotService).
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -24,11 +24,12 @@ function HomeButton.start()
 		end
 		lastClick = now
 		StartRemotes.GoHome:FireServer()
-	end)
+	end, "home")
+	-- Пока участок не выдан (все заняты) — вести некуда
 	local function refresh()
-		menu.Visible = player:GetAttribute("OwnsGarage") == true
+		menu.Visible = player:GetAttribute("PlotName") ~= nil
 	end
-	player:GetAttributeChangedSignal("OwnsGarage"):Connect(refresh)
+	player:GetAttributeChangedSignal("PlotName"):Connect(refresh)
 	refresh()
 end
 

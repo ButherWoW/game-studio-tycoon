@@ -26,6 +26,9 @@ local PREVIEW_REQUEST_GAP = 0.6
 local GRID_COLUMNS = 5
 local CARD_HEIGHT = 40
 local CARD_GAP = 6
+-- Запас по ширине ячейки: при округлении пикселей (UIScale окна, узкий экран) пятая карточка
+-- не влезала, сетка уходила в лишний ряд и снова наезжала на строки ниже (отчёт #3, P1-3)
+local CARD_SLACK = 2
 
 type Item = { id: string, name: string, nameEn: string, unlockCost: number }
 
@@ -91,10 +94,27 @@ local function buildGrid(
 	grid.BackgroundTransparency = 1
 	grid.Size = UDim2.fromScale(1, 1)
 	local layout = Instance.new("UIGridLayout")
-	layout.CellSize = UDim2.new(1 / GRID_COLUMNS, -CARD_GAP, 0, CARD_HEIGHT)
+	layout.CellSize = UDim2.new(1 / GRID_COLUMNS, -CARD_GAP - CARD_SLACK, 0, CARD_HEIGHT)
 	layout.CellPadding = UDim2.fromOffset(CARD_GAP, CARD_GAP)
+	layout.FillDirectionMaxCells = GRID_COLUMNS
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
 	layout.Parent = grid
+	-- Страховка: если сетка всё же вышла выше расчёта, рамка растёт по факту
+	local holder = parent :: GuiObject
+	local function fitHolder()
+		local planned = holder.Size.Y.Offset
+		local shownHeight = holder.AbsoluteSize.Y
+		if planned <= 0 or shownHeight <= 0 then
+			return
+		end
+		-- AbsoluteContentSize уже с UIScale окна — переводим обратно в «дизайнерские» пиксели
+		local needed = math.ceil(layout.AbsoluteContentSize.Y * planned / shownHeight)
+		if needed > planned then
+			holder.Size = UDim2.new(1, 0, 0, needed)
+		end
+	end
+	layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(fitHolder)
+	holder:GetPropertyChangedSignal("AbsoluteSize"):Connect(fitHolder)
 
 	local shown = 0
 	for i, item in list do

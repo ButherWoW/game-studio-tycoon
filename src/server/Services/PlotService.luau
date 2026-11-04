@@ -26,6 +26,9 @@ local BUTTON_EDGE_OFFSET = 5 -- от переднего края участка
 local TOUCH_COOLDOWN = 0.5
 -- Новая кнопка срабатывает только после того, как игрок отошёл от неё дальше этого
 local ARM_DISTANCE = 4.5
+-- «Стоит на кнопке»: запас по краям и высота HumanoidRootPart над кнопкой (studs)
+local STAND_MARGIN = 0.5
+local STAND_HEIGHT = 6
 local COLOR_REFRESH = 0.5
 local COLOR_AFFORDABLE = Color3.fromRGB(61, 220, 132)
 local COLOR_EXPENSIVE = Color3.fromRGB(70, 72, 90)
@@ -279,6 +282,15 @@ local function availableUpgrades(profile: DataService.Profile): { Upgrades.Upgra
 	return result
 end
 
+-- Стоит ли персонаж на кнопке (по горизонтали над ней и невысоко)
+local function isStandingOn(root: BasePart, button: BasePart): boolean
+	local offset = button.CFrame:PointToObjectSpace(root.Position)
+	return math.abs(offset.X) <= button.Size.X / 2 + STAND_MARGIN
+		and math.abs(offset.Z) <= button.Size.Z / 2 + STAND_MARGIN
+		and offset.Y >= -1
+		and offset.Y <= STAND_HEIGHT
+end
+
 local tryBuy: (player: Player, upgradeId: string) -> ()
 local onMoveStudio: (player: Player) -> ()
 
@@ -504,9 +516,7 @@ local function onGoHome(player: Player)
 		return
 	end
 	lastHome[player] = now
-	if not PlotService.ownsGarage(player) then
-		return
-	end
+	-- Без гаража тоже ведём к своему участку: новичок находит табличку «Гараж продаётся» (отчёт #3, P1-1)
 	sendHome(player)
 end
 
@@ -636,7 +646,23 @@ function PlotService.start()
 							end
 						end
 						local ready = if upgrade.move then COLOR_MOVE else COLOR_AFFORDABLE
-						button.Color = if profile.cash >= upgrade.cost then ready else COLOR_EXPENSIVE
+						local affordable = profile.cash >= upgrade.cost
+						button.Color = if affordable then ready else COLOR_EXPENSIVE
+						-- Игрок уже стоит на взведённой кнопке, а деньги появились только сейчас:
+						-- Touched не повторится, пока он не сойдёт, — покупаем сами (отчёт #3, P1-2)
+						if
+							affordable
+							and root
+							and button:GetAttribute("Armed") == true
+							and isStandingOn(root, button)
+							and (lastTouch[player] or 0) + TOUCH_COOLDOWN <= os.clock()
+						then
+							lastTouch[player] = os.clock()
+							-- В своём потоке: ошибка или ожидание покупки не остановит общий цикл
+							task.spawn(tryBuy, player, upgrade.id)
+							-- Кнопки сейчас пересоздадутся — остальные этого игрока не трогаем
+							break
+						end
 					end
 				end
 			end

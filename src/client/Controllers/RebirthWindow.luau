@@ -156,7 +156,7 @@ function RebirthWindow.start()
 		else
 			RebirthWindow.open()
 		end
-	end)
+	end, "menu_rebirth")
 
 	ClientState.changed:Connect(function()
 		if refresh then

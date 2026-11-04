@@ -100,7 +100,7 @@ function LanguageController.start()
 		else
 			LanguageController.open()
 		end
-	end)
+	end, "menu_language")
 
 	-- Язык поменялся — перерисовать открытое окно (подсветка и заголовок)
 	ClientState.changed:Connect(function()

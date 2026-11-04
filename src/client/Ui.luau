@@ -3,7 +3,10 @@
 
 local GuiService = game:GetService("GuiService")
 local TextChatService = game:GetService("TextChatService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
+
+local Images = require(ReplicatedStorage.Shared.Config.Images)
 
 local Ui = {}
 
@@ -371,7 +374,8 @@ local function fitMenu(column: Frame, scale: UIScale)
 	scale.Scale = if needed > 0 then math.clamp(available / needed, 0.55, 1) else 1
 end
 
-function Ui.menuButton(slot: number, icon: string, onClick: () -> ()): TextButton
+-- imageKey — ключ из Config/Images.menu: есть id картинки — вместо эмодзи показываем её
+function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: string?): TextButton
 	if not menuColumn then
 		local Players = game:GetService("Players")
 		local screen = Instance.new("ScreenGui")
@@ -422,11 +426,22 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> ()): TextButto
 	end
 	-- Слот задаёт порядок сверху вниз: 1 исследования, 2 команда, 3 задания, 4 магазин, 5 rebirth,
 	-- 6 язык, 7 хиты, 8 воры, 9 праздничный ивент (видна только во время ивента), 10 вид студии,
-	-- 11 банк (с долгом), 12 домой (у владельца гаража)
+	-- 11 банк (с долгом), 12 домой (к своему участку)
 	local b = Ui.button(menuColumn :: Frame, icon, Ui.colors.panel, onClick)
 	b.Name = "Slot" .. slot
 	b.LayoutOrder = slot
 	b.Size = UDim2.fromOffset(MENU_BUTTON, MENU_BUTTON)
+	local imageId = if imageKey then Images.menu[imageKey] else nil
+	if imageId and imageId > 0 then
+		b.Text = ""
+		local image = Instance.new("ImageLabel")
+		image.Name = "Icon"
+		image.BackgroundTransparency = 1
+		image.Size = UDim2.fromScale(1, 1)
+		image.ScaleType = Enum.ScaleType.Fit
+		image.Image = "rbxassetid://" .. imageId
+		image.Parent = b -- отступы даёт UIPadding кнопки
+	end
 	return b
 end
 

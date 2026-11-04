@@ -362,7 +362,7 @@ function HolidayController.start()
 		else
 			open()
 		end
-	end)
+	end, "menu_holiday")
 	menu.Visible = false
 
 	local function refresh()
