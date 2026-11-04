@@ -698,6 +698,20 @@ function Analytics.logAchievement(player: Player, id: string)
 	end
 end
 
+-- Подарок за Robux (GiftService): toFriend = false — получатель ушёл, предмет достался покупателю
+function Analytics.logGift(player: Player, giftId: string, toFriend: boolean)
+	if Config.enabled and states[player] then
+		logCustom(player, Config.events.gift, if toFriend then 1 else 0, giftId)
+	end
+end
+
+-- Награда за вступление в группу (SocialService)
+function Analytics.logGroupReward(player: Player)
+	if Config.enabled and states[player] then
+		logCustom(player, Config.events.groupReward, 1, "group")
+	end
+end
+
 function Analytics.start()
 	if not Config.enabled then
 		return

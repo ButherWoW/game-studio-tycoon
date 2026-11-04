@@ -9,6 +9,7 @@ local Players = game:GetService("Players")
 local Formulas = require(ReplicatedStorage.Shared.Formulas)
 local Offline = require(ReplicatedStorage.Shared.Config.Offline)
 local Rebirth = require(ReplicatedStorage.Shared.Config.Rebirth)
+local Social = require(ReplicatedStorage.Shared.Config.Social)
 local RetentionRemotes = require(ReplicatedStorage.Shared.RetentionRemotes)
 local DataService = require(script.Parent.DataService)
 
@@ -68,9 +69,13 @@ local function onPlayerAdded(player: Player)
 	-- lastLogout обновляется и при автосейве, так что «уход» точен до 60 с.
 	local away = os.time() - (tonumber(data.lastLogout) or os.time())
 	-- Несобранный доход не копится сверх одного максимального ухода (Offline.maxSeconds)
+	-- Roblox Premium: +Social.premium.offlineBonus к офлайн-доходу
+	local premium = if player.MembershipType == Enum.MembershipType.Premium
+		then 1 + Social.premium.offlineBonus
+		else 1
 	local pending = math.min(
-		(tonumber(data.offlinePending) or 0) + OfflineService.earnings(profile, away),
-		OfflineService.earnings(profile, Offline.maxSeconds)
+		(tonumber(data.offlinePending) or 0) + math.floor(OfflineService.earnings(profile, away) * premium),
+		math.floor(OfflineService.earnings(profile, Offline.maxSeconds) * premium)
 	)
 	data.offlinePending = pending
 	player:SetAttribute("OfflinePending", pending)

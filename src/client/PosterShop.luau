@@ -12,8 +12,10 @@ local PosterRemotes = require(Shared.PosterRemotes)
 local Posters = require(Shared.Config.Posters)
 local Images = require(Shared.Config.Images)
 local Texts = require(Shared.Config.Texts)
+local Social = require(Shared.Config.Social)
 local ClientState = require(script.Parent.ClientState)
 local Ui = require(script.Parent.Ui)
+local GiftPicker = require(script.Parent.GiftPicker)
 
 type State = {
 	owned: { [string]: boolean },
@@ -154,6 +156,11 @@ local function cellFor(parent: Instance, poster: Posters.Poster, order: number)
 	name.TextWrapped = true
 	name.TextXAlignment = Enum.TextXAlignment.Center
 	actionButton(cell, poster)
+	-- Премиум-постер можно подарить другому игроку на сервере
+	local gift = if poster.premium then Social.giftFor("poster", poster.id) else nil
+	if gift then
+		GiftPicker.button(cell, gift, posterName(poster), 8 + PREVIEW.Y)
+	end
 	cell.Parent = parent
 end
 
