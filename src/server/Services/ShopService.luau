@@ -140,10 +140,9 @@ function ShopService.grantProduct(player: Player, profile: DataService.Profile, 
 		-- Кофе продлевает: новые 10 минут считаются от конца текущих
 		boosts.coffeeUntil = math.max(boosts.coffeeUntil, os.time()) + Products.effects.coffeeSeconds
 	elseif product.kind == "incomePack" then
-		DataService.addCash(
-			player,
-			ShopService.incomePerMinute(player, profile) * (product.incomeMinutes or 0)
-		)
+		local amount = ShopService.incomePerMinute(player, profile) * (product.incomeMinutes or 0)
+		DataService.addCash(player, amount);
+		(require(script.Parent.RewardService) :: any).noteNonEarned(player, amount)
 	end
 	DataService.replicate(player)
 	pushState(player)

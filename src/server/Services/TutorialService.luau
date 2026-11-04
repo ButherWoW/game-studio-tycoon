@@ -48,7 +48,8 @@ local function onFinish(player: Player, completed: any)
 	player:SetAttribute("TutorialActive", false)
 	-- Награда только за прохождение: в туториале игрок выпускает первую игру
 	if completed and profile.gamesReleased > 0 then
-		DataService.addCash(player, Tutorial.reward)
+		DataService.addCash(player, Tutorial.reward);
+		(require(script.Parent.RewardService) :: any).noteNonEarned(player, Tutorial.reward)
 	end
 end
 
