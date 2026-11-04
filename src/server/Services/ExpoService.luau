@@ -271,7 +271,13 @@ end
 function ExpoService.start()
 	local isStudio = RunService:IsStudio()
 	local interval = if isStudio then Expo.studioIntervalSeconds else Expo.intervalSeconds
-	local minParticipants = if isStudio then Expo.studioMinParticipants else Expo.minParticipants
+	local minParticipants = if isStudio
+		then Expo.studioMinParticipants
+		elseif game.PrivateServerId ~= "" then math.max(
+			Expo.minParticipants,
+			Expo.privateMinParticipants
+		)
+		else Expo.minParticipants
 	Players.PlayerAdded:Connect(function(player)
 		task.spawn(claimPending, player)
 	end)
