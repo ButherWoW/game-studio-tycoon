@@ -189,6 +189,9 @@ function DataService.get(player: Player): Profile?
 	return profiles[player]
 end
 
+-- Доход релиза прячется из таблицы лидеров, пока в окне релиза не открылась оценка (отчёт #2, п. 6)
+local leaderstatsHold: { [Player]: { amount: number, untilAt: number } } = {}
+
 -- Отправить клиенту публичный снимок данных (без квитанций)
 function DataService.replicate(player: Player)
 	local p = profiles[player]
@@ -210,8 +213,27 @@ function DataService.replicate(player: Player)
 	local leaderstats = player:FindFirstChild("leaderstats")
 	local cashValue = leaderstats and leaderstats:FindFirstChild("Cash") :: NumberValue?
 	if cashValue then
-		cashValue.Value = p.cash
+		local hold = leaderstatsHold[player]
+		if hold and os.clock() >= hold.untilAt then
+			leaderstatsHold[player] = nil
+			hold = nil
+		end
+		cashValue.Value = if hold then math.max(p.cash - hold.amount, 0) else p.cash
 	end
+end
+
+-- Показать amount в таблице лидеров только через seconds (вызывает DevelopmentService при релизе)
+function DataService.holdLeaderstats(player: Player, amount: number, seconds: number)
+	local current = leaderstatsHold[player]
+	leaderstatsHold[player] = {
+		amount = amount + (if current and os.clock() < current.untilAt then current.amount else 0),
+		untilAt = os.clock() + seconds,
+	}
+	task.delay(seconds + 0.1, function()
+		if player.Parent then
+			DataService.replicate(player)
+		end
+	end)
 end
 
 function DataService.addCash(player: Player, amount: number)
@@ -251,6 +273,7 @@ end
 
 -- Финальное сохранение со снятием метки. Повторный вызов (PlayerRemoving + BindToClose) — пустой
 local function closeProfile(player: Player)
+	leaderstatsHold[player] = nil
 	local p = profiles[player]
 	local state = states[player]
 	if not p or not state or state.closed then
