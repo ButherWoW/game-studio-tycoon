@@ -6,6 +6,8 @@ local RunService = game:GetService("RunService")
 
 local NAMES = {
 	"HireEmployee", -- клиент -> сервер: employeeId
+	"FireEmployee", -- клиент -> сервер: employeeId (уволить, вернуть Employees.fireRefund цены)
+	"StrikeTipSeen", -- клиент -> сервер: без аргументов, подсказку о забастовке закрыли
 	"MoveStudio", -- клиент -> сервер: без аргументов, переезд на следующий этап
 	"StaffChanged", -- сервер -> клиент: { [employeeId]: deskUpgradeId ("" — ждёт стол) }, { info, unlocked, now }
 	"UpgradeSkill", -- клиент -> сервер: employeeId, skillKey

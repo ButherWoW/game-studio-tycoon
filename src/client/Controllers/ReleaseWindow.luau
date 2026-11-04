@@ -104,7 +104,7 @@ local function show(info: any)
 	gui = screen
 	Ui.windowOpened()
 
-	local window = Ui.window(screen, "Window", Vector2.new(620, 560))
+	local window = Ui.window(screen, "Window", Vector2.new(620, 600))
 	local body = Instance.new("Frame")
 	body.BackgroundTransparency = 1
 	body.Position = UDim2.fromOffset(16, 12)
@@ -152,6 +152,13 @@ local function show(info: any)
 		local value = math.clamp(info.score + (spread[i] or 0), 1, 10)
 		table.insert(cards, { score = scoreLabel, quote = quote, value = value, critic = critic })
 	end
+
+	-- Штраф за повтор жанра+темы (сервер присылает уже с учётом сиквела)
+	local repeatPenalty = math.max(tonumber(info.repeatPenalty) or 0, 0)
+	local repeatLine = Ui.label(body, "", 24, nil, Ui.colors.bad)
+	repeatLine.TextXAlignment = Enum.TextXAlignment.Center
+	repeatLine.LayoutOrder = 19
+	repeatLine.Visible = false
 
 	local total = Ui.label(body, "", 44, Ui.titleFontFor(ClientState.lang))
 	total.TextXAlignment = Enum.TextXAlignment.Center
@@ -219,6 +226,11 @@ local function show(info: any)
 		task.wait(REVEAL_DELAY)
 		if gui ~= screen then
 			return
+		end
+		if repeatPenalty > 0 then
+			local n = (string.format("%.1f", repeatPenalty):gsub("%.0$", ""))
+			repeatLine.Text = ClientState.t("critic_repeat", { n = n })
+			repeatLine.Visible = true
 		end
 		total.Text = ClientState.t("release_score", { score = info.score })
 		total.TextColor3 = Ui.scoreColor(info.score)
