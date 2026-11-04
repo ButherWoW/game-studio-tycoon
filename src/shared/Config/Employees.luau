@@ -121,11 +121,11 @@ Employees.list = {
 		"game designer",
 		"gameplay",
 		2,
-		25_000,
+		29_000,
 		2
 	),
-	employee("sara", "Сара", "Sara", "3D-художница", "3D artist", "graphics", 2, 25_000, 2),
-	employee("max", "Макс", "Max", "композитор", "composer", "sound", 2, 30_000, 2),
+	employee("sara", "Сара", "Sara", "3D-художница", "3D artist", "graphics", 2, 29_000, 2),
+	employee("max", "Макс", "Max", "композитор", "composer", "sound", 2, 35_000, 2),
 	employee(
 		"nika",
 		"Ника",
@@ -134,13 +134,13 @@ Employees.list = {
 		"narrative designer",
 		"story",
 		2,
-		30_000,
+		35_000,
 		2
 	),
 	-- Этаж
-	employee("den", "Ден", "Den", "техлид", "tech lead", "gameplay", 3, 150_000, 3),
-	employee("aya", "Ая", "Aya", "арт-директор", "art director", "graphics", 3, 150_000, 3),
-	employee("leo", "Лео", "Leo", "саунд-директор", "sound director", "sound", 3, 175_000, 3),
+	employee("den", "Ден", "Den", "техлид", "tech lead", "gameplay", 3, 170_000, 3),
+	employee("aya", "Ая", "Aya", "арт-директор", "art director", "graphics", 3, 170_000, 3),
+	employee("leo", "Лео", "Leo", "саунд-директор", "sound director", "sound", 3, 200_000, 3),
 	employee(
 		"vera",
 		"Вера",
@@ -149,7 +149,7 @@ Employees.list = {
 		"lead writer",
 		"story",
 		3,
-		175_000,
+		200_000,
 		3
 	),
 } :: { Employee }
@@ -167,7 +167,7 @@ local robo = employee(
 	"AI assistant",
 	nil,
 	4,
-	2_500_000,
+	2_900_000,
 	4
 )
 local ghost = employee(
