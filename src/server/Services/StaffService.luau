@@ -803,6 +803,8 @@ local function onTeamChanged(player: Player)
 	end
 	seatAll(profile)
 	sendStaff(player)
+	-- Размер команды в снимке данных: условия открытия жанров (shared/UnlockRules)
+	DataService.replicate(player)
 	task.spawn(refreshNpcs, player)
 	-- Все столы заняты — на участке может появиться кнопка переезда
 	PlotService.refreshButtons(player)
