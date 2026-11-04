@@ -1,0 +1,157 @@
+{
+  "assets": [
+    {
+      "name": "Desk1",
+      "file": "models/Desk1.rbxmx",
+      "parts": 262,
+      "seats": 1
+    },
+    {
+      "name": "Desk2",
+      "file": "models/Desk2.rbxmx",
+      "parts": 258,
+      "seats": 0
+    },
+    {
+      "name": "PC1",
+      "file": "models/PC1.rbxmx",
+      "parts": 232,
+      "seats": 0
+    },
+    {
+      "name": "PCPro",
+      "file": "models/PCPro.rbxmx",
+      "parts": 313,
+      "seats": 0
+    },
+    {
+      "name": "Chair",
+      "file": "models/Chair.rbxmx",
+      "parts": 155,
+      "seats": 1
+    },
+    {
+      "name": "Coffee",
+      "file": "models/Coffee.rbxmx",
+      "parts": 144,
+      "seats": 0
+    },
+    {
+      "name": "Posters",
+      "file": "models/Posters.rbxmx",
+      "parts": 44,
+      "seats": 0
+    },
+    {
+      "name": "GarageWalls",
+      "file": "models/GarageWalls.rbxmx",
+      "parts": 363,
+      "seats": 0
+    },
+    {
+      "name": "GarageRoof",
+      "file": "models/GarageRoof.rbxmx",
+      "parts": 44,
+      "seats": 0
+    },
+    {
+      "name": "Sofa",
+      "file": "models/Sofa.rbxmx",
+      "parts": 280,
+      "seats": 0
+    },
+    {
+      "name": "CoffeeTable",
+      "file": "models/CoffeeTable.rbxmx",
+      "parts": 60,
+      "seats": 0
+    },
+    {
+      "name": "HitShelf",
+      "file": "models/HitShelf.rbxmx",
+      "parts": 293,
+      "seats": 0
+    },
+    {
+      "name": "Plant",
+      "file": "models/Plant.rbxmx",
+      "parts": 30,
+      "seats": 0
+    },
+    {
+      "name": "PendantLamp",
+      "file": "models/PendantLamp.rbxmx",
+      "parts": 9,
+      "seats": 0
+    },
+    {
+      "name": "StudioSign",
+      "file": "models/StudioSign.rbxmx",
+      "parts": 71,
+      "seats": 0
+    },
+    {
+      "name": "Rug",
+      "file": "models/Rug.rbxmx",
+      "parts": 69,
+      "seats": 0
+    },
+    {
+      "name": "WallBench",
+      "file": "models/WallBench.rbxmx",
+      "parts": 25,
+      "seats": 0
+    }
+  ],
+  "assembledParts": 4034,
+  "notes": "All geometry original. Native anchored Parts. No Script/LocalScript/ModuleScript or external asset dependencies.",
+  "layout": {
+    "footprintStuds": [
+      45,
+      45
+    ],
+    "plotStuds": [
+      60,
+      60
+    ],
+    "deskTopY": 3,
+    "workstations": [
+      {
+        "position": [
+          -11.5,
+          0,
+          -12
+        ],
+        "yaw": 0
+      },
+      {
+        "position": [
+          11.5,
+          0,
+          -12
+        ],
+        "yaw": 0
+      },
+      {
+        "position": [
+          -11.5,
+          0,
+          1
+        ],
+        "yaw": 0
+      },
+      {
+        "position": [
+          11.5,
+          0,
+          1
+        ],
+        "yaw": 0
+      }
+    ],
+    "templateShellStuds": [
+      60,
+      60
+    ]
+  }
+}
