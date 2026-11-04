@@ -68,4 +68,7 @@ Images.skins = {
 	wizard_dev = { shirt = 133948528089059, pants = 84656926980640, preview = 128736905194190 }, -- премиум
 } :: { [string]: { shirt: number, pants: number, preview: number } }
 
+-- VIP (docs/VISUAL.md, V14): текстура искр над золотой вывеской. 0 — стандартная искра Roblox
+Images.vip = 0
+
 return Images

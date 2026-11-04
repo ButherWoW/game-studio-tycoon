@@ -261,6 +261,21 @@ function PosterService.owns(player: Player, posterId: string): boolean
 	return profile ~= nil and data(profile).owned[posterId] == true
 end
 
+-- Выдать постер по id (подарок). false — нет такого постера
+function PosterService.grantPoster(player: Player, profile: DataService.Profile, posterId: string): boolean
+	local poster = Posters.get(posterId)
+	if not poster then
+		return false
+	end
+	grant(player, profile, poster)
+	return true
+end
+
+-- Куплен ли постер в этом профиле (подарки: не дарить то, что уже есть)
+function PosterService.ownsIn(profile: DataService.Profile, posterId: string): boolean
+	return data(profile).owned[posterId] == true
+end
+
 local function throttled(player: Player): boolean
 	local now = os.clock()
 	if (lastAction[player] or 0) + ACTION_COOLDOWN > now then

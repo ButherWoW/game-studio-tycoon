@@ -25,6 +25,8 @@ local EARLY_TOLERANCE = 1 -- результат раньше jobDuration мин�
 type ActiveJob = { id: string, startedAt: number }
 
 local StartParkService = {}
+-- Ставит VipService: украсить готовую вывеску игрока (модель StudioSign и доска с названием)
+StartParkService.decorateSign = nil :: ((Player, Model, BasePart) -> ())?
 local activeJobs: { [Player]: ActiveJob } = {}
 local lastRequest: { [Player]: number } = {}
 local lastNameRequest: { [Player]: number } = {}
@@ -541,7 +543,18 @@ local function applyStudioSigns(player: Player)
 	glow.Brightness = 0.6
 	glow.Parent = signBoard
 	model.Parent = plot
+	-- VIP: золотая рамка, 👑 и искры (VipService)
+	local decorate = StartParkService.decorateSign
+	if decorate then
+		local ok, err = pcall(decorate, player, model, signBoard)
+		if not ok then
+			warn("[StartParkService] VIP sign failed:", err)
+		end
+	end
 end
+
+-- Перестроить вывеску (VipService: VIP-статус появился или пропал)
+StartParkService.refreshSigns = applyStudioSigns
 
 local function refreshNaming(player: Player)
 	local profile = DataService.get(player)

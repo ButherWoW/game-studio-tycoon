@@ -7,6 +7,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local QuestRemotes = require(ReplicatedStorage.Shared.QuestRemotes)
 local DailyRewards = require(ReplicatedStorage.Shared.Config.DailyRewards)
+local Social = require(ReplicatedStorage.Shared.Config.Social)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local QuestWindow = require(script.Parent.QuestWindow)
@@ -93,6 +94,32 @@ local function show(day: number)
 	hint.TextXAlignment = Enum.TextXAlignment.Center
 	hint.Position = UDim2.fromOffset(16, 242)
 	hint.Size = UDim2.new(1, -32, 0, 22)
+
+	-- Бонус Roblox Premium (Config/Social.premium): у премиум-игроков золотой, у остальных — серый
+	local perks = {}
+	local premium = Social.premium
+	if premium.offlineBonus > 0 then
+		table.insert(
+			perks,
+			ClientState.t("premium_offline", { percent = math.floor(premium.offlineBonus * 100 + 0.5) })
+		)
+	end
+	if premium.dailyCoffeeMinutes > 0 then
+		table.insert(perks, ClientState.t("premium_coffee", { minutes = premium.dailyCoffeeMinutes }))
+	end
+	if #perks > 0 then
+		local active = Players.LocalPlayer.MembershipType == Enum.MembershipType.Premium
+		local line = Ui.label(
+			window,
+			ClientState.t("premium_bonus", { perks = table.concat(perks, ", ") }),
+			22,
+			nil,
+			if active then Ui.colors.money else Ui.colors.muted
+		)
+		line.TextXAlignment = Enum.TextXAlignment.Center
+		line.Position = UDim2.fromOffset(16, 270)
+		line.Size = UDim2.new(1, -32, 0, 22)
+	end
 
 	local claim = Ui.button(
 		window,
