@@ -465,6 +465,16 @@ Texts.ru = {
 	hud_strike = "⚠️ Нечем платить зарплаты и аренду — команда бастует",
 	team_salary = "зарплата {amount}/мин",
 	team_rent = "аренда {amount}/мин",
+	loan_title = "🏦 Банк",
+	loan_offer = "Деньги почти закончились. Возьми кредит!",
+	loan_terms = "Вернуть {repay}: {percent}% дохода каждой игры, пока не погасишь",
+	loan_take = "Взять кредит",
+	loan_later = "Не сейчас",
+	loan_debt_text = "Осталось вернуть банку",
+	loan_auto_hint = "{percent}% дохода каждой игры уходит в погашение",
+	loan_pay = "Погасить {amount}",
+	loan_close = "Закрыть",
+	hud_debt = "🏦 долг {amount}",
 } :: { [string]: string }
 
 Texts.en = {
@@ -879,6 +889,16 @@ Texts.en = {
 	hud_strike = "⚠️ Can't pay salaries and rent — your team is on strike",
 	team_salary = "salary {amount}/min",
 	team_rent = "rent {amount}/min",
+	loan_title = "🏦 Bank",
+	loan_offer = "You are almost out of money. Take a loan!",
+	loan_terms = "Pay back {repay}: {percent}% of every game's income until it's repaid",
+	loan_take = "Take the loan",
+	loan_later = "Not now",
+	loan_debt_text = "Left to pay the bank",
+	loan_auto_hint = "{percent}% of every game's income goes to the bank",
+	loan_pay = "Pay {amount}",
+	loan_close = "Close",
+	hud_debt = "🏦 debt {amount}",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть

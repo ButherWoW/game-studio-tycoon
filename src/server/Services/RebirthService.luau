@@ -36,7 +36,9 @@ function RebirthService.check(profile: DataService.Profile): string?
 	if not profile.upgrades[Rebirth.requiredUpgrade] then
 		return "no_office"
 	end
-	if profile.cash < Rebirth.cost(profile.rebirths) then
+	-- Кредит банка гасится вместе с ребёрзом: денег нужно на ребёрз + долг
+	local debt = math.max(math.floor(tonumber((profile :: any).loanDebt) or 0), 0)
+	if profile.cash < Rebirth.cost(profile.rebirths) + debt then
 		return "no_money"
 	end
 	return nil
@@ -96,6 +98,10 @@ local function onRequestRebirth(player: Player)
 		data.perks.royalties = {}
 	end
 	player:SetAttribute("OfflinePending", 0)
+	local loanModule = script.Parent:FindFirstChild("LoanService")
+	if loanModule and loanModule:IsA("ModuleScript") then
+		(require(loanModule) :: any).clear(player, profile)
+	end
 	local devModule = script.Parent:FindFirstChild("DevelopmentService")
 	if devModule and devModule:IsA("ModuleScript") then
 		(require(devModule) :: any).cancel(player)
