@@ -47,6 +47,8 @@ export type Profile = {
 	-- Скины сотрудников (SkinService): открытые стили и кто что носит (employeeId -> skinId).
 	-- Rebirth не сбрасывает owned; assigned чистится по нанятым
 	skins: { owned: { [string]: boolean }, assigned: { [string]: string } },
+	-- Предложения доната (OfferService): первый вход (таймер стартового набора), куплен ли он, значок
+	offers: { firstJoin: number, starterBought: boolean, starterShown: boolean, starterBadge: boolean },
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
@@ -106,6 +108,7 @@ local function defaultProfile(): Profile
 		achievements = { done = {}, stats = {}, combos = {} },
 		decor = { owned = {} },
 		skins = { owned = {}, assigned = {} },
+		offers = { firstJoin = os.time(), starterBought = false, starterShown = false, starterBadge = false },
 		processedReceipts = {},
 		receiptLog = {},
 		lastLogout = os.time(),

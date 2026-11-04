@@ -675,6 +675,12 @@ local function release(player: Player, project: Project)
 		revenue = revenue,
 		laptop = project.laptop == true,
 	})
+	-- Предложение «×2 к доходу этой игры» (OfferService запоминает релиз на минуту)
+	hook("OfferService", "onGameReleased", player, {
+		projectId = project.id,
+		revenue = revenue,
+		score = score,
+	})
 
 	Remotes.GameReleased:FireClient(player, {
 		name = project.name,
@@ -1013,6 +1019,8 @@ local function tickProject(player: Player, project: Project, atPc: boolean)
 		id = project.id,
 		progress = math.min(project.elapsed / project.duration, 1),
 		points = project.points,
+		-- Секунд до релиза (кнопка «⚡ Закончить сейчас», Config/Offers.longDev)
+		remaining = math.max(project.duration - project.elapsed, 0),
 	})
 
 	maybeStartEvent(player, project)

@@ -15,6 +15,7 @@ local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local CreateGameWindow = require(script.Parent.CreateGameWindow)
+local OfferClient = require(script.Parent.Parent.OfferClient)
 
 local REVEAL_DELAY = 0.6
 local CRITIC_SPREAD = { -1, 0, 0, 1 } -- сумма 0: среднее равно итоговой оценке
@@ -104,7 +105,9 @@ local function show(info: any)
 	gui = screen
 	Ui.windowOpened()
 
-	local window = Ui.window(screen, "Window", Vector2.new(620, 636))
+	-- Предложение под итогом (×2 к доходу этой игры / геймпасс ×2): окно выше на строку
+	local offer = OfferClient.releaseOffer(info)
+	local window = Ui.window(screen, "Window", Vector2.new(620, if offer then 692 else 636))
 	local body = Instance.new("Frame")
 	body.BackgroundTransparency = 1
 	body.Position = UDim2.fromOffset(16, 12)
@@ -287,6 +290,9 @@ local function show(info: any)
 			loan.Visible = true
 		end
 		buttons.Visible = true
+		if offer then
+			offer(body, 24)
+		end
 		revealed()
 	end)
 end

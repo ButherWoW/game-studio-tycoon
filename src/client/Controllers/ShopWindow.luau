@@ -19,6 +19,7 @@ local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local PosterShop = require(script.Parent.Parent.PosterShop)
 local SkinShop = require(script.Parent.Parent.SkinShop)
+local OfferShop = require(script.Parent.Parent.OfferShop)
 
 type Tab = "ads" | "passes" | "boosts" | "posters" | "skins"
 type ShopState = {
@@ -258,6 +259,8 @@ render = function()
 	else
 		buildBoosts(body)
 	end
+	-- Сверху любой вкладки: сделка дня и стартовый набор
+	OfferShop.build(body)
 	-- Холст растягивается на следующем кадре: восстанавливаем прокрутку после него
 	local savedY = scrollY
 	task.defer(function()
@@ -284,6 +287,7 @@ function ShopWindow.open()
 	ShopRemotes.ShopStateRequest:FireServer()
 	PosterShop.request()
 	SkinShop.request()
+	OfferShop.request()
 end
 
 function ShopWindow.close()
@@ -314,6 +318,9 @@ function ShopWindow.start()
 		render()
 	end)
 	SkinShop.listen(function()
+		render()
+	end)
+	OfferShop.listen(function()
 		render()
 	end)
 	-- Деньги поменялись — перекрасить кнопки «за $»

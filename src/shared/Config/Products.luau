@@ -91,8 +91,41 @@ local list: { Product } = {
 	},
 }
 
+-- Продукты предложений (Config/Offers). Не в list: в магазине отдельной строкой не продаются.
+-- Dev 1 создаёт их в Dashboard и вписывает productId
+export type OfferProduct = { productId: number, robuxPrice: number }
+
+local offers = {
+	-- ×2 к доходу только что вышедшей игры (окно релиза). Поздно/повторно — пакет income10
+	doubleRelease = { productId = 0, robuxPrice = 25 } :: OfferProduct,
+	-- Стартовый набор: $ за 30 мин дохода (мин. $5 000), 2 скина, 3 кофе, значок. Раз на аккаунт
+	starterPack = { productId = 0, robuxPrice = 79 } :: OfferProduct,
+}
+
+-- «Сделка дня» (−30%): цену продукта в Dashboard менять нельзя, поэтому у каждого товара пула
+-- Offers.dailyDeal своя скидочная копия. Ключ — id из пула; выдаёт то же, что оригинал
+local deals: { [string]: OfferProduct } = {
+	instantFinish = { productId = 0, robuxPrice = 10 },
+	patch = { productId = 0, robuxPrice = 17 },
+	coffee = { productId = 0, robuxPrice = 20 },
+	income10 = { productId = 0, robuxPrice = 34 },
+	income30 = { productId = 0, robuxPrice = 90 },
+	income90 = { productId = 0, robuxPrice = 209 },
+	poster_neonCity = { productId = 0, robuxPrice = 34 },
+	poster_crystalKingdom = { productId = 0, robuxPrice = 55 },
+	poster_mechTitan = { productId = 0, robuxPrice = 69 },
+	poster_galaxyLegends = { productId = 0, robuxPrice = 90 },
+	poster_goldenController = { productId = 0, robuxPrice = 104 },
+	skin_neon_streamer = { productId = 0, robuxPrice = 55 },
+	skin_cyber_dev = { productId = 0, robuxPrice = 69 },
+	skin_space_dev = { productId = 0, robuxPrice = 90 },
+	skin_wizard_dev = { productId = 0, robuxPrice = 104 },
+}
+
 return {
 	list = list,
+	offers = offers,
+	deals = deals,
 	effects = {
 		coffeeSpeed = 2, -- ×2 скорость разработки
 		coffeeSeconds = 10 * 60, -- покупка продлевает от текущего конца
