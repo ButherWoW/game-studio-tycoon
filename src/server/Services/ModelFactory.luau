@@ -839,6 +839,8 @@ local function signText(p: BasePart, face: Enum.NormalId, key: string, text: str
 	label:SetAttribute("TextKey", key)
 	label.Parent = gui
 end
+-- Для моделей парка из Studio (WorldService): та же надпись с переводом по TextKey
+ModelFactory.signText = signText
 
 -- Скамейка с ноутбуком. Сидящий смотрит на −Z модели (так сажает Seat): там столик с ноутбуком.
 -- Seat «PcSeat» с атрибутом Public — общий компьютер, пока у игрока нет гаража (PlotService.isAtPc)

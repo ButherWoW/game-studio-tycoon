@@ -268,21 +268,72 @@ local function ensureStartPark()
 		model.Parent = folder
 	end
 
+	-- Модели Астры (assets/models/astra-park-objects) из ServerStorage важнее собранных кодом
+	local function parkModel(name: string): (Model?, boolean)
+		local template = landscapeTemplate(name)
+		if template and template:IsA("Model") then
+			return template:Clone(), true
+		end
+		return ModelFactory.build(name), false
+	end
+	-- Поставить по точке и повороту из раскладки Астры (лицо модели — +Z)
+	local function placeAt(model: Model, spot: { position: Vector3, yaw: number })
+		model:PivotTo(CFrame.new(center + spot.position) * CFrame.Angles(0, math.rad(spot.yaw), 0))
+		model.Parent = folder
+	end
+	-- Надпись на табличке импортированной модели (у Астры текста нет): лицо +Z — грань Back
+	local function addSign(model: Model, partName: string, key: string, text: string, color: Color3)
+		local part = model:FindFirstChild(partName, true)
+		if part and part:IsA("BasePart") then
+			ModelFactory.signText(part, Enum.NormalId.Back, key, text, color)
+		end
+	end
+	local landscape = hasLandscape()
+
 	-- Сидящий на скамейке смотрит на −Z (к спавну), столик с ноутбуком перед ним
 	for i = 1, StartPark.benchCount do
-		local bench = ModelFactory.build("ParkBench")
+		local bench = parkModel("ParkBench")
 		if bench then
 			bench.Name = "Bench" .. i
+			-- Ноутбук в парке — общий: атрибут Public на PcSeat (у импортированной модели может не быть)
+			for _, seat in bench:GetDescendants() do
+				if seat:IsA("Seat") and seat.Name == "PcSeat" then
+					seat:SetAttribute("Public", true)
+				end
+			end
 			place(bench, 30 + (i - 1) * 360 / StartPark.benchCount, StartPark.benchRadius, false)
 		end
 	end
-	local board = ModelFactory.build("JobBoard")
+	local board, boardImported = parkModel("JobBoard")
 	if board then
-		place(board, 90, StartPark.boardRadius, true)
+		if landscape then
+			placeAt(board, StartPark.landscapeBoard)
+		else
+			place(board, 90, StartPark.boardRadius, true)
+		end
+		if boardImported then
+			addSign(board, "Header", "park_board_sign", "📋 ЗАКАЗЫ", Color3.fromRGB(255, 255, 255))
+		end
 	end
-	local pawn = ModelFactory.build("Pawnshop")
+	local pawn, pawnImported = parkModel("Pawnshop")
 	if pawn then
-		place(pawn, 270, StartPark.boardRadius, true)
+		if landscape then
+			placeAt(pawn, StartPark.landscapePawnshop)
+		else
+			place(pawn, 270, StartPark.boardRadius, true)
+		end
+		if pawnImported then
+			addSign(pawn, "SignPanel", "park_pawn_sign", "📦 ЛОМБАРД", Color3.fromRGB(255, 201, 60))
+		end
+	end
+	-- Фонтан Астры — только вместе с её парком (место в парке под него оставлено)
+	if landscape then
+		local fountain = landscapeTemplate("Fountain")
+		if fountain and fountain:IsA("Model") then
+			local copy = fountain:Clone()
+			copy.Name = "Fountain"
+			placeAt(copy, StartPark.landscapeFountain)
+		end
 	end
 
 	-- Точки картриджей — на тропинках к участкам: игрок проходит мимо
