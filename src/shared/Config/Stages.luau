@@ -1,5 +1,6 @@
 --!strict
--- Этапы студии (issue #8). Номер этапа = profile.studioLevel (бонус к доходу в Formulas.revenue).
+-- Этапы студии (issue #8): гараж → трёхэтажный офис (1-й, 2-й, 3-й этаж); небоскрёба нет,
+-- id floor/skyscraper оставлены ради старых сохранений. Номер этапа = profile.studioLevel (бонус к доходу в Formulas.revenue).
 -- Переезд: нужен купленный апгрейд requiresUpgrade, gamesRequired выпущенных игр и cost денег.
 -- model — модель из ServerStorage.Upgrades, которая ставится на участок на этом этапе
 -- (нет — WorldService создаёт заглушку). Апгрейды гаража при переезде остаются.
@@ -40,8 +41,8 @@ local Stages: { Stage } = {
 	{
 		level = 3,
 		id = "floor",
-		name = "Этаж в бизнес-центре",
-		nameEn = "Business center floor",
+		name = "Офис: 2-й этаж",
+		nameEn = "Office: 2nd floor",
 		cost = 60_000,
 		gamesRequired = 10,
 		model = "Floor",
@@ -51,8 +52,8 @@ local Stages: { Stage } = {
 	{
 		level = 4,
 		id = "skyscraper",
-		name = "Небоскрёб",
-		nameEn = "Skyscraper",
+		name = "Офис: 3-й этаж",
+		nameEn = "Office: 3rd floor",
 		cost = 400_000,
 		gamesRequired = 40,
 		model = "Skyscraper",
