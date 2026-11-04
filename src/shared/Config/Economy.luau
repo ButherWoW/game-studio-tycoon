@@ -33,6 +33,8 @@ local Economy = {
 	repeatHistory = 4,
 	repeatPenalty = 0.7,
 	repeatPenaltyMax = 1.5,
+	-- Сиквелы геймпасса «Авто-релиз» получают такую долю штрафа за повтор (платная фича не должна резать доход)
+	sequelRepeatFactor = 0.5,
 }
 
 return Economy

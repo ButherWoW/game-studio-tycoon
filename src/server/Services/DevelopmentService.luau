@@ -108,11 +108,14 @@ local function scoreBonus(
 	player: Player,
 	profile: DataService.Profile,
 	genreId: string,
-	topicId: string
+	topicId: string,
+	sequel: boolean?
 ): number
+	-- Сиквел геймпасса «Авто-релиз» повторяет сочетание по задумке: штраф за повтор слабее
+	local repeatFactor = if sequel then Economy.sequelRepeatFactor else 1
 	return reviewBonus(player)
 		- Formulas.criticExpectation(profile.studioLevel)
-		- Formulas.repeatPenalty(profile.recentCombos, genreId, topicId)
+		- Formulas.repeatPenalty(profile.recentCombos, genreId, topicId) * repeatFactor
 end
 
 local function durationFactor(player: Player): number
@@ -152,6 +155,7 @@ type Project = {
 	eventsDone: number,
 	tempo: number, -- скорость разработки на момент старта (см. pointsRate)
 	event: { def: DevEvents.DevEvent, expiresAt: number }?,
+	sequel: boolean?, -- сиквел от «Авто-релиза» (слабее штраф за повтор)
 	laptop: boolean?, -- начата на ноутбуке в парке: доход × StartPark.laptopRevenueMultiplier
 }
 
@@ -385,7 +389,14 @@ end
 
 -- Начать игру: общие проверки для «Создать игру» и «Авто-релиза».
 -- rawName уже очищен (TextSafe) и обрезан; здесь он проходит фильтр Roblox
-local function beginProject(player: Player, genreId: string, topicId: string, focus: Focus, rawName: string)
+local function beginProject(
+	player: Player,
+	genreId: string,
+	topicId: string,
+	focus: Focus,
+	rawName: string,
+	sequel: boolean?
+)
 	-- Игру делают за компьютером, а не на бегу
 	if not PlotService.isAtPc(player) then
 		return
@@ -414,6 +425,7 @@ local function beginProject(player: Player, genreId: string, topicId: string, fo
 		nextEventAt = math.huge,
 		eventsDone = 0,
 		tempo = 1,
+		sequel = sequel == true,
 	}
 	table.insert(list, project)
 	DevelopmentService.pushState(player)
@@ -478,7 +490,7 @@ local function release(player: Player, project: Project)
 		project.topicId,
 		project.points,
 		rng,
-		scoreBonus(player, profile, project.genreId, project.topicId)
+		scoreBonus(player, profile, project.genreId, project.topicId, project.sequel)
 	)
 	local TrendService = optional("TrendService")
 	if TrendService then
@@ -714,7 +726,8 @@ local function maybeAutoRelease(player: Player, project: Project)
 		project.genreId,
 		project.topicId,
 		table.clone(project.focus),
-		sequelName(project.name)
+		sequelName(project.name),
+		true
 	)
 end
 
