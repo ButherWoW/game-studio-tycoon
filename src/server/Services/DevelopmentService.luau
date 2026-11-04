@@ -8,6 +8,7 @@ local TextService = game:GetService("TextService")
 local Shared = ReplicatedStorage.Shared
 local Remotes = require(Shared.Remotes)
 local Formulas = require(Shared.Formulas)
+local TextSafe = require(Shared.TextSafe)
 local Genres = require(Shared.Config.Genres)
 local Topics = require(Shared.Config.Topics)
 local Upgrades = require(Shared.Config.Upgrades)
@@ -77,6 +78,13 @@ local function durationFactor(player: Player): number
 end
 local StaffService = require(script.Parent.StaffService)
 local PlotService = require(script.Parent.PlotService)
+local StartPark = require(Shared.Config.StartPark)
+
+-- «Инди в парке»: пока нет гаража, игры делаются на общем ноутбуке — фиксированные время
+-- и очки в секунду (бонусы студии, магазина и исследований не действуют), доход ниже
+local function onLaptop(player: Player): boolean
+	return not PlotService.ownsGarage(player)
+end
 
 type Focus = { gameplay: number, graphics: number, sound: number, story: number }
 
@@ -93,6 +101,7 @@ type Project = {
 	eventsDone: number,
 	tempo: number, -- скорость разработки на момент старта (см. pointsRate)
 	event: { def: DevEvents.DevEvent, expiresAt: number }?,
+	laptop: boolean?, -- начата на ноутбуке в парке: доход × StartPark.laptopRevenueMultiplier
 }
 
 local BASE_DURATION = 30 -- секунд на одну игру в начале
@@ -145,6 +154,12 @@ function DevelopmentService.pointsRate(player: Player, focus: Focus, tempo: numb
 	local rate = { gameplay = 0, graphics = 0, sound = 0, story = 0 }
 	local profile = DataService.get(player)
 	if not profile then
+		return rate
+	end
+	if onLaptop(player) then
+		for _, key in FOCUS_KEYS do
+			(rate :: any)[key] = (focus :: any)[key] * StartPark.laptopPointsPerSecond
+		end
 		return rate
 	end
 	local byDesk = StaffService.employeesByDesk(player)
@@ -245,9 +260,10 @@ local function onStartDevelopment(player: Player, request: any)
 	if type(request.name) ~= "string" or #request.name > MAX_NAME_LENGTH * 4 then
 		return
 	end
-	local rawName = (request.name:gsub("^%s+", ""):gsub("%s+$", ""))
-	local nameLength = utf8.len(rawName)
-	if nameLength == nil or nameLength < MIN_NAME_LENGTH then
+	-- Невидимые символы и «Zalgo» вырезаем: название игры видят все (выставка, хиты)
+	local rawName = TextSafe.clean(request.name)
+	local nameLength = rawName and utf8.len(rawName)
+	if not rawName or not nameLength or TextSafe.visibleLength(rawName) < MIN_NAME_LENGTH then
 		return
 	end
 	if nameLength > MAX_NAME_LENGTH then
@@ -260,6 +276,7 @@ local function onStartDevelopment(player: Player, request: any)
 	if projects[player] ~= PENDING or not player.Parent then
 		return
 	end
+	local laptop = onLaptop(player)
 
 	local factor = durationFactor(player)
 	projects[player] = {
@@ -269,10 +286,11 @@ local function onStartDevelopment(player: Player, request: any)
 		focus = focus,
 		points = { gameplay = 0, graphics = 0, sound = 0, story = 0 },
 		elapsed = 0,
-		duration = BASE_DURATION * factor,
+		duration = if laptop then StartPark.laptopDuration else BASE_DURATION * factor,
 		nextEventAt = DevEvents.firstAt,
 		eventsDone = 0,
-		tempo = 1 / factor,
+		tempo = if laptop then 1 else 1 / factor,
+		laptop = laptop,
 	}
 end
 
@@ -310,7 +328,8 @@ local function release(player: Player, project: Project)
 	local research = researchModifiers(player)
 	local cashMultiplier = if shop and type(shop.cashMultiplier) == "number" then shop.cashMultiplier else 1
 	local researchMultiplier = if research and type(research.revenue) == "number" then research.revenue else 1
-	revenue = math.floor(revenue * cashMultiplier * researchMultiplier)
+	local laptopMultiplier = if project.laptop then StartPark.laptopRevenueMultiplier else 1
+	revenue = math.floor(revenue * cashMultiplier * researchMultiplier * laptopMultiplier)
 
 	local isRecord = profile.gamesReleased > 0 and score > profile.bestScore
 	profile.gamesReleased += 1
@@ -323,6 +342,12 @@ local function release(player: Player, project: Project)
 		name = project.name,
 		score = score,
 		points = p.gameplay + p.graphics + p.sound + p.story,
+	})
+	hook("HitService", "onGameReleased", player, {
+		name = project.name,
+		genreId = project.genreId,
+		topicId = project.topicId,
+		score = score,
 	})
 	hook("QuestService", "onGameReleased", player, {
 		genreId = project.genreId,

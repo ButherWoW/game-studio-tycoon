@@ -53,6 +53,10 @@ function ClientState.atPc(): boolean
 	if not seat or seat.Name ~= "PcSeat" then
 		return false
 	end
+	-- Общий ноутбук в парке — компьютер, пока нет гаража (атрибут ставит PlotService)
+	if seat:GetAttribute("Public") == true then
+		return player:GetAttribute("OwnsGarage") ~= true
+	end
 	local plots = workspace:FindFirstChild("Plots")
 	local plot = plots and plots:FindFirstChild(tostring(player:GetAttribute("PlotName")))
 	return plot ~= nil and seat:IsDescendantOf(plot)
