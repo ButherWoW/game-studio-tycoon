@@ -360,6 +360,8 @@ Texts.ru = {
 	hit_err_steal_back = "Этот хит у тебя недавно украли — сразу назад не забрать",
 	park_jobs_garage = "Подработки — для тех, кто копит на гараж. У тебя уже есть студия!",
 	park_seat_garage = "Ноутбуки в парке — для новичков. Иди в свою студию!",
+	error_name_bad = "Название с плохими словами — придумай другое",
+	move_celebrate = "🎉 Новая студия: {stage}!",
 } :: { [string]: string }
 
 Texts.en = {
@@ -642,6 +644,8 @@ Texts.en = {
 	hit_err_steal_back = "This hit was stolen from you recently — you cannot take it back right away",
 	park_jobs_garage = "Side jobs are for players saving up for a garage. You already have a studio!",
 	park_seat_garage = "Park laptops are for newcomers. Head to your studio!",
+	error_name_bad = "That title has bad words — try another one",
+	move_celebrate = "🎉 New studio: {stage}!",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть

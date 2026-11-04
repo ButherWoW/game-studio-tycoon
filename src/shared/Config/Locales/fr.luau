@@ -469,4 +469,6 @@ return {
 	hit_err_steal_back = "Ce hit t’a été volé récemment — impossible de le reprendre tout de suite",
 	park_jobs_garage = "Les petits boulots sont pour ceux qui économisent pour un garage. Tu as déjà un studio !",
 	park_seat_garage = "Les portables du parc sont pour les débutants. Va dans ton studio !",
+	error_name_bad = "Ce titre contient des gros mots — trouve-en un autre",
+	move_celebrate = "🎉 Nouveau studio : {stage} !",
 }

@@ -469,4 +469,6 @@ return {
 	hit_err_steal_back = "Dieser Hit wurde dir gerade erst geklaut — zurückholen geht nicht sofort",
 	park_jobs_garage = "Nebenjobs sind für alle, die auf eine Garage sparen. Du hast schon ein Studio!",
 	park_seat_garage = "Die Park-Laptops sind für Neulinge. Ab in dein Studio!",
+	error_name_bad = "Der Titel enthält Schimpfwörter – denk dir einen anderen aus",
+	move_celebrate = "🎉 Neues Studio: {stage}!",
 }

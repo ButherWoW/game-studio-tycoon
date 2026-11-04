@@ -469,4 +469,6 @@ return {
 	hit_err_steal_back = "Den här hiten stals från dig nyss — du kan inte ta tillbaka den direkt",
 	park_jobs_garage = "Extrajobb är för den som sparar till ett garage. Du har redan en studio!",
 	park_seat_garage = "Parkens laptops är för nybörjare. Gå till din studio!",
+	error_name_bad = "Titeln har fula ord — hitta på en annan",
+	move_celebrate = "🎉 Ny studio: {stage}!",
 }

@@ -468,4 +468,6 @@ return {
 	hit_err_steal_back = "Šo hitu tev nesen nozaga — uzreiz atpakaļ to nepaņemsi",
 	park_jobs_garage = "Gadījuma darbi ir tiem, kas krāj garāžai. Tev jau ir studija!",
 	park_seat_garage = "Parka klēpjdatori ir iesācējiem. Ej uz savu studiju!",
+	error_name_bad = "Nosaukumā ir rupji vārdi — izdomā citu",
+	move_celebrate = "🎉 Jauna studija: {stage}!",
 }

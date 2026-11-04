@@ -306,6 +306,30 @@ local function run()
 			elseif step == STEP_WAIT and not owns("pc1") then
 				target3d = plotButton("pc1")
 			end
+			-- Поверх других окон (награда за вход, офлайн-доход и т.п.) подсказка не лезет:
+			-- прячем её, пока такое окно открыто (окна «Создать игру» и «Релиз» — часть обучения)
+			local covered = false
+			for _, child in playerGui:GetChildren() do
+				if
+					child:IsA("ScreenGui")
+					and child.Enabled
+					and child.Name:sub(-6) == "Window"
+					and child.Name ~= "CreateGameWindow"
+					and child.Name ~= "ReleaseWindow"
+				then
+					-- Окно может жить постоянно и прятать содержимое через Visible — считаем только видимое
+					for _, frame in child:GetChildren() do
+						if frame:IsA("GuiObject") and frame.Visible then
+							covered = true
+							break
+						end
+					end
+				end
+			end
+			plate.Visible = not covered
+			if covered then
+				target2d, target3d = nil, nil
+			end
 			point3d(target3d)
 			point2d(target2d, now)
 

@@ -469,4 +469,6 @@ return {
 	hit_err_steal_back = "Acest hit ți-a fost furat de curând — nu îl poți lua înapoi imediat",
 	park_jobs_garage = "Joburile mărunte sunt pentru cei care strâng pentru garaj. Tu ai deja un studio!",
 	park_seat_garage = "Laptopurile din parc sunt pentru începători. Mergi în studioul tău!",
+	error_name_bad = "Titlul are cuvinte urâte — inventează altul",
+	move_celebrate = "🎉 Studio nou: {stage}!",
 }

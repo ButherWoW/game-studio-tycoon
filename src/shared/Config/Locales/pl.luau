@@ -469,4 +469,6 @@ return {
 	hit_err_steal_back = "Ten hit niedawno ci ukradziono — nie odbierzesz go od razu",
 	park_jobs_garage = "Dorywcze zlecenia są dla tych, co zbierają na garaż. Ty masz już studio!",
 	park_seat_garage = "Laptopy w parku są dla nowych. Idź do swojego studia!",
+	error_name_bad = "W nazwie są brzydkie słowa — wymyśl inną",
+	move_celebrate = "🎉 Nowe studio: {stage}!",
 }

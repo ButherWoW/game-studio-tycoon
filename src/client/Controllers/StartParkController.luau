@@ -9,6 +9,7 @@ local TweenService = game:GetService("TweenService")
 
 local StartRemotes = require(ReplicatedStorage.Shared.StartRemotes)
 local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
+local WordFilter = require(ReplicatedStorage.Shared.WordFilter)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
@@ -510,6 +511,10 @@ local function openNameWindow()
 		local length = utf8.len(name)
 		if not length or length < StartPark.studioNameMin or length > StartPark.studioNameMax then
 			showNameError("studio_name_err_length")
+			return
+		end
+		if not WordFilter.isClean(name) then
+			showNameError("studio_name_err_filtered")
 			return
 		end
 		err.Text = "…"

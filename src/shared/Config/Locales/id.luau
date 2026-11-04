@@ -468,4 +468,6 @@ return {
 	hit_err_steal_back = "Hit ini baru saja dicuri darimu — belum bisa diambil kembali",
 	park_jobs_garage = "Kerja sampingan untuk yang menabung beli garasi. Kamu sudah punya studio!",
 	park_seat_garage = "Laptop di taman untuk pemula. Pergi ke studiomu!",
+	error_name_bad = "Judulnya ada kata kasar — cari yang lain",
+	move_celebrate = "🎉 Studio baru: {stage}!",
 }

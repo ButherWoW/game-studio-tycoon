@@ -468,4 +468,6 @@ return {
 	hit_err_steal_back = "Šį hitą iš tavęs neseniai pavogė — iškart atgal nepasiimsi",
 	park_jobs_garage = "Papildomi darbai — tiems, kas taupo garažui. Tu jau turi studiją!",
 	park_seat_garage = "Parko nešiojamieji — naujokams. Eik į savo studiją!",
+	error_name_bad = "Pavadinime yra keiksmažodžių — sugalvok kitą",
+	move_celebrate = "🎉 Nauja studija: {stage}!",
 }

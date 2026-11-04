@@ -469,4 +469,6 @@ return {
 	hit_err_steal_back = "Questo hit ti è stato rubato da poco: non puoi riprenderlo subito",
 	park_jobs_garage = "I lavoretti sono per chi risparmia per il garage. Tu hai già uno studio!",
 	park_seat_garage = "I portatili del parco sono per i nuovi. Vai nel tuo studio!",
+	error_name_bad = "Il titolo contiene parolacce: inventane un altro",
+	move_celebrate = "🎉 Nuovo studio: {stage}!",
 }

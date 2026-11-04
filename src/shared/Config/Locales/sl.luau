@@ -467,4 +467,6 @@ return {
 	hit_err_steal_back = "Ta hit so ti pred kratkim ukradli — takoj ga ne moreš vzeti nazaj",
 	park_jobs_garage = "Priložnostna dela so za tiste, ki varčujejo za garažo. Ti že imaš studio!",
 	park_seat_garage = "Prenosniki v parku so za začetnike. Pojdi v svoj studio!",
+	error_name_bad = "V naslovu so grde besede — izmisli drugega",
+	move_celebrate = "🎉 Nov studio: {stage}!",
 }

@@ -468,4 +468,6 @@ return {
 	hit_err_steal_back = "See hitt varastati sinult hiljuti — kohe tagasi võtta ei saa",
 	park_jobs_garage = "Otsatööd on neile, kes koguvad garaaži jaoks. Sul on juba stuudio!",
 	park_seat_garage = "Pargi sülearvutid on algajatele. Mine oma stuudiosse!",
+	error_name_bad = "Pealkirjas on inetuid sõnu — mõtle teine",
+	move_celebrate = "🎉 Uus stuudio: {stage}!",
 }

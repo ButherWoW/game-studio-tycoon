@@ -468,4 +468,6 @@ return {
 	hit_err_steal_back = "这首热门作品刚被人从你这偷走——暂时不能抢回来",
 	park_jobs_garage = "兼职是给攒钱买车库的人的。你已经有工作室啦！",
 	park_seat_garage = "公园里的笔记本是给新手用的。快去你的工作室吧！",
+	error_name_bad = "名字里有不文明的词——换一个吧",
+	move_celebrate = "🎉 新工作室：{stage}！",
 }

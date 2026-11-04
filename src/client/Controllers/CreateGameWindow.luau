@@ -9,6 +9,7 @@ local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local WordFilter = require(ReplicatedStorage.Shared.WordFilter)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
@@ -195,6 +196,8 @@ local function startError(): string?
 		return ClientState.t("error_busy")
 	elseif utf8.len(trimmedName()) == nil or (utf8.len(trimmedName()) :: number) < MIN_NAME_LENGTH then
 		return ClientState.t("error_name_empty")
+	elseif not WordFilter.isClean(trimmedName()) then
+		return ClientState.t("error_name_bad")
 	elseif not selectedGenre then
 		return ClientState.t("error_pick_genre")
 	elseif not selectedTopic then

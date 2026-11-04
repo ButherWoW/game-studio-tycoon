@@ -469,4 +469,6 @@ return {
 	hit_err_steal_back = "Ezt a slágert nemrég lopták el tőled — nem veheted vissza azonnal",
 	park_jobs_garage = "Az alkalmi munkák a garázsra gyűjtőknek valók. Neked már van stúdiód!",
 	park_seat_garage = "A parki laptopok az újoncoké. Irány a stúdiód!",
+	error_name_bad = "A címben csúnya szavak vannak — találj ki másikat",
+	move_celebrate = "🎉 Új stúdió: {stage}!",
 }

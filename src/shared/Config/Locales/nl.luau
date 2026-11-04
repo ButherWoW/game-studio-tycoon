@@ -469,4 +469,6 @@ return {
 	hit_err_steal_back = "Deze hit is net van je gestolen — je kunt hem niet meteen terugpakken",
 	park_jobs_garage = "Bijbaantjes zijn voor wie spaart voor een garage. Jij hebt al een studio!",
 	park_seat_garage = "De laptops in het park zijn voor nieuwkomers. Ga naar je studio!",
+	error_name_bad = "Er staan scheldwoorden in de titel — verzin een andere",
+	move_celebrate = "🎉 Nieuwe studio: {stage}!",
 }

@@ -468,4 +468,6 @@ return {
 	hit_err_steal_back = "Tämä hitti varastettiin sinulta äsken — et voi ottaa sitä heti takaisin",
 	park_jobs_garage = "Keikkatyöt ovat autotalliin säästäville. Sinulla on jo studio!",
 	park_seat_garage = "Puiston läppärit ovat aloittelijoille. Mene studiollesi!",
+	error_name_bad = "Nimessä on rumia sanoja — keksi toinen",
+	move_celebrate = "🎉 Uusi studio: {stage}!",
 }

@@ -23,6 +23,8 @@ local BUTTON_SIZE = Vector3.new(5, 0.4, 5)
 local BUTTON_SPACING = 7
 local BUTTON_EDGE_OFFSET = 5 -- от переднего края участка
 local TOUCH_COOLDOWN = 0.5
+-- Новая кнопка срабатывает только после того, как игрок отошёл от неё дальше этого
+local ARM_DISTANCE = 4.5
 local COLOR_REFRESH = 0.5
 local COLOR_AFFORDABLE = Color3.fromRGB(61, 220, 132)
 local COLOR_EXPENSIVE = Color3.fromRGB(70, 72, 90)
@@ -300,9 +302,15 @@ local function createButton(
 		.. formatPrice(upgrade.cost)
 	label.Parent = billboard
 
+	-- Новая кнопка появляется там, где стоит игрок: пока он не отойдёт, она «не взведена»,
+	-- иначе стоя на месте покупались подряд компьютер, кресло и стены (отчёт #42)
+	button:SetAttribute("Armed", false)
 	button.Touched:Connect(function(hit: BasePart)
 		local character = hit.Parent
 		if not character or Players:GetPlayerFromCharacter(character) ~= player then
+			return
+		end
+		if button:GetAttribute("Armed") ~= true then
 			return
 		end
 		local now = os.clock()
@@ -508,7 +516,16 @@ function PlotService.start()
 			for player, playerButtons in buttons do
 				local profile = DataService.get(player)
 				if profile then
+					local character = player.Character
+					local root = character and character:FindFirstChild("HumanoidRootPart") :: BasePart?
 					for button, upgrade in playerButtons do
+						-- Взводим кнопку, когда игрок отошёл от неё (или его нет рядом)
+						if button:GetAttribute("Armed") ~= true then
+							local offset = if root then root.Position - button.Position else nil
+							if not offset or Vector3.new(offset.X, 0, offset.Z).Magnitude > ARM_DISTANCE then
+								button:SetAttribute("Armed", true)
+							end
+						end
 						local ready = if upgrade.move then COLOR_MOVE else COLOR_AFFORDABLE
 						button.Color = if profile.cash >= upgrade.cost then ready else COLOR_EXPENSIVE
 					end

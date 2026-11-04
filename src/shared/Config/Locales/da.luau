@@ -469,4 +469,6 @@ return {
 	hit_err_steal_back = "Dette hit blev stjålet fra dig for nylig — du kan ikke tage det tilbage med det samme",
 	park_jobs_garage = "Småjobs er for dem, der sparer op til en garage. Du har allerede et studie!",
 	park_seat_garage = "Parkens bærbare er til nybegyndere. Gå til dit studie!",
+	error_name_bad = "Titlen har grimme ord — find på en anden",
+	move_celebrate = "🎉 Nyt studie: {stage}!",
 }

@@ -469,4 +469,6 @@ return {
 	hit_err_steal_back = "Esse hit foi roubado de você há pouco — não dá para pegar de volta já",
 	park_jobs_garage = "Os bicos são para quem está juntando para a garagem. Você já tem um estúdio!",
 	park_seat_garage = "Os notebooks do parque são para iniciantes. Vá para o seu estúdio!",
+	error_name_bad = "O título tem palavrões — invente outro",
+	move_celebrate = "🎉 Novo estúdio: {stage}!",
 }

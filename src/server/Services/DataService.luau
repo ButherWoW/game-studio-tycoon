@@ -38,7 +38,19 @@ type State = {
 }
 
 local STORE_VERSION = "v1"
-local store = DataStoreService:GetDataStore("PlayerData_" .. STORE_VERSION)
+-- В неопубликованном плейсе или без «Studio Access to API Services» GetDataStore бросает ошибку.
+-- Раньше это роняло весь сервер (пустой мир без HUD, отчёт #42) — теперь играем без сохранений
+local store: DataStore? = nil
+do
+	local ok, result = pcall(function()
+		return DataStoreService:GetDataStore("PlayerData_" .. STORE_VERSION)
+	end)
+	if ok then
+		store = result
+	else
+		warn("[DataService] DataStore недоступен, сохранения выключены:", result)
+	end
+end
 local AUTOSAVE_SECONDS = 60
 local SESSION_TIMEOUT = 5 * 60 -- чужая метка старше — сервер, видимо, упал
 local LOCK_ATTEMPTS = 3
@@ -96,11 +108,14 @@ end
 -- Записать профиль, сохранив или сняв метку сессии. Не трогает запись,
 -- если её уже держит другой сервер (наша метка протухла и профиль забрали)
 local function write(userId: number, profile: Profile, release: boolean): boolean
+	if not store then
+		return false
+	end
 	local lastErr: any = nil
 	for attempt = 1, 3 do
 		local stolen = false
 		local ok, err = pcall(function()
-			store:UpdateAsync(key(userId), function(old: any): (any, { number }?)
+			(store :: DataStore):UpdateAsync(key(userId), function(old: any): (any, { number }?)
 				if type(old) == "table" and isForeignSession(old._session) then
 					stolen = true
 					return nil, nil -- отмена записи
@@ -127,13 +142,16 @@ end
 -- Взять профиль с меткой сессии. "ok" + данные, "locked" — открыт на другом сервере,
 -- "error" + текст — DataStore недоступен
 local function load(userId: number): (string, any)
+	if not store then
+		return "error", "DataStore unavailable"
+	end
 	local lastErr: any = nil
 	local attempt = 0
 	while attempt < LOCK_ATTEMPTS do
 		attempt += 1
 		local locked = false
 		local ok, result = pcall(function()
-			return store:UpdateAsync(key(userId), function(old: any): (any, { number }?)
+			return (store :: DataStore):UpdateAsync(key(userId), function(old: any): (any, { number }?)
 				-- Функция может вызываться несколько раз: флаг ставим заново каждый раз
 				locked = type(old) == "table" and isForeignSession(old._session)
 				if locked then

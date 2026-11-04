@@ -337,11 +337,12 @@ builders.GarageWalls = function(m)
 	-- Две подвесные лампы
 	for _, x in { -12, 12 } do
 		part(m, Vector3.new(0.1, 3, 0.1), Vector3.new(x, 10.5, -8), rgb(40, 40, 40))
-		local bulb = part(m, Vector3.new(1, 1, 1), Vector3.new(x, 8.8, -8), rgb(255, 230, 170), {
+		local bulb = part(m, Vector3.new(1, 1, 1), Vector3.new(x, 8.8, -8), rgb(200, 180, 135), {
 			material = Enum.Material.Neon,
 			shape = Enum.PartType.Ball,
 		})
-		light(bulb, rgb(255, 220, 160), 28, 1.2)
+		-- Свет вдвое тусклее прежнего (просьба владельца: в гараже было слишком ярко)
+		light(bulb, rgb(255, 220, 160), 22, 0.6)
 	end
 	-- Стеллаж у левой стены с коробками
 	local metal = rgb(120, 125, 130)

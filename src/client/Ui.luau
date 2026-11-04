@@ -67,12 +67,30 @@ function Ui.corner(parent: GuiObject, radius: number?)
 end
 
 -- Окно по центру экрана; maxSize ограничивает размер на больших мониторах
+-- Окно по центру. Строится в «дизайнерском» размере maxSize и целиком уменьшается UIScale,
+-- если экран меньше: раньше на невысоком экране кнопки внизу обрезались, а текст наезжал (отчёт #42)
 function Ui.window(parent: Instance, name: string, maxSize: Vector2): Frame
 	local frame = Instance.new("Frame")
 	frame.Name = name
 	frame.AnchorPoint = Vector2.new(0.5, 0.5)
 	frame.Position = UDim2.fromScale(0.5, 0.5)
-	frame.Size = UDim2.fromScale(0.92, 0.88)
+	frame.Size = UDim2.fromOffset(maxSize.X, maxSize.Y)
+	local scale = Instance.new("UIScale")
+	scale.Parent = frame
+	local function fit()
+		local camera = workspace.CurrentCamera
+		local viewport = if camera then camera.ViewportSize else Vector2.new(1280, 720)
+		scale.Scale =
+			math.clamp(math.min(viewport.X * 0.94 / maxSize.X, viewport.Y * 0.9 / maxSize.Y), 0.4, 1)
+	end
+	fit()
+	local camera = workspace.CurrentCamera
+	if camera then
+		local connection = camera:GetPropertyChangedSignal("ViewportSize"):Connect(fit)
+		frame.Destroying:Connect(function()
+			connection:Disconnect()
+		end)
+	end
 	frame.BackgroundColor3 = Ui.colors.panel
 	frame.BackgroundTransparency = 0.05
 	Ui.corner(frame)
@@ -80,9 +98,6 @@ function Ui.window(parent: Instance, name: string, maxSize: Vector2): Frame
 	stroke.Thickness = 2
 	stroke.Color = Ui.colors.stroke
 	stroke.Parent = frame
-	local limit = Instance.new("UISizeConstraint")
-	limit.MaxSize = maxSize
-	limit.Parent = frame
 	frame.Parent = parent
 	return frame
 end

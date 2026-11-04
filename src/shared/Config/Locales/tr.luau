@@ -467,4 +467,6 @@ return {
 	hit_err_steal_back = "Bu hit yakın zamanda senden çalındı — hemen geri alamazsın",
 	park_jobs_garage = "Ek işler garaj için para biriktirenler içindir. Senin zaten stüdyon var!",
 	park_seat_garage = "Parktaki laptoplar yeni başlayanlar için. Stüdyona git!",
+	error_name_bad = "Başlıkta kötü kelimeler var — başka bir tane bul",
+	move_celebrate = "🎉 Yeni stüdyo: {stage}!",
 }

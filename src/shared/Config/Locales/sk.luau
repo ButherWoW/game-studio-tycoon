@@ -469,4 +469,6 @@ return {
 	hit_err_steal_back = "Tento hit ti nedávno ukradli — hneď späť ho nevezmeš",
 	park_jobs_garage = "Brigády sú pre tých, čo šetria na garáž. Ty už štúdio máš!",
 	park_seat_garage = "Notebooky v parku sú pre nováčikov. Choď do svojho štúdia!",
+	error_name_bad = "Názov obsahuje vulgárne slová — vymysli iný",
+	move_celebrate = "🎉 Nové štúdio: {stage}!",
 }

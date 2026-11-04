@@ -9,6 +9,7 @@ local Shared = ReplicatedStorage.Shared
 local Remotes = require(Shared.Remotes)
 local Formulas = require(Shared.Formulas)
 local TextSafe = require(Shared.TextSafe)
+local WordFilter = require(Shared.WordFilter)
 local Genres = require(Shared.Config.Genres)
 local Topics = require(Shared.Config.Topics)
 local Upgrades = require(Shared.Config.Upgrades)
@@ -264,6 +265,10 @@ local function onStartDevelopment(player: Player, request: any)
 	local rawName = TextSafe.clean(request.name)
 	local nameLength = rawName and utf8.len(rawName)
 	if not rawName or not nameLength or TextSafe.visibleLength(rawName) < MIN_NAME_LENGTH then
+		return
+	end
+	-- Свой фильтр мата поверх фильтра Roblox (тот слабо ловит русский мат и молчит в Studio)
+	if not WordFilter.isClean(rawName) then
 		return
 	end
 	if nameLength > MAX_NAME_LENGTH then
