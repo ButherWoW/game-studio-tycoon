@@ -3,6 +3,7 @@
 -- в карточке сотрудника (TeamWindow). Что открыто и кто что носит, решает сервер (SkinService);
 -- за Robux клиент только открывает окно покупки Roblox. productId 0 — кнопка «Скоро».
 
+local GroupService = game:GetService("GroupService")
 local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -12,8 +13,10 @@ local SkinRemotes = require(Shared.SkinRemotes)
 local Skins = require(Shared.Config.Skins)
 local Images = require(Shared.Config.Images)
 local Texts = require(Shared.Config.Texts)
+local Social = require(Shared.Config.Social)
 local ClientState = require(script.Parent.ClientState)
 local Ui = require(script.Parent.Ui)
+local GiftPicker = require(script.Parent.GiftPicker)
 
 type State = {
 	owned: { [string]: boolean },
@@ -143,13 +146,56 @@ local function cellFor(parent: Instance, skin: Skins.Skin, order: number)
 	name.TextWrapped = true
 	name.TextXAlignment = Enum.TextXAlignment.Center
 	actionButton(cell, skin)
+	-- Премиум-скин можно подарить другому игроку на сервере
+	local gift = if skin.premium then Social.giftFor("skin", skin.id) else nil
+	if gift then
+		GiftPicker.button(cell, gift, SkinShop.name(skin), 8 + PREVIEW)
+	end
 	cell.Parent = parent
+end
+
+-- Подсказка «Вступи в группу — получи скин» (Config/Social.groupId > 0, награда ещё не получена)
+local function groupHint(body: Instance)
+	local groupId = Social.groupId
+	if groupId <= 0 or Players.LocalPlayer:GetAttribute("GroupRewarded") == true then
+		return
+	end
+	local reward = Skins.get(Social.groupReward.skin)
+	local frame = Instance.new("Frame")
+	frame.LayoutOrder = -1
+	frame.BackgroundColor3 = Color3.fromRGB(52, 56, 84)
+	frame.Size = UDim2.new(1, -8, 0, 56)
+	Ui.corner(frame, 10)
+	local text = Ui.label(
+		frame,
+		ClientState.t("group_hint", { skin = if reward then SkinShop.name(reward) else "" }),
+		24,
+		Enum.Font.GothamMedium
+	)
+	text.AnchorPoint = Vector2.new(0, 0.5)
+	text.Position = UDim2.new(0, 12, 0.5, 0)
+	text.Size = UDim2.new(0.7, -16, 0, 24)
+	local join = Ui.button(frame, ClientState.t("group_join"), Ui.colors.good, function()
+		task.spawn(function()
+			pcall(function()
+				GroupService:PromptJoinAsync(groupId)
+			end)
+			-- Сервер перепроверит членство и выдаст награду (SocialService)
+			local SocialRemotes = require(Shared.SocialRemotes) :: any
+			SocialRemotes.GroupCheck:FireServer()
+		end)
+	end)
+	join.AnchorPoint = Vector2.new(1, 0.5)
+	join.Position = UDim2.new(1, -8, 0.5, 0)
+	join.Size = UDim2.new(0.28, 0, 0, 44)
+	frame.Parent = body
 end
 
 -- Вкладка магазина в body (ScrollingFrame с UIListLayout окна магазина)
 function SkinShop.build(body: Instance)
 	local hint = Ui.label(body, ClientState.t("skins_hint"), 22, Enum.Font.GothamMedium, Ui.colors.muted)
 	hint.LayoutOrder = 0
+	groupHint(body)
 
 	local grid = Instance.new("Frame")
 	grid.LayoutOrder = 1

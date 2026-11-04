@@ -210,6 +210,21 @@ function SkinService.grantProduct(player: Player, profile: DataService.Profile, 
 	return true
 end
 
+-- Открыт ли скин у игрока (подарки: не дарить то, что уже есть)
+function SkinService.owns(profile: DataService.Profile, skinId: string): boolean
+	return data(profile).owned[skinId] == true
+end
+
+-- Выдать скин по id (подарок, награда за группу). false — нет такого скина
+function SkinService.grantSkin(player: Player, profile: DataService.Profile, skinId: string): boolean
+	local skin = Skins.get(skinId)
+	if not skin then
+		return false
+	end
+	grant(player, profile, skin)
+	return true
+end
+
 local function throttled(map: { [Player]: number }, player: Player, cooldown: number): boolean
 	local now = os.clock()
 	if (map[player] or 0) + cooldown > now then

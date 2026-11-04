@@ -56,6 +56,8 @@ local Analytics = {
 		languageChanged = "LanguageChanged", -- не чаще раза за сессию
 		quickEvent = "QuickEvent", -- быстрое событие разработки; поле — "вид_результат" (timing_perfect)
 		achievement = "Achievement", -- получено достижение; поле — id
+		gift = "GiftPurchased", -- подарок за Robux; поле — gift_<id>, значение 1 — другу, 0 — достался себе
+		groupReward = "GroupReward", -- награда за вступление в группу
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -73,6 +75,7 @@ local Analytics = {
 		["StartParkService.onPawn"] = { transactionType = "Pawnshop", sku = "cartridges" },
 		ShopService = { transactionType = "IAP", sku = "incomePack" },
 		TutorialService = { transactionType = "Onboarding", sku = "tutorial" },
+		SocialService = { transactionType = "TimedReward", sku = "group" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },

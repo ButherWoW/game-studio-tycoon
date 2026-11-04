@@ -12,6 +12,7 @@ local DataService = require(script.Parent.DataService)
 local ShopService = require(script.Parent.ShopService)
 local PosterService = require(script.Parent.PosterService)
 local SkinService = require(script.Parent.SkinService)
+local GiftService = require(script.Parent.GiftService)
 
 local MonetizationService = {}
 
@@ -86,7 +87,9 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 	if campaign then
 		applyAd(player, campaign, true)
 	elseif
-		not PosterService.grantProduct(player, profile, receipt.ProductId)
+		-- Подарки (gift_<itemId>) — GiftService: предмет получает выбранный игрок
+		not GiftService.grantProduct(player, profile, receipt)
+		and not PosterService.grantProduct(player, profile, receipt.ProductId)
 		and not SkinService.grantProduct(player, profile, receipt.ProductId)
 		and not ShopService.grantProduct(player, profile, receipt.ProductId)
 	then

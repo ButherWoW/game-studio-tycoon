@@ -8,6 +8,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local QuestRemotes = require(ReplicatedStorage.Shared.QuestRemotes)
 local DailyRewards = require(ReplicatedStorage.Shared.Config.DailyRewards)
+local Social = require(ReplicatedStorage.Shared.Config.Social)
 local DataService = require(script.Parent.DataService)
 local RewardService = require(script.Parent.RewardService)
 
@@ -75,6 +76,11 @@ local function onClaim(player: Player)
 	d.lastClaimDay = today()
 	d.streak = streakDay
 	RewardService.grant(player, DailyRewards[streakDay])
+	-- Roblox Premium: кофе к награде (Social.premium.dailyCoffeeMinutes, 0 — выключено)
+	local coffee = Social.premium.dailyCoffeeMinutes
+	if coffee > 0 and player.MembershipType == Enum.MembershipType.Premium then
+		RewardService.grant(player, { coffeeMinutes = coffee })
+	end
 	sendState(player)
 end
 
