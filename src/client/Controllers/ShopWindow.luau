@@ -292,7 +292,7 @@ function ShopWindow.start()
 		else
 			ShopWindow.open()
 		end
-	end)
+	end, "menu_shop")
 
 	ShopRemotes.ShopState.OnClientEvent:Connect(function(newState: any)
 		if type(newState) ~= "table" or type(newState.passes) ~= "table" then

@@ -253,7 +253,7 @@ function StudioCamera.start()
 		elseif ownPlot() then
 			StudioCamera.enter()
 		end
-	end)
+	end, "menu_camera")
 	menuButton = button
 
 	-- Маленький тумблер авто-вида при посадке за ПК (вкл/выкл)

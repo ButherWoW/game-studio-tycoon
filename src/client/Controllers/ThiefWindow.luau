@@ -198,7 +198,7 @@ function ThiefWindow.start()
 		else
 			open()
 		end
-	end)
+	end, "menu_thieves")
 	HitRemotes.ThiefBoard.OnClientEvent:Connect(function(data)
 		if type(data) ~= "table" then
 			return

@@ -298,7 +298,7 @@ function ResearchWindow.start()
 		else
 			ResearchWindow.open()
 		end
-	end)
+	end, "menu_research")
 end
 
 return ResearchWindow
