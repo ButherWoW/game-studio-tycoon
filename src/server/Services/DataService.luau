@@ -73,7 +73,12 @@ export type Profile = {
 	-- использован ли бесплатный сброс. Звёзды = rebirths − цена купленного. Rebirth не сбрасывает
 	rebirthPerks: { levels: { [string]: number }, respecUsed: boolean },
 	-- Титулы над головой (TitleService, Config/Titles): открытые (id -> os.time) и выбранный
-	titles: { owned: { [string]: number }, selected: string? },
+	titles: {
+		owned: { [string]: number },
+		selected: string?,
+		expires: { [string]: number }?, -- временные титулы: id -> os.time конца
+		restore: string?, -- выбор игрока до временного титула
+	},
 	-- «Игра недели» (GotwService): лучшая игра недели weekId, неделя последней проверки награды,
 	-- место титула (0 — нет) и до какого os.time держатся титул и статуэтка на полке
 	gotw: {
@@ -619,6 +624,22 @@ local function onPlayerAdded(player: Player)
 		end
 		if type(titles.selected) ~= "string" or #titles.selected > 64 then
 			titles.selected = nil
+		end
+		-- Временные титулы (TitleService.grant с untilAt): срок — число, иначе титул снимаем
+		if titles.expires ~= nil then
+			if type(titles.expires) ~= "table" then
+				titles.expires = nil
+			else
+				for id, untilAt in titles.expires do
+					if type(id) ~= "string" or type(untilAt) ~= "number" then
+						titles.expires[id] = nil
+						titles.owned[id] = nil
+					end
+				end
+			end
+		end
+		if type(titles.restore) ~= "string" or #titles.restore > 64 then
+			titles.restore = nil
 		end
 	end
 	profiles[player] = profile

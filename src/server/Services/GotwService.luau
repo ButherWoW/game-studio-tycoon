@@ -7,7 +7,8 @@
 --     Gotw.writeSeconds; при выходе игрока и в BindToClose — сразу. Все вызовы DataStore в pcall.
 --   * Топ-10 текущей недели читается раз в Gotw.readSeconds; детали — только изменившихся строк.
 --   * Смена недели: топ-10 прошлой недели читается один раз; победитель при входе (или сразу,
---     если он онлайн) получает минуты дохода, титул над головой (атрибут GotwRank) и статуэтку
+--     если он онлайн) получает минуты дохода, временный титул gotw_winner (TitleService — одна
+--     общая табличка, место из атрибута GotwRank) и статуэтку
 --     на полке хитов (HitService.refreshShelf) до конца недели.
 
 local DataStoreService = game:GetService("DataStoreService")
@@ -351,7 +352,15 @@ local function applyTitle(player: Player, profile: DataService.Profile)
 	local g = profile.gotw
 	local now = os.time()
 	local rank = if g.titleUntil > now and g.titleRank > 0 then g.titleRank else 0
+	-- Место для таблички титула (TitleTags); сам титул — общий временный gotw_winner.
+	-- grant идемпотентен: уже действующий титул только продлевается (без тоста)
 	player:SetAttribute("GotwRank", if rank > 0 then rank else nil)
+	if rank > 0 then
+		local titles = optional("TitleService")
+		if titles and type(titles.grant) == "function" then
+			pcall(titles.grant, player, "gotw_winner", g.titleUntil)
+		end
+	end
 	local trophy = g.trophyUntil > now
 	if trophyShown[player] ~= trophy then
 		trophyShown[player] = trophy

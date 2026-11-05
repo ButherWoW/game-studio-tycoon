@@ -12,6 +12,8 @@ local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local UnlockRules = require(ReplicatedStorage.Shared.UnlockRules)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
 
 local MENU_SLOT = 1
 local CARD_HEIGHT = 112
@@ -96,6 +98,10 @@ local function buildCard(parent: Instance, node: Research.Node, order: number)
 	)
 	title.Position = UDim2.fromOffset(10, 6)
 	title.Size = UDim2.new(1, -90, 0, 24)
+	-- Узел открывает жанр: иконка жанра (V21) перед названием; 0 — как раньше
+	if genreId then
+		ArtIcon.prefix(title, "", Images.genres[genreId] or 0, 22)
+	end
 
 	local costLabel =
 		Ui.label(card, ClientState.t("research_cost", { cost = cost }), 20, nil, Ui.colors.money)

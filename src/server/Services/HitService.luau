@@ -272,6 +272,7 @@ local function sendState(player: Player)
 		table.insert(list, {
 			id = hit.id,
 			name = hit.name,
+			genreId = hit.genreId, -- обложка жанра (V20) в строке окна хитов
 			score = hit.score,
 			income = hitIncome(hit, nowTime),
 			boostLeft = math.max((hit.boostUntil or 0) - nowTime, 0),

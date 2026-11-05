@@ -14,6 +14,7 @@ local AdCampaigns = require(ReplicatedStorage.Shared.Config.AdCampaigns)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
 local CreateGameWindow = require(script.Parent.CreateGameWindow)
 local OfferClient = require(script.Parent.Parent.OfferClient)
 local ArcadeWindow = require(script.Parent.ArcadeWindow)
@@ -127,6 +128,19 @@ local function show(info: any)
 	body.ScrollBarThickness = 6
 	Ui.list(body, 8)
 	body.Parent = window
+
+	-- Обложка жанра (V20) над заголовком; 0 — строки нет, окно как раньше. Тело прокручивается,
+	-- поэтому на телефоне лишние 110 px уходят в прокрутку, а не за край
+	local coverId = if type(info.genreId) == "string" then Images.covers[info.genreId] or 0 else 0
+	if coverId > 0 then
+		local cover = Instance.new("Frame")
+		cover.Name = "Cover"
+		cover.BackgroundTransparency = 1
+		cover.Size = UDim2.new(1, 0, 0, 110)
+		cover.LayoutOrder = 0
+		cover.Parent = body
+		Ui.artImage(cover, coverId)
+	end
 
 	local title = Ui.label(
 		body,

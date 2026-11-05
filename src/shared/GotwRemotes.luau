@@ -1,6 +1,7 @@
 --!strict
 -- Remotes «Игры недели» (GotwService / вкладка в окне 📊). Сервер создаёт, клиент ждёт.
--- Титул победителя — атрибут игрока GotwRank (1..10, 0 — нет), рисует клиент (GotwController).
+-- Титул победителя — временный титул gotw_winner (TitleService); место — атрибут игрока GotwRank
+-- (1..10, нет — nil), табличку рисует TitleTags.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")

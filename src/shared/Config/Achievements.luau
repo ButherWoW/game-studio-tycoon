@@ -10,7 +10,8 @@
 --   по событиям: score9 (игр 9+), hitGames (игр >= HitCartridges.minScore), combos (разных
 --     жанр/тема), qtePerfect (идеальных быстрых событий), earned (доход с релизов), expoWins,
 --     loansRepaid, strikes (пережитых забастовок), days (дней со входом), flops (игр с оценкой
---     <= 2), laptopStars (игр 8+ на ноутбуке в парке), likesReceived (лайков студии, TourService).
+--     <= 2), laptopStars (игр 8+ на ноутбуке в парке), likesReceived (лайков студии, TourService),
+--     bugsCaught (жуков на «Охоте на баги»), blitzWins (побед в блиц-джеме) — DailyEventService.
 -- tier: 1 бронза, 2 серебро, 3 золото (nil — без медали).
 -- badgeId > 0 — ещё и значок Roblox (BadgeService); id заведёт Dev 1.
 -- hidden — до получения в окне «???».
@@ -428,6 +429,67 @@ Achievements.list = {
 		3,
 		"Культовая студия",
 		"Cult Studio",
+		{ researchPoints = 25 }
+	),
+	-- События дня (DailyEventService): пойманные жуки «Охоты на баги» и победы в блиц-джеме
+	ach(
+		"bugs_25",
+		"special",
+		"bugsCaught",
+		25,
+		1,
+		"Ловец жуков",
+		"Bug Catcher",
+		{ coffeeMinutes = 10 }
+	),
+	ach(
+		"bugs_250",
+		"special",
+		"bugsCaught",
+		250,
+		2,
+		"Санитар кода",
+		"Code Exterminator",
+		{ incomeMinutes = 10 }
+	),
+	ach(
+		"bugs_1000",
+		"special",
+		"bugsCaught",
+		1000,
+		3,
+		"Гроза багов",
+		"Bug Slayer",
+		{ researchPoints = 20 }
+	),
+	ach(
+		"blitz_1",
+		"special",
+		"blitzWins",
+		1,
+		1,
+		"Блиц-победа",
+		"Blitz Victory",
+		{ incomeMinutes = 5 }
+	),
+	ach(
+		"blitz_5",
+		"special",
+		"blitzWins",
+		5,
+		2,
+		"Мастер блица",
+		"Blitz Master",
+		{ incomeMinutes = 15 }
+	),
+	ach(
+		"blitz_20",
+		"special",
+		"blitzWins",
+		20,
+		3,
+		"Легенда блица",
+		"Blitz Legend",
 		{ researchPoints = 25 }
 	),
 	-- Секретные

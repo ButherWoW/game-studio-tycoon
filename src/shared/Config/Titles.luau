@@ -12,6 +12,9 @@
 --   season = true        — сезонное звание хотя бы одного сезона (profile.seasonTitles);
 --   premium = true       — Roblox Premium: доступен, пока подписка активна (в owned не пишется);
 --   grant = true         — только через TitleService.grant (события, сейф и т.п.).
+-- Временные титулы: TitleService.grant(player, id, untilAt) — титул сразу надевается и снимается
+-- в untilAt (os.time), после чего возвращается прежний выбор игрока.
+-- condKey — свой ключ подсказки title_cond_<condKey> вместо общего по условию.
 
 export type Condition = {
 	achievement: string?,
@@ -27,6 +30,7 @@ export type Title = {
 	icon: string,
 	color: Color3,
 	cond: Condition,
+	condKey: string?,
 }
 
 local Titles = {}
@@ -71,6 +75,10 @@ local list: { Title } = {
 	{ id = "jam_champion", icon = "🏆", color = GOLD, cond = { jamFlag = "jamTop10" } },
 	{ id = "season_star", icon = "🎟️", color = PURPLE, cond = { season = true } },
 	{ id = "premium", icon = "💠", color = rgb(120, 200, 255), cond = { premium = true } },
+	-- Временные (TitleService.grant с untilAt): победитель блиц-джема (DailyEventService, на сутки)
+	-- и «Игра недели» (GotwService, до конца недели; на табличке — место из атрибута GotwRank)
+	{ id = "blitz_champion", icon = "⚡", color = GOLD, cond = { grant = true }, condKey = "blitz" },
+	{ id = "gotw_winner", icon = "🏆", color = GOLD, cond = { grant = true }, condKey = "gotw" },
 }
 Titles.list = list
 
@@ -83,7 +91,9 @@ Titles.byId = byId
 -- Ключ текста условия для окна: title_cond_<kind>
 function Titles.condKind(title: Title): string
 	local c = title.cond
-	if c.achievement then
+	if title.condKey then
+		return title.condKey
+	elseif c.achievement then
 		return "ach"
 	elseif c.rebirths then
 		return "rebirths"

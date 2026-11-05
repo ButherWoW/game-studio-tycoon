@@ -17,6 +17,8 @@ local Ui = require(script.Parent.Ui)
 local ROW_HEIGHT = 36
 local GAP = 6
 local MAX_NAME_LENGTH = 30
+-- Обложка жанра (V20) на кнопке франшизы и кандидата; 0 — кнопка как раньше
+local COVER_SIZE = 28
 
 local FranchiseClient = {}
 
@@ -153,14 +155,20 @@ function FranchiseClient.build(parent: Instance, order: number, onPick: (any) ->
 	ArtIcon.prefix(header, "📚", Images.contracts.franchise, 20)
 
 	-- Кнопки по две в ряд: «Новая игра» и франшизы
-	local buttons: { { text: string, selected: boolean, pick: any } } = {
-		{ text = ClientState.t("fr_new_game"), selected = FranchiseClient.selected == nil, pick = false },
+	local buttons: { { text: string, selected: boolean, pick: any, cover: number } } = {
+		{
+			text = ClientState.t("fr_new_game"),
+			selected = FranchiseClient.selected == nil,
+			pick = false,
+			cover = 0,
+		},
 	}
 	for _, f in all do
 		table.insert(buttons, {
 			text = ClientState.t("fr_entry", { name = f.name, fans = fansText(tonumber(f.fans) or 0) }),
 			selected = FranchiseClient.selected == f.id,
 			pick = f,
+			cover = Images.covers[f.genreId] or 0,
 		})
 	end
 	local current: Frame? = nil
@@ -180,6 +188,7 @@ function FranchiseClient.build(parent: Instance, order: number, onPick: (any) ->
 		)
 		b.Size = UDim2.new(0.5, -GAP / 2, 1, 0)
 		b.LayoutOrder = i
+		ArtIcon.prefix(b, "", spec.cover, COVER_SIZE)
 	end
 
 	local f = FranchiseClient.find(FranchiseClient.selected)
@@ -245,6 +254,7 @@ function FranchiseClient.build(parent: Instance, order: number, onPick: (any) ->
 				)
 				b.Size = UDim2.new(1, 0, 0, ROW_HEIGHT)
 				b.LayoutOrder = nextOrder(ROW_HEIGHT)
+				ArtIcon.prefix(b, "", Images.covers[c.genreId or ""] or 0, COVER_SIZE)
 			end
 		end
 	end
