@@ -1570,6 +1570,7 @@ return {
 	devent_board_empty = "поки нікого",
 	devent_bug_caught = "🐞 Жука спіймано! +{money}",
 	devent_bug_top = "🏆 Ти {rank}-й ловець жуків! Бонус +{money}",
+	devent_bug_limit = "🐞 Оплачено {count} жуків — далі жуки йдуть лише в залік топу",
 	devent_investor_prompt = "Отримати грант",
 	devent_investor_name = "Інвестор",
 	devent_investor_got = "📈 Грант інвестора: +{money} (ти {rank}-й із {max})",

@@ -1569,6 +1569,7 @@ return {
 	devent_board_empty = "belum ada",
 	devent_bug_caught = "🐞 Serangga tertangkap! +{money}",
 	devent_bug_top = "🏆 Kamu penangkap serangga #{rank}! Bonus +{money}",
+	devent_bug_limit = "🐞 {count} serangga dibayar — sisanya hanya dihitung untuk peringkat",
 	devent_investor_prompt = "Ambil hibah",
 	devent_investor_name = "Investor",
 	devent_investor_got = "📈 Hibah investor: +{money} (kamu #{rank} dari {max})",

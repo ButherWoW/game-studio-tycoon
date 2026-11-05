@@ -1570,6 +1570,7 @@ return {
 	devent_board_empty = "nog niemand",
 	devent_bug_caught = "🐞 Bug gevangen! +{money}",
 	devent_bug_top = "🏆 Je bent bugvanger nr. {rank}! Bonus +{money}",
+	devent_bug_limit = "🐞 {count} kevers uitbetaald — meer tellen alleen voor de top",
 	devent_investor_prompt = "Subsidie halen",
 	devent_investor_name = "Investeerder",
 	devent_investor_got = "📈 Subsidie van de investeerder: +{money} (je bent nr. {rank} van {max})",

@@ -1570,6 +1570,7 @@ return {
 	devent_board_empty = "noch niemand",
 	devent_bug_caught = "🐞 Bug gefangen! +{money}",
 	devent_bug_top = "🏆 Du bist Bug-Fänger Nr. {rank}! Bonus +{money}",
+	devent_bug_limit = "🐞 {count} Käfer ausgezahlt — weitere zählen nur für die Rangliste",
 	devent_investor_prompt = "Zuschuss holen",
 	devent_investor_name = "Investor",
 	devent_investor_got = "📈 Investoren-Zuschuss: +{money} (du bist Nr. {rank} von {max})",

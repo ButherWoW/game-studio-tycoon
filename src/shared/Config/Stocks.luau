@@ -15,7 +15,10 @@ local Stocks = {}
 Stocks.ipo = {
 	cost = 25_000_000,
 	requiresLevel = 4, -- 3-й этаж открыт (Config/Stages)
-	minIncomePerMinute = 120_000,
+	-- Доход — ShopService.incomePerMinute (лучшая оценка² × этап × Rebirth × 1.6 релиза/мин).
+	-- Релизный проход 05.11: было 120 000 — на 3-м этаже без Rebirth максимум ~10 000 (оценка 10),
+	-- то есть IPO открывалось бы только после ~22 Rebirth. 8 000 = лучшая оценка 9 на 3-м этаже
+	minIncomePerMinute = 8_000,
 	minAvgScore = 7.5,
 	recentGames = 20, -- средняя оценка считается по стольким последним играм
 	-- Владельцу после IPO: +10% к доходу каждого релиза
@@ -42,7 +45,9 @@ Stocks.maxCompaniesInPortfolio = 10
 
 -- Дивиденды: доля дохода компании в минуту, которую делят все акции
 Stocks.dividendShare = 0.02
-Stocks.dividendMinIncome = 30_000
+-- Было 30 000 — недостижимо без ~5 Rebirth (см. ipo.minIncomePerMinute). 4 000: компания после
+-- Rebirth владельца (гараж, оценка < 8) дивиденды не платит, пока не отстроится
+Stocks.dividendMinIncome = 4_000
 Stocks.dividendIntervalSeconds = 60
 
 -- Владелец не обновлял запись столько секунд — он не в игре, считаем по офлайн-доходу
