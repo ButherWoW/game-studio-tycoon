@@ -762,7 +762,10 @@ local function release(player: Player, project: Project)
 	local platformMultiplier =
 		hookNumber("ConsoleService", "revenueMultiplier", 1, player, project.platform, project.genreId)
 	local hypeMultiplier = hookNumber("StreamerService", "consumeHype", 1, player)
-	revenue = math.floor(revenue * platformMultiplier * hypeMultiplier)
+	-- Налоговая проверка (TaxService, ×0.8) и бонус компании на бирже (StockService, +10%)
+	local taxMultiplier = hookNumber("TaxService", "revenueMultiplier", 1, player)
+	local stockMultiplier = hookNumber("StockService", "revenueMultiplier", 1, player)
+	revenue = math.floor(revenue * platformMultiplier * hypeMultiplier * taxMultiplier * stockMultiplier)
 	-- Совместная разработка (CoopService): доля гостя уходит ему, дальше считаем долю хозяина
 	local coopPartner: Player? = nil
 	local CoopService = optional("CoopService")
@@ -793,6 +796,9 @@ local function release(player: Player, project: Project)
 	-- Поправки «следующей игры» событий компании израсходованы
 	hook("CompanyEventService", "onGameReleased", player)
 	hook("PerksService", "onGameReleased", player, revenue)
+	-- Налоговая база периода и оценка для биржи (средняя последних игр)
+	hook("TaxService", "onGameReleased", player, revenue)
+	hook("StockService", "onGameReleased", player, score)
 	-- Кредит: часть дохода игры уходит в погашение (Config/Loans.repayShare); сколько — для окна релиза
 	local debtBefore = tonumber(player:GetAttribute("LoanDebt")) or 0
 	hook("LoanService", "onGameReleased", player, revenue)

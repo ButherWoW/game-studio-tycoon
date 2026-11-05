@@ -90,6 +90,9 @@ local Analytics = {
 		notifyPrompt = "NotifyPrompt", -- shown / unavailable
 		referral = "Referral", -- joined_<источник> / new / inviter / inviter_capped / invite_sent
 		trade = "Trade", -- started / done / cancelled
+		-- Налоговая и биржа (TaxService, StockService): поле — этап, значение — сумма
+		tax = "Tax", -- billed / paid / fined
+		stock = "Stock", -- ipo / buy / sell / dividend / bankrupt
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -122,6 +125,8 @@ local Analytics = {
 		StreamerService = { transactionType = "Streamer", sku = "donations" },
 		ArcadeService = { transactionType = "Reward", sku = "arcade" },
 		ReferralService = { transactionType = "TimedReward", sku = "referral" },
+		["StockService.sell"] = { transactionType = "Stock", sku = "sell" }, -- продажа акций
+		["StockService.dividends"] = { transactionType = "Stock", sku = "dividend" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },
