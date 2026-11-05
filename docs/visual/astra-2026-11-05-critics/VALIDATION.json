@@ -1,0 +1,102 @@
+{
+  "expected": 4,
+  "ready": 4,
+  "runtimeTested": false,
+  "assets": [
+    {
+      "file": "critic_herald.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "transparentCorners": true,
+      "meaningfulAlphaBBox": [
+        9,
+        24,
+        243,
+        226
+      ],
+      "sha256": "5d12703ee8e9f939742d94259bcf65cc77b14153a265afa9c21804cb8b8fec1b",
+      "visualReview": "PASS: silhouette intact, transparent background, no text/numerals/brands, friendly theme; reviewed256/128/64/40px"
+    },
+    {
+      "file": "critic_gamertime.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "transparentCorners": true,
+      "meaningfulAlphaBBox": [
+        8,
+        52,
+        248,
+        220
+      ],
+      "sha256": "48b0aa3e7d624e5c9d71997ccbc4f323cff1d1d738e6fbc4e3586452f4099a23",
+      "visualReview": "PASS: silhouette intact, transparent background, no text/numerals/brands, friendly theme; reviewed256/128/64/40px"
+    },
+    {
+      "file": "critic_cube.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "transparentCorners": true,
+      "meaningfulAlphaBBox": [
+        17,
+        26,
+        230,
+        232
+      ],
+      "sha256": "2db1004946cf8e2cab9ed14ef7e1b44982704157522810da8c62f636e3f01db3",
+      "visualReview": "PASS: silhouette intact, transparent background, no text/numerals/brands, friendly theme; reviewed256/128/64/40px"
+    },
+    {
+      "file": "critic_hardcore.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "transparentCorners": true,
+      "meaningfulAlphaBBox": [
+        47,
+        12,
+        217,
+        247
+      ],
+      "sha256": "129d3365524c0fdc9192b2ec080ca018f0a64dd772d40793b9e916703bab78e0",
+      "visualReview": "PASS: silhouette intact, transparent background, no text/numerals/brands, friendly theme; reviewed256/128/64/40px"
+    }
+  ],
+  "configCoverage": {
+    "expected": [
+      "herald",
+      "gamertime",
+      "cube",
+      "hardcore"
+    ],
+    "status": "PASS"
+  },
+  "sourceChecks": {
+    "stylua": "PASS",
+    "selene": "PASS",
+    "rojoBuild": "PASS"
+  },
+  "visualReview": "PASS:4/4"
+}
