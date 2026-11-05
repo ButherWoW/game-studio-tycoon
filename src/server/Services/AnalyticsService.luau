@@ -779,6 +779,13 @@ function Analytics.logFurnitureStyle(player: Player, styleId: string, how: strin
 	end
 end
 
+-- Куплена отделка студии (InteriorFinishService, только за Robux)
+function Analytics.logInteriorFinish(player: Player, finishId: string)
+	if Config.enabled and states[player] then
+		logCustom(player, Config.events.interiorFinish, 1, finishId)
+	end
+end
+
 -- Событие компании (CompanyEventService): id и этап одним полем
 function Analytics.logCompanyEvent(player: Player, id: string, stage: string)
 	if Config.enabled and states[player] then

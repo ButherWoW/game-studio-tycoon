@@ -30,6 +30,8 @@ local PROMPT_KEYS = { Enum.KeyCode.One, Enum.KeyCode.Two, Enum.KeyCode.Three }
 local PROMPT_PAD_KEYS = { Enum.KeyCode.DPadDown, Enum.KeyCode.DPadLeft, Enum.KeyCode.DPadUp }
 
 export type LiftHandler = (player: Player, prompt: ProximityPrompt, floor: number) -> ()
+-- Потолок этажа из отделки студии (Config/InteriorFinishes): цвет и материал перекрытия
+export type Ceiling = { color: Color3, material: Enum.Material }
 
 local function makePart(model: Model, name: string, size: Vector3, cframe: CFrame, color: Color3): Part
 	local part = Instance.new("Part")
@@ -123,17 +125,19 @@ local function buildElevator(
 	end
 end
 
--- Плотное перекрытие под этажом 2 и 3: верх чуть ниже пола оболочки (без мерцания), низ — над стенами
-local function buildSlab(model: Model, plot: BasePart, floor: number)
+-- Плотное перекрытие под этажом 2 и 3: верх чуть ниже пола оболочки (без мерцания), низ — над стенами.
+-- Низ перекрытия — потолок этажа под ним: цвет и материал отделки (ceiling), без неё — классика.
+-- Второй панели потолка не добавляем (INTEGRATION.md наборов Астры)
+local function buildSlab(model: Model, plot: BasePart, floor: number, ceiling: Ceiling?)
 	local y = StudioLayout.floorY(floor)
 	local slab = makePart(
 		model,
 		"FloorSlab",
 		Vector3.new(PLOT_HALF * 2, SLAB_THICKNESS, PLOT_HALF * 2),
 		at(plot, 0, y - 0.01 - SLAB_THICKNESS / 2, 0),
-		SLAB_COLOR
+		if ceiling then ceiling.color else SLAB_COLOR
 	)
-	slab.Material = Enum.Material.Concrete
+	slab.Material = if ceiling then ceiling.material else Enum.Material.Concrete
 end
 
 -- Открытый верхний этаж: стекло в проёме передней стены, чтобы не выпасть на улицу
@@ -222,8 +226,9 @@ local function buildLock(model: Model, plot: BasePart, floor: number)
 	text:SetAttribute("FloorSign", floor)
 end
 
--- Поставить лифты, стёкла и замки этажей на участок. До офиса (гараж) — ничего
-function OfficeFloors.build(plot: BasePart, studioLevel: number, onLift: LiftHandler)
+-- Поставить лифты, стёкла, перекрытия и замки этажей на участок. До офиса (гараж) — ничего.
+-- ceiling — потолок из отделки студии (nil — классический)
+function OfficeFloors.build(plot: BasePart, studioLevel: number, onLift: LiftHandler, ceiling: Ceiling?)
 	if studioLevel < 2 then
 		return
 	end
@@ -233,7 +238,7 @@ function OfficeFloors.build(plot: BasePart, studioLevel: number, onLift: LiftHan
 		model.Name = "OfficeFloor" .. floor
 		model:SetAttribute("Floor", floor)
 		if floor > 1 then
-			buildSlab(model, plot, floor)
+			buildSlab(model, plot, floor, ceiling)
 		end
 		if floor <= unlocked then
 			buildElevator(model, plot, floor, unlocked, onLift)

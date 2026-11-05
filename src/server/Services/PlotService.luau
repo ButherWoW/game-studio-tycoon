@@ -76,7 +76,8 @@ PlotService.getPlot = getPlot
 
 local function placeModel(plot: BasePart, modelName: string, position: Vector3?, rotationDeg: number?)
 	local folder = ServerStorage:FindFirstChild("Upgrades")
-	-- Стиль мебели владельца (V15): Desk1_Neon вместо Desk1, если такая модель импортирована
+	-- Стиль мебели владельца (V15): Desk1_Neon вместо Desk1, если такая модель импортирована;
+	-- у оболочек этапов — отделка владельца (Office_Sakura, для Garage — GarageWalls_Sakura)
 	local owner = owners[plot]
 	local template = StyleModels.find(folder, modelName, if owner then DataService.get(owner) else nil)
 	if not template or not template:IsA("Model") then
@@ -181,14 +182,13 @@ end
 -- (стены гаража Астры #61 уже с полом и стенами: вторые стены мерцали бы)
 local SUPERSEDED_BY = { Garage = "GarageWalls" }
 
+-- Смотрим на поставленный клон, а не на классический шаблон: при отделке на участке может стоять
+-- GarageWalls_<suffix> (импортирован) при заглушке GarageWalls — гараж всё равно не ставим второй.
+-- Клон несёт атрибут Generated своего шаблона
 local function supersededOnPlot(plot: BasePart, modelName: string): boolean
 	local replacement = SUPERSEDED_BY[modelName]
-	if not replacement or not plot:FindFirstChild(replacement) then
-		return false
-	end
-	local folder = ServerStorage:FindFirstChild("Upgrades")
-	local template = folder and folder:FindFirstChild(replacement)
-	return template ~= nil and template:GetAttribute("Generated") ~= true
+	local placed = replacement and plot:FindFirstChild(replacement)
+	return placed ~= nil and placed:GetAttribute("Generated") ~= true
 end
 
 local onLift: OfficeFloors.LiftHandler
@@ -212,7 +212,12 @@ local function buildPlot(plot: BasePart, profile: DataService.Profile)
 			placeModel(plot, stage.model, stage.position, 0)
 		end
 	end
-	OfficeFloors.build(plot, level, onLift)
+	-- Потолок этажей (низ перекрытий) — в цвете отделки владельца; классика — как раньше
+	local finish = StyleModels.finish(profile)
+	local ceiling: OfficeFloors.Ceiling? = if finish and finish.ceilingColor
+		then { color = finish.ceilingColor, material = finish.ceilingMaterial or Enum.Material.SmoothPlastic }
+		else nil
+	OfficeFloors.build(plot, level, onLift, ceiling)
 end
 
 local refreshButtons: (player: Player) -> ()

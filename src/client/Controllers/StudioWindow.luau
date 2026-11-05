@@ -2,7 +2,8 @@
 -- Окно «🛋️ Студия»: вкладки «Интерьер» (то же, что кнопки на полу, — покупка через BuyUpgrade
 -- с теми же проверками на сервере), «Декор» (Config/Decor, DecorService), «Настроение»
 -- (разбор MoodService), «Консоль» (своя консоль и стример, ConsoleClient) и «Стиль» (стиль мебели
--- всей студии, Config/FurnitureStyles, FurnitureStyleService; за Robux — PromptProductPurchase).
+-- всей студии, Config/FurnitureStyles, FurnitureStyleService; за Robux — PromptProductPurchase)
+-- и «Отделка» (пол/стены/окна оболочек, Config/InteriorFinishes, InteriorFinishService; только за Robux).
 -- Клиент только показывает и просит; цены и замки проверяет сервер.
 
 local MarketplaceService = game:GetService("MarketplaceService")
@@ -14,6 +15,8 @@ local Remotes = require(Shared.Remotes)
 local DecorRemotes = require(Shared.DecorRemotes)
 local Decor = require(Shared.Config.Decor)
 local FurnitureStyles = require(Shared.Config.FurnitureStyles)
+local Images = require(Shared.Config.Images)
+local InteriorFinishes = require(Shared.Config.InteriorFinishes)
 local Mood = require(Shared.Config.Mood)
 local Stages = require(Shared.Config.Stages)
 local Texts = require(Shared.Config.Texts)
@@ -25,14 +28,17 @@ local CompanyEvents = require(Shared.Config.CompanyEvents)
 local Ui = require(script.Parent.Parent.Ui)
 local ConsoleClient = require(script.Parent.Parent.ConsoleClient)
 
-type Tab = "interior" | "decor" | "mood" | "console" | "style"
+type Tab = "interior" | "decor" | "mood" | "console" | "style" | "finish"
 type StyleState = { owned: { [string]: boolean }, selected: string }
 
 local MENU_SLOT = 13
 local ROW_HEIGHT = 72
 local ROW_COLOR = Color3.fromRGB(44, 46, 66)
-local TABS: { Tab } = { "interior", "decor", "style", "mood", "console" }
--- Узкий экран (телефон 844×390): окно ужимается UIScale, и 5 подписей вкладок не читаются —
+local TABS: { Tab } = { "interior", "decor", "style", "finish", "mood", "console" }
+-- Карточка отделки: картинка ShopCard слева (квадрат) и кнопка справа
+local FINISH_ROW_HEIGHT = 112
+local FINISH_PREVIEW = 96
+-- Узкий экран (телефон 844×390): окно ужимается UIScale, и 6 подписей вкладок не читаются —
 -- у невыбранных вкладок остаётся только значок, выбранная шире
 local COMPACT_WIDTH = 900
 local COMPACT_HEIGHT = 520
@@ -47,6 +53,9 @@ local render: () -> ()
 local styleState: StyleState =
 	{ owned = { [FurnitureStyles.default] = true }, selected = FurnitureStyles.default }
 local styleRemotes: { [string]: RemoteEvent }? = nil
+-- Отделка студии с сервера (StyleRemotes.FinishState); до ответа — классика
+local finishState: StyleState =
+	{ owned = { [InteriorFinishes.default] = true }, selected = InteriorFinishes.default }
 
 local function upgradeName(id: string): string
 	local upgrade = StudioLayout.get(id)
@@ -347,6 +356,121 @@ local function buildStyle(body: Instance)
 	end
 end
 
+-- Превью отделки: ShopCard_512.png, если загружена (Images.interiorFinishes), иначе цвета набора и значок
+local function finishPreview(parent: Instance, finish: InteriorFinishes.Finish)
+	local frame = Instance.new("Frame")
+	frame.AnchorPoint = Vector2.new(0, 0.5)
+	frame.Position = UDim2.new(0, 8, 0.5, 0)
+	frame.Size = UDim2.fromOffset(FINISH_PREVIEW, FINISH_PREVIEW)
+	frame.BackgroundColor3 = finish.color
+	frame.BorderSizePixel = 0
+	Ui.corner(frame, 8)
+	local imageId = if finish.imageKey then Images.interiorFinishes[finish.imageKey] or 0 else 0
+	if imageId > 0 then
+		local image = Instance.new("ImageLabel")
+		image.Size = UDim2.fromScale(1, 1)
+		image.BackgroundTransparency = 1
+		image.ScaleType = Enum.ScaleType.Crop
+		image.Image = "rbxassetid://" .. imageId
+		Ui.corner(image, 8)
+		image.Parent = frame
+	else
+		local gradient = Instance.new("UIGradient")
+		gradient.Rotation = 90
+		gradient.Color = ColorSequence.new(finish.color:Lerp(finish.accent, 0.4), finish.color)
+		gradient.Parent = frame
+		-- Полоса «пола» в цвете вставок набора
+		local floor = Instance.new("Frame")
+		floor.AnchorPoint = Vector2.new(0, 1)
+		floor.Position = UDim2.fromScale(0, 1)
+		floor.Size = UDim2.fromScale(1, 0.18)
+		floor.BackgroundColor3 = finish.accent
+		floor.BorderSizePixel = 0
+		Ui.corner(floor, 8)
+		floor.Parent = frame
+		local emoji = Ui.label(frame, finish.emoji, FINISH_PREVIEW * 0.5)
+		emoji.Position = UDim2.fromScale(0.1, 0.12)
+		emoji.Size = UDim2.fromScale(0.8, 0.58)
+		emoji.TextXAlignment = Enum.TextXAlignment.Center
+	end
+	frame.Parent = parent
+end
+
+local function finishButton(frame: Frame, finish: InteriorFinishes.Finish)
+	local remotes = styleRemotes
+	if finishState.selected == finish.id then
+		rowButton(frame, ClientState.t("ifinish_selected"), Ui.colors.good, function() end)
+	elseif finishState.owned[finish.id] then
+		rowButton(frame, ClientState.t("fstyle_select"), Ui.colors.primary, function()
+			if remotes then
+				remotes.SelectFinish:FireServer(finish.id)
+			end
+		end)
+	else
+		-- Только за Robux; productId 0 — продукт ещё не создан в Dashboard: «Скоро»
+		local soon = finish.productId == 0
+		rowButton(
+			frame,
+			if soon
+				then ClientState.t("shop_soon")
+				else ClientState.t("shop_robux", { price = finish.robuxPrice or 0 }),
+			if soon then Ui.colors.locked else Ui.colors.good,
+			function()
+				if not soon then
+					MarketplaceService:PromptProductPurchase(Players.LocalPlayer, finish.productId)
+				end
+			end
+		)
+	end
+end
+
+-- Вкладка «Отделка»: 4 карточки, одна отделка на всю студию (пол, стены, окна, свет), мебель не меняет
+local function buildFinish(body: Instance)
+	note(body, ClientState.t("ifinish_hint"), 1)
+	for i, finish in InteriorFinishes.list do
+		local selected = finishState.selected == finish.id
+		local frame = Instance.new("Frame")
+		frame.BackgroundColor3 = ROW_COLOR
+		frame.Size = UDim2.new(1, -8, 0, FINISH_ROW_HEIGHT)
+		frame.LayoutOrder = 1 + i
+		Ui.corner(frame, 10)
+		local stroke = Instance.new("UIStroke")
+		stroke.Thickness = if selected then 3 else 1
+		stroke.Color = if selected then Ui.colors.good else finish.accent
+		stroke.Transparency = if selected then 0 else 0.4
+		stroke.Parent = frame
+
+		finishPreview(frame, finish)
+		local left = FINISH_PREVIEW + 20
+		local titleLabel = Ui.label(
+			frame,
+			ClientState.t("ifinish_" .. finish.id),
+			28,
+			Ui.titleFontFor(ClientState.lang),
+			if finish.id == InteriorFinishes.default
+				then nil
+				else finish.accent:Lerp(Color3.new(1, 1, 1), 0.3)
+		)
+		titleLabel.Position = UDim2.fromOffset(left, 12)
+		titleLabel.Size = UDim2.new(0.7, -left - 4, 0, 28)
+		local descLabel = Ui.label(
+			frame,
+			ClientState.t("ifinish_" .. finish.id .. "_desc"),
+			20,
+			Enum.Font.GothamMedium,
+			Ui.colors.muted
+		)
+		descLabel.TextScaled = false
+		descLabel.TextSize = 16
+		descLabel.TextWrapped = true
+		descLabel.TextYAlignment = Enum.TextYAlignment.Top
+		descLabel.Position = UDim2.fromOffset(left, 46)
+		descLabel.Size = UDim2.new(0.7, -left - 4, 0, FINISH_ROW_HEIGHT - 54)
+		frame.Parent = body
+		finishButton(frame, finish)
+	end
+end
+
 local function isCompact(): boolean
 	local camera = workspace.CurrentCamera
 	local viewport = if camera then camera.ViewportSize else Vector2.new(1280, 720)
@@ -354,7 +478,11 @@ local function isCompact(): boolean
 end
 
 local function tabText(id: Tab, compact: boolean): string
-	local text = ClientState.t(if id == "style" then "fstyle_tab" else "studio_tab_" .. id)
+	local key = if id == "style"
+		then "fstyle_tab"
+		elseif id == "finish" then "ifinish_tab"
+		else "studio_tab_" .. id
+	local text = ClientState.t(key)
 	if compact and id ~= tab then
 		-- Подписи вкладок начинаются со значка: «🛠 Интерьер» -> «🛠»
 		return string.match(text, "^(%S+)%s") or text
@@ -435,6 +563,8 @@ render = function()
 		ConsoleClient.buildTab(body)
 	elseif tab == "style" then
 		buildStyle(body)
+	elseif tab == "finish" then
+		buildFinish(body)
 	else
 		buildMood(body)
 	end
@@ -463,6 +593,7 @@ function StudioWindow.open()
 	ConsoleClient.request()
 	if styleRemotes then
 		styleRemotes.StyleStateRequest:FireServer()
+		styleRemotes.FinishStateRequest:FireServer()
 	end
 end
 
@@ -510,7 +641,21 @@ function StudioWindow.start()
 				render()
 			end
 		end)
+		remotes.FinishState.OnClientEvent:Connect(function(newState: any)
+			if
+				type(newState) ~= "table"
+				or type(newState.owned) ~= "table"
+				or type(newState.selected) ~= "string"
+			then
+				return
+			end
+			finishState = { owned = newState.owned, selected = newState.selected }
+			if tab == "finish" then
+				render()
+			end
+		end)
 		remotes.StyleStateRequest:FireServer()
+		remotes.FinishStateRequest:FireServer()
 	end)
 	-- Деньги поменялись — перекрасить кнопки цены
 	ClientState.changed:Connect(function()
