@@ -1,0 +1,197 @@
+{
+  "expected": 8,
+  "ready": 8,
+  "runtimeTested": false,
+  "assets": [
+    {
+      "file": "fx_coin.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "transparentCorners": true,
+      "transparentPixels": 10316,
+      "semiTransparentPixels": 5883,
+      "opaquePixels": 185,
+      "meaningfulAlphaBBox": [
+        20,
+        21,
+        103,
+        109
+      ],
+      "sha256": "f303ed54724e97ca644ce72c0e4db9817287d1d2de0c3a06dced4ef4b09f5c96",
+      "visualReview": "PASS: isolated sprite, soft edge, no opaque background; reviewed128px light/dark and64/32/16px dark"
+    },
+    {
+      "file": "fx_star.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "transparentCorners": true,
+      "transparentPixels": 12003,
+      "semiTransparentPixels": 4379,
+      "opaquePixels": 2,
+      "meaningfulAlphaBBox": [
+        22,
+        25,
+        105,
+        105
+      ],
+      "sha256": "eaab6420ebe77bedd25075ba6eab5973a8082f874f7cb19ad7faae3a6fa354e8",
+      "visualReview": "PASS: isolated sprite, soft edge, no opaque background; reviewed128px light/dark and64/32/16px dark"
+    },
+    {
+      "file": "fx_sparkle.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "transparentCorners": true,
+      "transparentPixels": 14203,
+      "semiTransparentPixels": 2179,
+      "opaquePixels": 2,
+      "meaningfulAlphaBBox": [
+        15,
+        16,
+        112,
+        111
+      ],
+      "sha256": "0b1acb29eaa1f883f9e8248821dd66c1a0b9a734246963b511bb80bb01c78d89",
+      "visualReview": "PASS: isolated sprite, soft edge, no opaque background; reviewed128px light/dark and64/32/16px dark"
+    },
+    {
+      "file": "fx_confetti_1.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "transparentCorners": true,
+      "transparentPixels": 14339,
+      "semiTransparentPixels": 1990,
+      "opaquePixels": 55,
+      "meaningfulAlphaBBox": [
+        26,
+        40,
+        102,
+        90
+      ],
+      "sha256": "102a574575e07a4a6ee110e77f0b935f1ca6139471d149419da070acc0bd02a7",
+      "visualReview": "PASS: isolated sprite, soft edge, no opaque background; reviewed128px light/dark and64/32/16px dark"
+    },
+    {
+      "file": "fx_confetti_2.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentCorners": true,
+      "transparentPixels": 12240,
+      "semiTransparentPixels": 4144,
+      "opaquePixels": 0,
+      "meaningfulAlphaBBox": [
+        28,
+        28,
+        98,
+        99
+      ],
+      "sha256": "6dad5bfc44fdde39a093cb8eeeffa0db86b8d1d105dda944d2ed5493cf3a083d",
+      "visualReview": "PASS: isolated sprite, soft edge, no opaque background; reviewed128px light/dark and64/32/16px dark"
+    },
+    {
+      "file": "fx_heart.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentCorners": true,
+      "transparentPixels": 10171,
+      "semiTransparentPixels": 6213,
+      "opaquePixels": 0,
+      "meaningfulAlphaBBox": [
+        15,
+        24,
+        112,
+        109
+      ],
+      "sha256": "f362a8fcf9028e440f2bcd26707dc728ac660e48e573d0252236c5206a02406f",
+      "visualReview": "PASS: isolated sprite, soft edge, no opaque background; reviewed128px light/dark and64/32/16px dark"
+    },
+    {
+      "file": "fx_note.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "transparentCorners": true,
+      "transparentPixels": 11331,
+      "semiTransparentPixels": 5038,
+      "opaquePixels": 15,
+      "meaningfulAlphaBBox": [
+        30,
+        25,
+        97,
+        106
+      ],
+      "sha256": "387a1cf48eadeceb01b0824d25d78a9b7ce8102049fe969453ba98ea2c1169bd",
+      "visualReview": "PASS: isolated sprite, soft edge, no opaque background; reviewed128px light/dark and64/32/16px dark"
+    },
+    {
+      "file": "fx_smoke.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        253
+      ],
+      "transparentCorners": true,
+      "transparentPixels": 9422,
+      "semiTransparentPixels": 6962,
+      "opaquePixels": 0,
+      "meaningfulAlphaBBox": [
+        20,
+        22,
+        108,
+        105
+      ],
+      "sha256": "13a6cc0d5be415f5dcfac92c98916a68f2eb10f76ff60790e9e4061e7c486004",
+      "visualReview": "PASS: isolated sprite, soft edge, no opaque background; reviewed128px light/dark and64/32/16px dark"
+    }
+  ],
+  "visualReview": "PASS:8/8 reviewed; white tint masks intentionally low contrast on white backgrounds",
+  "sourceChecks": {
+    "stylua": "PASS",
+    "selene": "PASS",
+    "rojoBuild": "PASS"
+  }
+}
