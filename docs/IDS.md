@@ -59,76 +59,79 @@ Developer Products, GamePasses и Badges принадлежат **вселенн
 <!-- ids:begin -->
 | Конфиг | Ключ | Тип | test (v2, 10774624686) | main (10774551088) |
 |---|---|---|---|---|
-| AdCampaigns | `social` | Developer Product | 3728447783 |  |
-| AdCampaigns | `streamers` | Developer Product | 3728447889 |  |
-| AdCampaigns | `tv` | Developer Product | 3728447939 |  |
-| AdCampaigns | `worldwide` | Developer Product | 3728447942 |  |
-| FurnitureStyles | `neon` | Developer Product | 3728447945 |  |
-| GamePasses | `doubleCash` | GamePass | 2071008855 |  |
-| GamePasses | `autoRelease` | GamePass | 2072480376 |  |
-| GamePasses | `fastDev` | GamePass | 2067092439 |  |
-| GamePasses | `extraSlot` | GamePass | 2068496428 |  |
-| GamePasses | `vipOffice` | GamePass | 2070720897 |  |
-| GamePasses | `legendaryEmployee` | GamePass | 2070314109 |  |
-| InteriorFinishes | `obsidianGold` | Developer Product | 3728485040 |  |
-| InteriorFinishes | `sakura` | Developer Product | 3728485054 |  |
-| InteriorFinishes | `aurora` | Developer Product | 3728485064 |  |
-| Mascots | `neon_fox` | Developer Product | 3728447955 |  |
-| Mascots | `dragon_byte` | Developer Product | 3728447957 |  |
-| Mascots | `golden_trophy` | Developer Product | 3728447964 |  |
-| Mascots | `cosmic_whale` | Developer Product | 3728447966 |  |
-| Posters | `neonCity` | Developer Product | 3728447969 |  |
-| Posters | `crystalKingdom` | Developer Product | 3728447971 |  |
-| Posters | `mechTitan` | Developer Product | 3728447973 |  |
-| Posters | `galaxyLegends` | Developer Product | 3728447981 |  |
-| Posters | `goldenController` | Developer Product | 3728447985 |  |
-| Products | `instantFinish` | Developer Product | 3728447988 |  |
-| Products | `patch` | Developer Product | 3728447989 |  |
-| Products | `coffee` | Developer Product | 3728447993 |  |
-| Products | `income10` | Developer Product | 3728447996 |  |
-| Products | `income30` | Developer Product | 3728447999 |  |
-| Products | `income90` | Developer Product | 3728448002 |  |
-| Products | `offers.doubleRelease` | Developer Product | 3728448015 |  |
-| Products | `offers.starterPack` | Developer Product | 3728448017 |  |
-| Products | `deals.instantFinish` | Developer Product | 3728448020 |  |
-| Products | `deals.patch` | Developer Product | 3728448022 |  |
-| Products | `deals.coffee` | Developer Product | 3728448025 |  |
-| Products | `deals.income10` | Developer Product | 3728448031 |  |
-| Products | `deals.income30` | Developer Product | 3728448038 |  |
-| Products | `deals.income90` | Developer Product | 3728448040 |  |
-| Products | `deals.poster_neonCity` | Developer Product | 3728448052 |  |
-| Products | `deals.poster_crystalKingdom` | Developer Product | 3728448055 |  |
-| Products | `deals.poster_mechTitan` | Developer Product | 3728448058 |  |
-| Products | `deals.poster_galaxyLegends` | Developer Product | 3728448061 |  |
-| Products | `deals.poster_goldenController` | Developer Product | 3728448065 |  |
-| Products | `deals.skin_neon_streamer` | Developer Product | 3728448066 |  |
-| Products | `deals.skin_cyber_dev` | Developer Product | 3728448069 |  |
-| Products | `deals.skin_space_dev` | Developer Product | 3728448070 |  |
-| Products | `deals.skin_wizard_dev` | Developer Product | 3728448090 |  |
+| AdCampaigns | `social` | Developer Product | 3728447783 | 3728498032 |
+| AdCampaigns | `streamers` | Developer Product | 3728447889 | 3728498043 |
+| AdCampaigns | `tv` | Developer Product | 3728447939 | 3728498063 |
+| AdCampaigns | `worldwide` | Developer Product | 3728447942 | 3728498075 |
+| Construction | `buildSpeed5` | Developer Product | — |  |
+| Construction | `buildSpeed30` | Developer Product | — |  |
+| Construction | `buildSkip` | Developer Product | — |  |
+| FurnitureStyles | `neon` | Developer Product | 3728447945 | 3728498090 |
+| GamePasses | `doubleCash` | GamePass | 2071008855 | 2070540998 |
+| GamePasses | `autoRelease` | GamePass | 2072480376 | 2071816553 |
+| GamePasses | `fastDev` | GamePass | 2067092439 | 2070314173 |
+| GamePasses | `extraSlot` | GamePass | 2068496428 | 2072234478 |
+| GamePasses | `vipOffice` | GamePass | 2070720897 | 2071640568 |
+| GamePasses | `legendaryEmployee` | GamePass | 2070314109 | 2068652542 |
+| InteriorFinishes | `obsidianGold` | Developer Product | 3728485040 | 3728498631 |
+| InteriorFinishes | `sakura` | Developer Product | 3728485054 | 3728498643 |
+| InteriorFinishes | `aurora` | Developer Product | 3728485064 | 3728498658 |
+| Mascots | `neon_fox` | Developer Product | 3728447955 | 3728498102 |
+| Mascots | `dragon_byte` | Developer Product | 3728447957 | 3728498122 |
+| Mascots | `golden_trophy` | Developer Product | 3728447964 | 3728498132 |
+| Mascots | `cosmic_whale` | Developer Product | 3728447966 | 3728498151 |
+| Posters | `neonCity` | Developer Product | 3728447969 | 3728498871 |
+| Posters | `crystalKingdom` | Developer Product | 3728447971 | 3728498165 |
+| Posters | `mechTitan` | Developer Product | 3728447973 | 3728498888 |
+| Posters | `galaxyLegends` | Developer Product | 3728447981 | 3728498244 |
+| Posters | `goldenController` | Developer Product | 3728447985 | 3728498256 |
+| Products | `instantFinish` | Developer Product | 3728447988 | 3728498272 |
+| Products | `patch` | Developer Product | 3728447989 | 3728498290 |
+| Products | `coffee` | Developer Product | 3728447993 | 3728498309 |
+| Products | `income10` | Developer Product | 3728447996 | 3728498324 |
+| Products | `income30` | Developer Product | 3728447999 | 3728498349 |
+| Products | `income90` | Developer Product | 3728448002 | 3728498365 |
+| Products | `offers.doubleRelease` | Developer Product | 3728448015 | 3728498380 |
+| Products | `offers.starterPack` | Developer Product | 3728448017 | 3728498901 |
+| Products | `deals.instantFinish` | Developer Product | 3728448020 | 3728498397 |
+| Products | `deals.patch` | Developer Product | 3728448022 | 3728498414 |
+| Products | `deals.coffee` | Developer Product | 3728448025 | 3728498434 |
+| Products | `deals.income10` | Developer Product | 3728448031 | 3728498444 |
+| Products | `deals.income30` | Developer Product | 3728448038 | 3728498458 |
+| Products | `deals.income90` | Developer Product | 3728448040 | 3728498477 |
+| Products | `deals.poster_neonCity` | Developer Product | 3728448052 | 3728498495 |
+| Products | `deals.poster_crystalKingdom` | Developer Product | 3728448055 | 3728498515 |
+| Products | `deals.poster_mechTitan` | Developer Product | 3728448058 | 3728498524 |
+| Products | `deals.poster_galaxyLegends` | Developer Product | 3728448061 | 3728498540 |
+| Products | `deals.poster_goldenController` | Developer Product | 3728448065 | 3728498556 |
+| Products | `deals.skin_neon_streamer` | Developer Product | 3728448066 | 3728498572 |
+| Products | `deals.skin_cyber_dev` | Developer Product | 3728448069 | 3728498585 |
+| Products | `deals.skin_space_dev` | Developer Product | 3728448070 | 3728498600 |
+| Products | `deals.skin_wizard_dev` | Developer Product | 3728448090 | 3728498619 |
 | Products | `researchSpeed5` | Developer Product | — |  |
 | Products | `researchSpeed30` | Developer Product | — |  |
 | Products | `researchSkip` | Developer Product | — |  |
-| Season | `seasonPass` | Developer Product | 3728448106 |  |
-| Season | `seasonSkip` | Developer Product | 3728448111 |  |
-| Skins | `neon_streamer` | Developer Product | 3728448093 |  |
-| Skins | `cyber_dev` | Developer Product | 3728448098 |  |
-| Skins | `space_dev` | Developer Product | 3728448101 |  |
-| Skins | `wizard_dev` | Developer Product | 3728448105 |  |
-| Social | `gift_neon_streamer` | Developer Product | — |  |
-| Social | `gift_cyber_dev` | Developer Product | — |  |
-| Social | `gift_space_dev` | Developer Product | — |  |
-| Social | `gift_wizard_dev` | Developer Product | — |  |
-| Social | `gift_neonCity` | Developer Product | — |  |
-| Social | `gift_crystalKingdom` | Developer Product | — |  |
-| Social | `gift_mechTitan` | Developer Product | — |  |
-| Social | `gift_galaxyLegends` | Developer Product | — |  |
-| Social | `gift_goldenController` | Developer Product | — |  |
-| Social | `gift_neon_fox` | Developer Product | — |  |
-| Social | `gift_dragon_byte` | Developer Product | — |  |
-| Social | `gift_golden_trophy` | Developer Product | — |  |
-| Social | `gift_cosmic_whale` | Developer Product | — |  |
+| Season | `seasonPass` | Developer Product | 3728448106 | 3728498962 |
+| Season | `seasonSkip` | Developer Product | 3728448111 | 3728498976 |
+| Skins | `neon_streamer` | Developer Product | 3728448093 | 3728498913 |
+| Skins | `cyber_dev` | Developer Product | 3728448098 | 3728498923 |
+| Skins | `space_dev` | Developer Product | 3728448101 | 3728498933 |
+| Skins | `wizard_dev` | Developer Product | 3728448105 | 3728498948 |
+| Social | `gift_neon_streamer` | Developer Product | 3728497737 | 3728498672 |
+| Social | `gift_cyber_dev` | Developer Product | 3728497750 | 3728498688 |
+| Social | `gift_space_dev` | Developer Product | 3728497769 | 3728498698 |
+| Social | `gift_wizard_dev` | Developer Product | 3728497787 | 3728498712 |
+| Social | `gift_neonCity` | Developer Product | 3728497804 | 3728498731 |
+| Social | `gift_crystalKingdom` | Developer Product | 3728497819 | 3728498751 |
+| Social | `gift_mechTitan` | Developer Product | 3728497831 | 3728498769 |
+| Social | `gift_galaxyLegends` | Developer Product | 3728497863 | 3728498785 |
+| Social | `gift_goldenController` | Developer Product | 3728497878 | 3728498804 |
+| Social | `gift_neon_fox` | Developer Product | 3728497891 | 3728498815 |
+| Social | `gift_dragon_byte` | Developer Product | 3728497896 | 3728498830 |
+| Social | `gift_golden_trophy` | Developer Product | 3728497908 | 3728498845 |
+| Social | `gift_cosmic_whale` | Developer Product | 3728497923 | 3728498858 |
 | Training | `skillSkip` | Developer Product | — |  |
 | Training | `skillSkipAll` | Developer Product | — |  |
 
-Всего записей: 70; создано в test: 52; заполнено в main: 0.
+Всего записей: 73; создано в test: 65; заполнено в main: 65.
 <!-- ids:end -->

@@ -7,6 +7,10 @@
 -- Здесь же этапы студии (Config/Stages): studioLevel, переезд и модель этапа на участке.
 -- После гаража — трёхэтажный офис: оболочки всех этажей стоят сразу, «переезд» открывает
 -- следующий этаж, интерьер нижних остаётся (лифты и замки этажей — OfficeFloors).
+-- Покупка офиса или этажа начинает стройку (Config/Construction, V29): деньги списаны, этап
+-- наступает, когда выйдет время (profile.construction). Площадку и строителей ставит
+-- ConstructionService по сигналам plotChanged / constructionChanged; до конца стройки
+-- studioLevel и upgrades — прежние, поэтому все проверки этапа видят текущую студию.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -16,6 +20,7 @@ local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
+local Construction = require(ReplicatedStorage.Shared.Config.Construction)
 local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
 local StartRemotes = require(ReplicatedStorage.Shared.StartRemotes)
@@ -41,6 +46,8 @@ local MOVE_BUTTON_SIZE = Vector3.new(8, 0.5, 8)
 local COLOR_MOVE = Color3.fromRGB(255, 201, 60)
 -- Табличка «Гараж продаётся» — кнопка Buy_garage (не апгрейд из Config, а покупка самого гаража)
 local GARAGE_ID = "garage"
+-- Серая кнопка на месте переезда, пока идёт стройка (PlotLabels переводит Buy_building)
+local BUILDING_ID = "building"
 -- Точка появления владельца гаража: снаружи перед воротами (передний край участка +Z), лицом внутрь
 local HOME_OUTSIDE = 4 -- studs за передним краем участка
 local HOME_HEIGHT = 3.5 -- над верхом участка: HumanoidRootPart стоящего персонажа
@@ -63,6 +70,9 @@ local waiting: { Player } = {}
 -- Участок собран заново (вход игрока, переезд): StaffService пересаживает NPC
 local plotChanged = Instance.new("BindableEvent")
 PlotService.plotChanged = plotChanged.Event
+-- Стройка началась / закончилась / отменена: (player, kind: "start" | "finish" | "cancel", stage)
+local constructionChanged = Instance.new("BindableEvent")
+PlotService.constructionChanged = constructionChanged.Event
 
 local function getPlot(player: Player): BasePart?
 	for plot, owner in owners do
@@ -172,6 +182,31 @@ local function normalizeStage(profile: DataService.Profile): boolean
 	return level ~= old
 end
 
+-- Стройка, которая ведёт на следующий этап; другая (мусор, этап уже сменился) — не считается
+local function activeConstruction(profile: DataService.Profile)
+	local construction = profile.construction
+	if construction and construction.stage == profile.studioLevel + 1 then
+		return construction
+	end
+	return nil
+end
+
+function PlotService.construction(player: Player)
+	local profile = DataService.get(player)
+	return if profile then activeConstruction(profile) else nil
+end
+
+-- Стройка не ведёт на следующий этап (Rebirth, отладка, старое сохранение) — снимаем. true — сняли
+local function dropStaleConstruction(player: Player, profile: DataService.Profile): boolean
+	local construction = profile.construction
+	if construction and not activeConstruction(profile) then
+		profile.construction = nil
+		constructionChanged:Fire(player, "cancel", construction.stage)
+		return true
+	end
+	return false
+end
+
 -- Начинка прошлых этапов (гаражные стеллажи, офисные стены) после переезда не нужна,
 -- интерьер следующих этапов появляется только после переезда (Upgrade.stage)
 local function isVisible(upgrade: Upgrades.Upgrade, profile: DataService.Profile): boolean
@@ -235,6 +270,7 @@ function PlotService.rebuild(player: Player)
 		profile.studioLevel = 1
 	end
 	normalizeStage(profile)
+	dropStaleConstruction(player, profile)
 	for _, child in plot:GetChildren() do
 		if child:IsA("Model") then
 			child:Destroy()
@@ -310,15 +346,17 @@ end
 
 local function availableUpgrades(profile: DataService.Profile): { Upgrades.Upgrade }
 	local result = {}
+	-- Пока идёт стройка, кнопки переезда нет: вместо неё серая «🏗️ Строится…» (refreshButtons)
+	local canMove = readyToMove(profile) and activeConstruction(profile) == nil
 	for _, upgrade in Upgrades do
 		local unlocked = not upgrade.requires or profile.upgrades[upgrade.requires]
 		if not profile.upgrades[upgrade.id] and unlocked and isVisible(upgrade, profile) then
-			if not upgrade.move or readyToMove(profile) then
+			if not upgrade.move or canMove then
 				table.insert(result, upgrade)
 			end
 		end
 	end
-	local stageMove = if readyToMove(profile) then stageMoveButton(profile) else nil
+	local stageMove = if canMove then stageMoveButton(profile) else nil
 	if stageMove then
 		table.insert(result, stageMove)
 	end
@@ -336,6 +374,7 @@ end
 
 local tryBuy: (player: Player, upgradeId: string) -> ()
 local onMoveStudio: (player: Player) -> ()
+local startConstruction: (player: Player, profile: DataService.Profile, stage: number, cost: number) -> ()
 
 local function createButton(
 	player: Player,
@@ -439,12 +478,35 @@ refreshButtons = function(player: Player)
 		byFloor[floor] = byFloor[floor] or {}
 		table.insert(byFloor[floor], upgrade)
 	end
+	-- Идёт стройка: на месте кнопки переезда — серая «🏗️ Строится…». В playerButtons её нет:
+	-- общий цикл её не перекрашивает и не «покупает» (Buy_building не апгрейд — tryBuy её пропустит)
+	local building: Upgrades.Upgrade? = nil
+	if activeConstruction(profile) then
+		local placeholder = {
+			id = BUILDING_ID,
+			name = "🏗️ Строится…",
+			cost = 0,
+			model = "",
+			move = true,
+		} :: Upgrades.Upgrade
+		building = placeholder
+		byFloor[topFloor] = byFloor[topFloor] or {}
+		table.insert(byFloor[topFloor], placeholder)
+	end
 	local playerButtons = {}
 	for floor, floorList in byFloor do
 		for i, upgrade in floorList do
 			local button = createButton(player, plot, upgrade, i, #floorList, floor)
 			button.Parent = newFolder
-			playerButtons[button] = upgrade
+			if upgrade == building then
+				local gui = button:FindFirstChildWhichIsA("BillboardGui")
+				local label = gui and gui:FindFirstChildWhichIsA("TextLabel")
+				if label then
+					label.Text = upgrade.name
+				end
+			else
+				playerButtons[button] = upgrade
+			end
 		end
 	end
 	newFolder.Parent = plot
@@ -500,7 +562,20 @@ tryBuy = function(player: Player, upgradeId: string)
 			if not isVisible(upgrade, profile) then
 				return
 			end
-			if upgrade.move and not readyToMove(profile) then
+			if upgrade.move and (not readyToMove(profile) or activeConstruction(profile)) then
+				return
+			end
+			-- Переезд в офис — через стройку (Config/Construction): апгрейд office появится в конце
+			local nextStage = Stages[profile.studioLevel + 1]
+			if
+				upgrade.move
+				and nextStage
+				and nextStage.requiresUpgrade == upgrade.id
+				and Construction.duration(nextStage.level) > 0
+			then
+				if DataService.trySpend(player, upgrade.cost) then
+					startConstruction(player, profile, nextStage.level, upgrade.cost)
+				end
 				return
 			end
 			if DataService.trySpend(player, upgrade.cost) then
@@ -634,6 +709,7 @@ local function assignPlot(player: Player)
 					return
 				end
 				normalizeStage(profile)
+				dropStaleConstruction(player, profile)
 				player:SetAttribute("OwnsGarage", profileOwnsGarage(profile))
 				buildPlot(plot, profile)
 				DataService.replicate(player)
@@ -656,18 +732,70 @@ end
 
 onMoveStudio = function(player: Player)
 	local profile = DataService.get(player)
-	if not profile or not getPlot(player) then
+	if not profile or not getPlot(player) or activeConstruction(profile) then
 		return
 	end
 	local nextStage = Stages[profile.studioLevel + 1]
 	if not nextStage or not stageRequirementsMet(profile, nextStage) or not readyToMove(profile) then
 		return
 	end
+	-- Офис (cost 0) покупается апгрейдом office, а не здесь: иначе переезд бесплатно
+	if nextStage.cost <= 0 then
+		return
+	end
 	if DataService.trySpend(player, nextStage.cost) then
+		if Construction.duration(nextStage.level) > 0 then
+			startConstruction(player, profile, nextStage.level, nextStage.cost)
+			return
+		end
 		profile.studioLevel = nextStage.level
 		PlotService.rebuild(player)
 		DataService.replicate(player)
 	end
+end
+
+-- Начать стройку этапа stage (деньги уже списаны)
+startConstruction = function(player: Player, profile: DataService.Profile, stage: number, cost: number)
+	local now = os.time()
+	profile.construction = {
+		stage = stage,
+		startedAt = now,
+		endsAt = now + Construction.duration(stage),
+		cost = cost,
+	}
+	refreshButtons(player)
+	DataService.replicate(player)
+	constructionChanged:Fire(player, "start", stage)
+	-- Крупная покупка — сохраняем сразу, не ждём автосейва
+	task.spawn(DataService.save, player)
+end
+
+-- Стройка закончилась (время вышло или ускорение за Robux): этап наступает, участок пересобирается.
+-- Офис — это апгрейд office (Stages[2].requiresUpgrade), этажи — studioLevel. true — переехали
+function PlotService.finishConstruction(player: Player): boolean
+	local profile = DataService.get(player)
+	local construction = profile and profile.construction
+	if not profile or not construction then
+		return false
+	end
+	if dropStaleConstruction(player, profile) then
+		return false
+	end
+	profile.construction = nil
+	local stage = Stages[construction.stage]
+	if stage.requiresUpgrade and stage.cost <= 0 then
+		profile.upgrades[stage.requiresUpgrade] = true
+	end
+	profile.studioLevel = math.max(profile.studioLevel, construction.stage)
+	if getPlot(player) then
+		PlotService.rebuild(player)
+	else
+		normalizeStage(profile)
+		DataService.replicate(player)
+	end
+	constructionChanged:Fire(player, "finish", construction.stage)
+	task.spawn(DataService.save, player)
+	return true
 end
 
 -- Нанят сотрудник — может появиться кнопка переезда
@@ -688,7 +816,9 @@ export type Offer = {
 }
 
 local function moveLock(profile: DataService.Profile): (string?, { [string]: any }?)
-	if not interiorComplete(profile) then
+	if activeConstruction(profile) then
+		return "build_lock_building", nil
+	elseif not interiorComplete(profile) then
 		return "studio_lock_interior", nil
 	elseif not staffFull(profile) then
 		return "studio_lock_staff", nil

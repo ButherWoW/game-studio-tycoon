@@ -22,6 +22,9 @@ local COLORS = {
 }
 
 local MoveCelebration = {}
+-- Какие этапы уже отпраздновали в этой сессии: после стройки (V29) праздник зовут и по
+-- событию «построено» (ConstructionBanner), и по росту studioLevel — второй раз не показываем
+local celebrated: { [number]: boolean } = {}
 
 local function confetti(gui: ScreenGui)
 	local rng = Random.new()
@@ -61,9 +64,10 @@ end
 
 local function celebrate(level: number)
 	local stage = Stages[level]
-	if not stage then
+	if not stage or celebrated[level] then
 		return
 	end
+	celebrated[level] = true
 	local gui = Instance.new("ScreenGui")
 	gui.Name = "MoveCelebration"
 	gui.ResetOnSpawn = false
@@ -105,6 +109,11 @@ local function celebrate(level: number)
 	end)
 end
 
+-- Праздник переезда на этап level (ConstructionBanner: стройка закончилась, пока игрок входил)
+function MoveCelebration.celebrate(level: number)
+	celebrate(level)
+end
+
 function MoveCelebration.start()
 	local lastLevel: number? = nil
 	ClientState.changed:Connect(function()
@@ -116,6 +125,9 @@ function MoveCelebration.start()
 		-- Первый снимок после входа — не переезд
 		if lastLevel and level > lastLevel then
 			celebrate(level)
+		elseif lastLevel and level < lastLevel then
+			-- Rebirth: этапы можно отпраздновать снова
+			table.clear(celebrated)
 		end
 		lastLevel = level
 	end)

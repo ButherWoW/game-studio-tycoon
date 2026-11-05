@@ -287,6 +287,13 @@ def load():
         "hit": hit,
         "ads": ad_list,
         "secondsPerGame": field(rewards, "secondsPerGame"),
+        # Стройка этапа (Config/Construction, V29): секунд реального времени по номеру этапа
+        "construction": {
+            int(k): float(v)
+            for k, v in re.findall(
+                r"\[(\d)\] = ([\d_]+)", re.search(r"durations = \{([\s\S]*?)\}", read("Construction")).group(1)
+            )
+        },
     }
 
 
@@ -328,6 +335,8 @@ class Sim:
         self.event_cash = {}
         self.hit_update_ratio = 0.0  # лучшая окупаемость DLC хита за его 30 мин (цена → буст)
         self.hit_updates = 0
+        # Стройка (V29): (этап, id отметки, реальное время конца, апгрейд офиса или None)
+        self.building = None
 
     # --- справочники ---
     def visible(self, u):
@@ -516,8 +525,24 @@ class Sim:
             self.research.add(self.lab_node["id"])
             self.lab_node = None
 
+    def finish_building(self):
+        """Стройка идёт по реальному времени (и офлайн): закончилась — переезд."""
+        if self.building and self.wall >= self.building[2]:
+            level, mark, _, upgrade = self.building
+            self.building = None
+            if upgrade:
+                self.owned.add(upgrade)
+            self.level = level
+            self.mark(mark)
+
+    def start_building(self, level, mark, upgrade=None):
+        secs = self.c["construction"].get(level, 0.0)
+        self.building = (level, mark, self.wall + secs, upgrade)
+        self.finish_building()
+
     def buy_all(self):
         self.lab_tick()
+        self.finish_building()
         bought = True
         while bought:
             bought = False
@@ -580,29 +605,30 @@ class Sim:
                     continue
                 if u["requires"] and u["requires"] not in self.owned:
                     continue
-                if u["move"] and not self.ready_to_move():
+                if u["move"] and (not self.ready_to_move() or self.building):
                     continue
                 avail.append(u)
             avail.sort(key=lambda u: u["cost"])
             if avail and self.cash - avail[0]["cost"] >= self.reserve():
                 u = avail[0]
                 self.cash -= u["cost"]
+                if u["move"]:
+                    # Переезд в офис — стройка: апгрейд office появится в конце (PlotService)
+                    self.start_building(2, "office", u["id"])
+                    bought = True
+                    continue
                 self.owned.add(u["id"])
                 for lv, name in ((2, "office_interior"), (3, "floor_interior"), (4, "top_interior")):
                     if name not in self.marks and self.level == lv and self.interior_complete():
                         self.mark(name)
-                if u["move"]:
-                    self.level = 2
-                    self.mark("office")
                 bought = True
                 continue
             # переезд на этаж
             nxt = self.c["stages"][self.level] if self.level < len(self.c["stages"]) else None
-            if nxt and nxt["cost"] > 0 and self.ready_to_move() and self.games >= nxt["games"]:
+            if nxt and nxt["cost"] > 0 and not self.building and self.ready_to_move() and self.games >= nxt["games"]:
                 if self.cash - nxt["cost"] >= self.reserve():
                     self.cash -= nxt["cost"]
-                    self.level += 1
-                    self.mark(nxt["id"])
+                    self.start_building(self.level + 1, nxt["id"])
                     bought = True
                     continue
 
