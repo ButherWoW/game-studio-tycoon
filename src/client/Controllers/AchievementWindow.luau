@@ -397,7 +397,7 @@ local function playSound()
 	local module = script.Parent:FindFirstChild("SoundController")
 	if module and module:IsA("ModuleScript") then
 		pcall(function()
-			(require(module) :: any).play("unlock")
+			(require(module) :: any).play("achievement")
 		end)
 	end
 end

@@ -30,6 +30,7 @@ local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local SkinShop = require(script.Parent.Parent.SkinShop)
 local StaffPower = require(script.Parent.Parent.StaffPower)
 local ConsoleClient = require(script.Parent.Parent.ConsoleClient)
+local SoundController = require(script.Parent.SoundController)
 
 local MENU_SLOT = 2
 local ROW_COLOR = Color3.fromRGB(44, 46, 66)
@@ -540,6 +541,7 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 		local button = smallButton(line, text, color, function()
 			if skill < Skills.maxLevel and not studying and data.cash >= price then
 				StaffRemotes.UpgradeSkill:FireServer(employee.id, key)
+				SoundController.play("training_start")
 			end
 		end)
 		button.AnchorPoint = Vector2.new(1, 0)
