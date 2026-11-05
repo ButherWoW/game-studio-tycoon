@@ -1,0 +1,30 @@
+[
+  {
+    "file": "devent_banner.png",
+    "size": [
+      1600,
+      300
+    ],
+    "prompt": "Use case: stylized-concept. Asset: horizontal event-of-the-day banner for our original Roblox game Build Your Game Studio Tycoon. Intended exact final1600x300, ultra-wide16:3 fullbleedopaque. Show a joyful polished chunky cartoon3D game-development studio workday celebration: warm wooden desks and chunky bluePC monitors, royalblue/cyan/purple lighting, goldenstarcoins, friendly coffee cup, colorful original gamecartridges and a brightgold lightning motif. Tiny original blue blocky pixelcat with cyan muzzle and pinkinner ears as secondary decoration nearedge. A coherentpanoramic scene, objects spread acrosswidth withclear major shapes, darkerbluecentralregion with no denseclutter so UI can sit over it. Keepimportant motifs comfortably withinframe. Brightgold#FFC93C blue#3D7BFF cyan purple palette, thickdark#1E1E2E edging, friendly polished highlights. NO text letters digits logos watermarks orbrands. Do not draw any title or fake UI. No realconsole design, no weapons. One imageonly, notcontactsheet.",
+    "source": "/Users/erland/.codex/generated_images/01a1ac5b-fa55-75f1-bd6c-c7baedde54ea/exec-960f145b-b5e4-44a8-bc47-1ac71d36f033.png"
+  },
+  {
+    "file": "safe_keypad_bg.png",
+    "size": [
+      512,
+      640
+    ],
+    "prompt": "Use case: ui-mockup. Asset: final flat face-on game keypad window background, portrait4:5 intended512x640, opaquePNG. An original chunkycartoon blue/navy metal safe interface frame withsubtlecyan accent strips, small goldenreinforcedcornercaps, thickdark#1E1E2E edging and softpolished highlights. Flatorthographic UI background, no perspective. Crucial blankreservedregions: topdisplayrectangle x60..452 y60..155 is plain verydarknavy, completelyempty. Centralbuttonregion x64..448 y190..570 is plainflat darknavy, completelyempty andunobstructed. At mostsimplethinborder aroundthese blankregions. Keepall screws,metalbevels,goldcorners,cyanlights ONLY inouterframe x0..48 andx464..512 or top/bottommargins, notinsidereservedregions. NO buttons, keypadkeys,numbers, letters,text, locksymbols,wheelhandle, icons, watermark orlogo anywhere. Gamecode draws thedisplayandbuttons later. Beautifulclean childfriendlybluegoldstyle, no distressrust orrealbrands, fullopaque squarecorneredcanvas. One finalbackgroundonly.",
+    "source": "/Users/erland/.codex/generated_images/01a1ac5b-fa55-75f1-bd6c-c7baedde54ea/exec-8c5a6a4a-799e-4b4d-9e7e-a935d021662d.png"
+  },
+  {
+    "file": "safe_icon.png",
+    "size": [
+      256,
+      256
+    ],
+    "prompt": "Use case: stylized-concept. Asset: one256x256 transparent game safe_icon.png. Input image is reference of actual own ParkSafe model; preserve its recognizable design. Draw one chunky rectangular upright steel safe in friendly polished cartoon threequarterfront view: navy top/base, royalblue frontframe, mediumgray door, thin goldenhinge onleftedge, golden top/bottom doorstrips, small goldenhexagonalwheel incenter, twelve small blankrectangular keypadbuttons in3columns4rows onrightside withcyanbottomrow andcyanindicatorabove. No digits, letters, keyholes, currency, code or extra treasure. No pedestal/background/shadowplate, genuine transparentRGBA outsidefullobject,12%margin. Thickdark#1E1E2Eoutline and simplifiedbroad highlights, readable40px, no realisticbrands/watermark. Oneicononly, no contact sheet.",
+    "source": "/Users/erland/.codex/generated_images/01a1ac5b-fa55-75f1-bd6c-c7baedde54ea/exec-6786de84-1419-4b28-91b4-9aa5efbc253a.png",
+    "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v27/models-pack/previews/ParkSafe.png"
+  }
+]

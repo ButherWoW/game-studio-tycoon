@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "studioTested": false,
+  "clothing": {
+    "shirt": {
+      "size": [
+        585,
+        559
+      ],
+      "all18UVFacesOpaque": true,
+      "outsideUVTransparent": true,
+      "sha256": "a75637330492ced6a8178896023af347ee05daf3df0d12454457cabeed289ddb"
+    },
+    "pants": {
+      "size": [
+        585,
+        559
+      ],
+      "all18UVFacesOpaque": true,
+      "outsideUVTransparent": true,
+      "sha256": "dda6e9ebc1d8ece0c39b50fd7b488e493e1bb54ff9b98831ed5bf7f93c69a84d"
+    }
+  },
+  "accessory": {
+    "name": "InvestorCase",
+    "parts": 14,
+    "budget": 20,
+    "standardAttachment": "RightGripAttachment",
+    "attachmentLocalPosition": [
+      0.5,
+      0.0,
+      0.0
+    ],
+    "anchored": false,
+    "massless": true,
+    "collisions": false,
+    "welds": 13,
+    "intersectionPairs": 91,
+    "positiveVolumeIntersections": [],
+    "bounds": [
+      [
+        -0.7200000000000001,
+        -0.96,
+        -0.35000000000000003
+      ],
+      [
+        0.7200000000000001,
+        0.06,
+        0.31
+      ]
+    ]
+  },
+  "preview": "512x512 depth-render of actual UV panels and same accessory geometry on canonical block rig; not Studio"
+}

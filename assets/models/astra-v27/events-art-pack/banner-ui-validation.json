@@ -1,0 +1,47 @@
+{
+  "assets": [
+    {
+      "file": "devent_banner.png",
+      "size": [
+        1600,
+        300
+      ],
+      "alphaRange": [
+        255,
+        255
+      ],
+      "sha256": "19c2aad9c69eb296f3b9f6bb91c1205f5c82c40412f6aafd0606f3a3ce84e303",
+      "visualReview": "PASS: no text, no opaque plate on icon, icon matches actualParkSafe; keypad central region empty; reviewed contact sheet and40pxicon"
+    },
+    {
+      "file": "safe_keypad_bg.png",
+      "size": [
+        512,
+        640
+      ],
+      "alphaRange": [
+        255,
+        255
+      ],
+      "sha256": "aeb05b1ab25a91ae54a5266fe0bd486262a84bff0ab6ffffdd9feacce66d3de3",
+      "visualReview": "PASS: no text, no opaque plate on icon, icon matches actualParkSafe; keypad central region empty; reviewed contact sheet and40pxicon"
+    },
+    {
+      "file": "safe_icon.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "fadec65ae62d8a11d96375b5a4cce2d01bef3f6488b2537d0bf4cdd205f101f9",
+      "visualReview": "PASS: no text, no opaque plate on icon, icon matches actualParkSafe; keypad central region empty; reviewed contact sheet and40pxicon"
+    }
+  ],
+  "runtimeTested": false,
+  "uiKey": "Images.safe.keypadBg",
+  "eventBannerKey": "Images.dailyEvents.banner",
+  "limitation": "Safe background static image QA only; actual380x600 SafeController Crop and overlay require Studio check. Header separator is artwork, not UIlogic."
+}
