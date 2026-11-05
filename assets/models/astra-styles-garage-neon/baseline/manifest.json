@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "fe8c7a7300ae885931254c375bb6a652a4151a37",
+  "zones": {
+    "garage": [
+      "Desk1",
+      "Desk2",
+      "PC1",
+      "PCPro",
+      "Chair",
+      "Coffee",
+      "HitShelf",
+      "Posters"
+    ]
+  },
+  "sources": {
+    "Desk1": "assets/models/astra-garage/models/Desk1.rbxmx",
+    "Desk2": "assets/models/astra-garage/models/Desk2.rbxmx",
+    "PC1": "assets/models/astra-garage/models/PC1.rbxmx",
+    "PCPro": "assets/models/astra-garage/models/PCPro.rbxmx",
+    "Chair": "assets/models/astra-garage/models/Chair.rbxmx",
+    "Coffee": "assets/models/astra-garage/models/Coffee.rbxmx",
+    "HitShelf": "assets/models/astra-garage/models/HitShelf.rbxmx",
+    "Posters": "assets/models/astra-garage/models/Posters.rbxmx"
+  }
+}
