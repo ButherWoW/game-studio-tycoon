@@ -101,6 +101,9 @@ local Analytics = {
 		-- значение — дней не было, поле — shown / claimed
 		safe = "SafeAttempt",
 		comeback = "Comeback",
+		-- Стройка этапа (ConstructionService): поле — "этап_этап" (office_start, floor_finish,
+		-- skyscraper_cancel, office_buildSkip — значение: сколько секунд оставалось; buildSpeed5_fallback)
+		construction = "Construction",
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".

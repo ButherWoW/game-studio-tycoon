@@ -87,6 +87,16 @@ local function findByProduct(productId: number): AdCampaigns.AdCampaign?
 	return nil
 end
 
+-- Ускорения стройки (ConstructionService, Config/Construction). Лениво: ConstructionService тянет
+-- PlotService и StaffLife — без цикла require при старте
+local function grantConstruction(player: Player, profile: DataService.Profile, productId: number): boolean
+	local module = script.Parent:FindFirstChild("ConstructionService")
+	if not module or not module:IsA("ModuleScript") then
+		return false
+	end
+	return (require(module) :: any).grantProduct(player, profile, productId) == true
+end
+
 local function processReceipt(receipt): Enum.ProductPurchaseDecision
 	local player = Players:GetPlayerByUserId(receipt.PlayerId)
 	local profile = player and DataService.get(player)
@@ -102,7 +112,7 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 
 	-- Диспетчер по productId: реклама здесь, премиум-постеры — PosterService, премиум-скины —
 	-- SkinService, стиль мебели «Неон» — FurnitureStyleService, отделка студии — InteriorFinishService,
-	-- остальное — ShopService
+	-- ускорения стройки — ConstructionService, остальное — ShopService
 	-- Ошибка посреди выдачи: часть эффекта уже в профиле. Квитанцию всё равно записываем —
 	-- лучше недодать, чем выдать второй раз на повторе чека
 	local ok, handled = pcall(function(): boolean
@@ -122,6 +132,7 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 			or SeasonService.grantProduct(player, profile, receipt.ProductId)
 			or FurnitureStyleService.grantProduct(player, profile, receipt.ProductId)
 			or InteriorFinishService.grantProduct(player, profile, receipt.ProductId)
+			or grantConstruction(player, profile, receipt.ProductId)
 	end)
 	if not ok then
 		warn("[Monetization] Grant failed:", receipt.ProductId, receipt.PurchaseId, handled)

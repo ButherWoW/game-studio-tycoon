@@ -98,6 +98,9 @@ export type Profile = {
 	},
 	-- Последняя выпущенная игра (для рекламных щитов, BillboardService); имя уже отфильтровано
 	lastGame: { name: string, genreId: string, score: number }?,
+	-- Стройка следующего этапа (PlotService, Config/Construction): stage — studioLevel после стройки,
+	-- времена — os.time(); cost — сколько заплачено (для истории/аналитики, возврата нет)
+	construction: { stage: number, startedAt: number, endsAt: number, cost: number }?,
 	-- Постепенное открытие систем (FeatureUnlockService, Config/Unlocks): какие системы игрок уже
 	-- видел открытыми (больше не прячутся) и разметил ли сервер старое сохранение (init)
 	features: { seen: { [string]: boolean }, init: boolean },
@@ -197,6 +200,7 @@ local function defaultProfile(): Profile
 		gotw = defaultGotw(),
 		features = { seen = {}, init = false },
 		lastGame = nil,
+		construction = nil,
 		processedReceipts = {},
 		receiptLog = {},
 		lastLogout = os.time(),
@@ -354,6 +358,25 @@ local function validLastGame(raw: any): { name: string, genreId: string, score: 
 	return { name = raw.name, genreId = raw.genreId, score = math.clamp(raw.score, 0, 10) }
 end
 
+-- Стройка из сохранения: числа конечные, этап 2..4. Соответствие текущему этапу проверяет PlotService
+local function validConstruction(
+	raw: any
+): { stage: number, startedAt: number, endsAt: number, cost: number }?
+	if
+		type(raw) ~= "table"
+		or not isFiniteAmount(raw.stage)
+		or not isFiniteAmount(raw.startedAt)
+		or not isFiniteAmount(raw.endsAt)
+	then
+		return nil
+	end
+	local stage = math.floor(raw.stage)
+	if stage < 2 or stage > 4 then
+		return nil
+	end
+	return { stage = stage, startedAt = raw.startedAt, endsAt = raw.endsAt, cost = savedNumber(raw.cost) }
+end
+
 -- Доход релиза прячется из таблицы лидеров, пока в окне релиза не открылась оценка (отчёт #2, п. 6)
 local loadedCallbacks: { (Player, Profile) -> () } = {}
 local leaderstatsHold: { [Player]: { amount: number, untilAt: number } } = {}
@@ -390,6 +413,7 @@ function DataService.replicate(player: Player)
 		hitsReleased = p.hitsReleased,
 		employees = employeeCount(p),
 		activeAd = p.activeAd,
+		construction = p.construction,
 	})
 	local leaderstats = player:FindFirstChild("leaderstats")
 	local cashValue = leaderstats and leaderstats:FindFirstChild("Cash") :: NumberValue?
@@ -592,6 +616,7 @@ local function onPlayerAdded(player: Player)
 		end
 		profile.gotw = validGotw(profile.gotw)
 		profile.lastGame = validLastGame(profile.lastGame)
+		profile.construction = validConstruction(profile.construction)
 		-- Сохранения до защиты addCash/trySpend могли получить NaN или ±inf: с ними trySpend
 		-- пропускал любые траты бесплатно. Чиним при загрузке
 		if not isFiniteAmount(profile.cash) then

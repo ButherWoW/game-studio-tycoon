@@ -503,6 +503,34 @@ function StaffLife.leave(player: Player, model: Model, plot: BasePart)
 	end)
 end
 
+-- Чужой NPC (строители стройки, ConstructionService) идёт тем же шагом по точкам path (координаты
+-- участка, Y — пол; у модели атрибут StandHeight). Общий лимит MAX_WALKERS: нет места — false,
+-- NPC остаётся на месте. onDone — когда дошёл (модель удалена — не вызывается)
+function StaffLife.walkTo(
+	player: Player,
+	model: Model,
+	plot: BasePart,
+	path: { Vector3 },
+	speed: number,
+	onDone: () -> ()
+): boolean
+	if #walkers >= MAX_WALKERS or #path == 0 then
+		return false
+	end
+	model:SetAttribute("FloorY", path[1].Y)
+	walk(player, model, plot, path, speed, false, onDone)
+	return true
+end
+
+-- Остановить NPC (строители уходят со стройки): модель остаётся там, где стоит
+function StaffLife.stopWalking(model: Model)
+	for i = #walkers, 1, -1 do
+		if walkers[i].model == model then
+			table.remove(walkers, i)
+		end
+	end
+end
+
 function StaffLife.start()
 	RunService.Heartbeat:Connect(function(dt: number)
 		if #walkers > 0 then

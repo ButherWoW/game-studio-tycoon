@@ -158,9 +158,12 @@ local function buildStagePanel(parent: Instance, data: any, order: number)
 	nextLabel.Position = UDim2.fromOffset(12, 40)
 	nextLabel.Size = UDim2.new(0.6, -12, 0, 84)
 
+	-- Идёт стройка следующего этапа (V29): кнопка «🏗️ Строится…» неактивна
+	local building = type(data.construction) == "table" and data.construction.stage == nextStage.level
+	ready = ready and not building
 	local move = Ui.button(
 		panel,
-		ClientState.t("team_move"),
+		if building then ClientState.t("build_button") else ClientState.t("team_move"),
 		if ready then Ui.colors.good else Ui.colors.locked,
 		function()
 			if ready then

@@ -275,7 +275,10 @@ local function candidates(profile: DataService.Profile): ({ Candidate }, { Candi
 	end
 	local needed: { [string]: boolean } = {}
 	for _, upgrade in Upgrades do
-		if upgrade.requires and profile.upgrades[upgrade.id] then
+		-- Идёт стройка офиса (Config/Construction): апгрейд office ещё не куплен, но его условие
+		-- (Мощный ПК) забирать нельзя — стройка уже оплачена
+		local building = upgrade.move == true and profile.construction ~= nil
+		if upgrade.requires and (profile.upgrades[upgrade.id] or building) then
 			needed[upgrade.requires] = true
 		end
 	end
