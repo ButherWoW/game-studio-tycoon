@@ -59,7 +59,7 @@ InteriorFinishes.list = {
 		ceilingColor = Color3.fromHex("242530"),
 		ceilingMaterial = Enum.Material.SmoothPlastic,
 		imageKey = "obsidianGold",
-		productId = 0, -- Dev 1 впишет ID из Creator Dashboard
+		productId = 3728485040, -- тестовая вселенная v2, 199 R$
 		robuxPrice = 199, -- подсказка; финальную цену решает владелец
 	},
 	{
@@ -72,7 +72,7 @@ InteriorFinishes.list = {
 		ceilingColor = Color3.fromHex("FFF1E8"),
 		ceilingMaterial = Enum.Material.SmoothPlastic,
 		imageKey = "sakura",
-		productId = 0, -- Dev 1 впишет ID из Creator Dashboard
+		productId = 3728485054, -- тестовая вселенная v2, 199 R$
 		robuxPrice = 199, -- подсказка; финальную цену решает владелец
 	},
 	{
@@ -85,7 +85,7 @@ InteriorFinishes.list = {
 		ceilingColor = Color3.fromHex("23384F"),
 		ceilingMaterial = Enum.Material.SmoothPlastic,
 		imageKey = "aurora",
-		productId = 0, -- Dev 1 впишет ID из Creator Dashboard
+		productId = 3728485064, -- тестовая вселенная v2, 199 R$
 		robuxPrice = 199, -- подсказка; финальную цену решает владелец
 	},
 } :: { Finish }
