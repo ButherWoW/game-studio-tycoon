@@ -63,7 +63,11 @@ end
 
 local cache: { [string]: Cached } = {}
 local memberOf: { [Player]: string } = {}
-local pending: { [string]: { points: number, games: number } } = {}
+-- Незаписанные очки: id холдинга -> weekId -> очки. Неделя хранится вместе с очками: если flush
+-- пришёлся на смену недели, очки прошлой уходят в record.prev (или выбрасываются, если её нет),
+-- а не в новую неделю
+type Pending = { points: number, games: number }
+local pending: { [string]: { [number]: Pending } } = {}
 local invites: { [number]: Invite } = {}
 local nextInviteId = 0
 local busy: { [Player]: boolean } = {}
@@ -387,7 +391,8 @@ local function sendState(player: Player)
 	local record = cachedRecord(id)
 	local holding: any = nil
 	if id and record then
-		local extra = pending[id]
+		local byWeek = pending[id]
+		local extra = if byWeek then byWeek[record.week.id] else nil
 		local points = record.week.points + (if extra then extra.points else 0)
 		local games = record.week.games + (if extra then extra.games else 0)
 		local members = {}
@@ -745,10 +750,16 @@ function HoldingService.onGameReleased(player: Player, info: any)
 	if not id or (type(info) == "table" and info.laptop == true) then
 		return
 	end
-	local entry = pending[id]
+	local weekId = Tours.weekId()
+	local byWeek = pending[id]
+	if not byWeek then
+		byWeek = {}
+		pending[id] = byWeek
+	end
+	local entry = (byWeek :: { [number]: Pending })[weekId]
 	if not entry then
-		entry = { points = 0, games = 0 }
-		pending[id] = entry
+		entry = { points = 0, games = 0 };
+		(byWeek :: { [number]: Pending })[weekId] = entry
 	end
 	entry.points += Holdings.pointsPerGame
 	entry.games += 1
@@ -759,15 +770,16 @@ function HoldingService.onGameReleased(player: Player, info: any)
 	sendToHolding(id)
 end
 
-local function writeBoard(record: Record)
+local function writeBoard(record: Record, week: Week?)
+	local w = week or record.week
 	local okStore, ordered = pcall(function()
-		return DataStoreService:GetOrderedDataStore("HoldingsWeekly_" .. record.week.id)
+		return DataStoreService:GetOrderedDataStore("HoldingsWeekly_" .. w.id)
 	end)
 	if not okStore then
 		return
 	end
 	local ok, err = pcall(function()
-		(ordered :: OrderedDataStore):SetAsync(record.id, record.week.points)
+		(ordered :: OrderedDataStore):SetAsync(record.id, w.points)
 	end)
 	if not ok then
 		warn("[HoldingService] Топ не записался:", err)
@@ -794,32 +806,60 @@ local function reconcile(id: string, record: Record?)
 	end
 end
 
-local function flush()
-	for id, entry in pending do
-		local points, games = entry.points, entry.games
-		if points <= 0 and games <= 0 then
-			pending[id] = nil
-			continue
+local function flushEntry(id: string, weekId: number, entry: Pending): boolean
+	local points, games = entry.points, entry.games
+	if points <= 0 and games <= 0 then
+		return true
+	end
+	local ok, written = update(id, function(record: Record?): Record?
+		if not record then
+			return nil
 		end
-		local ok, written = update(id, function(record: Record?): Record?
-			if not record then
-				return nil
+		-- sanitize уже перевёл запись на текущую неделю: очки прошлой — в prev, старше — никуда
+		local target = if record.week.id == weekId
+			then record.week
+			elseif record.prev and record.prev.id == weekId then record.prev
+			else nil
+		if not target then
+			return nil
+		end
+		target.points += points
+		target.games += games
+		return record
+	end)
+	if not ok then
+		return false
+	end
+	-- Пока писали, могли прийти новые очки: вычитаем только записанное (или выброшенное)
+	entry.points -= points
+	entry.games -= games
+	if written then
+		if written.week.id == weekId then
+			writeBoard(written)
+		elseif written.prev and written.prev.id == weekId then
+			writeBoard(written, written.prev)
+		end
+	end
+	reconcile(id, written)
+	return true
+end
+
+local function flush()
+	-- Сначала список: flushEntry уступает (UpdateAsync), а новые релизы добавляют ключи в pending
+	local jobs: { { id: string, weekId: number, entry: Pending } } = {}
+	for id, byWeek in pending do
+		for weekId, entry in byWeek do
+			table.insert(jobs, { id = id, weekId = weekId, entry = entry })
+		end
+	end
+	for _, job in jobs do
+		flushEntry(job.id, job.weekId, job.entry)
+		local byWeek = pending[job.id]
+		if byWeek and byWeek[job.weekId] == job.entry and job.entry.points <= 0 and job.entry.games <= 0 then
+			byWeek[job.weekId] = nil
+			if next(byWeek) == nil then
+				pending[job.id] = nil
 			end
-			record.week.points += points
-			record.week.games += games
-			return record
-		end)
-		if ok then
-			-- Пока писали, могли прийти новые очки: вычитаем только записанное
-			entry.points -= points
-			entry.games -= games
-			if entry.points <= 0 and entry.games <= 0 then
-				pending[id] = nil
-			end
-			if written then
-				writeBoard(written)
-			end
-			reconcile(id, written)
 		end
 	end
 end

@@ -28,8 +28,12 @@ type Pending = { giftId: string, targetUserId: number, targetName: string, at: n
 local GiftService = {}
 local pending: { [Player]: Pending } = {}
 local lastSelect: { [Player]: number } = {}
--- Квитанции, уже выданные на этом сервере: повтор ProcessReceipt (сейв не удался) не выдаёт второй раз
-local delivered: { [string]: boolean } = {}
+-- Квитанции, уже выданные на этом сервере: повтор ProcessReceipt (сейв не удался) не выдаёт второй раз.
+-- purchaseId -> os.clock() выдачи; старше DELIVERED_KEEP чистятся (Roblox повторяет чек сразу
+-- или при следующем входе — на другом сервере, где этой таблицы всё равно нет)
+local DELIVERED_KEEP = 6 * 3600
+local PRUNE_EVERY = 10 * 60
+local delivered: { [string]: number } = {}
 
 local function notice(player: Player, payload: { [string]: any })
 	SocialRemotes.SocialNotice:FireClient(player, payload)
@@ -101,7 +105,7 @@ function GiftService.grantProduct(buyer: Player, buyerProfile: DataService.Profi
 		return false
 	end
 	local purchaseId = tostring(receipt.PurchaseId)
-	if delivered[purchaseId] then
+	if delivered[purchaseId] ~= nil then
 		return true
 	end
 	local item = { itemKind = gift.kind, itemId = gift.itemId }
@@ -114,7 +118,7 @@ function GiftService.grantProduct(buyer: Player, buyerProfile: DataService.Profi
 	local targetProfile = if target and target ~= buyer then DataService.get(target) else nil
 	if target and targetProfile and not ownsItem(targetProfile, gift) then
 		grantItem(target, targetProfile, gift)
-		delivered[purchaseId] = true
+		delivered[purchaseId] = os.clock()
 		-- Подарок в профиле получателя записан до подтверждения чека: не записался — Roblox повторит
 		-- чек, а delivered не даст выдать второй раз
 		if not DataService.save(target) then
@@ -138,7 +142,7 @@ function GiftService.grantProduct(buyer: Player, buyerProfile: DataService.Profi
 		-- Такой предмет у покупателя уже есть: Robux не должны пропасть — 10 минут дохода
 		RewardService.grant(buyer, { incomeMinutes = FALLBACK_INCOME_MINUTES })
 	end
-	delivered[purchaseId] = true
+	delivered[purchaseId] = os.clock()
 	notice(buyer, {
 		kind = "giftFallback",
 		name = if wish then wish.targetName else "?",
@@ -154,6 +158,17 @@ function GiftService.start()
 	Players.PlayerRemoving:Connect(function(player)
 		pending[player] = nil
 		lastSelect[player] = nil
+	end)
+	task.spawn(function()
+		while true do
+			task.wait(PRUNE_EVERY)
+			local cutoff = os.clock() - DELIVERED_KEEP
+			for purchaseId, at in delivered do
+				if at < cutoff then
+					delivered[purchaseId] = nil
+				end
+			end
+		end
 	end)
 end
 

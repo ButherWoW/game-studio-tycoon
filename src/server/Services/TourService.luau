@@ -26,6 +26,7 @@ local RewardService = require(script.Parent.RewardService)
 
 local TICK = 1 -- шаг учёта «сколько стоит на чужом участке», с
 local WRITE_CHECK = 30
+local CLOSE_WAIT = 20 -- BindToClose: сколько ждём записи рейтингов (Roblox даёт ~30 с)
 local REQUEST_COOLDOWN = 1
 local LIKE_COOLDOWN = 1
 -- Участок: перед воротами (+Z) ещё FRONT_MARGIN studs — туда ставит «Посетить»
@@ -97,7 +98,9 @@ local lastRequest: { [Player]: number } = {}
 local lastLike: { [Player]: number } = {}
 local pendingLikes: { [number]: number } = {} -- владелец вышел: userId -> лайков в очереди
 local written: { [number]: Written } = {}
-local pendingWrite: { [number]: boolean } = {}
+-- Отложенные записи вышедших (интервал Tours.writeSeconds не прошёл): последний снимок.
+-- BindToClose пишет их сразу, иначе task.delay умер бы вместе с сервером
+local deferred: { [number]: Written } = {}
 local names: { [number]: string } = {}
 local boards: Boards = { available = false, weekId = Tours.weekId(), likes = {}, value = {}, hit = {} }
 -- Топ-10 лайков прошлой недели: weekId -> userId -> место (читается один раз на сервер)
@@ -433,13 +436,26 @@ local function snapshot(player: Player): Written?
 	}
 end
 
-local function setOrdered(name: string, userId: number, value: number)
+-- keepMax: не опускать значение ниже записанного. Лайки недели других серверов (очередь вышедшему
+-- владельцу, flushQueue) приходят IncrementAsync и попадают в профиль только при следующем входе —
+-- SetAsync с сервера владельца затирал бы их до этого. Счёт недели не убывает, так что max = слияние
+local function setOrdered(name: string, userId: number, value: number, keepMax: boolean?)
 	local store = orderedStore(name)
 	if not store then
 		return
 	end
 	local ok, err = pcall(function()
-		(store :: OrderedDataStore):SetAsync(tostring(userId), value)
+		if keepMax then
+			(store :: OrderedDataStore):UpdateAsync(tostring(userId), function(old: any): any
+				local current = num(old)
+				if current >= value then
+					return nil -- уже не меньше: ничего не пишем
+				end
+				return value
+			end)
+		else
+			(store :: OrderedDataStore):SetAsync(tostring(userId), value)
+		end
 	end)
 	if not ok then
 		warn("[TourService] Запись в рейтинг не удалась:", name, err)
@@ -447,8 +463,8 @@ local function setOrdered(name: string, userId: number, value: number)
 end
 
 -- Записать изменившееся, если с прошлой записи прошло Tours.writeSeconds; иначе при выходе —
--- отложить до конца интервала
-local function maybeWrite(userId: number, snap: Written, deferIfEarly: boolean)
+-- отложить до конца интервала. force — писать сразу (сервер закрывается)
+local function maybeWrite(userId: number, snap: Written, deferIfEarly: boolean, force: boolean?)
 	if userId <= 0 then
 		return
 	end
@@ -462,21 +478,28 @@ local function maybeWrite(userId: number, snap: Written, deferIfEarly: boolean)
 	end
 	local now = os.clock()
 	local wait = if w then w.at + Tours.writeSeconds - now else 0
-	if wait > 0 then
-		if deferIfEarly and not pendingWrite[userId] then
-			pendingWrite[userId] = true
-			task.delay(wait, function()
-				pendingWrite[userId] = nil
-				maybeWrite(userId, snap, false)
-			end)
+	if wait > 0 and not force then
+		if deferIfEarly then
+			local first = deferred[userId] == nil
+			deferred[userId] = snap
+			if first then
+				task.delay(wait, function()
+					local latest = deferred[userId]
+					deferred[userId] = nil
+					if latest then
+						maybeWrite(userId, latest, false)
+					end
+				end)
+			end
 		end
 		return
 	end
+	deferred[userId] = nil
 	-- Отмечаем до yield, чтобы параллельный вызов не записал второй раз
 	written[userId] =
 		{ weekId = snap.weekId, likes = snap.likes, value = snap.value, hit = snap.hit, at = now }
 	if likesChanged then
-		setOrdered(likesStoreName(snap.weekId), userId, snap.likes)
+		setOrdered(likesStoreName(snap.weekId), userId, snap.likes, true)
 	end
 	if hitChanged then
 		setOrdered(hitStoreName(snap.weekId), userId, snap.hit)
@@ -1005,10 +1028,30 @@ function TourService.start()
 		end
 	end)
 
-	-- Сервер закрывается: лайки вышедшим владельцам не должны пропасть
+	-- Сервер закрывается: лайки вышедшим владельцам и отложенные записи рейтингов не должны пропасть
 	game:BindToClose(function()
+		for _, player in Players:GetPlayers() do
+			local snap = snapshot(player)
+			if snap then
+				deferred[player.UserId] = snap
+			end
+		end
+		local batch = deferred
+		deferred = {}
+		local running = 0
+		for userId, snap in batch do
+			running += 1
+			task.spawn(function()
+				pcall(maybeWrite, userId, snap, false, true)
+				running -= 1
+			end)
+		end
 		if next(pendingLikes) then
 			flushQueue()
+		end
+		local deadline = os.clock() + CLOSE_WAIT
+		while running > 0 and os.clock() < deadline do
+			task.wait(0.1)
 		end
 	end)
 end

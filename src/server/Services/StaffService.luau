@@ -26,6 +26,10 @@
 -- Увольнение (FireEmployee): сотрудник уходит вместе с навыками и перками, возвращается
 -- Employees.refundFor (доля fireRefund от цены найма; легендарные бесплатные — 0,
 -- нанять снова можно даром).
+-- Наставничество (Config/Mentoring, 7.21): profile.mentoring = { [mentorId]: menteeId }. Наставник —
+-- уровень ≥ minMentorLevel, ученик — уровень ниже наставника; один ученик на наставника, у ученика
+-- один наставник, наставник сам не учится. Ученику «+1» к навыку дешевле (×menteeSkillGain опыта),
+-- стол наставника даёт mentorSpeed очков. Старт/стоп — SetMentor(mentorId, menteeId | "").
 -- Подсказка о забастовке: (profile :: any).strikeTipSeen = true, когда игрок её закрыл;
 -- клиенту — атрибут игрока StrikeTipSeen (false — ещё не видел; nil — профиль не загружен).
 
@@ -36,6 +40,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Employees = require(ReplicatedStorage.Shared.Config.Employees)
 local Skills = require(ReplicatedStorage.Shared.Config.Skills)
+local Mentoring = require(ReplicatedStorage.Shared.Config.Mentoring)
 local StaffAppearance = require(script.Parent.StaffAppearance)
 local Expenses = require(ReplicatedStorage.Shared.Config.Expenses)
 local Mood = require(ReplicatedStorage.Shared.Config.Mood)
@@ -208,6 +213,57 @@ local function getInfo(profile: DataService.Profile): { [string]: Info }
 		end
 	end
 	return raw
+end
+
+-- Пары наставник -> ученик; из сохранения берём только то, что сходится с правилами
+-- (Config/Mentoring): оба наняты, наставник достаточно опытен, ученик младше, без цепочек и дублей.
+-- Ученик догнал наставника или кого-то уволили — пара снимается здесь же
+local function getMentoring(profile: DataService.Profile, info: { [string]: Info }): { [string]: string }
+	local raw = (profile :: any).mentoring
+	if type(raw) ~= "table" then
+		raw = {};
+		(profile :: any).mentoring = raw
+	end
+	local mentors: { string } = {}
+	for mentorId, menteeId in raw do
+		local valid = type(mentorId) == "string"
+			and type(menteeId) == "string"
+			and mentorId ~= menteeId
+			and info[mentorId] ~= nil
+			and info[menteeId] ~= nil
+		if valid then
+			local mentorLevel = employeeLevel(info[mentorId])
+			valid = Mentoring.canMentor(mentorLevel)
+				and Mentoring.isJunior(employeeLevel(info[menteeId]), mentorLevel)
+		end
+		if valid then
+			table.insert(mentors, mentorId)
+		else
+			raw[mentorId] = nil
+		end
+	end
+	-- Стабильный порядок: при дублях (сохранение с двух серверов) остаётся первая по id пара
+	table.sort(mentors)
+	local taught: { [string]: boolean } = {}
+	for _, mentorId in mentors do
+		local menteeId = raw[mentorId]
+		if taught[menteeId] or raw[menteeId] ~= nil then
+			raw[mentorId] = nil -- у ученика уже есть наставник или ученик сам наставник
+		else
+			taught[menteeId] = true
+		end
+	end
+	return raw
+end
+
+-- Учится ли сотрудник у кого-то (пары — из getMentoring)
+local function isMentee(mentorPairs: { [string]: string }, employeeId: string): boolean
+	for _, menteeId in mentorPairs do
+		if menteeId == employeeId then
+			return true
+		end
+	end
+	return false
 end
 
 -- Открыт ли легендарный: награда квеста (RewardService кладёт в profile.rewards.employees)
@@ -438,9 +494,13 @@ function StaffService.deskMultipliers(player: Player, deskId: string): { [string
 		end
 	end
 	local skills = if atDesk and info[atDesk] then info[atDesk].skills else nil
+	-- Наставник учит ученика — его стол работает медленнее (Config/Mentoring.mentorSpeed)
+	local teaching = if atDesk and getMentoring(profile, info)[atDesk] then Mentoring.mentorSpeed else 1
 	for _, key in Skills.keys do
 		local level = if skills then skills[key] or 0 else 0
-		result[key] = (1 + Skills.bonusPerLevel * level) * (1 + math.min(mentor, Skills.caps.mentorBonus))
+		result[key] = (1 + Skills.bonusPerLevel * level)
+			* (1 + math.min(mentor, Skills.caps.mentorBonus))
+			* teaching
 	end
 	return result
 end
@@ -564,6 +624,7 @@ local function powerOf(
 		end
 	end
 	local mentorMult = 1 + math.min(mentor, Skills.caps.mentorBonus)
+	local teachers = getMentoring(profile, info)
 	local base, team = 0, 0
 	for _, upgrade in Upgrades do
 		local points = upgrade.pointsPerSecond
@@ -577,7 +638,8 @@ local function powerOf(
 				local level = if skills then skills[key] or 0 else 0
 				average += (1 + Skills.bonusPerLevel * level) / #Skills.keys
 			end
-			team += points * (if employee then employee.multiplier else 1) * average * mentorMult
+			local teaching = if employeeId and teachers[employeeId] then Mentoring.mentorSpeed else 1
+			team += points * (if employee then employee.multiplier else 1) * average * mentorMult * teaching
 		end
 	end
 	local quality = teamQuality(members, info)
@@ -709,8 +771,10 @@ local function sendStaff(player: Player)
 			end
 		end
 	end
+	local info = getInfo(profile)
 	StaffRemotes.StaffChanged:FireClient(player, staff, {
-		info = getInfo(profile),
+		info = info,
+		mentoring = getMentoring(profile, info),
 		unlocked = unlocked,
 		now = os.time(),
 		raises = raises,
@@ -1450,12 +1514,16 @@ local function onUpgradeSkill(player: Player, employeeId: any, key: any)
 	if not profile or not employee or getStaff(profile)[employeeId] == nil then
 		return
 	end
-	local info = getInfo(profile)[employeeId]
+	local allInfo = getInfo(profile)
+	local info = allInfo[employeeId]
 	local level = info.skills[key]
 	if level >= Skills.maxLevel then
 		return
 	end
-	if DataService.trySpend(player, Skills.skillCost(employee.stage, employee.legendary, level)) then
+	-- Ученик наставника: «+1» дешевле (Config/Mentoring.menteeSkillGain)
+	local mentored = isMentee(getMentoring(profile, allInfo), employeeId)
+	local cost = Mentoring.skillCost(Skills.skillCost(employee.stage, employee.legendary, level), mentored)
+	if DataService.trySpend(player, cost) then
 		local before = StaffService.power(player)
 		info.skills[key] = level + 1
 		sendStaff(player)
@@ -1473,6 +1541,50 @@ local function onUpgradeSkill(player: Player, employeeId: any, key: any)
 			npc = folder and folder:FindFirstChild("Staff_" .. employeeId),
 		})
 	end
+end
+
+-- Наставничество: mentorId берёт ученика menteeId; menteeId = "" — закончить. Всё проверяет сервер
+local function onSetMentor(player: Player, mentorId: any, menteeId: any)
+	if type(mentorId) ~= "string" or type(menteeId) ~= "string" or throttled(player) then
+		return
+	end
+	local profile = DataService.get(player)
+	if not profile then
+		return
+	end
+	local staff = getStaff(profile)
+	if staff[mentorId] == nil then
+		return
+	end
+	local info = getInfo(profile)
+	local mentorPairs = getMentoring(profile, info)
+	if menteeId == "" then
+		if mentorPairs[mentorId] == nil then
+			return
+		end
+		mentorPairs[mentorId] = nil
+	else
+		if menteeId == mentorId or staff[menteeId] == nil or not info[mentorId] or not info[menteeId] then
+			return
+		end
+		local mentorLevel = employeeLevel(info[mentorId])
+		if not Mentoring.canMentor(mentorLevel) then
+			return
+		end
+		if not Mentoring.isJunior(employeeLevel(info[menteeId]), mentorLevel) then
+			return
+		end
+		-- Наставник сам не учится, ученик сам не учит и учится только у одного
+		if isMentee(mentorPairs, mentorId) or mentorPairs[menteeId] ~= nil then
+			return
+		end
+		if isMentee(mentorPairs, menteeId) and mentorPairs[mentorId] ~= menteeId then
+			return
+		end
+		mentorPairs[mentorId] = menteeId -- одна пара на наставника: прежний ученик освобождается
+	end
+	sendStaff(player)
+	sendPower(player)
 end
 
 -- Поставить перк в слот: в пустой — бесплатно, сменить — за деньги и не чаще perkCooldown
@@ -1543,6 +1655,7 @@ function StaffService.start()
 	StaffRemotes.UpgradeSkill.OnServerEvent:Connect(onUpgradeSkill)
 	StaffRemotes.SetPerk.OnServerEvent:Connect(onSetPerk)
 	StaffRemotes.SetLook.OnServerEvent:Connect(onSetLook)
+	StaffRemotes.SetMentor.OnServerEvent:Connect(onSetMentor)
 	PlotService.plotChanged:Connect(onTeamChanged)
 	-- Купили «Мастера Пикселя»: ShopService перепроверяет покупку асинхронно — перешлём чуть позже
 	MarketplaceService.PromptGamePassPurchaseFinished:Connect(
