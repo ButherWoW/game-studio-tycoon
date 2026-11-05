@@ -261,7 +261,10 @@ local function claimOne(
 	local reward = if track == "free" then entry.free else entry.premium
 	local ok, err = pcall(grantReward, player, profile, reward, s.id)
 	if not ok then
+		-- Не выдали — уровень остаётся доступным, можно забрать ещё раз
+		claimed[key] = nil
 		warn("[SeasonService] Награда не выдана:", player.UserId, track, tier, err)
+		return false
 	end
 	logAnalytics(player, "seasonClaim", tier, track .. "_" .. tier)
 	return true

@@ -37,7 +37,7 @@ end
 local function applyAd(player: Player, campaign: AdCampaigns.AdCampaign, paid: boolean?): boolean
 	local profile = DataService.get(player)
 	if not profile then
-		return
+		return false
 	end
 	local now = os.time()
 	local current = profile.activeAd
@@ -87,20 +87,27 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 
 	-- Диспетчер по productId: реклама здесь, премиум-постеры — PosterService, премиум-скины —
 	-- SkinService, стиль мебели «Неон» — FurnitureStyleService, остальное — ShopService
-	local campaign = findByProduct(receipt.ProductId)
-	if campaign then
-		applyAd(player, campaign, true)
-	elseif
+	-- Ошибка посреди выдачи: часть эффекта уже в профиле. Квитанцию всё равно записываем —
+	-- лучше недодать, чем выдать второй раз на повторе чека
+	local ok, handled = pcall(function(): boolean
+		local campaign = findByProduct(receipt.ProductId)
+		if campaign then
+			applyAd(player, campaign, true)
+			return true
+		end
 		-- Подарки (gift_<itemId>) — GiftService: предмет получает выбранный игрок
-		not GiftService.grantProduct(player, profile, receipt)
-		and not PosterService.grantProduct(player, profile, receipt.ProductId)
-		and not SkinService.grantProduct(player, profile, receipt.ProductId)
-		and not MascotService.grantProduct(player, profile, receipt.ProductId)
-		and not ShopService.grantProduct(player, profile, receipt.ProductId)
-		and not OfferService.grantProduct(player, profile, receipt.ProductId)
-		and not SeasonService.grantProduct(player, profile, receipt.ProductId)
-		and not FurnitureStyleService.grantProduct(player, profile, receipt.ProductId)
-	then
+		return GiftService.grantProduct(player, profile, receipt)
+			or PosterService.grantProduct(player, profile, receipt.ProductId)
+			or SkinService.grantProduct(player, profile, receipt.ProductId)
+			or MascotService.grantProduct(player, profile, receipt.ProductId)
+			or ShopService.grantProduct(player, profile, receipt.ProductId)
+			or OfferService.grantProduct(player, profile, receipt.ProductId)
+			or SeasonService.grantProduct(player, profile, receipt.ProductId)
+			or FurnitureStyleService.grantProduct(player, profile, receipt.ProductId)
+	end)
+	if not ok then
+		warn("[Monetization] Grant failed:", receipt.ProductId, receipt.PurchaseId, handled)
+	elseif not handled then
 		warn("[Monetization] Unknown product", receipt.ProductId)
 		return Enum.ProductPurchaseDecision.NotProcessedYet
 	end

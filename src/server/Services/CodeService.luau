@@ -73,13 +73,16 @@ local function grant(
 		RewardService.grant(player, { coffeeMinutes = reward.coffeeMinutes })
 		given.coffeeMinutes = reward.coffeeMinutes
 	end
+	-- Скин или постер уже есть — в ответе его нет (игрок не увидит «получено» впустую)
 	if reward.skin and Skins.get(reward.skin) then
-		call("SkinService", "grantSkin", player, profile, reward.skin)
-		given.skin = reward.skin
+		if call("SkinService", "grantSkin", player, profile, reward.skin) == true then
+			given.skin = reward.skin
+		end
 	end
 	if reward.poster and Posters.get(reward.poster) then
-		call("PosterService", "grantPoster", player, profile, reward.poster)
-		given.poster = reward.poster
+		if call("PosterService", "grantPoster", player, profile, reward.poster) == true then
+			given.poster = reward.poster
+		end
 	end
 	return given
 end

@@ -21,6 +21,7 @@ local DataService = require(script.Parent.DataService)
 local SkinService = require(script.Parent.SkinService)
 local PosterService = require(script.Parent.PosterService)
 local MascotService = require(script.Parent.MascotService)
+local RewardService = require(script.Parent.RewardService)
 
 local STATE_REQUEST_COOLDOWN = 1
 local TIMEOUT_CHECK = 5
@@ -404,6 +405,13 @@ local function execute(trade: Trade)
 	-- Деньги — перевод между игроками, а не доход: мимо addCash/trySpend (аналитика экономики)
 	pa.cash += offerB.cash - offerA.cash
 	pb.cash += offerA.cash - offerB.cash
+	-- Полученное в обмене — не заработок: иначе пересылка туда-обратно закрывает задания «заработай»
+	local netA = offerB.cash - offerA.cash
+	if netA > 0 then
+		RewardService.noteNonEarned(a, netA)
+	elseif netA < 0 then
+		RewardService.noteNonEarned(b, -netA)
+	end
 	endTrade(trade)
 	local readyAt = os.clock() + Friends.trade.afterTradeCooldown
 	cooldownUntil[a] = readyAt
