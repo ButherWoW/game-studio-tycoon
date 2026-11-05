@@ -11,6 +11,7 @@ local HitRemotes = require(ReplicatedStorage.Shared.HitRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
 
 local MENU_SLOT = 7
 local TOAST_SECONDS = 4
@@ -259,9 +260,13 @@ local function openWindow()
 	local function rebuildRows()
 		local hits = if state and type(state.hits) == "table" then state.hits else {}
 		local ids = {}
+		local genreOf: { [string]: string } = {}
 		for _, hit in hits do
 			if type(hit) == "table" and type(hit.id) == "string" then
 				table.insert(ids, hit.id)
+				if type(hit.genreId) == "string" then
+					genreOf[hit.id] = hit.genreId
+				end
 			end
 		end
 		local key = table.concat(ids, ",")
@@ -290,6 +295,19 @@ local function openWindow()
 			local info = Ui.label(row, "", 22, Enum.Font.GothamMedium)
 			info.Position = UDim2.fromOffset(10, 11)
 			info.Size = UDim2.new(0.6, -10, 0, 22)
+			-- Обложка картриджа по жанру (V20) слева; 0 — строка как раньше
+			local coverId = Images.covers[genreOf[id] or ""] or 0
+			if coverId > 0 then
+				local thumb = Instance.new("Frame")
+				thumb.Name = "Cover"
+				thumb.BackgroundTransparency = 1
+				thumb.Position = UDim2.fromOffset(6, 4)
+				thumb.Size = UDim2.fromOffset(36, 36)
+				thumb.Parent = row
+				Ui.artImage(thumb, coverId)
+				info.Position = UDim2.fromOffset(48, 11)
+				info.Size = UDim2.new(0.6, -48, 0, 22)
+			end
 			local button = Ui.button(row, "", Ui.colors.primary, function()
 				HitRemotes.RequestHitUpdate:FireServer(id)
 			end)

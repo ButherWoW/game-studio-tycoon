@@ -177,7 +177,15 @@ local function conditionText(title: Titles.Title): string
 	elseif kind == "rebirths" then
 		vars.count = title.cond.rebirths
 	end
-	return ClientState.t("title_cond_" .. kind, vars)
+	local text = ClientState.t("title_cond_" .. kind, vars)
+	-- Временный титул (блиц-джем, «Игра недели»): сколько ещё часов действует
+	local expires = titleState and type(titleState.expires) == "table" and titleState.expires
+	local untilAt = expires and tonumber(expires[title.id])
+	if untilAt then
+		local hours = math.max(math.ceil((untilAt - workspace:GetServerTimeNow()) / 3600), 1)
+		text ..= " · " .. ClientState.t("title_timed_left", { hours = hours })
+	end
+	return text
 end
 
 local function titleRow(parent: Instance, order: number, title: Titles.Title?)

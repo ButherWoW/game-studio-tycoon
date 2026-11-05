@@ -3,6 +3,9 @@
 -- Сервер (TitleService) проверяет титул и ставит атрибут игрока "Title" (id из Config/Titles);
 -- табличку рисует каждый клиент сам — на своём языке. BillboardGui лежит в PlayerGui
 -- (Adornee = голова), поэтому не мешает VIP-табличке VipService в самом персонаже.
+-- Это единственная табличка титула: временные титулы (блиц-джем, «Игра недели») — тоже здесь.
+-- "TitleUntil" — конец временного титула (табличка прячется вовремя, сервер снимает его следом),
+-- "GotwRank" — место в «Игре недели» для текста титула gotw_winner.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -11,6 +14,8 @@ local Titles = require(ReplicatedStorage.Shared.Config.Titles)
 local ClientState = require(script.Parent.Parent.ClientState)
 
 local ATTRIBUTE = "Title"
+local UNTIL_ATTRIBUTE = "TitleUntil"
+local GOTW_RANK_ATTRIBUTE = "GotwRank"
 local HEAD_WAIT = 10
 
 local TitleTags = {}
@@ -26,6 +31,15 @@ local function removeTag(player: Player)
 	end
 end
 
+-- Текст таблички: у «Игры недели» — с местом («🏆 Игра недели #3»)
+local function tagText(player: Player, title: Titles.Title): string
+	local rank = tonumber(player:GetAttribute(GOTW_RANK_ATTRIBUTE))
+	if title.id == "gotw_winner" and rank and rank > 0 then
+		return ClientState.t("gotw_head_title", { rank = rank })
+	end
+	return title.icon .. " " .. ClientState.t("title_" .. title.id)
+end
+
 local function update(player: Player)
 	removeTag(player)
 	local id = player:GetAttribute(ATTRIBUTE)
@@ -34,6 +48,19 @@ local function update(player: Player)
 	local head = character and character:FindFirstChild("Head")
 	if not title or not head or not head:IsA("BasePart") then
 		return
+	end
+	-- Временный титул истёк: не ждём сервера (он снимет титул при следующей проверке)
+	local untilAt = tonumber(player:GetAttribute(UNTIL_ATTRIBUTE))
+	if untilAt then
+		local left = untilAt - workspace:GetServerTimeNow()
+		if left <= 0 then
+			return
+		end
+		task.delay(left + 0.5, function()
+			if player.Parent and player:GetAttribute(UNTIL_ATTRIBUTE) == untilAt then
+				update(player)
+			end
+		end)
 	end
 	local config = Titles.tag
 	local gui = Instance.new("BillboardGui")
@@ -52,7 +79,7 @@ local function update(player: Player)
 	label.TextColor3 = title.color
 	label.TextStrokeColor3 = Color3.fromRGB(20, 20, 30)
 	label.TextStrokeTransparency = 0.3
-	label.Text = title.icon .. " " .. ClientState.t("title_" .. title.id)
+	label.Text = tagText(player, title)
 	label.Parent = gui
 	gui.Parent = localPlayer:WaitForChild("PlayerGui")
 	tags[player] = gui
@@ -60,12 +87,14 @@ end
 
 local function watch(player: Player)
 	local list: { RBXScriptConnection } = {}
-	table.insert(
-		list,
-		player:GetAttributeChangedSignal(ATTRIBUTE):Connect(function()
-			update(player)
-		end)
-	)
+	for _, attribute in { ATTRIBUTE, UNTIL_ATTRIBUTE, GOTW_RANK_ATTRIBUTE } do
+		table.insert(
+			list,
+			player:GetAttributeChangedSignal(attribute):Connect(function()
+				update(player)
+			end)
+		)
+	end
 	table.insert(
 		list,
 		player.CharacterAdded:Connect(function(character)

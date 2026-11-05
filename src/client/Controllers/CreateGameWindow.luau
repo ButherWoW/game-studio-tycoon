@@ -18,6 +18,8 @@ local DevState = require(script.Parent.Parent.DevState)
 local FranchiseClient = require(script.Parent.Parent.FranchiseClient)
 local ConsoleClient = require(script.Parent.Parent.ConsoleClient)
 local Ui = require(script.Parent.Parent.Ui)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
 
 local FOCUS_KEYS = { "gameplay", "graphics", "sound", "story" }
 local MAX_FOCUS = 10
@@ -33,6 +35,8 @@ local CARD_GAP = 6
 -- Запас по ширине ячейки: при округлении пикселей (UIScale окна, узкий экран) пятая карточка
 -- не влезала, сетка уходила в лишний ряд и снова наезжала на строки ниже (отчёт #3, P1-3)
 local CARD_SLACK = 2
+-- Иконка жанра/темы на карточке (V21): влезает в 40 px по высоте и в пятую часть окна на телефоне
+local CARD_ICON = 24
 
 type Item = { id: string, name: string, nameEn: string, unlockCost: number, requires: Genres.Requires? }
 
@@ -193,6 +197,9 @@ local function buildGrid(
 			onCardClick(kind, item, unlocked, reason)
 		end)
 		card.LayoutOrder = i
+		-- Иконка жанра/темы (V21) слева от названия; 0 — карточка как раньше
+		local art = if kind == "genre" then Images.genres[item.id] else Images.topics[item.id]
+		ArtIcon.prefix(card, "", art or 0, CARD_ICON)
 		if reason then
 			card.TextColor3 = Ui.colors.muted
 			card.AutoButtonColor = false

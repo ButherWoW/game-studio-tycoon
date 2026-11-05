@@ -15,7 +15,15 @@ local Expo = require(ReplicatedStorage.Shared.Config.Expo)
 local ExpoRemotes = require(ReplicatedStorage.Shared.ExpoRemotes)
 local DataService = require(script.Parent.DataService)
 
-type Entry = { userId: number, displayName: string, game: string, score: number, points: number, at: number }
+type Entry = {
+	userId: number,
+	displayName: string,
+	game: string,
+	genreId: string?, -- обложка жанра (V20) в итогах выставки
+	score: number,
+	points: number,
+	at: number,
+}
 
 local ExpoService = {}
 -- Лучшая игра каждого игрока за текущий раунд (по UserId: игрок может выйти)
@@ -82,11 +90,15 @@ local function publishLeader()
 end
 
 -- name уже отфильтрован TextService в DevelopmentService (его видят все игроки)
-function ExpoService.onGameReleased(player: Player, info: { name: string, score: number, points: number })
+function ExpoService.onGameReleased(
+	player: Player,
+	info: { name: string, genreId: string?, score: number, points: number }
+)
 	local entry: Entry = {
 		userId = player.UserId,
 		displayName = player.DisplayName,
 		game = info.name,
+		genreId = info.genreId,
 		score = info.score,
 		points = info.points,
 		at = os.clock(),
@@ -274,6 +286,7 @@ local function finishRound(roundId: number, minParticipants: number)
 		winner = winner.displayName,
 		winnerId = winner.userId,
 		game = winner.game,
+		genreId = winner.genreId,
 		score = winner.score,
 		prize = Expo.prize,
 	})

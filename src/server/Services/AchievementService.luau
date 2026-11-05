@@ -8,7 +8,7 @@
 -- хранится максимум (после Rebirth этап снова 1, но «Третий этаж» уже получен).
 -- События — из других сервисов (ленивый require через FindFirstChild):
 --   DevelopmentService.release -> onGameReleased; QuickEventService -> note("qtePerfect");
---   ExpoService -> note("expoWins").
+--   ExpoService -> note("expoWins"); DailyEventService -> note("bugsCaught"), note("blitzWins").
 -- Первый вход после появления системы: всё заслуженное засчитывается сразу, награды
 -- суммируются и режутся до Achievements.backfillCap — одна выдача и один тост.
 
