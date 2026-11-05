@@ -1,0 +1,110 @@
+[
+  {
+    "id": "neon_fox",
+    "tier": "epic",
+    "parts": 20,
+    "height": 2.6921702162364194,
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "face": "+Z",
+    "primaryPart": "Body",
+    "pointLights": 0,
+    "checks": "PASS",
+    "icon": {
+      "file": "mascot_neon_fox_icon.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visualReview": "PASS"
+    }
+  },
+  {
+    "id": "dragon_byte",
+    "tier": "epic",
+    "parts": 21,
+    "height": 2.8125655316528073,
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "face": "+Z",
+    "primaryPart": "Body",
+    "pointLights": 0,
+    "checks": "PASS",
+    "icon": {
+      "file": "mascot_dragon_byte_icon.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visualReview": "PASS"
+    }
+  },
+  {
+    "id": "golden_trophy",
+    "tier": "legendary",
+    "parts": 27,
+    "height": 2.31,
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "face": "+Z",
+    "primaryPart": "Body",
+    "pointLights": 0,
+    "checks": "PASS",
+    "icon": {
+      "file": "mascot_golden_trophy_icon.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visualReview": "PASS"
+    }
+  },
+  {
+    "id": "cosmic_whale",
+    "tier": "legendary",
+    "parts": 27,
+    "height": 2.1999999999999997,
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "face": "+Z",
+    "primaryPart": "Body",
+    "pointLights": 0,
+    "checks": "PASS",
+    "icon": {
+      "file": "mascot_cosmic_whale_icon.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visualReview": "PASS"
+    }
+  }
+]

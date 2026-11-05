@@ -1,0 +1,29 @@
+{
+  "tool": "OpenAI built-in ImageGen",
+  "assets": [
+    {
+      "id": "neon_fox",
+      "prompt": "Use case: stylized-concept. Asset: original collectible studio mascot icon for a child-friendly Roblox game, final256x256 PNG with genuine transparent background. Single cute mascot, full body centered, all parts inside canvas with10%clear transparent margin. Style matches polished cartoon game-menu V3 icons: thick clean dark #1E1E2E outline, chunky simple low-poly cel-shaded shapes, broad upper-left highlights, large head and huge friendly eyes, readable at44px. No ground, cast shadow, badge circle, border, letters, numerals, text, brands or watermark. Mascot design: purple fox with tall pointed ears, cyan neon ear markings, ivory muzzle and large purple cyan-tipped tail. Make a coherent simple toy-like figure, front three-quarter view facing viewer, cheerful and approachable; own design, no borrowed characters.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-c421b507-d8c3-439d-86e5-74480a3d30b5.png",
+      "file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-mascots-v16/batch-3/mascot_neon_fox_icon.png"
+    },
+    {
+      "id": "dragon_byte",
+      "prompt": "Use case: stylized-concept. Asset: original collectible studio mascot icon for a child-friendly Roblox game, final256x256 PNG with genuine transparent background. Single cute mascot, full body centered, all parts inside canvas with10%clear transparent margin. Style matches polished cartoon game-menu V3 icons: thick clean dark #1E1E2E outline, chunky simple low-poly cel-shaded shapes, broad upper-left highlights, large head and huge friendly eyes, readable at44px. No ground, cast shadow, badge circle, border, letters, numerals, text, brands or watermark. Mascot design: green tiny byte dragon with blue block wings, gold little horns and cyan belly. Make a coherent simple toy-like figure, front three-quarter view facing viewer, cheerful and approachable; own design, no borrowed characters.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-f31c0517-7a28-4958-bd2d-8f8444372e77.png",
+      "file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-mascots-v16/batch-3/mascot_dragon_byte_icon.png"
+    },
+    {
+      "id": "golden_trophy",
+      "prompt": "Use case: stylized-concept. Asset: original collectible studio mascot icon for a child-friendly Roblox game, final256x256 PNG with genuine transparent background. Single cute mascot, full body centered, all parts inside canvas with10%clear transparent margin. Style matches polished cartoon game-menu V3 icons: thick clean dark #1E1E2E outline, chunky simple low-poly cel-shaded shapes, broad upper-left highlights, large head and huge friendly eyes, readable at44px. No ground, cast shadow, badge circle, border, letters, numerals, text, brands or watermark. Mascot design: living golden trophy with two side handles, big friendly eyes, royal-blue feet and a glowing gold star. Make a coherent simple toy-like figure, front three-quarter view facing viewer, cheerful and approachable; own design, no borrowed characters.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-ff3d124f-1644-4fac-b80f-effe7d0a1744.png",
+      "file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-mascots-v16/batch-3/mascot_golden_trophy_icon.png"
+    },
+    {
+      "id": "cosmic_whale",
+      "prompt": "Use case: stylized-concept. Asset: original collectible studio mascot icon for a child-friendly Roblox game, final256x256 PNG with genuine transparent background. Single cute mascot, full body centered, all parts inside canvas with10%clear transparent margin. Style matches polished cartoon game-menu V3 icons: thick clean dark #1E1E2E outline, chunky simple low-poly cel-shaded shapes, broad upper-left highlights, large head and huge friendly eyes, readable at44px. No ground, cast shadow, badge circle, border, letters, numerals, text, brands or watermark. Mascot design: small floating navy cosmic whale with purple fins, cyan belly and little gold block star markings. Make a coherent simple toy-like figure, front three-quarter view facing viewer, cheerful and approachable; own design, no borrowed characters.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-1e51b017-2d14-4186-8e65-6af6572629ac.png",
+      "file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-mascots-v16/batch-3/mascot_cosmic_whale_icon.png"
+    }
+  ]
+}
