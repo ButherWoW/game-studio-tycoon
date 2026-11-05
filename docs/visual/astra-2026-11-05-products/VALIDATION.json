@@ -1,0 +1,211 @@
+{
+  "expected": 13,
+  "ready": 13,
+  "assets": [
+    {
+      "filename": "gp_doubleCash.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "fullyOpaque": true,
+      "sha256": "a1ba3d85a41545869d9ef1e089a57b42a3c8e6d4fefd17eea8180e07c2a2c49a",
+      "circleCropQA": "PASS: foreground visually retained in 420px circular crop; reviewed at 100px and 48px",
+      "smallReviewSizes": [
+        100,
+        48
+      ]
+    },
+    {
+      "filename": "gp_autoRelease.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "fullyOpaque": true,
+      "sha256": "def20b90037a1b9ac11f083627030f2060e2f11f2e546b65e10ea46f9b841c72",
+      "circleCropQA": "PASS: foreground visually retained in 420px circular crop; reviewed at 100px and 48px",
+      "smallReviewSizes": [
+        100,
+        48
+      ]
+    },
+    {
+      "filename": "gp_fastDev.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "fullyOpaque": true,
+      "sha256": "304551660a4770be2ad4ff350d0f24d99a0c7a4cad8714569172c22e00d3621b",
+      "circleCropQA": "PASS: foreground visually retained in 420px circular crop; reviewed at 100px and 48px",
+      "smallReviewSizes": [
+        100,
+        48
+      ]
+    },
+    {
+      "filename": "gp_extraSlot.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "fullyOpaque": true,
+      "sha256": "02caee0bb813e0236804dc0b77d473221af03668bf7fdac0f7d2420ff8db8075",
+      "circleCropQA": "PASS: foreground visually retained in 420px circular crop; reviewed at 100px and 48px",
+      "smallReviewSizes": [
+        100,
+        48
+      ]
+    },
+    {
+      "filename": "gp_vipOffice.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "fullyOpaque": true,
+      "sha256": "9b67f249854dd359e0f302c0574431a978d7a943f35936347e8237f06e794cb6",
+      "circleCropQA": "PASS: foreground visually retained in 420px circular crop; reviewed at 100px and 48px",
+      "smallReviewSizes": [
+        100,
+        48
+      ]
+    },
+    {
+      "filename": "gp_legendaryEmployee.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "fullyOpaque": true,
+      "sha256": "3febc7e0e8fd257f2b07d999133e5af9dc446501f71824c4aeae05b592ca3305",
+      "circleCropQA": "PASS: foreground visually retained in 420px circular crop; reviewed at 100px and 48px",
+      "smallReviewSizes": [
+        100,
+        48
+      ]
+    },
+    {
+      "filename": "dp_instantFinish.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "fullyOpaque": true,
+      "sha256": "ce24e11b59245450ccfa57fdda12abc8d3e29f8081af91a58f117eb1e30430b5",
+      "circleCropQA": "PASS: foreground visually retained in 420px circular crop; reviewed at 100px and 48px",
+      "smallReviewSizes": [
+        100,
+        48
+      ]
+    },
+    {
+      "filename": "dp_patch.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "fullyOpaque": true,
+      "sha256": "1ad0fe19f3a5a3c512d93aa58b1c39e542921e69924f6ec14898df334673c56e",
+      "circleCropQA": "PASS: foreground visually retained in 420px circular crop; reviewed at 100px and 48px",
+      "smallReviewSizes": [
+        100,
+        48
+      ]
+    },
+    {
+      "filename": "dp_coffee.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "fullyOpaque": true,
+      "sha256": "be7bb45b1afffcb5d69d221540e5c95f04acc43a64c0c297bbf0b4865426ca84",
+      "circleCropQA": "PASS: foreground visually retained in 420px circular crop; reviewed at 100px and 48px",
+      "smallReviewSizes": [
+        100,
+        48
+      ]
+    },
+    {
+      "filename": "dp_income10.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "fullyOpaque": true,
+      "sha256": "5fbf817515f0d06e8f363d5af135584792440dfb1023d17a06f4967f76a16cd4",
+      "circleCropQA": "PASS: foreground visually retained in 420px circular crop; reviewed at 100px and 48px",
+      "smallReviewSizes": [
+        100,
+        48
+      ]
+    },
+    {
+      "filename": "dp_income30.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "fullyOpaque": true,
+      "sha256": "01072c31accb6c77f21bc675e4888187d4e40a8203d7ebeb4fda0459f49fc624",
+      "circleCropQA": "PASS: foreground visually retained in 420px circular crop; reviewed at 100px and 48px",
+      "smallReviewSizes": [
+        100,
+        48
+      ]
+    },
+    {
+      "filename": "dp_income90.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "fullyOpaque": true,
+      "sha256": "ba192a0c6fbd45a6c83af6ebd6130ff5fa15a13dbb2206573c398aac31752cbd",
+      "circleCropQA": "PASS: foreground visually retained in 420px circular crop; reviewed at 100px and 48px",
+      "smallReviewSizes": [
+        100,
+        48
+      ]
+    },
+    {
+      "filename": "dp_ads.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "fullyOpaque": true,
+      "sha256": "afeca03ca776d5a2b7f73aa65d955df0a44157e67ca732940de0b9f18ad185f5",
+      "circleCropQA": "PASS: foreground visually retained in 420px circular crop; reviewed at 100px and 48px",
+      "smallReviewSizes": [
+        100,
+        48
+      ]
+    }
+  ],
+  "circleDiameterPixels": 420,
+  "generator": "built-in OpenAI ImageGen, one call per distinct icon, targeted edits recorded in prompts",
+  "promptManifests": [
+    "gamepasses-prompts.json",
+    "products-prompts.json",
+    "income-prompts.json"
+  ],
+  "runtimeUploaded": false,
+  "gameplayChanged": false,
+  "visualReview": "PASS: all 13 reviewed; small/medium/large coin quantities distinguish income bundles"
+}

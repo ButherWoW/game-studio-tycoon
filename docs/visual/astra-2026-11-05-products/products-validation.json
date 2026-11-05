@@ -1,0 +1,95 @@
+{
+  "status": "PASS",
+  "scope": "dp_instantFinish,dp_patch,dp_coffee,dp_ads only",
+  "tool": "built-in image_gen",
+  "canvas": [
+    512,
+    512
+  ],
+  "opaqueAllPixels": true,
+  "requiredCircleDiameter": 420,
+  "designTargetCircleDiameter": 360,
+  "foregroundMethod": "pixels whose largest channel difference from dominant royal-blue background exceeds35, plus visual review",
+  "assets": [
+    {
+      "file": "dp_instantFinish.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "allPixelAlpha": 255,
+      "dominantBackgroundRGB": [
+        49,
+        116,
+        253
+      ],
+      "foregroundRadiusPx": 155.7,
+      "foregroundPixelsOutside420Circle": 0,
+      "inside360DesignTarget": true,
+      "sourcePath": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-a5122b19-2016-48f7-9f46-811be7ec53ef.png",
+      "sha256": "ce24e11b59245450ccfa57fdda12abc8d3e29f8081af91a58f117eb1e30430b5",
+      "semanticReview": "PASS: requested object, no text except+1onpatch, no brands/currency glyphs/weapons, no enclosing layout-guide circle"
+    },
+    {
+      "file": "dp_patch.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "allPixelAlpha": 255,
+      "dominantBackgroundRGB": [
+        50,
+        117,
+        253
+      ],
+      "foregroundRadiusPx": 154.637,
+      "foregroundPixelsOutside420Circle": 0,
+      "inside360DesignTarget": true,
+      "sourcePath": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-d239577e-8081-4933-8e52-544301471a95.png",
+      "sha256": "1ad0fe19f3a5a3c512d93aa58b1c39e542921e69924f6ec14898df334673c56e",
+      "semanticReview": "PASS: requested object, no text except+1onpatch, no brands/currency glyphs/weapons, no enclosing layout-guide circle"
+    },
+    {
+      "file": "dp_coffee.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "allPixelAlpha": 255,
+      "dominantBackgroundRGB": [
+        51,
+        120,
+        253
+      ],
+      "foregroundRadiusPx": 153.8,
+      "foregroundPixelsOutside420Circle": 0,
+      "inside360DesignTarget": true,
+      "sourcePath": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-50a2469d-61b8-4f32-a81f-1df97fd61246.png",
+      "sha256": "be7bb45b1afffcb5d69d221540e5c95f04acc43a64c0c297bbf0b4865426ca84",
+      "semanticReview": "PASS: requested object, no text except+1onpatch, no brands/currency glyphs/weapons, no enclosing layout-guide circle"
+    },
+    {
+      "file": "dp_ads.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "allPixelAlpha": 255,
+      "dominantBackgroundRGB": [
+        53,
+        116,
+        253
+      ],
+      "foregroundRadiusPx": 179.773,
+      "foregroundPixelsOutside420Circle": 0,
+      "inside360DesignTarget": true,
+      "sourcePath": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-1d0c6509-4328-473e-bfb8-79e7739d2514.png",
+      "sha256": "afeca03ca776d5a2b7f73aa65d955df0a44157e67ca732940de0b9f18ad185f5",
+      "semanticReview": "PASS: requested object, no text except+1onpatch, no brands/currency glyphs/weapons, no enclosing layout-guide circle"
+    }
+  ]
+}

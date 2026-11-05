@@ -1,0 +1,90 @@
+{
+  "tool": "built-in image_gen",
+  "transparent_background": false,
+  "finalSize": [
+    512,
+    512
+  ],
+  "safeForegroundCircleDiameter": 360,
+  "requiredForegroundCircleMaximum": 420,
+  "background": "#3D7BFF",
+  "assets": [
+    {
+      "file": "dp_instantFinish.png",
+      "id": "dp_instantFinish",
+      "prompt": "Use case: stylized-concept. Asset type: Roblox developer-product icon, final square512x512 PNG fully OPAQUE. Background must fill the ENTIRE square with perfectly uniform solid royal blue #3D7BFF, no gradient, no vignette, no transparency, no panel or border. Place ALL foreground artwork INCLUDING outline, shadows and accent sparkles inside a centered circle only360 pixels in diameter on the final512pixel square; leave at least76pixels of uninterrupted blue padding on every side. Compact centered simple composition, no ground shadow extending outside the360circle. Match polished glossy chunky low-poly cartoon V3 game icons, thick dark outline #1E1E2E, rich bright blue #3D7BFF and golden yellow #FFC93C with restrained white edge highlights. Large simple readable silhouettes. Original unbranded artwork. No currency symbols, brands, watermarks, written words, letters or digits unless explicitly permitted below. Subject: One chunky golden hourglass with blue supports and a large gold lightning bolt crossing its lower right side. The hourglass sand is bright gold, visibly readable. No other objects or symbols; no text.",
+      "sourcePath": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-a5122b19-2016-48f7-9f46-811be7ec53ef.png",
+      "outputPath": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-products-v26/V26/dp_instantFinish.png",
+      "nativeSize": [
+        1254,
+        1254
+      ],
+      "finalMode": "RGB",
+      "finalSize": [
+        512,
+        512
+      ],
+      "normalization": "aspect-preserving contain on solid royal-blue canvas; alpha flattened onto same blue",
+      "originalSourcePath": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-a6dcd4d3-fdd3-40a5-ac52-6004f60f39ae.png",
+      "editPrompt": "Edit this game-product icon. REMOVE the large black circular enclosing outline completely, replacing that outline area with the same royal-blue background. The round layout guide must be invisible: no surrounding ring, disc, panel or frame. Reduce the central object group and all its decorative sparkles to about80% of their current size, centered on the canvas, so there is generous blue padding. Keep the hourglass/lightning OR bandaged cartridge with '+1' OR coffee mug subject exactly as shown, keeping all its internal details, glossy colors, thick object outlines and any permitted '+1'. Do not add any new text. The background fills the entire square, vivid royal blue #3D7BFF, fully OPAQUE, no transparency. No gradients or texture on the background.",
+      "editReference": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-a6dcd4d3-fdd3-40a5-ac52-6004f60f39ae.png"
+    },
+    {
+      "file": "dp_patch.png",
+      "id": "dp_patch",
+      "prompt": "Use case: stylized-concept. Asset type: Roblox developer-product icon, final square512x512 PNG fully OPAQUE. Background must fill the ENTIRE square with perfectly uniform solid royal blue #3D7BFF, no gradient, no vignette, no transparency, no panel or border. Place ALL foreground artwork INCLUDING outline, shadows and accent sparkles inside a centered circle only360 pixels in diameter on the final512pixel square; leave at least76pixels of uninterrupted blue padding on every side. Compact centered simple composition, no ground shadow extending outside the360circle. Match polished glossy chunky low-poly cartoon V3 game icons, thick dark outline #1E1E2E, rich bright blue #3D7BFF and golden yellow #FFC93C with restrained white edge highlights. Large simple readable silhouettes. Original unbranded artwork. No currency symbols, brands, watermarks, written words, letters or digits unless explicitly permitted below. Subject: One chunky blue video-game cartridge with gold top edge, a large cream adhesive bandage diagonally across its front and a small gold circular badge containing the exact allowed text '+1'. Render ONLY '+1' as clean bold dark characters on the gold badge; no other writing. The icon communicates a game patch improving its rating. Keep the cartridge, bandage and badge inside the360pixel central circle.",
+      "sourcePath": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-d239577e-8081-4933-8e52-544301471a95.png",
+      "outputPath": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-products-v26/V26/dp_patch.png",
+      "nativeSize": [
+        1254,
+        1254
+      ],
+      "finalMode": "RGB",
+      "finalSize": [
+        512,
+        512
+      ],
+      "normalization": "aspect-preserving contain on solid royal-blue canvas; alpha flattened onto same blue",
+      "originalSourcePath": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-3ee7dcb9-45b1-4c92-9821-3436e3ee07f1.png",
+      "editPrompt": "Edit this game-product icon. REMOVE the large black circular enclosing outline completely, replacing that outline area with the same royal-blue background. The round layout guide must be invisible: no surrounding ring, disc, panel or frame. Reduce the central object group and all its decorative sparkles to about80% of their current size, centered on the canvas, so there is generous blue padding. Keep the hourglass/lightning OR bandaged cartridge with '+1' OR coffee mug subject exactly as shown, keeping all its internal details, glossy colors, thick object outlines and any permitted '+1'. Do not add any new text. The background fills the entire square, vivid royal blue #3D7BFF, fully OPAQUE, no transparency. No gradients or texture on the background.",
+      "editReference": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-3ee7dcb9-45b1-4c92-9821-3436e3ee07f1.png"
+    },
+    {
+      "file": "dp_coffee.png",
+      "id": "dp_coffee",
+      "prompt": "Use case: stylized-concept. Asset type: Roblox developer-product icon, final square512x512 PNG fully OPAQUE. Background must fill the ENTIRE square with perfectly uniform solid royal blue #3D7BFF, no gradient, no vignette, no transparency, no panel or border. Place ALL foreground artwork INCLUDING outline, shadows and accent sparkles inside a centered circle only360 pixels in diameter on the final512pixel square; leave at least76pixels of uninterrupted blue padding on every side. Compact centered simple composition, no ground shadow extending outside the360circle. Match polished glossy chunky low-poly cartoon V3 game icons, thick dark outline #1E1E2E, rich bright blue #3D7BFF and golden yellow #FFC93C with restrained white edge highlights. Large simple readable silhouettes. Original unbranded artwork. No currency symbols, brands, watermarks, written words, letters or digits unless explicitly permitted below. Subject: One chunky blue ceramic coffee mug with golden handle and golden rim, visible dark brown coffee surface, two compact cream steam curls rising from it and a simple geometric gold star inset on the front. No text. Keep all steam curls inside the360pixel central circle.",
+      "sourcePath": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-50a2469d-61b8-4f32-a81f-1df97fd61246.png",
+      "outputPath": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-products-v26/V26/dp_coffee.png",
+      "nativeSize": [
+        1254,
+        1254
+      ],
+      "finalMode": "RGB",
+      "finalSize": [
+        512,
+        512
+      ],
+      "normalization": "aspect-preserving contain on solid royal-blue canvas; alpha flattened onto same blue",
+      "originalSourcePath": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-08141c8b-e29b-4044-8540-3ec1cf291332.png",
+      "editPrompt": "Edit this game-product icon. REMOVE the large black circular enclosing outline completely, replacing that outline area with the same royal-blue background. The round layout guide must be invisible: no surrounding ring, disc, panel or frame. Reduce the central object group and all its decorative sparkles to about80% of their current size, centered on the canvas, so there is generous blue padding. Keep the hourglass/lightning OR bandaged cartridge with '+1' OR coffee mug subject exactly as shown, keeping all its internal details, glossy colors, thick object outlines and any permitted '+1'. Do not add any new text. The background fills the entire square, vivid royal blue #3D7BFF, fully OPAQUE, no transparency. No gradients or texture on the background.",
+      "editReference": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-08141c8b-e29b-4044-8540-3ec1cf291332.png"
+    },
+    {
+      "file": "dp_ads.png",
+      "id": "dp_ads",
+      "prompt": "Use case: stylized-concept. Asset type: Roblox developer-product icon, final square512x512 PNG fully OPAQUE. Background must fill the ENTIRE square with perfectly uniform solid royal blue #3D7BFF, no gradient, no vignette, no transparency, no panel or border. Place ALL foreground artwork INCLUDING outline, shadows and accent sparkles inside a centered circle only360 pixels in diameter on the final512pixel square; leave at least76pixels of uninterrupted blue padding on every side. Compact centered simple composition, no ground shadow extending outside the360circle. Match polished glossy chunky low-poly cartoon V3 game icons, thick dark outline #1E1E2E, rich bright blue #3D7BFF and golden yellow #FFC93C with restrained white edge highlights. Large simple readable silhouettes. Original unbranded artwork. No currency symbols, brands, watermarks, written words, letters or digits unless explicitly permitted below. Subject: One chunky blue megaphone with a broad golden rim and two thick gold coins next to its mouth. Coins contain only a plain geometric star, no currency signs. One or two short gold sound rays stay close to the megaphone. Compact centered composition, all details inside the360pixel central circle; no text. IMPORTANT: The circular safe area is an INVISIBLE layout constraint; do NOT draw any surrounding ring, circular outline, panel, badge disc, frame or layout guide. The megaphone and coins as one compact group must occupy only the central280x280pixel area of the final512square, with ample uninterrupted royal-blue background around it. No text, no currency glyphs.",
+      "sourcePath": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-1d0c6509-4328-473e-bfb8-79e7739d2514.png",
+      "outputPath": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-products-v26/V26/dp_ads.png",
+      "nativeSize": [
+        1254,
+        1254
+      ],
+      "finalMode": "RGB",
+      "finalSize": [
+        512,
+        512
+      ],
+      "normalization": "aspect-preserving contain on solid royal-blue canvas; alpha flattened onto same blue"
+    }
+  ]
+}
