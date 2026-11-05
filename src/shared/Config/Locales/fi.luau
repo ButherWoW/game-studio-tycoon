@@ -1550,6 +1550,7 @@ return {
 	devent_board_empty = "ei vielä ketään",
 	devent_bug_caught = "🐞 Bugi napattu! +{money}",
 	devent_bug_top = "🏆 Olet bugien nappaaja #{rank}! Bonus +{money}",
+	devent_bug_limit = "🐞 {count} ötökkää maksettu — loput lasketaan vain kärkeen",
 	devent_investor_prompt = "Hae avustus",
 	devent_investor_name = "Sijoittaja",
 	devent_investor_got = "📈 Sijoittajan avustus: +{money} (olet #{rank}/{max})",

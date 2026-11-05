@@ -1551,6 +1551,7 @@ return {
 	devent_board_empty = "nimeni încă",
 	devent_bug_caught = "🐞 Gândăcel prins! +{money}",
 	devent_bug_top = "🏆 Ești vânătorul de gândăcei #{rank}! Bonus +{money}",
+	devent_bug_limit = "🐞 {count} gândaci plătiți — restul contează doar pentru top",
 	devent_investor_prompt = "Ia un grant",
 	devent_investor_name = "Investitor",
 	devent_investor_got = "📈 Grant de la investitor: +{money} (ești #{rank} din {max})",

@@ -58,6 +58,9 @@ local rng = Random.new()
 local bugs: { [Model]: boolean } = {}
 local catches: { [Player]: number } = {}
 local lastCatch: { [Player]: number } = {}
+-- Оплаченные жуки за охоту по UserId (лимит bugHunt.maxCatchesPerPlayer; перезаход не сбрасывает)
+local paidByUser: { [number]: number } = {}
+local limitToasted: { [number]: boolean } = {}
 -- Час инвесторов: кто уже получил грант (по UserId — перезаход не помогает)
 local investorGranted: { [number]: boolean } = {}
 local investorCount = 0
@@ -485,9 +488,17 @@ local function onCatch(player: Player, model: Model, root: BasePart, slotIndex: 
 	bugs[model] = nil
 	model:Destroy()
 	catches[player] = (catches[player] or 0) + 1
-	local amount = RewardService.incomeForMinutes(player, profile, cfg.incomeMinutes)
-	RewardService.grant(player, { incomeMinutes = cfg.incomeMinutes })
-	toast(player, "devent_bug_caught", { money = Texts.money(amount), count = catches[player] })
+	-- Деньги — только за первые maxCatchesPerPlayer жуков охоты, дальше — только зачёт топа
+	local paid = paidByUser[player.UserId] or 0
+	if paid < cfg.maxCatchesPerPlayer then
+		paidByUser[player.UserId] = paid + 1
+		local amount = RewardService.incomeForMinutes(player, profile, cfg.incomeMinutes)
+		RewardService.grant(player, { incomeMinutes = cfg.incomeMinutes })
+		toast(player, "devent_bug_caught", { money = Texts.money(amount), count = catches[player] })
+	elseif not limitToasted[player.UserId] then
+		limitToasted[player.UserId] = true
+		toast(player, "devent_bug_limit", { count = cfg.maxCatchesPerPlayer })
+	end
 	call("AchievementService", "note", player, "bugsCaught", 1)
 	boardDirty = true
 	task.delay(cfg.respawnSeconds, spawnBug, slotIndex)
@@ -599,6 +610,8 @@ local function finishBugHunt()
 	end
 	table.clear(catches)
 	table.clear(lastCatch)
+	table.clear(paidByUser)
+	table.clear(limitToasted)
 end
 
 -- ===== Час инвесторов =====
@@ -924,6 +937,8 @@ local function begin(slot: DailyEvents.Slot)
 	local id = slot.id
 	if id == "bugHunt" then
 		table.clear(catches)
+		table.clear(paidByUser)
+		table.clear(limitToasted)
 		for _ = 1, DailyEvents.bugHunt.count do
 			spawnBug(slot.index)
 		end

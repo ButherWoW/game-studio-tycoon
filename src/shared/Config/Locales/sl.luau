@@ -1549,6 +1549,7 @@ return {
 	devent_board_empty = "še nihče",
 	devent_bug_caught = "🐞 Hrošč ujet! +{money}",
 	devent_bug_top = "🏆 Si lovec na hrošče #{rank}! Bonus +{money}",
+	devent_bug_limit = "🐞 Izplačanih {count} hroščev — naprej štejejo samo za lestvico",
 	devent_investor_prompt = "Prejmi dotacijo",
 	devent_investor_name = "Investitor",
 	devent_investor_got = "📈 Dotacija investitorja: +{money} (si #{rank} od {max})",

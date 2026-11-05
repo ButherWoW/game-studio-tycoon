@@ -1551,6 +1551,7 @@ return {
 	devent_board_empty = "még senki",
 	devent_bug_caught = "🐞 Bogár elkapva! +{money}",
 	devent_bug_top = "🏆 #{rank}. bogárvadász lettél! Bónusz +{money}",
+	devent_bug_limit = "🐞 {count} bogár kifizetve — a többi csak a toplistába számít",
 	devent_investor_prompt = "Támogatást kérek",
 	devent_investor_name = "Befektető",
 	devent_investor_got = "📈 Befektetői támogatás: +{money} (#{rank} / {max})",

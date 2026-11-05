@@ -1550,6 +1550,7 @@ return {
 	devent_board_empty = "暂无",
 	devent_bug_caught = "🐞 抓到虫子！+{money}",
 	devent_bug_top = "🏆 你是第 {rank} 名捉虫高手！奖励 +{money}",
+	devent_bug_limit = "🐞 已支付 {count} 只虫子的奖励——之后只计入排行榜",
 	devent_investor_prompt = "领取资助",
 	devent_investor_name = "投资人",
 	devent_investor_got = "📈 投资人资助：+{money}（你是 {max} 人中的第 {rank} 名）",

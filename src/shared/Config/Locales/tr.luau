@@ -1549,6 +1549,7 @@ return {
 	devent_board_empty = "henüz kimse yok",
 	devent_bug_caught = "🐞 Böcek yakalandı! +{money}",
 	devent_bug_top = "🏆 {rank}. böcek avcısı sensin! Bonus +{money}",
+	devent_bug_limit = "🐞 {count} böcek ödendi — sonrakiler yalnızca sıralamaya sayılır",
 	devent_investor_prompt = "Hibe al",
 	devent_investor_name = "Yatırımcı",
 	devent_investor_got = "📈 Yatırımcı hibesi: +{money} ({max} kişiden {rank}. sensin)",

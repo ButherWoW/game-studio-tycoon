@@ -1551,6 +1551,7 @@ return {
 	devent_board_empty = "jeszcze nikt",
 	devent_bug_caught = "🐞 Bug złapany! +{money}",
 	devent_bug_top = "🏆 Jesteś łowcą bugów nr {rank}! Bonus +{money}",
+	devent_bug_limit = "🐞 Wypłacono za {count} robaków — kolejne liczą się tylko do rankingu",
 	devent_investor_prompt = "Weź grant",
 	devent_investor_name = "Inwestor",
 	devent_investor_got = "📈 Grant od inwestora: +{money} (jesteś nr {rank} z {max})",

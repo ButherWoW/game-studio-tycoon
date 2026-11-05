@@ -1551,6 +1551,7 @@ return {
 	devent_board_empty = "ingen endnu",
 	devent_bug_caught = "🐞 Bug fanget! +{money}",
 	devent_bug_top = "🏆 Du er bugfanger nr. {rank}! Bonus +{money}",
+	devent_bug_limit = "🐞 {count} biller udbetalt — flere tæller kun til toppen",
 	devent_investor_prompt = "Få tilskud",
 	devent_investor_name = "Investor",
 	devent_investor_got = "📈 Investortilskud: +{money} (du er nr. {rank} af {max})",

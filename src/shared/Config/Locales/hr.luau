@@ -1549,6 +1549,7 @@ return {
 	devent_board_empty = "još nitko",
 	devent_bug_caught = "🐞 Bubica uhvaćena! +{money}",
 	devent_bug_top = "🏆 Ti si lovac na bubice #{rank}! Bonus +{money}",
+	devent_bug_limit = "🐞 Plaćeno {count} buba — dalje se broje samo za poredak",
 	devent_investor_prompt = "Uzmi potporu",
 	devent_investor_name = "Investitor",
 	devent_investor_got = "📈 Potpora investitora: +{money} (ti si #{rank} od {max})",

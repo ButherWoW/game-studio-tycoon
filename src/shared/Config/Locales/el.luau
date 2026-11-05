@@ -1550,6 +1550,7 @@ return {
 	devent_board_empty = "κανείς ακόμα",
 	devent_bug_caught = "🐞 Έπιασες ζουζούνι! +{money}",
 	devent_bug_top = "🏆 Είσαι ο #{rank} κυνηγός ζουζουνιών! Μπόνους +{money}",
+	devent_bug_limit = "🐞 Πληρώθηκαν {count} ζωύφια — τα επόμενα μετράνε μόνο για την κατάταξη",
 	devent_investor_prompt = "Πάρε χορηγία",
 	devent_investor_name = "Επενδυτής",
 	devent_investor_got = "📈 Χορηγία επενδυτή: +{money} (είσαι #{rank} από {max})",

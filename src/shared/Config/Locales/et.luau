@@ -1550,6 +1550,7 @@ return {
 	devent_board_empty = "veel mitte kedagi",
 	devent_bug_caught = "🐞 Viga püütud! +{money}",
 	devent_bug_top = "🏆 Oled vigade püüdja #{rank}! Boonus +{money}",
+	devent_bug_limit = "🐞 {count} putukat makstud — edasi loevad ainult edetabelisse",
 	devent_investor_prompt = "Võta toetus",
 	devent_investor_name = "Investor",
 	devent_investor_got = "📈 Investori toetus: +{money} (oled #{rank}/{max})",
