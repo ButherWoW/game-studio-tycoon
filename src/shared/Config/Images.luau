@@ -68,7 +68,9 @@ Images.skins = {
 	wizard_dev = { shirt = 133948528089059, pants = 84656926980640, preview = 128736905194190 }, -- премиум
 } :: { [string]: { shirt: number, pants: number, preview: number } }
 
--- VIP (docs/VISUAL.md, V14): текстура искр над золотой вывеской. 0 — стандартная искра Roblox
+-- VIP (docs/VISUAL.md, V14): vip_crown.png из docs/visual/astra-2026-11-05-vip/V14 — текстура
+-- искр над золотой вывеской и корона 👑 в интерфейсе (табличка VIP, выбор получателя подарка,
+-- геймпасс «VIP-офис» в магазине). 0 — стандартная искра Roblox и эмодзи 👑
 Images.vip = 0
 
 -- Маскоты (docs/VISUAL.md, V16; Config/Mascots). 0 — иконки ещё нет: на карточке эмодзи.
@@ -86,6 +88,57 @@ Images.mascots = {
 	dragon_byte = 0,
 	golden_trophy = 0,
 	cosmic_whale = 0,
+} :: { [string]: number }
+
+-- События компании (docs/VISUAL.md, V19; Config/CompanyEvents). 0 — иконки ещё нет: на карточке
+-- события эмодзи. Dev 1: из docs/visual/astra-2026-11-05-events/events-1/V19 и events-2/V19
+-- загрузить cev_<id>.png как Image и вставить Image ID напротив id события
+Images.events = {
+	angel = 0, -- cev_angel.png (events-1)
+	streamer = 0, -- cev_streamer.png (events-1)
+	award = 0, -- cev_award.png (events-1)
+	conference = 0, -- cev_conference.png (events-1)
+	grant = 0, -- cev_grant.png (events-1)
+	donations = 0, -- cev_donations.png (events-1)
+	luckybug = 0, -- cev_luckybug.png (events-1)
+	hype = 0, -- cev_hype.png (events-1)
+	crash = 0, -- cev_crash.png (events-1)
+	leak = 0, -- cev_leak.png (events-1)
+	flood = 0, -- cev_flood.png (events-1)
+	audit = 0, -- cev_audit.png (events-2)
+	outage = 0, -- cev_outage.png (events-2)
+	reviewbomb = 0, -- cev_reviewbomb.png (events-2)
+	burnout = 0, -- cev_burnout.png (events-2)
+	lawsuit = 0, -- cev_lawsuit.png (events-2)
+	poach = 0, -- cev_poach.png (events-2)
+	rush = 0, -- cev_rush.png (events-2)
+	sponsor = 0, -- cev_sponsor.png (events-2)
+	gamble = 0, -- cev_gamble.png (events-2)
+	takeover = 0, -- cev_takeover.png (events-2)
+	bankrupt = 0, -- cev_bankrupt.png (events-2)
+} :: { [string]: number }
+
+-- Логотипы студий-конкурентов (V19; Config/Rivals). 0 — логотипа нет: эмодзи студии.
+-- Dev 1: из docs/visual/astra-2026-11-05-events/rivals загрузить rival_<id>.png как Image
+Images.rivals = {
+	tinfoilOwl = 0, -- rival_tinfoilOwl.png
+	mangoComet = 0, -- rival_mangoComet.png
+	quokkaPixel = 0, -- rival_quokkaPixel.png
+	gloomberry = 0, -- rival_gloomberry.png
+	brassfern = 0, -- rival_brassfern.png
+	velvetAnvil = 0, -- rival_velvetAnvil.png
+	nimbusTurtle = 0, -- rival_nimbusTurtle.png
+	okraLantern = 0, -- rival_okraLantern.png
+	bluemoth = 0, -- rival_bluemoth.png
+} :: { [string]: number }
+
+-- Монетизация (V14; docs/visual/astra-2026-11-05-vip/V14). 0 — картинки нет: как раньше, эмодзи.
+-- Корона vip_crown.png — это Images.vip выше
+Images.monetization = {
+	gift = 0, -- gift_icon.png (256×256): кнопка «🎁 Подарить» и окно выбора получателя
+	deal = 0, -- deal_badge.png (256×256, на картинке «-30%»): «Сделка дня» в магазине
+	starterBanner = 0, -- starter_pack_banner.png (1024×512): окно стартового набора
+	groupBanner = 0, -- group_banner.png (1024×512): подсказка «Вступи в группу» во вкладке скинов
 } :: { [string]: number }
 
 return Images

@@ -1,8 +1,9 @@
 --!strict
 -- События компании на клиенте (CompanyEventService): карточка события и плашки активных эффектов.
--- Карточка: эмодзи, заголовок, текст, эффект в цифрах, 1–2 кнопки. Хорошее — зелёное/золотое,
--- плохое — красное, катастрофа — тёмно-красная с тряской. Не поверх других окон, не в туториале,
--- не во время событий разработки и не сразу после предложения доната: ждёт в очереди.
+-- Карточка: эмодзи (или иконка Images.events), заголовок, текст, эффект в цифрах, 1–2 кнопки.
+-- Хорошее — зелёное/золотое, плохое — красное, катастрофа — тёмно-красная с тряской.
+-- Не поверх других окон, не в туториале, не во время событий разработки и не сразу после
+-- предложения доната: ждёт в очереди.
 -- Решает и применяет всё сервер; на выбор время идёт с момента показа (CompanyEventSeen).
 -- Плашки под HUD (Ui.bannerStack): «📉 −20% 12:30», «🛡 25:00», «⭐ +0.5»…
 
@@ -13,6 +14,7 @@ local TweenService = game:GetService("TweenService")
 local Shared = ReplicatedStorage.Shared
 local CompanyEvents = require(Shared.Config.CompanyEvents)
 local CompanyEventRemotes = require(Shared.CompanyEventRemotes)
+local Images = require(Shared.Config.Images)
 local Texts = require(Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local CompanyEventState = require(script.Parent.Parent.CompanyEventState)
@@ -152,6 +154,10 @@ local function render(info: any, lines: { any }?, result: boolean)
 	local emoji = Ui.label(body, tostring(info.emoji or "❗"), 54, Ui.titleFont)
 	emoji.TextXAlignment = Enum.TextXAlignment.Center
 	emoji.LayoutOrder = 2
+	-- Иконка события (Config/Images.events, V19); 0 — остаётся эмодзи
+	if Ui.artImage(emoji, Images.events[id]) then
+		emoji.Text = ""
+	end
 	text(body, ClientState.t("cev_" .. id .. "_title"), 30, 3, nil, Ui.titleFontFor(ClientState.lang))
 	text(body, ClientState.t("cev_" .. id .. "_text", textVars), 18, 4, Ui.colors.muted)
 

@@ -14,6 +14,7 @@ local Remotes = require(Shared.Remotes)
 local ShopRemotes = require(Shared.ShopRemotes)
 local AdCampaigns = require(Shared.Config.AdCampaigns)
 local GamePasses = require(Shared.Config.GamePasses)
+local Images = require(Shared.Config.Images)
 local Products = require(Shared.Config.Products)
 local Texts = require(Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
@@ -72,8 +73,16 @@ local function promptProduct(productId: number)
 	MarketplaceService:PromptProductPurchase(Players.LocalPlayer, productId)
 end
 
--- Строка: иконка, название, описание, справа кнопки. Возвращает рамку под кнопки
-local function row(parent: Instance, order: number, icon: string, title: string, description: string): Frame
+-- Строка: иконка, название, описание, справа кнопки. Возвращает рамку под кнопки.
+-- imageId — картинка из Config/Images вместо эмодзи иконки (0/nil — эмодзи)
+local function row(
+	parent: Instance,
+	order: number,
+	icon: string,
+	title: string,
+	description: string,
+	imageId: number?
+): Frame
 	local frame = Instance.new("Frame")
 	frame.BackgroundColor3 = Color3.fromRGB(44, 46, 66)
 	frame.Size = UDim2.new(1, -8, 0, ROW_HEIGHT)
@@ -83,6 +92,11 @@ local function row(parent: Instance, order: number, icon: string, title: string,
 	local iconLabel = Ui.label(frame, icon, ROW_HEIGHT, Ui.titleFont)
 	iconLabel.Size = UDim2.new(0, 56, 1, 0)
 	iconLabel.TextXAlignment = Enum.TextXAlignment.Center
+	local art = Ui.artImage(iconLabel, imageId)
+	if art then
+		iconLabel.Text = ""
+		art.Size = UDim2.fromScale(0.75, 0.75)
+	end
 
 	local titleLabel = Ui.label(frame, title, 26, Ui.titleFont)
 	titleLabel.Position = UDim2.fromOffset(60, 8)
@@ -160,7 +174,9 @@ end
 local function buildPasses(body: Instance)
 	for i, pass in GamePasses.list do
 		local name, description = localized(pass)
-		local frame = row(body, i, pass.icon, name, description)
+		-- VIP-офис — корона V14 (Images.vip)
+		local frame =
+			row(body, i, pass.icon, name, description, if pass.id == "vipOffice" then Images.vip else nil)
 		robuxButton(frame, pass.gamePassId, pass.robuxPrice, state.passes[pass.id] == true, function()
 			MarketplaceService:PromptGamePassPurchase(Players.LocalPlayer, pass.gamePassId)
 		end)

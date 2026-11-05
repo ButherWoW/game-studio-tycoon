@@ -2,10 +2,12 @@
 -- Верх окна магазина (ShopWindow): «Сделка дня» (−30% на один товар в сутки UTC, отсчёт до
 -- полуночи UTC) и строка стартового набора, пока идёт его таймер. Товар дня — Offers.dealFor,
 -- скидочный продукт — Products.deals; что выдать, решает сервер (OfferService).
+-- Значок «-30%» — Images.monetization.deal (V14); 0 — без значка, как раньше.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage.Shared
+local Images = require(Shared.Config.Images)
 local Offers = require(Shared.Config.Offers)
 local Products = require(Shared.Config.Products)
 local Posters = require(Shared.Config.Posters)
@@ -17,6 +19,9 @@ local Ui = require(script.Parent.Ui)
 local ROW_HEIGHT = 72
 local BANNER_COLOR = Color3.fromRGB(92, 52, 30)
 local STARTER_COLOR = Color3.fromRGB(40, 70, 52)
+local DEAL_BADGE = 34
+-- На картинке значка напечатано «-30%»: при другой скидке значок не показываем
+local DEAL_BADGE_PERCENT = 30
 
 local OfferShop = {}
 
@@ -94,6 +99,16 @@ local function buildDeal(body: Instance)
 	local percent = Offers.dailyDeal.discountPercent
 	local f = frame(body, -1, BANNER_COLOR)
 	local sub = texts(f, icon, ClientState.t("offer_deal_title", { percent = percent }) .. " · " .. name)
+	if percent == DEAL_BADGE_PERCENT then
+		-- Значок скидки в правом нижнем углу иконки товара
+		local badge = Ui.artImage(f, Images.monetization.deal)
+		if badge then
+			badge.SizeConstraint = Enum.SizeConstraint.RelativeXY
+			badge.Size = UDim2.fromOffset(DEAL_BADGE, DEAL_BADGE)
+			badge.Position = UDim2.fromOffset(56 - DEAL_BADGE / 2, ROW_HEIGHT - DEAL_BADGE / 2 - 4)
+			badge.ZIndex = 2
+		end
+	end
 	tick(sub, function()
 		return ClientState.t(
 			"offer_deal_timer",

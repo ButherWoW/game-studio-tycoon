@@ -11,7 +11,7 @@ local TOAST_SECONDS = 4
 
 local DepthToast = {}
 
-local queue: { { text: string, color: Color3 } } = {}
+local queue: { { text: string, color: Color3, image: number } } = {}
 local showing = false
 
 local function showNext()
@@ -37,14 +37,25 @@ local function showNext()
 	local limit = Instance.new("UISizeConstraint")
 	limit.MaxSize = Vector2.new(620, 36)
 	limit.Parent = label
+	-- Картинка слева (логотип конкурента, Config/Images); 0 — только текст
+	local art = Ui.artImage(label, item.image, "left")
+	if art then
+		local padding = Instance.new("UIPadding")
+		padding.PaddingLeft = UDim.new(0, 40)
+		padding.PaddingRight = UDim.new(0, 40)
+		padding.Parent = label
+		art.Size = UDim2.fromOffset(32, 32)
+		art.Position = UDim2.new(0, -36, 0.5, 0)
+	end
 	task.delay(TOAST_SECONDS, function()
 		screen:Destroy()
 		showNext()
 	end)
 end
 
-function DepthToast.show(text: string, color: Color3?)
-	table.insert(queue, { text = text, color = color or Ui.colors.good })
+-- image — id картинки из Config/Images (слева от текста); nil/0 — без картинки
+function DepthToast.show(text: string, color: Color3?, image: number?)
+	table.insert(queue, { text = text, color = color or Ui.colors.good, image = image or 0 })
 	if not showing then
 		showNext()
 	end

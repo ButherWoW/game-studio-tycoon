@@ -10,6 +10,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage.Shared
+local Images = require(Shared.Config.Images)
 local Offers = require(Shared.Config.Offers)
 local Products = require(Shared.Config.Products)
 local GamePasses = require(Shared.Config.GamePasses)
@@ -242,7 +243,11 @@ export type PopupSpec = {
 	-- Вторая кнопка: свой текст и действие (контракт: «Отказаться»); nil — «Не сейчас»
 	laterText: string?,
 	onLater: (() -> ())?,
+	-- Баннер 2:1 над заголовком (id из Config/Images); nil/0 — без баннера
+	banner: number?,
 }
+
+local BANNER_HEIGHT = 150
 
 -- Показать окно (проверку canPopup делает вызывающий). Считается в кулдаун и лимит сессии
 function OfferClient.popup(spec: PopupSpec)
@@ -260,7 +265,11 @@ function OfferClient.popup(spec: PopupSpec)
 	gui = screen
 	Ui.windowOpened()
 
-	local height = 190 + #spec.lines * 34 + (if spec.countdown then 34 else 0)
+	local bannerId = spec.banner or 0
+	local height = 190
+		+ #spec.lines * 34
+		+ (if spec.countdown then 34 else 0)
+		+ (if bannerId > 0 then BANNER_HEIGHT + 8 else 0)
 	local window = Ui.window(screen, "Window", Vector2.new(520, height))
 	local body = Instance.new("Frame")
 	body.BackgroundTransparency = 1
@@ -270,6 +279,19 @@ function OfferClient.popup(spec: PopupSpec)
 	layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	body.Parent = window
 
+	if bannerId > 0 then
+		local holder = Instance.new("Frame")
+		holder.BackgroundTransparency = 1
+		holder.Size = UDim2.new(1, 0, 0, BANNER_HEIGHT)
+		holder.LayoutOrder = 0
+		holder.Parent = body
+		local art = Ui.artImage(holder, bannerId)
+		if art then
+			art.SizeConstraint = Enum.SizeConstraint.RelativeXY
+			art.Size = UDim2.fromOffset(BANNER_HEIGHT * 2, BANNER_HEIGHT)
+			Ui.corner(art, 12)
+		end
+	end
 	local title = Ui.label(body, spec.title, 40, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
 	title.TextXAlignment = Enum.TextXAlignment.Center
 	title.LayoutOrder = 1
@@ -365,6 +387,7 @@ function OfferClient.showStarter()
 			return ClientState.t("offer_starter_timer", { time = Offers.clock(left) })
 		end,
 		endsAt = OfferClient.state.starterEndsAt,
+		banner = Images.monetization.starterBanner,
 	})
 end
 
