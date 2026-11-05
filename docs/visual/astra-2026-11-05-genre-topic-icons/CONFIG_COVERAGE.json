@@ -1,0 +1,33 @@
+{
+  "Genres": [
+    "action",
+    "adventure",
+    "casual",
+    "rpg",
+    "simulation",
+    "puzzle",
+    "racing",
+    "strategy",
+    "sports",
+    "horror"
+  ],
+  "Topics": [
+    "space",
+    "fantasy",
+    "zombies",
+    "pets",
+    "cars",
+    "cooking",
+    "pirates",
+    "business",
+    "school",
+    "ninja",
+    "robots",
+    "football",
+    "superheroes",
+    "detective",
+    "ghosts",
+    "pumpkins",
+    "newyear"
+  ]
+}
