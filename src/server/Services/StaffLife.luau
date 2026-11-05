@@ -28,6 +28,9 @@ local BOB_HEIGHT = 0.18
 local BOB_RATE = 12
 local LEAVE_TIME = 2.2 -- секунд на дорогу уволенного (быстрее обычного шага, если далеко)
 local FADE_TIME = 0.6
+-- Сколько NPC одновременно идут по всему серверу (Heartbeat двигает каждого PivotTo, это
+-- реплицируется всем): 12 участков с большим офисом — без лимита десятки моделей каждый кадр
+local MAX_WALKERS = 24
 local LEAVE_FAILSAFE = 12 -- модель уволенного удаляется не позже
 local BOX_COLOR = Color3.fromRGB(196, 152, 98)
 
@@ -393,7 +396,12 @@ local function schedule(player: Player)
 			checks[employeeId] = now + rng:NextNumber(Mood.breaks.checkMin, Mood.breaks.checkMax)
 		elseif now >= due then
 			checks[employeeId] = now + rng:NextNumber(Mood.breaks.checkMin, Mood.breaks.checkMax)
-			if onBreak < limit and not breaksPaused() and rng:NextNumber() < tier.chance then
+			if
+				onBreak < limit
+				and #walkers < MAX_WALKERS
+				and not breaksPaused()
+				and rng:NextNumber() < tier.chance
+			then
 				local model = folder:FindFirstChild("Staff_" .. employeeId)
 				if model and model:IsA("Model") and model:GetAttribute("SeatLocal") ~= nil then
 					startBreak(player, plot, model, employeeId, tier)

@@ -20,6 +20,7 @@ type Written = { steals: number, at: number }
 
 local WRITE_CHECK = 10
 local REQUEST_COOLDOWN = 1
+local CLOSE_WAIT = 15 -- BindToClose: сколько ждём записи (DataService — 25 с, Roblox даёт ~30 с)
 
 local ThiefBoardService = {}
 
@@ -38,6 +39,7 @@ local serverRows: { Row } = {}
 -- Последняя запись в глобальный топ по UserId: переживает выход игрока
 local written: { [number]: Written } = {}
 local pendingWrite: { [number]: boolean } = {}
+local deferred: { [number]: number } = {} -- отложенные записи вышедших: userId -> steals
 local names: { [number]: string } = {}
 local lastRequest: { [Player]: number } = {}
 local broadcastQueued = false
@@ -115,7 +117,8 @@ function ThiefBoardService.changed(_player: Player)
 end
 
 -- Запись в глобальный топ не чаще boardWriteInterval на игрока и только если число изменилось
-local function maybeWrite(userId: number, steals: number, deferIfEarly: boolean)
+-- force — сразу, без интервала (сервер закрывается)
+local function maybeWrite(userId: number, steals: number, deferIfEarly: boolean, force: boolean?)
 	local ordered = store
 	if not ordered or userId <= 0 or steals <= 0 then
 		return
@@ -126,16 +129,25 @@ local function maybeWrite(userId: number, steals: number, deferIfEarly: boolean)
 	end
 	local now = os.clock()
 	local wait = if w then w.at + HitCartridges.boardWriteInterval - now else 0
-	if wait > 0 then
-		if deferIfEarly and not pendingWrite[userId] then
-			pendingWrite[userId] = true
-			task.delay(wait, function()
-				pendingWrite[userId] = nil
-				maybeWrite(userId, steals, false)
-			end)
+	if wait > 0 and not force then
+		if deferIfEarly then
+			-- Последнее значение: BindToClose запишет его сразу (task.delay умрёт вместе с сервером)
+			deferred[userId] = steals
+			if not pendingWrite[userId] then
+				pendingWrite[userId] = true
+				task.delay(wait, function()
+					pendingWrite[userId] = nil
+					local last = deferred[userId]
+					deferred[userId] = nil
+					if last then
+						maybeWrite(userId, last, false)
+					end
+				end)
+			end
 		end
 		return
 	end
+	deferred[userId] = nil
 	-- Отмечаем до yield, чтобы параллельный вызов не записал второй раз
 	written[userId] = { steals = steals, at = now }
 	local ok, err = pcall(function()
@@ -245,6 +257,30 @@ function ThiefBoardService.start()
 			refreshGlobal()
 			HitRemotes.ThiefBoard:FireAllClients(payload())
 			task.wait(HitCartridges.boardReadInterval)
+		end
+	end)
+
+	-- Сервер закрывается: отложенные и текущие значения — сразу, параллельно, не дольше CLOSE_WAIT
+	game:BindToClose(function()
+		local batch = deferred
+		deferred = {}
+		for _, player in Players:GetPlayers() do
+			local profile = DataService.get(player)
+			if profile then
+				batch[player.UserId] = ThiefBoardService.stats(profile).steals
+			end
+		end
+		local running = 0
+		for userId, steals in batch do
+			running += 1
+			task.spawn(function()
+				pcall(maybeWrite, userId, steals, false, true)
+				running -= 1
+			end)
+		end
+		local deadline = os.clock() + CLOSE_WAIT
+		while running > 0 and os.clock() < deadline do
+			task.wait(0.2)
 		end
 	end)
 end

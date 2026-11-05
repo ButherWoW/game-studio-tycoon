@@ -431,9 +431,9 @@ local function refresh()
 		if slot then
 			local userId = if w then w.userId else 0
 			if w then
-				-- Названия — ввод игроков: фильтр для всех; не прошёл (автор не на сервере) —
-				-- сохранённое название уже отфильтровано при вводе
-				slot.studio.Text = BroadcastText.filter(w.studio, w.userId) or w.studio
+				-- Названия — ввод игроков: фильтр для всех; фильтр недоступен — не показываем
+				-- ввод игрока (fail closed), а ставим «Studio <имя Roblox>»
+				slot.studio.Text = BroadcastText.filter(w.studio, w.userId) or ("Studio " .. w.player)
 				slot.points.Text = "★ " .. w.points
 				slot.nameLabel.Text = w.player
 				slot.nameGui.Enabled = true

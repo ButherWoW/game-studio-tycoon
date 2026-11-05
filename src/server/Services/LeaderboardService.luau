@@ -16,6 +16,7 @@ local WRITE_CHECK = 10
 local TOP_INTERVAL = 120
 local TOP_SIZE = 10
 local REQUEST_COOLDOWN = 1
+local CLOSE_WAIT = 15 -- BindToClose: сколько ждём записи (DataService — 25 с, Roblox даёт ~30 с)
 
 type Entry = { name: string, value: number }
 type Board = { available: boolean, best: { Entry }, games: { Entry } }
@@ -38,6 +39,7 @@ end
 local board: Board = { available = false, best = {}, games = {} }
 local written: { [number]: Written } = {} -- по UserId: переживает выход игрока
 local pendingWrite: { [number]: boolean } = {}
+local deferred: { [number]: Written } = {} -- отложенные записи вышедших (at не используется)
 local names: { [number]: string } = {}
 local lastRequest: { [Player]: number } = {}
 
@@ -55,8 +57,8 @@ local function write(userId: number, best: number, games: number)
 end
 
 -- Записать, если значения изменились и с прошлой записи прошло WRITE_INTERVAL;
--- иначе (при выходе игрока) — отложить до конца интервала
-local function maybeWrite(userId: number, best: number, games: number, deferIfEarly: boolean)
+-- иначе (при выходе игрока) — отложить до конца интервала. force — сразу (сервер закрывается)
+local function maybeWrite(userId: number, best: number, games: number, deferIfEarly: boolean, force: boolean?)
 	if not bestStore or not gamesStore or userId <= 0 then
 		return
 	end
@@ -66,16 +68,25 @@ local function maybeWrite(userId: number, best: number, games: number, deferIfEa
 	end
 	local now = os.clock()
 	local wait = if w then w.at + WRITE_INTERVAL - now else 0
-	if wait > 0 then
-		if deferIfEarly and not pendingWrite[userId] then
-			pendingWrite[userId] = true
-			task.delay(wait, function()
-				pendingWrite[userId] = nil
-				maybeWrite(userId, best, games, false)
-			end)
+	if wait > 0 and not force then
+		if deferIfEarly then
+			-- Последние значения: BindToClose запишет их сразу (task.delay умрёт вместе с сервером)
+			deferred[userId] = { best = best, games = games, at = 0 }
+			if not pendingWrite[userId] then
+				pendingWrite[userId] = true
+				task.delay(wait, function()
+					pendingWrite[userId] = nil
+					local d = deferred[userId]
+					deferred[userId] = nil
+					if d then
+						maybeWrite(userId, d.best, d.games, false)
+					end
+				end)
+			end
 		end
 		return
 	end
+	deferred[userId] = nil
 	-- Отмечаем до yield, чтобы параллельный вызов не записал второй раз
 	written[userId] = { best = best, games = games, at = now }
 	write(userId, best, games)
@@ -164,6 +175,30 @@ function LeaderboardService.start()
 		while true do
 			refreshTop()
 			task.wait(TOP_INTERVAL)
+		end
+	end)
+
+	-- Сервер закрывается: отложенные и текущие значения — сразу, параллельно, не дольше CLOSE_WAIT
+	game:BindToClose(function()
+		local batch: { [number]: Written } = deferred
+		deferred = {}
+		for _, player in Players:GetPlayers() do
+			local profile = DataService.get(player)
+			if profile then
+				batch[player.UserId] = { best = profile.bestScore, games = profile.gamesReleased, at = 0 }
+			end
+		end
+		local running = 0
+		for userId, d in batch do
+			running += 1
+			task.spawn(function()
+				pcall(maybeWrite, userId, d.best, d.games, false, true)
+				running -= 1
+			end)
+		end
+		local deadline = os.clock() + CLOSE_WAIT
+		while running > 0 and os.clock() < deadline do
+			task.wait(0.2)
 		end
 	end)
 end

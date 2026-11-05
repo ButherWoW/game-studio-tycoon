@@ -560,6 +560,20 @@ local function ensureOuterLandscape()
 end
 
 -- Вызывать до PlotService.start()
+-- Импортированные модели апгрейдов (ServerStorage.Upgrades) клонируются на каждый участок:
+-- касания у декора не нужны (Touched — только у кнопок покупки), Seat оставляем
+local function untouchUpgradeModels()
+	local folder = ServerStorage:FindFirstChild("Upgrades")
+	if not folder then
+		return
+	end
+	for _, item in folder:GetDescendants() do
+		if item:IsA("BasePart") and not item:IsA("Seat") and not item:IsA("VehicleSeat") then
+			item.CanTouch = false
+		end
+	end
+end
+
 function WorldService.start()
 	ensureGround()
 	ensurePlots()
@@ -569,6 +583,7 @@ function WorldService.start()
 	ensureLandscape()
 	ensureOuterLandscape()
 	dimImportedLights()
+	untouchUpgradeModels()
 end
 
 return WorldService

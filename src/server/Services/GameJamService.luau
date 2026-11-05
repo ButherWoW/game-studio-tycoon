@@ -29,6 +29,7 @@ type TopEntry = { name: string, score: number, userId: number }
 local GameJamService = {}
 
 local CHECK_SECONDS = 10
+local FINAL_RETRY_SECONDS = 60 -- итоговый топ не прочитался: следующая попытка не раньше
 local REQUEST_COOLDOWN = 2
 -- В Studio — быстрее, чтобы проверить топ и награды без ожидания
 local STUDIO_SETTLE = 10
@@ -43,6 +44,7 @@ local currentTop: { TopEntry } = {}
 local topAvailable = false
 local topWeek = -1
 local finalTops: { [number]: { [number]: number } } = {} -- неделя -> userId -> место
+local finalRetryAt: { [number]: number } = {} -- неделя -> os.clock() следующей попытки
 local names: { [number]: string } = {}
 local lastRequest: { [Player]: number } = {}
 local rewarding: { [Player]: boolean } = {}
@@ -241,8 +243,14 @@ end
 local function finalRank(week: number, userId: number): (boolean, number?)
 	local ranks = finalTops[week]
 	if not ranks then
+		-- Топ не прочитался: maybeReward зовёт нас каждые CHECK_SECONDS для каждого игрока —
+		-- без паузы 12 игроков дали бы ~70 GetSortedAsync в минуту (лимит ~29) при сбое DataStore
+		if os.clock() < (finalRetryAt[week] or 0) then
+			return false, nil
+		end
 		local page = readTop(week)
 		if not page then
+			finalRetryAt[week] = os.clock() + FINAL_RETRY_SECONDS
 			return false, nil
 		end
 		local built: { [number]: number } = {}
