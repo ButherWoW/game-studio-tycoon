@@ -17,6 +17,7 @@ local OfferService = require(script.Parent.OfferService)
 local MascotService = require(script.Parent.MascotService)
 local SeasonService = require(script.Parent.SeasonService)
 local FurnitureStyleService = require(script.Parent.FurnitureStyleService)
+local InteriorFinishService = require(script.Parent.InteriorFinishService)
 
 local MonetizationService = {}
 
@@ -86,7 +87,8 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 	end
 
 	-- Диспетчер по productId: реклама здесь, премиум-постеры — PosterService, премиум-скины —
-	-- SkinService, стиль мебели «Неон» — FurnitureStyleService, остальное — ShopService
+	-- SkinService, стиль мебели «Неон» — FurnitureStyleService, отделка студии — InteriorFinishService,
+	-- остальное — ShopService
 	-- Ошибка посреди выдачи: часть эффекта уже в профиле. Квитанцию всё равно записываем —
 	-- лучше недодать, чем выдать второй раз на повторе чека
 	local ok, handled = pcall(function(): boolean
@@ -104,6 +106,7 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 			or OfferService.grantProduct(player, profile, receipt.ProductId)
 			or SeasonService.grantProduct(player, profile, receipt.ProductId)
 			or FurnitureStyleService.grantProduct(player, profile, receipt.ProductId)
+			or InteriorFinishService.grantProduct(player, profile, receipt.ProductId)
 	end)
 	if not ok then
 		warn("[Monetization] Grant failed:", receipt.ProductId, receipt.PurchaseId, handled)

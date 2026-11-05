@@ -190,4 +190,13 @@ Images.contracts = {
 	franchise = 0, -- icon_franchise.png: вместо 📚 у блока «Франшизы» и в тостах франшиз
 } :: { [string]: number }
 
+-- Отделка студии (Config/InteriorFinishes; assets/models/astra-interior-*/ShopCard_512.png).
+-- 0 — картинки нет: карточка в цветах набора со значком. Dev 1: загрузить ShopCard_512.png
+-- каждого набора как Image и вставить ID
+Images.interiorFinishes = {
+	obsidianGold = 0, -- astra-interior-obsidian-gold/ShopCard_512.png
+	sakura = 0, -- astra-interior-sakura/ShopCard_512.png
+	aurora = 0, -- astra-interior-aurora/ShopCard_512.png
+} :: { [string]: number }
+
 return Images

@@ -1,6 +1,7 @@
 --!strict
--- Remotes стилей мебели (окно «Студия» → «Стиль», FurnitureStyleService). Сервер создаёт, клиент ждёт.
--- Покупку за Robux клиент запускает сам (PromptProductPurchase), стиль выдаёт ProcessReceipt.
+-- Remotes стилей мебели (окно «Студия» → «Стиль», FurnitureStyleService) и отделки студии
+-- (вкладка «Отделка», InteriorFinishService). Сервер создаёт, клиент ждёт.
+-- Покупку за Robux клиент запускает сам (PromptProductPurchase), стиль/отделку выдаёт ProcessReceipt.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
@@ -13,6 +14,10 @@ local NAMES = {
 	"StyleState",
 	"BuyStyle", -- клиент -> сервер: styleId — купить стиль за $
 	"SelectStyle", -- клиент -> сервер: styleId — поставить открытый стиль
+	"FinishStateRequest", -- клиент -> сервер: без аргументов, прислать FinishState
+	-- сервер -> клиент: { owned = { [finishId]: true }, selected = finishId }
+	"FinishState",
+	"SelectFinish", -- клиент -> сервер: finishId — поставить открытую отделку (купить — только за Robux)
 }
 
 local folder: Folder

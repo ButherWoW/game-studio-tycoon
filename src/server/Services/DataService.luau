@@ -57,6 +57,9 @@ export type Profile = {
 	-- Стиль мебели студии (FurnitureStyleService, Config/FurnitureStyles): открытые и выбранный.
 	-- Косметика, Rebirth не сбрасывает; формат чистит StyleModels.data при загрузке
 	furniture: { owned: { [string]: boolean }, selected: string },
+	-- Отделка студии (InteriorFinishService, Config/InteriorFinishes): пол/стены/окна оболочек этапов.
+	-- Отдельно от стиля мебели; косметика, Rebirth не сбрасывает; формат чистит StyleModels.finishData
+	interior: { owned: { [string]: boolean }, selected: string },
 	-- Франшизы и контракты (FranchiseService, ContractService, RivalService); формат проверяют сервисы
 	franchises: any?,
 	contracts: any?,
@@ -127,6 +130,7 @@ local function defaultProfile(): Profile
 		codes = {},
 		mascots = { owned = {}, equipped = nil },
 		furniture = { owned = { classic = true }, selected = "classic" },
+		interior = { owned = { classic = true }, selected = "classic" },
 		franchises = { list = {}, candidates = {}, nextId = 1 },
 		contracts = { done = 0, failed = 0 },
 		rivals = { minutes = 0, passed = {} },
