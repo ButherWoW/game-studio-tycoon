@@ -1,0 +1,230 @@
+{
+  "status": "PASS",
+  "expected": 11,
+  "ready": 11,
+  "pending": [],
+  "assets": [
+    {
+      "file": "cev_audit.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        20,
+        16,
+        237,
+        244
+      ],
+      "sha256": "99debd5f44209fc413b7395e3f3e9323160086980b7f098ee78a69a0743a12a5",
+      "exactPromptMetadata": "events-2/metadata/audit.json"
+    },
+    {
+      "file": "cev_outage.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        16,
+        59,
+        239,
+        213
+      ],
+      "sha256": "024514bb04cad0de004d0d600c454deafb49259ddb71228d03bd37a8512d611a",
+      "exactPromptMetadata": "events-2/metadata/outage.json"
+    },
+    {
+      "file": "cev_reviewbomb.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        12,
+        14,
+        243,
+        246
+      ],
+      "sha256": "54da0af64bb4a5b95b99e0628b0014b2d971cb6468c5e085d1c62e6dc126c084",
+      "exactPromptMetadata": "events-2/metadata/reviewbomb.json"
+    },
+    {
+      "file": "cev_burnout.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        8,
+        22,
+        245,
+        241
+      ],
+      "sha256": "cd9be1b8da1e754723c5d6de32058f612b381ffd4b5b77b938b98d918c86b30f",
+      "exactPromptMetadata": "events-2/metadata/burnout.json"
+    },
+    {
+      "file": "cev_lawsuit.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        13,
+        13,
+        243,
+        243
+      ],
+      "sha256": "d4f26eb0ff4431bdbbbf6bca90c37e6b05807ccba665a1a530174c161eae3f7a",
+      "exactPromptMetadata": "events-2/metadata/lawsuit.json"
+    },
+    {
+      "file": "cev_poach.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        4,
+        53,
+        252,
+        222
+      ],
+      "sha256": "43da7c0eb08421df036869c3bcddafbf25952f61323dcd4cee2e9b439523a03a",
+      "exactPromptMetadata": "events-2/metadata/poach.json"
+    },
+    {
+      "file": "cev_rush.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        15,
+        24,
+        236,
+        237
+      ],
+      "sha256": "c5569c49ba5a666c392f131e2fcfa680046767ac62feb3775f5df0c0115b6b1c",
+      "exactPromptMetadata": "events-2/metadata/rush.json"
+    },
+    {
+      "file": "cev_sponsor.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        10,
+        29,
+        246,
+        232
+      ],
+      "sha256": "0ccf16a0804141c4ac5378dbf44b2bcb0c10e015e400628d072d40de6d05f723",
+      "exactPromptMetadata": "events-2/metadata/sponsor.json"
+    },
+    {
+      "file": "cev_gamble.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        24,
+        22,
+        226,
+        245
+      ],
+      "sha256": "f427077a684351ccfab9fe72c48d80daaf7b6e834a4864f56bd67763e8eafd4b",
+      "exactPromptMetadata": "events-2/metadata/gamble.json"
+    },
+    {
+      "file": "cev_takeover.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        6,
+        23,
+        250,
+        236
+      ],
+      "sha256": "23d11c11b87028b74f8da8e5fc679c29f589914892aa622f1556fc8b3504e8d8",
+      "exactPromptMetadata": "events-2/metadata/takeover.json"
+    },
+    {
+      "file": "cev_bankrupt.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        30,
+        13,
+        225,
+        247
+      ],
+      "sha256": "90b63433ea2bed387776df90c2114531502751404c9cab041ba5e64efb0d00e3",
+      "exactPromptMetadata": "events-2/metadata/bankrupt.json"
+    }
+  ],
+  "generation": "one built-in image_gen call per raster asset; genuine tool-generated alpha preserved; final resize through sips",
+  "studioTested": false
+}

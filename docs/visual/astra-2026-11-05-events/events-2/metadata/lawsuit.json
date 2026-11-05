@@ -1,0 +1,14 @@
+{
+  "file": "cev_lawsuit.png",
+  "folder": "events-2",
+  "id": "lawsuit",
+  "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: Chunky golden balance scales with a blue document folder at the base. A friendly business lawsuit symbol, no legal lettering. Every coin and document seal must use only a blank surface or a simple geometric star; no currency glyphs, letters or digits anywhere.",
+  "tool": "built-in image_gen",
+  "transparent_background": true,
+  "source": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-4aa9e94a-9a87-4fa0-a745-c7511cd2c9ec.png",
+  "final": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-events-v19/events-2/V19/cev_lawsuit.png",
+  "finalDimensions": [
+    256,
+    256
+  ]
+}
