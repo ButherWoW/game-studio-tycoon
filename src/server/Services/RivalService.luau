@@ -140,7 +140,11 @@ local function checkPasses(player: Player)
 	end
 	local d = data(profile)
 	local you = RivalService.studioValue(profile)
+	-- Обогнал нескольких сразу (накопил денег, старое сохранение) — награда за каждого,
+	-- но одно уведомление: о самом сильном из обогнанных, с общей суммой
 	local any = false
+	local best: Rivals.Rival? = nil
+	local total = 0
 	for _, rival in Rivals.list do
 		if not d.passed[rival.id] and you > Rivals.valueOf(rival, d.minutes) then
 			d.passed[rival.id] = true
@@ -148,19 +152,25 @@ local function checkPasses(player: Player)
 			local reward = incomePerMinute(player, profile) * Rivals.passRewardMinutes
 			if reward > 0 then
 				DataService.addCash(player, reward)
+				total += reward
 				local rewards = optional("RewardService")
 				if rewards and type(rewards.noteNonEarned) == "function" then
 					pcall(rewards.noteNonEarned, player, reward)
 				end
 			end
-			DepthRemotes.RivalNotice:FireClient(player, {
-				passed = { name = rival.name, icon = rival.icon, reward = reward },
-			})
+			if not best or rival.base > best.base then
+				best = rival
+			end
 			local analytics = optional("AnalyticsService")
 			if analytics and type(analytics.logDepth) == "function" then
 				pcall(analytics.logDepth, player, "rivalPassed", rival.id)
 			end
 		end
+	end
+	if best then
+		DepthRemotes.RivalNotice:FireClient(player, {
+			passed = { name = best.name, icon = best.icon, reward = total },
+		})
 	end
 	if any then
 		RivalService.pushState(player)
