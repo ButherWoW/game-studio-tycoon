@@ -9,6 +9,7 @@ local LiveOpsRemotes = require(ReplicatedStorage.Shared.LiveOpsRemotes)
 local Images = require(ReplicatedStorage.Shared.Config.Images)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local FeatureGate = require(script.Parent.FeatureGate)
 
 local BANNER_HEIGHT = 28
 local BANNER_WIDTH = 400
@@ -28,6 +29,10 @@ end
 
 local function showToast(stack: Frame, payload: any)
 	if type(payload) ~= "table" or type(payload.key) ~= "string" then
+		return
+	end
+	-- Сезон и гейм-джем (кнопка 🎫) ещё закрыты — их тосты новичку ни о чём
+	if not FeatureGate.isOpen("season") then
 		return
 	end
 	local old = stack:FindFirstChild("LiveOpsToast")
@@ -68,6 +73,8 @@ function LiveOpsBanner.start()
 	holder.Size = UDim2.fromOffset(BANNER_WIDTH, artHeight + BANNER_HEIGHT)
 	holder.Visible = false
 	holder.Parent = stack
+	-- Хакатон «Ночная смена» — из семьи событий дня: новичку с гаража (Config/Unlocks)
+	Ui.gate(holder, "dailyEvents")
 	if artId > 0 then
 		local art = Instance.new("ImageLabel")
 		art.Name = "Art"

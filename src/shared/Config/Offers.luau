@@ -79,7 +79,7 @@ local Offers = {
 
 	-- Стартовый набор: один раз на аккаунт, 24 ч с первого входа
 	starterPack = {
-		showAfterSeconds = 5 * 60, -- сессии; или сразу после покупки гаража
+		showAfterSeconds = 5 * 60, -- сессии, и только когда гараж куплен (онбординг, Config/Unlocks)
 		durationSeconds = 24 * 60 * 60,
 		incomeMinutes = 30, -- $ = доход студии за столько минут
 		minCash = 5_000,

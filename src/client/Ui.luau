@@ -7,6 +7,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
 
 local Images = require(ReplicatedStorage.Shared.Config.Images)
+local Unlocks = require(ReplicatedStorage.Shared.Config.Unlocks)
 
 local Ui = {}
 
@@ -623,6 +624,136 @@ end
 -- Пересчитать меню (кнопку показали/спрятали); задаётся при создании колонки
 local refitMenu: () -> () = function() end
 
+-- ===== Постепенное открытие систем (Config/Unlocks, контроллер FeatureGate) =====
+-- Закрытая система: её кнопка меню / плашка лежит в невидимой рамке LockedFeatures того же
+-- ScreenGui, а не просто Visible = false — контроллеры сами меняют Visible (банк с долгом,
+-- праздник во время ивента), и это не должно открывать закрытое. Рамка — прямо в ScreenGui,
+-- не в колонке меню / стеке плашек: их AutomaticSize и раскладку она не трогает, fitMenu
+-- считает только кнопки колонки. Пока FeatureGate не сказал «открыто», система закрыта:
+-- кнопки не мигают при входе
+local gateOpen: { [string]: boolean } = {}
+local gated: { [string]: { GuiObject } } = {}
+local gateHome: { [GuiObject]: Instance } = {}
+local lockers: { [Instance]: Frame } = {}
+local newBadges: { [GuiObject]: Instance } = {}
+-- Системы с 🆕 в этой сессии: кнопка, созданная позже Ui.markNew, тоже получит значок
+local newFeatures: { [string]: boolean } = {}
+
+local function locker(home: Instance): Frame
+	local parent: Instance = home:FindFirstAncestorWhichIsA("LayerCollector") or home
+	local existing = lockers[parent]
+	if existing and existing.Parent == parent then
+		return existing
+	end
+	local frame = Instance.new("Frame")
+	frame.Name = "LockedFeatures"
+	frame.BackgroundTransparency = 1
+	frame.Size = UDim2.fromOffset(0, 0)
+	frame.Position = UDim2.fromOffset(-10000, -10000) -- тач-подушки соседей её не видят
+	frame.Visible = false
+	frame.Parent = parent
+	lockers[parent] = frame
+	return frame
+end
+
+local function applyGate(object: GuiObject, open: boolean)
+	local home = gateHome[object]
+	if not home then
+		return
+	end
+	if open then
+		if object.Parent ~= home then
+			object.Parent = home
+		end
+	elseif object.Parent == home then
+		object.Parent = locker(home)
+	end
+end
+
+-- Прятать object (уже с родителем), пока система featureId закрыта. nil / система без ворот — ничего
+function Ui.gate(object: GuiObject, featureId: string?)
+	if not featureId or not Unlocks.features[featureId] or not object.Parent then
+		return
+	end
+	local list = gated[featureId]
+	if not list then
+		list = {}
+		gated[featureId] = list
+	end
+	table.insert(list, object)
+	gateHome[object] = object.Parent :: Instance
+	object.Destroying:Connect(function()
+		gateHome[object] = nil
+		newBadges[object] = nil
+		local index = table.find(list, object)
+		if index then
+			table.remove(list, index)
+		end
+	end)
+	applyGate(object, gateOpen[featureId] == true)
+	if newFeatures[featureId] then
+		Ui.markNew(featureId)
+	end
+end
+
+-- Открыта ли система для интерфейса (система без ворот — всегда)
+function Ui.gateIsOpen(featureId: string): boolean
+	return not Unlocks.features[featureId] or gateOpen[featureId] == true
+end
+
+function Ui.setGateOpen(featureId: string, open: boolean)
+	if gateOpen[featureId] == open then
+		return
+	end
+	gateOpen[featureId] = open
+	for _, object in gated[featureId] or {} do
+		applyGate(object, open)
+	end
+end
+
+local function clearNewBadge(object: GuiObject)
+	object:SetAttribute("NewSeen", true)
+	local badge = newBadges[object]
+	newBadges[object] = nil
+	if badge then
+		badge:Destroy()
+	end
+	local stroke = object:FindFirstChild("NewStroke")
+	if stroke then
+		stroke:Destroy()
+	end
+end
+
+-- Значок 🆕 и золотая обводка на кнопках меню системы, пока игрок на неё не нажмёт
+function Ui.markNew(featureId: string)
+	newFeatures[featureId] = true
+	for _, object in gated[featureId] or {} do
+		if not object:IsA("GuiButton") or newBadges[object] or object:GetAttribute("NewSeen") == true then
+			continue
+		end
+		local badge = Instance.new("TextLabel")
+		badge.Name = "NewBadge"
+		badge.BackgroundTransparency = 1
+		badge.Text = "🆕"
+		badge.TextScaled = true
+		badge.Font = Ui.bodyFont
+		badge.AnchorPoint = Vector2.new(0, 0)
+		-- Левый верхний угол: в правом на тач-экране тумблер авто-вида 🎥 (StudioCamera).
+		-- Кнопка с UIPadding (8 px по бокам, 6 сверху), отсюда смещение
+		badge.Position = UDim2.new(0, -12, 0, -10)
+		badge.Size = UDim2.fromOffset(22, 22)
+		badge.ZIndex = object.ZIndex + 2
+		badge.Parent = object
+		newBadges[object] = badge
+		local stroke = Instance.new("UIStroke")
+		stroke.Name = "NewStroke"
+		stroke.Thickness = 2
+		stroke.Color = Ui.colors.money
+		stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+		stroke.Parent = object
+	end
+end
+
 -- imageKey — ключ из Config/Images.menu: есть id картинки — вместо эмодзи показываем её
 function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: string?): TextButton
 	if not menuColumn then
@@ -688,7 +819,12 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 	-- 6 язык, 7 хиты, 8 воры, 9 праздничный ивент (видна только во время ивента), 10 вид студии,
 	-- 11 банк (с долгом), 12 домой (к своему участку), 13 студия (интерьер, декор, настроение),
 	-- 14 достижения, 15 студии игроков и рейтинги (TourWindow), 16 сезон и гейм-джем, 17 топ индустрии
-	local b = Ui.button(menuColumn :: Frame, icon, Ui.colors.panel, onClick)
+	local b: TextButton
+	-- Нажатие снимает значок 🆕 (Ui.markNew)
+	b = Ui.button(menuColumn :: Frame, icon, Ui.colors.panel, function()
+		clearNewBadge(b)
+		onClick()
+	end)
 	b.Name = "Slot" .. slot
 	b.LayoutOrder = slot
 	b.Size = UDim2.fromOffset(MENU_BUTTON, MENU_BUTTON)
@@ -704,6 +840,8 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 		image.Image = "rbxassetid://" .. imageId
 		image.Parent = b -- отступы даёт UIPadding кнопки
 	end
+	-- Система ещё закрыта для новичка (Config/Unlocks) — кнопка ждёт в LockedFeatures
+	Ui.gate(b, Unlocks.menuFeature(slot))
 	return b
 end
 

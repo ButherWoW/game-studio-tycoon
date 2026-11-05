@@ -355,6 +355,8 @@ function HolidayController.start()
 	padding.PaddingTop = UDim.new(0, 4)
 	padding.PaddingBottom = UDim.new(0, 4)
 	padding.Parent = banner
+	-- Новичку — с гаража, как и кнопка 🎉 (Config/Unlocks.holiday)
+	Ui.gate(banner, "holiday")
 
 	local menu = Ui.menuButton(MENU_SLOT, "🎉", function()
 		if gui then

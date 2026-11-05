@@ -17,6 +17,7 @@ local Topics = require(Shared.Config.Topics)
 local Images = require(Shared.Config.Images)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local FeatureGate = require(script.Parent.FeatureGate)
 local SoundController = require(script.Parent.SoundController)
 
 local BANNER_WIDTH = 400
@@ -205,6 +206,8 @@ function DailyEventBanner.start()
 	holder.Size = UDim2.fromOffset(BANNER_WIDTH, 0)
 	holder.AutomaticSize = Enum.AutomaticSize.Y
 	holder.Parent = stack
+	-- События дня и «Золотой час» новичку — только с гаража (Config/Unlocks.dailyEvents)
+	Ui.gate(holder, "dailyEvents")
 	local layout = Ui.list(holder, 4)
 	layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 
@@ -283,7 +286,9 @@ function DailyEventBanner.start()
 	end)
 
 	DailyEventRemotes.DailyEventToast.OnClientEvent:Connect(function(payload)
-		showToast(stack, payload)
+		if FeatureGate.isOpen("dailyEvents") then
+			showToast(stack, payload)
+		end
 	end)
 	DailyEventRemotes.DailyEventBoard.OnClientEvent:Connect(function(payload)
 		if type(payload) ~= "table" then
