@@ -1,0 +1,9 @@
+{
+  "sourceCommit": "48abb8b0e3b445aa013d9da5716553afd488ee36",
+  "shells": {
+    "GarageWalls": "astra-garage",
+    "Office": "astra-office",
+    "Floor": "astra-floor",
+    "Skyscraper": "astra-sky"
+  }
+}
