@@ -27,6 +27,8 @@ type ActiveJob = { id: string, startedAt: number }
 local StartParkService = {}
 -- Ставит VipService: украсить готовую вывеску игрока (модель StudioSign и доска с названием)
 StartParkService.decorateSign = nil :: ((Player, Model, BasePart) -> ())?
+-- Остальные украшения вывески (PremiumService: ⭐ перед названием) — после VIP, по порядку
+StartParkService.signDecorators = {} :: { (Player, Model, BasePart) -> () }
 local activeJobs: { [Player]: ActiveJob } = {}
 local lastRequest: { [Player]: number } = {}
 local lastNameRequest: { [Player]: number } = {}
@@ -551,9 +553,15 @@ local function applyStudioSigns(player: Player)
 			warn("[StartParkService] VIP sign failed:", err)
 		end
 	end
+	for _, extra in StartParkService.signDecorators do
+		local ok, err = pcall(extra, player, model, signBoard)
+		if not ok then
+			warn("[StartParkService] Sign decorator failed:", err)
+		end
+	end
 end
 
--- Перестроить вывеску (VipService: VIP-статус появился или пропал)
+-- Перестроить вывеску (VipService, PremiumService: статус появился или пропал)
 StartParkService.refreshSigns = applyStudioSigns
 
 local function refreshNaming(player: Player)

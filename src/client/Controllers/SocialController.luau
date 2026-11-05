@@ -1,6 +1,7 @@
 --!strict
 -- Статус и соцфичи на клиенте:
---   * чат-тег «[👑 VIP]» перед именем VIP-игроков (атрибут IsVip ставит VipService);
+--   * чат-тег «[👑 VIP]» перед именем VIP-игроков (атрибут IsVip ставит VipService)
+--     и ⭐ у Roblox Premium (атрибут IsPremium, PremiumService);
 --   * тосты подарков и награды за группу (SocialNotice от GiftService / SocialService).
 
 local Players = game:GetService("Players")
@@ -17,6 +18,7 @@ local Ui = require(script.Parent.Parent.Ui)
 
 local TOAST_SECONDS = 4
 local VIP_PREFIX = '<font color="#FFC93C">[👑 VIP]</font> '
+local PREMIUM_PREFIX = '<font color="#FFC93C">⭐</font> '
 
 local player = Players.LocalPlayer
 
@@ -126,6 +128,7 @@ local function onIncomingMessage(message: TextChatMessage): TextChatMessagePrope
 		return nil
 	end
 	local prefix = (if speaker:GetAttribute("IsVip") == true then VIP_PREFIX else "")
+		.. (if speaker:GetAttribute("IsPremium") == true then PREMIUM_PREFIX else "")
 		.. holdingPrefix(speaker)
 	if prefix == "" then
 		return nil

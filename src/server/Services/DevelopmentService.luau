@@ -768,7 +768,11 @@ local function release(player: Player, project: Project)
 	-- Налоговая проверка (TaxService, ×0.8) и бонус компании на бирже (StockService, +10%)
 	local taxMultiplier = hookNumber("TaxService", "revenueMultiplier", 1, player)
 	local stockMultiplier = hookNumber("StockService", "revenueMultiplier", 1, player)
-	revenue = math.floor(revenue * platformMultiplier * hypeMultiplier * taxMultiplier * stockMultiplier)
+	-- Roblox Premium: +10% (PremiumService, Config/Premium)
+	local premiumMultiplier = hookNumber("PremiumService", "revenueMultiplier", 1, player)
+	revenue = math.floor(
+		revenue * platformMultiplier * hypeMultiplier * taxMultiplier * stockMultiplier * premiumMultiplier
+	)
 	-- Совместная разработка (CoopService): доля гостя уходит ему, дальше считаем долю хозяина
 	local coopPartner: Player? = nil
 	local CoopService = optional("CoopService")

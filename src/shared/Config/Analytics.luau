@@ -94,6 +94,10 @@ local Analytics = {
 		-- Налоговая и биржа (TaxService, StockService): поле — этап, значение — сумма
 		tax = "Tax", -- billed / paid / fined
 		stock = "Stock", -- ipo / buy / sell / dividend / bankrupt
+		-- Сейф в парке (SafeService): поле — ok / wrong / slow / empty; бонус возвращения (ComebackService):
+		-- значение — дней не было, поле — shown / claimed
+		safe = "SafeAttempt",
+		comeback = "Comeback",
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -128,6 +132,8 @@ local Analytics = {
 		ReferralService = { transactionType = "TimedReward", sku = "referral" },
 		["StockService.sell"] = { transactionType = "Stock", sku = "sell" }, -- продажа акций
 		["StockService.dividends"] = { transactionType = "Stock", sku = "dividend" },
+		SafeService = { transactionType = "Reward", sku = "safe" }, -- приз сейфа в парке
+		ComebackService = { transactionType = "TimedReward", sku = "comeback" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },
