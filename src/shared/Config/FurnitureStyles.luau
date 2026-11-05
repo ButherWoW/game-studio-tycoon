@@ -54,7 +54,7 @@ FurnitureStyles.list = {
 		suffix = "_Neon",
 		emoji = "💜",
 		color = Color3.fromHex("7C4DFF"),
-		productId = 0, -- Dev 1 впишет ID из Creator Dashboard
+		productId = 3728447945, -- Dev 1 впишет ID из Creator Dashboard
 		robuxPrice = 149,
 	},
 } :: { Style }

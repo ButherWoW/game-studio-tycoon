@@ -28,7 +28,7 @@ local list: { Product } = {
 		description = "Текущая игра выходит сразу, без потери очков",
 		descriptionEn = "The current game is released right away, no points lost",
 		icon = "⏩",
-		productId = 0,
+		productId = 3728447988,
 		robuxPrice = 15,
 	},
 	{
@@ -39,7 +39,7 @@ local list: { Product } = {
 		description = "+1 к оценке следующего релиза",
 		descriptionEn = "+1 to the score of the next release",
 		icon = "🩹",
-		productId = 0,
+		productId = 3728447989,
 		robuxPrice = 25,
 	},
 	{
@@ -50,7 +50,7 @@ local list: { Product } = {
 		description = "×2 скорость разработки на 10 минут",
 		descriptionEn = "×2 development speed for 10 minutes",
 		icon = "☕",
-		productId = 0,
+		productId = 3728447993,
 		robuxPrice = 29,
 	},
 	{
@@ -61,7 +61,7 @@ local list: { Product } = {
 		description = "Деньги, которые студия заработала бы за 10 минут",
 		descriptionEn = "Cash your studio would earn in 10 minutes",
 		icon = "💵",
-		productId = 0,
+		productId = 3728447996,
 		robuxPrice = 49,
 		incomeMinutes = 10,
 	},
@@ -73,7 +73,7 @@ local list: { Product } = {
 		description = "Деньги, которые студия заработала бы за 30 минут",
 		descriptionEn = "Cash your studio would earn in 30 minutes",
 		icon = "💰",
-		productId = 0,
+		productId = 3728447999,
 		robuxPrice = 129,
 		incomeMinutes = 30,
 	},
@@ -85,7 +85,7 @@ local list: { Product } = {
 		description = "Деньги, которые студия заработала бы за 90 минут",
 		descriptionEn = "Cash your studio would earn in 90 minutes",
 		icon = "🏦",
-		productId = 0,
+		productId = 3728448002,
 		robuxPrice = 299,
 		incomeMinutes = 90,
 	},
@@ -97,29 +97,29 @@ export type OfferProduct = { productId: number, robuxPrice: number }
 
 local offers = {
 	-- ×2 к доходу только что вышедшей игры (окно релиза). Поздно/повторно — пакет income10
-	doubleRelease = { productId = 0, robuxPrice = 25 } :: OfferProduct,
+	doubleRelease = { productId = 3728448015, robuxPrice = 25 } :: OfferProduct,
 	-- Стартовый набор: $ за 30 мин дохода (мин. $5 000), 2 скина, 3 кофе, значок. Раз на аккаунт
-	starterPack = { productId = 0, robuxPrice = 79 } :: OfferProduct,
+	starterPack = { productId = 3728448017, robuxPrice = 79 } :: OfferProduct,
 }
 
 -- «Сделка дня» (−30%): цену продукта в Dashboard менять нельзя, поэтому у каждого товара пула
 -- Offers.dailyDeal своя скидочная копия. Ключ — id из пула; выдаёт то же, что оригинал
 local deals: { [string]: OfferProduct } = {
-	instantFinish = { productId = 0, robuxPrice = 10 },
-	patch = { productId = 0, robuxPrice = 17 },
-	coffee = { productId = 0, robuxPrice = 20 },
-	income10 = { productId = 0, robuxPrice = 34 },
-	income30 = { productId = 0, robuxPrice = 90 },
-	income90 = { productId = 0, robuxPrice = 209 },
-	poster_neonCity = { productId = 0, robuxPrice = 34 },
-	poster_crystalKingdom = { productId = 0, robuxPrice = 55 },
-	poster_mechTitan = { productId = 0, robuxPrice = 69 },
-	poster_galaxyLegends = { productId = 0, robuxPrice = 90 },
-	poster_goldenController = { productId = 0, robuxPrice = 104 },
-	skin_neon_streamer = { productId = 0, robuxPrice = 55 },
-	skin_cyber_dev = { productId = 0, robuxPrice = 69 },
-	skin_space_dev = { productId = 0, robuxPrice = 90 },
-	skin_wizard_dev = { productId = 0, robuxPrice = 104 },
+	instantFinish = { productId = 3728448020, robuxPrice = 10 },
+	patch = { productId = 3728448022, robuxPrice = 17 },
+	coffee = { productId = 3728448025, robuxPrice = 20 },
+	income10 = { productId = 3728448031, robuxPrice = 34 },
+	income30 = { productId = 3728448038, robuxPrice = 90 },
+	income90 = { productId = 3728448040, robuxPrice = 209 },
+	poster_neonCity = { productId = 3728448052, robuxPrice = 34 },
+	poster_crystalKingdom = { productId = 3728448055, robuxPrice = 55 },
+	poster_mechTitan = { productId = 3728448058, robuxPrice = 69 },
+	poster_galaxyLegends = { productId = 3728448061, robuxPrice = 90 },
+	poster_goldenController = { productId = 3728448065, robuxPrice = 104 },
+	skin_neon_streamer = { productId = 3728448066, robuxPrice = 55 },
+	skin_cyber_dev = { productId = 3728448069, robuxPrice = 69 },
+	skin_space_dev = { productId = 3728448070, robuxPrice = 90 },
+	skin_wizard_dev = { productId = 3728448090, robuxPrice = 104 },
 }
 
 return {
