@@ -181,8 +181,8 @@ end
 -- Сторона площадки: центр на расстоянии distance от центра участка, LookVector — к зданию,
 -- локальная X — вдоль стороны. Левая и правая — от задней стены до SIDE_FRONT, задняя — во всю ширину
 type Side = { cframe: CFrame, length: number }
-local function sides(plot: BasePart, distance: number): { Side }
-	local zMin, zMax = -distance, SIDE_FRONT
+local function sides(plot: BasePart, distance: number, rearInset: number?): { Side }
+	local zMin, zMax = -distance + (rearInset or 0), SIDE_FRONT
 	local sideLength = zMax - zMin
 	local zMid = (zMin + zMax) / 2
 	local result: { Side } = {}
@@ -211,7 +211,8 @@ local function buildScaffold(folder: Folder, plot: BasePart, stage: number)
 	local half = plot.Size.X / 2
 	local source = template("Construction_Scaffold")
 	local center = half + SCAFFOLD_IN + SCAFFOLD_DEPTH / 2
-	for _, side in sides(plot, center) do
+	local rearInset = if source then source:GetExtentsSize().Z / 2 + 0.1 else 0
+	for _, side in sides(plot, center, rearInset) do
 		if source then
 			-- Секции Астры: ширина и высота — по самой модели, лицевая сторона (−Z) к зданию
 			local size = source:GetExtentsSize()
@@ -269,7 +270,8 @@ local function buildFence(folder: Folder, plot: BasePart)
 	local model = Instance.new("Model")
 	model.Name = "Fence"
 	local source = template("Construction_Fence")
-	for _, side in sides(plot, plot.Size.X / 2 + FENCE) do
+	local rearInset = if source then source:GetExtentsSize().Z / 2 + 0.05 else 0
+	for _, side in sides(plot, plot.Size.X / 2 + FENCE, rearInset) do
 		if source then
 			local size = source:GetExtentsSize()
 			local count = math.max(1, math.floor(side.length / math.max(size.X, 1) + 0.5))
