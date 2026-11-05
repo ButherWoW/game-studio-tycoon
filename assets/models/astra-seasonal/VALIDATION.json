@@ -1,0 +1,66 @@
+{
+  "studioTested": false,
+  "models": {
+    "Pumpkin": {
+      "parts": 20,
+      "dimensionsXYZ": [
+        2.64,
+        2.5244,
+        2.6051
+      ],
+      "baseY": 0,
+      "pointLights": 1,
+      "checks": "PASS"
+    },
+    "HalloweenSign": {
+      "parts": 18,
+      "dimensionsXYZ": [
+        2.8,
+        3.95,
+        0.75
+      ],
+      "baseY": 0,
+      "pointLights": 1,
+      "checks": "PASS"
+    },
+    "HolidayTree": {
+      "parts": 75,
+      "dimensionsXYZ": [
+        5.61,
+        10.745,
+        5.61
+      ],
+      "baseY": 0,
+      "pointLights": 1,
+      "checks": "PASS"
+    },
+    "OfficeBuilding": {
+      "parts": 146,
+      "dimensionsXYZ": [
+        60.0,
+        39.6,
+        60.0
+      ],
+      "baseY": 0,
+      "pointLights": 0,
+      "checks": "PASS"
+    }
+  },
+  "runtimeScaling": {
+    "Pumpkin_atPlots": 1.3,
+    "HolidayTree_atSpawn": 1.5
+  },
+  "buildingUse": "preview/move exterior only, not gameplay floor shells",
+  "buildingFloorPitch": 13.2,
+  "checks": [
+    "exact technical names",
+    "native class allowlist",
+    "script/mesh/texture-free",
+    "source Part dimension bounds",
+    "baseY0",
+    "one shadowless light on each seasonal prop",
+    "no lights on exterior building",
+    "three building storeys;39.6height",
+    "Rojo binary builds"
+  ]
+}

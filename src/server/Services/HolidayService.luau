@@ -16,6 +16,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
+local ServerStorage = game:GetService("ServerStorage")
 
 local Holidays = require(ReplicatedStorage.Shared.Config.Holidays)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
@@ -365,8 +366,18 @@ local function ghost(model: Model)
 	end
 end
 
+-- Модель Астры из ServerStorage.Upgrades (импорт в Studio), иначе запасная из ModelFactory
+local function buildModel(name: string): Model?
+	local upgrades = ServerStorage:FindFirstChild("Upgrades")
+	local template = if upgrades then upgrades:FindFirstChild(name) else nil
+	if template and template:IsA("Model") then
+		return template:Clone()
+	end
+	return ModelFactory.build(name)
+end
+
 local function placeModel(name: string, cframe: CFrame, parent: Instance, scale: number?): Model?
-	local model = ModelFactory.build(name)
+	local model = buildModel(name)
 	if not model then
 		return nil
 	end
