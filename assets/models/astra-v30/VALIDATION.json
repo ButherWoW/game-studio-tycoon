@@ -1,0 +1,9 @@
+{
+  "models": 3,
+  "icons": 6,
+  "modelsReport": "models-pack/INDEPENDENT_VALIDATION.json",
+  "placementReport": "models-pack/PLACEMENT_VALIDATION.json",
+  "artReport": "art-pack/VALIDATION.json",
+  "visualReview": "PASS actualgeometry and icons reviewed",
+  "runtimeTested": false
+}

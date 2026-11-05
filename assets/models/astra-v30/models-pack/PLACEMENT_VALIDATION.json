@@ -1,0 +1,96 @@
+{
+  "scope": "Actual local floor-relative coordinates; equipmentY0.5 retained as configured, no code changes",
+  "configSHA256": "7009548dc984fe892e906c21b5bb3c95359e0b18f7aab89f2b3c09fd38d085a1",
+  "stage4Furniture": 13,
+  "decorSlots4": [
+    "plant",
+    "rug",
+    "pendantLamp",
+    "wallBench",
+    "beanBags",
+    "bookshelf",
+    "sofa",
+    "coffeeTable",
+    "miniFridge",
+    "neonSign",
+    "aquarium",
+    "arcade"
+  ],
+  "consoleDisplayPosition": [
+    -13.0,
+    0.5,
+    26.0
+  ],
+  "consoleDisplayRotation": "0",
+  "equipment": {
+    "Equip_ChipLab": {
+      "approach3Conflicts": [],
+      "worldBounds": [
+        [
+          8.0,
+          0.5,
+          23.5
+        ],
+        [
+          14.0,
+          4.75,
+          27.5
+        ]
+      ],
+      "pairChecks": 51184,
+      "positiveVolumeIntersections": [],
+      "status": "PASS"
+    },
+    "Equip_DesignStation": {
+      "approach3Conflicts": [],
+      "worldBounds": [
+        [
+          15.0,
+          0.5,
+          23.5
+        ],
+        [
+          21.0,
+          4.7,
+          27.5
+        ]
+      ],
+      "pairChecks": 50400,
+      "positiveVolumeIntersections": [],
+      "status": "PASS"
+    },
+    "Equip_TestBench": {
+      "approach3Conflicts": [],
+      "worldBounds": [
+        [
+          23.5,
+          0.5,
+          7.0
+        ],
+        [
+          27.5,
+          4.59,
+          13.0
+        ]
+      ],
+      "pairChecks": 72119,
+      "positiveVolumeIntersections": [],
+      "status": "PASS"
+    }
+  },
+  "runtimeTested": false,
+  "limitation": "Does not claim liveNPCpaths or furniture skin variants; geometry check includes currentclassic source models and conservative lift/button/plant reserves",
+  "status": "PASS",
+  "floorAlignmentReview": {
+    "plotThickness": 1,
+    "equipmentConfigY": 0.5,
+    "floorSurfaceOffsetFromPlotCenter": 0.5,
+    "equipmentBaseMatchesFloor": true,
+    "supportSlabTopBelowFloor": 0.01,
+    "sources": [
+      "WorldService.PLOT_THICKNESS",
+      "OfficeFloors.at/buildSlab",
+      "ConsoleService.floorFrame"
+    ]
+  }
+}

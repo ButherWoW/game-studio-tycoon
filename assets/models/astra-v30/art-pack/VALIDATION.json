@@ -1,0 +1,85 @@
+{
+  "expected": 6,
+  "ready": 6,
+  "assets": [
+    {
+      "file": "cstage_cpu.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "73d8e9ad3bdee6036b28842a6c2090138b3a9c44f7fdd5e55983cbf453b14758",
+      "visualReview": "PASS:128/40px, transparent, no text/brands; our console identity retained"
+    },
+    {
+      "file": "cstage_case.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "2a5f47b70a0c65972b68c9d74f3a28a82a71b68d42257659b9e839cee4448391",
+      "visualReview": "PASS:128/40px, transparent, no text/brands; our console identity retained"
+    },
+    {
+      "file": "cstage_sound.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "3cdbadf9d762885438ff0f366529fd5b844e2d88d684e8a2e85407ed985185f2",
+      "visualReview": "PASS:128/40px, transparent, no text/brands; our console identity retained"
+    },
+    {
+      "file": "cstage_prototype.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "ee5ee51bd2338006965697e6266ab9855cc3bc0a1d1abd588fde6fabd06c7003",
+      "visualReview": "PASS:128/40px, transparent, no text/brands; our console identity retained"
+    },
+    {
+      "file": "cstage_testing.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "42e76615b4f5ec8e7abcb1e92cdfb8af5fe6a9d8fd49cef92917e8b04ba68f30",
+      "visualReview": "PASS:128/40px, transparent, no text/brands; our console identity retained"
+    },
+    {
+      "file": "cstage_launch.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "b5069e7c2f3b65aa7b4a6ab1749e336bc45a600ae9cd452ab199968f7e40b667",
+      "visualReview": "PASS:128/40px, transparent, no text/brands; our console identity retained"
+    }
+  ],
+  "runtimeTested": false
+}
