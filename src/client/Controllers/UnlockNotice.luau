@@ -51,12 +51,15 @@ local function showNext()
 	end)
 end
 
+-- Общая очередь тостов открытия: её же берёт FeatureGate («🆕 Открыто: …»), чтобы тосты
+-- жанров и систем не ложились друг на друга
 local function toast(text: string)
 	table.insert(queue, text)
 	if not showing then
 		showNext()
 	end
 end
+UnlockNotice.toast = toast
 
 -- Закрытые жанры/темы с условиями, которые уже выполнены: "genre/rpg" -> true
 local function readySet(data: any): { [string]: boolean }

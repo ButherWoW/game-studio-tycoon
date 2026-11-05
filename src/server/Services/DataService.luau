@@ -90,6 +90,9 @@ export type Profile = {
 	},
 	-- Последняя выпущенная игра (для рекламных щитов, BillboardService); имя уже отфильтровано
 	lastGame: { name: string, genreId: string, score: number }?,
+	-- Постепенное открытие систем (FeatureUnlockService, Config/Unlocks): какие системы игрок уже
+	-- видел открытыми (больше не прячутся) и разметил ли сервер старое сохранение (init)
+	features: { seen: { [string]: boolean }, init: boolean },
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
@@ -183,6 +186,7 @@ local function defaultProfile(): Profile
 		rebirthPerks = { levels = {}, respecUsed = false },
 		titles = { owned = {}, selected = nil },
 		gotw = defaultGotw(),
+		features = { seen = {}, init = false },
 		lastGame = nil,
 		processedReceipts = {},
 		receiptLog = {},

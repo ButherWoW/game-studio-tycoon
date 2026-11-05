@@ -3,7 +3,7 @@
 --   • этаж: стоит у лифта рядом с 🔒 этажом, игр хватает, а денег нет — пакет дохода под разницу;
 --   • забастовка: не хватает на зарплату — пакет, который её покрывает (первую забастовку
 --     объясняет StrikeTip, в нём та же кнопка);
---   • стартовый набор: один раз через showAfterSeconds сессии или после покупки гаража.
+--   • стартовый набор: один раз после покупки гаража, не раньше showAfterSeconds сессии.
 -- Окна в кулдауне и лимите сессии (OfferClient.canPopup). Выдаёт купленное сервер.
 
 local Players = game:GetService("Players")
@@ -107,8 +107,10 @@ local function checkStarter()
 	if state.starterShown or not OfferClient.starterActive() then
 		return
 	end
-	local ready = OfferClient.sessionSeconds() >= Offers.starterPack.showAfterSeconds
-		or player:GetAttribute("OwnsGarage") == true
+	-- Онбординг: только после покупки гаража (в парке — ни одного предложения, canPopup),
+	-- не раньше showAfterSeconds сессии, после туториала и окон входа (PopupQueue)
+	local ready = player:GetAttribute("OwnsGarage") == true
+		and OfferClient.sessionSeconds() >= Offers.starterPack.showAfterSeconds
 	if ready and OfferClient.canPopup("starterPack") then
 		state.starterShown = true -- сервер запомнит по событию «shown»
 		OfferClient.showStarter()

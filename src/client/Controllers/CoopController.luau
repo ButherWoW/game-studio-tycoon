@@ -16,6 +16,7 @@ local CoopRemotes = require(Shared.CoopRemotes)
 local ClientState = require(script.Parent.Parent.ClientState)
 local DevState = require(script.Parent.Parent.DevState)
 local Ui = require(script.Parent.Parent.Ui)
+local FeatureGate = require(script.Parent.FeatureGate)
 
 local TOAST_SECONDS = 4
 local BANNER_ORDER = 45 -- место плашки в общем стеке
@@ -237,7 +238,8 @@ local function refresh()
 		else
 			b.Text = ClientState.t("coop_invite_button")
 			b.BackgroundColor3 = Ui.colors.good
-			b.Visible = ClientState.atPc() and studioProject() ~= nil
+			-- Позвать самому — с офиса (Config/Unlocks.coop); «Выйти» в совместной видна всегда
+			b.Visible = ClientState.atPc() and studioProject() ~= nil and FeatureGate.isOpen("coop")
 		end
 	end
 	local label = banner
@@ -416,6 +418,7 @@ function CoopController.start()
 		end
 	end)
 	ClientState.langChanged:Connect(refresh)
+	FeatureGate.changed:Connect(refresh)
 	refresh()
 end
 
