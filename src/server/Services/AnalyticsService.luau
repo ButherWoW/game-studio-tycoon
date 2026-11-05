@@ -341,6 +341,11 @@ local function checkCustom(player: Player, profile: Profile, state: PlayerState)
 					label = product.id
 				end
 			end
+			for _, product in Products.research do
+				if product.productId == productId then
+					label = product.id
+				end
+			end
 			for _, campaign in AdCampaigns do
 				if campaign.productId == productId then
 					label = "ad_" .. campaign.id
@@ -520,6 +525,11 @@ local function classifySpend(player: Player, amount: number, module: string?, be
 	elseif module == "FurnitureStyleService" then
 		local furniture = if type(p.furniture) == "table" then p.furniture.owned else nil
 		kind, sku = sinks.furnitureStyle, newKey(before.furniture, furniture) or "style"
+	elseif module == "ResearchService" then
+		-- Открытие жанра/темы за $ идёт таймером: жанра в профиле ещё нет, берём из лаборатории
+		local active = if type(p.research) == "table" then p.research.active else nil
+		kind, sku =
+			sinks.content, if type(active) == "table" then active.kind .. "_" .. active.id else "research"
 	elseif p.ownsGarage == true and not before.ownsGarage then
 		kind, sku = sinks.move, "garage"
 	elseif profile.studioLevel > before.studioLevel then

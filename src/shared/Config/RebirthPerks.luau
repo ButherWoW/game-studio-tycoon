@@ -22,7 +22,9 @@
 --   * Пассив: офлайн-доход +10% за уровень (до +50% к Offline.rate 0.3 → 0.45 — всё ещё меньше
 --     половины обычного дохода) и +1 место на полке хитов на 3-м и 5-м уровне. Полка не больше
 --     HitCartridges.maxSlots (10 мест на модели): на небоскрёбе бонус уже упирается в потолок.
---   * Лаборатория: исследования дешевле на 5% за уровень (до −25%), цена не меньше 1 ОИ.
+--   * Лаборатория: исследования дешевле на 5% за уровень (до −25%), цена не меньше 1 ОИ,
+--     и короче на 6% за уровень (до −30%: 75-минутное «Издательство» — ~53 мин), но не короче
+--     Research.TIMING.minSeconds. Действует и на открытие жанров/тем за $ (та же лаборатория).
 -- tools/balance_sim.py --rebirth2 считает второй забег с 1 звездой (перебор веток): 1 уровень
 -- даёт 0–2% времени до 2-го Rebirth, лучший — «Пассив» (docs/BALANCE.md, релизный проход 05.11).
 
@@ -36,6 +38,7 @@ export type Effects = {
 	offline: number, -- доля прибавки к офлайн-доходу: 0.5 = +50%
 	hitSlots: number, -- дополнительных мест на полке хитов
 	researchDiscount: number, -- доля скидки на исследования: 0.25 = −25%
+	researchTime: number, -- доля сокращения времени исследований: 0.3 = на 30% быстрее
 }
 
 export type Branch = {
@@ -110,18 +113,19 @@ local branches: { Branch } = {
 		icon = "🔬",
 		costs = COSTS,
 		levels = {
-			{ researchDiscount = 0.05 },
-			{ researchDiscount = 0.1 },
-			{ researchDiscount = 0.15 },
-			{ researchDiscount = 0.2 },
-			{ researchDiscount = 0.25 },
+			{ researchDiscount = 0.05, researchTime = 0.06 },
+			{ researchDiscount = 0.1, researchTime = 0.12 },
+			{ researchDiscount = 0.15, researchTime = 0.18 },
+			{ researchDiscount = 0.2, researchTime = 0.24 },
+			{ researchDiscount = 0.25, researchTime = 0.3 },
 		},
 	},
 }
 RebirthPerks.branches = branches
 
 -- Порядок эффектов в описаниях (ключи rperk_eff_<id>)
-RebirthPerks.effectOrder = { "devTime", "expenses", "startCash", "offline", "hitSlots", "researchDiscount" }
+RebirthPerks.effectOrder =
+	{ "devTime", "expenses", "startCash", "offline", "hitSlots", "researchDiscount", "researchTime" }
 
 local byId: { [string]: Branch } = {}
 for _, branch in branches do
@@ -170,7 +174,15 @@ function RebirthPerks.nextCost(levels: any, branchId: string): number?
 end
 
 local function neutral(): Effects
-	return { devTime = 0, expenses = 0, startCash = 0, offline = 0, hitSlots = 0, researchDiscount = 0 }
+	return {
+		devTime = 0,
+		expenses = 0,
+		startCash = 0,
+		offline = 0,
+		hitSlots = 0,
+		researchDiscount = 0,
+		researchTime = 0,
+	}
 end
 
 -- Эффекты одного уровня ветки (0 — нейтральные)
@@ -203,6 +215,7 @@ function RebirthPerks.effects(levels: any): Effects
 	result.expenses = math.clamp(result.expenses, 0, 0.5)
 	result.offline = math.clamp(result.offline, 0, 1)
 	result.researchDiscount = math.clamp(result.researchDiscount, 0, 0.5)
+	result.researchTime = math.clamp(result.researchTime, 0, 0.5)
 	result.hitSlots = math.max(math.floor(result.hitSlots), 0)
 	result.startCash = math.max(result.startCash, 0)
 	return result

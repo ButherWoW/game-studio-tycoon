@@ -101,6 +101,9 @@ local Analytics = {
 		-- значение — дней не было, поле — shown / claimed
 		safe = "SafeAttempt",
 		comeback = "Comeback",
+		-- Лаборатория (ResearchService, Config/Research.TIMING): поле — "этап_вид_id"
+		-- (start/finish/cancel/rebirth; вид node/genre/topic) или "skip_<товар>_вид_id" / "skip_<товар>_credit"
+		research = "Research",
 	},
 
 	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
@@ -137,6 +140,8 @@ local Analytics = {
 		["StockService.dividends"] = { transactionType = "Stock", sku = "dividend" },
 		SafeService = { transactionType = "Reward", sku = "safe" }, -- приз сейфа в парке
 		ComebackService = { transactionType = "TimedReward", sku = "comeback" },
+		-- Отмена открытия жанра/темы за $ в лаборатории: возврат цены
+		ResearchService = { transactionType = "Refund", sku = "researchCancel" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },

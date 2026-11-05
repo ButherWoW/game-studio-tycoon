@@ -9,7 +9,9 @@ local FOLDER_NAME = "ResearchRemotes"
 local NAMES = {
 	"BuyResearch", -- клиент -> сервер: nodeId
 	"RequestResearch", -- клиент -> сервер: прислать текущее состояние
-	"ResearchChanged", -- сервер -> клиент: { points, owned }
+	"ResearchChanged", -- сервер -> клиент: { points, owned, discount, active, credit… }
+	"CancelResearch", -- клиент -> сервер: отменить активное исследование (возврат ОИ/$)
+	"ResearchFinished", -- сервер -> клиент: { kind, id, offline } — тост «Исследование готово»
 }
 
 local folder: Folder
