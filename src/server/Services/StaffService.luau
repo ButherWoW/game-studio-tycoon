@@ -97,6 +97,24 @@ local function optionalService(name: string): any
 	return nil
 end
 
+-- «Охота за талантами» (DailyEventService): «звезда» найма и её цена со скидкой; nil — события нет
+local function talentStar(player: Player): (string?, number?)
+	local DailyEventService = optionalService("DailyEventService")
+	if not DailyEventService then
+		return nil, nil
+	end
+	local ok, id, cost = pcall(DailyEventService.talentStar, player)
+	if ok and type(id) == "string" and type(cost) == "number" and cost >= 0 then
+		return id, cost
+	end
+	return nil, nil
+end
+
+local function hireCost(player: Player, employee: Employees.Employee): number
+	local starId, cost = talentStar(player)
+	return if starId == employee.id and cost then math.min(cost, employee.cost) else employee.cost
+end
+
 local function isInteger(value: any, min: number, max: number): boolean
 	return type(value) == "number" and value == value and value % 1 == 0 and value >= min and value <= max
 end
@@ -772,12 +790,15 @@ local function sendStaff(player: Player)
 		end
 	end
 	local info = getInfo(profile)
+	local starId, starCost = talentStar(player)
 	StaffRemotes.StaffChanged:FireClient(player, staff, {
 		info = info,
 		mentoring = getMentoring(profile, info),
 		unlocked = unlocked,
 		now = os.time(),
 		raises = raises,
+		-- «Звезда» события дня: id и цена со скидкой (окно «Команда»)
+		star = if starId then { id = starId, cost = starCost } else nil,
 	})
 end
 
@@ -1316,7 +1337,7 @@ local function onHire(player: Player, employeeId: any)
 	if not hasSeat and not (employee.legendary and anyDesk) then
 		return
 	end
-	if not DataService.trySpend(player, employee.cost) then
+	if not DataService.trySpend(player, hireCost(player, employee)) then
 		return
 	end
 	local before = StaffService.power(player)

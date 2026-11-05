@@ -31,6 +31,13 @@ local Debug = {
 	consoleForceUnlock = false,
 	consoleStageGames = nil :: number?,
 	streamerSpeed = 1,
+	-- События дня (Config/DailyEvents, только Studio): dailyEventForce — id события (например
+	-- "bugHunt"), без dailyEventShort оно идёт всё время; dailyEventShort — короткий цикл
+	-- (событие каждые 6 мин на 3 мин, анонс за 30 с, золотой час каждые 10 мин на 2 мин);
+	-- dailyGoldenForce — золотой час идёт всё время. nil/false — как на живых серверах
+	dailyEventForce = nil :: string?,
+	dailyEventShort = false,
+	dailyGoldenForce = false,
 }
 
 return Debug

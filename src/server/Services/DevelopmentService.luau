@@ -703,6 +703,9 @@ local function release(player: Player, project: Project)
 			score += bonus
 		end
 	end
+	-- «Критики в городе» (DailyEventService): жанр дня +1
+	local criticsBonus = hookNumber("DailyEventService", "reviewBonus", 0, project.genreId)
+	score += criticsBonus
 	-- Продукт «Патч»: +1 к оценке, заряд тратится только если есть куда расти
 	local ShopService = optional("ShopService")
 	if ShopService and score < 10 then
@@ -744,6 +747,8 @@ local function release(player: Player, project: Project)
 			holidayMultiplier = value
 		end
 	end
+	-- «Золотой час» (DailyEventService): ×2, но вместе с праздником не выше общего лимита
+	holidayMultiplier *= hookNumber("DailyEventService", "revenueMultiplier", 1, holidayMultiplier)
 	-- События компании: стример, утечка кода, иск, катастрофы (1 — ничего не действует)
 	local companyMultiplier = tonumber(companyEvent("revenueMultiplier", 1, player)) or 1
 	-- Франшиза (хайп/усталость) и хит конкурента в жанре
@@ -879,6 +884,13 @@ local function release(player: Player, project: Project)
 		genreId = project.genreId,
 	})
 	hook("StreamerService", "onGameReleased", player, { score = score })
+	-- События дня: заявка в блиц-джем (жанр и тема часа)
+	hook("DailyEventService", "onGameReleased", player, {
+		genreId = project.genreId,
+		topicId = project.topicId,
+		score = score,
+		revenue = revenue,
+	})
 	-- Предложение «×2 к доходу этой игры» (OfferService запоминает релиз на минуту)
 	hook("OfferService", "onGameReleased", player, {
 		projectId = project.id,
@@ -905,6 +917,8 @@ local function release(player: Player, project: Project)
 		quickBonus = project.quickBonus,
 		-- Настроение команды в оценке (уже внутри score); 0 — строку в окне не показываем
 		moodBonus = moodReviewBonus(player),
+		-- «Критики в городе»: реплики критиков восторженнее (ReleaseWindow)
+		criticsHype = criticsBonus > 0,
 		-- Команда в оценке (StaffService.reviewBonus: навыки, перки, легендарные; уже внутри score)
 		teamBonus = StaffService.reviewBonus(player),
 		projectId = project.id,
@@ -1192,6 +1206,7 @@ local function onPreviewRequest(player: Player, request: any)
 			score += bonus
 		end
 	end
+	score += hookNumber("DailyEventService", "reviewBonus", 0, genreId)
 	score = math.clamp(score, 1, 10)
 	PaidRemotes.ReviewPreview:FireClient(player, {
 		genreId = genreId,
@@ -1234,8 +1249,10 @@ local function tickProject(player: Player, project: Project, atPc: boolean)
 		return
 	end
 	local rate = DevelopmentService.pointsRate(player, project.focus, project.tempo)
-	-- Ночь хакатона (HackathonService): время идёт ×2, очков за игру столько же
-	local step = TICK * hackathonSpeed()
+	-- Ночь хакатона (HackathonService): время идёт ×2, очков за игру столько же;
+	-- «Кофе-раш» (DailyEventService) — ещё +25%, вместе не выше DailyEvents.maxDevSpeed
+	local hackathon = hackathonSpeed()
+	local step = TICK * hookNumber("DailyEventService", "devSpeed", hackathon, hackathon)
 	project.points.gameplay += rate.gameplay * step
 	project.points.graphics += rate.graphics * step
 	project.points.sound += rate.sound * step

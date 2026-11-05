@@ -258,7 +258,9 @@ local function show(info: any)
 			end
 			card.score.Text = tostring(card.value)
 			card.score.TextColor3 = Ui.scoreColor(card.value)
-			card.quote.Text = criticLine(card.critic, card.value, genreName, topicName)
+			-- «Критики в городе» (события дня): реплика на ступень восторженнее оценки
+			local mood = if info.criticsHype == true then math.min(card.value + 2, 10) else card.value
+			card.quote.Text = criticLine(card.critic, mood, genreName, topicName)
 		end
 		task.wait(REVEAL_DELAY)
 		if gui ~= screen then

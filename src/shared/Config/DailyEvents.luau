@@ -1,0 +1,329 @@
+--!strict
+-- «События дня» (роадмап 7.15): каждый час в hh:30 UTC одно хорошее событие на 15 минут
+-- (выставка подводит итоги на границе часа — не пересекаемся). Какое событие — детерминированно
+-- от номера часа (os.time() // 3600: час + день недели), поэтому на всех серверах одно и то же
+-- и его можно заранее анонсировать в группе и Discord. Плюс раз в день «Золотой час»
+-- (доход ×2 у всех на 20 минут) и «Ночная смена» — это хакатон (Config/Hackathon), он только
+-- показывается в общем расписании.
+-- Сервер — DailyEventService (атрибуты ReplicatedStorage DailyEvent*, DailyGolden*), клиент —
+-- DailyEventBanner. Плохих событий здесь нет: они в событиях компании (Config/CompanyEvents).
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local Debug = require(script.Parent.Debug)
+local Genres = require(script.Parent.Genres)
+
+export type EventId =
+	"coffeeRush"
+	| "investors"
+	| "bugHunt"
+	| "cartridgeRush"
+	| "blitzJam"
+	| "critics"
+	| "pizza"
+	| "talentHunt"
+	| "flashSale"
+	| "mascotParade"
+
+export type Event = { id: EventId, icon: string, weight: number }
+
+-- Слот расписания: событие, окно и параметры (жанр критиков, тема блиц-джема)
+export type Slot = {
+	index: number, -- номер часа (os.time() // slotSeconds)
+	id: EventId,
+	startsAt: number,
+	endsAt: number,
+	announceSeconds: number,
+	genreId: string?, -- critics, blitzJam
+	topicId: string?, -- blitzJam
+}
+
+export type Window = { startsAt: number, endsAt: number, announceSeconds: number }
+
+local DailyEvents = {
+	slotSeconds = 60 * 60,
+	offsetSeconds = 30 * 60, -- старт в hh:30 UTC
+	durationSeconds = 15 * 60,
+	announceSeconds = 2 * 60, -- баннер «Через 2 мин» и пинг
+	-- Общие лимиты: событие не поднимает множитель выше этого вместе с праздником / хакатоном.
+	-- Если праздник уже выше лимита — событие ничего не добавляет (но и не отнимает)
+	maxRevenueMultiplier = 2,
+	maxDevSpeed = 2.5, -- хакатон ×2 × кофе-раш ×1.25
+
+	-- Золотой час: раз в день, вечер EU и день US (19:00 UTC = 20:00 Берлин, 14:00 Нью-Йорк)
+	golden = {
+		hourUtc = 19,
+		minuteUtc = 0,
+		durationSeconds = 20 * 60,
+		announceSeconds = 2 * 60,
+		revenueMultiplier = 2,
+	},
+
+	-- Список событий. weight — относительная частота (1 — обычная)
+	events = {
+		{ id = "coffeeRush", icon = "☕", weight = 1 },
+		{ id = "investors", icon = "📈", weight = 1 },
+		{ id = "bugHunt", icon = "🐞", weight = 1 },
+		{ id = "cartridgeRush", icon = "💾", weight = 1 },
+		{ id = "blitzJam", icon = "⚡", weight = 1 },
+		{ id = "critics", icon = "🎤", weight = 1 },
+		{ id = "pizza", icon = "🍕", weight = 1 },
+		{ id = "talentHunt", icon = "🔍", weight = 1 },
+		{ id = "flashSale", icon = "🏷️", weight = 1 },
+		{ id = "mascotParade", icon = "🐾", weight = 1 },
+	} :: { Event },
+
+	-- Эффекты событий
+	coffeeRush = {
+		devSpeed = 1.25, -- разработка +25% быстрее (вместе с хакатоном — не выше maxDevSpeed)
+		-- Кофе за Robux цену в Dashboard менять нельзя: магазин продаёт скидочную копию
+		-- «Сделки дня» (Products.deals[dealKey], выдаёт OfferService как обычный кофе)
+		dealKey = "coffee",
+	},
+	investors = {
+		grants = 10, -- первые N игроков сервера
+		incomeMinutes = 10, -- грант: N минут дохода (RewardService)
+		reachDistance = 14, -- ProximityPrompt 10 + запас на лаги
+		-- Модель ServerStorage.DailyEvents.Investor (Астра); нет — заглушка из деталей
+		modelFolder = "DailyEvents",
+		modelName = "Investor",
+	},
+	bugHunt = {
+		count = 30, -- столько жуков одновременно (пойманного сменяет новый)
+		respawnSeconds = 4,
+		incomeMinutes = 0.5, -- за жука
+		catchDistance = 40, -- ClickDetector 32 + запас на лаги
+		catchCooldown = 0.25, -- секунд между поимками одного игрока
+		topBonusMinutes = { 10, 6, 3 }, -- лучшим трём ловцам в конце
+		parkRadiusMin = 12,
+		parkRadiusMax = 100,
+		plotShare = 0.4, -- доля жуков перед участками (остальные — в парке)
+		crawlSeconds = 2,
+		crawlStep = 3,
+		-- Маскот ServerStorage.Mascots.Mascot_bug_beetle; нет — заглушка из деталей
+		mascotId = "bug_beetle",
+		modelScale = 0.6,
+	},
+	cartridgeRush = {
+		cartridgeMultiplier = 3, -- точек картриджей в парке в 3 раза больше
+		pawnMultiplier = 2, -- ломбард платит ×2
+	},
+	blitzJam = {
+		-- Только стартовые жанры и темы: участвовать может каждый
+		genres = { "action", "adventure", "casual" },
+		topics = { "space", "fantasy", "zombies" },
+		trophy = "blitzJam", -- RewardService: rewards.trophies (полка)
+		winnerIncomeMinutes = 20,
+		title = "devent_title_blitz", -- титул на день (текст)
+		titleSeconds = 24 * 60 * 60,
+		boardSize = 3,
+	},
+	critics = {
+		reviewBonus = 1, -- игры жанра дня +1 к оценке
+	},
+	pizza = {
+		moodKey = "devent_mood_pizza", -- строка в разборе настроения
+	},
+	talentHunt = {
+		discount = 0.5, -- «звезда» найма за полцены
+	},
+	flashSale = {
+		cashDiscount = 0.3, -- декор и стили за $ дешевле на 30%
+	},
+	mascotParade = {
+		bonusMultiplier = 2, -- бонус маскота ×2 (DevelopmentService всё равно режет до +100%)
+	},
+
+	-- В Studio (Config/Debug.dailyEventShort) — короткий цикл
+	studioSlotSeconds = 6 * 60,
+	studioOffsetSeconds = 60,
+	studioDurationSeconds = 3 * 60,
+	studioAnnounceSeconds = 30,
+	studioGoldenSlotSeconds = 10 * 60, -- золотой час каждые 10 мин на 2 мин
+	studioGoldenDurationSeconds = 2 * 60,
+}
+
+local byId: { [string]: Event } = {}
+local totalWeight = 0
+for _, event in DailyEvents.events do
+	byId[event.id] = event
+	totalWeight += event.weight
+end
+
+-- Все жанры по алфавиту (критики): порядок одинаковый на всех серверах
+local GENRE_IDS: { string } = {}
+for id in Genres do
+	table.insert(GENRE_IDS, id)
+end
+table.sort(GENRE_IDS)
+
+local function studio(): boolean
+	return RunService:IsStudio()
+end
+
+local function short(): boolean
+	return studio() and Debug.dailyEventShort == true
+end
+
+function DailyEvents.get(id: any): Event?
+	return if type(id) == "string" then byId[id] else nil
+end
+
+-- Принудительное событие в Studio (Config/Debug.dailyEventForce), иначе nil
+local function forced(): EventId?
+	local id = Debug.dailyEventForce
+	if studio() and id and byId[id] then
+		return id :: EventId
+	end
+	return nil
+end
+
+-- Взвешенный выбор по случайному числу 0..1
+local function pick(roll: number): EventId
+	local acc = 0
+	for _, event in DailyEvents.events do
+		acc += event.weight / totalWeight
+		if roll < acc then
+			return event.id
+		end
+	end
+	return DailyEvents.events[#DailyEvents.events].id
+end
+
+-- Событие и параметры часа index. Random с числом-зерном одинаков на всех серверах;
+-- подряд одно и то же событие не повторяем (берём следующее по списку)
+local function slotContent(index: number): (EventId, string?, string?)
+	local rng = Random.new(index * 7919 + 17)
+	local id = forced() or pick(rng:NextNumber())
+	if not forced() then
+		local prev = pick(Random.new((index - 1) * 7919 + 17):NextNumber())
+		if prev == id then
+			for i, event in DailyEvents.events do
+				if event.id == id then
+					id = DailyEvents.events[i % #DailyEvents.events + 1].id
+					break
+				end
+			end
+		end
+	end
+	local genreId: string?, topicId: string? = nil, nil
+	if id == "critics" and #GENRE_IDS > 0 then
+		genreId = GENRE_IDS[rng:NextInteger(1, #GENRE_IDS)]
+	elseif id == "blitzJam" then
+		local cfg = DailyEvents.blitzJam
+		genreId = cfg.genres[rng:NextInteger(1, #cfg.genres)]
+		topicId = cfg.topics[rng:NextInteger(1, #cfg.topics)]
+	end
+	return id, genreId, topicId
+end
+
+local function timings(): (number, number, number, number)
+	if short() then
+		return DailyEvents.studioSlotSeconds,
+			DailyEvents.studioOffsetSeconds,
+			DailyEvents.studioDurationSeconds,
+			DailyEvents.studioAnnounceSeconds
+	end
+	return DailyEvents.slotSeconds,
+		DailyEvents.offsetSeconds,
+		DailyEvents.durationSeconds,
+		DailyEvents.announceSeconds
+end
+
+-- Слот номер index (index-й час с 1970 года, в Studio с dailyEventShort — короткий цикл)
+function DailyEvents.slotAt(index: number): Slot
+	local interval, offset, duration, announce = timings()
+	local startsAt = index * interval + offset
+	local id, genreId, topicId = slotContent(index)
+	return {
+		index = index,
+		id = id,
+		startsAt = startsAt,
+		endsAt = startsAt + duration,
+		announceSeconds = announce,
+		genreId = genreId,
+		topicId = topicId,
+	}
+end
+
+-- Слот, который идёт сейчас, или ближайший следующий
+function DailyEvents.slot(now: number?): Slot
+	local t = now or os.time()
+	local interval, offset, duration = timings()
+	if forced() and not short() then
+		-- Без короткого цикла принудительное событие идёт всё время: окно от границы часа на 2 часа
+		local startsAt = t // 3600 * 3600
+		local id, genreId, topicId = slotContent(startsAt // 3600)
+		return {
+			index = startsAt // 3600,
+			id = id,
+			startsAt = startsAt,
+			endsAt = startsAt + 7200,
+			announceSeconds = 0,
+			genreId = genreId,
+			topicId = topicId,
+		}
+	end
+	local index = (t - offset) // interval
+	if t >= index * interval + offset + duration then
+		index += 1
+	end
+	return DailyEvents.slotAt(index)
+end
+
+-- Ближайшие count слотов начиная с текущего (окно расписания)
+function DailyEvents.upcoming(count: number, now: number?): { Slot }
+	local first = DailyEvents.slot(now)
+	local list = { first }
+	if forced() and not short() then
+		return list
+	end
+	for i = 1, count - 1 do
+		table.insert(list, DailyEvents.slotAt(first.index + i))
+	end
+	return list
+end
+
+-- Золотой час: текущее окно или ближайшее следующее
+function DailyEvents.goldenWindow(now: number?): Window
+	local t = now or os.time()
+	local cfg = DailyEvents.golden
+	if studio() and Debug.dailyGoldenForce then
+		local startsAt = t // 3600 * 3600
+		return { startsAt = startsAt, endsAt = startsAt + 7200, announceSeconds = 0 }
+	end
+	local interval = 24 * 60 * 60
+	local offset = cfg.hourUtc * 3600 + cfg.minuteUtc * 60
+	local duration = cfg.durationSeconds
+	local announce = cfg.announceSeconds
+	if short() then
+		interval = DailyEvents.studioGoldenSlotSeconds
+		offset = 0
+		duration = DailyEvents.studioGoldenDurationSeconds
+		announce = DailyEvents.studioAnnounceSeconds
+	end
+	local startsAt = (t - offset) // interval * interval + offset
+	if t >= startsAt + duration then
+		startsAt += interval
+	end
+	return { startsAt = startsAt, endsAt = startsAt + duration, announceSeconds = announce }
+end
+
+-- ===== Для клиента и сервера: что сейчас идёт (атрибуты ставит DailyEventService) =====
+
+-- Идёт ли событие id. Сервер выставляет атрибуты каждую секунду; клиент видит то же самое
+function DailyEvents.isActive(id: EventId): boolean
+	return ReplicatedStorage:GetAttribute("DailyEventActive") == true
+		and ReplicatedStorage:GetAttribute("DailyEventId") == id
+end
+
+-- Цена товара за $ с учётом «Флеш-распродажи» (декор и стили мебели; Robux не трогаем)
+function DailyEvents.cashPrice(cost: number): number
+	if cost <= 0 or not DailyEvents.isActive("flashSale") then
+		return cost
+	end
+	return math.floor(cost * (1 - math.clamp(DailyEvents.flashSale.cashDiscount, 0, 0.9)))
+end
+
+return DailyEvents

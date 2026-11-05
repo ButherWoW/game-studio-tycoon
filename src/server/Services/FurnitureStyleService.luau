@@ -11,6 +11,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage.Shared
 local FurnitureStyles = require(Shared.Config.FurnitureStyles)
+local DailyEvents = require(Shared.Config.DailyEvents)
 local StyleRemotes = require(Shared.StyleRemotes)
 local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService)
@@ -109,7 +110,8 @@ local function onBuy(player: Player, styleId: any)
 	if type(cost) ~= "number" or cost < 0 or styles.owned[style.id] then
 		return
 	end
-	if DataService.trySpend(player, cost) then
+	-- «Флеш-распродажа» (DailyEventService): только цена за $
+	if DataService.trySpend(player, DailyEvents.cashPrice(cost)) then
 		styles.owned[style.id] = true
 		logStyle(player, style.id, "cash")
 		-- Купил — значит хочет увидеть: ставим сразу (лимит выбора не тратим)

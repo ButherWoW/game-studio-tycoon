@@ -1,0 +1,40 @@
+--!strict
+-- Remotes «Событий дня» (DailyEventService). Сервер создаёт, клиент ждёт.
+-- Расписание и что идёт сейчас — без remotes: атрибуты ReplicatedStorage DailyEvent* и DailyGolden*.
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local FOLDER_NAME = "DailyEventRemotes"
+
+local NAMES = {
+	"RequestDailyEvent", -- клиент -> сервер: прислать таблицу события (жуки, инвестор, блиц-джем)
+	"DailyEventBoard", -- сервер -> клиент: { id, top = { { name, value } }, left?, mine? }
+	"DailyEventToast", -- сервер -> клиент: { key, vars, ping? } — короткое уведомление
+}
+
+local folder: Folder
+if RunService:IsServer() then
+	folder = ReplicatedStorage:FindFirstChild(FOLDER_NAME) :: Folder
+	if not folder then
+		folder = Instance.new("Folder")
+		folder.Name = FOLDER_NAME
+		folder.Parent = ReplicatedStorage
+	end
+	for _, name in NAMES do
+		if not folder:FindFirstChild(name) then
+			local remote = Instance.new("RemoteEvent")
+			remote.Name = name
+			remote.Parent = folder
+		end
+	end
+else
+	folder = ReplicatedStorage:WaitForChild(FOLDER_NAME) :: Folder
+end
+
+local DailyEventRemotes: { [string]: RemoteEvent } = {}
+for _, name in NAMES do
+	DailyEventRemotes[name] = folder:WaitForChild(name) :: RemoteEvent
+end
+
+return DailyEventRemotes

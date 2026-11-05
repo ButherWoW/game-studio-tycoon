@@ -14,6 +14,7 @@ local Shared = ReplicatedStorage.Shared
 local Remotes = require(Shared.Remotes)
 local DecorRemotes = require(Shared.DecorRemotes)
 local Decor = require(Shared.Config.Decor)
+local DailyEvents = require(Shared.Config.DailyEvents)
 local FurnitureStyles = require(Shared.Config.FurnitureStyles)
 local Images = require(Shared.Config.Images)
 local InteriorFinishes = require(Shared.Config.InteriorFinishes)
@@ -272,7 +273,8 @@ local function buildDecor(body: Instance)
 		if state.owned[Decor.key(item.id, floor)] then
 			rowButton(frame, ClientState.t("studio_decor_owned"), Ui.colors.good, function() end)
 		else
-			priceButton(frame, Decor.cost(item, floor), true, function()
+			-- «Флеш-распродажа»: та же цена, что спишет сервер
+			priceButton(frame, DailyEvents.cashPrice(Decor.cost(item, floor)), true, function()
 				DecorRemotes.BuyDecor:FireServer(item.id, floor)
 			end)
 		end
@@ -328,7 +330,7 @@ local function styleButton(frame: Frame, style: FurnitureStyles.Style)
 			end
 		)
 	else
-		priceButton(frame, style.cost or 0, remotes ~= nil, function()
+		priceButton(frame, DailyEvents.cashPrice(style.cost or 0), remotes ~= nil, function()
 			if remotes then
 				remotes.BuyStyle:FireServer(style.id)
 			end
@@ -617,6 +619,10 @@ function StudioWindow.start()
 		render()
 	end)
 	CompanyEventState.changed:Connect(function()
+		render()
+	end)
+	-- «Флеш-распродажа» началась или кончилась — цены декора и стилей другие
+	ReplicatedStorage:GetAttributeChangedSignal("DailyEventActive"):Connect(function()
 		render()
 	end)
 	ConsoleClient.changed:Connect(function()

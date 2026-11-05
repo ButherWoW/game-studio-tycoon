@@ -71,6 +71,9 @@ local Analytics = {
 		seasonClaim = "SeasonClaim", -- награда сезона; поле — "дорожка_уровень" (free_5, premium_30)
 		jamSubmit = "JamSubmit", -- заявка в гейм-джем; значение — оценка, поле — first / improved
 		hackathon = "Hackathon", -- начался хакатон (на каждого игрока на сервере)
+		-- События дня (DailyEventService): поле — "id_этап" (bugHunt_start, golden_start, investors_grant,
+		-- bugHunt_caught — значение: сколько поймал, blitzJam_win — значение: оценка)
+		dailyEvent = "DailyEvent",
 		-- Франшизы и контракты: поле — этап (created; offered/accepted/declined/expired/completed/failed)
 		-- или id обогнанной студии
 		franchise = "Franchise",

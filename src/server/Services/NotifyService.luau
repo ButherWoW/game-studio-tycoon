@@ -102,6 +102,14 @@ local function onResult(player: Player, result: any)
 	end
 end
 
+-- Игрок видел окно «Включить уведомления» (Roblox не говорит, нажал ли он «Да»): таким
+-- «События дня» (DailyEventService) шлют пинг со звуком за 2 минуты до начала. Пуш вне игры —
+-- внешний сервис по тому же расписанию (Config/DailyEvents.slotAt), см. docs/NOTIFY_REFER_TRADE.md
+function NotifyService.wantsPings(player: Player): boolean
+	local profile = DataService.get(player)
+	return profile ~= nil and data(profile).prompted
+end
+
 function NotifyService.start()
 	DataService.onProfileLoaded(function(player: Player, profile: DataService.Profile)
 		sessions[player] = {
