@@ -160,21 +160,21 @@ export type ResearchProduct = {
 local research: { ResearchProduct } = {
 	{
 		id = "researchSpeed5",
-		productId = Universe.pick({ test = 0, main = 0 }),
+		productId = Universe.pick({ test = 3728500562, main = 3728500791 }),
 		robuxPrice = 15,
 		seconds = 5 * 60,
 		skip = false,
 	},
 	{
 		id = "researchSpeed30",
-		productId = Universe.pick({ test = 0, main = 0 }),
+		productId = Universe.pick({ test = 3728500582, main = 3728500806 }),
 		robuxPrice = 49,
 		seconds = 30 * 60,
 		skip = false,
 	},
 	{
 		id = "researchSkip",
-		productId = Universe.pick({ test = 0, main = 0 }),
+		productId = Universe.pick({ test = 3728500600, main = 3728500828 }),
 		robuxPrice = 99,
 		seconds = 0,
 		skip = true,

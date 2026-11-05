@@ -32,8 +32,8 @@ Training.minSeconds = 5
 -- Если к приходу чека учить нечего (обучение успело закончиться), покупка становится жетоном:
 -- skip — 1 жетон, skipAll — skipAllCredits жетонов. Жетон доучивает любого сотрудника кнопкой.
 Training.products = {
-	skillSkip = { productId = Universe.pick({ test = 0, main = 0 }), robuxPrice = 19 },
-	skillSkipAll = { productId = Universe.pick({ test = 0, main = 0 }), robuxPrice = 49 },
+	skillSkip = { productId = Universe.pick({ test = 3728500528, main = 3728500763 }), robuxPrice = 19 },
+	skillSkipAll = { productId = Universe.pick({ test = 3728500547, main = 3728500777 }), robuxPrice = 49 },
 }
 Training.skipAllCredits = 3
 Training.maxCredits = 99
