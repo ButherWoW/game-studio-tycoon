@@ -4,6 +4,7 @@
 -- ни исследованием (ResearchService). Клиент показывает по ним замок и причину.
 -- Работает и с профилем сервера, и со снимком DataService.replicate на клиенте.
 
+local ContentDrops = require(script.Parent.Config.ContentDrops)
 local Genres = require(script.Parent.Config.Genres)
 local Stages = require(script.Parent.Config.Stages)
 local Texts = require(script.Parent.Config.Texts)
@@ -11,17 +12,18 @@ local HitCartridges = require(script.Parent.Config.HitCartridges)
 
 -- Виды условий: studioLevel (2 = офис, 3 = 2-й этаж, 4 = 3-й этаж), gamesReleased (всего игр),
 -- bestScore (лучшая оценка за всё время), genreGames (игр в жанре), hits (выпущено игр с оценкой
--- >= HitCartridges.minScore), employees (сотрудников в команде)
+-- >= HitCartridges.minScore), employees (сотрудников в команде). Плюс release — жанр/тема ещё не вышли
+-- по графику контента (Config/ContentDrops): need = дней до выхода; эта причина всегда первая
 export type Requires = Genres.Requires
 
 export type Missing = {
-	kind: string, -- studioLevel | gamesReleased | bestScore | genreGames | hits | employees
+	kind: string, -- release | studioLevel | gamesReleased | bestScore | genreGames | hits | employees
 	need: number,
 	have: number,
 	genre: string?,
 }
 
-type Item = { unlockCost: number, requires: Requires? }
+type Item = { id: string?, unlockCost: number, requires: Requires? }
 
 local UnlockRules = {}
 
@@ -57,9 +59,18 @@ end
 -- Выполнены ли условия; второе значение — список невыполненных
 function UnlockRules.check(item: Item, profile: any): (boolean, { Missing })
 	local missing: { Missing } = {}
+	-- График контента: жанр/тема ещё не вышли — не открываются ничем (id жанров и тем не пересекаются)
+	local id = item.id
+	if id then
+		local kind: ContentDrops.Kind = if (Genres :: any)[id] then "genre" else "topic"
+		local days = ContentDrops.daysUntil(kind, id)
+		if days > 0 then
+			table.insert(missing, { kind = "release", need = days, have = 0 })
+		end
+	end
 	local requires = item.requires
 	if not requires or type(profile) ~= "table" then
-		return requires == nil, missing
+		return requires == nil and #missing == 0, missing
 	end
 	for _, kind in ORDER do
 		local value = (requires :: any)[kind]
@@ -93,7 +104,9 @@ end
 function UnlockRules.describe(lang: Texts.Lang, missing: Missing): string
 	local kind = missing.kind
 	local vars: { [string]: any } = { need = missing.need, have = missing.have }
-	if kind == "studioLevel" then
+	if kind == "release" then
+		return Texts.format(lang, "drop_soon_days", { days = missing.need })
+	elseif kind == "studioLevel" then
 		local stage = Stages[missing.need]
 		vars.stage = if stage then localName(lang, "stage_", stage) else tostring(missing.need)
 		return Texts.format(lang, "unlock_req_stage", vars)

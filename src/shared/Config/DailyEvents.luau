@@ -7,10 +7,14 @@
 -- показывается в общем расписании.
 -- Сервер — DailyEventService (атрибуты ReplicatedStorage DailyEvent*, DailyGolden*), клиент —
 -- DailyEventBanner. Плохих событий здесь нет: они в событиях компании (Config/CompanyEvents).
+-- График контента (Config/ContentDrops): событие, которое ещё не вышло к часу слота, не выпадает
+-- (выбор среди вышедших; решает время слота — на всех серверах одинаково). Критики — только по
+-- вышедшим жанрам.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
+local ContentDrops = require(script.Parent.ContentDrops)
 local Debug = require(script.Parent.Debug)
 local Genres = require(script.Parent.Genres)
 
@@ -193,37 +197,60 @@ local function forced(): EventId?
 	return nil
 end
 
--- Взвешенный выбор по случайному числу 0..1
-local function pick(roll: number): EventId
-	local acc = 0
+-- События, вышедшие к моменту at (Config/ContentDrops); все вышли — весь список как есть
+local function releasedEvents(at: number): ({ Event }, number)
+	local list: { Event } = {}
+	local weight = 0
 	for _, event in DailyEvents.events do
-		acc += event.weight / totalWeight
+		if ContentDrops.isReleased("dailyEvent", event.id, at) then
+			table.insert(list, event)
+			weight += event.weight
+		end
+	end
+	if #list == 0 then
+		return DailyEvents.events, totalWeight
+	end
+	return list, weight
+end
+
+-- Взвешенный выбор по случайному числу 0..1 среди list (сумма весов weight)
+local function pick(roll: number, list: { Event }, weight: number): EventId
+	local acc = 0
+	for _, event in list do
+		acc += event.weight / weight
 		if roll < acc then
 			return event.id
 		end
 	end
-	return DailyEvents.events[#DailyEvents.events].id
+	return list[#list].id
 end
 
--- Событие и параметры часа index. Random с числом-зерном одинаков на всех серверах;
--- подряд одно и то же событие не повторяем (берём следующее по списку)
-local function slotContent(index: number): (EventId, string?, string?)
+-- Событие и параметры часа index (начинается в at). Random с числом-зерном одинаков на всех
+-- серверах; подряд одно и то же событие не повторяем (берём следующее по списку)
+local function slotContent(index: number, at: number): (EventId, string?, string?)
 	local rng = Random.new(index * 7919 + 17)
-	local id = forced() or pick(rng:NextNumber())
+	local list, weight = releasedEvents(at)
+	local id = forced() or pick(rng:NextNumber(), list, weight)
 	if not forced() then
-		local prev = pick(Random.new((index - 1) * 7919 + 17):NextNumber())
+		local prev = pick(Random.new((index - 1) * 7919 + 17):NextNumber(), list, weight)
 		if prev == id then
-			for i, event in DailyEvents.events do
+			for i, event in list do
 				if event.id == id then
-					id = DailyEvents.events[i % #DailyEvents.events + 1].id
+					id = list[i % #list + 1].id
 					break
 				end
 			end
 		end
 	end
 	local genreId: string?, topicId: string? = nil, nil
-	if id == "critics" and #GENRE_IDS > 0 then
-		genreId = GENRE_IDS[rng:NextInteger(1, #GENRE_IDS)]
+	local genres: { string } = {}
+	for _, gid in GENRE_IDS do
+		if ContentDrops.isReleased("genre", gid, at) then
+			table.insert(genres, gid)
+		end
+	end
+	if id == "critics" and #genres > 0 then
+		genreId = genres[rng:NextInteger(1, #genres)]
 	elseif id == "blitzJam" then
 		local cfg = DailyEvents.blitzJam
 		genreId = cfg.genres[rng:NextInteger(1, #cfg.genres)]
@@ -249,7 +276,7 @@ end
 function DailyEvents.slotAt(index: number): Slot
 	local interval, offset, duration, announce = timings()
 	local startsAt = index * interval + offset
-	local id, genreId, topicId = slotContent(index)
+	local id, genreId, topicId = slotContent(index, startsAt)
 	return {
 		index = index,
 		id = id,
@@ -268,7 +295,7 @@ function DailyEvents.slot(now: number?): Slot
 	if forced() and not short() then
 		-- Без короткого цикла принудительное событие идёт всё время: окно от границы часа на 2 часа
 		local startsAt = t // 3600 * 3600
-		local id, genreId, topicId = slotContent(startsAt // 3600)
+		local id, genreId, topicId = slotContent(startsAt // 3600, startsAt)
 		return {
 			index = startsAt // 3600,
 			id = id,
