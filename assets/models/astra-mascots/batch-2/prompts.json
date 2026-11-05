@@ -1,0 +1,29 @@
+{
+  "tool": "OpenAI built-in ImageGen",
+  "assets": [
+    {
+      "id": "cloud_ghost",
+      "prompt": "Use case: stylized-concept. Asset: original collectible studio mascot icon for a child-friendly Roblox game, final256x256 PNG with genuine transparent background. Single cute mascot, full body centered, all parts inside canvas with10%clear transparent margin. Style matches polished cartoon game-menu V3 icons: thick clean dark #1E1E2E outline, chunky simple low-poly cel-shaded shapes, broad upper-left highlights, large head and huge friendly eyes, readable at44px. No ground, cast shadow, badge circle, border, letters, numerals, text, brands or watermark. Mascot design: friendly ivory cloud ghost with three rounded cloud lobes, small waving arms and blue cheeks. Make a coherent simple toy-like figure, front three-quarter view facing viewer, cheerful and approachable; own design, no borrowed characters.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-aab5a049-12c7-4f3c-bf7c-d2d2825e239c.png",
+      "file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-mascots-v16/batch-2/mascot_cloud_ghost_icon.png"
+    },
+    {
+      "id": "controller_bunny",
+      "prompt": "Use case: stylized-concept. Asset: original collectible studio mascot icon for a child-friendly Roblox game, final256x256 PNG with genuine transparent background. Single cute mascot, full body centered, all parts inside canvas with10%clear transparent margin. Style matches polished cartoon game-menu V3 icons: thick clean dark #1E1E2E outline, chunky simple low-poly cel-shaded shapes, broad upper-left highlights, large head and huge friendly eyes, readable at44px. No ground, cast shadow, badge circle, border, letters, numerals, text, brands or watermark. Mascot design: purple bunny with tall blue joystick ears capped by cyan balls, ivory muzzle and cyan paws. Make a coherent simple toy-like figure, front three-quarter view facing viewer, cheerful and approachable; own design, no borrowed characters.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-8c508d13-f0f8-4c5f-8377-db2805690b0c.png",
+      "file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-mascots-v16/batch-2/mascot_controller_bunny_icon.png"
+    },
+    {
+      "id": "robo_owl",
+      "prompt": "Use case: stylized-concept. Asset: original collectible studio mascot icon for a child-friendly Roblox game, final256x256 PNG with genuine transparent background. Single cute mascot, full body centered, all parts inside canvas with10%clear transparent margin. Style matches polished cartoon game-menu V3 icons: thick clean dark #1E1E2E outline, chunky simple low-poly cel-shaded shapes, broad upper-left highlights, large head and huge friendly eyes, readable at44px. No ground, cast shadow, badge circle, border, letters, numerals, text, brands or watermark. Mascot design: blue robot owl with huge silver eye rings, cyan eye lights and gold beak. Make a coherent simple toy-like figure, front three-quarter view facing viewer, cheerful and approachable; own design, no borrowed characters.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-9820dd2d-630d-48cf-be45-2724228af2cb.png",
+      "file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-mascots-v16/batch-2/mascot_robo_owl_icon.png"
+    },
+    {
+      "id": "slime_star",
+      "prompt": "Use case: stylized-concept. Asset: original collectible studio mascot icon for a child-friendly Roblox game, final256x256 PNG with genuine transparent background. Single cute mascot, full body centered, all parts inside canvas with10%clear transparent margin. Style matches polished cartoon game-menu V3 icons: thick clean dark #1E1E2E outline, chunky simple low-poly cel-shaded shapes, broad upper-left highlights, large head and huge friendly eyes, readable at44px. No ground, cast shadow, badge circle, border, letters, numerals, text, brands or watermark. Mascot design: mint round slime with a gold star on forehead and cyan glowing belly. Make a coherent simple toy-like figure, front three-quarter view facing viewer, cheerful and approachable; own design, no borrowed characters.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-9219bade-c077-452c-b308-fba18adabeaf.png",
+      "file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-mascots-v16/batch-2/mascot_slime_star_icon.png"
+    }
+  ]
+}
