@@ -1,0 +1,75 @@
+{
+  "method": "Independent XML + OBB SAT (cylinder bounds conservative)",
+  "models": {
+    "Construction_Scaffold": {
+      "parts": 12,
+      "budget": 12,
+      "dimensionsXYZ": [
+        10.5,
+        15.0,
+        2.2
+      ],
+      "pivotXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "positiveVolumeIntersections": [],
+      "pairChecks": 66,
+      "status": "PASS"
+    },
+    "Construction_Fence": {
+      "parts": 4,
+      "budget": 4,
+      "dimensionsXYZ": [
+        8.0,
+        3.4,
+        0.30000000000000004
+      ],
+      "pivotXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "positiveVolumeIntersections": [],
+      "pairChecks": 6,
+      "status": "PASS"
+    },
+    "Construction_Crane": {
+      "parts": 52,
+      "budget": 60,
+      "dimensionsXYZ": [
+        6.300000000000001,
+        56.0,
+        52.2
+      ],
+      "pivotXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "positiveVolumeIntersections": [],
+      "pairChecks": 1326,
+      "status": "PASS"
+    },
+    "Construction_Sign": {
+      "parts": 7,
+      "budget": 10,
+      "dimensionsXYZ": [
+        7.5,
+        5.5,
+        0.43
+      ],
+      "pivotXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "positiveVolumeIntersections": [],
+      "pairChecks": 21,
+      "status": "PASS"
+    }
+  },
+  "runtimeTested": false,
+  "status": "PASS"
+}

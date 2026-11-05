@@ -1,0 +1,10 @@
+{
+  "constructionReport": "construction-pack/VALIDATION.json",
+  "layoutReport": "construction-pack/CONSTRUCTION_LAYOUT_REVIEW.json",
+  "builderReport": "builder-pack/VALIDATION.json",
+  "assetModels": 6,
+  "clothingPNG": 2,
+  "runtimeTested": false,
+  "integrationRequiresCornerPlacementFix": true,
+  "proposedPatch": "construction-pack/source/proposed-placement-fix.patch"
+}
