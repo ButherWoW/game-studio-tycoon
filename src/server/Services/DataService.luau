@@ -79,6 +79,9 @@ export type Profile = {
 		expires: { [string]: number }?, -- временные титулы: id -> os.time конца
 		restore: string?, -- выбор игрока до временного титула
 	},
+	-- Настройки игрока (SettingsService, Config/Settings): громкость, «меньше эффектов» и т.п.
+	-- Сырые данные: читать только через Settings.sanitize
+	settings: { [string]: any },
 	-- «Игра недели» (GotwService): лучшая игра недели weekId, неделя последней проверки награды,
 	-- место титула (0 — нет) и до какого os.time держатся титул и статуэтка на полке
 	gotw: {
@@ -187,6 +190,7 @@ local function defaultProfile(): Profile
 		streamer = { hype = 0, earned = 0, scores = {} },
 		rebirthPerks = { levels = {}, respecUsed = false },
 		titles = { owned = {}, selected = nil },
+		settings = {},
 		gotw = defaultGotw(),
 		lastGame = nil,
 		processedReceipts = {},

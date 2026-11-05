@@ -144,7 +144,15 @@ local function npcPart(npc: Instance, name: string): BasePart?
 	return if part and part:IsA("BasePart") then part else nil
 end
 
+-- «Меньше эффектов» (настройки, атрибут ставит ClientSettings): без конфетти, вспышек и полёта надписей
+local function lowGraphics(): boolean
+	return player:GetAttribute("LowGraphics") == true
+end
+
 local function confetti(npc: Model)
+	if lowGraphics() then
+		return
+	end
 	local root = npcPart(npc, "HumanoidRootPart") or npcPart(npc, "Head")
 	if not root then
 		return
@@ -235,6 +243,13 @@ local function floatUp(npc: Model, text: string, color: Color3)
 	if not gui or not label then
 		return
 	end
+	if lowGraphics() then
+		-- Без анимации: надпись просто висит и исчезает
+		task.delay(FLOAT_SECONDS, function()
+			gui:Destroy()
+		end)
+		return
+	end
 	local info = TweenInfo.new(FLOAT_SECONDS, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	TweenService:Create(gui, info, { StudsOffset = Vector3.new(0, 6.5, 0) }):Play()
 	TweenService:Create(label, info, { TextTransparency = 1 }):Play()
@@ -245,6 +260,9 @@ end
 
 -- Вспышка контура
 local function glow(npc: Model, color: Color3)
+	if lowGraphics() then
+		return
+	end
 	local highlight = Instance.new("Highlight")
 	highlight.FillColor = color
 	highlight.OutlineColor = color
