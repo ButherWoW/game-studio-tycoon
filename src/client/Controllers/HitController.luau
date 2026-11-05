@@ -205,7 +205,7 @@ local function openWindow()
 	screen.DisplayOrder = 15
 	screen.Parent = player:WaitForChild("PlayerGui")
 	window = screen
-	Ui.windowOpened()
+	Ui.windowOpened(closeWindow) -- окно меню: закрывает другое открытое окно меню
 	HitRemotes.RequestHitState:FireServer()
 
 	local frame = Ui.window(screen, "Window", Vector2.new(520, 420))

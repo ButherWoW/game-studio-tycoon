@@ -10,10 +10,12 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Shared = ReplicatedStorage.Shared
 local Bailiffs = require(Shared.Config.Bailiffs)
 local Decor = require(Shared.Config.Decor)
+local Images = require(Shared.Config.Images)
 local Offers = require(Shared.Config.Offers)
 local Texts = require(Shared.Config.Texts)
 local StudioLayout = require(Shared.StudioLayout)
 local BailiffRemotes = require(Shared.BailiffRemotes)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local OfferClient = require(script.Parent.Parent.OfferClient)
@@ -26,6 +28,8 @@ local TEXT_HEIGHT = 30
 local BUTTONS_HEIGHT = 34
 local TOAST_HEIGHT = 34
 local TOAST_SECONDS = 5
+local ICON = "⚖️"
+local ICON_SIZE = 26
 
 local BailiffBanner = {}
 
@@ -76,6 +80,9 @@ function BailiffBanner.start()
 	local text = Ui.label(panel, "", TEXT_HEIGHT, Ui.titleFontFor(ClientState.lang), Ui.colors.bad)
 	text.TextXAlignment = Enum.TextXAlignment.Center
 	text.LayoutOrder = 1
+	-- Иконка пристава (Config/Images.contracts.bailiffIcon) слева вместо ⚖️; 0 — эмодзи в тексте
+	local iconId = Images.contracts.bailiffIcon
+	ArtIcon.prefix(text, ICON, iconId, ICON_SIZE)
 
 	local row = Instance.new("Frame")
 	row.BackgroundTransparency = 1
@@ -125,7 +132,11 @@ function BailiffBanner.start()
 			percent = math.floor(Bailiffs.sellShare * 100),
 		}
 		local active = Players.LocalPlayer:GetAttribute("BailiffsActive") == true
-		text.Text = ClientState.t(if active then "bailiff_active" else "bailiff_warning", vars)
+		text.Text = ArtIcon.strip(
+			ClientState.t(if active then "bailiff_active" else "bailiff_warning", vars),
+			ICON,
+			iconId
+		)
 		bank.Text = ClientState.t("bailiff_bank")
 		fire.Text = ClientState.t("bailiff_fire")
 		-- Пакет дохода, который закрывает долг (те же пакеты, что при забастовке)

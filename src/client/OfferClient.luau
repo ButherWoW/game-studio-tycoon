@@ -18,6 +18,7 @@ local HitCartridges = require(Shared.Config.HitCartridges)
 local Texts = require(Shared.Config.Texts)
 local OfferRemotes = require(Shared.OfferRemotes)
 local ShopRemotes = require(Shared.ShopRemotes)
+local ArtIcon = require(script.Parent.ArtIcon)
 local ClientState = require(script.Parent.ClientState)
 local Ui = require(script.Parent.Ui)
 
@@ -245,9 +246,14 @@ export type PopupSpec = {
 	onLater: (() -> ())?,
 	-- Баннер 2:1 над заголовком (id из Config/Images); nil/0 — без баннера
 	banner: number?,
+	-- Иконка слева от заголовка (id из Config/Images) вместо эмодзи titleEmoji в его начале;
+	-- nil/0 — заголовок как есть
+	icon: number?,
+	titleEmoji: string?,
 }
 
 local BANNER_HEIGHT = 150
+local TITLE_ICON = 36
 
 -- Показать окно (проверку canPopup делает вызывающий). Считается в кулдаун и лимит сессии
 function OfferClient.popup(spec: PopupSpec)
@@ -295,6 +301,7 @@ function OfferClient.popup(spec: PopupSpec)
 	local title = Ui.label(body, spec.title, 40, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
 	title.TextXAlignment = Enum.TextXAlignment.Center
 	title.LayoutOrder = 1
+	ArtIcon.prefix(title, spec.titleEmoji or "", spec.icon or 0, TITLE_ICON)
 	for i, line in spec.lines do
 		local l = Ui.label(body, line, 26, Enum.Font.GothamMedium)
 		l.TextXAlignment = Enum.TextXAlignment.Center

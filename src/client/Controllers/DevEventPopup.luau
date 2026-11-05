@@ -2,6 +2,7 @@
 -- Всплывающее событие разработки (Config/DevEvents): вопрос, два варианта, полоска времени.
 -- Решает сервер; без ответа он сам применяет спокойный вариант b.
 
+local GuiService = game:GetService("GuiService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -11,6 +12,10 @@ local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
 local RESULT_SECONDS = 2.5
+local PANEL_WIDTH = 440
+-- Над окном релиза (20), окнами входа (25) и стартовым парком (26): выбор на время
+-- (answerSeconds) раньше мог спрятаться под ними и сгореть, пока игрок его не видел
+local DISPLAY_ORDER = 27
 
 local DevEventPopup = {}
 local gui: ScreenGui? = nil
@@ -28,14 +33,23 @@ local function panel(height: number): Frame
 	local frame = Instance.new("Frame")
 	frame.AnchorPoint = Vector2.new(0.5, 1)
 	frame.Position = UDim2.new(0.5, 0, 1, -96) -- над кнопкой «Создать игру»
-	frame.Size = UDim2.fromOffset(440, height)
+	frame.Size = UDim2.fromOffset(PANEL_WIDTH, height)
 	frame.BackgroundColor3 = Ui.colors.panel
 	frame.BackgroundTransparency = 0
+	-- Панель забирает нажатия: не проходят к HUD и подложкам окон под ней
+	frame.Active = true
 	Ui.corner(frame)
 	local stroke = Instance.new("UIStroke")
 	stroke.Thickness = 2
 	stroke.Color = Ui.colors.money
 	stroke.Parent = frame
+	-- На маленьком экране панель целиком уменьшается — как у быстрого события (QuickEventPopup)
+	local scale = Instance.new("UIScale")
+	scale.Parent = frame
+	local camera = workspace.CurrentCamera
+	local viewport = if camera then camera.ViewportSize else Vector2.new(1280, 720)
+	local available = viewport.Y - GuiService:GetGuiInset().Y
+	scale.Scale = math.clamp(math.min(viewport.X * 0.94 / PANEL_WIDTH, available * 0.62 / height), 0.45, 1)
 	frame.Parent = gui
 	return frame
 end
@@ -108,7 +122,7 @@ function DevEventPopup.start()
 	local screen = Instance.new("ScreenGui")
 	screen.Name = "DevEventPopup"
 	screen.ResetOnSpawn = false
-	screen.DisplayOrder = 15
+	screen.DisplayOrder = DISPLAY_ORDER
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	gui = screen
 	Remotes.DevEvent.OnClientEvent:Connect(show)

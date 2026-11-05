@@ -208,7 +208,7 @@ function AchievementWindow.open()
 	screen.DisplayOrder = 10
 	screen.Parent = player:WaitForChild("PlayerGui")
 	gui = screen
-	Ui.windowOpened()
+	Ui.windowOpened(AchievementWindow.close) -- окно меню: закрывает другое открытое окно меню
 
 	local window = Ui.window(screen, "Window", Vector2.new(680, 600))
 

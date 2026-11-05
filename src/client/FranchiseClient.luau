@@ -9,6 +9,8 @@ local Shared = ReplicatedStorage.Shared
 local DepthRemotes = require(Shared.DepthRemotes)
 local Franchises = require(Shared.Config.Franchises)
 local Genres = require(Shared.Config.Genres)
+local Images = require(Shared.Config.Images)
+local ArtIcon = require(script.Parent.ArtIcon)
 local ClientState = require(script.Parent.ClientState)
 local Ui = require(script.Parent.Ui)
 
@@ -145,7 +147,10 @@ function FranchiseClient.build(parent: Instance, order: number, onPick: (any) ->
 		return n
 	end
 
-	Ui.label(box, ClientState.t("fr_title"), 22, nil, Ui.colors.muted).LayoutOrder = nextOrder(22)
+	local header = Ui.label(box, ClientState.t("fr_title"), 22, nil, Ui.colors.muted)
+	header.LayoutOrder = nextOrder(22)
+	-- Иконка франшизы V19 вместо 📚 (Config/Images.contracts.franchise); 0 — эмодзи
+	ArtIcon.prefix(header, "📚", Images.contracts.franchise, 20)
 
 	-- Кнопки по две в ряд: «Новая игра» и франшизы
 	local buttons: { { text: string, selected: boolean, pick: any } } = {

@@ -9,6 +9,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local PopupQueue = require(script.Parent.Parent.PopupQueue)
 local OfferClient = require(script.Parent.Parent.OfferClient)
 
 local StrikeTip = {}
@@ -90,12 +91,24 @@ end
 
 function StrikeTip.start()
 	local player = Players.LocalPlayer
+	local function wanted(): boolean
+		return not dismissed
+			and player:GetAttribute("StaffStrike") == true
+			and player:GetAttribute("StrikeTipSeen") == false
+	end
 	local function check()
-		if dismissed or gui then
+		if gui then
 			return
 		end
-		if player:GetAttribute("StaffStrike") == true and player:GetAttribute("StrikeTipSeen") == false then
-			show()
+		-- По очереди с другими окнами входа и не во время туториала (PopupQueue)
+		if wanted() then
+			PopupQueue.push("strike", function()
+				if not gui and wanted() then
+					show()
+				end
+			end)
+		else
+			PopupQueue.remove("strike")
 		end
 	end
 	player:GetAttributeChangedSignal("StaffStrike"):Connect(check)

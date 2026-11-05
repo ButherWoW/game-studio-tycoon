@@ -14,6 +14,7 @@ local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local Images = require(ReplicatedStorage.Shared.Config.Images)
+local Posters = require(ReplicatedStorage.Shared.Config.Posters)
 local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
@@ -70,7 +71,12 @@ local function describe(reward: Season.Reward): string
 		table.insert(parts, base)
 	end
 	if reward.poster then
-		table.insert(parts, t("season_reward_poster", { name = t("poster_" .. reward.poster) }))
+		-- Как в PosterShop: перевод poster_<id>, иначе name/nameEn из Config/Posters (не сырой ключ)
+		local poster = Posters.get(reward.poster)
+		local name = if poster
+			then ClientState.localText("poster_" .. poster.id, poster.name, poster.nameEn)
+			else reward.poster
+		table.insert(parts, t("season_reward_poster", { name = name }))
 	end
 	if reward.skin then
 		table.insert(parts, t("season_reward_skin", { name = t("skin_" .. reward.skin) }))
@@ -498,7 +504,7 @@ function SeasonWindow.open(startTab: Tab?)
 	screen.DisplayOrder = 10
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	gui = screen
-	Ui.windowOpened()
+	Ui.windowOpened(SeasonWindow.close) -- окно меню: закрывает другое открытое окно меню
 
 	local window = Ui.window(screen, "Window", Vector2.new(720, 600))
 	local title = Ui.label(window, t("season_title"), 40, Ui.titleFontFor(ClientState.lang))

@@ -310,7 +310,7 @@ function ShopWindow.open()
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	gui = screen
 	scrollY = 0
-	Ui.windowOpened()
+	Ui.windowOpened(ShopWindow.close) -- окно меню: закрывает другое открытое окно меню
 	render()
 	-- Свежие заряды и доход в минуту (рекорд мог вырасти)
 	ShopRemotes.ShopStateRequest:FireServer()

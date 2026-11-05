@@ -388,7 +388,7 @@ function TourWindow.open()
 	screen.DisplayOrder = 10
 	screen.Parent = player:WaitForChild("PlayerGui")
 	gui = screen
-	Ui.windowOpened()
+	Ui.windowOpened(TourWindow.close) -- окно меню: закрывает другое открытое окно меню
 
 	local window = Ui.window(screen, "Window", Vector2.new(680, 580))
 	local title = Ui.label(window, ClientState.t("tour_title"), 40, Ui.titleFontFor(ClientState.lang))

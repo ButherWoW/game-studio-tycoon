@@ -143,7 +143,7 @@ function RivalWindow.open()
 	screen.DisplayOrder = 10
 	screen.Parent = player:WaitForChild("PlayerGui")
 	gui = screen
-	Ui.windowOpened()
+	Ui.windowOpened(RivalWindow.close) -- окно меню: закрывает другое открытое окно меню
 
 	local window = Ui.window(screen, "Window", Vector2.new(600, 600))
 	local title = Ui.label(window, ClientState.t("rivals_title"), 40, Ui.titleFontFor(ClientState.lang))
@@ -249,7 +249,7 @@ function RivalWindow.start()
 	Ui.menuButton(MENU_SLOT, "📊", function()
 		if gui then
 			RivalWindow.close()
-		elseif not Ui.anyWindowOpen() then
+		else
 			RivalWindow.open()
 		end
 	end)

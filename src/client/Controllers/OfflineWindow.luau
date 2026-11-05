@@ -10,6 +10,7 @@ local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local Offline = require(ReplicatedStorage.Shared.Config.Offline)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local PopupQueue = require(script.Parent.Parent.PopupQueue)
 
 local OfflineWindow = {}
 local gui: ScreenGui? = nil
@@ -95,10 +96,17 @@ function OfflineWindow.start()
 	local function check()
 		local amount = player:GetAttribute("OfflinePending")
 		if type(amount) == "number" and amount > 0 then
+			-- По очереди с другими окнами входа и не во время туториала (PopupQueue)
 			if not gui then
-				show(amount)
+				PopupQueue.push("offline", function()
+					local pending = player:GetAttribute("OfflinePending")
+					if not gui and type(pending) == "number" and pending > 0 then
+						show(pending)
+					end
+				end)
 			end
 		else
+			PopupQueue.remove("offline")
 			close()
 		end
 	end

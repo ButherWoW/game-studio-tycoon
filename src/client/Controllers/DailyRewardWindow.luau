@@ -12,6 +12,7 @@ local Images = require(ReplicatedStorage.Shared.Config.Images)
 local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local PopupQueue = require(script.Parent.Parent.PopupQueue)
 local QuestWindow = require(script.Parent.QuestWindow)
 
 local DailyRewardWindow = {}
@@ -180,11 +181,13 @@ function DailyRewardWindow.start()
 		if not state.available then
 			shownDay = nil
 			QuestWindow.setDailyReward(nil, nil)
+			PopupQueue.remove("daily")
 			close()
 			return
 		end
 		local day = state.day
 		QuestWindow.setDailyReward(day, function()
+			PopupQueue.remove("daily")
 			QuestWindow.close()
 			show(day)
 		end)
@@ -192,7 +195,13 @@ function DailyRewardWindow.start()
 			return
 		end
 		shownDay = day
-		show(day)
+		-- Сам — по очереди с другими окнами входа и после туториала (PopupQueue);
+		-- кнопка в «Заданиях» открывает сразу
+		PopupQueue.push("daily", function()
+			if not gui and shownDay == day then
+				show(day)
+			end
+		end)
 	end)
 	-- Окно всплывает при входе, сохранённый язык приходит позже (отчёт #2, п. 3)
 	ClientState.langChanged:Connect(function()
