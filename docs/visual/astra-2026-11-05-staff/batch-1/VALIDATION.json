@@ -1,0 +1,61 @@
+{
+  "studioTested": false,
+  "targetHeadSize": [
+    1.18,
+    1.2,
+    1.05
+  ],
+  "targetHatAttachment": [
+    0,
+    0.5,
+    0
+  ],
+  "employees": {
+    "mila": {
+      "parts": 19,
+      "specialization": "gameplay",
+      "gender": "female",
+      "faceSha256": "b3b161653fe57abff0489435e89cf7a9adf2e80c6c7390c7f74fe2e65c8ff16d",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    },
+    "tim": {
+      "parts": 12,
+      "specialization": "graphics",
+      "gender": "male",
+      "faceSha256": "5320d751df0a9cbaf93a990a8bb91c5c51fa3a0302b08e94c6a130af9acd58e2",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    },
+    "zoe": {
+      "parts": 14,
+      "specialization": "sound",
+      "gender": "female",
+      "faceSha256": "443177f69c7a0e4aa93b911f3f54702bf60d0cf4a17ac49611759d9c23964741",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    },
+    "ilya": {
+      "parts": 10,
+      "specialization": "story",
+      "gender": "male",
+      "faceSha256": "d2d12cd06ceb07e34a40647556e8386f1a729053d20452f6ac7cac578d02a34f",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    },
+    "oleg": {
+      "parts": 4,
+      "specialization": "gameplay",
+      "gender": "male",
+      "faceSha256": "7700ac7f3bd88741e62b58902c519660b52e641c030db0eedee1779bade643cd",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    }
+  },
+  "status": "PASS"
+}
