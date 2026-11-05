@@ -23,7 +23,10 @@ function StyleModels.data(profile: DataService.Profile): Data
 	local owned: { [string]: boolean } = {}
 	if type(raw) == "table" and type(raw.owned) == "table" then
 		for id, value in raw.owned do
-			if value == true and FurnitureStyles.get(id) then
+			-- Неизвестные id тоже храним (как SkinService/PosterService/MascotService): стиль
+			-- переименовали или временно убрали из Config — купленное за Robux не пропадает.
+			-- Выбор и интерфейс — только из Config
+			if value == true and type(id) == "string" and #id <= 64 then
 				owned[id] = true
 			end
 		end
@@ -34,7 +37,7 @@ function StyleModels.data(profile: DataService.Profile): Data
 		end
 	end
 	local selected = if type(raw) == "table" then raw.selected else nil
-	if type(selected) ~= "string" or not owned[selected] then
+	if type(selected) ~= "string" or not owned[selected] or not FurnitureStyles.get(selected) then
 		selected = FurnitureStyles.default
 	end
 	local clean = { owned = owned, selected = selected }

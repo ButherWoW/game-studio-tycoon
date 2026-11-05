@@ -32,7 +32,14 @@ local function pushState(player: Player)
 		return
 	end
 	local styles = StyleModels.data(profile)
-	StyleRemotes.StyleState:FireClient(player, { owned = styles.owned, selected = styles.selected })
+	-- Клиенту — только стили из Config (неизвестные id лежат в сохранении про запас)
+	local owned: { [string]: boolean } = {}
+	for id in styles.owned do
+		if FurnitureStyles.get(id) then
+			owned[id] = true
+		end
+	end
+	StyleRemotes.StyleState:FireClient(player, { owned = owned, selected = styles.selected })
 end
 
 local function logStyle(player: Player, styleId: string, how: string)
