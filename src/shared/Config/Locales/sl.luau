@@ -1262,6 +1262,7 @@ return {
 	studio_name_placeholder = "Na primer: Pixel Bananas",
 	studio_name_rule = "Od {min} do {max} znakov. Ime bodo videli vsi igralci",
 	studio_name_done = "Končano",
+	fixc_plot_waiting = "⏳ Vse parcele na strežniku so zasedene — čakamo na prosto… Si {n}. v vrsti",
 	studio_name_err_length = "Potrebuješ od {min} do {max} znakov",
 	studio_name_err_filtered = "Filter Roblox ni sprejel imena — izmisli si drugo",
 	studio_name_err_error = "Filter trenutno ni na voljo — poskusi znova",

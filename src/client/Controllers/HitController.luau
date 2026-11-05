@@ -16,6 +16,7 @@ local Images = require(ReplicatedStorage.Shared.Config.Images)
 local MENU_SLOT = 7
 local TOAST_SECONDS = 4
 local MAX_TOASTS = 3
+local CLOSE_HEIGHT = 44 -- px: кнопка «Закрыть» под прокруткой окна
 
 local player = Players.LocalPlayer
 
@@ -216,10 +217,19 @@ local function openWindow()
 	HitRemotes.RequestHitState:FireServer()
 
 	local frame = Ui.window(screen, "Window", Vector2.new(560, 660))
-	local body = Instance.new("Frame")
+	-- Тело прокручивается и тянется по высоте окна: тогда Ui.window на телефоне держит масштаб
+	-- не меньше 0.65 (раньше окно ужималось до ~46 %, текст 10 px — аудит P2-18).
+	-- «Закрыть» — вне прокрутки, всегда видна внизу
+	local body = Instance.new("ScrollingFrame")
 	body.BackgroundTransparency = 1
+	body.BorderSizePixel = 0
 	body.Position = UDim2.fromOffset(16, 12)
-	body.Size = UDim2.new(1, -32, 1, -24)
+	body.Size = UDim2.new(1, -32, 1, -(24 + CLOSE_HEIGHT + 8))
+	body.CanvasSize = UDim2.new()
+	body.AutomaticCanvasSize = Enum.AutomaticSize.Y
+	body.ScrollBarThickness = 6
+	body.ScrollingDirection = Enum.ScrollingDirection.Y
+	body.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
 	Ui.list(body, 8)
 	body.Parent = frame
 
@@ -244,13 +254,12 @@ local function openWindow()
 	local updHint = Ui.label(body, "", 36, Enum.Font.GothamMedium, Ui.colors.muted)
 	updHint.TextWrapped = true
 	updHint.LayoutOrder = 7
-	local list = Instance.new("ScrollingFrame")
+	-- Список растёт по содержимому: прокручивается всё тело окна
+	local list = Instance.new("Frame")
 	list.BackgroundTransparency = 1
 	list.BorderSizePixel = 0
-	list.Size = UDim2.new(1, 0, 0, 200)
-	list.CanvasSize = UDim2.new()
-	list.AutomaticCanvasSize = Enum.AutomaticSize.Y
-	list.ScrollBarThickness = 6
+	list.Size = UDim2.new(1, 0, 0, 0)
+	list.AutomaticSize = Enum.AutomaticSize.Y
 	list.LayoutOrder = 8
 	Ui.list(list, 4)
 	list.Parent = body
@@ -368,9 +377,10 @@ local function openWindow()
 	end)
 	lock.Size = UDim2.new(1, 0, 0, 50)
 	lock.LayoutOrder = 9
-	local close = Ui.button(body, ClientState.t("hit_close"), Ui.colors.locked, closeWindow)
-	close.Size = UDim2.new(1, 0, 0, 44)
-	close.LayoutOrder = 10
+	local close = Ui.button(frame, ClientState.t("hit_close"), Ui.colors.locked, closeWindow)
+	close.AnchorPoint = Vector2.new(0.5, 1)
+	close.Position = UDim2.new(0.5, 0, 1, -12)
+	close.Size = UDim2.new(1, -32, 0, CLOSE_HEIGHT)
 
 	local function update()
 		if not state then

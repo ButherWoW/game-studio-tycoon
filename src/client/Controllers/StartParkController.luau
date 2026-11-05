@@ -474,6 +474,11 @@ local function openNameWindow()
 		windowWithTitle("StudioNameWindow", ClientState.t("studio_name_title"), Vector2.new(440, 250), 25)
 	nameGui = screen
 	Ui.windowOpened()
+	-- Телефон: клавиатура поднимается снизу и закрывала «Готово» — окно у верхнего края (аудит P2-17)
+	if Ui.touch then
+		frame.AnchorPoint = Vector2.new(0.5, 0)
+		frame.Position = UDim2.new(0.5, 0, 0, 8)
+	end
 	local rule = Ui.label(
 		frame,
 		ClientState.t("studio_name_rule", { min = StartPark.studioNameMin, max = StartPark.studioNameMax }),
@@ -506,7 +511,7 @@ local function openNameWindow()
 	err.Size = UDim2.new(1, -32, 0, 20)
 	errorLabel = err
 
-	local done = Ui.button(frame, ClientState.t("studio_name_done"), Ui.colors.good, function()
+	local function submit()
 		local name = box.Text:gsub("^%s+", ""):gsub("%s+$", "")
 		local length = utf8.len(name)
 		if not length or length < StartPark.studioNameMin or length > StartPark.studioNameMax then
@@ -519,6 +524,13 @@ local function openNameWindow()
 		end
 		err.Text = "…"
 		StartRemotes.SetStudioName:FireServer(name)
+	end
+	local done = Ui.button(frame, ClientState.t("studio_name_done"), Ui.colors.good, submit)
+	-- Enter / «Готово» на клавиатуре телефона отправляет название, а не только прячет клавиатуру
+	box.FocusLost:Connect(function(enterPressed: boolean)
+		if enterPressed and box.Parent then
+			submit()
+		end
 	end)
 	done.Name = "DoneButton"
 	done.AnchorPoint = Vector2.new(0.5, 1)

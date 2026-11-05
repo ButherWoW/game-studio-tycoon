@@ -1264,6 +1264,7 @@ return {
 	studio_name_placeholder = "Till exempel: Pixel Bananas",
 	studio_name_rule = "{min} till {max} tecken. Alla spelare ser namnet",
 	studio_name_done = "Klar",
+	fixc_plot_waiting = "⏳ Alla tomter på servern är upptagna — väntar på en ledig… Du är nr {n} i kön",
 	studio_name_err_length = "Använd {min} till {max} tecken",
 	studio_name_err_filtered = "Robloxfiltret godkände inte namnet — hitta på ett annat",
 	studio_name_err_error = "Filtret är inte tillgängligt just nu — försök igen",

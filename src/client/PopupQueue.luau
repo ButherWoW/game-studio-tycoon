@@ -48,20 +48,32 @@ function PopupQueue.pending(): boolean
 	return #queue > 0
 end
 
+-- Один шаг очереди. Ошибка в show одного окна не должна навсегда оставить running = true
+-- (иначе ни одно окно входа больше не откроется) — аудит P2-6
+local function step()
+	local now = os.clock()
+	if PopupQueue.busy() then
+		freeSince = now
+	elseif now - freeSince >= GAP_SECONDS then
+		local entry = table.remove(queue, 1)
+		if entry then
+			-- show сама проверяет, актуально ли ещё окно (награду могли уже забрать)
+			local ok, err = pcall(entry.show)
+			if not ok then
+				warn("[PopupQueue] popup " .. entry.key .. " failed:", err)
+			end
+		end
+		freeSince = now
+	end
+end
+
 local function run()
 	running = true
 	while #queue > 0 do
 		task.wait(CHECK_SECONDS)
-		local now = os.clock()
-		if PopupQueue.busy() then
-			freeSince = now
-		elseif now - freeSince >= GAP_SECONDS then
-			local entry = table.remove(queue, 1)
-			if entry then
-				-- show сама проверяет, актуально ли ещё окно (награду могли уже забрать)
-				entry.show()
-			end
-			freeSince = now
+		local ok, err = pcall(step)
+		if not ok then
+			warn("[PopupQueue] step failed:", err)
 		end
 	end
 	running = false

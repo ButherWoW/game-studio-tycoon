@@ -10,7 +10,9 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage.Shared
-local ConsoleRemotes = require(Shared.ConsoleRemotes)
+-- ConsoleRemotes грузим в своём потоке (ниже): модуль нужен HUD/«Создать игру», а require ждёт сервер
+-- без таймаута (аудит P2-20). До загрузки запросы откладываются, кнопки ничего не шлют
+local consoleRemotes: typeof(require(Shared.ConsoleRemotes))? = nil
 local Console = require(Shared.Config.Console)
 local Platforms = require(Shared.Config.Platforms)
 local Employees = require(Shared.Config.Employees)
@@ -51,7 +53,7 @@ function ConsoleClient.platformOpen(id: string): boolean
 	return type(open) == "table" and open[id] == true
 end
 
-ConsoleRemotes.ConsoleState.OnClientEvent:Connect(function(state: any)
+local function onState(state: any)
 	if type(state) ~= "table" then
 		return
 	end
@@ -67,11 +69,27 @@ ConsoleRemotes.ConsoleState.OnClientEvent:Connect(function(state: any)
 		ConsoleClient.selectedPlatform = "pc"
 	end
 	changed:Fire()
-end)
-
-function ConsoleClient.request()
-	ConsoleRemotes.ConsoleRequest:FireServer()
 end
+
+local requestWanted = false
+function ConsoleClient.request()
+	local remotes = consoleRemotes
+	if remotes then
+		remotes.ConsoleRequest:FireServer()
+	else
+		requestWanted = true
+	end
+end
+
+task.spawn(function()
+	local remotes = require(Shared.ConsoleRemotes)
+	consoleRemotes = remotes
+	remotes.ConsoleState.OnClientEvent:Connect(onState)
+	if requestWanted then
+		requestWanted = false
+		remotes.ConsoleRequest:FireServer()
+	end
+end)
 
 -- Для перерисовки окна «Создать игру»: что поменялось в строке платформ
 function ConsoleClient.key(): string
@@ -309,7 +327,10 @@ local function buyEquipmentButton(
 		color = if affordable then Ui.colors.money else Ui.colors.locked,
 		onClick = function()
 			if affordable then
-				ConsoleRemotes.ConsoleEquip:FireServer(item.id)
+				local remotes = consoleRemotes
+				if remotes then
+					remotes.ConsoleEquip:FireServer(item.id)
+				end
 			end
 		end,
 	}
@@ -457,7 +478,10 @@ local function buildConsole(body: Instance, start: number): number
 				if canStart then Ui.colors.money else Ui.colors.locked,
 				function()
 					if canStart then
-						ConsoleRemotes.ConsoleStage:FireServer()
+						local remotes = consoleRemotes
+						if remotes then
+							remotes.ConsoleStage:FireServer()
+						end
 					end
 				end
 			)
@@ -586,7 +610,10 @@ local function buildStreamer(body: Instance, start: number)
 		ClientState.t("streamer_hype", { hype = s.hype or 0, bonus = s.hypeBonus or 0 })
 	)
 	rowButton(frame, ClientState.t("streamer_unassign"), Ui.colors.locked, function()
-		ConsoleRemotes.StreamerAssign:FireServer(false)
+		local remotes = consoleRemotes
+		if remotes then
+			remotes.StreamerAssign:FireServer(false)
+		end
 	end)
 	if s.strike == true then
 		text(body, ClientState.t("streamer_strike"), nextOrder(), Ui.colors.bad)
@@ -621,7 +648,10 @@ function ConsoleClient.streamerButton(parent: Instance, employeeId: string, orde
 		if isStreamer then ClientState.t("streamer_unassign") else ClientState.t("streamer_assign"),
 		if isStreamer then Ui.colors.locked else Ui.colors.primary,
 		function()
-			ConsoleRemotes.StreamerAssign:FireServer(if isStreamer then false else employeeId)
+			local remotes = consoleRemotes
+			if remotes then
+				remotes.StreamerAssign:FireServer(if isStreamer then false else employeeId)
+			end
 		end
 	)
 	b.Size = UDim2.new(1, 0, 0, 34)

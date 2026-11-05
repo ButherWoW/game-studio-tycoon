@@ -40,13 +40,20 @@ local ARROW_SIZE = 48
 local BOB_HEIGHT = 8
 local BOB_SPEED = 4
 -- Плашка внизу экрана; если поверх неё окно «Создать игру» / «Релиз» — ставим её под окно
--- или над ним, а если места нет — убираем за окно (отчёт #2, п. 4: закрывала ползунки и кнопки)
+-- или над ним (отчёт #2, п. 4: закрывала ползунки и кнопки). Места нет (телефон 844×390) —
+-- узкая карточка сбоку от окна, всегда поверх: раньше плашка уходила за окно и «Пропустить»
+-- нельзя было нажать (аудит P2-15)
 local PLATE_HEIGHT = 56
+local PLATE_WIDTH = 640
 local PLATE_BOTTOM = 92
 local PLATE_GAP = 8
 local PLATE_ORDER = 30 -- над HUD и обычными окнами
-local PLATE_BEHIND_ORDER = 5 -- под окнами «Создать игру» (10) и «Релиз» (20)
+local SIDE_MAX_WIDTH = 240
+local SIDE_MIN_WIDTH = 150
+local SIDE_HEIGHT = 140
 local TUTORIAL_WINDOWS = { "CreateGameWindow", "ReleaseWindow" }
+-- Всплывающие события разработки (выбор a/b, быстрое нажатие): пока на экране — плашку прячем
+local EVENT_POPUPS = { "DevEventPopup", "QuickEventPopup" }
 
 local TutorialController = {}
 
@@ -78,6 +85,39 @@ local function findButton(root: Instance?, name: string): GuiButton?
 		return button
 	end
 	return nil
+end
+
+-- Шаг «выбери жанр и тему»: стрелка на первую открытую карточку жанра, а когда жанр выбран —
+-- темы (CreateGameWindow ставит карточкам атрибуты TutorialPick и Selected)
+local function pickTarget(window: Instance?): GuiButton?
+	if not window then
+		return nil
+	end
+	local first: { [string]: GuiButton } = {}
+	local chosen: { [string]: boolean } = {}
+	for _, d in window:GetDescendants() do
+		local kind = d:GetAttribute("TutorialPick")
+		if type(kind) == "string" and d:IsA("GuiButton") and d.Visible then
+			if d:GetAttribute("Selected") == true then
+				chosen[kind] = true
+			end
+			local best = first[kind]
+			if not best or d.LayoutOrder < best.LayoutOrder then
+				first[kind] = d
+			end
+		end
+	end
+	local target = if not chosen.genre then first.genre elseif not chosen.topic then first.topic else nil
+	-- Карточка прокручена за край окна — стрелка висела бы в пустоте
+	local scroll = target and target:FindFirstAncestorWhichIsA("ScrollingFrame")
+	if target and scroll then
+		local y = target.AbsolutePosition.Y
+		local top = scroll.AbsolutePosition.Y
+		if y < top or y + target.AbsoluteSize.Y > top + scroll.AbsoluteSize.Y then
+			return nil
+		end
+	end
+	return target
 end
 
 -- Место игрока за компьютером на своём участке (Seat «PcSeat» в столе или кресле)
@@ -203,7 +243,7 @@ local function run()
 	plate.BackgroundTransparency = 0.1
 	Ui.corner(plate)
 	local limit = Instance.new("UISizeConstraint")
-	limit.MaxSize = Vector2.new(640, PLATE_HEIGHT)
+	limit.MaxSize = Vector2.new(PLATE_WIDTH, PLATE_HEIGHT)
 	limit.Parent = plate
 	local stroke = Instance.new("UIStroke")
 	stroke.Thickness = 2
@@ -259,7 +299,34 @@ local function run()
 		billboard.Parent = if target then arrowGui else nil
 	end
 
-	-- Плашка не должна закрывать окно обучения: под окном, над ним или за ним
+	-- Раскладка плашки: широкая строка (текст слева, кнопка справа) или карточка сбоку
+	-- (текст сверху, кнопка снизу во всю ширину)
+	local sideMode: boolean? = nil
+	local function setSide(side: boolean)
+		if sideMode == side then
+			return
+		end
+		sideMode = side
+		if side then
+			limit.MaxSize = Vector2.new(SIDE_MAX_WIDTH, SIDE_HEIGHT)
+			hint.Position = UDim2.fromOffset(10, 8)
+			hint.Size = UDim2.new(1, -20, 1, -68)
+			hint.TextWrapped = true
+			action.AnchorPoint = Vector2.new(0.5, 1)
+			action.Position = UDim2.new(0.5, 0, 1, -8)
+			action.Size = UDim2.new(1, -16, 0, 44)
+		else
+			limit.MaxSize = Vector2.new(PLATE_WIDTH, PLATE_HEIGHT)
+			hint.Position = UDim2.fromOffset(14, 8)
+			hint.Size = UDim2.new(1, -150, 0, 40)
+			hint.TextWrapped = false
+			action.AnchorPoint = Vector2.new(1, 0.5)
+			action.Position = UDim2.new(1, -8, 0.5, 0)
+			action.Size = UDim2.fromOffset(120, 40)
+		end
+	end
+
+	-- Плашка не должна закрывать окно обучения: под окном, над ним или сбоку от него
 	local function placePlate()
 		local window: GuiObject? = nil
 		for _, name in TUTORIAL_WINDOWS do
@@ -269,28 +336,38 @@ local function run()
 				window = frame
 			end
 		end
-		local screenHeight = gui.AbsoluteSize.Y
+		local screenSize = gui.AbsoluteSize
+		local screenHeight = screenSize.Y
+		gui.DisplayOrder = PLATE_ORDER
 		if not window or screenHeight <= 0 then
+			setSide(false)
 			plate.AnchorPoint = Vector2.new(0.5, 1)
 			plate.Position = UDim2.new(0.5, 0, 1, -PLATE_BOTTOM)
-			gui.DisplayOrder = PLATE_ORDER
+			plate.Size = UDim2.new(0.9, 0, 0, PLATE_HEIGHT)
 			return
 		end
 		local top = window.AbsolutePosition.Y
 		local bottom = top + window.AbsoluteSize.Y
 		if screenHeight - bottom >= PLATE_HEIGHT + PLATE_GAP * 2 then
+			setSide(false)
 			plate.AnchorPoint = Vector2.new(0.5, 0)
 			plate.Position = UDim2.new(0.5, 0, 0, bottom + PLATE_GAP)
-			gui.DisplayOrder = PLATE_ORDER
+			plate.Size = UDim2.new(0.9, 0, 0, PLATE_HEIGHT)
 		elseif top >= PLATE_HEIGHT + PLATE_GAP * 2 then
+			setSide(false)
 			plate.AnchorPoint = Vector2.new(0.5, 1)
 			plate.Position = UDim2.new(0.5, 0, 0, top - PLATE_GAP)
-			gui.DisplayOrder = PLATE_ORDER
+			plate.Size = UDim2.new(0.9, 0, 0, PLATE_HEIGHT)
 		else
-			-- Места нет (низкий экран): плашка уходит за окно, стрелка остаётся сверху
-			plate.AnchorPoint = Vector2.new(0.5, 1)
-			plate.Position = UDim2.new(0.5, 0, 1, -PLATE_BOTTOM)
-			gui.DisplayOrder = PLATE_BEHIND_ORDER
+			-- Низкий экран: карточка справа от окна, по высоте посередине (слева — меню и джойстик,
+			-- справа внизу — кнопка прыжка). Не хватает места — всё равно справа и поверх окна,
+			-- чтобы «Пропустить» оставалась нажимаемой
+			setSide(true)
+			local free = screenSize.X - (window.AbsolutePosition.X + window.AbsoluteSize.X) - PLATE_GAP * 2
+			local width = math.clamp(free, SIDE_MIN_WIDTH, SIDE_MAX_WIDTH)
+			plate.AnchorPoint = Vector2.new(1, 0.5)
+			plate.Position = UDim2.new(1, -PLATE_GAP, 0.5, 0)
+			plate.Size = UDim2.fromOffset(width, math.min(SIDE_HEIGHT, screenHeight - PLATE_GAP * 2))
 		end
 	end
 
@@ -366,6 +443,8 @@ local function run()
 				if ClientState.atPc() then
 					target2d = findButton(playerGui:FindFirstChild("Hud"), "CreateGameButton")
 				end
+			elseif step == STEP_PICK then
+				target2d = pickTarget(playerGui:FindFirstChild("CreateGameWindow"))
 			elseif step == STEP_START then
 				target2d = findButton(playerGui:FindFirstChild("CreateGameWindow"), "StartButton")
 			elseif step == STEP_WAIT and not owns("pc1") then
@@ -384,6 +463,18 @@ local function run()
 				then
 					-- Окно может жить постоянно и прятать содержимое через Visible — считаем только видимое
 					for _, frame in child:GetChildren() do
+						if frame:IsA("GuiObject") and frame.Visible then
+							covered = true
+							break
+						end
+					end
+				end
+			end
+			-- Событие разработки (кнопки a/b) и быстрое событие (кнопка «Жми!») — плашка их закрывала
+			for _, name in EVENT_POPUPS do
+				local screen = playerGui:FindFirstChild(name)
+				if screen and screen:IsA("ScreenGui") and screen.Enabled then
+					for _, frame in screen:GetChildren() do
 						if frame:IsA("GuiObject") and frame.Visible then
 							covered = true
 							break

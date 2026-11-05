@@ -1263,6 +1263,7 @@ return {
 	studio_name_placeholder = "Contoh: Pixel Bananas",
 	studio_name_rule = "{min} sampai {max} karakter. Semua pemain akan melihatnya",
 	studio_name_done = "Selesai",
+	fixc_plot_waiting = "⏳ Semua lahan di server ini terisi — menunggu yang kosong… Kamu antrean ke-{n}",
 	studio_name_err_length = "Gunakan {min} sampai {max} karakter",
 	studio_name_err_filtered = "Filter Roblox menolak nama ini — coba yang lain",
 	studio_name_err_error = "Filter sedang tidak tersedia — coba lagi",

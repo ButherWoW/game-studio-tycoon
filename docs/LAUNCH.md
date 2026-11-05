@@ -32,6 +32,7 @@
 | 16 | Реклама Roblox Ads: `ad_square`, `ad_wide` (§5), стартовый бюджет | ✅ бюджет | загрузка | тексты готовы | |
 | 17 | День 1–7: live-ops по плану (§4), сбор багов из Discord → Issues | ✅ анонсы | тесты горячих правок | хотфиксы | |
 | 18 | **Дата запуска** в `src/shared/Config/ContentDrops.luau` → `launchDate` (§6, «График контента») | ✅ решает дату | проверка в Studio | ✅ правка Config | |
+| 19 | **MaxPlayers = 12** (Game Settings → Places → Server Size): участков на сервере не больше 12 (`WorldService`, `PLOT_COUNT`); 13-й игрок ждёт в очереди с плашкой «Все участки заняты» | ✅ одобрить | ✅ ставит в Dashboard | лимит в коде | |
 
 ---
 

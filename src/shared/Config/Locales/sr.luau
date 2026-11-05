@@ -1262,6 +1262,7 @@ return {
 	studio_name_placeholder = "На пример: Pixel Bananas",
 	studio_name_rule = "Од {min} до {max} знакова. Име ће видети сви играчи",
 	studio_name_done = "Готово",
+	fixc_plot_waiting = "⏳ Све парцеле на серверу су заузете — чекамо слободну… Ти си {n}. у реду",
 	studio_name_err_length = "Треба од {min} до {max} знакова",
 	studio_name_err_filtered = "Roblox филтер није пропустио име — смисли друго",
 	studio_name_err_error = "Филтер тренутно није доступан — покушај поново",

@@ -1150,6 +1150,8 @@ Texts.ru = {
 	studio_name_placeholder = "Например: Pixel Bananas",
 	studio_name_rule = "От {min} до {max} символов. Название увидят все игроки",
 	studio_name_done = "Готово",
+	-- fixc_: исправления клиента (аудит)
+	fixc_plot_waiting = "⏳ Все участки на сервере заняты — ждём свободный… Ты {n}-й в очереди",
 	studio_name_err_length = "Нужно от {min} до {max} символов",
 	studio_name_err_filtered = "Фильтр Roblox не пропустил название — придумай другое",
 	studio_name_err_error = "Фильтр сейчас недоступен — попробуй ещё раз",
@@ -2694,6 +2696,8 @@ Texts.en = {
 	studio_name_placeholder = "For example: Pixel Bananas",
 	studio_name_rule = "{min} to {max} characters. Every player will see it",
 	studio_name_done = "Done",
+	-- fixc_: исправления клиента (аудит)
+	fixc_plot_waiting = "⏳ All plots on this server are taken — waiting for a free one… You're #{n} in line",
 	studio_name_err_length = "Use {min} to {max} characters",
 	studio_name_err_filtered = "Roblox filter didn't accept this name — try another one",
 	studio_name_err_error = "The filter is unavailable right now — try again",

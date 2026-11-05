@@ -1263,6 +1263,7 @@ return {
 	studio_name_placeholder = "例如：Pixel Bananas",
 	studio_name_rule = "{min} 到 {max} 个字符。所有玩家都能看到",
 	studio_name_done = "完成",
+	fixc_plot_waiting = "⏳ 本服务器的地块都已被占用——正在等待空出的地块……你排在第 {n} 位",
 	studio_name_err_length = "需要 {min} 到 {max} 个字符",
 	studio_name_err_filtered = "Roblox 过滤器没有通过这个名字 — 换一个试试",
 	studio_name_err_error = "过滤器暂时不可用 — 请再试一次",

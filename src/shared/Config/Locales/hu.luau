@@ -1264,6 +1264,7 @@ return {
 	studio_name_placeholder = "Például: Pixel Bananas",
 	studio_name_rule = "{min}–{max} karakter. Minden játékos látni fogja",
 	studio_name_done = "Kész",
+	fixc_plot_waiting = "⏳ A szerver összes telke foglalt — várunk egy szabadra… {n}. vagy a sorban",
 	studio_name_err_length = "{min}–{max} karakter kell",
 	studio_name_err_filtered = "A Roblox szűrője nem engedte át a nevet — találj ki másikat",
 	studio_name_err_error = "A szűrő most nem elérhető — próbáld újra",
