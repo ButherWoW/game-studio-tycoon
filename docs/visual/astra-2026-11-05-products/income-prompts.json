@@ -1,0 +1,38 @@
+[
+  {
+    "filename": "dp_income10.png",
+    "prompt": "Use case: ads-marketing. Production Roblox developer-product icon for original Build Your Game Studio Tycoon. Square1:1 finished512x512 opaque PNG. Same visual family: polished chunky cartoon low-poly toy3D, thicknavy#1E1E2E outline, gold#FFC93C with warmgold highlights, blue#3D7BFF. Full canvas vivid royalblue background, no transparency, no white border. CRITICAL circle crop safe: ALL foreground objects including coins, shadows and small details must lie entirely inside a centered circle diameter360 on512canvas, leaving broad generous blue margins allaround. Background alone fills outside that circle. No text, numerals, currency symbols, logos, brands, real products, weapons, watermark or signature. One SMALL rounded gold coin pouch, simple tied navy drawstring, one star-shaped blank seal, exactly three loose chunky gold coins beside it. Small starter-size bundle.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-428adcd2-c89d-42d0-88e0-3b9c8452deee.png",
+    "edits": [
+      {
+        "prompt": "Use case: precise-object-edit. Edit target is this original gold coin bundle icon. Keep the same bag, star emblem, blue drawstring, coin quantity, 3D style, colors and overall arrangement. REMOVE the entire black circular outline and any inner disk/badge edge. Fill its former area with seamless royalblue background matching the square's outer background. SHRINK the complete bag+coins+shadow group uniformly by25percent, centered, leaving much wider plainblue margins. Do not add or draw any guide, ring, circle, frame or border. No new text, logos, numbers or currency symbols. Square1:1, fully opaque edge-to-edge blue background, allforeground compact nearcenter.",
+        "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-6b9ed1ee-5bc4-4bab-aa11-896cc4b63367.png"
+      }
+    ],
+    "finalSource": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-6b9ed1ee-5bc4-4bab-aa11-896cc4b63367.png"
+  },
+  {
+    "filename": "dp_income30.png",
+    "prompt": "Use case: ads-marketing. Production Roblox developer-product icon for original Build Your Game Studio Tycoon. Square1:1 finished512x512 opaque PNG. Same visual family: polished chunky cartoon low-poly toy3D, thicknavy#1E1E2E outline, gold#FFC93C with warmgold highlights, blue#3D7BFF. Full canvas vivid royalblue background, no transparency, no white border. CRITICAL circle crop safe: ALL foreground objects including coins, shadows and small details must lie entirely inside a centered circle diameter360 on512canvas, leaving broad generous blue margins allaround. Background alone fills outside that circle. No text, numerals, currency symbols, logos, brands, real products, weapons, watermark or signature. One MEDIUM rounded gold coin pouch, same design with tied navy drawstring and a star-shaped blank seal, seven loose chunky gold coins stacked neatly beside it. Clearly a more generous bundle than the small version.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-25195e56-d195-4e92-b9ad-b5b955ff152d.png",
+    "edits": [
+      {
+        "prompt": "Use case: precise-object-edit. Edit target is this original gold coin bundle icon. Keep the same bag, star emblem, blue drawstring, coin quantity, 3D style, colors and overall arrangement. REMOVE the entire black circular outline and any inner disk/badge edge. Fill its former area with seamless royalblue background matching the square's outer background. SHRINK the complete bag+coins+shadow group uniformly by25percent, centered, leaving much wider plainblue margins. Do not add or draw any guide, ring, circle, frame or border. No new text, logos, numbers or currency symbols. Square1:1, fully opaque edge-to-edge blue background, allforeground compact nearcenter.",
+        "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-e14ff89b-0d86-4857-9faa-ce48ada7ca62.png"
+      }
+    ],
+    "finalSource": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-e14ff89b-0d86-4857-9faa-ce48ada7ca62.png"
+  },
+  {
+    "filename": "dp_income90.png",
+    "prompt": "Use case: ads-marketing. Production Roblox developer-product icon for original Build Your Game Studio Tycoon. Square1:1 finished512x512 opaque PNG. Same visual family: polished chunky cartoon low-poly toy3D, thicknavy#1E1E2E outline, gold#FFC93C with warmgold highlights, blue#3D7BFF. Full canvas vivid royalblue background, no transparency, no white border. CRITICAL circle crop safe: ALL foreground objects including coins, shadows and small details must lie entirely inside a centered circle diameter360 on512canvas, leaving broad generous blue margins allaround. Background alone fills outside that circle. No text, numerals, currency symbols, logos, brands, real products, weapons, watermark or signature. One LARGE rounded gold coin sack, same design with tied navy drawstring and star-shaped blank seal, two broad piles of chunky gold coins beside it. Abundant largest bundle, big clear silhouette.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-5a2109f0-3991-4c75-8c80-8da7dadfa92b.png",
+    "edits": [
+      {
+        "prompt": "Use case: precise-object-edit. Edit target is this original gold coin bundle icon. Keep the same bag, star emblem, blue drawstring, coin quantity, 3D style, colors and overall arrangement. REMOVE the entire black circular outline and any inner disk/badge edge. Fill its former area with seamless royalblue background matching the square's outer background. SHRINK the complete bag+coins+shadow group uniformly by25percent, centered, leaving much wider plainblue margins. Do not add or draw any guide, ring, circle, frame or border. No new text, logos, numbers or currency symbols. Square1:1, fully opaque edge-to-edge blue background, allforeground compact nearcenter.",
+        "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-17ff29ab-36ea-4963-83d7-221b60883a66.png"
+      }
+    ],
+    "finalSource": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-17ff29ab-36ea-4963-83d7-221b60883a66.png"
+  }
+]

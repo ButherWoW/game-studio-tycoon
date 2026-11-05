@@ -1,0 +1,128 @@
+{
+  "count": 6,
+  "visualReview": "All six inspected. Double-cash has two coin stacks and \u00d72; extra-slot has two monitors and plus; VIP-office plate blank; legend matches the V13 original crown/hair/gold/plum portrait. No words or brands. Foreground clearly inset with generous royal-blue square margin.",
+  "normalization": "Source images square; resized uniformly to512 without aspect distortion. All final pixels fully opaque.",
+  "foregroundCheck": "High-confidence dark outline, gold and cyan pixels all inside radius210; human review also checks complete subject silhouette.",
+  "assets": [
+    {
+      "file": "gp_doubleCash.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "alphaRange": [
+        255,
+        255
+      ],
+      "highConfidenceForegroundRadius": 179.26,
+      "safeCircleRadius": 210,
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "a1ba3d85a41545869d9ef1e089a57b42a3c8e6d4fefd17eea8180e07c2a2c49a",
+      "checks": "PASS"
+    },
+    {
+      "file": "gp_autoRelease.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "alphaRange": [
+        255,
+        255
+      ],
+      "highConfidenceForegroundRadius": 183.47,
+      "safeCircleRadius": 210,
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "def20b90037a1b9ac11f083627030f2060e2f11f2e546b65e10ea46f9b841c72",
+      "checks": "PASS"
+    },
+    {
+      "file": "gp_fastDev.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "alphaRange": [
+        255,
+        255
+      ],
+      "highConfidenceForegroundRadius": 180.75,
+      "safeCircleRadius": 210,
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "304551660a4770be2ad4ff350d0f24d99a0c7a4cad8714569172c22e00d3621b",
+      "checks": "PASS"
+    },
+    {
+      "file": "gp_extraSlot.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "alphaRange": [
+        255,
+        255
+      ],
+      "highConfidenceForegroundRadius": 171.98,
+      "safeCircleRadius": 210,
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "02caee0bb813e0236804dc0b77d473221af03668bf7fdac0f7d2420ff8db8075",
+      "checks": "PASS"
+    },
+    {
+      "file": "gp_vipOffice.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "alphaRange": [
+        255,
+        255
+      ],
+      "highConfidenceForegroundRadius": 176.1,
+      "safeCircleRadius": 210,
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "9b67f249854dd359e0f302c0574431a978d7a943f35936347e8237f06e794cb6",
+      "checks": "PASS"
+    },
+    {
+      "file": "gp_legendaryEmployee.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGB",
+      "alphaRange": [
+        255,
+        255
+      ],
+      "highConfidenceForegroundRadius": 184.15,
+      "safeCircleRadius": 210,
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "3febc7e0e8fd257f2b07d999133e5af9dc446501f71824c4aeae05b592ca3305",
+      "checks": "PASS"
+    }
+  ]
+}
