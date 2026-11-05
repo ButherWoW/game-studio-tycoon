@@ -338,6 +338,18 @@ local function goBack(player: Player, plot: BasePart, employeeId: string, record
 	end)
 end
 
+-- «Пицца-пати» (DailyEventService): никто не уходит на перерыв; без модуля — как обычно
+local function breaksPaused(): boolean
+	local module = script.Parent:FindFirstChild("DailyEventService")
+	if not module or not module:IsA("ModuleScript") then
+		return false
+	end
+	local ok, value = pcall(function()
+		return (require(module) :: any).noBreaks()
+	end)
+	return ok and value == true
+end
+
 local function schedule(player: Player)
 	local folder = StaffService.npcFolder(player)
 	local plot = PlotService.getPlot(player)
@@ -381,7 +393,7 @@ local function schedule(player: Player)
 			checks[employeeId] = now + rng:NextNumber(Mood.breaks.checkMin, Mood.breaks.checkMax)
 		elseif now >= due then
 			checks[employeeId] = now + rng:NextNumber(Mood.breaks.checkMin, Mood.breaks.checkMax)
-			if onBreak < limit and rng:NextNumber() < tier.chance then
+			if onBreak < limit and not breaksPaused() and rng:NextNumber() < tier.chance then
 				local model = folder:FindFirstChild("Staff_" .. employeeId)
 				if model and model:IsA("Model") and model:GetAttribute("SeatLocal") ~= nil then
 					startBreak(player, plot, model, employeeId, tier)

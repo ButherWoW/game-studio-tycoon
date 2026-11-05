@@ -105,10 +105,22 @@ function MascotService.equippedOf(profile: DataService.Profile): Mascots.Mascot?
 	return nil
 end
 
+-- «Парад маскотов» (DailyEventService): множитель бонуса; без модуля или при ошибке — 1
+local function paradeMultiplier(): number
+	local module = script.Parent:FindFirstChild("DailyEventService")
+	if not module or not module:IsA("ModuleScript") then
+		return 1
+	end
+	local ok, value = pcall(function()
+		return (require(module) :: any).mascotMultiplier()
+	end)
+	return if ok and type(value) == "number" and value >= 1 and value <= 10 then value else 1
+end
+
 -- Бонус надетого маскота вида kind (0 — нет такого)
 function MascotService.bonusFor(profile: DataService.Profile, kind: Mascots.BonusKind): number
 	local mascot = MascotService.equippedOf(profile)
-	return if mascot and mascot.bonus.kind == kind then mascot.bonus.value else 0
+	return if mascot and mascot.bonus.kind == kind then mascot.bonus.value * paradeMultiplier() else 0
 end
 
 function MascotService.bonus(player: Player, kind: Mascots.BonusKind): number

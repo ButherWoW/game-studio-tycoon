@@ -43,6 +43,8 @@ local info: { [string]: any } = {}
 local unlocked: { [string]: boolean } = {}
 -- Прибавки к зарплате после событий компании: employeeId -> множитель
 local raises: { [string]: number } = {}
+-- «Звезда» события дня «Охота за талантами» (StaffService): кого и почём можно нанять сейчас
+local star: { id: string, cost: number }? = nil
 local serverOffset = 0 -- os.time() сервера − клиента (перезарядка смены перка)
 local expanded: string? = nil -- сотрудник, у которого открыта карточка ✏️
 local scrollPosition = Vector2.zero
@@ -581,10 +583,17 @@ local function buildRow(
 	elseif freeDesks <= 0 and not (employee.legendary and anyDesk) then
 		text = ClientState.t("team_no_desk")
 	else
-		text = if employee.cost <= 0
+		-- «Звезда» найма: цена со скидкой, только пока идёт событие (сервер считает так же)
+		local cost = if star and star.id == employee.id
+			then math.min(star.cost, employee.cost)
+			else employee.cost
+		text = if cost <= 0
 			then ClientState.t("team_hire_free")
-			else ClientState.t("team_hire", { price = Texts.money(employee.cost) })
-		canHire = data.cash >= employee.cost
+			else ClientState.t("team_hire", { price = Texts.money(cost) })
+		if star and star.id == employee.id then
+			text = ClientState.t("devent_star_hire", { price = Texts.money(cost) })
+		end
+		canHire = data.cash >= cost
 		color = if canHire then Ui.colors.money else Ui.colors.locked
 	end
 	local button = Ui.button(row, text, color, function()
@@ -774,6 +783,12 @@ function TeamWindow.start()
 			info = if type(extra.info) == "table" then extra.info else {}
 			unlocked = if type(extra.unlocked) == "table" then extra.unlocked else {}
 			raises = if type(extra.raises) == "table" then extra.raises else {}
+			local s = extra.star
+			star = if type(s) == "table"
+					and type(s.id) == "string"
+					and type(s.cost) == "number"
+				then { id = s.id, cost = s.cost }
+				else nil
 			if type(extra.now) == "number" then
 				serverOffset = extra.now - os.time()
 			end

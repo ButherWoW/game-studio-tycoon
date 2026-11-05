@@ -432,6 +432,60 @@ spawnCartridge = function(spot: BasePart)
 	cartridge.Parent = spot
 end
 
+-- Множитель ломбарда от «Событий дня»; без модуля или при ошибке — 1
+local function dailyPawnMultiplier(): number
+	local module = script.Parent:FindFirstChild("DailyEventService")
+	if not module or not module:IsA("ModuleScript") then
+		return 1
+	end
+	local ok, value = pcall(function()
+		return (require(module) :: any).pawnMultiplier()
+	end)
+	return if ok and type(value) == "number" and value >= 1 and value <= 10 then value else 1
+end
+
+-- «Картриджепад»: multiplier > 1 — в CartridgeSpots добавляются временные точки RushSpot*
+-- (всего точек в multiplier раз больше), 1 — временные точки убираются вместе с картриджами
+function StartParkService.setCartridgeRush(multiplier: number)
+	local folder = park()
+	local spots = folder and folder:FindFirstChild("CartridgeSpots")
+	if not spots then
+		return
+	end
+	local base: { BasePart } = {}
+	for _, spot in spots:GetChildren() do
+		if spot:IsA("BasePart") then
+			if spot:GetAttribute("DailyRush") then
+				if multiplier <= 1 then
+					spot:Destroy()
+				end
+			else
+				table.insert(base, spot)
+			end
+		end
+	end
+	if multiplier <= 1 then
+		spots:SetAttribute("RushActive", nil)
+		return
+	end
+	-- Уже добавлены (повторный вызов в том же событии)
+	if #base == 0 or spots:GetAttribute("RushActive") then
+		return
+	end
+	spots:SetAttribute("RushActive", true)
+	local extra = math.floor(#base * (multiplier - 1))
+	for i = 1, extra do
+		local spot = base[(i - 1) % #base + 1]:Clone()
+		for _, child in spot:GetChildren() do
+			child:Destroy()
+		end
+		spot.Name = "RushSpot" .. i
+		spot:SetAttribute("DailyRush", true)
+		spot.Parent = spots
+		spawnCartridge(spot)
+	end
+end
+
 local function onPawn(player: Player)
 	local profile = DataService.get(player)
 	local counter = promptPart("Pawnshop", "Counter")
@@ -443,7 +497,8 @@ local function onPawn(player: Player)
 		StartRemotes.ParkNotice:FireClient(player, { kind = "pawn", count = 0, pay = 0 })
 		return
 	end
-	local pay = count * StartPark.cartridgePrice;
+	-- «Картриджепад» (DailyEventService): ломбард платит больше
+	local pay = math.floor(count * StartPark.cartridgePrice * dailyPawnMultiplier());
 	(profile :: any).cartridges = 0
 	player:SetAttribute("Cartridges", 0)
 	DataService.addCash(player, pay)

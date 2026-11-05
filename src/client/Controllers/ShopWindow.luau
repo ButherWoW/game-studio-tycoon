@@ -16,6 +16,7 @@ local AdCampaigns = require(Shared.Config.AdCampaigns)
 local GamePasses = require(Shared.Config.GamePasses)
 local Images = require(Shared.Config.Images)
 local Products = require(Shared.Config.Products)
+local DailyEvents = require(Shared.Config.DailyEvents)
 local Texts = require(Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
@@ -200,9 +201,21 @@ local function buildBoosts(body: Instance)
 			local amount = Texts.money(state.incomePerMinute * product.incomeMinutes)
 			description = ClientState.t("shop_income_amount", { money = amount })
 		end
+		-- «Кофе-раш» (события дня): кофе продаётся скидочной копией «Сделки дня» (выдаёт OfferService)
+		local productId, robuxPrice = product.productId, product.robuxPrice
+		local rushDeal = Products.deals[DailyEvents.coffeeRush.dealKey]
+		if
+			product.kind == "coffee"
+			and rushDeal
+			and rushDeal.productId > 0
+			and DailyEvents.isActive("coffeeRush")
+		then
+			productId, robuxPrice = rushDeal.productId, rushDeal.robuxPrice
+			description = ClientState.t("devent_coffee_sale") .. " · " .. description
+		end
 		local frame = row(body, i, product.icon, name, description)
-		robuxButton(frame, product.productId, product.robuxPrice, false, function()
-			promptProduct(product.productId)
+		robuxButton(frame, productId, robuxPrice, false, function()
+			promptProduct(productId)
 		end)
 	end
 end
@@ -359,6 +372,10 @@ function ShopWindow.start()
 	end)
 	-- Деньги поменялись — перекрасить кнопки «за $»
 	ClientState.changed:Connect(function()
+		render()
+	end)
+	-- «Кофе-раш» начался или кончился — другая цена кофе
+	ReplicatedStorage:GetAttributeChangedSignal("DailyEventActive"):Connect(function()
 		render()
 	end)
 end

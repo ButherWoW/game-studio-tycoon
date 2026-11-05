@@ -190,4 +190,22 @@ Images.contracts = {
 	franchise = 0, -- icon_franchise.png: вместо 📚 у блока «Франшизы» и в тостах франшиз
 } :: { [string]: number }
 
+-- События дня (V27; Config/DailyEvents). 0 — картинки нет: как раньше, эмодзи события.
+-- Иконки devent_<id>.png 256×256, баннер devent_banner.png 1600×300 без текста (над плашкой)
+Images.dailyEvents = {
+	coffeeRush = 0, -- devent_coffeeRush.png
+	investors = 0, -- devent_investors.png
+	bugHunt = 0, -- devent_bugHunt.png
+	cartridgeRush = 0, -- devent_cartridgeRush.png
+	blitzJam = 0, -- devent_blitzJam.png
+	critics = 0, -- devent_critics.png
+	pizza = 0, -- devent_pizza.png
+	talentHunt = 0, -- devent_talentHunt.png
+	flashSale = 0, -- devent_flashSale.png
+	mascotParade = 0, -- devent_mascotParade.png
+	golden = 0, -- devent_golden.png, «Золотой час»
+	nightShift = 0, -- devent_nightShift.png, «Ночная смена» (хакатон)
+	banner = 0, -- devent_banner.png 1600×300: общий баннер «Событие дня»
+} :: { [string]: number }
+
 return Images
