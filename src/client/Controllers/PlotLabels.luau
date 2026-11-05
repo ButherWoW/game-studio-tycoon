@@ -23,6 +23,10 @@ local function labelFor(buttonName: string): string?
 	if not id then
 		return nil
 	end
+	-- Серая кнопка на месте переезда, пока идёт стройка (PlotService, V29)
+	if id == "building" then
+		return ClientState.t("build_button")
+	end
 	local stageId = id:match("^stage_(.+)$")
 	if stageId then
 		for _, stage in Stages do

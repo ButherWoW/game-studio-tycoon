@@ -122,6 +122,10 @@ local function onRequestRebirth(player: Player)
 	-- Этап сбрасываем здесь: PlotService.rebuild делает это только при наличии участка,
 	-- а игрок в очереди на участок иначе сохранял бы офис/небоскрёб после Rebirth
 	profile.studioLevel = 1
+	-- Стройка этажа (Config/Construction) сгорает вместе со студией. Без возврата денег: Rebirth и так
+	-- обнуляет деньги, возврат стал бы лишь цифрой перед сбросом. PlotService.rebuild снимает её сам,
+	-- здесь — для игрока без участка (в очереди)
+	profile.construction = nil
 	DataService.replicate(player)
 
 	rebuildPlot(player)
