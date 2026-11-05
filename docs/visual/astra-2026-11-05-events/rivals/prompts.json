@@ -1,0 +1,80 @@
+{
+  "generator": "built-in image_gen",
+  "skill": "imagegen",
+  "transparentRequested": true,
+  "note": "quokkaPixel first request failed with transient connection error; one retry succeeded",
+  "assets": [
+    {
+      "id": "tinfoilOwl",
+      "prompt": "Use case: logo-brand. Asset: 256x256 rival studio UI emblem for a child-friendly original game studio tycoon. Generate one single centered compact symbol, not a sheet. Style: polished glossy low-poly toy illustration, broad confident very dark navy outline #1E1E2E, strong silhouette readable at 48px, chunky simplified geometry, tasteful bright specular highlights, same premium playful game-icon family. Fill about 78% of square, generous clear margin. Background genuinely transparent with alpha, no pedestal/background disk, no cast ground shadow outside silhouette. Symbol only: absolutely no text, letters, numbers, labels, logos, watermarks or real brands. Original invented emblem.\nSubject: A cheerful compact owl made from folded silver tinfoil facets, round amber-gold eyes and a tiny cyan brow highlight. Symmetrical recognizably owl silhouette, two small ear tufts, silver/lavender folds, dark outlined friendly face.",
+      "sourceFilename": "exec-c6ddf911-938f-466a-8d3f-d609dfdc976c.png",
+      "sourceCopy": "sources/exec-c6ddf911-938f-466a-8d3f-d609dfdc976c.png",
+      "filename": "rival_tinfoilOwl.png",
+      "generationAttempts": 1
+    },
+    {
+      "id": "mangoComet",
+      "prompt": "Use case: logo-brand. Asset: 256x256 rival studio UI emblem for a child-friendly original game studio tycoon. Generate one single centered compact symbol, not a sheet. Style: polished glossy low-poly toy illustration, broad confident very dark navy outline #1E1E2E, strong silhouette readable at 48px, chunky simplified geometry, tasteful bright specular highlights, same premium playful game-icon family. Fill about 78% of square, generous clear margin. Background genuinely transparent with alpha, no pedestal/background disk, no cast ground shadow outside silhouette. Symbol only: absolutely no text, letters, numbers, labels, logos, watermarks or real brands. Original invented emblem.\nSubject: A ripe golden-orange mango as a cheerful comet with a single tiny green leaf and a broad sweeping three-lobed coral-orange flame-like speed trail. Mango fruit readable, no face necessary, diagonal rising silhouette, vibrant orange/gold/leaf green.",
+      "sourceFilename": "exec-8d2ca2f4-22c0-48bb-85a4-f10e828df96b.png",
+      "sourceCopy": "sources/exec-8d2ca2f4-22c0-48bb-85a4-f10e828df96b.png",
+      "filename": "rival_mangoComet.png",
+      "generationAttempts": 1
+    },
+    {
+      "id": "quokkaPixel",
+      "prompt": "Use case: logo-brand. Asset: 256x256 rival studio UI emblem for a child-friendly original game studio tycoon. Generate one single centered compact symbol, not a sheet. Style: polished glossy low-poly toy illustration, broad confident very dark navy outline #1E1E2E, strong silhouette readable at 48px, chunky simplified geometry, tasteful bright specular highlights, same premium playful game-icon family. Fill about 78% of square, generous clear margin. Background genuinely transparent with alpha, no pedestal/background disk, no cast ground shadow outside silhouette. Symbol only: absolutely no text, letters, numbers, labels, logos, watermarks or real brands. Original invented emblem.\nSubject: A happy round sandy-brown quokka face with small round ears, dark button nose and gentle smile, dissolving at one lower corner into three chunky cyan and purple pixel cubes. Cute quokka, original symbol, not a bear or fox.",
+      "sourceFilename": "exec-0dd2698a-fe18-4309-80d1-874eea3ee1a1.png",
+      "sourceCopy": "sources/exec-0dd2698a-fe18-4309-80d1-874eea3ee1a1.png",
+      "filename": "rival_quokkaPixel.png",
+      "generationAttempts": 2
+    },
+    {
+      "id": "gloomberry",
+      "prompt": "Use case: logo-brand. Asset: 256x256 rival studio UI emblem for a child-friendly original game studio tycoon. Generate one single centered compact symbol, not a sheet. Style: polished glossy low-poly toy illustration, broad confident very dark navy outline #1E1E2E, strong silhouette readable at 48px, chunky simplified geometry, tasteful bright specular highlights, same premium playful game-icon family. Fill about 78% of square, generous clear margin. Background genuinely transparent with alpha, no pedestal/background disk, no cast ground shadow outside silhouette. Symbol only: absolutely no text, letters, numbers, labels, logos, watermarks or real brands. Original invented emblem.\nSubject: A single plump midnight-blue blueberry with a small angular indigo leaf crown, a friendly sleepy pair of eyes and a tiny lavender crescent cheek highlight. Cute mysterious mood, not scary. Rich blueberry blue and plum-purple, one compact rounded berry emblem.",
+      "sourceFilename": "exec-f007fdd0-ce39-4bb9-baaf-365947ca7e97.png",
+      "sourceCopy": "sources/exec-f007fdd0-ce39-4bb9-baaf-365947ca7e97.png",
+      "filename": "rival_gloomberry.png",
+      "generationAttempts": 1
+    },
+    {
+      "id": "brassfern",
+      "prompt": "Use case: logo-brand. Asset: 256x256 rival studio UI emblem for a child-friendly original game studio tycoon. Generate one single centered compact symbol, not a sheet. Style: polished glossy low-poly toy illustration, broad confident very dark navy outline #1E1E2E, strong silhouette readable at 48px, chunky simplified geometry, tasteful bright specular highlights, same premium playful game-icon family. Fill about 78% of square, generous clear margin. Background genuinely transparent with alpha, no pedestal/background disk, no cast ground shadow outside silhouette. Symbol only: absolutely no text, letters, numbers, labels, logos, watermarks or real brands. Original invented emblem.\nSubject: An original curled fern frond made of broad polished brass-gold leaflets, elegant but chunky, with a bright emerald green central stem and two copper shadows. One upright curling fern silhouette, no shield or lettering.",
+      "sourceFilename": "exec-fb56ca30-3d74-4ce8-a988-a1f42e29d812.png",
+      "sourceCopy": "sources/exec-fb56ca30-3d74-4ce8-a988-a1f42e29d812.png",
+      "filename": "rival_brassfern.png",
+      "generationAttempts": 1
+    },
+    {
+      "id": "velvetAnvil",
+      "prompt": "Use case: logo-brand. Asset: 256x256 rival studio UI emblem for a child-friendly original game studio tycoon. Generate one single centered compact symbol, not a sheet. Style: polished glossy low-poly toy illustration, broad confident very dark navy outline #1E1E2E, strong silhouette readable at 48px, chunky simplified geometry, tasteful bright specular highlights, same premium playful game-icon family. Fill about 78% of square, generous clear margin. Background genuinely transparent with alpha, no pedestal/background disk, no cast ground shadow outside silhouette. Symbol only: absolutely no text, letters, numbers, labels, logos, watermarks or real brands. Original invented emblem.\nSubject: A chunky friendly miniature anvil with a deep royal-plum velvet padded top and a warm brass-gold base, soft magenta edge highlights. One bold recognizable anvil silhouette, no hammer, no weapons, no letters.",
+      "sourceFilename": "exec-44aba552-49e3-4f1c-b885-686d59eb5413.png",
+      "sourceCopy": "sources/exec-44aba552-49e3-4f1c-b885-686d59eb5413.png",
+      "filename": "rival_velvetAnvil.png",
+      "generationAttempts": 1
+    },
+    {
+      "id": "nimbusTurtle",
+      "prompt": "Use case: logo-brand. Asset: 256x256 rival studio UI emblem for a child-friendly original game studio tycoon. Generate one single centered compact symbol, not a sheet. Style: polished glossy low-poly toy illustration, broad confident very dark navy outline #1E1E2E, strong silhouette readable at 48px, chunky simplified geometry, tasteful bright specular highlights, same premium playful game-icon family. Fill about 78% of square, generous clear margin. Background genuinely transparent with alpha, no pedestal/background disk, no cast ground shadow outside silhouette. Symbol only: absolutely no text, letters, numbers, labels, logos, watermarks or real brands. Original invented emblem.\nSubject: A happy turquoise little turtle with a puffy white cloud as its shell, lavender-blue shadow facets and tiny warm gold feet. Compact turtle side/three-quarter silhouette, friendly dark eye, one soft cloud-shell shape, no scenery.",
+      "sourceFilename": "exec-483ad7f7-a33e-47a5-ac44-1de9ea171c03.png",
+      "sourceCopy": "sources/exec-483ad7f7-a33e-47a5-ac44-1de9ea171c03.png",
+      "filename": "rival_nimbusTurtle.png",
+      "generationAttempts": 1
+    },
+    {
+      "id": "okraLantern",
+      "prompt": "Use case: logo-brand. Asset: 256x256 rival studio UI emblem for a child-friendly original game studio tycoon. Generate one single centered compact symbol, not a sheet. Style: polished glossy low-poly toy illustration, broad confident very dark navy outline #1E1E2E, strong silhouette readable at 48px, chunky simplified geometry, tasteful bright specular highlights, same premium playful game-icon family. Fill about 78% of square, generous clear margin. Background genuinely transparent with alpha, no pedestal/background disk, no cast ground shadow outside silhouette. Symbol only: absolutely no text, letters, numbers, labels, logos, watermarks or real brands. Original invented emblem.\nSubject: A whimsical hanging lantern shaped like a plump green okra pod, broad emerald faceted ribs around a glowing warm golden-orange center, tiny simple brass loop at top. Clearly a friendly vegetable-lantern emblem, no written characters or festival symbols.",
+      "sourceFilename": "exec-75ed42c1-826f-451e-990f-e355b5260fab.png",
+      "sourceCopy": "sources/exec-75ed42c1-826f-451e-990f-e355b5260fab.png",
+      "filename": "rival_okraLantern.png",
+      "generationAttempts": 1
+    },
+    {
+      "id": "bluemoth",
+      "prompt": "Use case: logo-brand. Asset: 256x256 rival studio UI emblem for a child-friendly original game studio tycoon. Generate one single centered compact symbol, not a sheet. Style: polished glossy low-poly toy illustration, broad confident very dark navy outline #1E1E2E, strong silhouette readable at 48px, chunky simplified geometry, tasteful bright specular highlights, same premium playful game-icon family. Fill about 78% of square, generous clear margin. Background genuinely transparent with alpha, no pedestal/background disk, no cast ground shadow outside silhouette. Symbol only: absolutely no text, letters, numbers, labels, logos, watermarks or real brands. Original invented emblem.\nSubject: An elegant friendly electric-blue moth with four broad geometric wing lobes, cobalt and cyan facets, tiny gold crescent accents and a dark navy compact body with two gentle antennae. Symmetrical moth silhouette, original invented wing pattern, no eyespots suggesting scary faces.",
+      "sourceFilename": "exec-5183464b-9b54-4a89-a108-aa37b5171683.png",
+      "sourceCopy": "sources/exec-5183464b-9b54-4a89-a108-aa37b5171683.png",
+      "filename": "rival_bluemoth.png",
+      "generationAttempts": 1
+    }
+  ]
+}
