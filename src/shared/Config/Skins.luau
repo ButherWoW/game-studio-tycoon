@@ -11,6 +11,8 @@
 -- robuxPrice — предложение, только для показа; финальную цену решает владелец.
 -- Переводы названий — ключи skin_<id> в Texts и Locales.
 
+local Universe = require(script.Parent.Universe)
+
 export type Skin = {
 	id: string,
 	name: string,
@@ -143,7 +145,7 @@ local list: { Skin } = {
 		name = "Неон-стример",
 		nameEn = "Neon Streamer",
 		premium = true,
-		productId = 3728448093,
+		productId = Universe.pick({ test = 3728448093, main = 0 }),
 		robuxPrice = 79,
 		model = "Skin_neon_streamer",
 		emoji = "📡",
@@ -156,7 +158,7 @@ local list: { Skin } = {
 		name = "Кибер-разработчик",
 		nameEn = "Cyber Dev",
 		premium = true,
-		productId = 3728448098,
+		productId = Universe.pick({ test = 3728448098, main = 0 }),
 		robuxPrice = 99,
 		model = "Skin_cyber_dev",
 		emoji = "🤖",
@@ -169,7 +171,7 @@ local list: { Skin } = {
 		name = "Разработчик-космонавт",
 		nameEn = "Space Dev",
 		premium = true,
-		productId = 3728448101,
+		productId = Universe.pick({ test = 3728448101, main = 0 }),
 		robuxPrice = 129,
 		model = "Skin_space_dev",
 		emoji = "🚀",
@@ -182,7 +184,7 @@ local list: { Skin } = {
 		name = "Маг кода",
 		nameEn = "Code Wizard",
 		premium = true,
-		productId = 3728448105,
+		productId = Universe.pick({ test = 3728448105, main = 0 }),
 		robuxPrice = 149,
 		model = "Skin_wizard_dev",
 		emoji = "🧙",

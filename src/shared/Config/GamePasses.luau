@@ -1,9 +1,11 @@
 --!strict
 -- Геймпассы (покупаются один раз, навсегда). Дизайн и цены — issue #11.
 -- gamePassId — ID из Creator Dashboard (0 = ещё не создан, в магазине кнопка «скоро»).
--- Текущие ID — тестовая вселенная v2 (10774624686), созданы 05.11; для основной игры нужен свой набор.
+-- ID парой Universe.pick({ test = v2 (10774624686), main = основная игра }) — Config/Universe, docs/IDS.md.
 -- robuxPrice — ПРЕДЛОЖЕНИЕ из #11, только для показа; финальную цену решает владелец,
 -- реальная задаётся в Dashboard (после этого поправить и здесь, чтобы магазин показывал верную).
+
+local Universe = require(script.Parent.Universe)
 
 export type PassId = "doubleCash" | "autoRelease" | "fastDev" | "extraSlot" | "vipOffice" | "legendaryEmployee"
 
@@ -26,7 +28,7 @@ local list: { GamePass } = {
 		description = "Вдвое больше дохода с каждого релиза",
 		descriptionEn = "Double revenue from every release",
 		icon = "💰",
-		gamePassId = 2071008855,
+		gamePassId = Universe.pick({ test = 2071008855, main = 0 }),
 		robuxPrice = 299, -- главный, ставим первым
 	},
 	{
@@ -36,7 +38,7 @@ local list: { GamePass } = {
 		description = "Новая игра стартует сама после релиза",
 		descriptionEn = "The next game starts by itself after a release",
 		icon = "🔁",
-		gamePassId = 2072480376,
+		gamePassId = Universe.pick({ test = 2072480376, main = 0 }),
 		robuxPrice = 149,
 	},
 	{
@@ -46,7 +48,7 @@ local list: { GamePass } = {
 		description = "Игры делаются на 25% быстрее",
 		descriptionEn = "Games are made 25% faster",
 		icon = "⚡",
-		gamePassId = 2067092439,
+		gamePassId = Universe.pick({ test = 2067092439, main = 0 }),
 		robuxPrice = 199,
 	},
 	{
@@ -56,7 +58,7 @@ local list: { GamePass } = {
 		description = "Две игры в разработке одновременно",
 		descriptionEn = "Develop two games at once",
 		icon = "➕",
-		gamePassId = 2068496428,
+		gamePassId = Universe.pick({ test = 2068496428, main = 0 }),
 		robuxPrice = 249,
 	},
 	{
@@ -66,7 +68,7 @@ local list: { GamePass } = {
 		description = "Свой декор и золотая табличка",
 		descriptionEn = "Exclusive decor and a golden sign",
 		icon = "👑",
-		gamePassId = 2070720897,
+		gamePassId = Universe.pick({ test = 2070720897, main = 0 }),
 		robuxPrice = 99, -- дешёвый, «первая покупка»
 	},
 	{
@@ -76,7 +78,7 @@ local list: { GamePass } = {
 		description = "Легендарный сотрудник в команду",
 		descriptionEn = "A legendary employee joins your team",
 		icon = "🧙",
-		gamePassId = 2070314109,
+		gamePassId = Universe.pick({ test = 2070314109, main = 0 }),
 		robuxPrice = 399,
 	},
 }
