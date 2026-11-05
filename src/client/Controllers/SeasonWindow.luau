@@ -239,7 +239,13 @@ local function renderSeason(frame: ScrollingFrame)
 	local tier = tonumber(s.tier) or 0
 	local xp = tonumber(s.xp) or 0
 	local maxTier = #Season.tiers
-	banner(frame, Images.social.seasonBanner, nextOrder())
+	-- «SEASON 1» — только в первом сезоне, дальше универсальный баннер без номера (если загружен)
+	local generic = Images.social.seasonBannerGeneric or 0
+	banner(
+		frame,
+		if Season.index() > 0 and generic > 0 then generic else Images.social.seasonBanner,
+		nextOrder()
+	)
 	local header = Ui.label(
 		frame,
 		t(

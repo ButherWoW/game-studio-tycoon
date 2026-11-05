@@ -107,7 +107,8 @@ Images.daily = {
 
 -- Сезон, гейм-джем, хакатон, студии, коды (docs/visual/astra-2026-11-05-social/V18), 0 — как раньше: эмодзи и цвет
 Images.social = {
-	seasonBanner = 0, -- season_banner.png (1600×400), шапка вкладки «Сезон»
+	seasonBanner = 0, -- season_banner.png (1600×400), шапка вкладки «Сезон» — только первый сезон («SEASON 1»)
+	seasonBannerGeneric = 0, -- season_banner_generic.png (1600×400, V18, без номера): сезоны со второго
 	gamejamBanner = 0, -- gamejam_banner.png (1600×400), шапка вкладки «Гейм-джем»
 	hackathonBanner = 0, -- hackathon_banner.png (1600×300), над плашкой хакатона
 	seasonTierFree = 0, -- season_tier_free.png, рамка иконки бесплатной награды уровня
