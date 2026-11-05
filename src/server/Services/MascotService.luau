@@ -44,7 +44,9 @@ local function data(profile: DataService.Profile): MascotData
 	local owned: { [string]: boolean } = {}
 	if type(raw.owned) == "table" then
 		for id, value in raw.owned do
-			if value == true and Mascots.get(id) then
+			-- Неизвестные id тоже храним: предмет переименовали или временно убрали из Config —
+			-- купленное за Robux не должно пропасть из сохранения. Интерфейс и обмен смотрят по Config
+			if value == true and type(id) == "string" and #id <= 64 then
 				owned[id] = true
 			end
 		end

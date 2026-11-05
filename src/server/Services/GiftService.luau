@@ -17,8 +17,11 @@ local DataService = require(script.Parent.DataService)
 local SkinService = require(script.Parent.SkinService)
 local PosterService = require(script.Parent.PosterService)
 local MascotService = require(script.Parent.MascotService)
+local RewardService = require(script.Parent.RewardService)
 
 local SELECT_COOLDOWN = 1
+-- Подарок вернулся покупателю, а такой предмет у него уже есть: столько минут дохода вместо него
+local FALLBACK_INCOME_MINUTES = 10
 
 type Pending = { giftId: string, targetUserId: number, targetName: string, at: number }
 
@@ -41,14 +44,14 @@ local function ownsItem(profile: DataService.Profile, gift: Social.Gift): boolea
 	return PosterService.ownsIn(profile, gift.itemId)
 end
 
-local function grantItem(player: Player, profile: DataService.Profile, gift: Social.Gift)
+-- false — предмет у игрока уже есть (ничего не выдано)
+local function grantItem(player: Player, profile: DataService.Profile, gift: Social.Gift): boolean
 	if gift.kind == "skin" then
-		SkinService.grantSkin(player, profile, gift.itemId)
+		return SkinService.grantSkin(player, profile, gift.itemId)
 	elseif gift.kind == "mascot" then
-		MascotService.grantMascot(player, profile, gift.itemId)
-	else
-		PosterService.grantPoster(player, profile, gift.itemId)
+		return MascotService.grantMascot(player, profile, gift.itemId)
 	end
+	return PosterService.grantPoster(player, profile, gift.itemId)
 end
 
 local function logGift(player: Player, gift: Social.Gift, toFriend: boolean)
@@ -112,8 +115,11 @@ function GiftService.grantProduct(buyer: Player, buyerProfile: DataService.Profi
 	if target and targetProfile and not ownsItem(targetProfile, gift) then
 		grantItem(target, targetProfile, gift)
 		delivered[purchaseId] = true
-		-- Подарок в профиле получателя: сохраняем сразу, не ждём автосейва
-		task.spawn(DataService.save, target)
+		-- Подарок в профиле получателя записан до подтверждения чека: не записался — Roblox повторит
+		-- чек, а delivered не даст выдать второй раз
+		if not DataService.save(target) then
+			return false
+		end
 		notice(target, {
 			kind = "giftReceived",
 			name = buyer.DisplayName,
@@ -128,7 +134,10 @@ function GiftService.grantProduct(buyer: Player, buyerProfile: DataService.Profi
 		return true
 	end
 	-- Получатель вышел или уже получил такой: деньги списаны — предмет достаётся покупателю
-	grantItem(buyer, buyerProfile, gift)
+	if not grantItem(buyer, buyerProfile, gift) then
+		-- Такой предмет у покупателя уже есть: Robux не должны пропасть — 10 минут дохода
+		RewardService.grant(buyer, { incomeMinutes = FALLBACK_INCOME_MINUTES })
+	end
 	delivered[purchaseId] = true
 	notice(buyer, {
 		kind = "giftFallback",

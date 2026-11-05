@@ -38,7 +38,9 @@ local function data(profile: DataService.Profile): PosterData
 	local owned: { [string]: boolean } = {}
 	if type(raw.owned) == "table" then
 		for id, value in raw.owned do
-			if value == true and Posters.get(id) then
+			-- Неизвестные id тоже храним: предмет переименовали или временно убрали из Config —
+			-- купленное за Robux не должно пропасть из сохранения. Интерфейс и обмен смотрят по Config
+			if value == true and type(id) == "string" and #id <= 64 then
 				owned[id] = true
 			end
 		end
@@ -269,16 +271,6 @@ end
 function PosterService.owns(player: Player, posterId: string): boolean
 	local profile = DataService.get(player)
 	return profile ~= nil and data(profile).owned[posterId] == true
-end
-
--- Выдать постер по id (подарок). false — нет такого постера
-function PosterService.grantPoster(player: Player, profile: DataService.Profile, posterId: string): boolean
-	local poster = Posters.get(posterId)
-	if not poster then
-		return false
-	end
-	grant(player, profile, poster)
-	return true
 end
 
 -- Куплен ли постер в этом профиле (подарки: не дарить то, что уже есть)
