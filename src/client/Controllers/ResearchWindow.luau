@@ -6,6 +6,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Research = require(ReplicatedStorage.Shared.Config.Research)
+local RebirthPerks = require(ReplicatedStorage.Shared.Config.RebirthPerks)
 local ResearchRemotes = require(ReplicatedStorage.Shared.ResearchRemotes)
 local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local UnlockRules = require(ReplicatedStorage.Shared.UnlockRules)
@@ -21,6 +22,8 @@ local gui: ScreenGui? = nil
 -- Последнее состояние с сервера
 local points = 0
 local owned: { [string]: boolean } = {}
+-- Скидка звёзд студии (ветка «Лаборатория», Config/RebirthPerks); цену проверяет сервер
+local discount = 0
 -- Позиции прокрутки колонок, чтобы перерисовка после покупки не сбрасывала их
 local scrollPositions: { [string]: Vector2 } = {}
 
@@ -60,7 +63,8 @@ local function buildCard(parent: Instance, node: Research.Node, order: number)
 	local isOwned = owned[node.id] == true
 	local lockReason = genreLockReason(node)
 	local available = not isOwned and Research.requirementsMet(node, owned) and lockReason == nil
-	local affordable = available and points >= node.cost
+	local cost = RebirthPerks.researchCost(node.cost, discount)
+	local affordable = available and points >= cost
 
 	local card = Instance.new("Frame")
 	card.Name = node.id
@@ -93,11 +97,11 @@ local function buildCard(parent: Instance, node: Research.Node, order: number)
 	title.Position = UDim2.fromOffset(10, 6)
 	title.Size = UDim2.new(1, -90, 0, 24)
 
-	local cost =
-		Ui.label(card, ClientState.t("research_cost", { cost = node.cost }), 20, nil, Ui.colors.money)
-	cost.Position = UDim2.new(1, -84, 0, 8)
-	cost.Size = UDim2.fromOffset(74, 20)
-	cost.TextXAlignment = Enum.TextXAlignment.Right
+	local costLabel =
+		Ui.label(card, ClientState.t("research_cost", { cost = cost }), 20, nil, Ui.colors.money)
+	costLabel.Position = UDim2.new(1, -84, 0, 8)
+	costLabel.Size = UDim2.fromOffset(74, 20)
+	costLabel.TextXAlignment = Enum.TextXAlignment.Right
 
 	local desc = Ui.label(card, description, 34, Enum.Font.GothamMedium, Ui.colors.muted)
 	desc.Position = UDim2.fromOffset(10, 32)
@@ -128,14 +132,14 @@ local function buildCard(parent: Instance, node: Research.Node, order: number)
 		status.Position = bottomPos
 	else
 		local text = if affordable
-			then ClientState.t("research_buy", { cost = node.cost })
-			else ClientState.t("research_need", { cost = node.cost })
+			then ClientState.t("research_buy", { cost = cost })
+			else ClientState.t("research_need", { cost = cost })
 		local button = Ui.button(
 			card,
 			text,
 			if affordable then Ui.colors.primary else Ui.colors.locked,
 			function()
-				if owned[node.id] or points < node.cost then
+				if owned[node.id] or points < cost then
 					return
 				end
 				ResearchRemotes.BuyResearch:FireServer(node.id)
@@ -277,6 +281,7 @@ function ResearchWindow.start()
 		end
 		points = if type(state.points) == "number" then state.points else 0
 		owned = if type(state.owned) == "table" then state.owned else {}
+		discount = if type(state.discount) == "number" then state.discount else 0
 		render()
 	end)
 

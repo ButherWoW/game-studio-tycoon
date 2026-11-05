@@ -9,6 +9,7 @@ local Players = game:GetService("Players")
 local Formulas = require(ReplicatedStorage.Shared.Formulas)
 local Offline = require(ReplicatedStorage.Shared.Config.Offline)
 local Rebirth = require(ReplicatedStorage.Shared.Config.Rebirth)
+local RebirthPerks = require(ReplicatedStorage.Shared.Config.RebirthPerks)
 local Social = require(ReplicatedStorage.Shared.Config.Social)
 local RetentionRemotes = require(ReplicatedStorage.Shared.RetentionRemotes)
 local DataService = require(script.Parent.DataService)
@@ -42,7 +43,9 @@ function OfflineService.earnings(profile: DataService.Profile, seconds: number):
 	local team = if staff and staff:IsA("ModuleScript")
 		then (require(staff) :: any).offlineMultiplier(profile)
 		else 1
-	local gross = capped / 60 * perMinute * Offline.rate * team
+	-- Звёзды студии (Config/RebirthPerks, ветка «Пассив»): +N% к офлайн-доходу
+	local stars = 1 + RebirthPerks.forProfile(profile).offline
+	local gross = capped / 60 * perMinute * Offline.rate * team * stars
 	-- Зарплаты и аренда (ExpensesService) идут и офлайн — в доле rate × expenseShare
 	local expenses = script.Parent:FindFirstChild("ExpensesService")
 	local okCost, cost = pcall(function()
