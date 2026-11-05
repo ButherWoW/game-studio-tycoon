@@ -1,0 +1,67 @@
+{
+  "assets": [
+    {
+      "file": "group_icon.png",
+      "size": [
+        512,
+        512
+      ],
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "resize": "proportional cover, centered crop if needed; no stretch",
+      "opaque": true,
+      "sha256": "8f6eda2b6d8c9474ba60b5e45112aa63de563ddb14fa363bb18ad0b309b84d34",
+      "visualReview": "PASS: referenced characters and office retained; no words/brands/watermarks; subject uncropped; icon readability checked at100px",
+      "circleSafeReview": "PASS: entire compact foreground retained within central420px circle"
+    },
+    {
+      "file": "group_banner.png",
+      "size": [
+        1920,
+        600
+      ],
+      "sourceSize": [
+        2172,
+        724
+      ],
+      "resize": "proportional cover, centered crop if needed; no stretch",
+      "opaque": true,
+      "sha256": "8dcfa124b5462f9703b59e8114a49616c69c619dec0bb3db32e364cee9007686",
+      "visualReview": "PASS: referenced characters and office retained; no words/brands/watermarks; subject uncropped; icon readability checked at100px"
+    },
+    {
+      "file": "discord_icon.png",
+      "size": [
+        512,
+        512
+      ],
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "resize": "proportional cover, centered crop if needed; no stretch",
+      "opaque": true,
+      "sha256": "8359ba3120222aefc689107c88557761051f34a9383dcb21109c2face2d83fc8",
+      "visualReview": "PASS: referenced characters and office retained; no words/brands/watermarks; subject uncropped; icon readability checked at100px",
+      "circleSafeReview": "PASS: entire compact foreground retained within central420px circle"
+    },
+    {
+      "file": "discord_banner.png",
+      "size": [
+        960,
+        540
+      ],
+      "sourceSize": [
+        1672,
+        941
+      ],
+      "resize": "proportional cover, centered crop if needed; no stretch",
+      "opaque": true,
+      "sha256": "1bab946b3335c0cc53e962e5f69fc0b933c12eaeaf3d2b8e8ff44782732f8a43",
+      "visualReview": "PASS: referenced characters and office retained; no words/brands/watermarks; subject uncropped; icon readability checked at100px"
+    }
+  ],
+  "runtimeUploaded": false
+}
