@@ -1,8 +1,10 @@
 --!strict
--- Картинки Астры (Config/Images.daily, Images.social) поверх старых эмодзи и цветных плашек.
+-- Картинки Астры (Config/Images.daily, Images.social) поверх старых эмодзи и цветных плашек,
+-- и частицы с её текстурами (ArtIcon.burst, Images.fx).
 -- Тот же приём, что у кнопок меню (Ui.menuButton): id > 0 — ImageLabel rbxassetid://id,
 -- id 0 — ничего не создаём и не трогаем, окно выглядит как раньше.
 
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Images = require(ReplicatedStorage.Shared.Config.Images)
@@ -85,6 +87,52 @@ function ArtIcon.prefix(target: TextLabel | TextButton, emoji: string, id: numbe
 	image.Image = "rbxassetid://" .. id
 	image.Parent = target
 	return image
+end
+
+-- Вспышка частиц с текстурами Астры (Images.fx, V24) над деталью part (по умолчанию — над
+-- персонажем игрока). ids — id текстур, нулевые пропускаются; все 0 — ничего не делаем
+-- и возвращаем false: у вызывающего остаётся старый эффект (или эффекта нет, как раньше)
+function ArtIcon.burst(ids: { number }, count: number, part: BasePart?): boolean
+	local textures = {}
+	for _, id in ids do
+		if id > 0 then
+			table.insert(textures, "rbxassetid://" .. id)
+		end
+	end
+	local target = part
+	if not target then
+		local character = Players.LocalPlayer.Character
+		local root = character and character:FindFirstChild("HumanoidRootPart")
+		target = if root and root:IsA("BasePart") then root else nil
+	end
+	if #textures == 0 or not target then
+		return false
+	end
+	local attachment = Instance.new("Attachment")
+	attachment.Name = "ArtBurst"
+	attachment.Position = Vector3.new(0, 2.5, 0)
+	attachment.Parent = target
+	local each = math.max(math.ceil(count / #textures), 1)
+	for _, texture in textures do
+		local emitter = Instance.new("ParticleEmitter")
+		emitter.Texture = texture
+		emitter.Rate = 0
+		emitter.Lifetime = NumberRange.new(1, 1.6)
+		emitter.Speed = NumberRange.new(8, 14)
+		emitter.SpreadAngle = Vector2.new(55, 55)
+		emitter.Acceleration = Vector3.new(0, -20, 0)
+		emitter.Drag = 1.5
+		emitter.Rotation = NumberRange.new(0, 360)
+		emitter.RotSpeed = NumberRange.new(-180, 180)
+		emitter.Size = NumberSequence.new(0.6, 0.3)
+		emitter.Transparency = NumberSequence.new(0, 0.6)
+		emitter.Parent = attachment
+		emitter:Emit(each)
+	end
+	task.delay(2.5, function()
+		attachment:Destroy()
+	end)
+	return true
 end
 
 -- Награда → ключ иконки в Images.daily и запасное эмодзи. Несколько видов сразу или предмет

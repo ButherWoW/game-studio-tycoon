@@ -15,11 +15,13 @@ local StaffLooks = require(ReplicatedStorage.Shared.Config.StaffLooks)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
 local Expenses = require(ReplicatedStorage.Shared.Config.Expenses)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local ClientState = require(script.Parent.Parent.ClientState)
 local StudioState = require(script.Parent.Parent.StudioState)
 local Ui = require(script.Parent.Parent.Ui)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local SkinShop = require(script.Parent.Parent.SkinShop)
 local StaffPower = require(script.Parent.Parent.StaffPower)
 local ConsoleClient = require(script.Parent.Parent.ConsoleClient)
@@ -401,7 +403,10 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 	end
 
 	-- Наставничество: учит / учится / кого можно взять в ученики
-	Ui.label(frame, ClientState.t("mentor_title"), 24, Ui.titleFont).LayoutOrder = nextOrder()
+	local mentorTitle = Ui.label(frame, ClientState.t("mentor_title"), 24, Ui.titleFont)
+	mentorTitle.LayoutOrder = nextOrder()
+	-- Сова-наставник Астры (Images.misc.mentorIcon, V28) вместо 🎓
+	ArtIcon.prefix(mentorTitle, "🎓", Images.misc.mentorIcon, 24)
 	local mentorHint = Ui.label(
 		frame,
 		ClientState.t("mentor_hint", { slow = math.floor((1 - Mentoring.mentorSpeed) * 100 + 0.5) }),

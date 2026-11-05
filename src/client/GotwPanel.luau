@@ -11,6 +11,8 @@ local Genres = require(Shared.Config.Genres)
 local Gotw = require(Shared.Config.Gotw)
 local GotwRemotes = require(Shared.GotwRemotes)
 local Texts = require(Shared.Config.Texts)
+local Images = require(Shared.Config.Images)
+local ArtIcon = require(script.Parent.ArtIcon)
 local ClientState = require(script.Parent.ClientState)
 local Ui = require(script.Parent.Ui)
 
@@ -118,6 +120,8 @@ function GotwPanel.render(frame: Instance, footer: TextLabel?)
 	end
 	local title = line(frame, ClientState.t("gotw_title"), nextOrder(), Ui.colors.money, 32)
 	title.Font = Ui.titleFontFor(ClientState.lang)
+	-- Иконка «Игры недели» Астры (Images.misc.gotwIcon, V28) вместо 🏆
+	ArtIcon.prefix(title, "🏆", Images.misc.gotwIcon, 30)
 	line(frame, ClientState.t("gotw_how"), nextOrder(), nil, 40).TextWrapped = true
 	if type(state) ~= "table" then
 		line(frame, ClientState.t("quests_loading"), nextOrder())

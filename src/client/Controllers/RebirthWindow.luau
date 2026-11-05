@@ -13,6 +13,8 @@ local RebirthPerks = require(ReplicatedStorage.Shared.Config.RebirthPerks)
 local RetentionRemotes = require(ReplicatedStorage.Shared.RetentionRemotes)
 local RebirthPerkRemotes = require(ReplicatedStorage.Shared.RebirthPerkRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
@@ -183,6 +185,10 @@ local function buildRebirthPage(page: ScrollingFrame): () -> ()
 	return update
 end
 
+-- Ветка перков → ключ иконки Астры в Images.rebirthPerks (V28: rperk_<ключ>.png); у lab иконки нет
+local BRANCH_ART: { [string]: string } =
+	{ speed = "speed", thrift = "costs", capital = "start", passive = "offline" }
+
 local function branchCard(parent: Instance, order: number, branch: RebirthPerks.Branch)
 	local level = levelOf(branch.id)
 	local maxLevel = #branch.costs
@@ -206,6 +212,8 @@ local function branchCard(parent: Instance, order: number, branch: RebirthPerks.
 	)
 	name.Position = UDim2.fromOffset(10, 6)
 	name.Size = UDim2.new(1, -170, 0, 28)
+	local artKey = BRANCH_ART[branch.id]
+	ArtIcon.prefix(name, branch.icon, if artKey then Images.rebirthPerks[artKey] or 0 else 0, 26)
 	local levelLabel = Ui.label(
 		card,
 		ClientState.t("rperk_level", { level = level, max = maxLevel }),
@@ -280,6 +288,7 @@ local function buildStarsPage(page: ScrollingFrame): () -> ()
 			Ui.label(page, ClientState.t("rperk_stars", { count = starCount() }), 32, nil, Ui.colors.money)
 		header.TextXAlignment = Enum.TextXAlignment.Center
 		header.LayoutOrder = 1
+		ArtIcon.prefix(header, "⭐", Images.misc.rebirthStar, 30)
 		local hint = Ui.label(page, ClientState.t("rperk_hint"), 22, Enum.Font.GothamMedium, Ui.colors.muted)
 		hint.TextXAlignment = Enum.TextXAlignment.Center
 		hint.TextWrapped = true
@@ -381,7 +390,11 @@ function RebirthWindow.open()
 		starsPage.Visible = tab == "stars"
 		rebirthTab.BackgroundColor3 = if tab == "rebirth" then Ui.colors.primary else Ui.colors.locked
 		starsTab.BackgroundColor3 = if tab == "stars" then Ui.colors.primary else Ui.colors.locked
-		starsTab.Text = ClientState.t("rperk_tab_stars", { count = starCount() })
+		starsTab.Text = ArtIcon.strip(
+			ClientState.t("rperk_tab_stars", { count = starCount() }),
+			"⭐",
+			Images.misc.rebirthStar
+		)
 	end
 	rebirthTab = Ui.button(tabs, ClientState.t("rperk_tab_rebirth"), Ui.colors.locked, function()
 		tab = "rebirth"
@@ -393,6 +406,8 @@ function RebirthWindow.open()
 		showTab()
 	end)
 	starsTab.Size = UDim2.new(0.5, -4, 1, 0)
+	-- Звезда Rebirth Астры (Images.misc.rebirthStar, V28) вместо ⭐ в названии вкладки
+	ArtIcon.prefix(starsTab, "⭐", Images.misc.rebirthStar, 24)
 
 	refresh = function()
 		update()
@@ -463,6 +478,8 @@ function RebirthWindow.start()
 			toast.AnchorPoint = Vector2.new(0.5, 0.5)
 			toast.Position = UDim2.fromScale(0.5, 0.35)
 			toast.Size = UDim2.fromOffset(520, 48)
+			-- Конфетти Астры над игроком (Images.fx, V24); нет текстур — без частиц, как раньше
+			ArtIcon.burst({ Images.fx.confetti1, Images.fx.confetti2 }, 40)
 			task.delay(4, function()
 				screen:Destroy()
 			end)
