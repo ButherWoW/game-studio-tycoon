@@ -63,6 +63,7 @@ local Analytics = {
 		code = "CodeRedeemed", -- активирован промокод; поле — код
 		mascot = "MascotPurchased", -- маскот куплен; поле — "id_cash" / "id_robux"
 		furnitureStyle = "FurnitureStylePurchased", -- стиль мебели куплен; поле — "id_cash" / "id_robux"
+		interiorFinish = "InteriorFinishPurchased", -- отделка студии куплена за Robux; поле — id
 		-- событие компании; поле — "id_этап": shown/insured (сработало), a/b/auto_a (выбор),
 		-- win/lose (риск), repaired, insurance_bought
 		companyEvent = "CompanyEvent",
