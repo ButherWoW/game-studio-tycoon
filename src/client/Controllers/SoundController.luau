@@ -424,12 +424,17 @@ function SoundController.start()
 	end)
 
 	-- Разработка: первый тик — dev_start, дальше тихий dev_tick раз в несколько секунд
-	local developing = false
+	-- Свой флаг на проект (два слота разработки); паузу (игрок отошёл от ПК) не озвучиваем
+	local developing: { [any]: boolean } = {}
 	local lastTick = 0
-	Remotes.DevelopmentProgress.OnClientEvent:Connect(function()
+	Remotes.DevelopmentProgress.OnClientEvent:Connect(function(info)
+		if type(info) == "table" and info.paused == true then
+			return
+		end
+		local id = if type(info) == "table" and info.id ~= nil then info.id else "single"
 		local now = os.clock()
-		if not developing then
-			developing = true
+		if not developing[id] then
+			developing[id] = true
 			lastTick = now
 			SoundController.play("dev_start")
 		elseif now - lastTick >= Sounds.devTickInterval then
@@ -438,7 +443,8 @@ function SoundController.start()
 		end
 	end)
 	Remotes.GameReleased.OnClientEvent:Connect(function(info)
-		developing = false
+		local id = if type(info) == "table" and info.projectId ~= nil then info.projectId else "single"
+		developing[id] = nil
 		onGameReleased(info)
 	end)
 
