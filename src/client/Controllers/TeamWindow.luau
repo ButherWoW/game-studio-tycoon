@@ -1,7 +1,7 @@
 --!strict
 -- Окно «Команда» (3.3 + 3.5 + 3.7): найм, переезд студии, столы по этапам, легендарные,
 -- навыки, перки, внешность и скин сотрудников (кнопка ✏️; скины — SkinShop), увольнение
--- (два нажатия «Уволить»).
+-- (два нажатия «Уволить»), наставничество (Config/Mentoring: опытный учит младшего).
 -- Клиент только показывает и просит; цену, этап, свободный стол и всё остальное проверяет сервер.
 
 local Players = game:GetService("Players")
@@ -10,6 +10,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local Employees = require(ReplicatedStorage.Shared.Config.Employees)
 local Skills = require(ReplicatedStorage.Shared.Config.Skills)
+local Mentoring = require(ReplicatedStorage.Shared.Config.Mentoring)
 local StaffLooks = require(ReplicatedStorage.Shared.Config.StaffLooks)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
@@ -43,6 +44,8 @@ local info: { [string]: any } = {}
 local unlocked: { [string]: boolean } = {}
 -- Прибавки к зарплате после событий компании: employeeId -> множитель
 local raises: { [string]: number } = {}
+-- Наставничество: mentorId -> menteeId (с сервера, уже проверенное)
+local mentoring: { [string]: string } = {}
 local serverOffset = 0 -- os.time() сервера − клиента (перезарядка смены перка)
 local expanded: string? = nil -- сотрудник, у которого открыта карточка ✏️
 local scrollPosition = Vector2.zero
@@ -293,6 +296,24 @@ local function employeeLevel(employeeInfo: any): number
 	return total
 end
 
+local function employeeName(employeeId: string): string
+	local employee = Employees.get(employeeId)
+	if not employee then
+		return employeeId
+	end
+	return ClientState.localText("employee_" .. employee.id, employee.name, employee.nameEn)
+end
+
+-- Наставник сотрудника (nil — не учится)
+local function mentorOf(employeeId: string): string?
+	for mentorId, menteeId in mentoring do
+		if menteeId == employeeId then
+			return mentorId
+		end
+	end
+	return nil
+end
+
 local function smallButton(parent: Instance, text: string, color: Color3, onClick: () -> ()): TextButton
 	local b = Ui.button(parent, text, color, onClick)
 	if color == Ui.colors.locked then
@@ -359,7 +380,11 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 		if skill >= Skills.maxLevel then
 			text = ClientState.t("team_skill_max")
 		else
-			price = Skills.skillCost(employee.stage, employee.legendary, skill)
+			-- Ученику наставника «+1» дешевле (сервер считает так же)
+			price = Mentoring.skillCost(
+				Skills.skillCost(employee.stage, employee.legendary, skill),
+				mentorOf(employee.id) ~= nil
+			)
 			text = ClientState.t("team_skill_up", { price = Texts.money(price) })
 			color = if data.cash >= price then Ui.colors.money else Ui.colors.locked
 		end
@@ -371,6 +396,84 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 		button.AnchorPoint = Vector2.new(1, 0)
 		button.Position = UDim2.new(1, 0, 0, 0)
 		button.Size = UDim2.new(0.42, 0, 0, 32)
+	end
+
+	-- Наставничество: учит / учится / кого можно взять в ученики
+	Ui.label(frame, ClientState.t("mentor_title"), 24, Ui.titleFont).LayoutOrder = nextOrder()
+	local mentorHint = Ui.label(
+		frame,
+		ClientState.t("mentor_hint", { slow = math.floor((1 - Mentoring.mentorSpeed) * 100 + 0.5) }),
+		40,
+		nil,
+		Ui.colors.muted
+	)
+	mentorHint.TextScaled = false
+	mentorHint.TextSize = SMALL_TEXT
+	mentorHint.TextWrapped = true
+	mentorHint.LayoutOrder = nextOrder()
+	local myMentor = mentorOf(employee.id)
+	local myMentee = mentoring[employee.id]
+	if myMentor or myMentee then
+		local text = if myMentee
+			then ClientState.t("mentor_teaching", { name = employeeName(myMentee) })
+			else ClientState.t("mentor_learning", { name = employeeName(myMentor :: string) })
+		local line = detailLine(frame, text, nextOrder())
+		local stop = smallButton(line, ClientState.t("mentor_stop"), Ui.colors.bad, function()
+			StaffRemotes.SetMentor:FireServer(myMentee and employee.id or myMentor, "")
+		end)
+		stop.AnchorPoint = Vector2.new(1, 0)
+		stop.Position = UDim2.new(1, 0, 0, 0)
+		stop.Size = UDim2.new(0.42, 0, 0, 32)
+	elseif not Mentoring.canMentor(level) then
+		Ui.label(
+			frame,
+			ClientState.t("mentor_locked", { level = Mentoring.minMentorLevel }),
+			22,
+			nil,
+			Ui.colors.muted
+		).LayoutOrder =
+			nextOrder()
+	else
+		-- Младшие без наставника, которые сами никого не учат
+		local juniors: { string } = {}
+		for otherId in staff do
+			local otherInfo = info[otherId]
+			if
+				otherId ~= employee.id
+				and type(otherInfo) == "table"
+				and type(otherInfo.skills) == "table"
+				and Mentoring.isJunior(employeeLevel(otherInfo), level)
+				and mentoring[otherId] == nil
+				and mentorOf(otherId) == nil
+			then
+				table.insert(juniors, otherId)
+			end
+		end
+		table.sort(juniors)
+		if #juniors == 0 then
+			Ui.label(frame, ClientState.t("mentor_none", { level = level }), 22, nil, Ui.colors.muted).LayoutOrder =
+				nextOrder()
+		end
+		for _, juniorId in juniors do
+			local line = detailLine(
+				frame,
+				employeeName(juniorId)
+					.. " · "
+					.. ClientState.t("team_skills", { level = employeeLevel(info[juniorId]) }),
+				nextOrder()
+			)
+			local pick = smallButton(
+				line,
+				ClientState.t("mentor_pick", { name = employeeName(juniorId) }),
+				Ui.colors.primary,
+				function()
+					StaffRemotes.SetMentor:FireServer(employee.id, juniorId)
+				end
+			)
+			pick.AnchorPoint = Vector2.new(1, 0)
+			pick.Position = UDim2.new(1, 0, 0, 0)
+			pick.Size = UDim2.new(0.42, 0, 0, 32)
+		end
 	end
 
 	-- Перки
@@ -540,6 +643,11 @@ local function buildRow(
 		details ..= " · " .. ClientState.t("team_waiting")
 	elseif deskId then
 		details ..= " · " .. ClientState.t("team_seated", { desk = upgradeName(deskId) })
+	end
+	if mentoring[employee.id] then
+		details ..= " · " .. ClientState.t("mentor_tag_mentor")
+	elseif mentorOf(employee.id) then
+		details ..= " · " .. ClientState.t("mentor_tag_mentee")
 	end
 	local streamTag = ConsoleClient.streamerTag(employee.id)
 	if streamTag then
@@ -774,6 +882,7 @@ function TeamWindow.start()
 			info = if type(extra.info) == "table" then extra.info else {}
 			unlocked = if type(extra.unlocked) == "table" then extra.unlocked else {}
 			raises = if type(extra.raises) == "table" then extra.raises else {}
+			mentoring = if type(extra.mentoring) == "table" then extra.mentoring else {}
 			if type(extra.now) == "number" then
 				serverOffset = extra.now - os.time()
 			end

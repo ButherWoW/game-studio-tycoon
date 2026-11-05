@@ -26,6 +26,8 @@ export type GameConfig = {
 	par: number?, -- головоломка: счёт «на 100%» (у остальных — число объектов)
 	minInterval: number?, -- головоломка: не чаще одного ответа за столько секунд
 	shuffleEvery: number?, -- головоломка: корзины меняют цвета каждые N фишек
+	-- Счёт выше par × plausibleShare считается подделкой (без медали). Нет — потолок maxScore
+	plausibleShare: number?,
 }
 
 local Arcade = {
@@ -99,6 +101,8 @@ local Arcade = {
 			par = 28,
 			minInterval = 0.3,
 			shuffleEvery = 8,
+			-- Рекорд руками ≈ 2 фишки в секунду (~40 за 20 с); 0.3 с на ответ (66) — только скрипт
+			plausibleShare = 1.75,
 		},
 		-- Забег: ямы подъезжают, прыгай
 		jump = {
@@ -167,6 +171,20 @@ function Arcade.maxScore(kind: Kind, seed: number): number
 		return math.min(count, math.floor(Arcade.duration / cfg.minInterval))
 	end
 	return count
+end
+
+-- Мог ли человек честно набрать score за duration: целое, не меньше 0, не больше maxScore
+-- и par × plausibleShare. Неправдоподобный счёт не обрезается до максимума (так подделка
+-- получала бы золото), а остаётся без медали
+function Arcade.plausible(kind: Kind, seed: number, score: any): boolean
+	if type(score) ~= "number" or score ~= score or score % 1 ~= 0 or score < 0 then
+		return false
+	end
+	if score > Arcade.maxScore(kind, seed) then
+		return false
+	end
+	local share = Arcade.games[kind].plausibleShare
+	return share == nil or score <= math.floor(Arcade.par(kind, seed) * share)
 end
 
 function Arcade.grade(kind: Kind, seed: number, score: number): Grade?

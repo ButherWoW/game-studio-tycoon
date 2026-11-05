@@ -31,6 +31,8 @@ export type Profile = {
 	genreGames: { [string]: number },
 	hitsReleased: number,
 	strikeTipSeen: boolean?, -- закрыл подсказку о первой забастовке (StaffService)
+	-- Наставничество (StaffService, Config/Mentoring): mentorId -> menteeId; пары проверяет StaffService
+	mentoring: { [string]: string },
 	activeAd: { bonus: number, expiresAt: number }?,
 	-- Купленные за Robux разовые эффекты (ShopService): заряды и конец действия кофе
 	boosts: { instantFinish: number, patch: number, coffeeUntil: number },
@@ -99,6 +101,11 @@ local SESSION_TIMEOUT = 5 * 60 -- чужая метка старше — сер�
 local LOCK_ATTEMPTS = 3
 local LOCK_RETRY_DELAY = 6
 local CLOSE_TIMEOUT = 25 -- BindToClose даёт ~30 с
+-- Финальная запись при выходе: если write (3 попытки) не прошёл — ещё раунды с растущей паузой,
+-- пока укладываемся в CLOSE_WRITE_BUDGET от начала выхода (меньше CLOSE_TIMEOUT)
+local CLOSE_RETRY_ROUNDS = 3
+local CLOSE_RETRY_BACKOFF = { 1, 2, 4 }
+local CLOSE_WRITE_BUDGET = 16 -- новый раунд не начинаем позже: сам write длится до ~7 с
 
 local LOCKED_KICK_MESSAGE =
 	"Твоя студия ещё открыта на другом сервере. Подожди минуту и зайди снова — прогресс не потеряется."
@@ -120,6 +127,7 @@ local function defaultProfile(): Profile
 		genreGames = {},
 		hitsReleased = 0,
 		strikeTipSeen = false,
+		mentoring = {},
 		activeAd = nil,
 		boosts = { instantFinish = 0, patch = 0, coffeeUntil = 0 },
 		posters = { owned = {}, equipped = {} },
@@ -168,10 +176,11 @@ local function isForeignSession(session: any): boolean
 end
 
 -- Записать профиль, сохранив или сняв метку сессии. Не трогает запись,
--- если её уже держит другой сервер (наша метка протухла и профиль забрали)
-local function write(userId: number, profile: Profile, release: boolean): boolean
+-- если её уже держит другой сервер (наша метка протухла и профиль забрали).
+-- Второе значение — true, если запись отменена из-за чужой метки (повторять бессмысленно)
+local function write(userId: number, profile: Profile, release: boolean): (boolean, boolean)
 	if not store then
-		return false
+		return false, false
 	end
 	local lastErr: any = nil
 	for attempt = 1, 3 do
@@ -190,15 +199,15 @@ local function write(userId: number, profile: Profile, release: boolean): boolea
 		if ok then
 			if stolen then
 				warn("[DataService] Profile of", userId, "is owned by another server, save skipped")
-				return false
+				return false, true
 			end
-			return true
+			return true, false
 		end
 		lastErr = err
 		task.wait(attempt)
 	end
 	warn("[DataService] Save failed for", userId, lastErr)
-	return false
+	return false, false
 end
 
 -- Взять профиль с меткой сессии. "ok" + данные, "locked" — открыт на другом сервере,
@@ -364,7 +373,7 @@ function DataService.save(player: Player): boolean
 	local ok = false
 	if not state.closed then
 		p.lastLogout = os.time()
-		ok = write(player.UserId, p, false)
+		ok = (write(player.UserId, p, false))
 	end
 	busy[player.UserId] = nil
 	return ok
@@ -380,9 +389,25 @@ local function closeProfile(player: Player)
 	end
 	state.closed = true
 	if state.persistent then
+		local startedAt = os.clock()
 		acquire(player.UserId)
 		p.lastLogout = os.time()
-		write(player.UserId, p, true)
+		local ok, stolen = write(player.UserId, p, true)
+		-- Не записалось (сбой DataStore, не чужая метка): ещё несколько раундов с паузой,
+		-- пока хватает времени BindToClose — иначе прогресс с последнего автосейва пропадёт
+		local round = 0
+		while not ok and not stolen and round < CLOSE_RETRY_ROUNDS do
+			round += 1
+			local pause = CLOSE_RETRY_BACKOFF[round] or 4
+			if os.clock() - startedAt + pause >= CLOSE_WRITE_BUDGET then
+				break
+			end
+			task.wait(pause)
+			ok, stolen = write(player.UserId, p, true)
+		end
+		if not ok and not stolen then
+			warn("[DataService] Final save failed for", player.UserId, "after", round, "retry rounds")
+		end
 		busy[player.UserId] = nil
 	end
 	profiles[player] = nil
@@ -442,6 +467,22 @@ local function onPlayerAdded(player: Player)
 		if type(profile.genreGames) ~= "table" then
 			profile.genreGames = {}
 		end
+		-- Наставничество: только строки ≤ 64 символов; остальное (уволенные, младше/старше) чистит
+		-- StaffService.getMentoring по правилам Config/Mentoring
+		local mentoring: { [string]: string } = {}
+		if type(profile.mentoring) == "table" then
+			for mentorId, menteeId in profile.mentoring :: any do
+				if
+					type(mentorId) == "string"
+					and type(menteeId) == "string"
+					and #mentorId <= 64
+					and #menteeId <= 64
+				then
+					mentoring[mentorId] = menteeId
+				end
+			end
+		end
+		profile.mentoring = mentoring
 		-- Старые сохранения без счётчика хитов: считаем свои картриджи на полке
 		if type(profile.hitsReleased) ~= "number" then
 			local own = 0

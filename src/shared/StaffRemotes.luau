@@ -9,10 +9,11 @@ local NAMES = {
 	"FireEmployee", -- клиент -> сервер: employeeId (уволить, вернуть Employees.fireRefund цены)
 	"StrikeTipSeen", -- клиент -> сервер: без аргументов, подсказку о забастовке закрыли
 	"MoveStudio", -- клиент -> сервер: без аргументов, переезд на следующий этап
-	"StaffChanged", -- сервер -> клиент: { [employeeId]: deskUpgradeId ("" — ждёт стол) }, { info, unlocked, now }
+	"StaffChanged", -- сервер -> клиент: { [employeeId]: deskUpgradeId ("" — ждёт стол) }, { info, mentoring, unlocked, now, raises }
 	"UpgradeSkill", -- клиент -> сервер: employeeId, skillKey
 	"SetPerk", -- клиент -> сервер: employeeId, slot, perkId
 	"SetLook", -- клиент -> сервер: employeeId, field ("shirt" | "skin" | "hat" | "item"), index
+	"SetMentor", -- клиент -> сервер: mentorId, menteeId ("" — закончить наставничество)
 	"StaffPower", -- сервер -> клиент: мощность команды (StaffService.power): speed, quality, review, breaks, losses
 	"StaffFeel", -- сервер -> клиент: { kind = "hire" | "arrive" | "skill" | "fire", employeeId, before, after, ... }
 }

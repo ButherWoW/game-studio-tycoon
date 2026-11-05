@@ -4,7 +4,9 @@
 --   • ArcadeStart(projectId): релиз не старше windowSeconds и ещё не игрался → сессия
 --     { token, kind, seed }; релиз сразу помечается сыгранным (переиграть ради золота нельзя).
 --   • ArcadeSubmit(token, score): одна отправка на сессию, не раньше countdown + duration − submitEarly
---     и не позже + submitLate; счёт обрезается по Arcade.maxScore(kind, seed); бонус — доля дохода.
+--     и не позже + submitLate; бонус — доля дохода.
+--   • Проверка счёта: Arcade.plausible (целое, не выше maxScore и par × plausibleShare). Неправдоподобный
+--     счёт — без медали, бонуса и достижения «arcadeGold» (раньше обрезался до максимума = золото).
 -- Клиенту можно не верить: худшее, что даст подделка счёта, — +5% дохода одного релиза.
 -- Данные в профиль не пишем: всё живёт в памяти сервера несколько минут.
 
@@ -144,18 +146,25 @@ local function onSubmit(player: Player, token: any, score: any)
 	local elapsed = os.clock() - session.issuedAt
 	local playTime = Arcade.countdown + Arcade.duration
 	local value = if type(score) == "number" and score == score then score else 0
-	if elapsed < playTime - Arcade.submitEarly or elapsed > playTime + Arcade.submitLate then
-		value = 0 -- прислано раньше конца игры или слишком поздно — без медали
+	local onTime = elapsed >= playTime - Arcade.submitEarly and elapsed <= playTime + Arcade.submitLate
+	-- Прислано раньше конца игры, слишком поздно или счёт не мог быть набран честно — без медали
+	local plausible = onTime and Arcade.plausible(session.kind, session.seed, value)
+	if not plausible then
+		if onTime and value > 0 then
+			hook("AnalyticsService", "logDepth", player, "arcade", session.kind .. "_implausible")
+		end
+		value = 0
 	end
 	value = math.clamp(math.floor(value), 0, Arcade.maxScore(session.kind, session.seed))
-	local grade = Arcade.grade(session.kind, session.seed, value)
+	local grade = if plausible then Arcade.grade(session.kind, session.seed, value) else nil
 	local bonus = if grade then math.floor(session.revenue * Arcade.bonus[grade]) else 0
 	if bonus > 0 then
 		DataService.addCash(player, bonus)
 		-- Как пакеты дохода: не засчитываем в задания «заработай»
 		hook("RewardService", "noteNonEarned", player, bonus)
 	end
-	if grade == "gold" then
+	-- Достижение — только за правдоподобное золото
+	if plausible and grade == "gold" then
 		hook("AchievementService", "note", player, "arcadeGold")
 	end
 	hook("AnalyticsService", "logDepth", player, "arcade", session.kind .. "_" .. (grade or "none"))
