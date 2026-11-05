@@ -306,6 +306,7 @@ local function open()
 		button.LayoutOrder = i
 		button.TextSize = 34
 		button.AutoButtonColor = not locked
+		button:SetAttribute("SoundKey", "safe_beep")
 	end
 
 	local resultLabel = Ui.label(window, "", 26, Enum.Font.GothamMedium, Ui.colors.muted)

@@ -327,7 +327,7 @@ local function onFeel(event: any)
 			changeLines(before, after, key),
 			Ui.colors.money
 		)
-		SoundController.play("unlock")
+		SoundController.play("level_up")
 		if npc then
 			glow(npc, Ui.colors.money)
 			floatUp(npc, "+1 " .. StaffPower.icons[key], Ui.colors.money)

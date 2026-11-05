@@ -20,6 +20,9 @@ local openWindows = 0
 -- Окно меню, открытое сейчас (его close): окна меню взаимоисключающие — новое закрывает старое,
 -- иначе два окна DisplayOrder 10 лежали друг на друге. Закрыть уже закрытое окно — ничего не делает
 local exclusiveClose: (() -> ())? = nil
+-- Окно открылось (true) / закрылось (false) — для звуков (SoundController)
+local windowSignal = Instance.new("BindableEvent")
+Ui.windowEvent = windowSignal.Event
 
 -- close — передают окна меню (кнопки бокового меню): открытие такого окна закрывает
 -- предыдущее окно меню. Всплывающие окна (награда, банк, релиз…) зовут без аргумента
@@ -33,6 +36,7 @@ function Ui.windowOpened(close: (() -> ())?)
 	end
 	openWindows += 1
 	TextChatService.ChatWindowConfiguration.Enabled = false
+	windowSignal:Fire(true)
 end
 
 -- Открыто ли сейчас хоть одно окно игры (HUD не открывает «Создать игру» поверх него)
@@ -41,6 +45,7 @@ function Ui.anyWindowOpen(): boolean
 end
 
 function Ui.windowClosed()
+	windowSignal:Fire(false)
 	openWindows = math.max(openWindows - 1, 0)
 	if openWindows == 0 then
 		TextChatService.ChatWindowConfiguration.Enabled = true
