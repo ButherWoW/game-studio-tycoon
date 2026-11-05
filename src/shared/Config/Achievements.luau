@@ -12,13 +12,14 @@
 --     loansRepaid, strikes (пережитых забастовок), days (дней со входом), flops (игр с оценкой
 --     <= 2), laptopStars (игр 8+ на ноутбуке в парке), likesReceived (лайков студии, TourService).
 -- tier: 1 бронза, 2 серебро, 3 золото (nil — без медали).
--- badgeId > 0 — ещё и значок Roblox (BadgeService); id заведёт Dev 1.
+-- badgeId > 0 — ещё и значок Roblox (BadgeService); id заведёт Dev 1 в badgeIds ниже.
 -- hidden — до получения в окне «???».
 
 local Genres = require(script.Parent.Genres)
 local Rewards = require(script.Parent.Rewards)
 local Research = require(script.Parent.Research)
 local Skills = require(script.Parent.Skills)
+local Universe = require(script.Parent.Universe)
 
 export type Reward = Rewards.Reward
 export type Category = "studio" | "games" | "team" | "money" | "rivals" | "special"
@@ -52,6 +53,10 @@ Achievements.backfillCap = {
 -- Деньги на счётчике earned и в описаниях: краткая запись
 Achievements.moneyStats = { earned = true } :: { [string]: boolean }
 
+-- Значки Roblox по id достижения: test — вселенная v2, main — основная игра (docs/IDS.md).
+-- Нет в таблице или 0 — без значка. Пример: office_2 = { test = 123, main = 0 },
+local badgeIds: { [string]: Universe.Pair } = {}
+
 local genreCount = 0
 for _ in Genres do
 	genreCount += 1
@@ -77,7 +82,7 @@ local function ach(
 		name = name,
 		nameEn = nameEn,
 		reward = reward,
-		badgeId = 0,
+		badgeId = Universe.pick(badgeIds[id]),
 		hidden = hidden,
 	}
 end

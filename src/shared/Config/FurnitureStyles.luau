@@ -11,6 +11,8 @@
 -- Уют дешевле Минимала: ближе к классике, первый шаг; Минимал — как дорогой стол 2-го этажа.
 -- Названия и строка настроения — ключи fstyle_<id> и fstyle_<id>_desc в Texts и Locales.
 
+local Universe = require(script.Parent.Universe)
+
 export type Style = {
 	id: string,
 	suffix: string, -- "" у классики
@@ -54,7 +56,7 @@ FurnitureStyles.list = {
 		suffix = "_Neon",
 		emoji = "💜",
 		color = Color3.fromHex("7C4DFF"),
-		productId = 3728447945, -- Dev 1 впишет ID из Creator Dashboard
+		productId = Universe.pick({ test = 3728447945, main = 0 }), -- Dev 1 впишет ID из Creator Dashboard
 		robuxPrice = 149,
 	},
 } :: { Style }

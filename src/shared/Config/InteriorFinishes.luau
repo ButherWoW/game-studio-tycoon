@@ -12,6 +12,8 @@
 -- ceilingColor/ceilingMaterial из manifest.json набора; nil — как раньше (классика).
 -- Названия и строка настроения — ключи ifinish_<id> и ifinish_<id>_desc в Texts и Locales.
 
+local Universe = require(script.Parent.Universe)
+
 export type Finish = {
 	id: string,
 	suffix: string, -- "" у классики
@@ -59,7 +61,7 @@ InteriorFinishes.list = {
 		ceilingColor = Color3.fromHex("242530"),
 		ceilingMaterial = Enum.Material.SmoothPlastic,
 		imageKey = "obsidianGold",
-		productId = 3728485040, -- тестовая вселенная v2, 199 R$
+		productId = Universe.pick({ test = 3728485040, main = 0 }), -- тестовая вселенная v2, 199 R$
 		robuxPrice = 199, -- подсказка; финальную цену решает владелец
 	},
 	{
@@ -72,7 +74,7 @@ InteriorFinishes.list = {
 		ceilingColor = Color3.fromHex("FFF1E8"),
 		ceilingMaterial = Enum.Material.SmoothPlastic,
 		imageKey = "sakura",
-		productId = 3728485054, -- тестовая вселенная v2, 199 R$
+		productId = Universe.pick({ test = 3728485054, main = 0 }), -- тестовая вселенная v2, 199 R$
 		robuxPrice = 199, -- подсказка; финальную цену решает владелец
 	},
 	{
@@ -85,7 +87,7 @@ InteriorFinishes.list = {
 		ceilingColor = Color3.fromHex("23384F"),
 		ceilingMaterial = Enum.Material.SmoothPlastic,
 		imageKey = "aurora",
-		productId = 3728485064, -- тестовая вселенная v2, 199 R$
+		productId = Universe.pick({ test = 3728485064, main = 0 }), -- тестовая вселенная v2, 199 R$
 		robuxPrice = 199, -- подсказка; финальную цену решает владелец
 	},
 } :: { Finish }

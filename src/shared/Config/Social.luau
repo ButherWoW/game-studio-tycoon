@@ -7,6 +7,7 @@
 local Skins = require(script.Parent.Skins)
 local Posters = require(script.Parent.Posters)
 local Mascots = require(script.Parent.Mascots)
+local Universe = require(script.Parent.Universe)
 
 export type GiftKind = "skin" | "poster" | "mascot"
 
@@ -19,21 +20,21 @@ export type Gift = {
 }
 
 -- Dev 1: создать Developer Product «Gift: <название>» с той же ценой, что у предмета,
--- и вставить ID напротив gift_<itemId>
-local giftProducts: { [string]: number } = {
-	gift_neon_streamer = 0,
-	gift_cyber_dev = 0,
-	gift_space_dev = 0,
-	gift_wizard_dev = 0,
-	gift_neonCity = 0,
-	gift_crystalKingdom = 0,
-	gift_mechTitan = 0,
-	gift_galaxyLegends = 0,
-	gift_goldenController = 0,
-	gift_neon_fox = 0,
-	gift_dragon_byte = 0,
-	gift_golden_trophy = 0,
-	gift_cosmic_whale = 0,
+-- и вставить ID напротив gift_<itemId> (test — вселенная v2, main — основная игра, docs/IDS.md)
+local giftProducts: { [string]: Universe.Pair } = {
+	gift_neon_streamer = { test = 0, main = 0 },
+	gift_cyber_dev = { test = 0, main = 0 },
+	gift_space_dev = { test = 0, main = 0 },
+	gift_wizard_dev = { test = 0, main = 0 },
+	gift_neonCity = { test = 0, main = 0 },
+	gift_crystalKingdom = { test = 0, main = 0 },
+	gift_mechTitan = { test = 0, main = 0 },
+	gift_galaxyLegends = { test = 0, main = 0 },
+	gift_goldenController = { test = 0, main = 0 },
+	gift_neon_fox = { test = 0, main = 0 },
+	gift_dragon_byte = { test = 0, main = 0 },
+	gift_golden_trophy = { test = 0, main = 0 },
+	gift_cosmic_whale = { test = 0, main = 0 },
 }
 
 -- Подарить можно премиум-скины, премиум-постеры и маскотов за Robux; цена — как у предмета
@@ -45,7 +46,7 @@ for _, skin in Skins.list do
 			id = id,
 			kind = "skin",
 			itemId = skin.id,
-			productId = giftProducts[id] or 0,
+			productId = Universe.pick(giftProducts[id]),
 			robuxPrice = skin.robuxPrice or 0,
 		})
 	end
@@ -57,7 +58,7 @@ for _, poster in Posters.list do
 			id = id,
 			kind = "poster",
 			itemId = poster.id,
-			productId = giftProducts[id] or 0,
+			productId = Universe.pick(giftProducts[id]),
 			robuxPrice = poster.robuxPrice or 0,
 		})
 	end
@@ -70,7 +71,7 @@ for _, mascot in Mascots.list do
 			id = id,
 			kind = "mascot",
 			itemId = mascot.id,
-			productId = giftProducts[id] or 0,
+			productId = Universe.pick(giftProducts[id]),
 			robuxPrice = mascot.robuxPrice or 0,
 		})
 	end
