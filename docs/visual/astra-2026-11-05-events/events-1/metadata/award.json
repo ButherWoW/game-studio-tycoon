@@ -1,0 +1,14 @@
+{
+  "file": "cev_award.png",
+  "folder": "events-1",
+  "id": "award",
+  "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A shiny golden game-award trophy on a compact blue pedestal, with one large blue star inset in its cup. Proud and celebratory.",
+  "tool": "built-in image_gen",
+  "transparent_background": true,
+  "source": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-ff966922-aa8d-4d37-b2cc-e39fc0fad05f.png",
+  "final": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-events-v19/events-1/V19/cev_award.png",
+  "finalDimensions": [
+    256,
+    256
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "file": "cev_angel.png",
+  "folder": "events-1",
+  "id": "angel",
+  "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: An angel investor symbol: one chunky blue business briefcase with a large gold coin attached, two tiny white wings and a small gold halo. Friendly prosperous game event, no human character.",
+  "tool": "built-in image_gen",
+  "transparent_background": true,
+  "source": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-e2da6edb-ba15-4cc6-afd8-d7f1d1f7bd41.png",
+  "editReference": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-2c335bb9-afa5-4e0b-bfff-a7f17394f36c.png",
+  "editPrompt": "Edit this angel-investor briefcase icon. Change only the currency glyph embossed on the gold coin: remove it completely and replace it with one simple five-point geometric gold star. Keep the blue briefcase, halo, white wings, composition, colors, outlines, highlights and genuine transparent background unchanged. No lettering, digits or currency signs.",
+  "final": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-events-v19/events-1/V19/cev_angel.png",
+  "finalDimensions": [
+    256,
+    256
+  ]
+}
