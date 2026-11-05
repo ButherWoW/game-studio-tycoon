@@ -104,6 +104,9 @@ export type Profile = {
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
+	-- График контента (ContentDropService, Config/ContentDrops): номер последней волны, про которую
+	-- игрок видел «Что нового». nil — ещё не ставили (новичок/старое сохранение: ставится тихо)
+	contentDropSeen: number?,
 }
 
 local function defaultGotw()

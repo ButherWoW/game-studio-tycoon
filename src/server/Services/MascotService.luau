@@ -17,6 +17,7 @@ local TweenService = game:GetService("TweenService")
 
 local Shared = ReplicatedStorage.Shared
 local Mascots = require(Shared.Config.Mascots)
+local ContentDrops = require(Shared.Config.ContentDrops)
 local MascotRemotes = require(Shared.MascotRemotes)
 local DataService = require(script.Parent.DataService)
 
@@ -416,6 +417,10 @@ local function onBuy(player: Player, mascotId: any)
 	local mascot = Mascots.get(mascotId)
 	local profile = DataService.get(player)
 	if not mascot or not profile or mascot.how ~= "cash" then
+		return
+	end
+	-- График контента (Config/ContentDrops): до выхода не продаём
+	if not ContentDrops.isReleased("mascot", mascot.id) then
 		return
 	end
 	local cost = mascot.cost

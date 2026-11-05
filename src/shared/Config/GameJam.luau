@@ -6,6 +6,7 @@
 local RunService = game:GetService("RunService")
 
 local Debug = require(script.Parent.Debug)
+local ContentDrops = require(script.Parent.ContentDrops)
 local Genres = require(script.Parent.Genres)
 local Topics = require(script.Parent.Topics)
 
@@ -85,10 +86,24 @@ function GameJam.weekEndsAt(index: number): number
 	return (index + 1) * length + offset
 end
 
+-- Только вышедшие к началу недели (Config/ContentDrops): одинаково на всех серверах
+local function released(ids: { string }, kind: ContentDrops.Kind, at: number): { string }
+	local list = {}
+	for _, id in ids do
+		if ContentDrops.isReleased(kind, id, at) then
+			table.insert(list, id)
+		end
+	end
+	return if #list > 0 then list else ids
+end
+
 -- Тема недели: жанр и тема игры. Разные шаги, чтобы пары не повторялись подряд
 function GameJam.theme(index: number): (string, string)
-	local genre = GENRE_IDS[(index * 7 + 3) % #GENRE_IDS + 1]
-	local topic = TOPIC_IDS[(index * 11 + 5) % #TOPIC_IDS + 1]
+	local startsAt = GameJam.weekEndsAt(index) - GameJam.weekSeconds()
+	local genres = released(GENRE_IDS, "genre", startsAt)
+	local topics = released(TOPIC_IDS, "topic", startsAt)
+	local genre = genres[(index * 7 + 3) % #genres + 1]
+	local topic = topics[(index * 11 + 5) % #topics + 1]
 	return genre, topic
 end
 

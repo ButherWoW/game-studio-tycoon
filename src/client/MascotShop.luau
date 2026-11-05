@@ -17,6 +17,7 @@ local Social = require(Shared.Config.Social)
 local ClientState = require(script.Parent.ClientState)
 local Ui = require(script.Parent.Ui)
 local GiftPicker = require(script.Parent.GiftPicker)
+local ContentDropClient = require(script.Parent.ContentDropClient)
 
 type State = { owned: { [string]: boolean }, equipped: string? }
 
@@ -84,7 +85,11 @@ local function actionButton(cell: Frame, mascot: Mascots.Mascot)
 	local color: Color3
 	local dark = false
 	local onClick: () -> () = function() end
-	if owned and state.equipped == mascot.id then
+	-- График контента: ещё не вышел — тизер «Скоро: через N дн.» без покупки
+	local teaser = ContentDropClient.teaser("mascot", mascot.id, owned)
+	if teaser then
+		text, color = teaser, Ui.colors.locked
+	elseif owned and state.equipped == mascot.id then
 		text, color = ClientState.t("mascots_equipped"), Ui.colors.good
 		onClick = function()
 			MascotRemotes.EquipMascot:FireServer(nil)
@@ -170,7 +175,9 @@ local function cellFor(parent: Instance, mascot: Mascots.Mascot, order: number)
 	bonus.TextXAlignment = Enum.TextXAlignment.Center
 	actionButton(cell, mascot)
 	-- Маскота за Robux можно подарить другому игроку на сервере
-	local gift = if mascot.how == "robux" then Social.giftFor("mascot", mascot.id) else nil
+	local gift = if mascot.how == "robux" and ContentDropClient.isReleased("mascot", mascot.id)
+		then Social.giftFor("mascot", mascot.id)
+		else nil
 	if gift then
 		GiftPicker.button(cell, gift, MascotShop.name(mascot), 8 + ICON)
 	end
@@ -181,6 +188,7 @@ end
 function MascotShop.build(body: Instance)
 	local hint = Ui.label(body, ClientState.t("mascots_hint"), 22, Enum.Font.GothamMedium, Ui.colors.muted)
 	hint.LayoutOrder = 0
+	ContentDropClient.nextLine(body, 0)
 	local grid = Instance.new("Frame")
 	grid.LayoutOrder = 1
 	grid.BackgroundTransparency = 1
@@ -192,7 +200,10 @@ function MascotShop.build(body: Instance)
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
 	layout.Parent = grid
 	for i, mascot in Mascots.list do
-		cellFor(grid, mascot, i)
+		-- Тизеры невышедших — в конце сетки
+		local owned = MascotShop.state.owned[mascot.id] == true
+		local soon = ContentDropClient.teaser("mascot", mascot.id, owned) ~= nil
+		cellFor(grid, mascot, if soon then 1000 + i else i)
 	end
 	grid.Parent = body
 end

@@ -42,6 +42,9 @@ local Debug = {
 	-- "main" — как в основной игре (где main = 0 — «Скоро»), "test" — тестовая v2.
 	-- nil — по game.GameId
 	forceUniverse = nil :: string?,
+	-- График контента (Config/ContentDrops, только Studio): какой день после запуска изображать
+	-- (например 7 — вышла «Неделя роботов», 60 — всё). nil — по настоящей дате (до запуска — день 0)
+	contentDayOffset = nil :: number?,
 }
 
 return Debug

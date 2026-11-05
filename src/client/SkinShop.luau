@@ -17,6 +17,7 @@ local Social = require(Shared.Config.Social)
 local ClientState = require(script.Parent.ClientState)
 local Ui = require(script.Parent.Ui)
 local GiftPicker = require(script.Parent.GiftPicker)
+local ContentDropClient = require(script.Parent.ContentDropClient)
 
 type State = {
 	owned: { [string]: boolean },
@@ -97,8 +98,13 @@ local function actionButton(cell: Frame, skin: Skins.Skin)
 	local text: string
 	local color: Color3
 	local onClick: () -> ()
+	-- График контента: ещё не вышел — тизер «Скоро: через N дн.» без покупки
+	local teaser = ContentDropClient.teaser("skin", skin.id, owned)
 	if owned then
 		text, color = ClientState.t("skins_owned"), Ui.colors.good
+		onClick = function() end
+	elseif teaser then
+		text, color = teaser, Ui.colors.locked
 		onClick = function() end
 	elseif skin.premium then
 		local soon = skin.productId == 0
@@ -124,7 +130,7 @@ local function actionButton(cell: Frame, skin: Skins.Skin)
 		end
 	end
 	local b = Ui.button(cell, text, color, onClick)
-	if not owned and not skin.premium then
+	if not owned and not skin.premium and not teaser then
 		b.TextColor3 = if color == Ui.colors.money then Color3.fromRGB(40, 30, 0) else Ui.colors.muted
 	end
 	b.AnchorPoint = Vector2.new(0.5, 1)
@@ -147,7 +153,9 @@ local function cellFor(parent: Instance, skin: Skins.Skin, order: number)
 	name.TextXAlignment = Enum.TextXAlignment.Center
 	actionButton(cell, skin)
 	-- Премиум-скин можно подарить другому игроку на сервере
-	local gift = if skin.premium then Social.giftFor("skin", skin.id) else nil
+	local gift = if skin.premium and ContentDropClient.isReleased("skin", skin.id)
+		then Social.giftFor("skin", skin.id)
+		else nil
 	if gift then
 		GiftPicker.button(cell, gift, SkinShop.name(skin), 8 + PREVIEW)
 	end
@@ -211,6 +219,7 @@ end
 function SkinShop.build(body: Instance)
 	local hint = Ui.label(body, ClientState.t("skins_hint"), 22, Enum.Font.GothamMedium, Ui.colors.muted)
 	hint.LayoutOrder = 0
+	ContentDropClient.nextLine(body, 0)
 	groupHint(body)
 
 	local grid = Instance.new("Frame")
@@ -224,7 +233,9 @@ function SkinShop.build(body: Instance)
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
 	layout.Parent = grid
 	for i, skin in Skins.list do
-		cellFor(grid, skin, i)
+		-- Тизеры невышедших — в конце сетки
+		local soon = ContentDropClient.teaser("skin", skin.id, SkinShop.state.owned[skin.id] == true) ~= nil
+		cellFor(grid, skin, if soon then 1000 + i else i)
 	end
 	grid.Parent = body
 end

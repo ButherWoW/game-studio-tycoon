@@ -28,6 +28,7 @@ local CompanyEventState = require(script.Parent.Parent.CompanyEventState)
 local CompanyEvents = require(Shared.Config.CompanyEvents)
 local Ui = require(script.Parent.Parent.Ui)
 local ConsoleClient = require(script.Parent.Parent.ConsoleClient)
+local ContentDropClient = require(script.Parent.Parent.ContentDropClient)
 
 type Tab = "interior" | "decor" | "mood" | "console" | "style" | "finish"
 type StyleState = { owned: { [string]: boolean }, selected: string }
@@ -267,6 +268,12 @@ local function buildDecor(body: Instance)
 		if not item.slots[stage] then
 			continue
 		end
+		-- График контента: невышедший декор не показываем (купленный — всегда)
+		if
+			not state.owned[Decor.key(item.id, floor)] and not ContentDropClient.isReleased("decor", item.id)
+		then
+			continue
+		end
 		local name = ClientState.localText("decor_" .. item.id, item.name, item.nameEn)
 		local frame = row(body, order, item.emoji, name, "+" .. item.mood .. " 😊 · " .. floorLabel(floor))
 		order += 1
@@ -306,7 +313,11 @@ end
 
 local function styleButton(frame: Frame, style: FurnitureStyles.Style)
 	local remotes = styleRemotes
-	if styleState.selected == style.id then
+	-- График контента: ещё не вышел — тизер «Скоро: через N дн.»
+	local teaser = ContentDropClient.teaser("style", style.id, styleState.owned[style.id] == true)
+	if teaser then
+		rowButton(frame, teaser, Ui.colors.locked, function() end)
+	elseif styleState.selected == style.id then
 		rowButton(frame, ClientState.t("fstyle_selected"), Ui.colors.good, function() end)
 	elseif styleState.owned[style.id] then
 		rowButton(frame, ClientState.t("fstyle_select"), Ui.colors.primary, function()
@@ -341,6 +352,7 @@ end
 -- Вкладка «Стиль»: 4 карточки, один стиль на всю студию (только вид, на работу не влияет)
 local function buildStyle(body: Instance)
 	note(body, ClientState.t("fstyle_hint"), 1)
+	ContentDropClient.nextLine(body, 1)
 	for i, style in FurnitureStyles.list do
 		local frame = row(
 			body,
@@ -400,7 +412,11 @@ end
 
 local function finishButton(frame: Frame, finish: InteriorFinishes.Finish)
 	local remotes = styleRemotes
-	if finishState.selected == finish.id then
+	-- График контента: ещё не вышла — тизер «Скоро: через N дн.»
+	local teaser = ContentDropClient.teaser("finish", finish.id, finishState.owned[finish.id] == true)
+	if teaser then
+		rowButton(frame, teaser, Ui.colors.locked, function() end)
+	elseif finishState.selected == finish.id then
 		rowButton(frame, ClientState.t("ifinish_selected"), Ui.colors.good, function() end)
 	elseif finishState.owned[finish.id] then
 		rowButton(frame, ClientState.t("fstyle_select"), Ui.colors.primary, function()

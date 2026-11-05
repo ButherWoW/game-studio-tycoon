@@ -16,6 +16,7 @@ local Social = require(Shared.Config.Social)
 local ClientState = require(script.Parent.ClientState)
 local Ui = require(script.Parent.Ui)
 local GiftPicker = require(script.Parent.GiftPicker)
+local ContentDropClient = require(script.Parent.ContentDropClient)
 
 type State = {
 	owned: { [string]: boolean },
@@ -246,6 +247,7 @@ function PosterShop.build(body: Instance)
 		Ui.colors.muted
 	)
 	hint.LayoutOrder = 0
+	ContentDropClient.nextLine(body, 0)
 	if picking and #state.slots > 0 then
 		slotPicker(body, picking)
 	end
@@ -261,7 +263,10 @@ function PosterShop.build(body: Instance)
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
 	layout.Parent = grid
 	for i, poster in Posters.list do
-		cellFor(grid, poster, i)
+		-- График контента: невышедшие постеры не показываем (купленные — всегда)
+		if state.owned[poster.id] == true or ContentDropClient.isReleased("poster", poster.id) then
+			cellFor(grid, poster, i)
+		end
 	end
 	grid.Parent = body
 end

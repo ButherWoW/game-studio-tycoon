@@ -11,6 +11,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage.Shared
 local FurnitureStyles = require(Shared.Config.FurnitureStyles)
+local ContentDrops = require(Shared.Config.ContentDrops)
 local DailyEvents = require(Shared.Config.DailyEvents)
 local StyleRemotes = require(Shared.StyleRemotes)
 local DataService = require(script.Parent.DataService)
@@ -103,6 +104,10 @@ local function onBuy(player: Player, styleId: any)
 	local profile = DataService.get(player)
 	-- За Robux за $ не продаётся; открытый второй раз не продаём
 	if not style or not profile or FurnitureStyles.isPremium(style) then
+		return
+	end
+	-- График контента (Config/ContentDrops): до выхода не продаём
+	if not ContentDrops.isReleased("style", style.id) then
 		return
 	end
 	local cost = style.cost

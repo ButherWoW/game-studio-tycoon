@@ -11,6 +11,7 @@ local ServerStorage = game:GetService("ServerStorage")
 
 local Shared = ReplicatedStorage.Shared
 local Decor = require(Shared.Config.Decor)
+local ContentDrops = require(Shared.Config.ContentDrops)
 local DailyEvents = require(Shared.Config.DailyEvents)
 local Stages = require(Shared.Config.Stages)
 local DecorRemotes = require(Shared.DecorRemotes)
@@ -145,6 +146,10 @@ local function onBuy(player: Player, itemId: any, floor: any)
 		or floor < 1
 		or floor > Decor.floorsOpen(profile.studioLevel)
 	then
+		return
+	end
+	-- График контента (Config/ContentDrops): до выхода не продаём
+	if not ContentDrops.isReleased("decor", item.id) then
 		return
 	end
 	-- Места для этого этажа нет — не продаём

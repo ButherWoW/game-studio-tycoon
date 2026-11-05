@@ -9,6 +9,9 @@ Research, Offline, Rebirth, HitCartridges, AdCampaigns), поэтому посл
 --all — релизный проход (05.11): --extras + события дня, золотой час, налоги, DLC хитов
   (если окупается), см. ASSUMPTIONS ниже; --premium — то же с Roblox Premium (+10%);
 --rebirth2 — ещё и второй забег после 1-го Rebirth: звезду покупает жадно (перебор веток).
+--drops — с графиком контента (Config/ContentDrops): игрок начинает в день запуска, события дня
+  выпадают только вышедшие к этому дню (жанры/темы модель не выбирает — у каждого жанра набора
+  запуска есть тема 1.2, допущение topic_fit не меняется).
 
 Это приближение, а не повтор кода сервера. Допущения (см. ASSUMPTIONS ниже):
 - парк до гаража ~5 мин; дальше игрок сразу покупает всё, на что хватает денег,
@@ -58,6 +61,7 @@ ASSUMPTIONS = {
     # 1-го Rebirth), отделка/стили/декор и «Флеш-распродажа» (косметика), наставничество (навыки
     # модель не покупает), «Охота за талантами», пицца, парад маскотов, картриджепад (копейки).
     "all": False,
+    "drops": False,  # --drops: события дня по графику контента (Config/ContentDrops), старт в день запуска
     "premium": False,  # Roblox Premium: +10% к релизам (Config/Premium) и +10% офлайн (Social.premium)
     "golden_days_share": 0.5,  # в золотой час (19:00 UTC) играет в половину дней: 2-я сессия с него
     # События дня — раз в час на 15 мин (hh:30). Сессия 45 мин задевает в среднем одно событие и
@@ -84,6 +88,19 @@ def num(s: str) -> float:
 
 def read(name: str) -> str:
     return (CFG / f"{name}.luau").read_text(encoding="utf-8")
+
+
+def drop_days(field_name: str) -> dict:
+    """Config/ContentDrops: id -> день выхода для поля волны (не в списке — 0)."""
+    text = read("ContentDrops")
+    days = {}
+    for block in re.split(r"\n\t\t\{\n", text)[1:]:
+        day = re.search(r"\bday = (\d+)", block)
+        ids = re.search(rf"\b{field_name} = \{{([^}}]*)\}}", block)
+        if day and ids:
+            for item in re.findall(r'"(\w+)"', ids.group(1)):
+                days[item] = int(day.group(1))
+    return days
 
 
 def field(text: str, name: str) -> float:
@@ -233,6 +250,7 @@ def load():
         "golden_minutes": eval(re.search(r"durationSeconds = ([\d_ *]+)", sub(de, "golden")).group(1)) / 60,
         "golden_mult": field(sub(de, "golden"), "revenueMultiplier"),
         "events": re.findall(r'\{ id = "(\w+)", icon = "[^"]*", weight = [\d.]+ \}', de),
+        "event_day": drop_days("dailyEvents"),
         "coffee": field(sub(de, "coffeeRush"), "devSpeed"),
         "investor_minutes": field(sub(de, "investors"), "incomeMinutes"),
         "bug_minutes": field(sub(de, "bugHunt"), "incomeMinutes"),
@@ -754,7 +772,10 @@ def run(prev=None, perk_levels=None):
                     sim.hit_update_check()
             while sim.t < session_end:
                 if ASSUMPTIONS["all"] and event_at is not None and sim.t >= event_at:
-                    sim.daily_event(events[event_no % len(events)])
+                    pool = events
+                    if ASSUMPTIONS["drops"]:  # день 1 модели = день запуска (0)
+                        pool = [e for e in events if c["daily"]["event_day"].get(e, 0) <= day - 1] or events
+                    sim.daily_event(pool[event_no % len(pool)])
                     event_no += 1
                     event_at = None
                 sim.play(min(60.0, session_end - sim.t))
@@ -867,6 +888,7 @@ def sanity(c):
 if __name__ == "__main__":
     ASSUMPTIONS["all"] = "--all" in sys.argv
     ASSUMPTIONS["premium"] = "--premium" in sys.argv
+    ASSUMPTIONS["drops"] = "--drops" in sys.argv
     ASSUMPTIONS["extras"] = "--extras" in sys.argv or ASSUMPTIONS["all"]
     s, r = run()
     report(s, r, quiet="--quiet" in sys.argv)
