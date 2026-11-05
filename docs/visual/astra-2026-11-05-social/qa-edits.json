@@ -1,0 +1,14 @@
+[
+  {
+    "filename": "gamejam_banner.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-bc4f3084-a352-4d61-98a0-42c46557fa65.png",
+    "prompt": "Use case: precise-object-edit. Recompose this original GAME JAM stage header to fit the final1600x4004:1 crop. Preserve the same playful blue purple cartoon style, four developers on separated laptops, trophy and blank clock. Crucial: put complete exact headline GAME JAM horizontally across CENTER of composition, huge and fully readable, with all letters inside the central horizontal quarter of image height. Move trophy slightly left and people toward far sides to clear headline. No other writing or numerals. Native panoramic4:1 composition; no top-centered text; keep every important feature within central vertical band40% so4:1centercrop cannot cut text. Opaque background.",
+    "replacesSource": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-69dc81e9-0d25-4004-ab11-4ceba95ce757.png"
+  },
+  {
+    "filename": "menu_gamejam.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-5af4797e-345a-4f4a-8a5f-328599cb104b.png",
+    "prompt": "Use case: background-extraction. Make this trophy-and-two-laptops menu icon truly transparent. Remove ALL background scenery, violet rays, walls, stage, greenery and ambient glow haze. Keep only the golden trophy, two separate blue laptops and one cyan sparkle; redraw their outer silhouettes cleanly with thick#1E1E2E outline, chunky glossy cartoon game style. Genuine alpha0 throughout exterior and holes between the three objects, no tinted square backdrop. No text or numerals. Square final256PNG.",
+    "replacesSource": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-d1326a9e-a3a2-4651-830a-bbce9206329c.png"
+  }
+]

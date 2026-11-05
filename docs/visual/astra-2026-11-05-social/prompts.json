@@ -1,0 +1,156 @@
+[
+  {
+    "filename": "season_banner.png",
+    "size": [
+      1600,
+      400
+    ],
+    "transparent": false,
+    "prompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Very wide panoramic aspect4:1 season header. Exact only text SEASON 1 centered huge gold/white rounded letters with navyoutline. Original bright studio trophy, stars and colorful game cartridges flanking sides, blue/violet glossy lowpolycartoon background. Keep headline and every important object in central horizontal band50%height for wide header crop. No other writing.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-c19cd2f6-dfb5-4fcd-88ae-c389045bcaae.png"
+  },
+  {
+    "filename": "season_tier_free.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Square1:1 overlay FRAME ONLY: thick chunky rounded square blue#3D7BFF/navy#1E1E2E border, one small silver star on top edge. The whole middle square hole must be genuinely transparent, as must exterior. No filled center, rewards, words, numbers or symbols inside the hole.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-a4c0c020-6843-4211-acca-31aa7acfb940.png"
+  },
+  {
+    "filename": "season_tier_premium.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Square1:1 overlay FRAME ONLY: same chunky rounded square shape as a blue free-tier frame but thick gold#FFC93C border with violet#7C4DFF neon edge, one small gold diamond on top edge. The whole middle square hole must be genuinely transparent, as must exterior. No filled center, rewards, words or numbers.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-498a6ed2-8071-42c6-88ad-38d447a8a783.png"
+  },
+  {
+    "filename": "season_premium_badge.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Square1:1 isolated premium season icon: bold golden fivepointstar inside a violet faceted diamond with small cyanwingaccents, thick navyoutline, original glossy cartoon3D. No words, numerals or currency symbols.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-8d9e539a-1266-4469-8f05-bd9db2c31e1f.png"
+  },
+  {
+    "filename": "gamejam_banner.png",
+    "size": [
+      1600,
+      400
+    ],
+    "transparent": false,
+    "prompt": "Use case: precise-object-edit. Recompose this original GAME JAM stage header to fit the final1600x4004:1 crop. Preserve the same playful blue purple cartoon style, four developers on separated laptops, trophy and blank clock. Crucial: put complete exact headline GAME JAM horizontally across CENTER of composition, huge and fully readable, with all letters inside the central horizontal quarter of image height. Move trophy slightly left and people toward far sides to clear headline. No other writing or numerals. Native panoramic4:1 composition; no top-centered text; keep every important feature within central vertical band40% so4:1centercrop cannot cut text. Opaque background.",
+    "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-bc4f3084-a352-4d61-98a0-42c46557fa65.png",
+    "originalPrompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Verywidepanorama aspect4:1. Cheerful friendly original blocky developers at separated laptops on a little gamejam stage, central chunkygold trophy and large abstract clock with blank face. Exact only headline GAME JAM topcenter white/gold navyoutline. Cyan/blue/violet energeticlights. All importantcontentincludingtextcentralhorizontalband50%height for widecrop. No logos, othertext, numbers or clockdigits.",
+    "originalSource": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-69dc81e9-0d25-4004-ab11-4ceba95ce757.png"
+  },
+  {
+    "filename": "gamejam_medal_top10.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Square1:1 isolated award medal: thickgold circularrim, darkblue center with chunky trophy and three small stars, violet short ribbons. Premiumwinning gamejam award, navyoutline, glossygold. No writing or numerals.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-577ed51f-1842-41a7-9c7b-d87326fdf972.png"
+  },
+  {
+    "filename": "gamejam_medal_top100.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Square1:1 isolated award medal: matching medal shape with silver circularrim, darkbluecenter with one largegold star, blue short ribbons. Friendlygamejam participationaward, navyoutline glossy. No writing or numerals.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-c52e5e0d-36bd-4616-8be2-5037962ecdc4.png"
+  },
+  {
+    "filename": "hackathon_banner.png",
+    "size": [
+      1600,
+      300
+    ],
+    "transparent": false,
+    "prompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Extremely wide panoramic aspect16:3 nighttime hackathon game header. Exactonlyheadline HACKATHON NIGHT ×2 huge white/cyan rounded lettersoutlinednavy, center. Silhouettesof original friendly developers at laptops left andright, neonviolet/cyanclock withoutdigits, stars. Keep everyimportantobject andtextincentralhorizontalband40%heightforverywidecrop. No otherwritingbrandsorweapons.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-ff1f6a2f-358b-4468-97d6-d6b12b5da1b7.png"
+  },
+  {
+    "filename": "icon_like.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Square1:1 isolated chunky thumbs-up hand icon with blue sleeve, warm neutral skin, one goldstar sparkle. Friendly roundedtoyhand correctlyone thumb, thicknavyoutline, blue/gold glossycartoon. No text.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-5661765e-f16a-4df1-aea8-1f0fba7019ef.png"
+  },
+  {
+    "filename": "icon_visit.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Square1:1 isolated cheerful studio house icon: blue roof, creamwalls, warmgold open door, smallcyan welcome path. Clearly a home with doorway, thicknavyoutline, glossycartoon. No text or numbers.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-e8c7dc93-c8b4-4291-a95a-e7a9928e6252.png"
+  },
+  {
+    "filename": "icon_leaderboard.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Square1:1 isolated three-step blue/purple podium withlarge goldstar oncenterhigheststep andtwosmall goldstars sides. No numbers, people or text. Thicknavyoutline, glossytoy3D.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-2c5aacaf-6ee2-4923-9b1b-df57e0b61c27.png"
+  },
+  {
+    "filename": "icon_codes.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Square1:1 isolated blue-purple perforated ticket with one central goldstar symbol and goldrim. Large rounded silhouette, navyoutline, glossycartoon. No letters, numbers or actualbarcode.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-aa7df123-f542-4d64-9967-d994c7a2266a.png"
+  },
+  {
+    "filename": "menu_season.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Square1:1 menuicon: premium violetblue season ticket with goldstarburst crest and small goldribbon, thicknavyoutline. Bold simplifiedtoy3D readable44pixels. No text or numerals.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-c958bb23-56d2-4cf8-a834-50f6dd7ebf11.png"
+  },
+  {
+    "filename": "menu_studios.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Square1:1 menuicon: three smallfriendly studio houses clustered, middlehouseblue roof/goldlitdoor, otherspinkandviolet, separated silhouettes. Thicknavyoutline glossycartoon readable44pixels. No text.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-7dd17092-d015-4a88-b8ac-ec151be0a808.png"
+  },
+  {
+    "filename": "menu_gamejam.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: background-extraction. Make this trophy-and-two-laptops menu icon truly transparent. Remove ALL background scenery, violet rays, walls, stage, greenery and ambient glow haze. Keep only the golden trophy, two separate blue laptops and one cyan sparkle; redraw their outer silhouettes cleanly with thick#1E1E2E outline, chunky glossy cartoon game style. Genuine alpha0 throughout exterior and holes between the three objects, no tinted square backdrop. No text or numerals. Square final256PNG.",
+    "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-5af4797e-345a-4f4a-8a5f-328599cb104b.png",
+    "originalPrompt": "Use case: ui-mockup. Original Game Studio Tycoon UI art, consistent blue#3D7BFF, gold#FFC93C, violet#7C4DFF, thickoutline#1E1E2E, polishedcartoonlowpoly. Childfriendly, no weapons, brands, logo, watermark or signature. Square1:1 menuicon: a gold trophy above two clearly separated blue laptops, onecyanstar sparkle, thicknavyoutline. Friendly glossycartoon chunky readable44pixels. No writing or numbers.",
+    "originalSource": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-d1326a9e-a3a2-4651-830a-bbce9206329c.png"
+  }
+]
