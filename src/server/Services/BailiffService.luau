@@ -514,6 +514,10 @@ local function seize(player: Player, profile: DataService.Profile, candidate: Ca
 			return
 		end
 		profile.upgrades[candidate.id] = nil
+		local events = optional("CompanyEventService")
+		if events and type(events.forgetItem) == "function" then
+			pcall(events.forgetItem, player, candidate.id)
+		end
 	end
 	local sale = Bailiffs.saleFor(candidate.cost)
 	if sale > 0 then

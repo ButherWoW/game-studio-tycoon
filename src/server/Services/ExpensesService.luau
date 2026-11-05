@@ -98,7 +98,15 @@ local function charge(player: Player)
 	player:SetAttribute("ExpensesPerMinute", salaryPerMinute + rentPerMinute)
 	local now = os.clock()
 	if not nextPayday[player] then
-		nextPayday[player] = now + Expenses.paydaySeconds
+		-- Набежавшая зарплата и время до выплаты — из прошлой сессии: перезаход их не обнуляет
+		local saved = (profile :: any).payday
+		local accrued = if type(saved) == "table" then tonumber(saved.accrued) else nil
+		local left = if type(saved) == "table" then tonumber(saved.left) else nil
+		if accrued and accrued == accrued and accrued > 0 then
+			salaryAccrued[player] = math.min(accrued, 1e12)
+		end
+		left = if left and left == left then math.clamp(left, 0, Expenses.paydaySeconds) else nil
+		nextPayday[player] = now + (left or Expenses.paydaySeconds)
 	end
 
 	-- Аренда — долями (и в минус: долг, Config/Bailiffs)
@@ -120,6 +128,8 @@ local function charge(player: Player)
 
 	-- Клиенту: когда и сколько (оценка — набежавшее + до конца периода по текущей ставке)
 	local left = math.max(nextPayday[player] - now, 0)
+	local stored: any = profile
+	stored.payday = { accrued = salaryAccrued[player] or 0, left = left }
 	local upcoming = math.floor((salaryAccrued[player] or 0) + salaryPerMinute * left / 60)
 	player:SetAttribute(
 		"PaydayAt",

@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Slágerüldözés közben nem lehet",
 	tour_toast_gone = "A játékos már kilépett",
 	tour_toast_nogarage = "A játékosnak még nincs stúdiója",
+	tour_toast_like_garage = "Akkor lájkolhatsz, ha már van saját garázsod",
 	tour_toast_star = "⭐ {rank}. hely a hét stúdiói között! Jutalom: {money} és a ⭐ jelvény",
 	tour_rating_likes = "👍 Lájkok",
 	tour_rating_value = "💰 Érték",

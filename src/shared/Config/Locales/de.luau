@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Nicht während einer Hit-Verfolgung",
 	tour_toast_gone = "Der Spieler ist schon weg",
 	tour_toast_nogarage = "Der Spieler hat noch kein Studio",
+	tour_toast_like_garage = "Likes kannst du vergeben, sobald du eine eigene Garage hast",
 	tour_toast_star = "⭐ Platz {rank} der Studios der Woche! Belohnung: {money} und das ⭐-Abzeichen",
 	tour_rating_likes = "👍 Likes",
 	tour_rating_value = "💰 Wert",

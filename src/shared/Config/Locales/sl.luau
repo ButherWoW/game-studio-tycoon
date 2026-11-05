@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Ne med lovom za hitom",
 	tour_toast_gone = "Igralec je že odšel",
 	tour_toast_nogarage = "Igralec še nima studia",
+	tour_toast_like_garage = "Všečke lahko daješ, ko imaš svojo garažo",
 	tour_toast_star = "⭐ Št. {rank} med studii tedna! Nagrada: {money} in značka ⭐",
 	tour_rating_likes = "👍 Všečki",
 	tour_rating_value = "💰 Vrednost",

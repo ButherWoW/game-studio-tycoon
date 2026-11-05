@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Niet tijdens een hit-achtervolging",
 	tour_toast_gone = "Die speler is al weg",
 	tour_toast_nogarage = "Die speler heeft nog geen studio",
+	tour_toast_like_garage = "Je kunt studio's liken zodra je een eigen garage hebt",
 	tour_toast_star = "⭐ Nr. {rank} van de studio's van de week! Beloning: {money} en de ⭐-badge",
 	tour_rating_likes = "👍 Likes",
 	tour_rating_value = "💰 Waarde",

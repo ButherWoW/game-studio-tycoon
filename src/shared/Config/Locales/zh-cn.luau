@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "追逐爆款时不能这样做",
 	tour_toast_gone = "该玩家已离开",
 	tour_toast_nogarage = "该玩家还没有工作室",
+	tour_toast_like_garage = "拥有自己的车库后才能点赞工作室",
 	tour_toast_star = "⭐ 本周工作室第 {rank} 名！奖励：{money} 和 ⭐ 徽章",
 	tour_rating_likes = "👍 点赞",
 	tour_rating_value = "💰 价值",

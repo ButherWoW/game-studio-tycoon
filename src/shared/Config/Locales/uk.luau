@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Під час погоні за хітом не можна",
 	tour_toast_gone = "Гравець уже пішов",
 	tour_toast_nogarage = "У гравця ще немає студії",
+	tour_toast_like_garage = "Лайкати можна, коли в тебе є свій гараж",
 	tour_toast_star = "⭐ №{rank} серед студій тижня! Нагорода: {money} і значок ⭐",
 	tour_rating_likes = "👍 Лайки",
 	tour_rating_value = "💰 Вартість",

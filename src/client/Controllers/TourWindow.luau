@@ -636,6 +636,8 @@ function TourWindow.start()
 					likedToday[likeTarget.UserId] = true
 				end
 				toast(t("tour_toast_already"), Ui.colors.muted)
+			elseif notice.reason == "garage" then
+				toast(t("tour_toast_like_garage"), Ui.colors.muted)
 			else
 				toast(t("tour_toast_visit_first"), Ui.colors.muted)
 			end

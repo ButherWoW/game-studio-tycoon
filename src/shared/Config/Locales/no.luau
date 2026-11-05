@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Ikke under en hitjakt",
 	tour_toast_gone = "Spilleren har allerede gått",
 	tour_toast_nogarage = "Spilleren har ikke studio ennå",
+	tour_toast_like_garage = "Du kan like studioer når du har din egen garasje",
 	tour_toast_star = "⭐ Nr. {rank} blant ukens studioer! Belønning: {money} og ⭐-merket",
 	tour_rating_likes = "👍 Likes",
 	tour_rating_value = "💰 Verdi",

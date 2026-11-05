@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Ei hittijahdin aikana",
 	tour_toast_gone = "Pelaaja on jo lähtenyt",
 	tour_toast_nogarage = "Pelaajalla ei ole vielä studiota",
+	tour_toast_like_garage = "Voit tykätä studioista, kun sinulla on oma autotalli",
 	tour_toast_star = "⭐ Sija {rank} viikon studioissa! Palkinto: {money} ja ⭐-merkki",
 	tour_rating_likes = "👍 Tykkäykset",
 	tour_rating_value = "💰 Arvo",

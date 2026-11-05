@@ -853,7 +853,12 @@ local function release(player: Player, project: Project)
 		revenue = revenue,
 	})
 	-- Очки недели холдинга (HoldingService); совместная игра двух участников — больше
-	hook("HoldingService", "onGameReleased", player, { coopWith = coopPartner })
+	hook(
+		"HoldingService",
+		"onGameReleased",
+		player,
+		{ coopWith = coopPartner, laptop = project.laptop == true }
+	)
 	-- Своя консоль (этапы, доля рынка) и стример (слава, хайп)
 	hook("ConsoleService", "onGameReleased", player, {
 		platform = project.platform,
@@ -1066,7 +1071,9 @@ local function finishProject(player: Player, project: Project)
 			table.insert(list, project)
 		end
 		DevelopmentService.pushState(player)
-		error(err, 0)
+		-- Без error: иначе цикл тиков посчитает проект сломанным и уберёт его из списка
+		warn("[DevelopmentService] Release failed, will retry:", player.Name, project.releaseFailures, err)
+		return
 	elseif not ok then
 		warn("[DevelopmentService] Release finished with an error after payout:", err)
 	end

@@ -832,6 +832,11 @@ local function onLike(player: Player, userId: any)
 	if not profile or userId == player.UserId then
 		return
 	end
+	-- Лайкают только игроки со своим гаражом: альты из парка не накручивают недельный топ
+	if not PlotService.ownsGarage(player) then
+		TourRemotes.TourNotice:FireClient(player, { kind = "like", ok = false, reason = "garage" })
+		return
+	end
 	local owner = Players:GetPlayerByUserId(userId)
 	local ownerName: string? = nil
 	if owner then
