@@ -44,6 +44,9 @@ local Friends = {
 		declineCooldown = 30, -- после отказа тому же игроку не чаще, с
 		offerCooldown = 0.25, -- изменения предложения не чаще, с
 		afterTradeCooldown = 10, -- после обмена новый — через N с
+		-- Денег от обменов за сутки (UTC) получатель берёт не больше N минут своего дохода
+		-- (RewardService.incomeForMinutes): альты не перекачивают деньги повторными обменами по 50%
+		dailyCashMinutes = 120,
 	},
 }
 

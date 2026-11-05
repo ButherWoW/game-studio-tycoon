@@ -6,7 +6,13 @@
 -- подтверждения и запирает кнопку на lockSeconds. Когда подтвердили оба — сервер заново
 -- проверяет всё (оба на сервере, владение, долг, деньги) и меняет одним куском без yield.
 -- Игрок в долгу (cash < 0) не меняется: иначе уводил бы предметы от приставов.
--- Состояние живёт только в памяти сервера; в профиле — только итог (предметы и деньги).
+-- Состояние живёт только в памяти сервера; в профиле — только итог (предметы и деньги)
+-- и сколько денег игрок получил обменами за текущие сутки UTC:
+--   (profile :: any).tradeCash = { day = os.time() // 86400, received = number }.
+-- Потолок полученного за сутки — Friends.trade.dailyCashMinutes минут СВОЕГО дохода получателя
+-- (защита от перекачки с альтов повторными обменами по 50%).
+-- Сохранение после обмена: сначала тот, кто отдаёт, потом получатель, по очереди — если вторая
+-- запись не пройдёт, предмет пропадёт, но не раздвоится. Каждый обмен пишет в лог свой id.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -23,6 +29,7 @@ local PosterService = require(script.Parent.PosterService)
 local MascotService = require(script.Parent.MascotService)
 local RewardService = require(script.Parent.RewardService)
 
+local DAY_SECONDS = 86400
 local STATE_REQUEST_COOLDOWN = 1
 local TIMEOUT_CHECK = 5
 
@@ -35,6 +42,7 @@ type Trade = {
 	confirmed: { [Player]: boolean },
 	lockUntil: number,
 	startedAt: number,
+	id: string,
 }
 
 local TradeService = {}
@@ -46,6 +54,7 @@ local lastOffer: { [Player]: number } = {}
 local lastStateRequest: { [Player]: number } = {}
 local declined: { [Player]: { [number]: number } } = {} -- кто кому отказал: [запросивший][userId]
 local cooldownUntil: { [Player]: number } = {}
+local tradeCounter = 0
 
 local function notice(player: Player, payload: { [string]: any })
 	FriendRemotes.FriendNotice:FireClient(player, payload)
@@ -95,6 +104,44 @@ local function maxCash(profile: DataService.Profile): number
 	return math.max(math.floor(profile.cash * Friends.trade.maxCashShare), 0)
 end
 
+-- Полученные обменами деньги за сегодня (UTC); вчерашнее обнуляется, мусор из сохранения чинится
+local function cashLog(profile: DataService.Profile): { day: number, received: number }
+	local today = os.time() // DAY_SECONDS
+	local raw = (profile :: any).tradeCash
+	local received = if type(raw) == "table" then raw.received else nil
+	if
+		type(raw) ~= "table"
+		or raw.day ~= today
+		or type(received) ~= "number"
+		or received ~= received
+		or received < 0
+		or received == math.huge
+	then
+		raw = { day = today, received = 0 };
+		(profile :: any).tradeCash = raw
+	end
+	return raw
+end
+
+-- Сколько ещё денег игрок может получить обменами сегодня
+local function receiveLeft(player: Player, profile: DataService.Profile): number
+	local cap = RewardService.incomeForMinutes(player, profile, Friends.trade.dailyCashMinutes)
+	if type(cap) ~= "number" or cap ~= cap then
+		return 0
+	end
+	return math.max(math.floor(cap - cashLog(profile).received), 0)
+end
+
+-- Сколько денег giver может положить в обмен с receiver: доля своего баланса и остаток суточного
+-- потолка получателя
+local function maxCashFor(
+	profile: DataService.Profile,
+	receiver: Player,
+	receiverProfile: DataService.Profile
+): number
+	return math.min(maxCash(profile), receiveLeft(receiver, receiverProfile))
+end
+
 local function partnerOf(trade: Trade, player: Player): Player
 	return if trade.a == player then trade.b else trade.a
 end
@@ -108,6 +155,10 @@ local function pushState(player: Player)
 	local payload: { [string]: any } = { inventory = inventory(profile), maxCash = maxCash(profile) }
 	if trade then
 		local partner = partnerOf(trade, player)
+		local partnerProfile = DataService.get(partner)
+		if partnerProfile then
+			payload.maxCash = maxCashFor(profile, partner, partnerProfile)
+		end
 		payload.trade = {
 			partnerName = partner.DisplayName,
 			partnerUserId = partner.UserId,
@@ -165,7 +216,9 @@ local function blocker(player: Player): string?
 end
 
 local function startTrade(a: Player, b: Player)
+	tradeCounter += 1
 	local trade: Trade = {
+		id = string.sub(game.JobId, 1, 8) .. "-" .. tradeCounter .. "-" .. os.time(),
 		a = a,
 		b = b,
 		offers = { [a] = { items = {}, cash = 0 }, [b] = { items = {}, cash = 0 } },
@@ -293,7 +346,7 @@ local function cleanOffer(
 		end
 	end
 	if type(cash) == "number" and cash == cash and cash > 0 then
-		result.cash = math.clamp(math.floor(cash), 0, maxCash(profile))
+		result.cash = math.clamp(math.floor(cash), 0, maxCashFor(profile, partner, partnerProfile))
 	end
 	return result
 end
@@ -343,7 +396,7 @@ local function valid(trade: Trade): boolean
 			return false
 		end
 		local offer = trade.offers[giver]
-		if offer.cash < 0 or offer.cash > maxCash(gp) then
+		if offer.cash < 0 or offer.cash > maxCashFor(gp, receiver, rp) then
 			return false
 		end
 		for _, item in offer.items do
@@ -405,6 +458,9 @@ local function execute(trade: Trade)
 	-- Деньги — перевод между игроками, а не доход: мимо addCash/trySpend (аналитика экономики)
 	pa.cash += offerB.cash - offerA.cash
 	pb.cash += offerA.cash - offerB.cash
+	-- Суточный потолок полученного (valid уже проверил остаток)
+	cashLog(pa).received += offerB.cash
+	cashLog(pb).received += offerA.cash
 	-- Полученное в обмене — не заработок: иначе пересылка туда-обратно закрывает задания «заработай»
 	local netA = offerB.cash - offerA.cash
 	if netA > 0 then
@@ -420,9 +476,34 @@ local function execute(trade: Trade)
 		DataService.replicate(player)
 		pushState(player)
 		notice(player, { kind = "tradeDone", name = partnerOf(trade, player).DisplayName })
-		task.spawn(DataService.save, player)
 	end
 	log(a, #offerA.items + #offerB.items, "done")
+	print(
+		string.format(
+			"[TradeService] trade %s done: %d -> %d (%d items, $%d), %d -> %d (%d items, $%d)",
+			trade.id,
+			a.UserId,
+			b.UserId,
+			#offerA.items,
+			offerA.cash,
+			b.UserId,
+			a.UserId,
+			#offerB.items,
+			offerB.cash
+		)
+	)
+	-- Сохраняем по очереди: сначала отдающий (у кого забрали больше предметов, при равенстве —
+	-- больше денег), потом получатель. Сбой второй записи теряет вещь, но не дублирует её
+	local giveA = #offerA.items * 1e12 + offerA.cash
+	local giveB = #offerB.items * 1e12 + offerB.cash
+	local first, second = if giveB > giveA then b else a, if giveB > giveA then a else b
+	task.spawn(function()
+		for _, player in { first, second } do
+			if not DataService.save(player) and player.Parent then
+				warn("[TradeService] trade", trade.id, "save failed for", player.UserId)
+			end
+		end
+	end)
 end
 
 local function onConfirm(player: Player)
