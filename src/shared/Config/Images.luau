@@ -190,4 +190,19 @@ Images.contracts = {
 	franchise = 0, -- icon_franchise.png: вместо 📚 у блока «Франшизы» и в тостах франшиз
 } :: { [string]: number }
 
+-- Обложки игр по жанру (V20): рекламные щиты у спавна (BillboardService). 0 — картинки нет:
+-- на щите эмодзи жанра
+Images.covers = {
+	action = 0, -- cover_action.png
+	adventure = 0, -- cover_adventure.png
+	casual = 0, -- cover_casual.png
+	rpg = 0, -- cover_rpg.png
+	simulation = 0, -- cover_simulation.png
+	puzzle = 0, -- cover_puzzle.png
+	racing = 0, -- cover_racing.png
+	strategy = 0, -- cover_strategy.png
+	sports = 0, -- cover_sports.png
+	horror = 0, -- cover_horror.png
+} :: { [string]: number }
+
 return Images

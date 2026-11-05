@@ -13,7 +13,9 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
 
+local Gotw = require(ReplicatedStorage.Shared.Config.Gotw)
 local HitCartridges = require(ReplicatedStorage.Shared.Config.HitCartridges)
+local Tours = require(ReplicatedStorage.Shared.Config.Tours)
 local HitRemotes = require(ReplicatedStorage.Shared.HitRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local DataService = require(script.Parent.DataService)
@@ -31,6 +33,10 @@ export type Hit = {
 	creatorId: number,
 	creatorName: string,
 	stolenFrom: string?, -- у кого украден последним (имя для «украдено у …»)
+	-- «Обновление / DLC»: UTC-день последнего обновления (Tours.dayId) и конец буста дохода (os.time).
+	-- Едут с картриджем при краже: вор не обновит его второй раз в тот же день
+	updatedDay: number?,
+	boostUntil: number?,
 }
 
 type Shelf = { model: Model, parts: { [string]: BasePart } }
@@ -71,7 +77,9 @@ local stealReadyAt: { [number]: number } = {}
 local pairReadyAt: { [string]: number } = {}
 local holdStarted: { [Player]: number } = {}
 local lastRequest: { [Player]: number } = {}
+local lastUpdate: { [Player]: number } = {}
 local cachedTemplate: Model? = nil
+local cachedTrophy: Model? = nil
 
 local function toast(player: Player, key: string, vars: { [string]: any }?)
 	if player.Parent then
@@ -91,6 +99,15 @@ local function hitsOf(profile: DataService.Profile): { Hit }
 		if type(hit) ~= "table" or type(hit.id) ~= "string" or type(hit.score) ~= "number" then
 			clean = false
 			break
+		end
+		-- Поля обновления из сохранения: не число (или NaN/inf) — как будто обновления не было
+		for _, field in { "updatedDay", "boostUntil" } do
+			local value = hit[field]
+			if
+				value ~= nil and (type(value) ~= "number" or value ~= value or math.abs(value) == math.huge)
+			then
+				hit[field] = nil
+			end
 		end
 	end
 	if not clean then
@@ -188,14 +205,45 @@ local function addHit(profile: DataService.Profile, hit: Hit): boolean
 	return findIndex(hits, hit.id) ~= nil
 end
 
+-- Доход картриджа в минуту с учётом буста обновления
+local function hitIncome(hit: Hit, now: number): number
+	local income = HitCartridges.income(hit.score)
+	if (hit.boostUntil or 0) > now then
+		income = math.floor(income * HitCartridges.updateBoost)
+	end
+	return income
+end
+
 local function incomeOf(profile: DataService.Profile): number
 	local total = 0
+	local now = os.time()
 	for _, hit in activeHits(profile) do
 		if not carriedIds[hit.id] then
-			total += HitCartridges.income(hit.score)
+			total += hitIncome(hit, now)
 		end
 	end
 	return total
+end
+
+-- Модуль другой фичи без жёсткой зависимости (ShopService тянет много сервисов)
+local function optional(name: string): any
+	local module = script.Parent:FindFirstChild(name)
+	if not module or not module:IsA("ModuleScript") then
+		return nil
+	end
+	local ok, result = pcall(require, module)
+	return if ok then result else nil
+end
+
+-- Цена обновления хита: минуты дохода студии (ShopService.incomePerMinute)
+local function updatePrice(player: Player, profile: DataService.Profile): number
+	local shop = optional("ShopService")
+	local income = 0
+	if shop and type(shop.incomePerMinute) == "function" then
+		local ok, value = pcall(shop.incomePerMinute, player, profile)
+		income = if ok and type(value) == "number" then value else 0
+	end
+	return HitCartridges.updatePrice(income)
 end
 
 local function isNewbie(profile: DataService.Profile): boolean
@@ -213,7 +261,29 @@ local function sendState(player: Player)
 	end
 	local now = os.clock()
 	local stats = ThiefBoardService.stats(profile)
+	-- Картриджи на полке для кнопок «Обновить»: можно ли сегодня и сколько ещё идёт буст
+	local today = Tours.dayId()
+	local nowTime = os.time()
+	local list = {}
+	for _, hit in activeHits(profile) do
+		table.insert(list, {
+			id = hit.id,
+			name = hit.name,
+			score = hit.score,
+			income = hitIncome(hit, nowTime),
+			boostLeft = math.max((hit.boostUntil or 0) - nowTime, 0),
+			updatedToday = hit.updatedDay == today,
+			carried = carriedIds[hit.id] ~= nil,
+		})
+	end
 	HitRemotes.HitState:FireClient(player, {
+		hits = list,
+		updatePrice = updatePrice(player, profile),
+		updateBoost = HitCartridges.updateBoost,
+		updateMinutes = HitCartridges.updateBoostMinutes,
+		updateScore = HitCartridges.updateScore,
+		updateMaxScore = HitCartridges.updateMaxScore,
+		nextDayIn = (today + 1) * 86400 - nowTime,
 		count = #activeHits(profile),
 		slots = capacity(profile),
 		income = incomeOf(profile),
@@ -241,6 +311,74 @@ local function shelfTemplate(profile: DataService.Profile): Model?
 		cachedTemplate = ModelFactory.build("HitShelf")
 	end
 	return cachedTemplate
+end
+
+-- Статуэтка «Игра недели» (GotwService): модель Trophy_GOTW из ServerStorage.Upgrades, иначе из деталей
+local function trophyTemplate(): Model
+	local folder = ServerStorage:FindFirstChild("Upgrades")
+	local imported = folder and folder:FindFirstChild(Gotw.trophyModel)
+	if imported and imported:IsA("Model") then
+		return imported
+	end
+	if cachedTrophy then
+		return cachedTrophy
+	end
+	local model = Instance.new("Model")
+	model.Name = Gotw.trophyModel
+	local gold = Color3.fromRGB(255, 200, 50)
+	local function piece(size: Vector3, offset: Vector3, color: Color3, shape: Enum.PartType?): Part
+		local p = Instance.new("Part")
+		p.Size = size
+		p.CFrame = CFrame.new(offset)
+		p.Color = color
+		p.Material = Enum.Material.Metal
+		p.Anchored = true
+		p.CanCollide = false
+		p.CanTouch = false
+		p.CanQuery = false
+		p.TopSurface = Enum.SurfaceType.Smooth
+		p.BottomSurface = Enum.SurfaceType.Smooth
+		if shape then
+			p.Shape = shape
+		end
+		p.Parent = model
+		return p
+	end
+	local base = piece(Vector3.new(1, 0.3, 1), Vector3.new(0, 0.15, 0), Color3.fromRGB(40, 32, 28))
+	piece(Vector3.new(0.25, 0.6, 0.25), Vector3.new(0, 0.6, 0), gold)
+	piece(Vector3.new(0.8, 0.8, 0.8), Vector3.new(0, 1.25, 0), gold, Enum.PartType.Ball)
+	local star = piece(Vector3.new(0.45, 0.45, 0.45), Vector3.new(0, 1.85, 0), gold, Enum.PartType.Ball)
+	star.Material = Enum.Material.Neon
+	model.PrimaryPart = base
+	model.WorldPivot = CFrame.new()
+	cachedTrophy = model
+	return model
+end
+
+local function renderTrophy(profile: DataService.Profile, shelf: Shelf)
+	local old = shelf.model:FindFirstChild("GotwTrophy")
+	local gotw = (profile :: any).gotw
+	local show = type(gotw) == "table" and (tonumber(gotw.trophyUntil) or 0) > os.time()
+	if not show then
+		if old then
+			old:Destroy()
+		end
+		return
+	end
+	if old then
+		return
+	end
+	local trophy = trophyTemplate():Clone()
+	trophy.Name = "GotwTrophy"
+	for _, item in trophy:GetDescendants() do
+		if item:IsA("BasePart") then
+			item.Anchored = true
+			item.CanCollide = false
+			item.CanTouch = false
+		end
+	end
+	trophy:PivotTo(shelf.model:GetPivot() * Gotw.trophyOffset)
+	trophy.Parent = shelf.model
 end
 
 local function makeCartridge(hit: Hit): Part
@@ -364,6 +502,7 @@ local function renderShelf(player: Player)
 			current.parts[hit.id] = part
 		end
 	end
+	renderTrophy(profile, current)
 end
 
 -- ===== Кража =====
@@ -715,6 +854,66 @@ local function onRequestLock(player: Player)
 	end)
 end
 
+-- «Обновление / DLC» хита на своей полке: раз в UTC-день на картридж, цена — минуты дохода
+local function onRequestUpdate(player: Player, hitId: any)
+	if type(hitId) ~= "string" or #hitId > 64 or leaving[player] then
+		return
+	end
+	local now = os.clock()
+	if (lastUpdate[player] or 0) + HitCartridges.updateCooldown > now then
+		return
+	end
+	lastUpdate[player] = now
+	local profile = DataService.get(player)
+	if not profile then
+		return
+	end
+	local hit: Hit? = nil
+	for _, candidate in activeHits(profile) do
+		if candidate.id == hitId then
+			hit = candidate
+		end
+	end
+	if not hit then
+		toast(player, "hitupd_err_missing")
+		sendState(player)
+		return
+	end
+	local target = hit :: Hit
+	local today = Tours.dayId()
+	if carriedIds[target.id] then
+		toast(player, "hitupd_err_carried")
+		return
+	elseif target.updatedDay == today then
+		toast(player, "hitupd_err_today")
+		sendState(player)
+		return
+	end
+	local price = updatePrice(player, profile)
+	if not DataService.trySpend(player, price) then
+		toast(player, "hitupd_err_cash", { price = Texts.money(price) })
+		return
+	end
+	local nowTime = os.time()
+	target.updatedDay = today
+	target.boostUntil = math.max(target.boostUntil or 0, nowTime) + HitCartridges.updateBoostMinutes * 60
+	target.score = math.min(target.score + HitCartridges.updateScore, HitCartridges.updateMaxScore)
+	toast(player, "hitupd_done", {
+		name = target.name,
+		score = target.score,
+		boost = HitCartridges.updateBoost,
+		minutes = HitCartridges.updateBoostMinutes,
+	})
+	renderShelf(player)
+	sendState(player)
+end
+
+-- Перерисовать полку и окно (статуэтка «Игры недели» появилась или пропала)
+function HitService.refreshShelf(player: Player)
+	renderShelf(player)
+	sendState(player)
+end
+
 local function onRequestState(player: Player)
 	local now = os.clock()
 	if (lastRequest[player] or 0) + REQUEST_COOLDOWN > now then
@@ -773,6 +972,7 @@ local function onPlayerRemoving(player: Player)
 	end
 	shelves[player] = nil
 	lastRequest[player] = nil
+	lastUpdate[player] = nil
 	holdStarted[player] = nil
 	-- Обработчики, начатые до выхода, ещё могут спросить leaving
 	task.delay(30, function()
@@ -783,6 +983,7 @@ end
 function HitService.start()
 	HitRemotes.RequestLock.OnServerEvent:Connect(onRequestLock)
 	HitRemotes.RequestHitState.OnServerEvent:Connect(onRequestState)
+	HitRemotes.RequestHitUpdate.OnServerEvent:Connect(onRequestUpdate)
 	-- Участок собран (вход, переезд, Rebirth): поставить полку и картриджи, обновить слоты
 	PlotService.plotChanged:Connect(function(player: Player)
 		renderShelf(player)
