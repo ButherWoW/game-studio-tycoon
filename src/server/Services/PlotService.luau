@@ -22,6 +22,7 @@ local StartRemotes = require(ReplicatedStorage.Shared.StartRemotes)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local DataService = require(script.Parent.DataService)
 local OfficeFloors = require(script.Parent.OfficeFloors)
+local StyleModels = require(script.Parent.StyleModels)
 
 local BUTTON_SIZE = Vector3.new(5, 0.4, 5)
 local BUTTON_SPACING = 7
@@ -75,12 +76,16 @@ PlotService.getPlot = getPlot
 
 local function placeModel(plot: BasePart, modelName: string, position: Vector3?, rotationDeg: number?)
 	local folder = ServerStorage:FindFirstChild("Upgrades")
-	local template = folder and folder:FindFirstChild(modelName)
+	-- Стиль мебели владельца (V15): Desk1_Neon вместо Desk1, если такая модель импортирована
+	local owner = owners[plot]
+	local template = StyleModels.find(folder, modelName, if owner then DataService.get(owner) else nil)
 	if not template or not template:IsA("Model") then
 		warn("[PlotService] Missing model", modelName)
 		return
 	end
 	local model = template:Clone()
+	-- Имя — классическое: по нему модель ищут StaffService, VipService, BailiffService и placeUpgrade
+	model.Name = modelName
 	if position then
 		-- Раскладка из Config: pivot модели — центр её основания
 		local rotation = math.rad(rotationDeg or 0)

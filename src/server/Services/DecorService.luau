@@ -17,6 +17,7 @@ local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService)
 local MoodService = require(script.Parent.MoodService)
 local ModelFactory = require(script.Parent.ModelFactory)
+local StyleModels = require(script.Parent.StyleModels)
 
 local MODEL_NAME = "PlayerDecor"
 local FLOOR_LEVEL = 0.5 -- пол участка над его центром (как y = 0.5 в Config/Upgrades)
@@ -44,10 +45,11 @@ local function owned(profile: DataService.Profile): { [string]: boolean }
 	return clean
 end
 
--- Шаблон: импортированная модель из ServerStorage.Upgrades (Астра), иначе из деталей (ModelFactory)
-local function template(item: Decor.Item): (Model?, boolean)
+-- Шаблон: импортированная модель из ServerStorage.Upgrades (Астра) в стиле мебели игрока
+-- (Plant_Cozy, StyleModels), иначе классика, иначе из деталей (ModelFactory)
+local function template(item: Decor.Item, profile: DataService.Profile): (Model?, boolean)
 	local folder = ServerStorage:FindFirstChild("Upgrades")
-	local imported = folder and folder:FindFirstChild(item.model)
+	local imported = StyleModels.find(folder, item.model, profile)
 	if imported and imported:IsA("Model") and imported:GetAttribute("Generated") ~= true then
 		return imported, true
 	end
@@ -80,7 +82,7 @@ local function place(player: Player)
 	local container = Instance.new("Model")
 	container.Name = MODEL_NAME
 	for _, entry in Decor.placed(owned(profile), profile.studioLevel) do
-		local source, imported = template(entry.item)
+		local source, imported = template(entry.item, profile)
 		if not source then
 			continue
 		end

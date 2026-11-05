@@ -19,6 +19,7 @@ local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService)
 local ModelFactory = require(script.Parent.ModelFactory)
+local StyleModels = require(script.Parent.StyleModels)
 local ThiefBoardService = require(script.Parent.ThiefBoardService)
 
 export type Hit = {
@@ -229,10 +230,10 @@ end
 
 -- ===== Полка =====
 
-local function shelfTemplate(): Model?
-	-- Модель, импортированная в Studio, важнее собранной из деталей
+local function shelfTemplate(profile: DataService.Profile): Model?
+	-- Модель, импортированная в Studio (в стиле мебели игрока, StyleModels), важнее собранной из деталей
 	local folder = ServerStorage:FindFirstChild("Upgrades")
-	local imported = folder and folder:FindFirstChild("HitShelf")
+	local imported = StyleModels.find(folder, "HitShelf", profile)
 	if imported and imported:IsA("Model") then
 		return imported
 	end
@@ -331,7 +332,7 @@ local function renderShelf(player: Player)
 		if shelf then
 			shelf.model:Destroy()
 		end
-		local template = shelfTemplate()
+		local template = shelfTemplate(profile)
 		if not template then
 			return
 		end
