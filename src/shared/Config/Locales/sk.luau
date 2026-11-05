@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Nie počas naháňačky za hitom",
 	tour_toast_gone = "Ten hráč už odišiel",
 	tour_toast_nogarage = "Ten hráč ešte nemá štúdio",
+	tour_toast_like_garage = "Lajkovať môžeš, keď budeš mať vlastnú garáž",
 	tour_toast_star = "⭐ Č. {rank} medzi štúdiami týždňa! Odmena: {money} a odznak ⭐",
 	tour_rating_likes = "👍 Liky",
 	tour_rating_value = "💰 Hodnota",

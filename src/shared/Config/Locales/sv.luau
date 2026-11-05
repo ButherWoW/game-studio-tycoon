@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Inte under en hitjakt",
 	tour_toast_gone = "Spelaren har redan gått",
 	tour_toast_nogarage = "Spelaren har ingen studio än",
+	tour_toast_like_garage = "Du kan gilla studior när du har ett eget garage",
 	tour_toast_star = "⭐ Nr {rank} bland veckans studior! Belöning: {money} och ⭐-märket",
 	tour_rating_likes = "👍 Gillanden",
 	tour_rating_value = "💰 Värde",

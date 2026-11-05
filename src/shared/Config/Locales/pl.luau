@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Nie podczas pościgu za hitem",
 	tour_toast_gone = "Ten gracz już wyszedł",
 	tour_toast_nogarage = "Ten gracz nie ma jeszcze studia",
+	tour_toast_like_garage = "Polubienia możesz dawać, gdy masz własny garaż",
 	tour_toast_star = "⭐ Nr {rank} wśród studiów tygodnia! Nagroda: {money} i odznaka ⭐",
 	tour_rating_likes = "👍 Polubienia",
 	tour_rating_value = "💰 Wartość",

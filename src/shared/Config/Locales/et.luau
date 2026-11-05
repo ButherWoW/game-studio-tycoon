@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Mitte hiti tagaajamise ajal",
 	tour_toast_gone = "Mängija on juba lahkunud",
 	tour_toast_nogarage = "Mängijal pole veel stuudiot",
+	tour_toast_like_garage = "Meeldimisi saad anda, kui sul on oma garaaž",
 	tour_toast_star = "⭐ Nr {rank} nädala stuudiote seas! Auhind: {money} ja ⭐ märk",
 	tour_rating_likes = "👍 Laigid",
 	tour_rating_value = "💰 Väärtus",

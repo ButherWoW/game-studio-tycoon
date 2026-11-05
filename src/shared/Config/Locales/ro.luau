@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Nu în timpul unei urmăriri de hit",
 	tour_toast_gone = "Jucătorul a plecat deja",
 	tour_toast_nogarage = "Jucătorul nu are încă un studio",
+	tour_toast_like_garage = "Poți da like studiourilor după ce ai propriul garaj",
 	tour_toast_star = "⭐ Nr. {rank} printre studiourile săptămânii! Recompensă: {money} și insigna ⭐",
 	tour_rating_likes = "👍 Like-uri",
 	tour_rating_value = "💰 Valoare",

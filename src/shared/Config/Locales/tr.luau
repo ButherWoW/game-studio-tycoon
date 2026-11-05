@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Hit kovalamacası sırasında olmaz",
 	tour_toast_gone = "Oyuncu zaten ayrıldı",
 	tour_toast_nogarage = "Oyuncunun henüz stüdyosu yok",
+	tour_toast_like_garage = "Kendi garajın olunca stüdyoları beğenebilirsin",
 	tour_toast_star = "⭐ Haftanın stüdyoları arasında {rank}. sıradasın! Ödül: {money} ve ⭐ rozeti",
 	tour_rating_likes = "👍 Beğeniler",
 	tour_rating_value = "💰 Değer",

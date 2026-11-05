@@ -741,7 +741,8 @@ end
 -- DevelopmentService.release: игра участника; info.coopWith — гость совместной игры
 function HoldingService.onGameReleased(player: Player, info: any)
 	local id = memberOf[player]
-	if not id then
+	-- Игры на ноутбуке в парке (35 с) очков не дают: иначе альты без гаража фармят цели недели
+	if not id or (type(info) == "table" and info.laptop == true) then
 		return
 	end
 	local entry = pending[id]

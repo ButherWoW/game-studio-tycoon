@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Ne hita pakaļdzīšanās laikā",
 	tour_toast_gone = "Spēlētājs jau aizgāja",
 	tour_toast_nogarage = "Spēlētājam vēl nav studijas",
+	tour_toast_like_garage = "Patīk varēsi likt, kad tev būs sava garāža",
 	tour_toast_star = "⭐ Nr. {rank} nedēļas studiju vidū! Balva: {money} un ⭐ nozīmīte",
 	tour_rating_likes = "👍 Novērtējumi",
 	tour_rating_value = "💰 Vērtība",

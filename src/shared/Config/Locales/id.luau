@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Tidak saat mengejar hit",
 	tour_toast_gone = "Pemain itu sudah pergi",
 	tour_toast_nogarage = "Pemain itu belum punya studio",
+	tour_toast_like_garage = "Kamu bisa menyukai studio setelah punya garasi sendiri",
 	tour_toast_star = "⭐ Peringkat {rank} studio minggu ini! Hadiah: {money} dan lencana ⭐",
 	tour_rating_likes = "👍 Suka",
 	tour_rating_value = "💰 Nilai",

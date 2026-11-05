@@ -910,6 +910,22 @@ function CompanyEventService.isBroken(player: Player, upgradeId: string): boolea
 	return false
 end
 
+-- Предмет ушёл из профиля (BailiffService забрал): «поломка» на нём снимается — чинить
+-- за деньги больше нечего, и новые события «поломка» снова могут прийти
+function CompanyEventService.forgetItem(player: Player, upgradeId: string)
+	local _, data = dataFor(player)
+	if not data then
+		return
+	end
+	for index = #data.effects, 1, -1 do
+		local effect = data.effects[index]
+		if effect.kind == "broken" and effect.item == upgradeId then
+			table.remove(data.effects, index)
+		end
+	end
+	CompanyEventService.pushState(player)
+end
+
 function CompanyEventService.walkout(player: Player): boolean
 	for _, effect in effectsOf(player) do
 		if effect.kind == "walkout" and effect.left > 0 then

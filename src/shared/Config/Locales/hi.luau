@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "हिट का पीछा करते समय नहीं",
 	tour_toast_gone = "वह खिलाड़ी जा चुका है",
 	tour_toast_nogarage = "उस खिलाड़ी के पास अभी स्टूडियो नहीं है",
+	tour_toast_like_garage = "अपना गैराज होने के बाद ही तुम स्टूडियो को लाइक कर सकते हो",
 	tour_toast_star = "⭐ हफ़्ते के स्टूडियो में नंबर {rank}! इनाम: {money} और ⭐ बैज",
 	tour_rating_likes = "👍 लाइक",
 	tour_rating_value = "💰 कीमत",

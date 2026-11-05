@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Pas pendant une poursuite de hit",
 	tour_toast_gone = "Ce joueur est parti",
 	tour_toast_nogarage = "Ce joueur n'a pas encore de studio",
+	tour_toast_like_garage = "Tu pourras aimer des studios quand tu auras ton propre garage",
 	tour_toast_star = "⭐ N°{rank} des studios de la semaine ! Récompense : {money} et le badge ⭐",
 	tour_rating_likes = "👍 J'aime",
 	tour_rating_value = "💰 Valeur",

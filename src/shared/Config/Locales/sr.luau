@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Не током потере за хитом",
 	tour_toast_gone = "Играч је већ отишао",
 	tour_toast_nogarage = "Играч још нема студио",
+	tour_toast_like_garage = "Лајкове можеш да дајеш кад имаш своју гаражу",
 	tour_toast_star = "⭐ Бр. {rank} међу студијима недеље! Награда: {money} и значка ⭐",
 	tour_rating_likes = "👍 Лајкови",
 	tour_rating_value = "💰 Вредност",

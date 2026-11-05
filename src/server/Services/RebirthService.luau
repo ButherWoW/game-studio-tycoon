@@ -79,6 +79,9 @@ local function onRequestRebirth(player: Player)
 	profile.rebirths += 1
 	profile.cash = Rebirth.cashAfter
 	profile.upgrades = {}
+	-- Набежавшая зарплата прошлой команды (ExpensesService) после Rebirth не переносится
+	local stored: any = profile
+	stored.payday = nil
 	profile.unlockedGenres = freeSet(Genres)
 	profile.unlockedTopics = freeSet(Topics)
 	-- Награды «N минут дохода» — по новой студии, а не по рекорду до Rebirth (отчёт #2)

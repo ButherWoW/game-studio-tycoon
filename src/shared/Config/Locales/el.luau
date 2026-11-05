@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Όχι κατά τη διάρκεια καταδίωξης επιτυχίας",
 	tour_toast_gone = "Ο παίκτης έχει ήδη φύγει",
 	tour_toast_nogarage = "Ο παίκτης δεν έχει ακόμα στούντιο",
+	tour_toast_like_garage = "Μπορείς να κάνεις like όταν έχεις δικό σου γκαράζ",
 	tour_toast_star = "⭐ Νο {rank} στα στούντιο της εβδομάδας! Ανταμοιβή: {money} και το σήμα ⭐",
 	tour_rating_likes = "👍 Like",
 	tour_rating_value = "💰 Αξία",

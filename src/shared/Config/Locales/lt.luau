@@ -183,6 +183,7 @@ return {
 	tour_toast_chase = "Ne per hito gaudynes",
 	tour_toast_gone = "Žaidėjas jau išėjo",
 	tour_toast_nogarage = "Žaidėjas dar neturi studijos",
+	tour_toast_like_garage = "Patiktukus galėsi dėti, kai turėsi savo garažą",
 	tour_toast_star = "⭐ Nr. {rank} tarp savaitės studijų! Prizas: {money} ir ⭐ ženklelis",
 	tour_rating_likes = "👍 Patinka",
 	tour_rating_value = "💰 Vertė",
