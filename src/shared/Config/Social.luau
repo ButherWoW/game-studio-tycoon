@@ -22,19 +22,19 @@ export type Gift = {
 -- Dev 1: создать Developer Product «Gift: <название>» с той же ценой, что у предмета,
 -- и вставить ID напротив gift_<itemId> (test — вселенная v2, main — основная игра, docs/IDS.md)
 local giftProducts: { [string]: Universe.Pair } = {
-	gift_neon_streamer = { test = 0, main = 0 },
-	gift_cyber_dev = { test = 0, main = 0 },
-	gift_space_dev = { test = 0, main = 0 },
-	gift_wizard_dev = { test = 0, main = 0 },
-	gift_neonCity = { test = 0, main = 0 },
-	gift_crystalKingdom = { test = 0, main = 0 },
-	gift_mechTitan = { test = 0, main = 0 },
-	gift_galaxyLegends = { test = 0, main = 0 },
-	gift_goldenController = { test = 0, main = 0 },
-	gift_neon_fox = { test = 0, main = 0 },
-	gift_dragon_byte = { test = 0, main = 0 },
-	gift_golden_trophy = { test = 0, main = 0 },
-	gift_cosmic_whale = { test = 0, main = 0 },
+	gift_neon_streamer = { test = 3728497737, main = 3728498672 },
+	gift_cyber_dev = { test = 3728497750, main = 3728498688 },
+	gift_space_dev = { test = 3728497769, main = 3728498698 },
+	gift_wizard_dev = { test = 3728497787, main = 3728498712 },
+	gift_neonCity = { test = 3728497804, main = 3728498731 },
+	gift_crystalKingdom = { test = 3728497819, main = 3728498751 },
+	gift_mechTitan = { test = 3728497831, main = 3728498769 },
+	gift_galaxyLegends = { test = 3728497863, main = 3728498785 },
+	gift_goldenController = { test = 3728497878, main = 3728498804 },
+	gift_neon_fox = { test = 3728497891, main = 3728498815 },
+	gift_dragon_byte = { test = 3728497896, main = 3728498830 },
+	gift_golden_trophy = { test = 3728497908, main = 3728498845 },
+	gift_cosmic_whale = { test = 3728497923, main = 3728498858 },
 }
 
 -- Подарить можно премиум-скины, премиум-постеры и маскотов за Robux; цена — как у предмета
