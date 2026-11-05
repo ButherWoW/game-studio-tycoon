@@ -20,6 +20,7 @@ local FurnitureStyleService = require(script.Parent.FurnitureStyleService)
 local InteriorFinishService = require(script.Parent.InteriorFinishService)
 local ResearchService = require(script.Parent.ResearchService)
 local StaffService = require(script.Parent.StaffService)
+local ConsoleService = require(script.Parent.ConsoleService)
 
 local MonetizationService = {}
 
@@ -139,6 +140,7 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 			-- «Доучить сейчас» / «Доучить всех» (Config/Training)
 			or StaffService.grantProduct(player, profile, receipt.ProductId)
 			or grantConstruction(player, profile, receipt.ProductId)
+			or ConsoleService.grantProduct(player, profile, receipt.ProductId)
 	end)
 	if not ok then
 		warn("[Monetization] Grant failed:", receipt.ProductId, receipt.PurchaseId, handled)

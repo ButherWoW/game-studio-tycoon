@@ -331,4 +331,15 @@ Images.rebirthPerks = {
 	offline = 0, -- rperk_offline.png (луна с монеткой)
 } :: { [string]: number }
 
+-- Иконки этапов своей консоли (V30; этапы Config/Console.stages). PNG 128×128,
+-- 0 — эмодзи этапа в окне консоли
+Images.consoleStages = {
+	cpu = 0, -- cstage_cpu.png (кристалл процессора)
+	case = 0, -- cstage_case.png (эскиз корпуса с карандашом)
+	sound = 0, -- cstage_sound.png (звуковой чип с нотой)
+	prototype = 0, -- cstage_prototype.png (открытый корпус, провода)
+	testing = 0, -- cstage_testing.png (геймпад под лупой)
+	launch = 0, -- cstage_launch.png (консоль с ракетой)
+} :: { [string]: number }
+
 return Images

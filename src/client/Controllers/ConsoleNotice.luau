@@ -27,7 +27,7 @@ local function onNotice(info: any)
 				DepthToast.show(
 					ClientState.t(
 						"console_notice_stage",
-						{ stage = ClientState.t("console_stage_" .. stage.id) }
+						{ stage = ClientState.t("cons_stage_" .. stage.id) }
 					),
 					Ui.colors.good
 				)

@@ -63,6 +63,9 @@ Developer Products, GamePasses и Badges принадлежат **вселенн
 | AdCampaigns | `streamers` | Developer Product | 3728447889 | 3728498043 |
 | AdCampaigns | `tv` | Developer Product | 3728447939 | 3728498063 |
 | AdCampaigns | `worldwide` | Developer Product | 3728447942 | 3728498075 |
+| Console | `consoleSpeed5` | Developer Product | — |  |
+| Console | `consoleSpeed30` | Developer Product | — |  |
+| Console | `consoleSkip` | Developer Product | — |  |
 | Construction | `buildSpeed5` | Developer Product | — |  |
 | Construction | `buildSpeed30` | Developer Product | — |  |
 | Construction | `buildSkip` | Developer Product | — |  |
@@ -133,5 +136,5 @@ Developer Products, GamePasses и Badges принадлежат **вселенн
 | Training | `skillSkip` | Developer Product | — |  |
 | Training | `skillSkipAll` | Developer Product | — |  |
 
-Всего записей: 73; создано в test: 65; заполнено в main: 65.
+Всего записей: 76; создано в test: 65; заполнено в main: 65.
 <!-- ids:end -->
