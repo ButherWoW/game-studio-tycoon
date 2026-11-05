@@ -19,3 +19,5 @@ Dev1: put VipSignFrame and VipChair in ServerStorage or ServerStorage.Upgrades. 
 Rebuild models with python3 source/build_vip.py and python3 source/check_overlay.py; Python numpy/Pillow and Rojo are required. Previews show actual generated geometry, including VipChair_OnAcceptedChair.png. MODELS_VALIDATION.json plus VALIDATION.json record bounds, part budgets, pivots, clear name area, no Seat/lights/scripts and solid-overlap checks.
 
 Studio playtest has not been performed. Verify two sign faces, name length, crown particles at32px, actual VIP activation/deactivation, sitting, transitions between floors/styles and phone readability/FPS. Graphic banners do not create products or change prices.
+
+Additional compatibility check: the same VIP trim was tested against Chair_Neon, Chair_Cozy and Chair_Minimal from V15. All three have zero OBB overlaps; STYLE_COMPATIBILITY.json records pair counts and source/check_vip_styles.py reproduces the check when the V15 kits are available. This supplements the classic Chair test, without replacing the seated-pose Studio test.

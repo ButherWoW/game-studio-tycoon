@@ -1,0 +1,17 @@
+{
+  "neon": {
+    "pairsTested": 2983,
+    "overlaps": 0,
+    "checks": "PASS"
+  },
+  "cozy": {
+    "pairsTested": 2983,
+    "overlaps": 0,
+    "checks": "PASS"
+  },
+  "minimal": {
+    "pairsTested": 2983,
+    "overlaps": 0,
+    "checks": "PASS"
+  }
+}
