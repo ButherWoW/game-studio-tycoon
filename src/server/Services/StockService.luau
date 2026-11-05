@@ -26,6 +26,10 @@ local BOARD_NAME = "StockMarketCap_v1"
 local TICK = 5
 local REQUEST_COOLDOWN = 0.5
 local RECORD_CACHE_SECONDS = 60
+-- Бюджет GetAsync общий для всего сервера (60 + 10 × игроков в минуту): дивиденды и список биржи
+-- читают десятки компаний. Осталось меньше резерва — обычное чтение берёт кэш (даже старый),
+-- чтобы загрузка профилей, холдинги и лайки не упёрлись в лимит. Сделки (fresh) читают всегда
+local GET_BUDGET_RESERVE = 60
 -- Список компаний обновляем, только если биржу открывали недавно
 local LIST_IDLE_SECONDS = 300
 
@@ -151,6 +155,14 @@ local function getRecord(id: number, fresh: boolean?): Record?
 	end
 	if not store then
 		return nil
+	end
+	if not fresh then
+		local okBudget, budget = pcall(function()
+			return DataStoreService:GetRequestBudgetForRequestType(Enum.DataStoreRequestType.GetAsync)
+		end)
+		if okBudget and budget < GET_BUDGET_RESERVE then
+			return if cached then cached.record else nil
+		end
 	end
 	local ok, raw = pcall(function()
 		return (store :: DataStore):GetAsync(key(id))
