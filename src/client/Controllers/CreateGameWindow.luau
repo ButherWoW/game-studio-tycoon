@@ -12,6 +12,7 @@ local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local WordFilter = require(ReplicatedStorage.Shared.WordFilter)
 local UnlockRules = require(ReplicatedStorage.Shared.UnlockRules)
+local Research = require(ReplicatedStorage.Shared.Config.Research)
 local GameJam = require(ReplicatedStorage.Shared.Config.GameJam)
 local ClientState = require(script.Parent.Parent.ClientState)
 local DevState = require(script.Parent.Parent.DevState)
@@ -119,6 +120,18 @@ local function onCardClick(kind: string, item: Item, unlocked: boolean, reason: 
 		render()
 		return
 	end
+	-- Открытие идёт через лабораторию (Config/Research.TIMING): одно исследование за раз
+	local player = Players.LocalPlayer
+	local endsAt = player:GetAttribute("ResearchEndsAt")
+	if type(endsAt) == "number" then
+		local left = Research.formatTime(math.max(endsAt - workspace:GetServerTimeNow(), 0))
+		if player:GetAttribute("ResearchKind") == kind and player:GetAttribute("ResearchId") == item.id then
+			showHint(ClientState.t("rtime_unlocking_hint", { time = left }))
+		else
+			showHint(ClientState.t("rtime_busy", { time = left }))
+		end
+		return
+	end
 	local key = kind .. "/" .. item.id
 	local now = os.clock()
 	if pendingUnlock == key and now - pendingUnlockAt < UNLOCK_CONFIRM_SECONDS then
@@ -165,6 +178,14 @@ local function buildGrid(
 	holder:GetPropertyChangedSignal("AbsoluteSize"):Connect(fitHolder)
 
 	local shown = 0
+	-- Что сейчас открывается в лаборатории ("genre/rpg") и перк «Лаборатория» (ResearchService)
+	local player = Players.LocalPlayer
+	local researchKind = player:GetAttribute("ResearchKind")
+	local researchId = player:GetAttribute("ResearchId")
+	local researchingKey = if type(researchKind) == "string" and type(researchId) == "string"
+		then researchKind .. "/" .. researchId
+		else nil
+	local timeReduction = tonumber(player:GetAttribute("ResearchTimeReduction")) or 0
 	for i, item in list do
 		local unlocked = unlockedSet[item.id] == true
 		-- Сезонную тему показываем, только пока идёт её ивент (сервер открыл её игроку)
@@ -182,10 +203,19 @@ local function buildGrid(
 			-- На карточке только замок и название, причина — по нажатию (showHint)
 			color = Ui.colors.locked
 			text = "🔒 " .. text
+		elseif not unlocked and researchingKey == key then
+			-- Открывается в лаборатории: время — по нажатию (showHint) и на плашке под HUD
+			color = Ui.colors.money
+			text = text .. "\n" .. ClientState.t("rtime_unlocking")
 		elseif not unlocked then
 			color = Ui.colors.locked
 			text = if pendingUnlock == key
-				then ClientState.t("create_unlock_ask", { price = Texts.money(item.unlockCost) })
+				then ClientState.t("rtime_unlock_ask", {
+					price = Texts.money(item.unlockCost),
+					time = Research.formatTime(
+						Research.durationSeconds(Research.categoryMinutes(item.unlockCost), timeReduction)
+					),
+				})
 				else text .. "\n" .. ClientState.t(
 					"create_locked",
 					{ price = Texts.money(item.unlockCost) }
@@ -689,6 +719,12 @@ function CreateGameWindow.start()
 	end)
 	FranchiseClient.changed:Connect(function()
 		if gui and contentKey() ~= shownKey then
+			render()
+		end
+	end)
+	-- Лаборатория начала/закончила открытие жанра или темы (ResearchService) — пометка на карточке
+	Players.LocalPlayer:GetAttributeChangedSignal("ResearchId"):Connect(function()
+		if gui then
 			render()
 		end
 	end)

@@ -21,7 +21,9 @@ local Ui = require(script.Parent.Parent.Ui)
 local CONFIRM_SECONDS = 3 -- сколько ждём второй клик
 local CARD_HEIGHT = 100
 local PERCENT_EFFECTS: { [string]: boolean } =
-	{ devTime = true, expenses = true, offline = true, researchDiscount = true }
+	{ devTime = true, expenses = true, offline = true, researchDiscount = true, researchTime = true }
+-- Эффекты, у которых ключ текста не rperk_eff_<эффект> (добавлены позже своим блоком текстов)
+local EFFECT_TEXT_KEYS: { [string]: string } = { researchTime = "rtime_perk_eff" }
 
 local RebirthWindow = {}
 local gui: ScreenGui? = nil
@@ -55,7 +57,10 @@ local function describe(effects: RebirthPerks.Effects): string
 				then tostring(math.round(value * 100))
 				elseif key == "startCash" then Texts.money(value)
 				else tostring(value)
-			table.insert(parts, ClientState.t("rperk_eff_" .. key, { value = shown }))
+			table.insert(
+				parts,
+				ClientState.t(EFFECT_TEXT_KEYS[key] or ("rperk_eff_" .. key), { value = shown })
+			)
 		end
 	end
 	return if #parts > 0 then table.concat(parts, ", ") else ClientState.t("rperk_none")

@@ -1,6 +1,10 @@
 --!strict
 -- Покупка жанров и тем за игровую валюту. Цены — Config/Genres и Config/Topics.
 -- Купить можно только после выполнения условий requires (shared/UnlockRules).
+-- Открытие идёт через лабораторию (ResearchService.startCategory, Config/Research.TIMING):
+-- деньги списываются сразу, жанр/тема открываются, когда кончится таймер. Пока идёт другое
+-- исследование — не начинаем. Автоматические открытия (стартовые бесплатные, сезонные темы
+-- HolidayService, жанры исследований после Rebirth) остаются мгновенными: это не действие игрока.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -9,6 +13,7 @@ local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local UnlockRules = require(ReplicatedStorage.Shared.UnlockRules)
 local DataService = require(script.Parent.DataService)
+local ResearchService = require(script.Parent.ResearchService)
 
 local UnlockService = {}
 
@@ -36,10 +41,13 @@ local function onUnlock(player: Player, kind: any, id: any)
 	if unlocked[id] or not UnlockRules.check(item, profile) then
 		return
 	end
-	if DataService.trySpend(player, item.unlockCost) then
+	-- Бесплатное (unlockCost = 0) открыто со старта; на всякий случай — сразу, без таймера
+	if item.unlockCost <= 0 then
 		unlocked[id] = true
 		DataService.replicate(player)
+		return
 	end
+	ResearchService.startCategory(player, if kind == "genre" then "genre" else "topic", id, item.unlockCost)
 end
 
 function UnlockService.start()

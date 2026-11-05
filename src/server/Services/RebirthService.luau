@@ -114,6 +114,11 @@ local function onRequestRebirth(player: Player)
 	if devModule and devModule:IsA("ModuleScript") then
 		(require(devModule) :: any).cancel(player)
 	end
+	-- Открытие жанра/темы за $ в лаборатории сгорает (узел дерева исследований идёт дальше)
+	local researchModule = script.Parent:FindFirstChild("ResearchService")
+	if researchModule and researchModule:IsA("ModuleScript") then
+		(require(researchModule) :: any).onRebirth(player)
+	end
 	-- Этап сбрасываем здесь: PlotService.rebuild делает это только при наличии участка,
 	-- а игрок в очереди на участок иначе сохранял бы офис/небоскрёб после Rebirth
 	profile.studioLevel = 1
