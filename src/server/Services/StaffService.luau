@@ -827,6 +827,16 @@ function StaffService.hired(profile: DataService.Profile): { [string]: string }
 	return getStaff(profile)
 end
 
+-- Навыки нанятых (employeeId -> { [навык]: уровень }) — для требований этапов консоли
+-- (ConsoleService). Копия: менять навыки — только через StaffService
+function StaffService.skillLevels(profile: DataService.Profile): { [string]: { [string]: number } }
+	local result = {}
+	for employeeId, employeeInfo in getInfo(profile) do
+		result[employeeId] = table.clone(employeeInfo.skills)
+	end
+	return result
+end
+
 local function sendStaff(player: Player)
 	local profile = DataService.get(player)
 	if not profile then

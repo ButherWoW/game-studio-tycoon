@@ -1198,6 +1198,10 @@ function TeamWindow.start()
 			render()
 		end
 	end)
+	-- Чек-лист этапа консоли: «👥 Команда» — нанять или обучить сотрудника до нужного навыка
+	ConsoleClient.openTeamRequested:Connect(function()
+		TeamWindow.open()
+	end)
 end
 
 return TeamWindow
