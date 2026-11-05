@@ -6,8 +6,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local PaidRemotes = require(ReplicatedStorage.Shared.PaidRemotes)
-local ShopRemotes = require(ReplicatedStorage.Shared.ShopRemotes)
-local ResearchRemotes = require(ReplicatedStorage.Shared.ResearchRemotes)
 local ClientState = require(script.Parent.ClientState)
 
 export type ProjectInfo = { id: number, name: string, laptop: boolean }
@@ -60,15 +58,6 @@ PaidRemotes.DevState.OnClientEvent:Connect(function(state: any)
 	changed:Fire()
 end)
 
--- Заряды покупают в магазине — ShopState приходит сразу после покупки
-ShopRemotes.ShopState.OnClientEvent:Connect(function(state: any)
-	local boosts = type(state) == "table" and state.boosts
-	if type(boosts) == "table" and type(boosts.instantFinish) == "number" then
-		DevState.instantFinish = boosts.instantFinish
-		changed:Fire()
-	end
-end)
-
 -- Слоты, тест-группа и издательство зависят от исследований и геймпассов: перезапросить снимок.
 -- С задержкой — сервер отвечает не чаще раза в секунду
 local requestQueued = false
@@ -82,8 +71,24 @@ function DevState.request()
 		PaidRemotes.DevStateRequest:FireServer()
 	end)
 end
-ResearchRemotes.ResearchChanged.OnClientEvent:Connect(DevState.request)
-ShopRemotes.ShopState.OnClientEvent:Connect(DevState.request)
+-- Remotes магазина и исследований — в своём потоке: если их сервис не поднялся, require ждёт
+-- вечно, а HUD (он требует DevState) всё равно должен появиться (аудит P2-20)
+task.spawn(function()
+	local ShopRemotes = require(ReplicatedStorage.Shared.ShopRemotes)
+	-- Заряды покупают в магазине — ShopState приходит сразу после покупки
+	ShopRemotes.ShopState.OnClientEvent:Connect(function(state: any)
+		local boosts = type(state) == "table" and state.boosts
+		if type(boosts) == "table" and type(boosts.instantFinish) == "number" then
+			DevState.instantFinish = boosts.instantFinish
+			changed:Fire()
+		end
+	end)
+	ShopRemotes.ShopState.OnClientEvent:Connect(DevState.request)
+end)
+task.spawn(function()
+	local ResearchRemotes = require(ReplicatedStorage.Shared.ResearchRemotes)
+	ResearchRemotes.ResearchChanged.OnClientEvent:Connect(DevState.request)
+end)
 -- Первый снимок — когда профиль загружен (до этого сервер не отвечает)
 local firstData: RBXScriptConnection? = nil
 firstData = Remotes.DataChanged.OnClientEvent:Connect(function()

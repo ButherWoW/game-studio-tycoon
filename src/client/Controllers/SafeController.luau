@@ -24,7 +24,9 @@ local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local DepthToast = require(script.Parent.Parent.DepthToast)
 
 local MODEL_NAME = "ParkSafe"
-local KEY_SIZE = 72
+-- Окно 380×460 (было 600): на телефоне 844×390 масштаб ~0.66 вместо ~0.51, клавиши ≥ 36 px (аудит P2-18)
+local KEY_SIZE = 56
+local KEY_GAP = 8
 local GREEN = Color3.fromRGB(60, 230, 110)
 local RED = Color3.fromRGB(255, 50, 50)
 local OFF_COLOR = Color3.fromRGB(150, 30, 30)
@@ -236,7 +238,7 @@ local function open()
 	gui = screen
 	Ui.windowOpened(close)
 
-	local window = Ui.window(screen, "Window", Vector2.new(380, 600))
+	local window = Ui.window(screen, "Window", Vector2.new(380, 460))
 	if Images.safe.keypadBg > 0 then
 		local bg = Instance.new("ImageLabel")
 		bg.Name = "Background"
@@ -254,8 +256,7 @@ local function open()
 	title.Size = UDim2.new(1, -80, 0, 34)
 	ArtIcon.prefix(title, "🔐", Images.safe.icon, 34)
 	local closeButton = Ui.button(window, ClientState.t("create_close"), Ui.colors.locked, close)
-	closeButton.Size = UDim2.fromOffset(40, 40)
-	closeButton.Position = UDim2.new(1, -52, 0, 8)
+	Ui.headerClose(closeButton)
 
 	local _, cash = stateOf(safeModel())
 	local prize = Ui.label(
@@ -265,13 +266,13 @@ local function open()
 		Ui.bodyFont,
 		Ui.colors.money
 	)
-	prize.Position = UDim2.fromOffset(16, 54)
+	prize.Position = UDim2.fromOffset(16, 50)
 	prize.Size = UDim2.new(1, -32, 0, 26)
 	prize.TextXAlignment = Enum.TextXAlignment.Center
 
 	local screenLabel = Ui.label(window, "", 48, Enum.Font.Code, Ui.colors.good)
-	screenLabel.Position = UDim2.fromOffset(16, 88)
-	screenLabel.Size = UDim2.new(1, -32, 0, 56)
+	screenLabel.Position = UDim2.fromOffset(16, 80)
+	screenLabel.Size = UDim2.new(1, -32, 0, 48)
 	screenLabel.TextXAlignment = Enum.TextXAlignment.Center
 	screenLabel.BackgroundColor3 = Color3.fromRGB(16, 20, 18)
 	screenLabel.BackgroundTransparency = 0
@@ -283,11 +284,11 @@ local function open()
 	grid.Name = "Keys"
 	grid.BackgroundTransparency = 1
 	grid.AnchorPoint = Vector2.new(0.5, 0)
-	grid.Position = UDim2.new(0.5, 0, 0, 156)
-	grid.Size = UDim2.fromOffset(KEY_SIZE * 3 + 24, KEY_SIZE * 4 + 36)
+	grid.Position = UDim2.new(0.5, 0, 0, 136)
+	grid.Size = UDim2.fromOffset(KEY_SIZE * 3 + KEY_GAP * 2, KEY_SIZE * 4 + KEY_GAP * 3)
 	local layout = Instance.new("UIGridLayout")
 	layout.CellSize = UDim2.fromOffset(KEY_SIZE, KEY_SIZE)
-	layout.CellPadding = UDim2.fromOffset(12, 12)
+	layout.CellPadding = UDim2.fromOffset(KEY_GAP, KEY_GAP)
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
 	layout.Parent = grid
 	grid.Parent = window
@@ -304,14 +305,14 @@ local function open()
 			press(key)
 		end)
 		button.LayoutOrder = i
-		button.TextSize = 34
+		button.TextSize = 30
 		button.AutoButtonColor = not locked
 		button:SetAttribute("SoundKey", "safe_beep")
 	end
 
 	local resultLabel = Ui.label(window, "", 26, Enum.Font.GothamMedium, Ui.colors.muted)
-	resultLabel.Position = UDim2.new(0, 16, 1, -86)
-	resultLabel.Size = UDim2.new(1, -32, 0, 70)
+	resultLabel.Position = UDim2.new(0, 16, 1, -68)
+	resultLabel.Size = UDim2.new(1, -32, 0, 60)
 	resultLabel.TextWrapped = true
 	resultLabel.TextXAlignment = Enum.TextXAlignment.Center
 	result = resultLabel

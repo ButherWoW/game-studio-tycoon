@@ -1264,6 +1264,7 @@ return {
 	studio_name_placeholder = "Por ejemplo: Pixel Bananas",
 	studio_name_rule = "De {min} a {max} caracteres. Todos los jugadores verán el nombre",
 	studio_name_done = "Listo",
+	fixc_plot_waiting = "⏳ Todas las parcelas del servidor están ocupadas — esperando una libre… Eres el n.º {n} en la cola",
 	studio_name_err_length = "Usa de {min} a {max} caracteres",
 	studio_name_err_filtered = "El filtro de Roblox no aceptó el nombre — prueba otro",
 	studio_name_err_error = "El filtro no está disponible ahora — inténtalo de nuevo",

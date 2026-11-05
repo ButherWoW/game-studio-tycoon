@@ -6,7 +6,9 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage.Shared
-local DepthRemotes = require(Shared.DepthRemotes)
+-- DepthRemotes грузим в своём потоке (ниже): модуль нужен HUD/«Создать игру», а require ждёт сервер
+-- без таймаута (аудит P2-20). До загрузки запросы откладываются, кнопки ничего не шлют
+local depthRemotes: typeof(require(Shared.DepthRemotes))? = nil
 local Franchises = require(Shared.Config.Franchises)
 local Genres = require(Shared.Config.Genres)
 local Images = require(Shared.Config.Images)
@@ -52,7 +54,7 @@ function FranchiseClient.find(id: number?): any
 	return nil
 end
 
-DepthRemotes.FranchiseState.OnClientEvent:Connect(function(state: any)
+local function onState(state: any)
 	if type(state) ~= "table" then
 		return
 	end
@@ -62,11 +64,27 @@ DepthRemotes.FranchiseState.OnClientEvent:Connect(function(state: any)
 		FranchiseClient.selected = nil
 	end
 	changed:Fire()
-end)
-
-function FranchiseClient.request()
-	DepthRemotes.FranchiseRequest:FireServer()
 end
+
+local requestWanted = false
+function FranchiseClient.request()
+	local remotes = depthRemotes
+	if remotes then
+		remotes.FranchiseRequest:FireServer()
+	else
+		requestWanted = true
+	end
+end
+
+task.spawn(function()
+	local remotes = require(Shared.DepthRemotes)
+	depthRemotes = remotes
+	remotes.FranchiseState.OnClientEvent:Connect(onState)
+	if requestWanted then
+		requestWanted = false
+		remotes.FranchiseRequest:FireServer()
+	end
+end)
 
 -- Для перерисовки окна: что поменялось в блоке
 function FranchiseClient.key(): string
@@ -249,7 +267,10 @@ function FranchiseClient.build(parent: Instance, order: number, onPick: (any) ->
 					ClientState.t("fr_make", { name = c.name, score = c.score }),
 					Ui.colors.locked,
 					function()
-						DepthRemotes.FranchiseCreate:FireServer(c.key)
+						local remotes = depthRemotes
+						if remotes then
+							remotes.FranchiseCreate:FireServer(c.key)
+						end
 					end
 				)
 				b.Size = UDim2.new(1, 0, 0, ROW_HEIGHT)

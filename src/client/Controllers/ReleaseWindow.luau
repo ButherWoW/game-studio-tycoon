@@ -107,7 +107,10 @@ local function show(info: any)
 	screen.DisplayOrder = 20
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	gui = screen
-	Ui.windowOpened()
+	-- Окно меню (аудит P2-19): итог релиза закрывает открытое окно меню, окно меню — итог.
+	-- Кроме «Создать игру»: там может быть набранное название следующей игры — итог ложится поверх
+	local createOpen = screen.Parent ~= nil and screen.Parent:FindFirstChild("CreateGameWindow") ~= nil
+	Ui.windowOpened(if createOpen then nil else close)
 
 	-- Предложение под итогом (×2 к доходу этой игры / геймпасс ×2): окно выше на строку
 	local offer = OfferClient.releaseOffer(info)

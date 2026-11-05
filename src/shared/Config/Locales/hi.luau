@@ -1263,6 +1263,7 @@ return {
 	studio_name_placeholder = "उदाहरण: Pixel Bananas",
 	studio_name_rule = "{min} से {max} अक्षर। यह नाम सभी खिलाड़ी देखेंगे",
 	studio_name_done = "हो गया",
+	fixc_plot_waiting = "⏳ इस सर्वर के सभी प्लॉट भरे हैं — खाली प्लॉट का इंतज़ार… कतार में तुम्हारा नंबर {n} है",
 	studio_name_err_length = "{min} से {max} अक्षर चाहिए",
 	studio_name_err_filtered = "Roblox फ़िल्टर ने यह नाम नहीं माना — कोई और सोचो",
 	studio_name_err_error = "फ़िल्टर अभी उपलब्ध नहीं है — फिर से कोशिश करो",

@@ -16,6 +16,18 @@ local Ui = {}
 -- Телефон/планшет: кнопки не меньше пальца, боковое меню не лезет на джойстик
 Ui.touch = UserInputService.TouchEnabled
 Ui.MIN_TOUCH = 44
+-- Кнопки шапки окна (×, «Коды», Premium): на тач-экране выше и с зазором побольше — окно
+-- ужимается до 0.65, и 40 px превращались в ~26 px, а подушка не росла из-за соседа (аудит P2-16)
+Ui.HEADER_BUTTON = if Ui.touch then 48 else 40
+Ui.HEADER_TOP = if Ui.touch then 4 else 8
+Ui.HEADER_GAP = if Ui.touch then 16 else 10
+Ui.HEADER_RIGHT = 12
+
+-- «×» в правом верхнем углу окна: размер и место по Ui.HEADER_*
+function Ui.headerClose(button: GuiObject)
+	button.Size = UDim2.fromOffset(Ui.HEADER_BUTTON, Ui.HEADER_BUTTON)
+	button.Position = UDim2.new(1, -(Ui.HEADER_BUTTON + Ui.HEADER_RIGHT), 0, Ui.HEADER_TOP)
+end
 
 -- Пока открыто окно игры, прячем окно чата: оно рисуется поверх нашего UI и забирает клики
 local openWindows = 0

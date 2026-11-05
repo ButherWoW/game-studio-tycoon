@@ -1263,6 +1263,7 @@ return {
 	studio_name_placeholder = "Pavyzdžiui: Pixel Bananas",
 	studio_name_rule = "Nuo {min} iki {max} simbolių. Pavadinimą matys visi žaidėjai",
 	studio_name_done = "Baigta",
+	fixc_plot_waiting = "⏳ Visi serverio sklypai užimti — laukiame laisvo… Tu eilėje {n}-as",
 	studio_name_err_length = "Reikia nuo {min} iki {max} simbolių",
 	studio_name_err_filtered = "Roblox filtras nepraleido pavadinimo — sugalvok kitą",
 	studio_name_err_error = "Filtras šiuo metu nepasiekiamas — bandyk dar kartą",

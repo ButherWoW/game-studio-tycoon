@@ -5,7 +5,6 @@ local LocalizationService = game:GetService("LocalizationService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
-local LanguageRemotes = require(ReplicatedStorage.Shared.LanguageRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
@@ -91,7 +90,12 @@ function ClientState.setLang(code: string, save: boolean?)
 		return
 	end
 	if save ~= false then
-		LanguageRemotes.SetLanguage:FireServer(code)
+		-- LanguageRemotes — лениво и в своём потоке: ClientState нужен всем окнам и HUD, а require
+		-- ждёт сервер без таймаута (аудит P2-20)
+		task.spawn(function()
+			local LanguageRemotes = require(ReplicatedStorage.Shared.LanguageRemotes)
+			LanguageRemotes.SetLanguage:FireServer(code)
+		end)
 	end
 	if code ~= ClientState.lang then
 		ClientState.lang = code

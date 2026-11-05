@@ -61,9 +61,12 @@ local function makeBeam(from: Attachment, button: BasePart): Beam
 	return beam
 end
 
-function GarageGuide.start()
+-- Значок 🏠 над табличкой. ResetOnSpawn = false: иначе после смерти PlayerGui уничтожает
+-- его, и следующая попытка сменить Parent у уничтоженного экземпляра роняет цикл (аудит, P1-4)
+local function makeMark(): BillboardGui
 	local mark = Instance.new("BillboardGui")
 	mark.Name = "GarageGuideMark"
+	mark.ResetOnSpawn = false
 	mark.Size = UDim2.fromOffset(MARK_SIZE, MARK_SIZE)
 	mark.StudsOffset = Vector3.new(0, MARK_OFFSET, 0)
 	mark.AlwaysOnTop = true
@@ -73,6 +76,18 @@ function GarageGuide.start()
 	icon.TextScaled = true
 	icon.Text = "🏠"
 	icon.Parent = mark
+	return mark
+end
+
+-- Уничтоженный экземпляр: Parent заблокирован, сменить его нельзя
+local function isDestroyed(inst: Instance): boolean
+	return not pcall(function()
+		inst.Parent = inst.Parent
+	end)
+end
+
+function GarageGuide.start()
+	local mark = makeMark()
 
 	-- Текущие цели: при смене персонажа или таблички пересобираем луч
 	local shownRoot: BasePart? = nil
@@ -96,6 +111,9 @@ function GarageGuide.start()
 			from = nil
 		end
 		shownRoot, shownButton = nil, nil
+		if isDestroyed(mark) then
+			mark = makeMark()
+		end
 		mark.Adornee = nil
 		mark.Parent = nil
 	end
@@ -118,14 +136,26 @@ function GarageGuide.start()
 			beam = makeBeam(attachment, button)
 			shownRoot, shownButton = root, button
 		end
+		if isDestroyed(mark) then
+			mark = makeMark()
+		end
 		mark.Adornee = button
 		mark.Parent = player:FindFirstChildOfClass("PlayerGui")
 	end
 
-	player:GetAttributeChangedSignal("OwnsGarage"):Connect(update)
+	-- Ошибка одного прохода не должна навсегда гасить подсказку
+	local function safeUpdate()
+		local ok, err = pcall(update)
+		if not ok then
+			warn("[GarageGuide] update failed:", err)
+			pcall(clear)
+		end
+	end
+
+	player:GetAttributeChangedSignal("OwnsGarage"):Connect(safeUpdate)
 	task.spawn(function()
 		while true do
-			update()
+			safeUpdate()
 			task.wait(CHECK_INTERVAL)
 		end
 	end)

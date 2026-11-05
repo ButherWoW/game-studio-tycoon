@@ -38,6 +38,8 @@ type ShopState = {
 
 local MENU_SLOT = 4
 local ROW_HEIGHT = 72
+local CODES_WIDTH = 150 -- px: кнопка «Коды» в шапке
+local PREMIUM_WIDTH = 170 -- px: подсказка Premium в шапке
 local TABS: { Tab } = { "ads", "passes", "boosts", "posters", "skins", "mascots" }
 
 local ShopWindow = {}
@@ -239,18 +241,19 @@ render = function()
 
 	local title = Ui.label(window, ClientState.t("shop_title"), 36, Ui.titleFont)
 	title.Position = UDim2.fromOffset(16, 10)
-	title.Size = UDim2.new(1, -230, 0, 36)
+	-- Шапка справа налево: ×, «Коды», Premium (размеры и зазоры — Ui.HEADER_*, на тач-экране крупнее)
+	local headerRight = Ui.HEADER_RIGHT + Ui.HEADER_BUTTON
+	title.Size = UDim2.new(1, -(headerRight + Ui.HEADER_GAP + CODES_WIDTH + 18), 0, 36)
 	local close = Ui.button(window, ClientState.t("create_close"), Ui.colors.locked, function()
 		ShopWindow.close()
 	end)
-	close.Size = UDim2.fromOffset(40, 40)
-	close.Position = UDim2.new(1, -52, 0, 8)
+	Ui.headerClose(close)
 	-- Промокоды: отдельное маленькое окно поверх магазина
 	local codes = Ui.button(window, ClientState.t("codes_button"), Ui.colors.primary, function()
 		CodeWindow.open()
 	end)
-	codes.Size = UDim2.fromOffset(150, 40)
-	codes.Position = UDim2.new(1, -212, 0, 8)
+	codes.Size = UDim2.fromOffset(CODES_WIDTH, Ui.HEADER_BUTTON)
+	codes.Position = UDim2.new(1, -(headerRight + Ui.HEADER_GAP + CODES_WIDTH), 0, Ui.HEADER_TOP)
 	ArtIcon.prefix(codes, "🎟", Images.social.iconCodes, 28)
 	-- Roblox Premium: +10% к доходу (PremiumService). Подсказка только тем, у кого его нет
 	if Players.LocalPlayer.MembershipType ~= Enum.MembershipType.Premium then
@@ -264,9 +267,10 @@ render = function()
 				end)
 			end
 		)
-		premium.Size = UDim2.fromOffset(170, 40)
-		premium.Position = UDim2.new(1, -392, 0, 8)
-		title.Size = UDim2.new(1, -410, 0, 36)
+		local premiumRight = headerRight + 2 * Ui.HEADER_GAP + CODES_WIDTH + PREMIUM_WIDTH
+		premium.Size = UDim2.fromOffset(PREMIUM_WIDTH, Ui.HEADER_BUTTON)
+		premium.Position = UDim2.new(1, -premiumRight, 0, Ui.HEADER_TOP)
+		title.Size = UDim2.new(1, -(premiumRight + 18), 0, 36)
 	end
 
 	local tabs = Instance.new("Frame")

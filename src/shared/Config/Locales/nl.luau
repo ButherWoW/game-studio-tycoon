@@ -1264,6 +1264,7 @@ return {
 	studio_name_placeholder = "Bijvoorbeeld: Pixel Bananas",
 	studio_name_rule = "{min} tot {max} tekens. Alle spelers zien de naam",
 	studio_name_done = "Klaar",
+	fixc_plot_waiting = "⏳ Alle kavels op deze server zijn bezet — wachten op een vrije… Je bent nr. {n} in de rij",
 	studio_name_err_length = "Gebruik {min} tot {max} tekens",
 	studio_name_err_filtered = "Het Roblox-filter keurde deze naam af — probeer een andere",
 	studio_name_err_error = "Het filter is nu niet beschikbaar — probeer het opnieuw",
