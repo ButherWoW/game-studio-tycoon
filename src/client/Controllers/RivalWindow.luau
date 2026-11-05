@@ -2,6 +2,7 @@
 -- «📊 Топ-10 индустрии» (кнопка меню — слот 18): место студии игрока среди конкурентов
 -- (RivalService, Config/Rivals) по стоимости студии. Плашка под HUD, пока идёт хит конкурента
 -- (атрибуты ReplicatedStorage RivalHit*), тосты «обогнал студию» и «конкурент выпустил хит».
+-- Логотипы студий — Config/Images.rivals (V19); 0 — эмодзи студии, как раньше.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -9,6 +10,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Shared = ReplicatedStorage.Shared
 local DepthRemotes = require(Shared.DepthRemotes)
 local Genres = require(Shared.Config.Genres)
+local Images = require(Shared.Config.Images)
 local Rivals = require(Shared.Config.Rivals)
 local Texts = require(Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
@@ -33,6 +35,20 @@ local state: any = nil
 local function genreName(id: any): string
 	local genre = if type(id) == "string" then Genres[id] else nil
 	return if genre then ClientState.localName(genre) else tostring(id)
+end
+
+-- Логотип студии по id или по названию (в тостах и плашке хита сервер шлёт только название); 0 — нет
+local function logoOf(id: any, name: any): number
+	if type(id) ~= "string" then
+		id = nil
+		for _, rival in Rivals.list do
+			if rival.name == name then
+				id = rival.id
+				break
+			end
+		end
+	end
+	return if type(id) == "string" then Images.rivals[id] or 0 else 0
 end
 
 local function hitPercent(): number
@@ -61,15 +77,28 @@ local function render()
 		row.LayoutOrder = i
 		Ui.corner(row, 10)
 		local name = if you then ClientState.t("rivals_you", { name = entry.name }) else entry.name
+		local logo = if you then 0 else logoOf(entry.id, entry.name)
 		local left = Ui.label(
 			row,
-			string.format("%d. %s %s", i, tostring(entry.icon), tostring(name)),
+			if logo > 0
+				then string.format("%d. %s", i, tostring(name))
+				else string.format("%d. %s %s", i, tostring(entry.icon), tostring(name)),
 			26,
 			nil,
 			if you then Ui.colors.good else Ui.colors.text
 		)
 		left.Position = UDim2.fromOffset(10, 7)
 		left.Size = UDim2.new(0.62, -10, 0, 26)
+		if logo > 0 then
+			-- Логотип слева от места, текст сдвигается на ширину логотипа
+			local art = Ui.artImage(row, logo, "left")
+			if art then
+				art.Size = UDim2.fromOffset(ROW_HEIGHT - 6, ROW_HEIGHT - 6)
+				art.Position = UDim2.new(0, 6, 0.5, 0)
+			end
+			left.Position = UDim2.fromOffset(ROW_HEIGHT + 6, 7)
+			left.Size = UDim2.new(0.62, -(ROW_HEIGHT + 6), 0, 26)
+		end
 		local right = Ui.label(row, Texts.money(tonumber(entry.value) or 0), 26, nil, Ui.colors.money)
 		right.TextXAlignment = Enum.TextXAlignment.Right
 		right.Position = UDim2.new(0.62, 0, 0, 7)
@@ -165,6 +194,25 @@ local function buildHitBanner()
 	padding.PaddingBottom = UDim.new(0, 3)
 	padding.Parent = banner
 
+	-- Логотип студии слева (Images.rivals); меняется вместе с хитом
+	local art: ImageLabel? = nil
+	local artId = 0
+	local function setLogo(id: number)
+		if id == artId then
+			return
+		end
+		artId = id
+		if art then
+			art:Destroy()
+		end
+		art = Ui.artImage(banner, id, "left")
+		padding.PaddingLeft = UDim.new(0, if art then 10 + BANNER_HEIGHT else 10)
+		padding.PaddingRight = padding.PaddingLeft
+		if art then
+			art.Position = UDim2.new(0, -BANNER_HEIGHT, 0.5, 0)
+		end
+	end
+
 	local function refresh()
 		local endsAt = ReplicatedStorage:GetAttribute("RivalHitEndsAt")
 		local left = if type(endsAt) == "number" then endsAt - workspace:GetServerTimeNow() else 0
@@ -173,15 +221,21 @@ local function buildHitBanner()
 			return
 		end
 		local s = math.floor(left)
+		local studio = ReplicatedStorage:GetAttribute("RivalHitStudio")
+		local logo = logoOf(nil, studio)
+		setLogo(logo)
 		banner.Visible = true
 		banner.Font = Ui.titleFontFor(ClientState.lang)
-		banner.Text = ClientState.t("rivals_hit_banner", {
-			icon = tostring(ReplicatedStorage:GetAttribute("RivalHitIcon") or "🏢"),
-			name = tostring(ReplicatedStorage:GetAttribute("RivalHitStudio") or ""),
+		local text = ClientState.t("rivals_hit_banner", {
+			icon = if logo > 0
+				then ""
+				else tostring(ReplicatedStorage:GetAttribute("RivalHitIcon") or "🏢"),
+			name = tostring(studio or ""),
 			genre = genreName(ReplicatedStorage:GetAttribute("RivalHitGenre")),
 			percent = hitPercent(),
 			time = string.format("%d:%02d", s // 60, s % 60),
 		})
+		banner.Text = (string.gsub(text, "^%s+", ""))
 	end
 	task.spawn(function()
 		while true do
@@ -210,28 +264,27 @@ function RivalWindow.start()
 		if type(info) ~= "table" then
 			return
 		end
+		-- Есть логотип — эмодзи из текста убираем, логотип рисует тост слева
 		local passed = info.passed
 		if type(passed) == "table" then
-			DepthToast.show(
-				ClientState.t("rivals_passed", {
-					icon = tostring(passed.icon),
-					name = tostring(passed.name),
-					reward = Texts.money(tonumber(passed.reward) or 0),
-				}),
-				Ui.colors.good
-			)
+			local logo = logoOf(passed.id, passed.name)
+			local text = ClientState.t("rivals_passed", {
+				icon = if logo > 0 then "" else tostring(passed.icon),
+				name = tostring(passed.name),
+				reward = Texts.money(tonumber(passed.reward) or 0),
+			})
+			DepthToast.show((string.gsub(text, "^%s+", "")), Ui.colors.good, logo)
 		end
 		local hit = info.hit
 		if type(hit) == "table" then
-			DepthToast.show(
-				ClientState.t("rivals_hit", {
-					icon = tostring(hit.icon),
-					name = tostring(hit.name),
-					genre = genreName(hit.genreId),
-					percent = hitPercent(),
-				}),
-				Ui.colors.bad
-			)
+			local logo = logoOf(hit.id, hit.name)
+			local text = ClientState.t("rivals_hit", {
+				icon = if logo > 0 then "" else tostring(hit.icon),
+				name = tostring(hit.name),
+				genre = genreName(hit.genreId),
+				percent = hitPercent(),
+			})
+			DepthToast.show((string.gsub(text, "^%s+", "")), Ui.colors.bad, logo)
 		end
 	end)
 	-- Пока окно открыто — обновлять (деньги и конкуренты растут)

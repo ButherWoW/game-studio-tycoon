@@ -82,6 +82,40 @@ function Ui.corner(parent: GuiObject, radius: number?)
 	c.Parent = parent
 end
 
+-- Картинка из Config/Images поверх объекта: квадрат по высоте holder (с учётом UIPadding),
+-- по центру или у левого края (align = "left"). id 0/nil — ничего не делает и возвращает nil:
+-- тогда остаётся эмодзи, а убрать текст или сдвинуть его вызывающий решает сам по результату
+function Ui.artImage(holder: GuiObject, imageId: number?, align: string?): ImageLabel?
+	if not imageId or imageId <= 0 then
+		return nil
+	end
+	local image = Instance.new("ImageLabel")
+	image.Name = "Art"
+	image.BackgroundTransparency = 1
+	image.SizeConstraint = Enum.SizeConstraint.RelativeYY
+	image.Size = UDim2.fromScale(1, 1)
+	image.ScaleType = Enum.ScaleType.Fit
+	if align == "left" then
+		image.AnchorPoint = Vector2.new(0, 0.5)
+		image.Position = UDim2.fromScale(0, 0.5)
+	else
+		image.AnchorPoint = Vector2.new(0.5, 0.5)
+		image.Position = UDim2.fromScale(0.5, 0.5)
+	end
+	image.ZIndex = holder.ZIndex
+	image.Image = "rbxassetid://" .. imageId
+	image.Parent = holder
+	return image
+end
+
+-- Текст без эмодзи в начале («🎁 Подарить» → «Подарить»), когда эмодзи заменила картинка
+function Ui.stripIcon(text: string, icon: string): string
+	if string.sub(text, 1, #icon) == icon then
+		return (string.gsub(string.sub(text, #icon + 1), "^%s+", ""))
+	end
+	return text
+end
+
 -- Окно по центру экрана; maxSize ограничивает размер на больших мониторах
 -- Окно по центру. Строится в «дизайнерском» размере maxSize и целиком уменьшается UIScale,
 -- если экран меньше: раньше на невысоком экране кнопки внизу обрезались, а текст наезжал (отчёт #42)

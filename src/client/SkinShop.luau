@@ -154,7 +154,9 @@ local function cellFor(parent: Instance, skin: Skins.Skin, order: number)
 	cell.Parent = parent
 end
 
--- Подсказка «Вступи в группу — получи скин» (Config/Social.groupId > 0, награда ещё не получена)
+-- Подсказка «Вступи в группу — получи скин» (Config/Social.groupId > 0, награда ещё не получена).
+-- Есть баннер группы (Images.monetization.groupBanner, V14) — строка выше, баннер 2:1 слева
+local GROUP_BANNER = 80
 local function groupHint(body: Instance)
 	local groupId = Social.groupId
 	if groupId <= 0 or Players.LocalPlayer:GetAttribute("GroupRewarded") == true then
@@ -175,6 +177,20 @@ local function groupHint(body: Instance)
 	text.AnchorPoint = Vector2.new(0, 0.5)
 	text.Position = UDim2.new(0, 12, 0.5, 0)
 	text.Size = UDim2.new(0.7, -16, 0, 24)
+	local art = Ui.artImage(frame, Images.monetization.groupBanner, "left")
+	if art then
+		frame.Size = UDim2.new(1, -8, 0, GROUP_BANNER + 16)
+		art.SizeConstraint = Enum.SizeConstraint.RelativeXY
+		art.Size = UDim2.fromOffset(GROUP_BANNER * 2, GROUP_BANNER)
+		art.Position = UDim2.new(0, 8, 0.5, 0)
+		Ui.corner(art, 8)
+		-- Текст в две строки справа от баннера
+		local left = GROUP_BANNER * 2 + 20
+		text.Text = Ui.stripIcon(text.Text, "👥")
+		text.TextWrapped = true
+		text.Position = UDim2.new(0, left, 0.5, 0)
+		text.Size = UDim2.new(0.7, -left - 4, 0, 48)
+	end
 	local join = Ui.button(frame, ClientState.t("group_join"), Ui.colors.good, function()
 		task.spawn(function()
 			pcall(function()
