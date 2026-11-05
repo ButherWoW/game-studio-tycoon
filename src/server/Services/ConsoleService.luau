@@ -621,7 +621,9 @@ function ConsoleService.grantProduct(player: Player, profile: DataService.Profil
 	if launched(d) then
 		local rewards = optional("RewardService")
 		if rewards then
-			rewards.grant(player, { incomeMinutes = LATE_PURCHASE_MINUTES })
+			-- Минуты — по цене товара, как у пакета «10 минут дохода» (49 R$): не дешёвый пакет денег
+			local minutes = math.max(1, math.floor((product.robuxPrice or 49) * LATE_PURCHASE_MINUTES / 49))
+			rewards.grant(player, { incomeMinutes = minutes })
 		end
 		return true
 	end

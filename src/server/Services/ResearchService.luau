@@ -140,7 +140,8 @@ local function startTimer(
 	local seconds = Research.durationSeconds(minutes, RebirthPerks.forProfile(profile).researchTime)
 	local active: Research.Active =
 		{ kind = kind, id = id, startedAt = now, endsAt = now + seconds, paid = paid }
-	if data.creditSkips > 0 then
+	-- «Завершить сейчас» из запаса — только на долгое (как в окне: короче skipHideSeconds не предлагаем)
+	if data.creditSkips > 0 and seconds > Research.skipHideSeconds then
 		data.creditSkips -= 1
 		active.endsAt = now
 	elseif data.creditSeconds > 0 then
@@ -270,6 +271,11 @@ local function onCancel(player: Player)
 		data.points += active.paid
 	else
 		DataService.addCash(player, active.paid)
+		-- Возврат — не заработок: иначе старт/отмена закрывали бы задания «заработай»
+		local rewards = script.Parent:FindFirstChild("RewardService")
+		if rewards and rewards:IsA("ModuleScript") then
+			pcall((require(rewards) :: any).noteNonEarned, player, active.paid)
+		end
 	end
 	logEvent(player, "cancel_" .. active.kind .. "_" .. active.id)
 	replicate(player)
@@ -369,7 +375,11 @@ local function tick()
 		local research = profile and profile.research
 		local active = if type(research) == "table" then research.active else nil
 		if active and now >= active.endsAt then
-			finish(player, false)
+			-- Ошибка одного игрока не должна останавливать цикл для всех
+			local ok, err = pcall(finish, player, false)
+			if not ok then
+				warn("[ResearchService] finish failed:", player.UserId, err)
+			end
 		end
 	end
 end

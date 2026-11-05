@@ -38,7 +38,7 @@ local Construction = {
 	-- Сколько секунд строитель стучит молотком / ждёт между делами
 	hammerSeconds = { 3, 7 },
 	-- Ускорения за Robux (Developer Products; 0 = ещё не создан — в окне «Скоро»).
-	-- Квитанция пришла, а стройка уже закончилась: Robux не теряются — fallbackIncomeMinutes дохода
+	-- Квитанция пришла, а стройки нет: Robux не теряются — доход по цене товара (fallbackMinutesPerRobux)
 	speedups = {
 		{
 			id = "buildSpeed5",
@@ -65,7 +65,9 @@ local Construction = {
 			robuxPrice = 79,
 		},
 	} :: { Speedup },
-	fallbackIncomeMinutes = 10,
+	-- Запасной доход: столько минут за 1 R$ цены — как у пакета «10 минут дохода» (49 R$), иначе
+	-- −5 мин без стройки стал бы дешёвым пакетом денег (аудит 05.11)
+	fallbackMinutesPerRobux = 10 / 49,
 }
 
 function Construction.duration(stageLevel: number): number
