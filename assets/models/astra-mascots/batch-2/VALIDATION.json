@@ -1,0 +1,110 @@
+[
+  {
+    "id": "cloud_ghost",
+    "tier": "ordinary",
+    "parts": 19,
+    "height": 2.43,
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "face": "+Z",
+    "primaryPart": "Body",
+    "pointLights": 0,
+    "checks": "PASS",
+    "icon": {
+      "file": "mascot_cloud_ghost_icon.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visualReview": "PASS"
+    }
+  },
+  {
+    "id": "controller_bunny",
+    "tier": "rare",
+    "parts": 17,
+    "height": 2.965,
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "face": "+Z",
+    "primaryPart": "Body",
+    "pointLights": 0,
+    "checks": "PASS",
+    "icon": {
+      "file": "mascot_controller_bunny_icon.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visualReview": "PASS"
+    }
+  },
+  {
+    "id": "robo_owl",
+    "tier": "rare",
+    "parts": 15,
+    "height": 2.7261500244216,
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "face": "+Z",
+    "primaryPart": "Body",
+    "pointLights": 0,
+    "checks": "PASS",
+    "icon": {
+      "file": "mascot_robo_owl_icon.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visualReview": "PASS"
+    }
+  },
+  {
+    "id": "slime_star",
+    "tier": "rare",
+    "parts": 18,
+    "height": 2.1463322076663194,
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "face": "+Z",
+    "primaryPart": "Body",
+    "pointLights": 0,
+    "checks": "PASS",
+    "icon": {
+      "file": "mascot_slime_star_icon.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visualReview": "PASS"
+    }
+  }
+]
