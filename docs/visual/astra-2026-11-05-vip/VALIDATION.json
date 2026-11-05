@@ -1,0 +1,73 @@
+{
+  "images": {
+    "vip_crown.png": {
+      "size": [
+        256,
+        256
+      ],
+      "alphaChecked": true,
+      "visualReview": "PASS"
+    },
+    "starter_pack_banner.png": {
+      "size": [
+        1024,
+        512
+      ],
+      "alphaChecked": false,
+      "visualReview": "PASS"
+    },
+    "deal_badge.png": {
+      "size": [
+        256,
+        256
+      ],
+      "alphaChecked": true,
+      "visualReview": "PASS"
+    },
+    "gift_icon.png": {
+      "size": [
+        256,
+        256
+      ],
+      "alphaChecked": true,
+      "visualReview": "PASS"
+    },
+    "group_banner.png": {
+      "size": [
+        1024,
+        512
+      ],
+      "alphaChecked": false,
+      "visualReview": "PASS"
+    }
+  },
+  "models": {
+    "VipSignFrame": {
+      "parts": 16,
+      "dimensionsXYZ": [
+        14.9,
+        3.85,
+        0.32
+      ],
+      "pivot": "board center (0,0,0)",
+      "lights": 0,
+      "Seat": false,
+      "checks": "PASS"
+    },
+    "VipChair": {
+      "parts": 19,
+      "dimensionsXYZ": [
+        2.54,
+        3.6801,
+        2.24
+      ],
+      "pivot": "existing Chair base (0,0,0)",
+      "lights": 0,
+      "Seat": false,
+      "checks": "PASS",
+      "overlayVsAcceptedChair": "PASS: OBB SAT, no solid overlap",
+      "referenceChair": "Chair.rbxmx"
+    }
+  },
+  "studioTested": false
+}

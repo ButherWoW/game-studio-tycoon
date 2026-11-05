@@ -1,0 +1,54 @@
+[
+  {
+    "filename": "vip_crown.png",
+    "prompt": "Use case: ads-marketing. Original Game Studio Tycoon UI asset. Consistent polished cartoon low-poly, bold readable shapes, thick navy#1E1E2E edges, blue#3D7BFF and gold#FFC93C accents. No brands, real products, logos, watermark or signature. Child-friendly. One plump golden VIP crown with exactly three rounded points and one turquoise central gemstone. Thick navy outline #1E1E2E, glossy golden #FFC93C highlights. Big clear silhouette at32pixels, isolated, no text.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-c14f1067-175e-449d-90ab-9dc9a11ea402.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true
+  },
+  {
+    "filename": "starter_pack_banner.png",
+    "prompt": "Use case: ads-marketing. Original Game Studio Tycoon UI asset. Consistent polished cartoon low-poly, bold readable shapes, thick navy#1E1E2E edges, blue#3D7BFF and gold#FFC93C accents. No brands, real products, logos, watermark or signature. Child-friendly. Landscape2:1 starter bundle shop banner. Cozy game studio wooden desk, one open gift box holding neatly separated gold coins, a takeaway coffee and a bright original game cartridge. Large readable exact headline STARTER PACK in white and gold with navy outline. Background royalblue#3D7BFF toviolet, joyful polished cartoonlowpoly3D. No other writing or currency symbols.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-199fab49-c948-4bda-b5b5-d72a70c3c9be.png",
+    "size": [
+      1024,
+      512
+    ],
+    "transparent": false,
+    "originalSource": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-ca832c0d-0161-4e95-a128-7c60ec7dcd4b.png",
+    "editPrompt": "Use case: precise-object-edit. Edit this starter pack banner. Preserve composition, open gift box, coins, coffee, warm studio backdrop, exact STARTER PACK headline, blue/gold colors and cartridge. Change ONLY the illustration on the game cartridge: replace the adventurer holding a sword with a cheerful original astronaut waving on a small colorful planet, with no tools or weapons. No swords, guns or any weapons anywhere. No new text, no brands, no watermark. Finished landscape2:1 banner."
+  },
+  {
+    "filename": "deal_badge.png",
+    "prompt": "Use case: ads-marketing. Original Game Studio Tycoon UI asset. Consistent polished cartoon low-poly, bold readable shapes, thick navy#1E1E2E edges, blue#3D7BFF and gold#FFC93C accents. No brands, real products, logos, watermark or signature. Child-friendly. A bold red and gold starburst discount sticker, thick #1E1E2E outline, glossy playful UI icon. Exact only text -30% in oversized white numerals with navy outline, centered, readable at44pixels. Red #FF5A5F/gold#FFC93C. Transparent exterior.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-233f2e45-fef4-41a9-833c-70ea5921b2de.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true
+  },
+  {
+    "filename": "gift_icon.png",
+    "prompt": "Use case: ads-marketing. Original Game Studio Tycoon UI asset. Consistent polished cartoon low-poly, bold readable shapes, thick navy#1E1E2E edges, blue#3D7BFF and gold#FFC93C accents. No brands, real products, logos, watermark or signature. Child-friendly. One lovely gift box pink-purple #D65CA8 with big rounded golden #FFC93C ribbon and bow. Chunky playful three-quarter view, glossy highlights, thick #1E1E2E outline. No text, isolated on actual transparent background.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-01d7ce9e-0351-4b98-9b1a-cc1150b632e1.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true
+  },
+  {
+    "filename": "group_banner.png",
+    "prompt": "Use case: ads-marketing. Original Game Studio Tycoon UI asset. Consistent polished cartoon low-poly, bold readable shapes, thick navy#1E1E2E edges, blue#3D7BFF and gold#FFC93C accents. No brands, real products, logos, watermark or signature. Child-friendly. Landscape2:1 wordless community banner in warm cozy wooden game-studio garage. Five joyful original blocky developers wave, all physically separated, large cheerful faces. Center character wears original intern outfit: teal plaid shirt, plain blank badge, bluegray jeans and small ochre backpack, no words onbadge. Other staff blue/pink/green/violet clothes, tasteful desks in background. Bright family-friendly glossy cartoonlowpoly3D, readable phone composition. No text whatsoever.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-661c7bbc-8341-4e08-8827-185f0192df58.png",
+    "size": [
+      1024,
+      512
+    ],
+    "transparent": false
+  }
+]
