@@ -15,7 +15,7 @@ local Contracts = {
 	offerSeconds = 4 * 60, -- сколько предложение ждёт ответа
 
 	advanceMinutes = 3, -- аванс = доход студии за столько минут (ShopService.incomePerMinute)
-	bonusMinutes = 6, -- бонус за выполнение
+	bonusMinutes = 4, -- бонус за выполнение
 	failRepayFactor = 1.25,
 
 	templates = {

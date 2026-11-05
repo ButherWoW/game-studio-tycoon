@@ -34,7 +34,7 @@ Platforms.list = {
 		icon = "📱",
 		minStudioLevel = 2,
 		default = 1,
-		revenue = { casual = 1.3, puzzle = 1.3, sports = 1.1, strategy = 0.8, rpg = 0.85, simulation = 0.9 },
+		revenue = { casual = 1.2, puzzle = 1.2, sports = 1.1, strategy = 0.8, rpg = 0.85, simulation = 0.9 },
 		scoreBonus = 0,
 	},
 	-- Своя консоль: экшен и гонки — лучше всех; +0.3 к оценке (чаще 8+ и хиты).

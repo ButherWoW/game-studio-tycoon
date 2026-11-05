@@ -17,8 +17,8 @@ local Franchises = {
 	fansPerPoint = 1_000,
 	badKeep = 0.6,
 
-	hypePerThousandFans = 0.05, -- +5% дохода за каждую 1000 фанатов
-	maxHype = 0.5,
+	hypePerThousandFans = 0.03, -- +3% дохода за каждую 1000 фанатов
+	maxHype = 0.3,
 
 	fatigueSeconds = 3 * 60, -- части чаще — фанаты устают
 	fatigueMultiplier = 0.7,
