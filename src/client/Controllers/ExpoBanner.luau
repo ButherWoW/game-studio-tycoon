@@ -29,7 +29,8 @@ local function timeLeft(endsAt: number): string
 end
 
 local function showResult(stack: Frame, result: any)
-	local old = stack:FindFirstChild("ExpoResult")
+	-- Итоги могут быть в объявлении или карточке лотка, не на складе
+	local old = Ui.bannerFind("ExpoResult")
 	if old then
 		old:Destroy()
 	end
@@ -91,6 +92,7 @@ function ExpoBanner.start()
 	Ui.corner(banner, 10)
 	-- Выставка новичку — с офиса (Config/Unlocks.expo)
 	Ui.gate(banner, "expo")
+	Ui.bannerMeta(banner, "expo", "🏆")
 
 	ExpoRemotes.ExpoResult.OnClientEvent:Connect(function(result)
 		if FeatureGate.isOpen("expo") then

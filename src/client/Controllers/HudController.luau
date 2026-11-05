@@ -1,12 +1,15 @@
 --!strict
--- HUD: деньги, число игр, активная реклама, роялти, прогресс разработки (строка на каждый
--- проект, с кнопкой «⚡ Закончить»), тумблер «Авто-релиз» и кнопка «Создать игру».
+-- HUD: верхняя строка (деньги + значки: игры, реклама, роялти, расходы, долг, забастовка,
+-- настроение, мощность команды; нажатие на значок — подсказка с полным текстом), прогресс
+-- разработки (строка на каждый проект, с кнопкой «⚡ Закончить»), тумблер «Авто-релиз» и кнопка
+-- «Создать игру». Плашки событий — в лотке справа (Ui.bannerStack, Config/Hud).
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local PaidRemotes = require(ReplicatedStorage.Shared.PaidRemotes)
+local Hud = require(ReplicatedStorage.Shared.Config.Hud)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local StudioState = require(script.Parent.Parent.StudioState)
 local ClientState = require(script.Parent.Parent.ClientState)
@@ -18,35 +21,65 @@ local OfferClient = require(script.Parent.Parent.OfferClient)
 
 local HudController = {}
 
-local PLATE_WIDTH = Ui.HUD_PLATE_WIDTH -- боковое меню на тач-экране не заходит под плашки (Ui)
-local ROW_HEIGHT = 40 -- шаг между плашками
-local FIRST_PROGRESS_Y = 92
+-- Верхняя строка сверху по центру (отзыв владельца 06.11: деньги, «Игр», настроение и мощность
+-- были отдельными большими плашками и закрывали студию). Сверху слева чат Roblox, справа список
+-- игроков; ScreenGui с ScreenInsets по умолчанию — y 0 уже под верхней панелью Roblox
+local TOP_Y = 6
+local BAR_HEIGHT = Hud.topBarHeight
+local BAR_WIDTH = Ui.HUD_PLATE_WIDTH -- боковое меню на тач-экране не заходит под строку (Ui)
+local CASH_TEXT = if Ui.touch then 22 else 24
+local CHIP_TEXT = if Ui.touch then 15 else 16
+local CHIP_HEIGHT = BAR_HEIGHT - 8
+local CASH_SHORT_FROM = 100000000 -- деньги от $100 млн — коротко: «$123.4M»
+-- Строки прогресса разработки — под верхней строкой, узкие
+local PROGRESS_WIDTH = 300
+local PROGRESS_HEIGHT = 26
+local ROW_HEIGHT = PROGRESS_HEIGHT + 4 -- шаг между строками
+local FIRST_PROGRESS_Y = TOP_Y + BAR_HEIGHT + 4
+local FINISH_WIDTH = 130
 -- Переезд/пересборка комнаты: сервер заново сажает игрока за ПК — окно само не открываем
 -- столько секунд (отчёт #2, п. 7)
 local REBUILD_QUIET_SECONDS = 4
 
 local function plate(parent: Instance, y: number): TextLabel
-	local l = Ui.label(parent, "", 34, Ui.titleFontFor(ClientState.lang))
+	local l = Ui.label(parent, "", PROGRESS_HEIGHT, Ui.titleFontFor(ClientState.lang))
 	l.TextXAlignment = Enum.TextXAlignment.Center
-	-- Сверху по центру: слева окно чата Roblox (перекрывает HUD и забирает клики),
-	-- справа список игроков с leaderstats
 	l.AnchorPoint = Vector2.new(0.5, 0)
-	l.Size = UDim2.fromOffset(PLATE_WIDTH, 34)
+	l.Size = UDim2.fromOffset(PROGRESS_WIDTH, PROGRESS_HEIGHT)
 	l.Position = UDim2.new(0.5, 0, 0, y)
 	l.BackgroundTransparency = 0.25
 	l.BackgroundColor3 = Ui.colors.panel
-	Ui.corner(l, 10)
+	Ui.corner(l, 8)
 	local padding = Instance.new("UIPadding")
-	padding.PaddingLeft = UDim.new(0, 10)
-	padding.PaddingRight = UDim.new(0, 10)
-	padding.PaddingTop = UDim.new(0, 4)
-	padding.PaddingBottom = UDim.new(0, 4)
+	padding.PaddingLeft = UDim.new(0, 8)
+	padding.PaddingRight = UDim.new(0, 8)
+	padding.PaddingTop = UDim.new(0, 3)
+	padding.PaddingBottom = UDim.new(0, 3)
 	padding.Parent = l
 	return l
 end
 
+-- Коротко для значков: $3 786, $12.3K, $4.5M, $1.2B
+local function shortMoney(amount: number): string
+	local a = math.abs(amount)
+	local text: string
+	if a >= 1e9 then
+		text = string.format("%.1fB", a / 1e9)
+	elseif a >= 1e6 then
+		text = string.format("%.1fM", a / 1e6)
+	elseif a >= 1e5 then
+		text = string.format("%.0fK", a / 1e3)
+	elseif a >= 1e4 then
+		text = string.format("%.1fK", a / 1e3)
+	else
+		return Texts.money(a)
+	end
+	return "$" .. (string.gsub(text, "%.0([KMB])$", "%1"))
+end
+
 type Row = { label: TextLabel, finish: TextButton, projectId: number? }
 type Progress = { percent: number, paused: boolean, remaining: number? }
+type Chip = { button: TextButton, detail: string }
 
 -- Купили заряд кнопкой «⚡ Закончить сейчас»: потратить его на этот проект, когда сервер выдаст
 local FINISH_AFTER_PURCHASE_SECONDS = 60
@@ -57,20 +90,143 @@ function HudController.start()
 	gui.ResetOnSpawn = false
 	gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 
-	local cash = plate(gui, 12)
+	-- ===== Верхняя строка: деньги и значки =====
+	local bar = Instance.new("Frame")
+	bar.Name = "TopBar"
+	bar.AnchorPoint = Vector2.new(0.5, 0)
+	bar.Position = UDim2.new(0.5, 0, 0, TOP_Y)
+	bar.Size = UDim2.fromOffset(0, BAR_HEIGHT)
+	bar.AutomaticSize = Enum.AutomaticSize.X
+	bar.BackgroundColor3 = Ui.colors.panel
+	bar.BackgroundTransparency = 0.25
+	bar.ClipsDescendants = true
+	Ui.corner(bar, 10)
+	local barLimit = Instance.new("UISizeConstraint")
+	barLimit.MaxSize = Vector2.new(BAR_WIDTH, BAR_HEIGHT)
+	barLimit.Parent = bar
+	local barPadding = Instance.new("UIPadding")
+	barPadding.PaddingLeft = UDim.new(0, 10)
+	barPadding.PaddingRight = UDim.new(0, 10)
+	barPadding.Parent = bar
+	local barLayout = Instance.new("UIListLayout")
+	barLayout.FillDirection = Enum.FillDirection.Horizontal
+	barLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+	barLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	barLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	barLayout.Padding = UDim.new(0, 6)
+	barLayout.Parent = bar
+	bar.Parent = gui
+
+	local cash = Instance.new("TextLabel")
+	cash.Name = "Cash"
+	cash.BackgroundTransparency = 1
+	cash.Size = UDim2.new(0, 0, 1, 0)
+	cash.AutomaticSize = Enum.AutomaticSize.X
+	cash.TextSize = CASH_TEXT
 	cash.TextColor3 = Ui.colors.money
-	local info = plate(gui, 52)
-	-- Настроение команды (MoodService, атрибут TeamMood): только когда есть сотрудники;
-	-- строки прогресса разработки тогда сдвигаются на строку ниже
-	local mood = plate(gui, FIRST_PROGRESS_Y)
-	mood.Visible = false
-	-- Мощность команды (StaffPower) — пока идёт разработка и есть сотрудники: «👥 ⚡ +45% · ⭐ +0.4 · ☕ 2»
-	local power = plate(gui, FIRST_PROGRESS_Y)
-	power.Visible = false
+	cash.Font = Ui.titleFontFor(ClientState.lang)
+	cash.Text = ""
+	cash.LayoutOrder = 0
+	cash.Parent = bar
+
+	-- Подсказка под строкой: полный текст значка, пока не нажали ещё раз или Hud.popoverSeconds
+	local popover = Ui.label(gui, "", 0)
+	popover.Name = "Popover"
+	popover.TextScaled = false
+	popover.TextSize = 16
+	popover.TextWrapped = true
+	popover.TextXAlignment = Enum.TextXAlignment.Center
+	popover.AnchorPoint = Vector2.new(0.5, 0)
+	popover.Position = UDim2.new(0.5, 0, 0, TOP_Y + BAR_HEIGHT + 4)
+	popover.Size = UDim2.fromOffset(PROGRESS_WIDTH, 0)
+	popover.AutomaticSize = Enum.AutomaticSize.Y
+	popover.BackgroundColor3 = Ui.colors.panel
+	popover.BackgroundTransparency = 0.05
+	popover.ZIndex = 5
+	popover.Visible = false
+	Ui.corner(popover, 8)
+	local popoverPadding = Instance.new("UIPadding")
+	popoverPadding.PaddingLeft = UDim.new(0, 8)
+	popoverPadding.PaddingRight = UDim.new(0, 8)
+	popoverPadding.PaddingTop = UDim.new(0, 5)
+	popoverPadding.PaddingBottom = UDim.new(0, 5)
+	popoverPadding.Parent = popover
+	local popoverOwner: Chip? = nil
+	local popoverToken = 0
+	local function togglePopover(chip: Chip)
+		popoverToken += 1
+		if popover.Visible and popoverOwner == chip then
+			popover.Visible = false
+			popoverOwner = nil
+			return
+		end
+		popoverOwner = chip
+		popover.Font = Ui.bodyFont
+		popover.Text = chip.detail
+		popover.Visible = true
+		local token = popoverToken
+		task.delay(Hud.popoverSeconds, function()
+			if popoverToken == token then
+				popover.Visible = false
+				popoverOwner = nil
+			end
+		end)
+	end
+
+	local function makeChip(name: string, order: number): Chip
+		local b = Instance.new("TextButton")
+		b.Name = name
+		b.AutoButtonColor = true
+		b.BackgroundColor3 = Ui.colors.stroke
+		b.BackgroundTransparency = 0.35
+		b.TextColor3 = Ui.colors.text
+		b.Font = Ui.bodyFont
+		b.TextSize = CHIP_TEXT
+		b.Size = UDim2.fromOffset(0, CHIP_HEIGHT)
+		b.AutomaticSize = Enum.AutomaticSize.X
+		b.LayoutOrder = order
+		b.Visible = false
+		Ui.corner(b, 8)
+		local padding = Instance.new("UIPadding")
+		padding.PaddingLeft = UDim.new(0, 6)
+		padding.PaddingRight = UDim.new(0, 6)
+		padding.Parent = b
+		b.Parent = bar
+		local chip: Chip = { button = b, detail = "" }
+		b.Activated:Connect(function()
+			togglePopover(chip)
+		end)
+		return chip
+	end
+	local gamesChip = makeChip("Games", 1)
+	local strikeChip = makeChip("Strike", 2)
+	local expensesChip = makeChip("Expenses", 3)
+	local debtChip = makeChip("Debt", 4)
+	local adChip = makeChip("Ad", 5)
+	local royaltyChip = makeChip("Royalty", 6)
+	-- Настроение команды (MoodService, атрибут TeamMood): только когда есть сотрудники
+	local moodChip = makeChip("Mood", 7)
+	-- Мощность команды (StaffPower) — пока идёт разработка и есть сотрудники
+	local powerChip = makeChip("Power", 8)
+	local function setChip(chip: Chip, shown: boolean, text: string?, detail: string?, color: Color3?)
+		chip.button.Visible = shown
+		if not shown then
+			if popoverOwner == chip then
+				popover.Visible = false
+				popoverOwner = nil
+			end
+			return
+		end
+		chip.button.Text = text or ""
+		chip.button.TextColor3 = color or Ui.colors.text
+		chip.detail = detail or ""
+		if popoverOwner == chip and popover.Visible then
+			popover.Text = chip.detail
+		end
+	end
+
 	local function progressTop(): number
 		return FIRST_PROGRESS_Y
-			+ (if mood.Visible then ROW_HEIGHT else 0)
-			+ (if power.Visible then ROW_HEIGHT else 0)
 	end
 
 	-- Прогресс по id проекта (из DevelopmentProgress)
@@ -113,8 +269,8 @@ function HudController.start()
 		finish.Name = "InstantFinishButton"
 		finish.TextColor3 = Color3.fromRGB(40, 30, 0)
 		finish.AnchorPoint = Vector2.new(0, 0)
-		finish.Position = UDim2.new(0.5, PLATE_WIDTH / 2 + 8, 0, y)
-		finish.Size = UDim2.fromOffset(150, 34)
+		finish.Position = UDim2.new(0.5, PROGRESS_WIDTH / 2 + 6, 0, y)
+		finish.Size = UDim2.fromOffset(FINISH_WIDTH, PROGRESS_HEIGHT)
 		finish.Visible = false
 		newRow = { label = label, finish = finish, projectId = nil }
 		rows[index] = newRow
@@ -138,7 +294,7 @@ function HudController.start()
 			row.finish.Visible = false
 			local y = progressTop() + (i - 1) * ROW_HEIGHT
 			row.label.Position = UDim2.new(0.5, 0, 0, y)
-			row.finish.Position = UDim2.new(0.5, PLATE_WIDTH / 2 + 8, 0, y)
+			row.finish.Position = UDim2.new(0.5, PROGRESS_WIDTH / 2 + 6, 0, y)
 			if project and progress then
 				row.label.Font = font
 				local text: string
@@ -169,8 +325,8 @@ function HudController.start()
 				end
 			end
 		end
-		-- Плашки тренда/выставки — сразу под последней видимой строкой HUD
-		Ui.setBannerTop(progressTop() + shown * ROW_HEIGHT + 2)
+		-- Полоса объявлений плашек (Ui.bannerStack) — под последней видимой строкой HUD
+		Ui.setHudBottom(progressTop() + shown * ROW_HEIGHT)
 	end
 
 	local create = Ui.button(gui, ClientState.t("hud_create"), Ui.colors.money, function()
@@ -209,7 +365,7 @@ function HudController.start()
 		create.BackgroundColor3 = if seated then Ui.colors.money else Ui.colors.locked
 		create.TextColor3 = if seated then Color3.fromRGB(40, 30, 0) else Ui.colors.text
 		local font = Ui.titleFontFor(ClientState.lang)
-		cash.Font, info.Font = font, font
+		cash.Font = font
 
 		autoRelease.Visible = DevState.autoReleaseOwned
 		autoRelease.Text = ClientState.t(if DevState.autoReleaseOn then "hud_auto_on" else "hud_auto_off")
@@ -223,58 +379,66 @@ function HudController.start()
 		-- Доход релиза появляется вместе с оценкой в окне релиза, а не раньше (отчёт #2, п. 6)
 		-- Минус (долг, Config/Bailiffs) — красным: «-$ 4 200»
 		local shown = ClientState.displayCash()
-		cash.Text = (if shown < 0 then "-" else "")
-			.. ClientState.t("hud_cash", { cash = Texts.money(math.abs(shown)):sub(2) })
+		local cashText = if math.abs(shown) >= CASH_SHORT_FROM
+			then shortMoney(shown):sub(2)
+			else Texts.money(math.abs(shown)):sub(2)
+		cash.Text = (if shown < 0 then "-" else "") .. ClientState.t("hud_cash", { cash = cashText })
 		cash.TextColor3 = if shown < 0 then Ui.colors.bad else Ui.colors.money
-		local line = ClientState.t("hud_games", { count = data.gamesReleased })
-		if data.activeAd and data.activeAd.expiresAt > os.time() then
-			line ..= "  ·  " .. ClientState.t("hud_ad", { percent = math.floor(data.activeAd.bonus * 100) })
-		end
-		if DevState.royaltyPerMinute > 0 then
-			line ..= "  ·  " .. ClientState.t(
-				"hud_royalty",
-				{ amount = Texts.money(DevState.royaltyPerMinute) }
-			)
-		end
-		-- Расходы студии (ExpensesService): зарплаты + аренда, и забастовка, если нечем платить
+		local games = ClientState.t("hud_games", { count = data.gamesReleased })
+		setChip(gamesChip, true, "🎮 " .. tostring(data.gamesReleased), games)
+		local adOn = data.activeAd ~= nil and data.activeAd.expiresAt > os.time()
+		local adPercent = if adOn then math.floor(data.activeAd.bonus * 100) else 0
+		setChip(adChip, adOn, "📣 +" .. adPercent .. "%", ClientState.t("hud_ad", { percent = adPercent }))
+		local royalty = DevState.royaltyPerMinute
+		setChip(
+			royaltyChip,
+			royalty > 0,
+			"📚 +" .. shortMoney(royalty),
+			ClientState.t("hud_royalty", { amount = Texts.money(royalty) }),
+			Ui.colors.good
+		)
+		-- Расходы студии (ExpensesService): зарплаты + аренда, и забастовка, если нечем платить.
+		-- Красным — когда в минус: забастовка, долг, деньги ниже нуля или расходы больше дохода
+		-- в минуту (OfferClient.state.incomePerMinute — оценка сервера, + роялти)
 		local player = Players.LocalPlayer
 		local expenses = tonumber(player:GetAttribute("ExpensesPerMinute")) or 0
-		if expenses > 0 then
-			line ..= "  ·  " .. ClientState.t("hud_expenses", { amount = Texts.money(expenses) })
-		end
 		local debt = tonumber(player:GetAttribute("LoanDebt")) or 0
-		if debt > 0 then
-			line ..= "  ·  " .. ClientState.t("hud_debt", { amount = Texts.money(debt) })
-		end
 		local strike = player:GetAttribute("StaffStrike") == true
-		if strike then
-			-- Плашка одна (ниже строки прогресса): пока бастуют — показываем только это
-			line = ClientState.t("hud_strike")
-		end
-		info.Text = line
-		info.TextColor3 = if strike then Ui.colors.bad else Ui.colors.text
+		local income = OfferClient.state.incomePerMinute + royalty
+		local losing = strike or debt > 0 or shown < 0 or (income > 0 and expenses > income)
+		setChip(
+			expensesChip,
+			expenses > 0,
+			"💸 −" .. shortMoney(expenses),
+			ClientState.t("hud_expenses", { amount = Texts.money(expenses) }),
+			if losing then Ui.colors.bad else Ui.colors.muted
+		)
+		local debtText = ClientState.t("hud_debt", { amount = Texts.money(debt) })
+		setChip(debtChip, debt > 0, "🏦 " .. shortMoney(debt), debtText, Ui.colors.bad)
+		setChip(strikeChip, strike, "⚠️", ClientState.t("hud_strike"), Ui.colors.bad)
 		local moodValue = tonumber(player:GetAttribute("TeamMood"))
-		local moodShown = moodValue ~= nil
-		mood.Font = font
 		if moodValue then
-			mood.Text = ClientState.t("hud_mood", { value = moodValue })
-			mood.TextColor3 = StudioState.moodColor(moodValue)
-		end
-		if mood.Visible ~= moodShown then
-			mood.Visible = moodShown
-			renderProgress()
+			setChip(
+				moodChip,
+				true,
+				"😊 " .. moodValue .. "%",
+				ClientState.t("hud_mood", { value = moodValue }),
+				StudioState.moodColor(moodValue)
+			)
+		else
+			setChip(moodChip, false)
 		end
 		local staffPower = StaffPower.power
-		local powerShown = moodShown and staffPower ~= nil and #DevState.projects > 0
-		power.Font = font
-		power.Position = UDim2.new(0.5, 0, 0, FIRST_PROGRESS_Y + (if moodShown then ROW_HEIGHT else 0))
-		if staffPower then
-			power.Text = StaffPower.compact(staffPower)
-			power.TextColor3 = if staffPower.breaks > 0 then Ui.colors.money else Ui.colors.text
-		end
-		if power.Visible ~= powerShown then
-			power.Visible = powerShown
-			renderProgress()
+		if moodValue ~= nil and staffPower ~= nil and #DevState.projects > 0 then
+			setChip(
+				powerChip,
+				true,
+				"⚡ " .. StaffPower.percent(staffPower.speed),
+				StaffPower.compact(staffPower),
+				if staffPower.breaks > 0 then Ui.colors.money else Ui.colors.text
+			)
+		else
+			setChip(powerChip, false)
 		end
 		-- «Создать игру» доступна, пока есть свободный слот
 		create.Visible = DevState.hasFreeSlot()

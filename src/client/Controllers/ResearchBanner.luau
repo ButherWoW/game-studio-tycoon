@@ -41,6 +41,7 @@ function ResearchBanner.start()
 	padding.PaddingTop = UDim.new(0, 3)
 	padding.PaddingBottom = UDim.new(0, 3)
 	padding.Parent = banner
+	Ui.bannerMeta(banner, "research", "🔬")
 
 	local function refresh()
 		local endsAt = player:GetAttribute("ResearchEndsAt")
