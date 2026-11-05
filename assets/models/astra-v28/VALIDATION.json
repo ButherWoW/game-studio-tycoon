@@ -1,0 +1,8 @@
+{
+  "modelsReport": "models-pack/INDEPENDENT_VALIDATION.json",
+  "artReport": "art-pack/VALIDATION.json",
+  "models": 5,
+  "png": 11,
+  "visualReview": "PASS all actualgeometry/PNG andstretchedtitleframes reviewed",
+  "runtimeTested": false
+}

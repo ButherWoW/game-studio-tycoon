@@ -1,0 +1,175 @@
+{
+  "expected": 11,
+  "ready": 11,
+  "runtimeTested": false,
+  "titleSliceRect": [
+    48,
+    24,
+    464,
+    72
+  ],
+  "assets": [
+    {
+      "file": "gotw_icon.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "a85c65cde9e3779388e3e58c76c0d03b2e8657c41c70f38733f915676c2f4844",
+      "visualReview": "PASS: complete readable silhouette, no text/brands; icons reviewed128/64/40px and frames actual512x96 plus9slice768x96"
+    },
+    {
+      "file": "rebirth_star.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "f1cff41390f60d3fb1658d28a4215164c5b68ce9b948a3db935996449699dbba",
+      "visualReview": "PASS: complete readable silhouette, no text/brands; icons reviewed128/64/40px and frames actual512x96 plus9slice768x96"
+    },
+    {
+      "file": "rperk_speed.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "12aeb73feb69db3cd63a3ff5bf3f5283fababab94f9184f817380b4cd6ad5eee",
+      "visualReview": "PASS: complete readable silhouette, no text/brands; icons reviewed128/64/40px and frames actual512x96 plus9slice768x96"
+    },
+    {
+      "file": "rperk_costs.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "6e07beb0175a1d6777b3579ab9e543d82e6c295df110b108d57fad283c32fe24",
+      "visualReview": "PASS: complete readable silhouette, no text/brands; icons reviewed128/64/40px and frames actual512x96 plus9slice768x96"
+    },
+    {
+      "file": "rperk_start.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "2b600de41399f14314049af0ed9226b39f79342ceec6ac26c5234e3b124b6c64",
+      "visualReview": "PASS: complete readable silhouette, no text/brands; icons reviewed128/64/40px and frames actual512x96 plus9slice768x96"
+    },
+    {
+      "file": "rperk_hits.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "f4c65f9599113605263769d57fd93f2364d0d136bb7a1c4b70a78755090902ee",
+      "visualReview": "PASS: complete readable silhouette, no text/brands; icons reviewed128/64/40px and frames actual512x96 plus9slice768x96"
+    },
+    {
+      "file": "rperk_offline.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "f5a06ee26f0f3024440c21420f2d4b49f6913bcfbeb58f488889036733e36eb6",
+      "visualReview": "PASS: complete readable silhouette, no text/brands; icons reviewed128/64/40px and frames actual512x96 plus9slice768x96"
+    },
+    {
+      "file": "mentor_icon.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "acb275345e2b5ce9dbd23638c7d7ebbe05b368585dccfb23c4657bdbadd07448",
+      "visualReview": "PASS: complete readable silhouette, no text/brands; icons reviewed128/64/40px and frames actual512x96 plus9slice768x96"
+    },
+    {
+      "file": "title_frame.png",
+      "size": [
+        512,
+        96
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "centerStdDevRGBA": [
+        0.6929334039040087,
+        0.6799056283099134,
+        0.7090863727162889,
+        0.2847327566831277
+      ],
+      "sha256": "12c6702929cb77a6c6436e68b6620f4a959db289133f6206619bb15e73c514f5",
+      "visualReview": "PASS: complete readable silhouette, no text/brands; icons reviewed128/64/40px and frames actual512x96 plus9slice768x96"
+    },
+    {
+      "file": "title_frame_rare.png",
+      "size": [
+        512,
+        96
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "centerStdDevRGBA": [
+        1.4173701312654028,
+        1.6651419171432718,
+        2.3398471515918167,
+        0.13592481185390307
+      ],
+      "sha256": "99884a67b9895270b314464c7dfb2ae24b24797901e1fc0fb15a0c2247383f71",
+      "visualReview": "PASS: complete readable silhouette, no text/brands; icons reviewed128/64/40px and frames actual512x96 plus9slice768x96"
+    },
+    {
+      "file": "title_frame_legendary.png",
+      "size": [
+        512,
+        96
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "centerStdDevRGBA": [
+        10.786486372346497,
+        9.12635829256256,
+        3.594926292709299,
+        0.06076343943254412
+      ],
+      "sha256": "fcd196266d734209eb3f98508aab42adf1279478eff4c8c7771c56304c9015f5",
+      "visualReview": "PASS: complete readable silhouette, no text/brands; icons reviewed128/64/40px and frames actual512x96 plus9slice768x96"
+    }
+  ],
+  "frameCenterNote": "Plain unpatterned dark fill, minor RGB variation from rastergeneration; centerStdDevRGBA records actual variation and includes any rim crossing SliceRect boundary."
+}
