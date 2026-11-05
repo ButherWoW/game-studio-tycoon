@@ -1,0 +1,33 @@
+{
+  "sourceCommit": "fe8c7a7300ae885931254c375bb6a652a4151a37",
+  "zones": {
+    "decor": [
+      "Plant",
+      "Rug",
+      "Sofa",
+      "CoffeeTable",
+      "PendantLamp",
+      "WallBench",
+      "BeanBags",
+      "Bookshelf",
+      "MiniFridge",
+      "NeonSign",
+      "Aquarium",
+      "ArcadeMachine"
+    ]
+  },
+  "sources": {
+    "Plant": "assets/models/astra-garage/models/Plant.rbxmx",
+    "Rug": "assets/models/astra-garage/models/Rug.rbxmx",
+    "Sofa": "assets/models/astra-garage/models/Sofa.rbxmx",
+    "CoffeeTable": "assets/models/astra-garage/models/CoffeeTable.rbxmx",
+    "PendantLamp": "assets/models/astra-garage/models/PendantLamp.rbxmx",
+    "WallBench": "assets/models/astra-garage/models/WallBench.rbxmx",
+    "BeanBags": "assets/models/astra-decor-v9/models/BeanBags.rbxmx",
+    "Bookshelf": "assets/models/astra-decor-v9/models/Bookshelf.rbxmx",
+    "MiniFridge": "assets/models/astra-decor-v9/models/MiniFridge.rbxmx",
+    "NeonSign": "assets/models/astra-decor-v9/models/NeonSign.rbxmx",
+    "Aquarium": "assets/models/astra-decor-v9/models/Aquarium.rbxmx",
+    "ArcadeMachine": "assets/models/astra-decor-v9/models/ArcadeMachine.rbxmx"
+  }
+}
