@@ -1,0 +1,54 @@
+{
+  "GarageWalls_Sakura": {
+    "floorTiles": 169,
+    "coverageCells": 169,
+    "unionArea": 3600.0,
+    "expectedArea": 3600,
+    "gaps": 0,
+    "overlaps": 0,
+    "floorY": [
+      -0.24,
+      0.0
+    ],
+    "checks": "PASS"
+  },
+  "Floor_Sakura": {
+    "floorTiles": 169,
+    "coverageCells": 169,
+    "unionArea": 3364.0,
+    "expectedArea": 3364,
+    "gaps": 0,
+    "overlaps": 0,
+    "floorY": [
+      0.0,
+      0.02
+    ],
+    "checks": "PASS"
+  },
+  "Skyscraper_Sakura": {
+    "floorTiles": 169,
+    "coverageCells": 169,
+    "unionArea": 3364.0,
+    "expectedArea": 3364,
+    "gaps": 0,
+    "overlaps": 0,
+    "floorY": [
+      0.0,
+      0.02
+    ],
+    "checks": "PASS"
+  },
+  "Office_Sakura": {
+    "floorTiles": 169,
+    "coverageCells": 169,
+    "unionArea": 3364.0,
+    "expectedArea": 3364,
+    "gaps": 0,
+    "overlaps": 0,
+    "floorY": [
+      0.0,
+      0.02
+    ],
+    "checks": "PASS"
+  }
+}
