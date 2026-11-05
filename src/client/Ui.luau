@@ -16,8 +16,20 @@ Ui.MIN_TOUCH = 44
 
 -- Пока открыто окно игры, прячем окно чата: оно рисуется поверх нашего UI и забирает клики
 local openWindows = 0
+-- Окно меню, открытое сейчас (его close): окна меню взаимоисключающие — новое закрывает старое,
+-- иначе два окна DisplayOrder 10 лежали друг на друге. Закрыть уже закрытое окно — ничего не делает
+local exclusiveClose: (() -> ())? = nil
 
-function Ui.windowOpened()
+-- close — передают окна меню (кнопки бокового меню): открытие такого окна закрывает
+-- предыдущее окно меню. Всплывающие окна (награда, банк, релиз…) зовут без аргумента
+function Ui.windowOpened(close: (() -> ())?)
+	if close then
+		local previous = exclusiveClose
+		exclusiveClose = close
+		if previous and previous ~= close then
+			previous()
+		end
+	end
 	openWindows += 1
 	TextChatService.ChatWindowConfiguration.Enabled = false
 end
@@ -116,26 +128,175 @@ function Ui.stripIcon(text: string, icon: string): string
 	return text
 end
 
--- Окно по центру экрана; maxSize ограничивает размер на больших мониторах
+-- Боковое меню (Ui.menuButton): колонка кнопок, нужна окнам (дыра в подложке) и плашкам
+local menuColumn: Frame? = nil
+-- Пересчитать стек плашек (задаёт Ui.bannerStack): меню на тач-экране сменило ширину
+local refitBanners: () -> () = function() end
+
+-- Прямоугольник бокового меню в координатах экрана; nil — меню нет или оно пустое
+local function menuRect(): (Vector2?, Vector2?)
+	local column = menuColumn
+	if not column or not column.Parent then
+		return nil, nil
+	end
+	local size = column.AbsoluteSize
+	if size.X <= 0 or size.Y <= 0 then
+		return nil, nil
+	end
+	return column.AbsolutePosition, size
+end
+
+-- Не шире столько окно уменьшаем на низком экране (телефон в альбомной): ниже текст не прочитать.
+-- Окно с растягиваемой прокруткой тогда становится ниже в «дизайнерских» px, а тело прокручивается
+local SHORT_MIN_SCALE = 0.65
+local MENU_HOLE_MARGIN = 4
+
+-- Тело окна тянется по высоте: ScrollingFrame, у которого он сам и все рамки до окна
+-- заданы долей высоты (Size.Y.Scale > 0). Такое окно можно сделать ниже — тело прокрутится
+local function hasStretchyScroll(frame: Frame): boolean
+	for _, item in frame:GetDescendants() do
+		if item:IsA("ScrollingFrame") and item.Size.Y.Scale > 0 then
+			local node = item.Parent
+			local stretchy = true
+			while node and node ~= frame do
+				if node:IsA("GuiObject") and node.Size.Y.Scale <= 0 then
+					stretchy = false
+					break
+				end
+				node = node.Parent
+			end
+			if stretchy then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+-- Прозрачная подложка во весь экран под окном (Active): нажатия мимо окна не доходят до HUD,
+-- плашек и мира под ним. Боковое меню остаётся доступным — в подложке дыра под колонку меню
+-- (через меню переключают окна, Ui.windowOpened). Три куска: справа от меню, над ним и под ним
+local function backdrop(parent: Instance, frame: Frame)
+	local holder = Instance.new("Frame")
+	holder.Name = "Backdrop"
+	holder.BackgroundTransparency = 1
+	holder.Size = UDim2.fromScale(1, 1)
+	holder.ZIndex = 0
+	local pieces: { Frame } = {}
+	for i = 1, 3 do
+		local piece = Instance.new("Frame")
+		piece.Name = "Block" .. i
+		piece.BackgroundTransparency = 1
+		piece.BorderSizePixel = 0
+		piece.Active = true
+		piece.ZIndex = 0
+		piece.Parent = holder
+		pieces[i] = piece
+	end
+	local function layout()
+		local position, size = menuRect()
+		if not position or not size then
+			pieces[1].Position = UDim2.new()
+			pieces[1].Size = UDim2.fromScale(1, 1)
+			pieces[2].Visible = false
+			pieces[3].Visible = false
+			return
+		end
+		local origin = holder.AbsolutePosition
+		local right = position.X - origin.X + size.X + MENU_HOLE_MARGIN
+		local top = math.max(position.Y - origin.Y - MENU_HOLE_MARGIN, 0)
+		local bottom = position.Y - origin.Y + size.Y + MENU_HOLE_MARGIN
+		pieces[1].Position = UDim2.fromOffset(right, 0)
+		pieces[1].Size = UDim2.new(1, -right, 1, 0)
+		pieces[2].Visible = true
+		pieces[2].Position = UDim2.new()
+		pieces[2].Size = UDim2.fromOffset(right, top)
+		pieces[3].Visible = true
+		pieces[3].Position = UDim2.fromOffset(0, bottom)
+		pieces[3].Size = UDim2.new(0, right, 1, -bottom)
+	end
+	local connections: { RBXScriptConnection } = {
+		holder:GetPropertyChangedSignal("AbsoluteSize"):Connect(layout),
+		frame:GetPropertyChangedSignal("Visible"):Connect(function()
+			holder.Visible = frame.Visible
+		end),
+	}
+	local column = menuColumn
+	if column then
+		table.insert(connections, column:GetPropertyChangedSignal("AbsoluteSize"):Connect(layout))
+		table.insert(connections, column:GetPropertyChangedSignal("AbsolutePosition"):Connect(layout))
+	end
+	frame.Destroying:Connect(function()
+		for _, connection in connections do
+			connection:Disconnect()
+		end
+		holder:Destroy()
+	end)
+	-- Подложка раньше окна в дереве и с ZIndex 0: при любом ZIndexBehavior она под окном
+	holder.Parent = parent
+	layout()
+end
+
 -- Окно по центру. Строится в «дизайнерском» размере maxSize и целиком уменьшается UIScale,
--- если экран меньше: раньше на невысоком экране кнопки внизу обрезались, а текст наезжал (отчёт #42)
+-- если экран меньше: раньше на невысоком экране кнопки внизу обрезались, а текст наезжал (отчёт #42).
+-- На низком экране масштаб не меньше SHORT_MIN_SCALE, если тело окна прокручивается: окно
+-- становится ниже, лишнее уходит в прокрутку (иначе на телефоне текст был ~45% и не читался)
 function Ui.window(parent: Instance, name: string, maxSize: Vector2): Frame
 	local frame = Instance.new("Frame")
 	frame.Name = name
 	frame.AnchorPoint = Vector2.new(0.5, 0.5)
 	frame.Position = UDim2.fromScale(0.5, 0.5)
 	frame.Size = UDim2.fromOffset(maxSize.X, maxSize.Y)
+	-- Окно забирает нажатия: раньше тап по фону окна проходил к кнопкам под ним
+	frame.Active = true
 	local scale = Instance.new("UIScale")
 	scale.Parent = frame
+	-- Тело тянется по высоте (hasStretchyScroll): содержимое окна появляется после Ui.window,
+	-- поэтому проверяем по DescendantAdded раз в кадр, пока не найдём
+	local stretchy = false
 	local function fit()
 		local camera = workspace.CurrentCamera
 		local viewport = if camera then camera.ViewportSize else Vector2.new(1280, 720)
 		-- ScreenGui рисуется под верхней панелью Roblox: на телефоне 844×390 это ~58 px из 390
 		local inset = GuiService:GetGuiInset()
 		local height = viewport.Y - inset.Y
-		scale.Scale = math.clamp(math.min(viewport.X * 0.94 / maxSize.X, height * 0.92 / maxSize.Y), 0.4, 1)
+		local byWidth = viewport.X * 0.94 / maxSize.X
+		local natural = math.min(byWidth, height * 0.92 / maxSize.Y)
+		local value = math.clamp(natural, 0.4, 1)
+		local designHeight = maxSize.Y
+		if stretchy and natural < SHORT_MIN_SCALE then
+			local floor = math.min(SHORT_MIN_SCALE, byWidth)
+			if floor > natural then
+				value = floor
+				designHeight = math.floor(height * 0.92 / floor)
+			end
+		end
+		scale.Scale = value
+		frame.Size = UDim2.fromOffset(maxSize.X, designHeight)
 	end
 	fit()
+	local checkScheduled = false
+	local descendantConnection: RBXScriptConnection? = nil
+	descendantConnection = frame.DescendantAdded:Connect(function()
+		if checkScheduled or stretchy then
+			return
+		end
+		checkScheduled = true
+		task.defer(function()
+			checkScheduled = false
+			if stretchy or not frame.Parent then
+				return
+			end
+			if hasStretchyScroll(frame) then
+				stretchy = true
+				local connection = descendantConnection
+				if connection then
+					connection:Disconnect()
+				end
+				fit()
+			end
+		end)
+	end)
 	local camera = workspace.CurrentCamera
 	if camera then
 		local connection = camera:GetPropertyChangedSignal("ViewportSize"):Connect(fit)
@@ -143,6 +304,7 @@ function Ui.window(parent: Instance, name: string, maxSize: Vector2): Frame
 			connection:Disconnect()
 		end)
 	end
+	backdrop(parent, frame)
 	frame.BackgroundColor3 = Ui.colors.panel
 	-- Непрозрачный фон: сквозь полупрозрачный просвечивали цифры HUD (отчёт #2, п. 9)
 	frame.BackgroundTransparency = 0
@@ -370,43 +532,96 @@ end
 -- Боковое меню слева посередине (слева сверху чат, справа сверху список игроков).
 -- Слоты, чтобы фичи не спорили за место: 1 исследования, 2 сотрудники, 3 задания,
 -- 4 магазин, 5 rebirth, 6 язык. order внутри слота не нужен — один слот, одна кнопка.
-local menuColumn: Frame? = nil
 local MENU_BUTTON = 52
 local MENU_GAP = 8
 -- Сверху HUD и плашки, снизу кнопка «Создать игру»: столько по высоте меню не занимает
 local MENU_RESERVED = 200
+local MENU_LEFT = 12
 
 -- Тач: меню начинается сверху и не опускается в нижние MENU_TOUCH_BOTTOM px —
--- там джойстик (низ-лево). Не влезло в высоту — следующий столбец справа, кнопки не мельчают
+-- там джойстик (низ-лево). Не влезло в высоту — следующий столбец справа. Столбцы не заходят
+-- под HUD и плашки по центру (Ui.HUD_PLATE_WIDTH): на телефоне 844×390 при 5–6 столбцах по 52 px
+-- меню доходило до x 364 и перекрывало HUD (x 272–572). Клетка поменьше (не меньше MIN_TOUCH),
+-- и если всё равно не влезает — колонка целиком уменьшается
 local MENU_TOUCH_TOP = 8
 local MENU_TOUCH_BOTTOM = 120
+local MENU_TOUCH_CELL = 46
+local MENU_TOUCH_GAP = 4
+local MENU_HUD_GAP = 8 -- зазор от меню до плашек HUD
+local MENU_TOUCH_MIN_SCALE = 0.7
 
--- Колонка кнопок сама уменьшается, если все не влезают по высоте (ПК с низким окном);
--- на тач-экране вместо уменьшения кнопки переносятся в соседний столбец (≥ 44 px)
-local function fitMenu(column: Frame, scale: UIScale)
-	local camera = workspace.CurrentCamera
+-- Ширина плашек HUD по центру сверху (HudController): меню на тач-экране правее не заходит
+Ui.HUD_PLATE_WIDTH = 300
+
+local function visibleButtons(column: Frame): number
 	local count = 0
 	for _, child in column:GetChildren() do
-		if child:IsA("GuiButton") then
+		if child:IsA("GuiButton") and child.Visible then
 			count += 1
 		end
 	end
-	local grid = column:FindFirstChildOfClass("UIGridLayout")
-	if grid then
-		local screen = column.Parent
-		local height = if screen and screen:IsA("ScreenGui") then screen.AbsoluteSize.Y else 0
-		if height <= 0 then
-			height = (if camera then camera.ViewportSize.Y else 720) - GuiService:GetGuiInset().Y
-		end
-		local available = height - MENU_TOUCH_TOP - MENU_TOUCH_BOTTOM
-		local perColumn = math.max(math.floor((available + MENU_GAP) / (MENU_BUTTON + MENU_GAP)), 1)
-		grid.FillDirectionMaxCells = perColumn
+	return count
+end
+
+-- Размер области SideMenu: ScreenGui с ScreenInsets по умолчанию (CoreUISafeInsets) — уже без
+-- верхней панели Roblox и выреза экрана. Ещё не посчитан — камера минус GuiInset
+local function screenSize(column: Frame): Vector2
+	local screen = column.Parent
+	local size = if screen and screen:IsA("ScreenGui") then screen.AbsoluteSize else Vector2.zero
+	if size.X <= 0 or size.Y <= 0 then
+		local camera = workspace.CurrentCamera
+		local viewport = if camera then camera.ViewportSize else Vector2.new(1280, 720)
+		size = viewport - Vector2.new(0, GuiService:GetGuiInset().Y)
+	end
+	return size
+end
+
+-- Тач: перебираем число столбцов и берём раскладку с самым крупным масштабом (при равном —
+-- меньше столбцов). Ширина — до края HUD, высота — над джойстиком
+local function fitTouchMenu(column: Frame, grid: UIGridLayout, scale: UIScale, count: number)
+	if count <= 0 then
+		scale.Scale = 1
 		return
 	end
-	local needed = count * (MENU_BUTTON + MENU_GAP)
-	local available = (if camera then camera.ViewportSize.Y else 720) - MENU_RESERVED
-	scale.Scale = if needed > 0 then math.clamp(available / needed, 0.55, 1) else 1
+	local size = screenSize(column)
+	local widthRoom = size.X * 0.5 - Ui.HUD_PLATE_WIDTH / 2 - MENU_HUD_GAP - MENU_LEFT
+	local heightRoom = size.Y - MENU_TOUCH_TOP - MENU_TOUCH_BOTTOM
+	local pitch = MENU_TOUCH_CELL + MENU_TOUCH_GAP
+	local bestScale, bestRows = 0, count
+	for columns = 1, count do
+		local rows = math.ceil(count / columns)
+		local value = math.min(
+			1,
+			widthRoom / (columns * pitch - MENU_TOUCH_GAP),
+			heightRoom / (rows * pitch - MENU_TOUCH_GAP)
+		)
+		if value > bestScale + 0.001 then
+			bestScale, bestRows = value, rows
+		end
+	end
+	grid.FillDirectionMaxCells = bestRows
+	scale.Scale = math.max(bestScale, MENU_TOUCH_MIN_SCALE)
 end
+
+-- Колонка кнопок сама уменьшается, если все не влезают по высоте (ПК с низким окном);
+-- на тач-экране — раскладка столбцами (fitTouchMenu). Считаются только видимые кнопки:
+-- скрытые (праздник вне ивента, банк без долга) места не занимают
+local function fitMenu(column: Frame, scale: UIScale)
+	local count = visibleButtons(column)
+	local grid = column:FindFirstChildOfClass("UIGridLayout")
+	if grid then
+		fitTouchMenu(column, grid, scale, count)
+	else
+		local camera = workspace.CurrentCamera
+		local needed = count * (MENU_BUTTON + MENU_GAP)
+		local available = (if camera then camera.ViewportSize.Y else 720) - MENU_RESERVED
+		scale.Scale = if needed > 0 then math.clamp(available / needed, 0.55, 1) else 1
+	end
+	refitBanners()
+end
+
+-- Пересчитать меню (кнопку показали/спрятали); задаётся при создании колонки
+local refitMenu: () -> () = function() end
 
 -- imageKey — ключ из Config/Images.menu: есть id картинки — вместо эмодзи показываем её
 function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: string?): TextButton
@@ -419,20 +634,20 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 		column.Name = "Column"
 		column.BackgroundTransparency = 1
 		column.AnchorPoint = Vector2.new(0, 0.5)
-		column.Position = UDim2.new(0, 12, 0.5, 0)
+		column.Position = UDim2.new(0, MENU_LEFT, 0.5, 0)
 		column.Size = UDim2.fromOffset(MENU_BUTTON, 0)
 		column.AutomaticSize = Enum.AutomaticSize.Y
 		if Ui.touch then
 			-- Сверху вниз столбцами, сколько влезает над джойстиком (fitMenu)
 			column.AnchorPoint = Vector2.new(0, 0)
-			column.Position = UDim2.fromOffset(12, MENU_TOUCH_TOP)
+			column.Position = UDim2.fromOffset(MENU_LEFT, MENU_TOUCH_TOP)
 			column.Size = UDim2.new()
 			column.AutomaticSize = Enum.AutomaticSize.XY
 			local grid = Instance.new("UIGridLayout")
 			grid.SortOrder = Enum.SortOrder.LayoutOrder
 			grid.FillDirection = Enum.FillDirection.Vertical
-			grid.CellSize = UDim2.fromOffset(MENU_BUTTON, MENU_BUTTON)
-			grid.CellPadding = UDim2.fromOffset(MENU_GAP, MENU_GAP)
+			grid.CellSize = UDim2.fromOffset(MENU_TOUCH_CELL, MENU_TOUCH_CELL)
+			grid.CellPadding = UDim2.fromOffset(MENU_TOUCH_GAP, MENU_TOUCH_GAP)
 			grid.Parent = column
 		else
 			local layout = Instance.new("UIListLayout")
@@ -445,17 +660,28 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 		column.Parent = screen
 		screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 		menuColumn = column
-		column.ChildAdded:Connect(function()
-			fitMenu(column, scale)
-		end)
-		screen:GetPropertyChangedSignal("AbsoluteSize"):Connect(function()
-			fitMenu(column, scale)
-		end)
-		local camera = workspace.CurrentCamera
-		if camera then
-			camera:GetPropertyChangedSignal("ViewportSize"):Connect(function()
+		-- Кнопки создаются пачкой при старте и меняют Visible: пересчёт раз в кадр
+		local scheduled = false
+		refitMenu = function()
+			if scheduled then
+				return
+			end
+			scheduled = true
+			task.defer(function()
+				scheduled = false
 				fitMenu(column, scale)
 			end)
+		end
+		column.ChildAdded:Connect(refitMenu)
+		column.ChildRemoved:Connect(refitMenu)
+		-- Ширина меню на тач-экране ограничивает ширину плашек (Ui.bannerStack)
+		column:GetPropertyChangedSignal("AbsoluteSize"):Connect(function()
+			refitBanners()
+		end)
+		screen:GetPropertyChangedSignal("AbsoluteSize"):Connect(refitMenu)
+		local camera = workspace.CurrentCamera
+		if camera then
+			camera:GetPropertyChangedSignal("ViewportSize"):Connect(refitMenu)
 		end
 	end
 	-- Слот задаёт порядок сверху вниз: 1 исследования, 2 команда, 3 задания, 4 магазин, 5 rebirth,
@@ -466,6 +692,7 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 	b.Name = "Slot" .. slot
 	b.LayoutOrder = slot
 	b.Size = UDim2.fromOffset(MENU_BUTTON, MENU_BUTTON)
+	b:GetPropertyChangedSignal("Visible"):Connect(refitMenu)
 	local imageId = if imageKey then Images.menu[imageKey] else nil
 	if imageId and imageId > 0 then
 		b.Text = ""
@@ -490,6 +717,14 @@ local BANNER_GAP = 6
 -- Низкий экран (телефон в альбомной): плашки стека чуть меньше, чтобы не дойти до кнопки «Создать игру»
 local SHORT_SCREEN = 500
 local SHORT_SCALE = 0.8
+-- Тач или низкий экран: стек целиком помещается между HUD и кнопкой «Создать игру» (низ −24,
+-- высота 56) и не заходит под боковое меню — уменьшается, но не мельче BANNER_MIN_SCALE.
+-- HUD длинный (настроение, мощность, 2 проекта) — стек поднимается на нижние строки HUD,
+-- оставляя себе BANNER_MIN_SPACE: кнопки плашек (контракт, долг) должны быть на экране
+local BANNER_BOTTOM = 86
+local BANNER_MIN_SPACE = 64
+local BANNER_MIN_SCALE = 0.5
+local BANNER_MENU_GAP = 8
 local bannerStack: Frame? = nil
 local bannerTop = BANNER_TOP
 
@@ -516,14 +751,59 @@ function Ui.bannerStack(): Frame
 	scale.Parent = stack
 	local function fit()
 		local camera = workspace.CurrentCamera
-		local height = if camera then camera.ViewportSize.Y else 720
-		scale.Scale = if height < SHORT_SCREEN then SHORT_SCALE else 1
+		local viewportHeight = if camera then camera.ViewportSize.Y else 720
+		local short = viewportHeight < SHORT_SCREEN
+		local value = if short then SHORT_SCALE else 1
+		local top = bannerTop
+		local size = screen.AbsoluteSize
+		if (short or Ui.touch) and size.Y > 0 then
+			local current = math.max(scale.Scale, 0.01)
+			top = math.max(math.min(top, size.Y - BANNER_BOTTOM - BANNER_MIN_SPACE), 0)
+			-- Высота и ширина в «дизайнерских» px: AbsoluteSize уже умножен на текущий масштаб
+			local height = layout.AbsoluteContentSize.Y / current
+			if height > 0 then
+				value = math.min(value, (size.Y - BANNER_BOTTOM - top) / height)
+			end
+			local menuPosition, menuSize = menuRect()
+			if Ui.touch and menuPosition and menuSize then
+				local menuRight = menuPosition.X - screen.AbsolutePosition.X + menuSize.X
+				local room = size.X - 2 * (menuRight + BANNER_MENU_GAP)
+				local widest = 0
+				for _, child in stack:GetChildren() do
+					if child:IsA("GuiObject") and child.Visible and child.Size.X.Scale == 0 then
+						widest = math.max(widest, child.AbsoluteSize.X / current)
+					end
+				end
+				if widest > 0 then
+					value = math.min(value, room / widest)
+				end
+			end
+			value = math.max(value, BANNER_MIN_SCALE)
+		end
+		if math.abs(scale.Scale - value) > 0.01 then
+			scale.Scale = value
+		end
+		stack.Position = UDim2.new(0.5, 0, 0, top)
+	end
+	-- Плашки появляются, прячутся и меняют текст часто: пересчёт раз в кадр
+	local scheduled = false
+	refitBanners = function()
+		if scheduled then
+			return
+		end
+		scheduled = true
+		task.defer(function()
+			scheduled = false
+			fit()
+		end)
 	end
 	fit()
 	local camera = workspace.CurrentCamera
 	if camera then
-		camera:GetPropertyChangedSignal("ViewportSize"):Connect(fit)
+		camera:GetPropertyChangedSignal("ViewportSize"):Connect(refitBanners)
 	end
+	screen:GetPropertyChangedSignal("AbsoluteSize"):Connect(refitBanners)
+	layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(refitBanners)
 	stack.Parent = screen
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	bannerStack = stack
@@ -536,6 +816,7 @@ function Ui.setBannerTop(y: number)
 	local stack = bannerStack
 	if stack then
 		stack.Position = UDim2.new(0.5, 0, 0, bannerTop)
+		refitBanners()
 	end
 end
 

@@ -19,6 +19,7 @@ local Texts = require(Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local CompanyEventState = require(script.Parent.Parent.CompanyEventState)
 local OfferClient = require(script.Parent.Parent.OfferClient)
+local PopupQueue = require(script.Parent.Parent.PopupQueue)
 local Ui = require(script.Parent.Parent.Ui)
 
 local player = Players.LocalPlayer
@@ -48,21 +49,12 @@ local gui: ScreenGui? = nil
 local current: any = nil -- показанная карточка (info с сервера)
 
 local function busy(): boolean
-	if Ui.anyWindowOpen() or player:GetAttribute("TutorialActive") == true then
+	-- Окна, туториал, предложение, событие разработки на экране (PopupQueue.busy);
+	-- окна входа в очереди (награда, «пока тебя не было») — сначала они
+	if PopupQueue.busy() or PopupQueue.pending() then
 		return true
 	end
-	if OfferClient.popupOpen() or OfferClient.secondsSincePopup() < AFTER_OFFER_SECONDS then
-		return true
-	end
-	-- Событие разработки (выбор или быстрое) на экране — подождём
-	local playerGui = player:FindFirstChild("PlayerGui")
-	for _, name in { "DevEventPopup", "QuickEventPopup" } do
-		local screen = playerGui and playerGui:FindFirstChild(name)
-		if screen and #screen:GetChildren() > 0 then
-			return true
-		end
-	end
-	return false
+	return OfferClient.secondsSincePopup() < AFTER_OFFER_SECONDS
 end
 
 local function close()

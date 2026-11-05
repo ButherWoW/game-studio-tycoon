@@ -11,6 +11,7 @@ local LoanRemotes = require(ReplicatedStorage.Shared.LoanRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local PopupQueue = require(script.Parent.Parent.PopupQueue)
 
 local MENU_SLOT = 11
 
@@ -31,6 +32,8 @@ end
 
 local function show()
 	close()
+	-- Открыли кнопкой — то же окно в очереди (PopupQueue) больше не нужно
+	PopupQueue.remove("loan")
 	local offer = attr("LoanOffer")
 	local debt = attr("LoanDebt")
 	if offer <= 0 and debt <= 0 then
@@ -136,11 +139,17 @@ function LoanWindow.start()
 		menu.Visible = attr("LoanDebt") > 0
 		if offer > 0 and not offered then
 			offered = true
+			-- Само всплывает по очереди с другими окнами входа (PopupQueue); кнопка меню — сразу
 			if not gui then
-				show()
+				PopupQueue.push("loan", function()
+					if not gui and attr("LoanOffer") > 0 then
+						show()
+					end
+				end)
 			end
 		elseif offer <= 0 then
 			offered = false
+			PopupQueue.remove("loan")
 		end
 	end
 	player:GetAttributeChangedSignal("LoanOffer"):Connect(check)

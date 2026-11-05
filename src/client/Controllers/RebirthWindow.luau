@@ -41,7 +41,7 @@ function RebirthWindow.open()
 	screen.DisplayOrder = 15
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	gui = screen
-	Ui.windowOpened()
+	Ui.windowOpened(close) -- окно меню: закрывает другое открытое окно меню
 
 	local window = Ui.window(screen, "Window", Vector2.new(520, 440))
 	local body = Instance.new("Frame")

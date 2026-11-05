@@ -19,6 +19,7 @@ local Shared = ReplicatedStorage.Shared
 local Bailiffs = require(Shared.Config.Bailiffs)
 local Debug = require(Shared.Config.Debug)
 local Decor = require(Shared.Config.Decor)
+local Images = require(Shared.Config.Images)
 local Stages = require(Shared.Config.Stages)
 local Upgrades = require(Shared.Config.Upgrades)
 local StudioLayout = require(Shared.StudioLayout)
@@ -353,9 +354,23 @@ local function buildBailiff(): Model?
 	if humanoid then
 		humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
 	end
+	-- Костюм Астры (Config/Images.contracts, V19): шаблоны одежды, как у сотрудников
+	-- (StaffAppearance). Нет id — тёмный костюм цветом частей и белая рубашка-деталь
+	local shirtId = Images.contracts.bailiffShirt
+	local pantsId = Images.contracts.bailiffPants
+	if shirtId > 0 then
+		local clothing = Instance.new("Shirt")
+		clothing.ShirtTemplate = "rbxassetid://" .. shirtId
+		clothing.Parent = model
+	end
+	if pantsId > 0 then
+		local clothing = Instance.new("Pants")
+		clothing.PantsTemplate = "rbxassetid://" .. pantsId
+		clothing.Parent = model
+	end
 	-- Белая рубашка под пиджаком и табличка над головой — видно издалека и гостям
 	local torso = model:FindFirstChild("UpperTorso")
-	if torso and torso:IsA("BasePart") then
+	if torso and torso:IsA("BasePart") and shirtId <= 0 then
 		local shirt = Instance.new("Part")
 		shirt.Name = "Shirt"
 		shirt.Anchored = true
@@ -374,12 +389,23 @@ local function buildBailiff(): Model?
 		board.StudsOffset = Vector3.new(0, 2.2, 0)
 		board.AlwaysOnTop = true
 		board.MaxDistance = 120
-		local label = Instance.new("TextLabel")
-		label.BackgroundTransparency = 1
-		label.Size = UDim2.fromScale(1, 1)
-		label.Text = "⚖️"
-		label.TextScaled = true
-		label.Parent = board
+		local iconId = Images.contracts.bailiffIcon
+		if iconId > 0 then
+			-- Иконка пристава (bailiff_icon.png) вместо эмодзи
+			local icon = Instance.new("ImageLabel")
+			icon.BackgroundTransparency = 1
+			icon.Size = UDim2.fromScale(1, 1)
+			icon.ScaleType = Enum.ScaleType.Fit
+			icon.Image = "rbxassetid://" .. iconId
+			icon.Parent = board
+		else
+			local label = Instance.new("TextLabel")
+			label.BackgroundTransparency = 1
+			label.Size = UDim2.fromScale(1, 1)
+			label.Text = "⚖️"
+			label.TextScaled = true
+			label.Parent = board
+		end
 		board.Parent = head
 	end
 	return model

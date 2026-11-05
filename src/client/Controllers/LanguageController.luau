@@ -81,7 +81,7 @@ function LanguageController.open()
 	screen.DisplayOrder = 15
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	gui = screen
-	Ui.windowOpened()
+	Ui.windowOpened(LanguageController.close) -- окно меню: закрывает другое открытое окно меню
 	render()
 end
 

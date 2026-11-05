@@ -743,7 +743,7 @@ function TeamWindow.open()
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	gui = screen
 	scrollPosition = Vector2.zero
-	Ui.windowOpened()
+	Ui.windowOpened(TeamWindow.close) -- окно меню: закрывает другое открытое окно меню
 	render()
 	StudioState.request()
 	SkinShop.request()

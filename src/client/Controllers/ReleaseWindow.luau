@@ -115,10 +115,16 @@ local function show(info: any)
 		"Window",
 		Vector2.new(620, (if offer then 692 else 636) + (if arcade then 50 else 0))
 	)
-	local body = Instance.new("Frame")
+	-- Тело прокручивается: на низком экране (телефон) Ui.window делает окно ниже, а не мельче,
+	-- и итог с кнопками уходит в прокрутку, а не за край экрана
+	local body = Instance.new("ScrollingFrame")
 	body.BackgroundTransparency = 1
+	body.BorderSizePixel = 0
 	body.Position = UDim2.fromOffset(16, 12)
 	body.Size = UDim2.new(1, -32, 1, -24)
+	body.CanvasSize = UDim2.new()
+	body.AutomaticCanvasSize = Enum.AutomaticSize.Y
+	body.ScrollBarThickness = 6
 	Ui.list(body, 8)
 	body.Parent = window
 

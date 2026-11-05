@@ -177,4 +177,17 @@ Images.monetization = {
 	groupBanner = 0, -- group_banner.png (1024×512): подсказка «Вступи в группу» во вкладке скинов
 } :: { [string]: number }
 
+-- Контракты, приставы, франшизы (V19 часть 3; docs/visual/astra-2026-11-05-events/contracts-bailiff/V19).
+-- 0 — картинки нет: как раньше, эмодзи (📜 ⚖️ 📚) и костюм пристава из деталей.
+-- Dev 1: bailiff_shirt/bailiff_pants (шаблоны одежды 585×559) загрузить как Shirt/Pants
+-- (Classic Clothing), остальные — как Image, и вставить ID
+Images.contracts = {
+	bailiffShirt = 0, -- bailiff_shirt.png: ShirtTemplate NPC-пристава (BailiffService)
+	bailiffPants = 0, -- bailiff_pants.png: PantsTemplate NPC-пристава (BailiffService)
+	bailiffIcon = 0, -- bailiff_icon.png: вместо ⚖️ на плашке долга и над головой пристава
+	contract = 0, -- icon_contract.png: вместо 📜 на плашке контракта и в окне предложения
+	publisher = 0, -- icon_publisher.png: издатель в заголовке окна предложения контракта
+	franchise = 0, -- icon_franchise.png: вместо 📚 у блока «Франшизы» и в тостах франшиз
+} :: { [string]: number }
+
 return Images

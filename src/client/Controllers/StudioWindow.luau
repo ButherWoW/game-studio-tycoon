@@ -457,7 +457,7 @@ function StudioWindow.open()
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	gui = screen
 	scrollY = 0
-	Ui.windowOpened()
+	Ui.windowOpened(StudioWindow.close) -- окно меню: закрывает другое открытое окно меню
 	render()
 	StudioState.request()
 	ConsoleClient.request()

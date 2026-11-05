@@ -8,8 +8,10 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Shared = ReplicatedStorage.Shared
 local DepthRemotes = require(Shared.DepthRemotes)
 local Genres = require(Shared.Config.Genres)
+local Images = require(Shared.Config.Images)
 local Topics = require(Shared.Config.Topics)
 local Texts = require(Shared.Config.Texts)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local OfferClient = require(script.Parent.Parent.OfferClient)
 local DepthToast = require(script.Parent.Parent.DepthToast)
@@ -18,6 +20,9 @@ local Ui = require(script.Parent.Parent.Ui)
 local BANNER_HEIGHT = 26
 local BANNER_WIDTH = 400
 local CHECK_SECONDS = 2
+-- Картинки V19 (Config/Images.contracts): 📜 контракта и иконка издателя; 0 — эмодзи
+local CONTRACT_EMOJI = "📜"
+local BANNER_ICON = 20
 
 local ContractController = {}
 
@@ -60,12 +65,17 @@ end
 local function showPopup(offer: any)
 	poppedId = offer.id
 	local factor = tonumber(state and state.repayFactor) or 1.25
+	-- Слева от заголовка — иконка издателя (тогда без его эмодзи), иначе иконка контракта
+	local images = Images.contracts
+	local publisherImage = images.publisher > 0
+	local publisher = if publisherImage
+		then tostring(offer.publisherName)
+		else tostring(offer.publisherIcon) .. " " .. tostring(offer.publisherName)
 	OfferClient.popup({
 		kind = "contract",
-		title = ClientState.t(
-			"contract_title",
-			{ publisher = offer.publisherIcon .. " " .. offer.publisherName }
-		),
+		title = ClientState.t("contract_title", { publisher = publisher }),
+		icon = if publisherImage then images.publisher else images.contract,
+		titleEmoji = CONTRACT_EMOJI,
 		lines = {
 			requirement(offer),
 			ClientState.t("contract_terms", {
@@ -92,6 +102,11 @@ local function showPopup(offer: any)
 	})
 end
 
+-- Текст плашки без 📜, если вместо него картинка (Images.contracts.contract)
+local function bannerText(key: string, vars: { [string]: any }): string
+	return ArtIcon.strip(ClientState.t(key, vars), CONTRACT_EMOJI, Images.contracts.contract)
+end
+
 local function buildBanner(): TextButton
 	local banner = Instance.new("TextButton")
 	banner.Name = "ContractBanner"
@@ -112,6 +127,7 @@ local function buildBanner(): TextButton
 	padding.PaddingBottom = UDim.new(0, 3)
 	padding.Parent = banner
 	banner.Parent = Ui.bannerStack()
+	ArtIcon.prefix(banner, CONTRACT_EMOJI, Images.contracts.contract, BANNER_ICON)
 	return banner
 end
 
@@ -132,7 +148,7 @@ function ContractController.start()
 			local left = (tonumber(active.remaining) or 0) - (os.clock() - receivedAt)
 			banner.Visible = true
 			banner.TextColor3 = if left < 60 then Ui.colors.bad else Ui.colors.money
-			banner.Text = ClientState.t("contract_banner_active", {
+			banner.Text = bannerText("contract_banner_active", {
 				publisher = active.publisherName,
 				progress = active.progress,
 				count = active.count,
@@ -143,7 +159,7 @@ function ContractController.start()
 			local left = (tonumber(offer.expiresAt) or 0) - workspace:GetServerTimeNow()
 			banner.Visible = left > 0
 			banner.TextColor3 = Ui.colors.good
-			banner.Text = ClientState.t("contract_banner_offer", {
+			banner.Text = bannerText("contract_banner_offer", {
 				publisher = offer.publisherName,
 				time = formatTime(left),
 			})

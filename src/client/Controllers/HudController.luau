@@ -18,7 +18,7 @@ local OfferClient = require(script.Parent.Parent.OfferClient)
 
 local HudController = {}
 
-local PLATE_WIDTH = 300
+local PLATE_WIDTH = Ui.HUD_PLATE_WIDTH -- боковое меню на тач-экране не заходит под плашки (Ui)
 local ROW_HEIGHT = 40 -- шаг между плашками
 local FIRST_PROGRESS_Y = 92
 -- Переезд/пересборка комнаты: сервер заново сажает игрока за ПК — окно само не открываем
