@@ -1,0 +1,230 @@
+{
+  "status": "PASS",
+  "expected": 11,
+  "ready": 11,
+  "pending": [],
+  "assets": [
+    {
+      "file": "cev_angel.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        7,
+        28,
+        249,
+        236
+      ],
+      "sha256": "9f355ca12b784ec1257412ce202ba55740d5bfd02a7261f725e274045bb08de2",
+      "exactPromptMetadata": "events-1/metadata/angel.json"
+    },
+    {
+      "file": "cev_streamer.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        31,
+        25,
+        224,
+        242
+      ],
+      "sha256": "50e619328f86e97692487c585af583f77d71d3e66caa30fcd21e13bda94cd8ea",
+      "exactPromptMetadata": "events-1/metadata/streamer.json"
+    },
+    {
+      "file": "cev_award.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        27,
+        15,
+        228,
+        243
+      ],
+      "sha256": "72cd0444db7880150c87704e8fb2fa6364517d0307d4ea8a0ee199f47ed1bd5d",
+      "exactPromptMetadata": "events-1/metadata/award.json"
+    },
+    {
+      "file": "cev_conference.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        15,
+        25,
+        240,
+        242
+      ],
+      "sha256": "cccf8cf98f9045cb654467a2c894c4570c21fc6c0918839427ab5fbb20ff50c7",
+      "exactPromptMetadata": "events-1/metadata/conference.json"
+    },
+    {
+      "file": "cev_grant.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        18,
+        18,
+        230,
+        244
+      ],
+      "sha256": "fc85725abc83d2d18a62efd5cbf55524efce90727b0ae59a2900011aefc83497",
+      "exactPromptMetadata": "events-1/metadata/grant.json"
+    },
+    {
+      "file": "cev_donations.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        13,
+        21,
+        239,
+        248
+      ],
+      "sha256": "1e02b9be37df47b25efff29884cf9256c07dbb9f33db59dcd8dc7a653de4a6be",
+      "exactPromptMetadata": "events-1/metadata/donations.json"
+    },
+    {
+      "file": "cev_luckybug.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        32,
+        13,
+        222,
+        246
+      ],
+      "sha256": "8d9576e040e715e5097e85f0f16d363f8fc57ddfd93923210a542b177d98a07f",
+      "exactPromptMetadata": "events-1/metadata/luckybug.json"
+    },
+    {
+      "file": "cev_hype.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        6,
+        15,
+        248,
+        242
+      ],
+      "sha256": "b839ac6478c4941f3e057ac8041a5d1e1aaf2b004794e94d0af32464d66e5932",
+      "exactPromptMetadata": "events-1/metadata/hype.json"
+    },
+    {
+      "file": "cev_crash.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        26,
+        27,
+        232,
+        239
+      ],
+      "sha256": "045c5eb8b9be70aa93da1e57ddd83739ade6b7b97a6261beb7f8bd1e9d146d88",
+      "exactPromptMetadata": "events-1/metadata/crash.json"
+    },
+    {
+      "file": "cev_leak.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        21,
+        40,
+        229,
+        227
+      ],
+      "sha256": "66b5936dc6a928c76080885bf9ee81bc5ca14f17d1711004b6d1b93216e7983e",
+      "exactPromptMetadata": "events-1/metadata/leak.json"
+    },
+    {
+      "file": "cev_flood.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        8,
+        33,
+        248,
+        234
+      ],
+      "sha256": "68b633a7a04d87453a1a06738611a1b6590cb0a0b1bbd977e18eb4bb5b1d8543",
+      "exactPromptMetadata": "events-1/metadata/flood.json"
+    }
+  ],
+  "generation": "one built-in image_gen call per raster asset; genuine tool-generated alpha preserved; final resize through sips",
+  "studioTested": false
+}

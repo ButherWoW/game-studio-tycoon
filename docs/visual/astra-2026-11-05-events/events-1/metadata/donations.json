@@ -1,0 +1,14 @@
+{
+  "file": "cev_donations.png",
+  "folder": "events-1",
+  "id": "donations",
+  "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A blue open gift box with a large pink heart above its opening and two chunky gold coins beside it. Warm fan donations. Every coin and document seal must use only a blank surface or a simple geometric star; no currency glyphs, letters or digits anywhere.",
+  "tool": "built-in image_gen",
+  "transparent_background": true,
+  "source": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-a290ee2c-f7f0-4515-8864-94ee81f0d5cc.png",
+  "final": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-events-v19/events-1/V19/cev_donations.png",
+  "finalDimensions": [
+    256,
+    256
+  ]
+}
