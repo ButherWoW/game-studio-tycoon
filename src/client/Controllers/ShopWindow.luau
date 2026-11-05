@@ -1,7 +1,7 @@
 --!strict
 -- Окно «Магазин» (5.4, 5.5): вкладки «Реклама / Геймпассы / Бусты / Постеры / Скины / Маскоты»
 -- (постеры — PosterShop, скины сотрудников — SkinShop, маскоты — MascotShop).
--- В шапке — кнопка «🎟 Коды» (CodeWindow).
+-- В шапке — кнопка «🎟 Коды» (CodeWindow) и, если нет Roblox Premium, «⭐ Premium +10%» (покупка Premium).
 -- Клиент только показывает цены и открывает окно покупки Roblox; что куплено и что выдать,
 -- решает сервер (ShopService, MonetizationService). ID 0 = товар ещё не создан: кнопка «Скоро».
 
@@ -16,6 +16,7 @@ local AdCampaigns = require(Shared.Config.AdCampaigns)
 local GamePasses = require(Shared.Config.GamePasses)
 local Images = require(Shared.Config.Images)
 local Products = require(Shared.Config.Products)
+local Premium = require(Shared.Config.Premium)
 local Texts = require(Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
@@ -25,6 +26,7 @@ local OfferShop = require(script.Parent.Parent.OfferShop)
 local MascotShop = require(script.Parent.Parent.MascotShop)
 local CodeWindow = require(script.Parent.Parent.CodeWindow)
 local ArtIcon = require(script.Parent.Parent.ArtIcon)
+local DepthToast = require(script.Parent.Parent.DepthToast)
 
 type Tab = "ads" | "passes" | "boosts" | "posters" | "skins" | "mascots"
 type ShopState = {
@@ -237,6 +239,22 @@ render = function()
 	codes.Size = UDim2.fromOffset(150, 40)
 	codes.Position = UDim2.new(1, -212, 0, 8)
 	ArtIcon.prefix(codes, "🎟", Images.social.iconCodes, 28)
+	-- Roblox Premium: +10% к доходу (PremiumService). Подсказка только тем, у кого его нет
+	if Players.LocalPlayer.MembershipType ~= Enum.MembershipType.Premium then
+		local premium = Ui.button(
+			window,
+			ClientState.t("prem_shop_hint", { percent = math.floor(Premium.incomeBonus * 100 + 0.5) }),
+			Ui.colors.money,
+			function()
+				pcall(function()
+					MarketplaceService:PromptPremiumPurchase(Players.LocalPlayer)
+				end)
+			end
+		)
+		premium.Size = UDim2.fromOffset(170, 40)
+		premium.Position = UDim2.new(1, -392, 0, 8)
+		title.Size = UDim2.new(1, -410, 0, 36)
+	end
 
 	local tabs = Instance.new("Frame")
 	tabs.BackgroundTransparency = 1
@@ -337,6 +355,19 @@ function ShopWindow.start()
 			ShopWindow.open()
 		end
 	end, "menu_shop")
+	-- Купил Premium в окне Roblox — спасибо, а подсказка больше не нужна
+	Players.PlayerMembershipChanged:Connect(function(who: Player)
+		if who ~= Players.LocalPlayer then
+			return
+		end
+		if who.MembershipType == Enum.MembershipType.Premium then
+			DepthToast.show(
+				ClientState.t("prem_thanks", { percent = math.floor(Premium.incomeBonus * 100 + 0.5) }),
+				Ui.colors.money
+			)
+		end
+		render()
+	end)
 
 	ShopRemotes.ShopState.OnClientEvent:Connect(function(newState: any)
 		if type(newState) ~= "table" or type(newState.passes) ~= "table" then

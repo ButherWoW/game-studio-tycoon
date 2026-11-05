@@ -2,7 +2,7 @@
 -- Remotes модных жанров, Rebirth и офлайн-дохода. Сервер создаёт, клиент ждёт.
 -- Текущий тренд — атрибуты ReplicatedStorage (TrendGenre, TrendTopic, TrendEndsAt):
 -- они реплицируются сами, и клиент, зашедший позже, сразу видит тренд.
--- Офлайн-доход к выдаче — атрибут игрока OfflinePending.
+-- Офлайн-доход к выдаче — атрибут игрока OfflinePending, бонус возвращения — ComebackCash.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
@@ -13,6 +13,7 @@ local NAMES = {
 	"RequestRebirth", -- клиент -> сервер: без аргументов
 	"RebirthResult", -- сервер -> клиент: { ok: boolean, reason: string? }
 	"ClaimOffline", -- клиент -> сервер: без аргументов
+	"ClaimComeback", -- клиент -> сервер: забрать бонус возвращения (ComebackService), без аргументов
 }
 
 local folder: Folder

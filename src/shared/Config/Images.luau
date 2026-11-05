@@ -190,4 +190,10 @@ Images.contracts = {
 	franchise = 0, -- icon_franchise.png: вместо 📚 у блока «Франшизы» и в тостах франшиз
 } :: { [string]: number }
 
+-- Сейф в парке (7.16, SafeService / SafeWindow). 0 — картинки нет: эмодзи 🔐 и простой фон окна
+Images.safe = {
+	icon = 0, -- safe_icon.png (256×256): заголовок окна клавиатуры
+	keypadBg = 0, -- safe_keypad_bg.png (512×640): фон окна клавиатуры
+} :: { [string]: number }
+
 return Images
