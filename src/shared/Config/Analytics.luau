@@ -62,6 +62,7 @@ local Analytics = {
 		seizure = "BailiffSeizure", -- приставы забрали предмет за долг; поле — id, значение — выручка
 		code = "CodeRedeemed", -- активирован промокод; поле — код
 		mascot = "MascotPurchased", -- маскот куплен; поле — "id_cash" / "id_robux"
+		furnitureStyle = "FurnitureStylePurchased", -- стиль мебели куплен; поле — "id_cash" / "id_robux"
 		-- событие компании; поле — "id_этап": shown/insured (сработало), a/b/auto_a (выбор),
 		-- win/lose (риск), repaired, insurance_bought
 		companyEvent = "CompanyEvent",
@@ -139,6 +140,7 @@ local Analytics = {
 		decor = "Decor", -- декор студии (DecorService), sku — ключ покупки id@этаж
 		skin = "Skin", -- скины сотрудников за $ (SkinService), sku — id скина
 		mascot = "Mascot", -- маскоты за $ (MascotService), sku — id маскота
+		furnitureStyle = "FurnitureStyle", -- стили мебели за $ (FurnitureStyleService), sku — id стиля
 		companyEvent = "CompanyEvent", -- потери от событий компании, страховка и починка
 		other = "Other",
 	},

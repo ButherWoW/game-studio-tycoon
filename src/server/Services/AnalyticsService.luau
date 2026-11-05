@@ -63,6 +63,7 @@ type SpendSnapshot = {
 	decor: { [string]: boolean },
 	skins: { [string]: boolean },
 	mascots: { [string]: boolean },
+	furniture: { [string]: boolean },
 	studioLevel: number,
 	ownsGarage: boolean,
 	ad: any,
@@ -484,6 +485,7 @@ local function snapshot(profile: Profile): SpendSnapshot
 		decor = keySet(if type(p.decor) == "table" then p.decor.owned else nil),
 		skins = keySet(if type(p.skins) == "table" then p.skins.owned else nil),
 		mascots = keySet(if type(p.mascots) == "table" then p.mascots.owned else nil),
+		furniture = keySet(if type(p.furniture) == "table" then p.furniture.owned else nil),
 		studioLevel = profile.studioLevel,
 		ownsGarage = p.ownsGarage == true,
 		ad = ad,
@@ -515,6 +517,9 @@ local function classifySpend(player: Player, amount: number, module: string?, be
 	elseif module == "MascotService" then
 		local mascots = if type(p.mascots) == "table" then p.mascots.owned else nil
 		kind, sku = sinks.mascot, newKey(before.mascots, mascots) or "mascot"
+	elseif module == "FurnitureStyleService" then
+		local furniture = if type(p.furniture) == "table" then p.furniture.owned else nil
+		kind, sku = sinks.furnitureStyle, newKey(before.furniture, furniture) or "style"
 	elseif p.ownsGarage == true and not before.ownsGarage then
 		kind, sku = sinks.move, "garage"
 	elseif profile.studioLevel > before.studioLevel then
@@ -764,6 +769,13 @@ end
 function Analytics.logMascot(player: Player, mascotId: string, how: string)
 	if Config.enabled and states[player] then
 		logCustom(player, Config.events.mascot, 1, mascotId .. "_" .. how)
+	end
+end
+
+-- Куплен стиль мебели (FurnitureStyleService): how — "cash" или "robux"
+function Analytics.logFurnitureStyle(player: Player, styleId: string, how: string)
+	if Config.enabled and states[player] then
+		logCustom(player, Config.events.furnitureStyle, 1, styleId .. "_" .. how)
 	end
 end
 

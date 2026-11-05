@@ -54,6 +54,9 @@ export type Profile = {
 	codes: { [string]: number },
 	-- Маскоты (MascotService): открытые и надетый. Rebirth не сбрасывает
 	mascots: { owned: { [string]: boolean }, equipped: string? },
+	-- Стиль мебели студии (FurnitureStyleService, Config/FurnitureStyles): открытые и выбранный.
+	-- Косметика, Rebirth не сбрасывает; формат чистит StyleModels.data при загрузке
+	furniture: { owned: { [string]: boolean }, selected: string },
 	-- Франшизы и контракты (FranchiseService, ContractService, RivalService); формат проверяют сервисы
 	franchises: any?,
 	contracts: any?,
@@ -123,6 +126,7 @@ local function defaultProfile(): Profile
 		offers = { firstJoin = os.time(), starterBought = false, starterShown = false, starterBadge = false },
 		codes = {},
 		mascots = { owned = {}, equipped = nil },
+		furniture = { owned = { classic = true }, selected = "classic" },
 		franchises = { list = {}, candidates = {}, nextId = 1 },
 		contracts = { done = 0, failed = 0 },
 		rivals = { minutes = 0, passed = {} },
