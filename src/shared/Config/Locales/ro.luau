@@ -804,6 +804,7 @@ return {
 	rebirth_next = "După renaștere: venit ×{mult} pentru totdeauna",
 	rebirth_need_office = "Mută-te într-un birou",
 	rebirth_need_cash = "Bani: {price}",
+	rebirth_need_no_stocks = "Mai întâi vinde toate acțiunile (bursă)",
 	rebirth_resets = "Se resetează: banii (îți rămân $100), upgrade-urile, genurile și temele deblocate",
 	rebirth_keeps = "Rămân: recordul și numărul de jocuri lansate",
 	rebirth_button = "Ia-o de la capăt",

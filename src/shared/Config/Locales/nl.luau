@@ -804,6 +804,7 @@ return {
 	rebirth_next = "Na de rebirth: inkomen ×{mult} voor altijd",
 	rebirth_need_office = "Verhuis naar een kantoor",
 	rebirth_need_cash = "Geld: {price}",
+	rebirth_need_no_stocks = "Verkoop eerst al je aandelen (beurs)",
 	rebirth_resets = "Wordt gereset: geld (je houdt $100), upgrades, vrijgespeelde genres en thema’s",
 	rebirth_keeps = "Blijft: beste score en aantal uitgebrachte games",
 	rebirth_button = "Opnieuw beginnen",

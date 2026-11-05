@@ -58,11 +58,10 @@ local rng = Random.new()
 local bugs: { [Model]: boolean } = {}
 local catches: { [Player]: number } = {}
 local lastCatch: { [Player]: number } = {}
--- Оплаченные жуки за охоту по UserId (лимит bugHunt.maxCatchesPerPlayer; перезаход не сбрасывает)
-local paidByUser: { [number]: number } = {}
+-- Оплаченные жуки (лимит bugHunt.maxCatchesPerPlayer) и грант инвестора — в профиле (slotPaid):
+-- ни перезаход, ни смена сервера их не обнуляют
 local limitToasted: { [number]: boolean } = {}
--- Час инвесторов: кто уже получил грант (по UserId — перезаход не помогает)
-local investorGranted: { [number]: boolean } = {}
+-- Час инвесторов: сколько грантов выдал этот сервер
 local investorCount = 0
 -- Блиц-джем: лучшая заявка по UserId
 local blitz: { [number]: Entry } = {}
@@ -116,6 +115,21 @@ local function rootOf(player: Player): BasePart?
 	local character = player.Character
 	local root = character and character:FindFirstChild("HumanoidRootPart")
 	return if root and root:IsA("BasePart") then root else nil
+end
+
+type SlotPaid = { slot: number, bugs: number, investor: boolean }
+
+-- Выплаты игроку в слоте slotIndex (номер слота общий для всех серверов): profile.dailyEventPaid.
+-- Другой слот — счёт заново
+local function slotPaid(profile: DataService.Profile, slotIndex: number): SlotPaid
+	local raw = (profile :: any).dailyEventPaid
+	if type(raw) ~= "table" or raw.slot ~= slotIndex then
+		raw = { slot = slotIndex, bugs = 0, investor = false };
+		(profile :: any).dailyEventPaid = raw
+	end
+	raw.bugs = math.max(math.floor(tonumber(raw.bugs) or 0), 0)
+	raw.investor = raw.investor == true
+	return raw :: SlotPaid
 end
 
 local function isOn(id: DailyEvents.EventId): boolean
@@ -489,9 +503,9 @@ local function onCatch(player: Player, model: Model, root: BasePart, slotIndex: 
 	model:Destroy()
 	catches[player] = (catches[player] or 0) + 1
 	-- Деньги — только за первые maxCatchesPerPlayer жуков охоты, дальше — только зачёт топа
-	local paid = paidByUser[player.UserId] or 0
-	if paid < cfg.maxCatchesPerPlayer then
-		paidByUser[player.UserId] = paid + 1
+	local paid = slotPaid(profile, slotIndex)
+	if paid.bugs < cfg.maxCatchesPerPlayer then
+		paid.bugs += 1
 		local amount = RewardService.incomeForMinutes(player, profile, cfg.incomeMinutes)
 		RewardService.grant(player, { incomeMinutes = cfg.incomeMinutes })
 		toast(player, "devent_bug_caught", { money = Texts.money(amount), count = catches[player] })
@@ -610,7 +624,6 @@ local function finishBugHunt()
 	end
 	table.clear(catches)
 	table.clear(lastCatch)
-	table.clear(paidByUser)
 	table.clear(limitToasted)
 end
 
@@ -734,7 +747,8 @@ local function onInvestor(player: Player, root: BasePart, slotIndex: number)
 	if not character or not profile or (character.Position - root.Position).Magnitude > cfg.reachDistance then
 		return
 	end
-	if investorGranted[player.UserId] then
+	local paid = slotPaid(profile, slotIndex)
+	if paid.investor then
 		toast(player, "devent_investor_already")
 		return
 	end
@@ -742,7 +756,7 @@ local function onInvestor(player: Player, root: BasePart, slotIndex: number)
 		toast(player, "devent_investor_late")
 		return
 	end
-	investorGranted[player.UserId] = true
+	paid.investor = true
 	investorCount += 1
 	local amount = RewardService.incomeForMinutes(player, profile, cfg.incomeMinutes)
 	RewardService.grant(player, { incomeMinutes = cfg.incomeMinutes })
@@ -937,13 +951,11 @@ local function begin(slot: DailyEvents.Slot)
 	local id = slot.id
 	if id == "bugHunt" then
 		table.clear(catches)
-		table.clear(paidByUser)
 		table.clear(limitToasted)
 		for _ = 1, DailyEvents.bugHunt.count do
 			spawnBug(slot.index)
 		end
 	elseif id == "investors" then
-		table.clear(investorGranted)
 		investorCount = 0
 		spawnInvestor(slot.index)
 	elseif id == "cartridgeRush" then

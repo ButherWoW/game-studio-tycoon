@@ -804,6 +804,7 @@ return {
 	rebirth_next = "रीबर्थ के बाद: कमाई हमेशा के लिए ×{mult}",
 	rebirth_need_office = "ऑफ़िस में शिफ़्ट हो जाओ",
 	rebirth_need_cash = "पैसे: {price}",
+	rebirth_need_no_stocks = "पहले सारे शेयर बेचो (बाज़ार)",
 	rebirth_resets = "रीसेट होगा: पैसे ($100 बचेंगे), अपग्रेड, अनलॉक किए जॉनर और टॉपिक",
 	rebirth_keeps = "बचा रहेगा: बेस्ट स्कोर और रिलीज़ किए गेम",
 	rebirth_button = "फिर से शुरू करो",

@@ -803,6 +803,7 @@ return {
 	rebirth_next = "Nakon ponovnog rođenja: prihod ×{mult} zauvijek",
 	rebirth_need_office = "Preseli se u ured",
 	rebirth_need_cash = "Novac: {price}",
+	rebirth_need_no_stocks = "Prvo prodaj sve dionice (burza)",
 	rebirth_resets = "Poništava: novac (ostaje ti $100), nadogradnje, otključane žanrove i teme",
 	rebirth_keeps = "Ostaje: najbolja ocjena i izdane igre",
 	rebirth_button = "Kreni ispočetka",

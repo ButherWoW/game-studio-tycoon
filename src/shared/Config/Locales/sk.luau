@@ -804,6 +804,7 @@ return {
 	rebirth_next = "Po rebirthe príjem ×{mult} navždy",
 	rebirth_need_office = "Sťahovanie do kancelárie",
 	rebirth_need_cash = "Peniaze: {price}",
+	rebirth_need_no_stocks = "Najprv predaj všetky akcie (burza)",
 	rebirth_resets = "Resetuje sa: peniaze (zostane $100), vylepšenia, odomknuté žánre a témy",
 	rebirth_keeps = "Zostane: rekord a počet vydaných hier",
 	rebirth_button = "Začať odznova",

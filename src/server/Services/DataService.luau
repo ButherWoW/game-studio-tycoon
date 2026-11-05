@@ -328,6 +328,15 @@ function DataService.get(player: Player): Profile?
 	return profiles[player]
 end
 
+-- Сколько секунд игрока не было до этого входа (по lastLogout сохранения). Снимок при загрузке:
+-- любое сохранение (автосейв, награда при входе в onProfileLoaded) переписывает lastLogout текущим
+-- временем, и OfflineService / ComebackService, прочитав его позже, видели бы «уход» 0 секунд
+local awayAtLoad: { [Player]: number } = {}
+
+function DataService.awaySeconds(player: Player): number
+	return awayAtLoad[player] or 0
+end
+
 -- NaN и ±inf в cash ломают профиль навсегда (NaN < x всегда false — trySpend «списал» бы NaN,
 -- и сохранение запишет мусор). Любая сумма из формул/DataStore проходит эту проверку
 local function isFiniteAmount(amount: any): boolean
@@ -547,6 +556,7 @@ local function closeProfile(player: Player)
 	end
 	profiles[player] = nil
 	states[player] = nil
+	awayAtLoad[player] = nil
 end
 
 local function onPlayerAdded(player: Player)
@@ -694,6 +704,10 @@ local function onPlayerAdded(player: Player)
 			titles.restore = nil
 		end
 	end
+	local lastLogout = tonumber(profile.lastLogout)
+	awayAtLoad[player] = if lastLogout and lastLogout == lastLogout
+		then math.max(os.time() - lastLogout, 0)
+		else 0
 	profiles[player] = profile
 	states[player] = { persistent = persistent, closed = false }
 

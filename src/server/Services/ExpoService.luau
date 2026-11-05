@@ -49,6 +49,15 @@ local function noteWins(player: Player, wins: number)
 	end
 end
 
+-- Приз выставки — не заработок за игру: в задания «заработай» не идёт (RewardService, ленивый require)
+local function payPrize(player: Player, amount: number)
+	DataService.addCash(player, amount)
+	local module = script.Parent:FindFirstChild("RewardService")
+	if module and module:IsA("ModuleScript") then
+		pcall((require(module) :: any).noteNonEarned, player, amount)
+	end
+end
+
 local function updateWithRetry(key: string, transform: (any) -> any): (boolean, any)
 	local store = pendingStore
 	if not store then
@@ -167,7 +176,7 @@ local function claimPending(player: Player)
 		return
 	end
 	if player.Parent and DataService.get(player) then
-		DataService.addCash(player, amount)
+		payPrize(player, amount)
 		-- Копилка — призы побед офлайн: сколько призов, столько побед
 		noteWins(player, math.max(math.floor(amount / Expo.prize + 0.5), 1))
 		task.spawn(DataService.save, player)
@@ -270,7 +279,7 @@ local function finishRound(roundId: number, minParticipants: number)
 				task.spawn(claimRoundLater, winner.userId, roundId)
 			end
 		else
-			DataService.addCash(online, Expo.prize)
+			payPrize(online, Expo.prize)
 			noteWins(online, 1)
 			task.spawn(DataService.save, online)
 		end

@@ -68,9 +68,9 @@ local function onPlayerAdded(player: Player)
 		return
 	end
 	local data = profile :: any
-	-- Считаем сразу после загрузки: автосейв перезапишет lastLogout текущим временем.
-	-- lastLogout обновляется и при автосейве, так что «уход» точен до 60 с.
-	local away = os.time() - (tonumber(data.lastLogout) or os.time())
+	-- Снимок DataService при загрузке: сохранение при входе (награды в onProfileLoaded) уже могло
+	-- переписать lastLogout. lastLogout обновляется и при автосейве, так что «уход» точен до 60 с.
+	local away = DataService.awaySeconds(player)
 	-- Несобранный доход не копится сверх одного максимального ухода (Offline.maxSeconds)
 	-- Roblox Premium: +Social.premium.offlineBonus к офлайн-доходу
 	local premium = if player.MembershipType == Enum.MembershipType.Premium

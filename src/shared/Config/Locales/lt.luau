@@ -804,6 +804,7 @@ return {
 	rebirth_next = "Po atgimimo: pajamos ×{mult} visam laikui",
 	rebirth_need_office = "Persikelk į biurą",
 	rebirth_need_cash = "Pinigai: {price}",
+	rebirth_need_no_stocks = "Pirma parduok visas akcijas (birža)",
 	rebirth_resets = "Išsitrins: pinigai (liks $100), patobulinimai, atrakinti žanrai ir temos",
 	rebirth_keeps = "Liks: rekordas ir išleistų žaidimų skaičius",
 	rebirth_button = "Pradėti iš naujo",

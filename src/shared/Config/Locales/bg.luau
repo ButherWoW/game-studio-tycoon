@@ -804,6 +804,7 @@ return {
 	rebirth_next = "След прераждане: доход ×{mult} завинаги",
 	rebirth_need_office = "Премести се в офис",
 	rebirth_need_cash = "Пари: {price}",
+	rebirth_need_no_stocks = "Първо продай всички акции (борса)",
 	rebirth_resets = "Нулират се: парите (остават ти $100), подобренията, отключените жанрове и теми",
 	rebirth_keeps = "Остават: рекордът и броят издадени игри",
 	rebirth_button = "Започни отначало",
