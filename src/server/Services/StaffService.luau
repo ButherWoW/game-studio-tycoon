@@ -36,6 +36,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Employees = require(ReplicatedStorage.Shared.Config.Employees)
 local Skills = require(ReplicatedStorage.Shared.Config.Skills)
+local StaffAppearance = require(script.Parent.StaffAppearance)
 local Expenses = require(ReplicatedStorage.Shared.Config.Expenses)
 local Mood = require(ReplicatedStorage.Shared.Config.Mood)
 local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
@@ -69,7 +70,7 @@ export type PerkTotals = {
 
 local LOOK_LIMITS: { [string]: { min: number, max: number } } = {
 	shirt = { min = 0, max = #Skills.shirts },
-	skin = { min = 1, max = #Skills.skins },
+	skin = { min = 0, max = #Skills.skins }, -- 0 — свой цвет из Config/StaffLooks
 	hat = { min = 1, max = #Skills.hats },
 	item = { min = 1, max = #Skills.items },
 }
@@ -140,7 +141,7 @@ local function defaultInfo(employee: Employees.Employee): Info
 		skills = Skills.start(employee.specialization, employee.legendary),
 		perks = perks,
 		perkChangedAt = 0,
-		look = { shirt = 0, skin = 1, hat = 1, item = 1 },
+		look = { shirt = 0, skin = 0, hat = 1, item = 1 },
 	}
 end
 
@@ -889,13 +890,14 @@ local function buildNpc(employee: Employees.Employee, look: Look): Model?
 	local shirt = if look.shirt > 0
 		then Skills.shirts[look.shirt]
 		else Employees.shirtColors[employee.specialization or "all"]
-	local skin = Skills.skins[look.skin] or Skills.skins[1]
+	local skin = Skills.skins[look.skin] or StaffAppearance.bodyColor(employee.id) or Skills.skins[1]
+	local pants = StaffAppearance.pantsColor(employee.id) or PANTS
 	description.HeadColor = skin
 	description.LeftArmColor = skin
 	description.RightArmColor = skin
 	description.TorsoColor = shirt
-	description.LeftLegColor = PANTS
-	description.RightLegColor = PANTS
+	description.LeftLegColor = pants
+	description.RightLegColor = pants
 	local ok, result = pcall(function()
 		return Players:CreateHumanoidModelFromDescription(description, Enum.HumanoidRigType.R15)
 	end)
@@ -905,6 +907,8 @@ local function buildNpc(employee: Employees.Employee, look: Look): Model?
 	end
 	local model = result :: Model
 	model.Name = "Staff_" .. employee.id
+	-- Лицо, причёска и одежда Астры (V13); платный скин потом перекроет одежду
+	StaffAppearance.apply(model, employee.id, look.shirt > 0)
 	for _, part in model:GetDescendants() do
 		if part:IsA("BasePart") then
 			part.Anchored = true

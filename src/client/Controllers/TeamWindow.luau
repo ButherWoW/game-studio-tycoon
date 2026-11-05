@@ -10,6 +10,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local Employees = require(ReplicatedStorage.Shared.Config.Employees)
 local Skills = require(ReplicatedStorage.Shared.Config.Skills)
+local StaffLooks = require(ReplicatedStorage.Shared.Config.StaffLooks)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
@@ -436,17 +437,18 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 	Ui.label(frame, ClientState.t("team_look"), 24, Ui.titleFont).LayoutOrder = nextOrder()
 	local limits: { [string]: { min: number, max: number } } = {
 		shirt = { min = 0, max = #Skills.shirts },
-		skin = { min = 1, max = #Skills.skins },
+		skin = { min = 0, max = #Skills.skins }, -- 0 — свой цвет сотрудника (Config/StaffLooks)
 		hat = { min = 1, max = #Skills.hats },
 		item = { min = 1, max = #Skills.items },
 	}
+	local baseLook = StaffLooks.get(employee.id)
 	for _, field in LOOK_FIELDS do
 		local value = tonumber(employeeInfo.look[field]) or limits[field].min
 		local valueText: string
 		if field == "shirt" then
 			valueText = if value == 0 then ClientState.t("look_default") else tostring(value)
 		elseif field == "skin" then
-			valueText = tostring(value)
+			valueText = if value == 0 then "★" else tostring(value)
 		elseif field == "hat" then
 			valueText = ClientState.t("hat_" .. (Skills.hats[value] or "none"))
 		else
@@ -460,7 +462,7 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 			swatch.AnchorPoint = Vector2.new(1, 0)
 			swatch.Position = UDim2.new(1, -96, 0, 5)
 			swatch.BackgroundColor3 = if field == "skin"
-				then Skills.skins[value] or Skills.skins[1]
+				then Skills.skins[value] or (if baseLook then baseLook.body else Skills.skins[1])
 				elseif value > 0 then Skills.shirts[value]
 				else Employees.shirtColors[employee.specialization or "all"]
 			Ui.corner(swatch, 6)

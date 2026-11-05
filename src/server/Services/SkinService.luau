@@ -19,6 +19,7 @@ local SkinRemotes = require(Shared.SkinRemotes)
 local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService)
 local StaffService = require(script.Parent.StaffService)
+local StaffAppearance = require(script.Parent.StaffAppearance)
 
 local ACTION_COOLDOWN = 0.25 -- покупка не чаще
 local ASSIGN_COOLDOWN = 1 -- смена скина перестраивает NPC: не чаще раза в секунду
@@ -108,33 +109,6 @@ local function clothing(model: Model, shirtId: number, pantsId: number)
 	end
 end
 
--- Ручное крепление, если AddAccessory не сварил (модель ещё не в Workspace)
-local function weldByAttachment(model: Model, accessory: Accessory)
-	local handle = accessory:FindFirstChild("Handle")
-	if not handle or not handle:IsA("BasePart") or handle:FindFirstChild("AccessoryWeld") then
-		return
-	end
-	local own = handle:FindFirstChildOfClass("Attachment")
-	if not own then
-		return
-	end
-	for _, part in model:GetChildren() do
-		if not part:IsA("BasePart") then
-			continue
-		end
-		local target = part:FindFirstChild(own.Name)
-		if target and target:IsA("Attachment") then
-			handle.CFrame = target.WorldCFrame * own.CFrame:Inverse()
-			local weld = Instance.new("WeldConstraint")
-			weld.Name = "AccessoryWeld"
-			weld.Part0 = handle
-			weld.Part1 = part
-			weld.Parent = handle
-			return
-		end
-	end
-end
-
 -- Аксессуары скина из ServerStorage.Skins: модель с Accessory внутри (как сдала Астра)
 local function accessories(model: Model, humanoid: Humanoid, skin: Skins.Skin)
 	local folder = ServerStorage:FindFirstChild(Skins.folder)
@@ -146,14 +120,7 @@ local function accessories(model: Model, humanoid: Humanoid, skin: Skins.Skin)
 	local list = if source:IsA("Accessory") then { source } else source:GetChildren()
 	for _, child in list do
 		if child:IsA("Accessory") then
-			local clone = child:Clone()
-			local ok = pcall(function()
-				humanoid:AddAccessory(clone)
-			end)
-			if not ok then
-				clone.Parent = model
-			end
-			weldByAttachment(model, clone)
+			StaffAppearance.addAccessory(model, humanoid, child)
 		end
 	end
 end
