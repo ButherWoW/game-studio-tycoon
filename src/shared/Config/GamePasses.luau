@@ -28,7 +28,7 @@ local list: { GamePass } = {
 		description = "Вдвое больше дохода с каждого релиза",
 		descriptionEn = "Double revenue from every release",
 		icon = "💰",
-		gamePassId = Universe.pick({ test = 2071008855, main = 0 }),
+		gamePassId = Universe.pick({ test = 2071008855, main = 2070540998 }),
 		robuxPrice = 299, -- главный, ставим первым
 	},
 	{
@@ -38,7 +38,7 @@ local list: { GamePass } = {
 		description = "Новая игра стартует сама после релиза",
 		descriptionEn = "The next game starts by itself after a release",
 		icon = "🔁",
-		gamePassId = Universe.pick({ test = 2072480376, main = 0 }),
+		gamePassId = Universe.pick({ test = 2072480376, main = 2071816553 }),
 		robuxPrice = 149,
 	},
 	{
@@ -48,7 +48,7 @@ local list: { GamePass } = {
 		description = "Игры делаются на 25% быстрее",
 		descriptionEn = "Games are made 25% faster",
 		icon = "⚡",
-		gamePassId = Universe.pick({ test = 2067092439, main = 0 }),
+		gamePassId = Universe.pick({ test = 2067092439, main = 2070314173 }),
 		robuxPrice = 199,
 	},
 	{
@@ -58,7 +58,7 @@ local list: { GamePass } = {
 		description = "Две игры в разработке одновременно",
 		descriptionEn = "Develop two games at once",
 		icon = "➕",
-		gamePassId = Universe.pick({ test = 2068496428, main = 0 }),
+		gamePassId = Universe.pick({ test = 2068496428, main = 2072234478 }),
 		robuxPrice = 249,
 	},
 	{
@@ -68,7 +68,7 @@ local list: { GamePass } = {
 		description = "Свой декор и золотая табличка",
 		descriptionEn = "Exclusive decor and a golden sign",
 		icon = "👑",
-		gamePassId = Universe.pick({ test = 2070720897, main = 0 }),
+		gamePassId = Universe.pick({ test = 2070720897, main = 2071640568 }),
 		robuxPrice = 99, -- дешёвый, «первая покупка»
 	},
 	{
@@ -78,7 +78,7 @@ local list: { GamePass } = {
 		description = "Легендарный сотрудник в команду",
 		descriptionEn = "A legendary employee joins your team",
 		icon = "🧙",
-		gamePassId = Universe.pick({ test = 2070314109, main = 0 }),
+		gamePassId = Universe.pick({ test = 2070314109, main = 2068652542 }),
 		robuxPrice = 399,
 	},
 }

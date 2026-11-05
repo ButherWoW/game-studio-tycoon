@@ -56,7 +56,7 @@ FurnitureStyles.list = {
 		suffix = "_Neon",
 		emoji = "💜",
 		color = Color3.fromHex("7C4DFF"),
-		productId = Universe.pick({ test = 3728447945, main = 0 }), -- Dev 1 впишет ID из Creator Dashboard
+		productId = Universe.pick({ test = 3728447945, main = 3728498090 }), -- Dev 1 впишет ID из Creator Dashboard
 		robuxPrice = 149,
 	},
 } :: { Style }
