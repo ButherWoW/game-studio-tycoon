@@ -9,13 +9,14 @@ local NAMES = {
 	"FireEmployee", -- клиент -> сервер: employeeId (уволить, вернуть Employees.fireRefund цены)
 	"StrikeTipSeen", -- клиент -> сервер: без аргументов, подсказку о забастовке закрыли
 	"MoveStudio", -- клиент -> сервер: без аргументов, переезд на следующий этап
-	"StaffChanged", -- сервер -> клиент: { [employeeId]: deskUpgradeId ("" — ждёт стол) }, { info, mentoring, unlocked, now, raises }
+	"StaffChanged", -- сервер -> клиент: { [employeeId]: deskUpgradeId ("" — ждёт стол) }, { info, mentoring, training, trainingCredits, unlocked, now, raises }
 	"UpgradeSkill", -- клиент -> сервер: employeeId, skillKey
 	"SetPerk", -- клиент -> сервер: employeeId, slot, perkId
 	"SetLook", -- клиент -> сервер: employeeId, field ("shirt" | "skin" | "hat" | "item"), index
 	"SetMentor", -- клиент -> сервер: mentorId, menteeId ("" — закончить наставничество)
+	"SkipTraining", -- клиент -> сервер: employeeId — доучить жетоном или запомнить для чека skillSkip
 	"StaffPower", -- сервер -> клиент: мощность команды (StaffService.power): speed, quality, review, breaks, losses
-	"StaffFeel", -- сервер -> клиент: { kind = "hire" | "arrive" | "skill" | "fire", employeeId, before, after, ... }
+	"StaffFeel", -- сервер -> клиент: { kind = "hire" | "arrive" | "skill" | "fire", employeeId, before, after, trained?, ... }
 }
 
 local folder: Folder

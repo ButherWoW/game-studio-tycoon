@@ -30,9 +30,17 @@
 -- уровень ≥ minMentorLevel, ученик — уровень ниже наставника; один ученик на наставника, у ученика
 -- один наставник, наставник сам не учится. Ученику «+1» к навыку дешевле (×menteeSkillGain опыта),
 -- стол наставника даёт mentorSpeed очков. Старт/стоп — SetMentor(mentorId, menteeId | "").
+-- Обучение навыку (Config/Training): «+1» оплачивается сразу, уровень растёт по таймеру.
+--   (profile :: any).training = { [employeeId]: { key, from, startAt, endAt } } — os.time(), идёт и
+--   офлайн; один навык на сотрудника. (profile :: any).trainingCredits — жетоны «Доучить» (покупка
+--   за Robux пришла, когда учить было некого). Клиенту — в StaffChanged (training, trainingCredits)
+--   и атрибутами NPC TrainingSkill/TrainingStart/TrainingEnd/TrainingTo + тег StaffTraining
+--   (полоска над головой рисуется на клиенте, без трафика каждый кадр). Конец — StaffFeel «skill»
+--   с trained = true. Учащийся работает медленнее (Training.workSpeed).
 -- Подсказка о забастовке: (profile :: any).strikeTipSeen = true, когда игрок её закрыл;
 -- клиенту — атрибут игрока StrikeTipSeen (false — ещё не видел; nil — профиль не загружен).
 
+local CollectionService = game:GetService("CollectionService")
 local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -41,6 +49,7 @@ local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Employees = require(ReplicatedStorage.Shared.Config.Employees)
 local Skills = require(ReplicatedStorage.Shared.Config.Skills)
 local Mentoring = require(ReplicatedStorage.Shared.Config.Mentoring)
+local Training = require(ReplicatedStorage.Shared.Config.Training)
 local StaffAppearance = require(script.Parent.StaffAppearance)
 local Expenses = require(ReplicatedStorage.Shared.Config.Expenses)
 local Mood = require(ReplicatedStorage.Shared.Config.Mood)
@@ -66,6 +75,7 @@ export type Info = {
 	perkChangedAt: number,
 	look: Look,
 }
+export type TrainingEntry = { key: string, from: number, startAt: number, endAt: number }
 export type PerkTotals = {
 	devTime: number, -- множитель времени разработки: 0.9 = на 10% быстрее
 	bugAlwaysWins: boolean,
@@ -88,6 +98,10 @@ local breaks: { [Player]: { [string]: boolean } } = {}
 local pendingArrive: { [Player]: { [string]: boolean } } = {}
 local refreshGeneration: { [Player]: number } = {}
 local lastAction: { [Player]: number } = {}
+-- «Доучить сейчас» за Robux: кого выбрал игрок перед покупкой (чек не знает сотрудника)
+local skipTarget: { [Player]: string } = {}
+local TRAINING_TAG = "StaffTraining" -- тег NPC, который сейчас учится (клиент: StaffTraining)
+local TRAINING_TICK = 1 -- раз в столько секунд проверяем, кто доучился
 
 local function optionalService(name: string): any
 	local module = script.Parent:FindFirstChild(name)
@@ -282,6 +296,46 @@ local function isMentee(mentorPairs: { [string]: string }, employeeId: string): 
 		end
 	end
 	return false
+end
+
+local function finiteNumber(value: any): boolean
+	return type(value) == "number" and value == value and value > -math.huge and value < math.huge
+end
+
+-- Идущие обучения; из сохранения берём только то, что сходится: сотрудник нанят, навык ещё на
+-- уровне from (Rebirth/увольнение — запись пропадает, деньги за неё не возвращаются)
+local function getTraining(
+	profile: DataService.Profile,
+	info: { [string]: Info }
+): { [string]: TrainingEntry }
+	local raw = (profile :: any).training
+	if type(raw) ~= "table" then
+		raw = {};
+		(profile :: any).training = raw
+	end
+	for employeeId, entry in raw do
+		local employeeInfo = if type(employeeId) == "string" then info[employeeId] else nil
+		local valid = employeeInfo ~= nil
+			and type(entry) == "table"
+			and Skills.isKey(entry.key)
+			and isInteger(entry.from, 0, Skills.maxLevel - 1)
+			and finiteNumber(entry.startAt)
+			and finiteNumber(entry.endAt)
+			and entry.endAt >= entry.startAt
+		if not valid or (employeeInfo :: Info).skills[entry.key] ~= entry.from then
+			raw[employeeId] = nil
+		end
+	end
+	return raw
+end
+
+local function trainingCredits(profile: DataService.Profile): number
+	local value = (profile :: any).trainingCredits
+	return if isInteger(value, 0, Training.maxCredits) then value else 0
+end
+
+local function setTrainingCredits(profile: DataService.Profile, value: number)
+	(profile :: any).trainingCredits = math.clamp(math.floor(value), 0, Training.maxCredits)
 end
 
 -- Открыт ли легендарный: награда квеста (RewardService кладёт в profile.rewards.employees)
@@ -514,11 +568,14 @@ function StaffService.deskMultipliers(player: Player, deskId: string): { [string
 	local skills = if atDesk and info[atDesk] then info[atDesk].skills else nil
 	-- Наставник учит ученика — его стол работает медленнее (Config/Mentoring.mentorSpeed)
 	local teaching = if atDesk and getMentoring(profile, info)[atDesk] then Mentoring.mentorSpeed else 1
+	-- Учится навыку — тоже медленнее (Config/Training.workSpeed)
+	local studying = if atDesk and getTraining(profile, info)[atDesk] then Training.workSpeed else 1
 	for _, key in Skills.keys do
 		local level = if skills then skills[key] or 0 else 0
 		result[key] = (1 + Skills.bonusPerLevel * level)
 			* (1 + math.min(mentor, Skills.caps.mentorBonus))
 			* teaching
+			* studying
 	end
 	return result
 end
@@ -643,6 +700,7 @@ local function powerOf(
 	end
 	local mentorMult = 1 + math.min(mentor, Skills.caps.mentorBonus)
 	local teachers = getMentoring(profile, info)
+	local studying = getTraining(profile, info)
 	local base, team = 0, 0
 	for _, upgrade in Upgrades do
 		local points = upgrade.pointsPerSecond
@@ -657,6 +715,9 @@ local function powerOf(
 				average += (1 + Skills.bonusPerLevel * level) / #Skills.keys
 			end
 			local teaching = if employeeId and teachers[employeeId] then Mentoring.mentorSpeed else 1
+			if employeeId and studying[employeeId] then
+				teaching *= Training.workSpeed
+			end
 			team += points * (if employee then employee.multiplier else 1) * average * mentorMult * teaching
 		end
 	end
@@ -794,6 +855,9 @@ local function sendStaff(player: Player)
 	StaffRemotes.StaffChanged:FireClient(player, staff, {
 		info = info,
 		mentoring = getMentoring(profile, info),
+		-- Обучение навыку (Config/Training): employeeId -> { key, from, startAt, endAt } по os.time()
+		training = getTraining(profile, info),
+		trainingCredits = trainingCredits(profile),
 		unlocked = unlocked,
 		now = os.time(),
 		raises = raises,
@@ -803,6 +867,22 @@ local function sendStaff(player: Player)
 end
 
 -- ===== NPC =====
+
+-- Атрибуты обучения на NPC: клиент (StaffTraining) рисует полоску и искры сам по времени
+local function markNpc(npc: Instance?, entry: TrainingEntry?)
+	if not npc then
+		return
+	end
+	npc:SetAttribute("TrainingSkill", if entry then entry.key else nil)
+	npc:SetAttribute("TrainingStart", if entry then entry.startAt else nil)
+	npc:SetAttribute("TrainingEnd", if entry then entry.endAt else nil)
+	npc:SetAttribute("TrainingTo", if entry then entry.from + 1 else nil)
+	if entry then
+		CollectionService:AddTag(npc, TRAINING_TAG)
+	else
+		CollectionService:RemoveTag(npc, TRAINING_TAG)
+	end
+end
 
 local function attach(model: Model, size: Vector3, cframe: CFrame, color: Color3, shape: Enum.PartType?): Part
 	local p = Instance.new("Part")
@@ -1188,6 +1268,7 @@ rebuildNpcs = function(player: Player)
 	folder.Name = "Staff"
 
 	local info = getInfo(profile)
+	local studying = getTraining(profile, info)
 	local skins = optionalService("SkinService")
 	local byDesk: { [string]: string } = {}
 	for employeeId, deskId in seated(profile) do
@@ -1212,6 +1293,7 @@ rebuildNpcs = function(player: Player)
 			end
 			if npc then
 				npc:SetAttribute("EmployeeId", employeeId)
+				markNpc(npc, studying[employeeId])
 				seatNpc(npc, plot, upgrade, used)
 				local item = Skills.items[look.item] or "none"
 				if item ~= "none" then
@@ -1405,8 +1487,12 @@ local function fireEmployee(player: Player, employeeId: string, withRefund: bool
 		pendingArrive[player][employee.id] = nil
 	end
 	staff[employee.id] = nil
-	-- getInfo чистит staffInfo уволенных: при повторном найме навыки начнутся с нуля
-	getInfo(profile)
+	-- getInfo чистит staffInfo уволенных: при повторном найме навыки начнутся с нуля.
+	-- Обучение уволенного отменяется без возврата (getTraining)
+	getTraining(profile, getInfo(profile))
+	if skipTarget[player] == employee.id then
+		skipTarget[player] = nil
+	end
 	local skins = optionalService("SkinService")
 	if skins then
 		skins.forget(player, profile, employee.id)
@@ -1460,11 +1546,13 @@ function StaffService.grantFreeSkill(player: Player): { employeeId: string, key:
 		return nil
 	end
 	local info = getInfo(profile)
+	local studying = getTraining(profile, info)
 	local options: { { employeeId: string, key: string } } = {}
 	for employeeId in getStaff(profile) do
 		local employee = Employees.get(employeeId)
 		local employeeInfo = info[employeeId]
-		if employee and employeeInfo then
+		-- Кто сейчас учится, тому подарок не даём: иначе оплаченный уровень пропал бы
+		if employee and employeeInfo and not studying[employeeId] then
 			local spec = employee.specialization
 			if spec and (employeeInfo.skills[spec] or 0) < Skills.maxLevel then
 				table.insert(options, { employeeId = employeeId, key = spec })
@@ -1525,7 +1613,132 @@ local function onStrikeTipSeen(player: Player)
 	player:SetAttribute("StrikeTipSeen", true)
 end
 
--- «+1» к навыку за деньги
+-- ===== Обучение навыку (Config/Training) =====
+
+-- Доучился: +1 уровень (зарплата и перки — от уровня сами), StaffFeel «skill» с trained = true
+local function finishTraining(player: Player, employeeId: string): boolean
+	local profile = DataService.get(player)
+	if not profile then
+		return false
+	end
+	local info = getInfo(profile)
+	local studying = getTraining(profile, info)
+	local entry = studying[employeeId]
+	local employeeInfo = info[employeeId]
+	if not entry or not employeeInfo then
+		return false
+	end
+	local before = StaffService.power(player)
+	local level = employeeInfo.skills[entry.key] or 0
+	studying[employeeId] = nil
+	employeeInfo.skills[entry.key] = math.min(level + 1, Skills.maxLevel)
+	local folder = npcFolders[player]
+	local npc = folder and folder:FindFirstChild("Staff_" .. employeeId)
+	markNpc(npc, nil)
+	sendStaff(player)
+	sendPower(player)
+	StaffRemotes.StaffFeel:FireClient(player, {
+		kind = "skill",
+		trained = true,
+		employeeId = employeeId,
+		key = entry.key,
+		from = level,
+		to = employeeInfo.skills[entry.key],
+		before = before,
+		after = StaffService.power(player),
+		npc = npc,
+	})
+	return true
+end
+
+-- Раз в секунду: кто доучился (и после входа — кто доучился офлайн)
+local function trainingTick()
+	local now = os.time()
+	for _, player in Players:GetPlayers() do
+		local profile = DataService.get(player)
+		local raw = profile and (profile :: any).training
+		if type(raw) == "table" and next(raw) ~= nil then
+			local due: { string } = {}
+			for employeeId, entry in raw do
+				if type(entry) == "table" and type(entry.endAt) == "number" and entry.endAt <= now then
+					table.insert(due, employeeId)
+				end
+			end
+			for _, employeeId in due do
+				local ok, err = pcall(finishTraining, player, employeeId)
+				if not ok then
+					warn("[StaffService] training finish failed:", err)
+				end
+			end
+		end
+	end
+end
+
+-- Доучить всех, кто учится. Возвращает, скольких
+local function finishAll(player: Player): number
+	local profile = DataService.get(player)
+	if not profile then
+		return 0
+	end
+	local ids: { string } = {}
+	for employeeId in getTraining(profile, getInfo(profile)) do
+		table.insert(ids, employeeId)
+	end
+	local count = 0
+	for _, employeeId in ids do
+		if finishTraining(player, employeeId) then
+			count += 1
+		end
+	end
+	return count
+end
+
+-- Клиент: «Доучить» сотрудника. Есть жетон — тратим его; нет — запоминаем, кого доучить, когда
+-- придёт чек skillSkip (покупку клиент запускает сам)
+local function onSkipTraining(player: Player, employeeId: any)
+	if type(employeeId) ~= "string" or throttled(player) then
+		return
+	end
+	local profile = DataService.get(player)
+	if not profile or getTraining(profile, getInfo(profile))[employeeId] == nil then
+		return
+	end
+	local credits = trainingCredits(profile)
+	if credits > 0 then
+		setTrainingCredits(profile, credits - 1)
+		finishTraining(player, employeeId)
+	else
+		skipTarget[player] = employeeId
+	end
+end
+
+-- Чек за «Доучить сейчас» / «Доучить всех» (MonetizationService.processReceipt).
+-- Учить некого (успел доучиться сам, уволен) — покупка становится жетоном: Robux не пропадают
+function StaffService.grantProduct(player: Player, profile: DataService.Profile, productId: number): boolean
+	if productId == 0 then
+		return false
+	end
+	if productId == Training.products.skillSkip.productId then
+		local studying = getTraining(profile, getInfo(profile))
+		local target = skipTarget[player]
+		skipTarget[player] = nil
+		if target and studying[target] and finishTraining(player, target) then
+			return true
+		end
+		setTrainingCredits(profile, trainingCredits(profile) + 1)
+		sendStaff(player)
+		return true
+	elseif productId == Training.products.skillSkipAll.productId then
+		if finishAll(player) == 0 then
+			setTrainingCredits(profile, trainingCredits(profile) + Training.skipAllCredits)
+			sendStaff(player)
+		end
+		return true
+	end
+	return false
+end
+
+-- «+1» к навыку за деньги: оплата сразу, уровень — когда закончится обучение
 local function onUpgradeSkill(player: Player, employeeId: any, key: any)
 	if type(employeeId) ~= "string" or not Skills.isKey(key) or throttled(player) then
 		return
@@ -1541,26 +1754,28 @@ local function onUpgradeSkill(player: Player, employeeId: any, key: any)
 	if level >= Skills.maxLevel then
 		return
 	end
-	-- Ученик наставника: «+1» дешевле (Config/Mentoring.menteeSkillGain)
+	-- Один навык за раз: пока учится, «+1» не продаём
+	local studying = getTraining(profile, allInfo)
+	if studying[employeeId] then
+		return
+	end
+	-- Ученик наставника: «+1» дешевле (Config/Mentoring.menteeSkillGain) и учится быстрее
 	local mentored = isMentee(getMentoring(profile, allInfo), employeeId)
 	local cost = Mentoring.skillCost(Skills.skillCost(employee.stage, employee.legendary, level), mentored)
 	if DataService.trySpend(player, cost) then
-		local before = StaffService.power(player)
-		info.skills[key] = level + 1
-		sendStaff(player)
-		sendPower(player)
-		-- «Было → стало» и эффект над NPC (клиент: «+1 🎨», вспышка)
-		local folder = npcFolders[player]
-		StaffRemotes.StaffFeel:FireClient(player, {
-			kind = "skill",
-			employeeId = employeeId,
-			key = key,
+		local now = os.time()
+		local entry: TrainingEntry = {
+			key = key :: string,
 			from = level,
-			to = level + 1,
-			before = before,
-			after = StaffService.power(player),
-			npc = folder and folder:FindFirstChild("Staff_" .. employeeId),
-		})
+			startAt = now,
+			endAt = now + Training.duration(employee.stage, employee.legendary, level + 1, mentored),
+		}
+		studying[employeeId] = entry
+		local folder = npcFolders[player]
+		markNpc(folder and folder:FindFirstChild("Staff_" .. employeeId), entry)
+		sendStaff(player)
+		-- Стол учащегося работает медленнее: мощность команды поменялась
+		sendPower(player)
 	end
 end
 
@@ -1677,6 +1892,13 @@ function StaffService.start()
 	StaffRemotes.SetPerk.OnServerEvent:Connect(onSetPerk)
 	StaffRemotes.SetLook.OnServerEvent:Connect(onSetLook)
 	StaffRemotes.SetMentor.OnServerEvent:Connect(onSetMentor)
+	StaffRemotes.SkipTraining.OnServerEvent:Connect(onSkipTraining)
+	task.spawn(function()
+		while true do
+			task.wait(TRAINING_TICK)
+			trainingTick()
+		end
+	end)
 	PlotService.plotChanged:Connect(onTeamChanged)
 	-- Купили «Мастера Пикселя»: ShopService перепроверяет покупку асинхронно — перешлём чуть позже
 	MarketplaceService.PromptGamePassPurchaseFinished:Connect(
@@ -1722,6 +1944,7 @@ function StaffService.start()
 		refreshGeneration[player] = nil
 		lastAction[player] = nil
 		lastLook[player] = nil
+		skipTarget[player] = nil
 	end)
 end
 

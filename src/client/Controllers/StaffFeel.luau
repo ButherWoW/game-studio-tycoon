@@ -1,7 +1,8 @@
 --!strict
 -- Ощущение команды (StaffRemotes.StaffFeel): найм, прокачка навыка и увольнение заметны.
 -- Тост «было → стало» (скорость, оценка по направлениям, возврат, настроение) и эффекты над NPC
--- у владельца: новичку — конфетти и «Привет, команда!», навыку — вспышка и «+1 🎨» вверх.
+-- у владельца: новичку — конфетти и «Привет, команда!», навыку — вспышка и «+1 🎨» вверх
+-- (и когда доучился навыку — StaffTraining/Config/Training, event.trained).
 -- Уход уволенного с коробкой — на сервере (StaffLife), его видят все. Эффекты живут 1–3 с.
 
 local Players = game:GetService("Players")
@@ -317,16 +318,15 @@ local function onFeel(event: any)
 		local key = event.key :: string
 		local from = if type(event.from) == "number" then event.from else 0
 		local to = if type(event.to) == "number" then event.to else from + 1
-		toast(
-			ClientState.t("staff_feel_skill", {
-				name = name,
-				skill = StaffPower.icons[key] .. " " .. ClientState.t("focus_" .. key),
-				from = from,
-				to = to,
-			}),
-			changeLines(before, after, key),
-			Ui.colors.money
-		)
+		local skillName = StaffPower.icons[key] .. " " .. ClientState.t("focus_" .. key)
+		-- Доучился (Config/Training): «🎓 Мила: 🎨 Графика — выучено до 3!»
+		local title = if event.trained == true
+			then ClientState.t("train_done", { name = name, skill = skillName, level = to })
+			else ClientState.t(
+				"staff_feel_skill",
+				{ name = name, skill = skillName, from = from, to = to }
+			)
+		toast(title, changeLines(before, after, key), Ui.colors.money)
 		SoundController.play("unlock")
 		if npc then
 			glow(npc, Ui.colors.money)
