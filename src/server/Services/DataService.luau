@@ -31,6 +31,8 @@ export type Profile = {
 	genreGames: { [string]: number },
 	hitsReleased: number,
 	strikeTipSeen: boolean?, -- закрыл подсказку о первой забастовке (StaffService)
+	-- Наставничество (StaffService, Config/Mentoring): mentorId -> menteeId; пары проверяет StaffService
+	mentoring: { [string]: string },
 	activeAd: { bonus: number, expiresAt: number }?,
 	-- Купленные за Robux разовые эффекты (ShopService): заряды и конец действия кофе
 	boosts: { instantFinish: number, patch: number, coffeeUntil: number },
@@ -122,6 +124,7 @@ local function defaultProfile(): Profile
 		genreGames = {},
 		hitsReleased = 0,
 		strikeTipSeen = false,
+		mentoring = {},
 		activeAd = nil,
 		boosts = { instantFinish = 0, patch = 0, coffeeUntil = 0 },
 		posters = { owned = {}, equipped = {} },
@@ -460,6 +463,22 @@ local function onPlayerAdded(player: Player)
 		if type(profile.genreGames) ~= "table" then
 			profile.genreGames = {}
 		end
+		-- Наставничество: только строки ≤ 64 символов; остальное (уволенные, младше/старше) чистит
+		-- StaffService.getMentoring по правилам Config/Mentoring
+		local mentoring: { [string]: string } = {}
+		if type(profile.mentoring) == "table" then
+			for mentorId, menteeId in profile.mentoring :: any do
+				if
+					type(mentorId) == "string"
+					and type(menteeId) == "string"
+					and #mentorId <= 64
+					and #menteeId <= 64
+				then
+					mentoring[mentorId] = menteeId
+				end
+			end
+		end
+		profile.mentoring = mentoring
 		-- Старые сохранения без счётчика хитов: считаем свои картриджи на полке
 		if type(profile.hitsReleased) ~= "number" then
 			local own = 0
