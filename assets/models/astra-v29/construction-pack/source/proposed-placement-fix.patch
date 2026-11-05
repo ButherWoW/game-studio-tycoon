@@ -1,0 +1,126 @@
+--- a/src/server/Services/ConstructionService.luau
++++ b/src/server/Services/ConstructionService.luau
+@@ -180,8 +180,8 @@
+ -- Сторона площадки: центр на расстоянии distance от центра участка, LookVector — к зданию,
+ -- локальная X — вдоль стороны. Левая и правая — от задней стены до SIDE_FRONT, задняя — во всю ширину
+ type Side = { cframe: CFrame, length: number }
+-local function sides(plot: BasePart, distance: number): { Side }
+-	local zMin, zMax = -distance, SIDE_FRONT
++local function sides(plot: BasePart, distance: number, rearInset: number?): { Side }
++	local zMin, zMax = -distance + (rearInset or 0), SIDE_FRONT
+ 	local sideLength = zMax - zMin
+ 	local zMid = (zMin + zMax) / 2
+ 	local result: { Side } = {}
+@@ -210,7 +210,8 @@
+ 	local half = plot.Size.X / 2
+ 	local source = template("Construction_Scaffold")
+ 	local center = half + SCAFFOLD_IN + SCAFFOLD_DEPTH / 2
+-	for _, side in sides(plot, center) do
++	local rearInset = if source then source:GetExtentsSize().Z / 2 + 0.1 else 0
++	for _, side in sides(plot, center, rearInset) do
+ 		if source then
+ 			-- Секции Астры: ширина и высота — по самой модели, лицевая сторона (−Z) к зданию
+ 			local size = source:GetExtentsSize()
+@@ -268,17 +269,14 @@
+ 	local model = Instance.new("Model")
+ 	model.Name = "Fence"
+ 	local source = template("Construction_Fence")
+-	for _, side in sides(plot, plot.Size.X / 2 + FENCE) do
++	local rearInset = if source then source:GetExtentsSize().Z / 2 + 0.05 else 0
++	for _, side in sides(plot, plot.Size.X / 2 + FENCE, rearInset) do
+ 		if source then
+ 			local size = source:GetExtentsSize()
+ 			local count = math.max(1, math.floor(side.length / math.max(size.X, 1) + 0.5))
+ 			local width = side.length / count
+ 			for i = 1, count do
+-				placeTemplate(
+-					source,
+-					model,
+-					side.cframe * CFrame.new(-side.length / 2 + (i - 0.5) * width, 0, 0)
+-				)
++				placeTemplate(source, model, side.cframe * CFrame.new(-side.length / 2 + (i - 0.5) * width, 0, 0))
+ 			end
+ 		else
+ 			local panel = part(
+@@ -316,14 +314,7 @@
+ 	model.Name = "Crane"
+ 	local height = buildingTop(plot, stage) + CRANE_OVER
+ 	local reach = corner * math.sqrt(2) - 8
+-	part(
+-		model,
+-		"Base",
+-		Vector3.new(6, 1, 6),
+-		frame * CFrame.new(0, 0.5, 0),
+-		COLOR_DARK,
+-		Enum.Material.Concrete
+-	)
++	part(model, "Base", Vector3.new(6, 1, 6), frame * CFrame.new(0, 0.5, 0), COLOR_DARK, Enum.Material.Concrete)
+ 	part(
+ 		model,
+ 		"Mast",
+@@ -413,8 +404,7 @@
+ 		emitter.Speed = NumberRange.new(0.8, 1.6)
+ 		emitter.SpreadAngle = Vector2.new(60, 60)
+ 		emitter.Color = ColorSequence.new(Color3.fromRGB(205, 190, 165))
+-		emitter.Size =
+-			NumberSequence.new({ NumberSequenceKeypoint.new(0, 1.2), NumberSequenceKeypoint.new(1, 3) })
++		emitter.Size = NumberSequence.new({ NumberSequenceKeypoint.new(0, 1.2), NumberSequenceKeypoint.new(1, 3) })
+ 		emitter.Transparency =
+ 			NumberSequence.new({ NumberSequenceKeypoint.new(0, 0.55), NumberSequenceKeypoint.new(1, 1) })
+ 		emitter.LightInfluence = 1
+@@ -787,34 +777,20 @@
+ end
+ 
+ -- Пройти по дорожке к sTo; лимит идущих NPC исчерпан — остаёмся и работаем на месте
+-local function goTo(
+-	player: Player,
+-	site: Site,
+-	builder: Builder,
+-	sTo: number,
+-	work: string,
+-	onArrive: () -> ()
+-)
++local function goTo(player: Player, site: Site, builder: Builder, sTo: number, work: string, onArrive: () -> ())
+ 	if walkingBuilders() >= MAX_WALKING_BUILDERS then
+ 		hammer(builder)
+ 		return
+ 	end
+ 	local path = lanePath(site.plot, builder.s, sTo)
+ 	setWork(builder, work)
+-	local started = StaffLife.walkTo(
+-		player,
+-		builder.model,
+-		site.plot,
+-		path,
+-		Construction.walkSpeed,
+-		function()
+-			builder.walking = false
+-			builder.s = sTo
+-			local point, face = lanePoint(site.plot, sTo)
+-			standAt(builder.model, site.plot, point, face)
+-			onArrive()
+-		end
+-	)
++	local started = StaffLife.walkTo(player, builder.model, site.plot, path, Construction.walkSpeed, function()
++		builder.walking = false
++		builder.s = sTo
++		local point, face = lanePoint(site.plot, sTo)
++		standAt(builder.model, site.plot, point, face)
++		onArrive()
++	end)
+ 	if started then
+ 		builder.walking = true
+ 	else
+@@ -994,11 +970,7 @@
+ 
+ -- Developer Product «Ускорить стройку» (MonetizationService, после проверки квитанции).
+ -- Стройки уже нет (закончилась, пока шла покупка) — Robux не пропадают: доход за N минут
+-function ConstructionService.grantProduct(
+-	player: Player,
+-	profile: DataService.Profile,
+-	productId: number
+-): boolean
++function ConstructionService.grantProduct(player: Player, profile: DataService.Profile, productId: number): boolean
+ 	local speedup = Construction.speedupByProduct(productId)
+ 	if not speedup then
+ 		return false

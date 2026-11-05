@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "studioTested": false,
+  "rig": {
+    "parts": 19,
+    "bodyPartsIncludingHRP": 16,
+    "motor6D": 15,
+    "connectedBodyGraph": true,
+    "jointBindFramesCoincide": true,
+    "rootPivotXYZ": [
+      0,
+      3,
+      0
+    ],
+    "footBaseY": 0,
+    "HipHeight": 2,
+    "StandHeight": 3,
+    "visiblePartPairs": 153,
+    "positiveVolumeIntersections": [],
+    "rootVolumeExcluded": "HumanoidRootPart is an intentionally overlapping invisible animation root"
+  },
+  "hat": {
+    "name": "BuilderHat",
+    "parts": 3,
+    "attachment": "HatAttachment",
+    "noPositiveVolumeIntersections": true
+  },
+  "clothing": {
+    "shirt": {
+      "size": [
+        585,
+        559
+      ],
+      "exact18UVMask": true,
+      "sha256": "6bd1259978ae515e7bbfea3235b6c7fc1ba85dc78e7db3db3acecccad81e728b"
+    },
+    "pants": {
+      "size": [
+        585,
+        559
+      ],
+      "exact18UVMask": true,
+      "sha256": "e6f516f95de7a4d1bba58eb77a91f978de85532fad03b2ae6bdcd21cd88ac015"
+    }
+  },
+  "templateTextureIDsPending": true,
+  "preview": "Actual generated UV panels and same accessory geometry on canonical block rig"
+}

@@ -1,0 +1,467 @@
+{
+  "serviceSHA256": "5a95f9ef9a87c0eba05d6bd2e1b02a4e648e356f3fded1bbd57c3d2eedd89c69",
+  "plot": [
+    60,
+    60
+  ],
+  "floorTopHeightsForPlotThickness1": [
+    15,
+    29,
+    43
+  ],
+  "tierHeight": 15,
+  "method": "Independent XML parser, actual native parts, CFrame.lookAt side rotations, AABB broad phase +15axisOBB SAT; touching accepted",
+  "actualServiceScaffold": {
+    "rows": [
+      {
+        "side": "left",
+        "length": 43.9,
+        "countPerTier": 4,
+        "step": 10.975,
+        "modelWidth": 10.5
+      },
+      {
+        "side": "right",
+        "length": 43.9,
+        "countPerTier": 4,
+        "step": 10.975,
+        "modelWidth": 10.5
+      },
+      {
+        "side": "rear",
+        "length": 63.8,
+        "countPerTier": 6,
+        "step": 10.633333333333333,
+        "modelWidth": 10.5
+      }
+    ],
+    "status": "FAIL",
+    "instances": 42,
+    "parts": 504,
+    "sameSideNeighborPairs": 33,
+    "verticalStackInstancePairs": 42,
+    "differentSidePairs": 192,
+    "broadPhaseInstancePairs": 6,
+    "narrowPartSATChecks": 60,
+    "intersections": [
+      {
+        "a": "left_0_tier0",
+        "b": "rear_5_tier0",
+        "partA": "VerticalPole",
+        "partB": "Deck"
+      },
+      {
+        "a": "left_0_tier0",
+        "b": "rear_5_tier0",
+        "partA": "VerticalPole",
+        "partB": "Deck"
+      },
+      {
+        "a": "left_0_tier0",
+        "b": "rear_5_tier0",
+        "partA": "Deck",
+        "partB": "VerticalPole"
+      },
+      {
+        "a": "left_0_tier0",
+        "b": "rear_5_tier0",
+        "partA": "Deck",
+        "partB": "Deck"
+      },
+      {
+        "a": "left_0_tier0",
+        "b": "rear_5_tier0",
+        "partA": "Deck",
+        "partB": "VerticalPole"
+      },
+      {
+        "a": "left_0_tier0",
+        "b": "rear_5_tier0",
+        "partA": "Deck",
+        "partB": "Deck"
+      },
+      {
+        "a": "left_0_tier0",
+        "b": "rear_5_tier0",
+        "partA": "GuardRail",
+        "partB": "GuardRail"
+      },
+      {
+        "a": "left_0_tier0",
+        "b": "rear_5_tier0",
+        "partA": "GuardRail",
+        "partB": "GuardRail"
+      },
+      {
+        "a": "left_0_tier1",
+        "b": "rear_5_tier1",
+        "partA": "VerticalPole",
+        "partB": "Deck"
+      },
+      {
+        "a": "left_0_tier1",
+        "b": "rear_5_tier1",
+        "partA": "VerticalPole",
+        "partB": "Deck"
+      },
+      {
+        "a": "left_0_tier1",
+        "b": "rear_5_tier1",
+        "partA": "Deck",
+        "partB": "VerticalPole"
+      },
+      {
+        "a": "left_0_tier1",
+        "b": "rear_5_tier1",
+        "partA": "Deck",
+        "partB": "Deck"
+      },
+      {
+        "a": "left_0_tier1",
+        "b": "rear_5_tier1",
+        "partA": "Deck",
+        "partB": "VerticalPole"
+      },
+      {
+        "a": "left_0_tier1",
+        "b": "rear_5_tier1",
+        "partA": "Deck",
+        "partB": "Deck"
+      },
+      {
+        "a": "left_0_tier1",
+        "b": "rear_5_tier1",
+        "partA": "GuardRail",
+        "partB": "GuardRail"
+      },
+      {
+        "a": "left_0_tier1",
+        "b": "rear_5_tier1",
+        "partA": "GuardRail",
+        "partB": "GuardRail"
+      },
+      {
+        "a": "left_0_tier2",
+        "b": "rear_5_tier2",
+        "partA": "VerticalPole",
+        "partB": "Deck"
+      },
+      {
+        "a": "left_0_tier2",
+        "b": "rear_5_tier2",
+        "partA": "VerticalPole",
+        "partB": "Deck"
+      },
+      {
+        "a": "left_0_tier2",
+        "b": "rear_5_tier2",
+        "partA": "Deck",
+        "partB": "VerticalPole"
+      },
+      {
+        "a": "left_0_tier2",
+        "b": "rear_5_tier2",
+        "partA": "Deck",
+        "partB": "Deck"
+      },
+      {
+        "a": "left_0_tier2",
+        "b": "rear_5_tier2",
+        "partA": "Deck",
+        "partB": "VerticalPole"
+      },
+      {
+        "a": "left_0_tier2",
+        "b": "rear_5_tier2",
+        "partA": "Deck",
+        "partB": "Deck"
+      },
+      {
+        "a": "left_0_tier2",
+        "b": "rear_5_tier2",
+        "partA": "GuardRail",
+        "partB": "GuardRail"
+      },
+      {
+        "a": "left_0_tier2",
+        "b": "rear_5_tier2",
+        "partA": "GuardRail",
+        "partB": "GuardRail"
+      },
+      {
+        "a": "right_3_tier0",
+        "b": "rear_0_tier0",
+        "partA": "VerticalPole",
+        "partB": "Deck"
+      },
+      {
+        "a": "right_3_tier0",
+        "b": "rear_0_tier0",
+        "partA": "VerticalPole",
+        "partB": "Deck"
+      },
+      {
+        "a": "right_3_tier0",
+        "b": "rear_0_tier0",
+        "partA": "Deck",
+        "partB": "VerticalPole"
+      },
+      {
+        "a": "right_3_tier0",
+        "b": "rear_0_tier0",
+        "partA": "Deck",
+        "partB": "Deck"
+      },
+      {
+        "a": "right_3_tier0",
+        "b": "rear_0_tier0",
+        "partA": "Deck",
+        "partB": "VerticalPole"
+      },
+      {
+        "a": "right_3_tier0",
+        "b": "rear_0_tier0",
+        "partA": "Deck",
+        "partB": "Deck"
+      },
+      {
+        "a": "right_3_tier0",
+        "b": "rear_0_tier0",
+        "partA": "GuardRail",
+        "partB": "GuardRail"
+      },
+      {
+        "a": "right_3_tier0",
+        "b": "rear_0_tier0",
+        "partA": "GuardRail",
+        "partB": "GuardRail"
+      },
+      {
+        "a": "right_3_tier1",
+        "b": "rear_0_tier1",
+        "partA": "VerticalPole",
+        "partB": "Deck"
+      },
+      {
+        "a": "right_3_tier1",
+        "b": "rear_0_tier1",
+        "partA": "VerticalPole",
+        "partB": "Deck"
+      },
+      {
+        "a": "right_3_tier1",
+        "b": "rear_0_tier1",
+        "partA": "Deck",
+        "partB": "VerticalPole"
+      },
+      {
+        "a": "right_3_tier1",
+        "b": "rear_0_tier1",
+        "partA": "Deck",
+        "partB": "Deck"
+      },
+      {
+        "a": "right_3_tier1",
+        "b": "rear_0_tier1",
+        "partA": "Deck",
+        "partB": "VerticalPole"
+      },
+      {
+        "a": "right_3_tier1",
+        "b": "rear_0_tier1",
+        "partA": "Deck",
+        "partB": "Deck"
+      },
+      {
+        "a": "right_3_tier1",
+        "b": "rear_0_tier1",
+        "partA": "GuardRail",
+        "partB": "GuardRail"
+      },
+      {
+        "a": "right_3_tier1",
+        "b": "rear_0_tier1",
+        "partA": "GuardRail",
+        "partB": "GuardRail"
+      },
+      {
+        "a": "right_3_tier2",
+        "b": "rear_0_tier2",
+        "partA": "VerticalPole",
+        "partB": "Deck"
+      },
+      {
+        "a": "right_3_tier2",
+        "b": "rear_0_tier2",
+        "partA": "VerticalPole",
+        "partB": "Deck"
+      },
+      {
+        "a": "right_3_tier2",
+        "b": "rear_0_tier2",
+        "partA": "Deck",
+        "partB": "VerticalPole"
+      },
+      {
+        "a": "right_3_tier2",
+        "b": "rear_0_tier2",
+        "partA": "Deck",
+        "partB": "Deck"
+      },
+      {
+        "a": "right_3_tier2",
+        "b": "rear_0_tier2",
+        "partA": "Deck",
+        "partB": "VerticalPole"
+      },
+      {
+        "a": "right_3_tier2",
+        "b": "rear_0_tier2",
+        "partA": "Deck",
+        "partB": "Deck"
+      },
+      {
+        "a": "right_3_tier2",
+        "b": "rear_0_tier2",
+        "partA": "GuardRail",
+        "partB": "GuardRail"
+      },
+      {
+        "a": "right_3_tier2",
+        "b": "rear_0_tier2",
+        "partA": "GuardRail",
+        "partB": "GuardRail"
+      }
+    ],
+    "intersectionCount": 48
+  },
+  "actualServiceFence": {
+    "rows": [
+      {
+        "side": "left",
+        "length": 48.2,
+        "countPerTier": 6,
+        "step": 8.033333333333333,
+        "modelWidth": 8.0
+      },
+      {
+        "side": "right",
+        "length": 48.2,
+        "countPerTier": 6,
+        "step": 8.033333333333333,
+        "modelWidth": 8.0
+      },
+      {
+        "side": "rear",
+        "length": 72.4,
+        "countPerTier": 9,
+        "step": 8.044444444444444,
+        "modelWidth": 8.0
+      }
+    ],
+    "status": "FAIL",
+    "instances": 21,
+    "parts": 84,
+    "sameSideNeighborPairs": 18,
+    "verticalStackInstancePairs": 0,
+    "differentSidePairs": 144,
+    "broadPhaseInstancePairs": 2,
+    "narrowPartSATChecks": 2,
+    "intersections": [
+      {
+        "a": "left_0_tier0",
+        "b": "rear_8_tier0",
+        "partA": "OrangePanel",
+        "partB": "OrangePanel"
+      },
+      {
+        "a": "right_5_tier0",
+        "b": "rear_0_tier0",
+        "partA": "OrangePanel",
+        "partB": "OrangePanel"
+      }
+    ],
+    "intersectionCount": 2
+  },
+  "recommendedScaffold": {
+    "change": "Scaffold side rows only: zMin=-distance+depth/2+0.1; rear row unchanged",
+    "rearInset": 1.2,
+    "rows": [
+      {
+        "side": "left",
+        "length": 42.7,
+        "countPerTier": 4,
+        "step": 10.675,
+        "modelWidth": 10.5
+      },
+      {
+        "side": "right",
+        "length": 42.7,
+        "countPerTier": 4,
+        "step": 10.675,
+        "modelWidth": 10.5
+      },
+      {
+        "side": "rear",
+        "length": 63.8,
+        "countPerTier": 6,
+        "step": 10.633333333333333,
+        "modelWidth": 10.5
+      }
+    ],
+    "status": "PASS",
+    "instances": 42,
+    "parts": 504,
+    "sameSideNeighborPairs": 33,
+    "verticalStackInstancePairs": 42,
+    "differentSidePairs": 192,
+    "broadPhaseInstancePairs": 0,
+    "narrowPartSATChecks": 0,
+    "intersections": [],
+    "intersectionCount": 0
+  },
+  "recommendedFence": {
+    "change": "Fence side rows only: zMin=-distance+0.2; rear row unchanged",
+    "rearInset": 0.2,
+    "rows": [
+      {
+        "side": "left",
+        "length": 48.0,
+        "countPerTier": 6,
+        "step": 8.0,
+        "modelWidth": 8.0
+      },
+      {
+        "side": "right",
+        "length": 48.0,
+        "countPerTier": 6,
+        "step": 8.0,
+        "modelWidth": 8.0
+      },
+      {
+        "side": "rear",
+        "length": 72.4,
+        "countPerTier": 9,
+        "step": 8.044444444444444,
+        "modelWidth": 8.0
+      }
+    ],
+    "status": "PASS",
+    "instances": 21,
+    "parts": 84,
+    "sameSideNeighborPairs": 18,
+    "verticalStackInstancePairs": 0,
+    "differentSidePairs": 144,
+    "broadPhaseInstancePairs": 0,
+    "narrowPartSATChecks": 0,
+    "intersections": [],
+    "intersectionCount": 0
+  },
+  "legacy60LengthAssumption": "Not applicable: current sides end atZ12, lengths43.9/43.9/63.8. Round counts4+4+6=14, three tiers42, not54.",
+  "runtimeTested": false,
+  "limitations": [
+    "Models unchanged; recommendations only, no sourcegamecode edits",
+    "Plot rotations preserve all relative intersections",
+    "NPC routes, neighboringplots, crane and materials need runtime/fullsite checks"
+  ]
+}
