@@ -1,0 +1,283 @@
+{
+  "sourceCommit": "fe8c7a7300ae885931254c375bb6a652a4151a37",
+  "zone": "garage",
+  "style": "Minimal",
+  "studioTested": false,
+  "models": {
+    "Desk1_Minimal": {
+      "classicParts": 263,
+      "variantParts": 266,
+      "addedParts": 3,
+      "classicDimensionsXYZ": [
+        7.6,
+        4.315,
+        5.35
+      ],
+      "variantDimensionsXYZ": [
+        7.6,
+        4.315,
+        5.35
+      ],
+      "functionalParts": 1,
+      "preservedArtSemanticParts": 0,
+      "nativeLights": 1,
+      "newBaseSAT": {
+        "pairs": 786,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 3,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalOakInset",
+        "MinimalRoundedCap",
+        "MinimalRoundedCap"
+      ],
+      "checks": "PASS"
+    },
+    "Desk2_Minimal": {
+      "classicParts": 259,
+      "variantParts": 262,
+      "addedParts": 3,
+      "classicDimensionsXYZ": [
+        7.6,
+        4.315,
+        3.5
+      ],
+      "variantDimensionsXYZ": [
+        7.6,
+        4.315,
+        3.5
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 0,
+      "nativeLights": 1,
+      "newBaseSAT": {
+        "pairs": 774,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 3,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalOakInset",
+        "MinimalRoundedCap",
+        "MinimalRoundedCap"
+      ],
+      "checks": "PASS"
+    },
+    "PC1_Minimal": {
+      "classicParts": 233,
+      "variantParts": 234,
+      "addedParts": 1,
+      "classicDimensionsXYZ": [
+        5.531,
+        2.45,
+        3.2267
+      ],
+      "variantDimensionsXYZ": [
+        5.531,
+        2.52,
+        3.2267
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 108,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 232,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 0,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalBezelTopCap"
+      ],
+      "checks": "PASS"
+    },
+    "PCPro_Minimal": {
+      "classicParts": 314,
+      "variantParts": 316,
+      "addedParts": 2,
+      "classicDimensionsXYZ": [
+        5.531,
+        2.275,
+        3.2267
+      ],
+      "variantDimensionsXYZ": [
+        5.531,
+        2.345,
+        3.2267
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 142,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 626,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 1,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalBezelTopCap",
+        "MinimalBezelTopCap"
+      ],
+      "checks": "PASS"
+    },
+    "Chair_Minimal": {
+      "classicParts": 156,
+      "variantParts": 157,
+      "addedParts": 1,
+      "classicDimensionsXYZ": [
+        2.4456,
+        3.95,
+        2.3259
+      ],
+      "variantDimensionsXYZ": [
+        2.4456,
+        3.95,
+        2.3714
+      ],
+      "functionalParts": 1,
+      "preservedArtSemanticParts": 5,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 155,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 0,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalExteriorBinding"
+      ],
+      "checks": "PASS"
+    },
+    "Coffee_Minimal": {
+      "classicParts": 145,
+      "variantParts": 148,
+      "addedParts": 3,
+      "classicDimensionsXYZ": [
+        6.9,
+        5.55,
+        2.77
+      ],
+      "variantDimensionsXYZ": [
+        6.9,
+        5.55,
+        2.77
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 3,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 432,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 3,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalOakInset",
+        "MinimalRoundedCap",
+        "MinimalRoundedCap"
+      ],
+      "checks": "PASS"
+    },
+    "HitShelf_Minimal": {
+      "classicParts": 8,
+      "variantParts": 9,
+      "addedParts": 1,
+      "classicDimensionsXYZ": [
+        11.5,
+        5.9,
+        1.7
+      ],
+      "variantDimensionsXYZ": [
+        11.5,
+        5.9,
+        1.7
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 0,
+      "nativeLights": 1,
+      "newBaseSAT": {
+        "pairs": 7,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 0,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalOakInset"
+      ],
+      "checks": "PASS"
+    },
+    "Posters_Minimal": {
+      "classicParts": 45,
+      "variantParts": 48,
+      "addedParts": 3,
+      "classicDimensionsXYZ": [
+        12.6,
+        4.8,
+        0.3525
+      ],
+      "variantDimensionsXYZ": [
+        12.6,
+        4.87,
+        0.3525
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 41,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 132,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 3,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalBezelTopCap",
+        "MinimalBezelTopCap",
+        "MinimalBezelTopCap"
+      ],
+      "checks": "PASS"
+    }
+  },
+  "checks": [
+    "all original Part class/name/CFrame/size unchanged",
+    "native Seat and BlueSeat*/SeatCushion preserved",
+    "all original PivotOffsets/PrimaryPart preserved",
+    "same shelf-board positions",
+    "all original artwork/screen/semantic colors and materials preserved",
+    "same monitor/table-top heights",
+    "AABB dimension delta<=.2",
+    "same lowerY",
+    "Part count<=classic+20%",
+    "physical design additions present on every model",
+    "new/base oriented-bounds SAT zero intersections",
+    "new/new oriented-bounds SAT zero intersections",
+    "no scripts/mesh/texture",
+    "native light count unchanged;Shadows=false",
+    "unique referents",
+    "Rojo binary builds"
+  ]
+}
