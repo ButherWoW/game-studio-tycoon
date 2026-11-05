@@ -11,6 +11,7 @@ local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local Research = require(ReplicatedStorage.Shared.Config.Research)
 local Rebirth = require(ReplicatedStorage.Shared.Config.Rebirth)
+local RebirthPerks = require(ReplicatedStorage.Shared.Config.RebirthPerks)
 local RetentionRemotes = require(ReplicatedStorage.Shared.RetentionRemotes)
 local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService) :: any
@@ -77,7 +78,8 @@ local function onRequestRebirth(player: Player)
 
 	-- Всё синхронно, без yield: между проверкой и сбросом никто не вклинится
 	profile.rebirths += 1
-	profile.cash = Rebirth.cashAfter
+	-- Перк «Стартовый капитал» (Config/RebirthPerks) заменяет cashAfter, если больше
+	profile.cash = math.max(Rebirth.cashAfter, RebirthPerks.forProfile(profile).startCash)
 	profile.upgrades = {}
 	-- Набежавшая зарплата прошлой команды (ExpensesService) после Rebirth не переносится
 	local stored: any = profile
@@ -124,6 +126,14 @@ local function onRequestRebirth(player: Player)
 		(require(questModule) :: any).onRebirth(player)
 	end
 	RetentionRemotes.RebirthResult:FireClient(player, { ok = true, rebirths = profile.rebirths })
+	-- Новая звезда студии и титулы за число Rebirth
+	for _, name in { "RebirthPerkService", "TitleService" } do
+		local module = script.Parent:FindFirstChild(name)
+		if module and module:IsA("ModuleScript") then
+			local service = require(module) :: any
+			pcall(if name == "TitleService" then service.refresh else service.sync, player, true)
+		end
+	end
 
 	-- Возвращаем персонажа на точку появления — к пустому гаражу
 	task.spawn(function()

@@ -1,12 +1,15 @@
 --!strict
 -- Окно «Достижения» (кнопка меню — слот 14) и тост «🏆 Достижение: …» при получении.
 -- Клиент только показывает присланное сервером: награды выдаются автоматически (AchievementService).
+-- Вкладка «Титулы» (роадмап 7.21): выбор титула над головой; проверяет сервер (TitleService).
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local AchievementRemotes = require(ReplicatedStorage.Shared.AchievementRemotes)
 local Achievements = require(ReplicatedStorage.Shared.Config.Achievements)
+local Titles = require(ReplicatedStorage.Shared.Config.Titles)
+local TitleRemotes = require(ReplicatedStorage.Shared.TitleRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local Images = require(ReplicatedStorage.Shared.Config.Images)
 local ClientState = require(script.Parent.Parent.ClientState)
@@ -15,6 +18,8 @@ local QuestWindow = require(script.Parent.QuestWindow)
 
 local MENU_SLOT = 14
 local ROW_HEIGHT = 84
+local TITLE_ROW_HEIGHT = 64
+local TITLES_TAB = "titles"
 local TOAST_SECONDS = 3.5
 local TIER_ICONS = { "🥉", "🥈", "🥇" }
 -- Картинки медалей по уровню (Config/Images.medals); id 0 — эмодзи
@@ -28,8 +33,11 @@ local gui: ScreenGui? = nil
 local content: ScrollingFrame? = nil
 local countLabel: TextLabel? = nil
 local tabButtons: { [string]: TextButton } = {}
-local tab: Achievements.Category = "studio"
+-- Категория достижений или TITLES_TAB
+local tab: string = "studio"
 local state: any = nil
+-- Титулы с сервера: { owned = { [id]: true }, selected }
+local titleState: any = nil
 
 local function nameOf(a: Achievements.Achievement): string
 	return ClientState.localText("ach_" .. a.id, a.name, a.nameEn)
@@ -150,6 +158,100 @@ local function row(parent: Instance, order: number, a: Achievements.Achievement)
 	frame.Parent = parent
 end
 
+local function titleName(id: string): string
+	return ClientState.t("title_" .. id)
+end
+
+-- Условие открытия титула для подсказки в строке
+local function conditionText(title: Titles.Title): string
+	local kind = Titles.condKind(title)
+	local vars: { [string]: any } = {}
+	if kind == "ach" then
+		local a = Achievements.find(title.cond.achievement or "")
+		local done = a and state and type(state.done) == "table" and state.done[a.id] ~= nil
+		-- Скрытое достижение не раскрываем, пока не получено
+		vars.name = if not a
+			then "?"
+			elseif a.hidden and not done then ClientState.t("ach_hidden")
+			else nameOf(a)
+	elseif kind == "rebirths" then
+		vars.count = title.cond.rebirths
+	end
+	return ClientState.t("title_cond_" .. kind, vars)
+end
+
+local function titleRow(parent: Instance, order: number, title: Titles.Title?)
+	local owned = title == nil
+		or (titleState and type(titleState.owned) == "table" and titleState.owned[title.id] == true)
+	local selectedId = if titleState and type(titleState.selected) == "string"
+		then titleState.selected
+		else nil
+	local selected = if title then selectedId == title.id else selectedId == nil
+
+	local frame = Instance.new("Frame")
+	frame.BackgroundColor3 = if selected then Color3.fromRGB(40, 62, 52) else Color3.fromRGB(44, 46, 66)
+	frame.Size = UDim2.new(1, -8, 0, TITLE_ROW_HEIGHT)
+	frame.LayoutOrder = order
+	Ui.corner(frame, 10)
+
+	local name = Ui.label(
+		frame,
+		if title then title.icon .. " " .. titleName(title.id) else "🚫 " .. ClientState.t("title_none"),
+		28,
+		Ui.titleFontFor(ClientState.lang),
+		if title and owned then title.color elseif owned then Ui.colors.text else Ui.colors.muted
+	)
+	name.Position = UDim2.fromOffset(10, 4)
+	name.Size = UDim2.new(1, -190, 0, 28)
+	local desc = Ui.label(
+		frame,
+		if title then conditionText(title) else ClientState.t("title_hint"),
+		22,
+		Enum.Font.GothamMedium,
+		Ui.colors.muted
+	)
+	desc.Position = UDim2.fromOffset(10, 36)
+	desc.Size = UDim2.new(1, -190, 0, 22)
+
+	local text = if selected
+		then ClientState.t("title_picked")
+		elseif owned then ClientState.t("title_pick")
+		else "🔒 " .. ClientState.t("title_locked")
+	local button = Ui.button(
+		frame,
+		text,
+		if selected then Ui.colors.good elseif owned then Ui.colors.primary else Ui.colors.locked,
+		function()
+			if owned and not selected then
+				TitleRemotes.SelectTitle:FireServer(if title then title.id else "")
+			end
+		end
+	)
+	button.AnchorPoint = Vector2.new(1, 0.5)
+	button.Position = UDim2.new(1, -10, 0.5, 0)
+	button.Size = UDim2.fromOffset(170, 46)
+	frame.Parent = parent
+end
+
+local function renderTitles(frame: ScrollingFrame)
+	if titleState == nil then
+		Ui.label(frame, ClientState.t("quests_loading"), 28, nil, Ui.colors.muted)
+		return
+	end
+	titleRow(frame, 0, nil)
+	-- Открытые — выше закрытых, внутри — порядок конфига
+	local n = 0
+	for pass = 1, 2 do
+		for _, title in Titles.list do
+			local isOwned = type(titleState.owned) == "table" and titleState.owned[title.id] == true
+			if isOwned == (pass == 1) then
+				n += 1
+				titleRow(frame, n, title)
+			end
+		end
+	end
+end
+
 local function doneCount(): (number, number)
 	local done = 0
 	local list = state and type(state.done) == "table" and state.done
@@ -172,6 +274,10 @@ local function render()
 	end
 	local frame = clearContent()
 	if not frame then
+		return
+	end
+	if tab == TITLES_TAB then
+		renderTitles(frame)
 		return
 	end
 	if state == nil then
@@ -226,13 +332,13 @@ function AchievementWindow.open()
 	close.Position = UDim2.new(1, -12, 0, 10)
 	close.Size = UDim2.fromOffset(40, 40)
 
-	-- 6 вкладок в два ряда: на телефоне в один ряд текст был бы нечитаемо мелким
+	-- 7 вкладок (6 категорий + «Титулы») в два ряда по 4: в один ряд на телефоне нечитаемо мелко
 	local tabs = Instance.new("Frame")
 	tabs.BackgroundTransparency = 1
 	tabs.Position = UDim2.fromOffset(16, 58)
 	tabs.Size = UDim2.new(1, -32, 0, 80)
 	local grid = Instance.new("UIGridLayout")
-	grid.CellSize = UDim2.new(1 / 3, -6, 0, 36)
+	grid.CellSize = UDim2.new(1 / 4, -6, 0, 36)
 	grid.CellPadding = UDim2.fromOffset(8, 8)
 	grid.SortOrder = Enum.SortOrder.LayoutOrder
 	grid.Parent = tabs
@@ -245,6 +351,17 @@ function AchievementWindow.open()
 		button.LayoutOrder = i
 		tabButtons[name] = button
 	end
+	local titlesButton = Ui.button(
+		tabs,
+		"🎖️ " .. ClientState.t("title_tab"),
+		Ui.colors.locked,
+		function()
+			tab = TITLES_TAB
+			render()
+		end
+	)
+	titlesButton.LayoutOrder = #Achievements.categories + 1
+	tabButtons[TITLES_TAB] = titlesButton
 
 	local scroll = Instance.new("ScrollingFrame")
 	scroll.BackgroundTransparency = 1
@@ -260,6 +377,7 @@ function AchievementWindow.open()
 
 	render()
 	AchievementRemotes.RequestAchievements:FireServer()
+	TitleRemotes.RequestTitles:FireServer()
 end
 
 -- ===== Тосты: по очереди, если получено несколько сразу =====
@@ -369,6 +487,23 @@ function AchievementWindow.start()
 		end
 	end)
 	AchievementRemotes.AchievementUnlocked.OnClientEvent:Connect(onUnlocked)
+	TitleRemotes.TitleState.OnClientEvent:Connect(function(data)
+		if type(data) ~= "table" then
+			return
+		end
+		titleState = data
+		if type(data.new) == "table" then
+			for _, id in data.new do
+				local title = if type(id) == "string" then Titles.byId[id] else nil
+				if title then
+					toast(ClientState.t("title_new", { name = title.icon .. " " .. titleName(id) }), "")
+				end
+			end
+		end
+		if gui then
+			render()
+		end
+	end)
 	-- Сменили язык: открытое окно собираем заново
 	ClientState.langChanged:Connect(function()
 		if gui then

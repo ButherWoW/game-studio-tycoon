@@ -7,6 +7,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Research = require(ReplicatedStorage.Shared.Config.Research)
+local RebirthPerks = require(ReplicatedStorage.Shared.Config.RebirthPerks)
 local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local UnlockRules = require(ReplicatedStorage.Shared.UnlockRules)
 local ResearchRemotes = require(ReplicatedStorage.Shared.ResearchRemotes)
@@ -44,9 +45,12 @@ local function replicate(player: Player)
 	if data then
 		-- Окно «Команда» по атрибуту показывает, что РОБО-9000 можно нанять
 		player:SetAttribute("RobotHire", Research.modifiers(data.owned).robotHire)
+		local profile = DataService.get(player)
 		ResearchRemotes.ResearchChanged:FireClient(player, {
 			points = data.points,
 			owned = data.owned,
+			-- Скидка звёзд студии (ветка «Лаборатория»): окно показывает цены с ней
+			discount = RebirthPerks.forProfile(profile).researchDiscount,
 		})
 	end
 end
@@ -98,7 +102,8 @@ local function onBuy(player: Player, nodeId: any)
 	if not node or not profile or not data then
 		return
 	end
-	if data.owned[nodeId] or not Research.requirementsMet(node, data.owned) or data.points < node.cost then
+	local cost = RebirthPerks.researchCost(node.cost, RebirthPerks.forProfile(profile).researchDiscount)
+	if data.owned[nodeId] or not Research.requirementsMet(node, data.owned) or data.points < cost then
 		return
 	end
 	-- Узел жанра: пока не выполнены условия жанра (shared/UnlockRules), не изучается.
@@ -114,7 +119,7 @@ local function onBuy(player: Player, nodeId: any)
 	end
 
 	-- Без yield между проверкой и списанием: двойной клик не спишет дважды
-	data.points -= node.cost
+	data.points -= cost
 	data.owned[nodeId] = true
 
 	local genreId = node.effect.unlockGenre
@@ -122,6 +127,11 @@ local function onBuy(player: Player, nodeId: any)
 		profile.unlockedGenres[genreId] = true
 		DataService.replicate(player)
 	end
+	replicate(player)
+end
+
+-- Перки Rebirth изменились (RebirthPerkService): прислать цены со скидкой
+function ResearchService.sync(player: Player)
 	replicate(player)
 end
 
