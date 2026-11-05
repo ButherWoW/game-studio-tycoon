@@ -3,6 +3,7 @@
 -- (RivalService, Config/Rivals) по стоимости студии. Плашка под HUD, пока идёт хит конкурента
 -- (атрибуты ReplicatedStorage RivalHit*), тосты «обогнал студию» и «конкурент выпустил хит».
 -- Логотипы студий — Config/Images.rivals (V19); 0 — эмодзи студии, как раньше.
+-- Вкладка «🏆 Игра недели» — GotwPanel (топ-10 игр недели между серверами).
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -15,6 +16,7 @@ local Rivals = require(Shared.Config.Rivals)
 local Texts = require(Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local DepthToast = require(script.Parent.Parent.DepthToast)
+local GotwPanel = require(script.Parent.Parent.GotwPanel)
 local Ui = require(script.Parent.Parent.Ui)
 
 local MENU_SLOT = 17
@@ -31,6 +33,9 @@ local gui: ScreenGui? = nil
 local content: ScrollingFrame? = nil
 local footer: TextLabel? = nil
 local state: any = nil
+type Tab = "industry" | "gotw"
+local tab: Tab = "industry"
+local tabButtons: { [string]: TextButton } = {}
 
 local function genreName(id: any): string
 	local genre = if type(id) == "string" then Genres[id] else nil
@@ -64,6 +69,13 @@ local function render()
 		if not child:IsA("UIListLayout") then
 			child:Destroy()
 		end
+	end
+	for id, button in tabButtons do
+		button.BackgroundColor3 = if id == tab then Ui.colors.primary else Ui.colors.locked
+	end
+	if tab == "gotw" then
+		GotwPanel.render(frame, footer)
+		return
 	end
 	if type(state) ~= "table" or type(state.top) ~= "table" then
 		Ui.label(frame, ClientState.t("quests_loading"), 28, nil, Ui.colors.muted)
@@ -129,6 +141,7 @@ function RivalWindow.close()
 		gui = nil
 		content = nil
 		footer = nil
+		tabButtons = {}
 		Ui.windowClosed()
 	end
 end
@@ -154,11 +167,31 @@ function RivalWindow.open()
 	close.Position = UDim2.new(1, -12, 0, 10)
 	close.Size = UDim2.fromOffset(40, 40)
 
+	-- Вкладки: «Индустрия» и «🏆 Игра недели»
+	for i, id in { "industry", "gotw" } do
+		local key = if id == "gotw" then "gotw_tab" else "gotw_tab_industry"
+		local button = Ui.button(window, ClientState.t(key), Ui.colors.locked, function()
+			if tab == id then
+				return
+			end
+			tab = if id == "gotw" then "gotw" else "industry"
+			render()
+			if tab == "gotw" then
+				GotwPanel.request()
+			else
+				DepthRemotes.RivalRequest:FireServer()
+			end
+		end)
+		button.Position = UDim2.new((i - 1) / 2, if i == 1 then 16 else 4, 0, 58)
+		button.Size = UDim2.new(0.5, -20, 0, 38)
+		tabButtons[id] = button
+	end
+
 	local scroll = Instance.new("ScrollingFrame")
 	scroll.BackgroundTransparency = 1
 	scroll.BorderSizePixel = 0
-	scroll.Position = UDim2.fromOffset(16, 60)
-	scroll.Size = UDim2.new(1, -32, 1, -116)
+	scroll.Position = UDim2.fromOffset(16, 104)
+	scroll.Size = UDim2.new(1, -32, 1, -160)
 	scroll.CanvasSize = UDim2.new()
 	scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
 	scroll.ScrollBarThickness = 6
@@ -173,7 +206,11 @@ function RivalWindow.open()
 	footer = foot
 
 	render()
-	DepthRemotes.RivalRequest:FireServer()
+	if tab == "gotw" then
+		GotwPanel.request()
+	else
+		DepthRemotes.RivalRequest:FireServer()
+	end
 end
 
 local function buildHitBanner()
@@ -257,6 +294,13 @@ function RivalWindow.start()
 	DepthRemotes.RivalState.OnClientEvent:Connect(function(newState: any)
 		if type(newState) == "table" then
 			state = newState
+			if tab == "industry" then
+				render()
+			end
+		end
+	end)
+	GotwPanel.changed:Connect(function()
+		if gui and tab == "gotw" then
 			render()
 		end
 	end)
@@ -291,7 +335,7 @@ function RivalWindow.start()
 	task.spawn(function()
 		while true do
 			task.wait(REFRESH_SECONDS)
-			if gui then
+			if gui and tab == "industry" then
 				DepthRemotes.RivalRequest:FireServer()
 			end
 		end

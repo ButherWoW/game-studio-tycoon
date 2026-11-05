@@ -1,5 +1,6 @@
 --!strict
--- Картриджи-хиты на клиенте: тосты, тревога при краже, окно 🔒 (слот меню 7)
+-- Картриджи-хиты на клиенте: тосты, тревога при краже, окно 🔒 (слот меню 7) со списком хитов
+-- и кнопками «Обновление / DLC» (раз в сутки на хит, цена — минуты дохода студии)
 -- и prompts «Украсть» (язык игрока; у своих картриджей и у новичка prompt скрыт).
 -- Всё решает сервер (HitService), здесь только отображение и запросы.
 
@@ -18,6 +19,8 @@ local MAX_TOASTS = 3
 local player = Players.LocalPlayer
 
 local HitController = {}
+
+type UpdateRow = { info: TextLabel, button: TextButton }
 
 -- Последнее состояние с сервера; остатки таймеров пересчитываем от момента получения
 local state: any = nil
@@ -127,6 +130,9 @@ local TOAST_COLORS: { [string]: Color3 } = {
 	hit_caught_thief = Ui.colors.good,
 	hit_lost = Ui.colors.bad,
 	hit_you_were_caught = Ui.colors.bad,
+	hitupd_done = Ui.colors.good,
+	hitupd_err_cash = Ui.colors.bad,
+	hitupd_err_today = Ui.colors.bad,
 }
 
 local function headOf(userId: number): BasePart?
@@ -208,7 +214,7 @@ local function openWindow()
 	Ui.windowOpened(closeWindow) -- окно меню: закрывает другое открытое окно меню
 	HitRemotes.RequestHitState:FireServer()
 
-	local frame = Ui.window(screen, "Window", Vector2.new(520, 420))
+	local frame = Ui.window(screen, "Window", Vector2.new(560, 660))
 	local body = Instance.new("Frame")
 	body.BackgroundTransparency = 1
 	body.Position = UDim2.fromOffset(16, 12)
@@ -230,16 +236,123 @@ local function openWindow()
 	local hint = Ui.label(body, ClientState.t("hit_lock_hint"), 22, Enum.Font.GothamMedium, Ui.colors.muted)
 	hint.LayoutOrder = 5
 
+	-- Хиты на полке и «Обновление / DLC»
+	local updTitle =
+		Ui.label(body, ClientState.t("hitupd_title"), 26, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
+	updTitle.LayoutOrder = 6
+	local updHint = Ui.label(body, "", 36, Enum.Font.GothamMedium, Ui.colors.muted)
+	updHint.TextWrapped = true
+	updHint.LayoutOrder = 7
+	local list = Instance.new("ScrollingFrame")
+	list.BackgroundTransparency = 1
+	list.BorderSizePixel = 0
+	list.Size = UDim2.new(1, 0, 0, 200)
+	list.CanvasSize = UDim2.new()
+	list.AutomaticCanvasSize = Enum.AutomaticSize.Y
+	list.ScrollBarThickness = 6
+	list.LayoutOrder = 8
+	Ui.list(list, 4)
+	list.Parent = body
+	local rows: { [string]: UpdateRow } = {}
+	local rowsKey = ""
+
+	local function rebuildRows()
+		local hits = if state and type(state.hits) == "table" then state.hits else {}
+		local ids = {}
+		for _, hit in hits do
+			if type(hit) == "table" and type(hit.id) == "string" then
+				table.insert(ids, hit.id)
+			end
+		end
+		local key = table.concat(ids, ",")
+		if key == rowsKey then
+			return
+		end
+		rowsKey = key
+		for _, child in list:GetChildren() do
+			if not child:IsA("UIListLayout") then
+				child:Destroy()
+			end
+		end
+		rows = {}
+		if #ids == 0 then
+			local empty =
+				Ui.label(list, ClientState.t("hitupd_none"), 24, Enum.Font.GothamMedium, Ui.colors.muted)
+			empty.Size = UDim2.new(1, -8, 0, 24)
+			return
+		end
+		for i, id in ids do
+			local row = Instance.new("Frame")
+			row.BackgroundColor3 = Color3.fromRGB(44, 46, 66)
+			row.Size = UDim2.new(1, -8, 0, 44)
+			row.LayoutOrder = i
+			Ui.corner(row, 10)
+			local info = Ui.label(row, "", 22, Enum.Font.GothamMedium)
+			info.Position = UDim2.fromOffset(10, 11)
+			info.Size = UDim2.new(0.6, -10, 0, 22)
+			local button = Ui.button(row, "", Ui.colors.primary, function()
+				HitRemotes.RequestHitUpdate:FireServer(id)
+			end)
+			button.AnchorPoint = Vector2.new(1, 0.5)
+			button.Position = UDim2.new(1, -6, 0.5, 0)
+			button.Size = UDim2.new(0.4, -6, 0, 36)
+			row.Parent = list
+			rows[id] = { info = info, button = button }
+		end
+	end
+
+	local function updateRows()
+		rebuildRows()
+		if not state or type(state.hits) ~= "table" then
+			return
+		end
+		local elapsed = os.clock() - stateAt
+		local price = Texts.money(tonumber(state.updatePrice) or 0)
+		updHint.Text = ClientState.t("hitupd_hint", {
+			boost = state.updateBoost,
+			minutes = state.updateMinutes,
+			score = state.updateScore,
+		})
+		for _, hit in state.hits do
+			local row = type(hit) == "table" and rows[hit.id]
+			if row then
+				local boostLeft = math.max(math.ceil((tonumber(hit.boostLeft) or 0) - elapsed), 0)
+				local text = ClientState.t("hitupd_row", {
+					score = hit.score,
+					name = hit.name,
+					income = Texts.money(tonumber(hit.income) or 0),
+				})
+				if boostLeft > 0 then
+					text ..= " " .. ClientState.t("hitupd_boost", { time = mmss(boostLeft) })
+				end
+				row.info.Text = text
+				if hit.updatedToday then
+					local nextIn = math.max(math.ceil((tonumber(state.nextDayIn) or 0) - elapsed), 0)
+					row.button.Text = ClientState.t("hitupd_done_today", {
+						time = string.format("%d:%02d", nextIn // 3600, (nextIn % 3600) // 60),
+					})
+					row.button.BackgroundColor3 = Ui.colors.locked
+				elseif hit.carried then
+					row.button.Text = ClientState.t("hitupd_carried")
+					row.button.BackgroundColor3 = Ui.colors.locked
+				else
+					row.button.Text = ClientState.t("hitupd_button", { price = price })
+					row.button.BackgroundColor3 = Ui.colors.primary
+				end
+			end
+		end
+	end
+
 	local lock = Ui.button(body, "", Ui.colors.primary, function()
 		if left("lockLeft") <= 0 and left("lockReadyIn") <= 0 then
 			HitRemotes.RequestLock:FireServer()
 		end
 	end)
 	lock.Size = UDim2.new(1, 0, 0, 50)
-	lock.LayoutOrder = 6
+	lock.LayoutOrder = 9
 	local close = Ui.button(body, ClientState.t("hit_close"), Ui.colors.locked, closeWindow)
 	close.Size = UDim2.new(1, 0, 0, 44)
-	close.LayoutOrder = 7
+	close.LayoutOrder = 10
 
 	local function update()
 		if not state then
@@ -267,6 +380,7 @@ local function openWindow()
 			lock.Text = ClientState.t("hit_lock", { seconds = state.lockSeconds })
 			lock.BackgroundColor3 = Ui.colors.primary
 		end
+		updateRows()
 	end
 	refreshWindow = update
 	update()

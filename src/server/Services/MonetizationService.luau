@@ -64,6 +64,20 @@ local function applyAd(player: Player, campaign: AdCampaigns.AdCampaign, paid: b
 	return true
 end
 
+-- Последняя игра — на рекламные щиты у спавна (BillboardService); без модуля ничего не ломается
+local function toBillboards(player: Player, campaign: AdCampaigns.AdCampaign, paid: boolean)
+	local module = script.Parent:FindFirstChild("BillboardService")
+	if not module or not module:IsA("ModuleScript") then
+		return
+	end
+	local ok, err = pcall(function()
+		(require(module) :: any).onAdPurchased(player, campaign, paid)
+	end)
+	if not ok then
+		warn("[Monetization] Billboards failed:", err)
+	end
+end
+
 local function findByProduct(productId: number): AdCampaigns.AdCampaign?
 	for _, c in AdCampaigns do
 		if c.productId ~= 0 and c.productId == productId then
@@ -95,6 +109,7 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 		local campaign = findByProduct(receipt.ProductId)
 		if campaign then
 			applyAd(player, campaign, true)
+			toBillboards(player, campaign, true)
 			return true
 		end
 		-- Подарки (gift_<itemId>) — GiftService: предмет получает выбранный игрок
@@ -135,8 +150,8 @@ local function onBuyWithCash(player: Player, campaignId: any)
 			if current and current.expiresAt > os.time() and current.bonus > c.bonus then
 				return
 			end
-			if DataService.trySpend(player, c.cashCost) then
-				applyAd(player, c)
+			if DataService.trySpend(player, c.cashCost) and applyAd(player, c) then
+				toBillboards(player, c, false)
 			end
 			return
 		end

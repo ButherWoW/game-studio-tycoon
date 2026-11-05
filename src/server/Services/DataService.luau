@@ -74,10 +74,41 @@ export type Profile = {
 	rebirthPerks: { levels: { [string]: number }, respecUsed: boolean },
 	-- Титулы над головой (TitleService, Config/Titles): открытые (id -> os.time) и выбранный
 	titles: { owned: { [string]: number }, selected: string? },
+	-- «Игра недели» (GotwService): лучшая игра недели weekId, неделя последней проверки награды,
+	-- место титула (0 — нет) и до какого os.time держатся титул и статуэтка на полке
+	gotw: {
+		week: number,
+		value: number,
+		name: string,
+		genreId: string,
+		score: number,
+		revenue: number,
+		rewardWeek: number,
+		titleRank: number,
+		titleUntil: number,
+		trophyUntil: number,
+	},
+	-- Последняя выпущенная игра (для рекламных щитов, BillboardService); имя уже отфильтровано
+	lastGame: { name: string, genreId: string, score: number }?,
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
 }
+
+local function defaultGotw()
+	return {
+		week = 0,
+		value = 0,
+		name = "",
+		genreId = "",
+		score = 0,
+		revenue = 0,
+		rewardWeek = 0,
+		titleRank = 0,
+		titleUntil = 0,
+		trophyUntil = 0,
+	}
+end
 
 type Session = { jobId: string, time: number }
 
@@ -151,6 +182,8 @@ local function defaultProfile(): Profile
 		streamer = { hype = 0, earned = 0, scores = {} },
 		rebirthPerks = { levels = {}, respecUsed = false },
 		titles = { owned = {}, selected = nil },
+		gotw = defaultGotw(),
+		lastGame = nil,
 		processedReceipts = {},
 		receiptLog = {},
 		lastLogout = os.time(),
@@ -265,6 +298,47 @@ end
 -- и сохранение запишет мусор). Любая сумма из формул/DataStore проходит эту проверку
 local function isFiniteAmount(amount: any): boolean
 	return type(amount) == "number" and amount == amount and amount > -math.huge and amount < math.huge
+end
+
+-- Неотрицательное конечное число из сохранения, иначе 0
+local function savedNumber(value: any): number
+	return if isFiniteAmount(value) and value >= 0 then value else 0
+end
+
+local function savedText(value: any, maxLength: number): string
+	return if type(value) == "string" and #value <= maxLength then value else ""
+end
+
+-- «Игра недели»: поля по одному, мусор из сохранения — в значения по умолчанию
+local function validGotw(raw: any): any
+	local gotw = defaultGotw()
+	if type(raw) ~= "table" then
+		return gotw
+	end
+	for _, field in
+		{ "week", "value", "score", "revenue", "rewardWeek", "titleRank", "titleUntil", "trophyUntil" }
+	do
+		(gotw :: any)[field] = savedNumber(raw[field])
+	end
+	gotw.name = savedText(raw.name, 200)
+	gotw.genreId = savedText(raw.genreId, 40)
+	gotw.score = math.min(gotw.score, 10)
+	gotw.titleRank = math.min(math.floor(gotw.titleRank), 10)
+	return gotw
+end
+
+local function validLastGame(raw: any): { name: string, genreId: string, score: number }?
+	if
+		type(raw) ~= "table"
+		or type(raw.name) ~= "string"
+		or #raw.name > 200
+		or type(raw.genreId) ~= "string"
+		or #raw.genreId > 40
+		or not isFiniteAmount(raw.score)
+	then
+		return nil
+	end
+	return { name = raw.name, genreId = raw.genreId, score = math.clamp(raw.score, 0, 10) }
 end
 
 -- Доход релиза прячется из таблицы лидеров, пока в окне релиза не открылась оценка (отчёт #2, п. 6)
@@ -503,6 +577,8 @@ local function onPlayerAdded(player: Player)
 			end
 			profile.hitsReleased = own
 		end
+		profile.gotw = validGotw(profile.gotw)
+		profile.lastGame = validLastGame(profile.lastGame)
 		-- Сохранения до защиты addCash/trySpend могли получить NaN или ±inf: с ними trySpend
 		-- пропускал любые траты бесплатно. Чиним при загрузке
 		if not isFiniteAmount(profile.cash) then

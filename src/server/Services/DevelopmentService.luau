@@ -827,6 +827,15 @@ local function release(player: Player, project: Project)
 		topicId = project.topicId,
 		score = score,
 	})
+	-- «Игра недели» между серверами и рекламные щиты (последняя игра); name уже отфильтрован
+	local releaseInfo = {
+		name = project.name,
+		genreId = project.genreId,
+		score = score,
+		revenue = revenue,
+	}
+	hook("GotwService", "onGameReleased", player, releaseInfo)
+	hook("BillboardService", "onGameReleased", player, releaseInfo)
 	-- Лучший хит недели для рейтинга (TourService)
 	hook("TourService", "onGameReleased", player, {
 		score = score,
