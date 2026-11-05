@@ -167,6 +167,7 @@ local function startBanner()
 	stroke.Thickness = 2
 	stroke.Parent = panel
 	panel.Parent = stack
+	Ui.bannerMeta(panel, "construction", "🏗️", nil, Ui.colors.money)
 
 	local text = Ui.label(panel, "", HEIGHT - 12, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
 	text.Position = UDim2.fromOffset(10, 6)

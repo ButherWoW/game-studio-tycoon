@@ -357,6 +357,8 @@ local function startBadges()
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
 	layout.Parent = bar
 	bar.Parent = Ui.bannerStack()
+	-- Значок в лотке — эмодзи первой метки (📉 / 🛡 / ⭐)
+	Ui.bannerMeta(bar, "companyEvents", nil, nil, Ui.colors.primary)
 
 	local labels: { TextLabel } = {}
 	local function refresh()

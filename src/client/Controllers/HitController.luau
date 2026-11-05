@@ -440,6 +440,7 @@ function HitController.start()
 	alarmLabel.BackgroundColor3 = Ui.colors.bad
 	alarmLabel.Visible = false
 	Ui.corner(alarmLabel, 10)
+	Ui.bannerMeta(alarmLabel, "hitAlarm", "🚨", nil, Ui.colors.bad)
 
 	Ui.menuButton(MENU_SLOT, "🔒", function()
 		if window then

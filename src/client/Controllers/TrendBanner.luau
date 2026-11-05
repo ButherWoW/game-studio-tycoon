@@ -1,5 +1,5 @@
 --!strict
--- Плашка «🔥 В тренде: Хоррор + Призраки, ещё 7:12» под HUD (шаг 4.3).
+-- Плашка «🔥 В тренде: Хоррор + Призраки, ещё 7:12» — значок 🔥 в лотке плашек (шаг 4.3).
 -- Тренд выбирает сервер (TrendService) и кладёт в атрибуты ReplicatedStorage.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -47,6 +47,9 @@ function TrendBanner.start()
 	padding.Parent = banner
 	-- Новичку — с гаража (Config/Unlocks.trends)
 	Ui.gate(banner, "trends")
+	-- Значок 🔥 в лотке справа (Config/Hud); новый тренд — объявление сверху
+	Ui.bannerMeta(banner, "trend", "🔥")
+	local announcedTrend = ""
 
 	-- Держатели иконок за пределами отступа текста: пустые и прозрачные, пока картинок нет
 	local function iconHolder(name: string, x: number): Frame
@@ -86,6 +89,11 @@ function TrendBanner.start()
 			return
 		end
 		banner.Visible = true
+		local trendKey = genre.id .. "/" .. topic.id
+		if announcedTrend ~= "" and announcedTrend ~= trendKey then
+			Ui.bannerAnnounce(banner)
+		end
+		announcedTrend = trendKey
 		setIcons(genre.id, topic.id)
 		banner.Font = Ui.titleFontFor(ClientState.lang)
 		banner.Text = ClientState.t("trend_banner", {
