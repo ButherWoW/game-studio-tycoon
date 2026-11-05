@@ -1,0 +1,59 @@
+[
+  {
+    "file": "thumb_v2_1.png",
+    "size": [
+      1920,
+      1080
+    ],
+    "refs": [
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-garage/previews/Garage_Overview.png",
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-office/previews/Office_Overview.png",
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-thumbnails/V2/thumb_2_grow.png",
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-staff/batch-1/V13_ContactSheet.png"
+    ],
+    "scene": "Wide16:9 launch thumbnail showing three clearly separate progression vignettes left to right: tiny wooden garage coding studio with bluechair and woodencomputerdesk, one-story bright glassoffice with lightwoodfloor and bluechairs, then a completed EXACTLY THREE-STORY square office building composed of three equal floors directly stacked, golden bottomfloor, cyanmiddlefloor, subtlepurpletopfloor and single flat roof. Count3 rows ofwindows no additionalfloors. Gold arrows connecting stages. Foreground protagonist Mila from staffreference: blockyavatar brown angular hair blackrectangularglasses bluecodehoodie happy confident face pointing to completedHQ. Headline across top verbatim 'FROM GARAGE TO HQ'. Reference1garagegeometry,2officegeometry,3prior marketingcomposition only,4staffidentity; replace generic prior hero withMila.",
+    "prompt": "Use case: ads-marketing. Asset for Build Your Game Studio Tycoon. Primary request: Wide16:9 launch thumbnail showing three clearly separate progression vignettes left to right: tiny wooden garage coding studio with bluechair and woodencomputerdesk, one-story bright glassoffice with lightwoodfloor and bluechairs, then a completed EXACTLY THREE-STORY square office building composed of three equal floors directly stacked, golden bottomfloor, cyanmiddlefloor, subtlepurpletopfloor and single flat roof. Count3 rows ofwindows no additionalfloors. Gold arrows connecting stages. Foreground protagonist Mila from staffreference: blockyavatar brown angular hair blackrectangularglasses bluecodehoodie happy confident face pointing to completedHQ. Headline across top verbatim 'FROM GARAGE TO HQ'. Reference1garagegeometry,2officegeometry,3prior marketingcomposition only,4staffidentity; replace generic prior hero withMila. Input images are supporting game-identity references, not edit targets; retain actual characterclothing, blockyfeatures and studio blue/wood visualidentity. Style: polished vibrant chunky3D cartoon Roblox-like promotional illustration, readable silhouettes, thick dark#1E1E2E edging, saturatedroyalblue#3D7BFF gold#FFC93C cyan, warm friendlylighting, childfriendly. Professional clearcomposition, no watermarks or signatures, no Robloxlogo, no realbrands or realconsole design, no weapons, no currencyprices or inventedgameplay. Fullbleed opaque scene, no fake phone frame, no collage contact sheet. Exact requested headline only, do not add text; no text if not requested.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-9011bf7f-cb03-4dd0-b3c1-dfa2b7afcf3c.png"
+  },
+  {
+    "file": "icon_v3.png",
+    "size": [
+      512,
+      512
+    ],
+    "refs": [
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-staff/batch-1/V13_ContactSheet.png"
+    ],
+    "scene": "Square game icon. Close waistup portrait of Mila from reference: brown angularhair blackrectangle glasses bluehoodie, friendly enthusiastic smile, authentic block head and arms, sitting at wooden desk beside chunky blue PC cyan monitor. Three brightgold stars arch overhead, royalblue vibrantbackground. Character face PC andstars fill centralcircle420of512, readable100px. No text.",
+    "prompt": "Use case: ads-marketing. Asset for Build Your Game Studio Tycoon. Primary request: Square game icon. Close waistup portrait of Mila from reference: brown angularhair blackrectangle glasses bluehoodie, friendly enthusiastic smile, authentic block head and arms, sitting at wooden desk beside chunky blue PC cyan monitor. Three brightgold stars arch overhead, royalblue vibrantbackground. Character face PC andstars fill centralcircle420of512, readable100px. No text. Input images are supporting game-identity references, not edit targets; retain actual characterclothing, blockyfeatures and studio blue/wood visualidentity. Style: polished vibrant chunky3D cartoon Roblox-like promotional illustration, readable silhouettes, thick dark#1E1E2E edging, saturatedroyalblue#3D7BFF gold#FFC93C cyan, warm friendlylighting, childfriendly. Professional clearcomposition, no watermarks or signatures, no Robloxlogo, no realbrands or realconsole design, no weapons, no currencyprices or inventedgameplay. Fullbleed opaque scene, no fake phone frame, no collage contact sheet. Exact requested headline only, do not add text; no text if not requested.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-f20c8153-ae28-4128-84e3-5935f27e978d.png"
+  },
+  {
+    "file": "ad_square.png",
+    "size": [
+      1200,
+      1200
+    ],
+    "refs": [
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-staff/batch-1/V13_ContactSheet.png",
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-office/previews/Office_Overview.png"
+    ],
+    "scene": "Square1:1 Robloxad: happy developer Mila accurate brown angularhair blackglasses bluehoodie foreground, bluePC cyanmonitor on wooden desk, behind compact EXACTLY3story glassstudioHQ, three equal floors flatroof; scene feels ourwoodfloorbluechair gamestudio. Goldenstars andblue cyan accents. Veryclear bold huge headline at top verbatim 'BUILD YOUR GAME STUDIO!' on3shortlines, no othertext. Subjectandtext10%margin.",
+    "prompt": "Use case: ads-marketing. Asset for Build Your Game Studio Tycoon. Primary request: Square1:1 Robloxad: happy developer Mila accurate brown angularhair blackglasses bluehoodie foreground, bluePC cyanmonitor on wooden desk, behind compact EXACTLY3story glassstudioHQ, three equal floors flatroof; scene feels ourwoodfloorbluechair gamestudio. Goldenstars andblue cyan accents. Veryclear bold huge headline at top verbatim 'BUILD YOUR GAME STUDIO!' on3shortlines, no othertext. Subjectandtext10%margin. Input images are supporting game-identity references, not edit targets; retain actual characterclothing, blockyfeatures and studio blue/wood visualidentity. Style: polished vibrant chunky3D cartoon Roblox-like promotional illustration, readable silhouettes, thick dark#1E1E2E edging, saturatedroyalblue#3D7BFF gold#FFC93C cyan, warm friendlylighting, childfriendly. Professional clearcomposition, no watermarks or signatures, no Robloxlogo, no realbrands or realconsole design, no weapons, no currencyprices or inventedgameplay. Fullbleed opaque scene, no fake phone frame, no collage contact sheet. Exact requested headline only, do not add text; no text if not requested.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-102e29a8-43a3-4520-8c64-06f30b47830e.png"
+  },
+  {
+    "file": "ad_wide.png",
+    "size": [
+      1200,
+      628
+    ],
+    "refs": [
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-staff/batch-1/V13_ContactSheet.png",
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-office/previews/Office_Overview.png"
+    ],
+    "scene": "Wide1200:628 aspectratio advertising art. Left45% spacious vibrantroyalblue field with verylarge legible bold whitegold headline verbatim 'BUILD YOUR GAME STUDIO!' onthree shortlines. Right55% happy developer Mila brownangularhair blackglasses bluehoodie presenting chunkybluePC cyanmonitor onwoodendesk. Behind them EXACTLY3story squareglassstudio with3equalwindowrows flatroof, bluechairswoodfloor visible. Goldstars andgrowtharrow, samegameidentity. 8%outermargins no othertext.",
+    "prompt": "Use case: ads-marketing. Asset for Build Your Game Studio Tycoon. Primary request: Wide1200:628 aspectratio advertising art. Left45% spacious vibrantroyalblue field with verylarge legible bold whitegold headline verbatim 'BUILD YOUR GAME STUDIO!' onthree shortlines. Right55% happy developer Mila brownangularhair blackglasses bluehoodie presenting chunkybluePC cyanmonitor onwoodendesk. Behind them EXACTLY3story squareglassstudio with3equalwindowrows flatroof, bluechairswoodfloor visible. Goldstars andgrowtharrow, samegameidentity. 8%outermargins no othertext. Input images are supporting game-identity references, not edit targets; retain actual characterclothing, blockyfeatures and studio blue/wood visualidentity. Style: polished vibrant chunky3D cartoon Roblox-like promotional illustration, readable silhouettes, thick dark#1E1E2E edging, saturatedroyalblue#3D7BFF gold#FFC93C cyan, warm friendlylighting, childfriendly. Professional clearcomposition, no watermarks or signatures, no Robloxlogo, no realbrands or realconsole design, no weapons, no currencyprices or inventedgameplay. Fullbleed opaque scene, no fake phone frame, no collage contact sheet. Exact requested headline only, do not add text; no text if not requested.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-905f1a68-05c9-462f-84c1-2177a70b9c8e.png"
+  }
+]

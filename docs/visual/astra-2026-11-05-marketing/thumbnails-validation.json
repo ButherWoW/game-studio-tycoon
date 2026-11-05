@@ -1,0 +1,66 @@
+[
+  {
+    "file": "thumb_v2_2.png",
+    "sourceSize": [
+      1672,
+      941
+    ],
+    "size": [
+      1920,
+      1080
+    ],
+    "opaque": true,
+    "normalization": "proportional fit with centered crop, no stretching",
+    "sha256": "5031fd9e8113abec0f656b53e010535922c50e21b81ba34a2a325298a030ae2c",
+    "visualReview": "PASS: title complete/readable, relevant actual assets recognizable, no watermark/brands, proportional16:9 crop retains all important features",
+    "subjectCheck": "Mila blue/glasses, Tim pink/beret, Zoe green/doublebuns; office PC collaboration"
+  },
+  {
+    "file": "thumb_v2_3.png",
+    "sourceSize": [
+      1672,
+      941
+    ],
+    "size": [
+      1920,
+      1080
+    ],
+    "opaque": true,
+    "normalization": "proportional fit with centered crop, no stretching",
+    "sha256": "f21f3121697e7824e2eb7c93e8f584ed6122cb7b36c02e6ec152f8de3bc0236a",
+    "visualReview": "PASS: title complete/readable, relevant actual assets recognizable, no watermark/brands, proportional16:9 crop retains all important features",
+    "subjectCheck": "MAKE A HIT, score10/10, stars/coins/cartridge/reviewer medallions"
+  },
+  {
+    "file": "thumb_v2_4.png",
+    "sourceSize": [
+      1672,
+      941
+    ],
+    "size": [
+      1920,
+      1080
+    ],
+    "opaque": true,
+    "normalization": "proportional fit with centered crop, no stretching",
+    "sha256": "b55062155f43fd2ef496241065f9e4b7c182674bf04219e6c3085b864e20ce3f",
+    "visualReview": "PASS: title complete/readable, relevant actual assets recognizable, no watermark/brands, proportional16:9 crop retains all important features",
+    "subjectCheck": "MEET YOUR MASCOT; actual bluepixelcat cyan muzzle pinkear cubes, developer, golden crown blankplate"
+  },
+  {
+    "file": "thumb_v2_5.png",
+    "sourceSize": [
+      1672,
+      941
+    ],
+    "size": [
+      1920,
+      1080
+    ],
+    "opaque": true,
+    "normalization": "proportional fit with centered crop, no stretching",
+    "sha256": "7cc54b6c7a48b08bc865d8771a0d3f29ce6c44da5888c886f9c47db977741538",
+    "visualReview": "PASS: title complete/readable, relevant actual assets recognizable, no watermark/brands, proportional16:9 crop retains all important features",
+    "subjectCheck": "CHOOSE YOUR STYLE; exactly4 matching workstation panels CLASSIC/NEON/COZY/MINIMAL, actual palette distinctions"
+  }
+]

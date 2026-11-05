@@ -1,0 +1,68 @@
+[
+  {
+    "file": "group_icon.png",
+    "w": 512,
+    "h": 512,
+    "desc": "Square512x512 Roblox community group emblem. A large golden five-point studio star above a compact unbranded blue desktop computer, with two small friendly cuboid developer heads peeking from each side (Mila and Tim pinkshirt/beret), centered compact composition. Deep royalblue gradient background edge to edge, no decorative outer disk or guide circles. ALL important foreground fits well inside a central circle diameter400px with generous margins, background only at corners. Readable100x100.",
+    "prompt": "Use case: ads-marketing. Create polished original cartoon chunky3D Roblox-like block-figure game art for our own Build Your Game Studio Tycoon. Image1 is authentic employee character reference, Image2 authentic office room/furniture reference, Image3 authentic own mascot models reference. Keep blocky cuboid heads and bodies, own friendly simple faces and chunky hair. Mila: brown block hair, black rectangular glasses, royalblue code hoodie. Pixelcat: royalblue cuboid cat, pink inner block ears, cyan rectangular muzzle and big round white eyes. Bright blue #3D7BFF / golden #FFC93C highlights with dark #1E1E2E accents, appealing professional playful game art, dimensional light, clear silhouette. Completely opaque background. No text, letters, digits, typography, watermark, real brand or platform logos anywhere. Screens show only simple geometric blue interfaces with no writing. Square512x512 Roblox community group emblem. A large golden five-point studio star above a compact unbranded blue desktop computer, with two small friendly cuboid developer heads peeking from each side (Mila and Tim pinkshirt/beret), centered compact composition. Deep royalblue gradient background edge to edge, no decorative outer disk or guide circles. ALL important foreground fits well inside a central circle diameter400px with generous margins, background only at corners. Readable100x100.",
+    "refs": [
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-staff/batch-1/V13_ContactSheet.png",
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-office/previews/Office_Overview.png",
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-mascots/batch-1/Models_ContactSheet.png"
+    ],
+    "source": "/Users/erland/.codex/generated_images/01a1ac0c-bcbb-7b73-8b48-2c4f27754e68/exec-70faa890-7238-4f28-a492-8638ff0e3e35.png",
+    "edits": [
+      {
+        "prompt": "Use case: precise-object-edit. Preserve this exact square social icon art, character identities, colors, expressions, objects, style and lighting. Single change only: reduce the entire foreground composition uniformly in size by 25 percent and center it in the canvas, filling the newly revealed space with a seamless continuation of the existing blue gradient background. All foreground objects including the star, headset, all body parts, cat, desk and computer if present must now fit compactly within central circle diameter78 percent of imagewidth; the circle is an imaginary layout constraint and MUST NOT be drawn. Keep square aspect. No new objects, no text, no border, no frame, no disk or circle outline, no watermark. Fully opaque background.",
+        "source": "/Users/erland/.codex/generated_images/01a1ac0c-bcbb-7b73-8b48-2c4f27754e68/exec-70faa890-7238-4f28-a492-8638ff0e3e35.png"
+      }
+    ],
+    "initialSource": "/Users/erland/.codex/generated_images/01a1ac0c-bcbb-7b73-8b48-2c4f27754e68/exec-0d7afd12-9e74-4277-8ff5-daaa3c4f5f79.png"
+  },
+  {
+    "file": "group_banner.png",
+    "w": 1920,
+    "h": 600,
+    "desc": "Very wide landscape community group banner, native aspect ratio16:5, final1920x600. One continuous friendly studio-team scene, eye-level wide camera: Mila in blue hoodie at desk on left, Tim pinkshirt beret center, Zoe darkskin dark doublebuns greenhoodie right, all happily collaborating with monitors. Authentic office pale wood plank floor and wooden desks, navy blue office chairs, huge rectangular panoramic windows, small green potted plants. Pixelcat sits near a desk. Keep heads/monitors/main art within middle70% of height so modest banner crop retains all. No montage, no panels, no logo or headline. Soft sunny exterior beyond windows.",
+    "prompt": "Use case: ads-marketing. Create polished original cartoon chunky3D Roblox-like block-figure game art for our own Build Your Game Studio Tycoon. Image1 is authentic employee character reference, Image2 authentic office room/furniture reference, Image3 authentic own mascot models reference. Keep blocky cuboid heads and bodies, own friendly simple faces and chunky hair. Mila: brown block hair, black rectangular glasses, royalblue code hoodie. Pixelcat: royalblue cuboid cat, pink inner block ears, cyan rectangular muzzle and big round white eyes. Bright blue #3D7BFF / golden #FFC93C highlights with dark #1E1E2E accents, appealing professional playful game art, dimensional light, clear silhouette. Completely opaque background. No text, letters, digits, typography, watermark, real brand or platform logos anywhere. Screens show only simple geometric blue interfaces with no writing. Very wide landscape community group banner, native aspect ratio16:5, final1920x600. One continuous friendly studio-team scene, eye-level wide camera: Mila in blue hoodie at desk on left, Tim pinkshirt beret center, Zoe darkskin dark doublebuns greenhoodie right, all happily collaborating with monitors. Authentic office pale wood plank floor and wooden desks, navy blue office chairs, huge rectangular panoramic windows, small green potted plants. Pixelcat sits near a desk. Keep heads/monitors/main art within middle70% of height so modest banner crop retains all. No montage, no panels, no logo or headline. Soft sunny exterior beyond windows.",
+    "refs": [
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-staff/batch-1/V13_ContactSheet.png",
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-office/previews/Office_Overview.png",
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-mascots/batch-1/Models_ContactSheet.png"
+    ],
+    "source": "/Users/erland/.codex/generated_images/01a1ac0c-bcbb-7b73-8b48-2c4f27754e68/exec-9d5d3ee9-c88b-4331-adea-da4c872b4978.png"
+  },
+  {
+    "file": "discord_icon.png",
+    "w": 512,
+    "h": 512,
+    "desc": "Square512x512 community avatar icon. Closeup portrait of Mila, brown chunky hair, black rectangular glasses, cheerful simple face, royalblue hoodie, wearing an unbranded blue-and-gold headset with small microphone. A single small golden fivepoint studio star above shoulder. Blue to violet gradient background fullbleed. No Discord logo, no platformbrand. Compact full head/shoulders/headset within central circle diameter400px, generous margins, no guide ring/outerdisk/border. Readable100x100.",
+    "prompt": "Use case: ads-marketing. Create polished original cartoon chunky3D Roblox-like block-figure game art for our own Build Your Game Studio Tycoon. Image1 is authentic employee character reference, Image2 authentic office room/furniture reference, Image3 authentic own mascot models reference. Keep blocky cuboid heads and bodies, own friendly simple faces and chunky hair. Mila: brown block hair, black rectangular glasses, royalblue code hoodie. Pixelcat: royalblue cuboid cat, pink inner block ears, cyan rectangular muzzle and big round white eyes. Bright blue #3D7BFF / golden #FFC93C highlights with dark #1E1E2E accents, appealing professional playful game art, dimensional light, clear silhouette. Completely opaque background. No text, letters, digits, typography, watermark, real brand or platform logos anywhere. Screens show only simple geometric blue interfaces with no writing. Square512x512 community avatar icon. Closeup portrait of Mila, brown chunky hair, black rectangular glasses, cheerful simple face, royalblue hoodie, wearing an unbranded blue-and-gold headset with small microphone. A single small golden fivepoint studio star above shoulder. Blue to violet gradient background fullbleed. No Discord logo, no platformbrand. Compact full head/shoulders/headset within central circle diameter400px, generous margins, no guide ring/outerdisk/border. Readable100x100.",
+    "refs": [
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-staff/batch-1/V13_ContactSheet.png",
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-office/previews/Office_Overview.png",
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-mascots/batch-1/Models_ContactSheet.png"
+    ],
+    "source": "/Users/erland/.codex/generated_images/01a1ac0c-bcbb-7b73-8b48-2c4f27754e68/exec-3dfe34f9-5ad3-4c8d-bb58-1b6263903290.png",
+    "edits": [
+      {
+        "prompt": "Use case: precise-object-edit. Preserve this exact square social icon art, character identities, colors, expressions, objects, style and lighting. Single change only: reduce the entire foreground composition uniformly in size by 25 percent and center it in the canvas, filling the newly revealed space with a seamless continuation of the existing blue gradient background. All foreground objects including the star, headset, all body parts, cat, desk and computer if present must now fit compactly within central circle diameter78 percent of imagewidth; the circle is an imaginary layout constraint and MUST NOT be drawn. Keep square aspect. No new objects, no text, no border, no frame, no disk or circle outline, no watermark. Fully opaque background.",
+        "source": "/Users/erland/.codex/generated_images/01a1ac0c-bcbb-7b73-8b48-2c4f27754e68/exec-3dfe34f9-5ad3-4c8d-bb58-1b6263903290.png"
+      }
+    ],
+    "initialSource": "/Users/erland/.codex/generated_images/01a1ac0c-bcbb-7b73-8b48-2c4f27754e68/exec-ff030cb9-d4d2-4cde-a454-cbe3fd9d575e.png"
+  },
+  {
+    "file": "discord_banner.png",
+    "w": 960,
+    "h": 540,
+    "desc": "Landscape16:9 final960x540 community coding banner. Mila bluehoodie brownblockhair blackglasses at a wooden desk with bluemonitor and bluechair, friendly Tim pinkshirt/beret chatting beside her. Our authentic blueblock pixelcat with pinkears/cyanmuzzle sits beside keyboard. Cozy actualoffice pale woodfloor, huge rectangular windows with evening sky, tiny plants and subtle blue/gold glow. Bold readable three-character composition within central80%. Completely no text or platformlogos.",
+    "prompt": "Use case: ads-marketing. Create polished original cartoon chunky3D Roblox-like block-figure game art for our own Build Your Game Studio Tycoon. Image1 is authentic employee character reference, Image2 authentic office room/furniture reference, Image3 authentic own mascot models reference. Keep blocky cuboid heads and bodies, own friendly simple faces and chunky hair. Mila: brown block hair, black rectangular glasses, royalblue code hoodie. Pixelcat: royalblue cuboid cat, pink inner block ears, cyan rectangular muzzle and big round white eyes. Bright blue #3D7BFF / golden #FFC93C highlights with dark #1E1E2E accents, appealing professional playful game art, dimensional light, clear silhouette. Completely opaque background. No text, letters, digits, typography, watermark, real brand or platform logos anywhere. Screens show only simple geometric blue interfaces with no writing. Landscape16:9 final960x540 community coding banner. Mila bluehoodie brownblockhair blackglasses at a wooden desk with bluemonitor and bluechair, friendly Tim pinkshirt/beret chatting beside her. Our authentic blueblock pixelcat with pinkears/cyanmuzzle sits beside keyboard. Cozy actualoffice pale woodfloor, huge rectangular windows with evening sky, tiny plants and subtle blue/gold glow. Bold readable three-character composition within central80%. Completely no text or platformlogos.",
+    "refs": [
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-staff/batch-1/V13_ContactSheet.png",
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-office/previews/Office_Overview.png",
+      "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-mascots/batch-1/Models_ContactSheet.png"
+    ],
+    "source": "/Users/erland/.codex/generated_images/01a1ac0c-bcbb-7b73-8b48-2c4f27754e68/exec-46fd1334-d1d8-4144-aca4-7a157c5a36ba.png"
+  }
+]
