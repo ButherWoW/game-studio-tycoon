@@ -62,6 +62,8 @@ do
 end
 
 local cache: { [string]: Cached } = {}
+local REFRESH_RETRY_SECONDS = 60
+local refreshRetryAt: { [string]: number } = {} -- id -> os.clock(), раньше не перечитывать после сбоя
 local memberOf: { [Player]: string } = {}
 -- Незаписанные очки: id холдинга -> weekId -> очки. Неделя хранится вместе с очками: если flush
 -- пришёлся на смену недели, очки прошлой уходят в record.prev (или выбрасываются, если её нет),
@@ -869,12 +871,19 @@ local function refresh()
 	for _, id in memberOf do
 		ids[id] = true
 	end
+	local now = os.clock()
 	for id in ids do
 		local entry = cache[id]
-		if not entry or os.clock() - entry.fetchedAt >= Holdings.refreshSeconds then
+		local due = not entry or now - entry.fetchedAt >= Holdings.refreshSeconds
+		if due and now >= (refreshRetryAt[id] or 0) then
 			local ok, record = load(id)
 			if ok then
+				refreshRetryAt[id] = nil
 				reconcile(id, record)
+			else
+				-- DataStore не ответил: refresh идёт каждые 5 с — без паузы это GetAsync на каждый
+				-- холдинг 12 раз в минуту, пока сбой не пройдёт
+				refreshRetryAt[id] = now + REFRESH_RETRY_SECONDS
 			end
 		end
 	end

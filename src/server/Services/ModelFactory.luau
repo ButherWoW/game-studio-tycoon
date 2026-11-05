@@ -1273,6 +1273,13 @@ function ModelFactory.build(name: string): Model?
 	model.Name = name
 	builder(model)
 	model.WorldPivot = CFrame.new()
+	-- Декор: касания не нужны (Touched есть только у кнопок покупки PlotService) — меньше работы
+	-- физике на сервере с 12 участками. Seat оставляем: на него садятся касанием
+	for _, item in model:GetDescendants() do
+		if item:IsA("BasePart") and not item:IsA("Seat") and not item:IsA("VehicleSeat") then
+			item.CanTouch = false
+		end
+	end
 	return model
 end
 

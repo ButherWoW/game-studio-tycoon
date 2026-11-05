@@ -316,6 +316,14 @@ local function step(player: Player, pet: Pet)
 			then CFrame.lookAt(at, Vector3.new(facing.X, at.Y, facing.Z)) * CFrame.Angles(0, math.pi, 0)
 			else CFrame.new(at)
 	) * pet.offset
+	-- Стоит на месте: новый твин не нужен (каждый серверный твин реплицирует CFrame всем клиентам)
+	local body = pet.body.CFrame
+	if
+		(body.Position - target.Position).Magnitude < 0.05
+		and body.LookVector:Dot(target.LookVector) > 0.999
+	then
+		return
+	end
 	if pet.tween then
 		pet.tween:Cancel()
 		pet.tween = nil
