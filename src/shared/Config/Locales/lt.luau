@@ -1569,6 +1569,7 @@ return {
 	devent_board_empty = "dar niekas",
 	devent_bug_caught = "🐞 Klaida pagauta! +{money}",
 	devent_bug_top = "🏆 Tu esi #{rank} klaidų gaudytojas! Premija +{money}",
+	devent_bug_limit = "🐞 Apmokėta {count} vabzdžių — kiti skaičiuojami tik į topą",
 	devent_investor_prompt = "Gauti dotaciją",
 	devent_investor_name = "Investuotojas",
 	devent_investor_got = "📈 Investuotojo dotacija: +{money} (tu #{rank} iš {max})",

@@ -1570,6 +1570,7 @@ return {
 	devent_board_empty = "ancora nessuno",
 	devent_bug_caught = "🐞 Bug catturato! +{money}",
 	devent_bug_top = "🏆 Sei il cacciatore di bug n. {rank}! Bonus +{money}",
+	devent_bug_limit = "🐞 {count} insetti pagati: i prossimi contano solo per la classifica",
 	devent_investor_prompt = "Ottieni i fondi",
 	devent_investor_name = "Investitore",
 	devent_investor_got = "📈 Fondi dall'investitore: +{money} (sei il n. {rank} su {max})",

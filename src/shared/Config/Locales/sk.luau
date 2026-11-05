@@ -1570,6 +1570,7 @@ return {
 	devent_board_empty = "zatiaľ nikto",
 	devent_bug_caught = "🐞 Chrobák chytený! +{money}",
 	devent_bug_top = "🏆 Si lovec chrobákov #{rank}! Bonus +{money}",
+	devent_bug_limit = "🐞 Vyplatených {count} chrobákov — ďalšie sa rátajú len do rebríčka",
 	devent_investor_prompt = "Získať grant",
 	devent_investor_name = "Investor",
 	devent_investor_got = "📈 Grant od investora: +{money} (si #{rank} z {max})",

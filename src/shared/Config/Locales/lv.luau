@@ -1569,6 +1569,7 @@ return {
 	devent_board_empty = "vēl neviena",
 	devent_bug_caught = "🐞 Kļūda noķerta! +{money}",
 	devent_bug_top = "🏆 Tu esi #{rank} kļūdu ķērājs! Bonuss +{money}",
+	devent_bug_limit = "🐞 Samaksāts par {count} kukaiņiem — pārējie skaitās tikai topā",
 	devent_investor_prompt = "Saņemt grantu",
 	devent_investor_name = "Investors",
 	devent_investor_got = "📈 Investora grants: +{money} (tu esi #{rank} no {max})",

@@ -1570,6 +1570,7 @@ return {
 	devent_board_empty = "zatím nikdo",
 	devent_bug_caught = "🐞 Brouk chycen! +{money}",
 	devent_bug_top = "🏆 Jsi lovec brouků #{rank}! Bonus +{money}",
+	devent_bug_limit = "🐞 Proplaceno {count} brouků — další se počítají jen do žebříčku",
 	devent_investor_prompt = "Získat grant",
 	devent_investor_name = "Investor",
 	devent_investor_got = "📈 Grant od investora: +{money} (jsi #{rank} z {max})",

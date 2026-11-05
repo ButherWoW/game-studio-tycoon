@@ -1570,6 +1570,7 @@ return {
 	devent_board_empty = "ingen än",
 	devent_bug_caught = "🐞 Bugg fångad! +{money}",
 	devent_bug_top = "🏆 Du är buggfångare #{rank}! Bonus +{money}",
+	devent_bug_limit = "🐞 {count} insekter utbetalda — fler räknas bara till topplistan",
 	devent_investor_prompt = "Ta emot bidrag",
 	devent_investor_name = "Investerare",
 	devent_investor_got = "📈 Investerarbidrag: +{money} (du är #{rank} av {max})",

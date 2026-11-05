@@ -1569,6 +1569,7 @@ return {
 	devent_board_empty = "अभी कोई नहीं",
 	devent_bug_caught = "🐞 कीड़ा पकड़ा! +{money}",
 	devent_bug_top = "🏆 तुम #{rank} कीड़ा पकड़ने वाले हो! बोनस +{money}",
+	devent_bug_limit = "🐞 {count} कीड़ों का भुगतान — आगे के कीड़े सिर्फ़ टॉप में गिने जाएँगे",
 	devent_investor_prompt = "ग्रांट लो",
 	devent_investor_name = "निवेशक",
 	devent_investor_got = "📈 निवेशक ग्रांट: +{money} (तुम {max} में से #{rank})",
