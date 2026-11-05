@@ -13,6 +13,8 @@ local GameJam = require(ReplicatedStorage.Shared.Config.GameJam)
 local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local QuestWindow = require(script.Parent.QuestWindow)
@@ -23,6 +25,9 @@ local MENU_SLOT = 16
 local ROW_HEIGHT = 64
 local ROW_COLOR = Color3.fromRGB(44, 46, 66)
 local PREMIUM_COLOR = Color3.fromRGB(255, 170, 60)
+-- Картинки V18 (Config/Images.social): шапки вкладок 4:1 и рамка иконки награды уровня
+local BANNER_HEIGHT = 150
+local TIER_ICON = 48
 
 local SeasonWindow = {}
 
@@ -112,8 +117,63 @@ local function claimedSet(list: any): { [number]: boolean }
 	return set
 end
 
+-- Шапка вкладки (season_banner / gamejam_banner) первой строкой; id 0 — шапки нет
+local function banner(frame: ScrollingFrame, id: number, order: number)
+	if id <= 0 then
+		return
+	end
+	local holder = Instance.new("Frame")
+	holder.BackgroundTransparency = 1
+	holder.Size = UDim2.new(1, -8, 0, BANNER_HEIGHT)
+	holder.LayoutOrder = order
+	local image = ArtIcon.fill(holder, id)
+	if image then
+		image.ZIndex = 1
+	end
+	holder.Parent = frame
+end
+
+-- Рамка уровня (season_tier_free / premium) с иконкой награды внутри; без иконки — эмодзи вида
+local function tierIcon(cell: Frame, reward: Season.Reward, frameId: number, dim: boolean)
+	local slot = Instance.new("Frame")
+	slot.BackgroundTransparency = 1
+	slot.AnchorPoint = Vector2.new(0, 0.5)
+	slot.Position = UDim2.fromScale(0, 0.5)
+	slot.Size = UDim2.fromOffset(TIER_ICON, TIER_ICON)
+	slot.Parent = cell
+	local _, emoji = ArtIcon.rewardKind(reward)
+	local rewardId = ArtIcon.rewardImage(reward)
+	local inner = Instance.new("Frame")
+	inner.BackgroundTransparency = 1
+	inner.AnchorPoint = Vector2.new(0.5, 0.5)
+	inner.Position = UDim2.fromScale(0.5, 0.5)
+	inner.Size = UDim2.fromScale(0.62, 0.62)
+	inner.Parent = slot
+	local icon = ArtIcon.fill(inner, rewardId)
+	if icon then
+		icon.ZIndex = 1
+		icon.ImageTransparency = if dim then 0.45 else 0
+	else
+		local label = Ui.label(inner, emoji, TIER_ICON)
+		label.TextXAlignment = Enum.TextXAlignment.Center
+		label.Size = UDim2.fromScale(1, 1)
+		label.TextTransparency = if dim then 0.45 else 0
+	end
+	local frame = ArtIcon.fill(slot, frameId)
+	if frame then
+		frame.ZIndex = 2 -- рамка поверх иконки: центр у PNG прозрачный
+	end
+end
+
 -- Половина строки уровня: награда и кнопка
-local function rewardCell(row: Frame, x: number, reward: Season.Reward, state: string, onClaim: () -> ())
+local function rewardCell(
+	row: Frame,
+	x: number,
+	reward: Season.Reward,
+	state: string,
+	frameId: number,
+	onClaim: () -> ()
+)
 	local cell = Instance.new("Frame")
 	cell.BackgroundTransparency = 1
 	cell.Position = UDim2.new(x, 4, 0, 4)
@@ -123,6 +183,11 @@ local function rewardCell(row: Frame, x: number, reward: Season.Reward, state: s
 	local text = Ui.label(cell, describe(reward), 18, Enum.Font.GothamMedium, color)
 	text.TextWrapped = true
 	text.Size = UDim2.new(0.62, 0, 1, 0)
+	if frameId > 0 then
+		tierIcon(cell, reward, frameId, state == "claimed")
+		text.Position = UDim2.fromOffset(TIER_ICON + 4, 0)
+		text.Size = UDim2.new(0.62, -(TIER_ICON + 4), 1, 0)
+	end
 	local buttonText = if state == "claimed"
 		then t("quests_claimed")
 		elseif state == "ready" then t("quests_claim")
@@ -157,6 +222,7 @@ local function renderSeason(frame: ScrollingFrame)
 	local tier = tonumber(s.tier) or 0
 	local xp = tonumber(s.xp) or 0
 	local maxTier = #Season.tiers
+	banner(frame, Images.social.seasonBanner, nextOrder())
 	local header = Ui.label(
 		frame,
 		t(
@@ -205,6 +271,7 @@ local function renderSeason(frame: ScrollingFrame)
 	if s.premium then
 		local owned = Ui.label(buyRow, t("season_premium_active"), 42, nil, PREMIUM_COLOR)
 		owned.Size = UDim2.new(0.5, -4, 1, 0)
+		ArtIcon.prefix(owned, "⭐", Images.social.seasonPremiumBadge, 36)
 	else
 		local pass = buyButton(
 			buyRow,
@@ -254,6 +321,7 @@ local function renderSeason(frame: ScrollingFrame)
 	local premiumHead = Ui.label(heads, t("season_track_premium"), 22, nil, PREMIUM_COLOR)
 	premiumHead.Position = UDim2.new(0.58, 4, 0, 0)
 	premiumHead.Size = UDim2.new(0.42, -8, 1, 0)
+	ArtIcon.prefix(premiumHead, "⭐", Images.social.seasonPremiumBadge, 22)
 	heads.Parent = frame
 
 	for n, entry in Season.tiers do
@@ -274,7 +342,7 @@ local function renderSeason(frame: ScrollingFrame)
 		num.Position = UDim2.new(0, 4, 0.5, -12)
 		num.Size = UDim2.new(0.16, -8, 0, 24)
 		local freeState = if claimedFree[n] then "claimed" elseif reached then "ready" else "locked"
-		rewardCell(row, 0.16, entry.free, freeState, function()
+		rewardCell(row, 0.16, entry.free, freeState, Images.social.seasonTierFree, function()
 			LiveOpsRemotes.ClaimSeason:FireServer("free", n)
 		end)
 		local premiumState = if claimedPremium[n]
@@ -282,7 +350,7 @@ local function renderSeason(frame: ScrollingFrame)
 			elseif not s.premium then "premium"
 			elseif reached then "ready"
 			else "locked"
-		rewardCell(row, 0.58, entry.premium, premiumState, function()
+		rewardCell(row, 0.58, entry.premium, premiumState, Images.social.seasonTierPremium, function()
 			LiveOpsRemotes.ClaimSeason:FireServer("premium", n)
 		end)
 		row.Parent = frame
@@ -297,6 +365,7 @@ local function renderJam(frame: ScrollingFrame)
 		return order
 	end
 	-- Тема известна и без сервера (Config/GameJam), остальное — из JamState
+	banner(frame, Images.social.gamejamBanner, nextOrder())
 	local week = GameJam.weekIndex()
 	local genreId, topicId = GameJam.theme(week)
 	local theme = Ui.label(
@@ -355,14 +424,19 @@ local function renderJam(frame: ScrollingFrame)
 	end
 	local flags = j.flags
 	if type(flags) == "table" and (flags.jamTop10 or flags.jamTop100) then
-		Ui.label(
+		local flag = Ui.label(
 			frame,
 			t(if flags.jamTop10 then "jam_flag_top10" else "jam_flag_top100"),
 			22,
 			nil,
 			Ui.colors.money
-		).LayoutOrder =
-			nextOrder()
+		)
+		flag.LayoutOrder = nextOrder()
+		if flags.jamTop10 then
+			ArtIcon.prefix(flag, "🏆", Images.social.gamejamMedalTop10, 22)
+		else
+			ArtIcon.prefix(flag, "🥇", Images.social.gamejamMedalTop100, 22)
+		end
 	end
 
 	Ui.label(frame, t("jam_top_title"), 28, Ui.titleFontFor(ClientState.lang), Ui.colors.money).LayoutOrder =
@@ -452,6 +526,11 @@ function SeasonWindow.open(startTab: Tab?)
 		end)
 		button.LayoutOrder = i
 		button.Size = UDim2.new(0.5, -4, 1, 0)
+		if name == "season" then
+			ArtIcon.prefix(button, "🎫", Images.menu.menu_season or 0, 28)
+		else
+			ArtIcon.prefix(button, "🎮", Images.social.menuGamejam, 28)
+		end
 		tabButtons[name] = button
 	end
 

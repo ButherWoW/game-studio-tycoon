@@ -8,11 +8,21 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local QuestRemotes = require(ReplicatedStorage.Shared.QuestRemotes)
 local DailyRewards = require(ReplicatedStorage.Shared.Config.DailyRewards)
 local Social = require(ReplicatedStorage.Shared.Config.Social)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local QuestWindow = require(script.Parent.QuestWindow)
 
 local DailyRewardWindow = {}
+
+-- Картинки V17 (Config/Images.daily). Рамки режутся 9-slice: углы и звезда сверху не тянутся,
+-- растягивается середина. Прямоугольники — в пикселях PNG
+local BOARD_SLICE = Rect.new(140, 140, 1060, 560) -- daily_board_bg 1200×700, деревянная рамка
+local BOARD_SLICE_SCALE = 0.3
+local CARD_SLICE = Rect.new(48, 56, 208, 280) -- daily_card_* 256×320
+local CARD_SLICE_SCALE = 0.4
+local REWARD_ICON = 44
 
 local gui: ScreenGui? = nil
 -- Автопоказ один раз, пока награда доступна: закрыл без получения — не всплывает снова
@@ -42,10 +52,17 @@ local function show(day: number)
 	Ui.windowOpened()
 
 	local window = Ui.window(screen, "Window", Vector2.new(760, 380))
+	local board =
+		ArtIcon.fill(window, Images.daily.boardBg, Enum.ScaleType.Slice, BOARD_SLICE, BOARD_SLICE_SCALE)
+	if board then
+		Ui.corner(board)
+	end
 	local title = Ui.label(window, ClientState.t("daily_reward_title"), 40, Ui.titleFontFor(ClientState.lang))
 	title.TextXAlignment = Enum.TextXAlignment.Center
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -80, 0, 40)
+	-- Огонёк серии слева от заголовка (номер дня серии — на плитке и кнопке)
+	ArtIcon.prefix(title, "", Images.daily.streakFlame, 40)
 	local closeButton = Ui.button(window, "×", Ui.colors.bad, close)
 	closeButton.AnchorPoint = Vector2.new(1, 0)
 	closeButton.Position = UDim2.new(1, -12, 0, 10)
@@ -72,6 +89,15 @@ local function show(day: number)
 			elseif i < day then Ui.colors.locked
 			else Color3.fromRGB(44, 46, 66)
 		Ui.corner(tile, 10)
+		-- Рамка карточки по состоянию: сегодня, забрано, завтра, дальше
+		local cardId = if i == day
+			then Images.daily.cardToday
+			elseif i < day then Images.daily.cardClaimed
+			elseif i == day + 1 then Images.daily.cardNormal
+			else Images.daily.cardLocked
+		if ArtIcon.fill(tile, cardId, Enum.ScaleType.Slice, CARD_SLICE, CARD_SLICE_SCALE) then
+			tile.BackgroundTransparency = 1
+		end
 		local dayLabel = Ui.label(
 			tile,
 			ClientState.t("daily_reward_day", { day = i }),
@@ -87,6 +113,16 @@ local function show(day: number)
 		text.TextWrapped = true
 		text.Position = UDim2.fromOffset(4, 40)
 		text.Size = UDim2.new(1, -8, 1, -46)
+		-- Иконка награды по виду над подписью; подпись (суммы) остаётся ниже, чуть мельче
+		local icon = ArtIcon.fill(tile, ArtIcon.rewardImage(reward))
+		if icon then
+			icon.ZIndex = 1
+			icon.AnchorPoint = Vector2.new(0.5, 0)
+			icon.Position = UDim2.new(0.5, 0, 0, 36)
+			icon.Size = UDim2.fromOffset(REWARD_ICON, REWARD_ICON)
+			text.Position = UDim2.fromOffset(4, 40 + REWARD_ICON + 4)
+			text.Size = UDim2.new(1, -8, 1, -(46 + REWARD_ICON + 4))
+		end
 		tile.Parent = tiles
 	end
 

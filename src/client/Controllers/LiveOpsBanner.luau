@@ -6,6 +6,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local LiveOpsRemotes = require(ReplicatedStorage.Shared.LiveOpsRemotes)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
@@ -15,6 +16,8 @@ local TOAST_HEIGHT = 32
 local TOAST_WIDTH = 420
 local TOAST_SECONDS = 4
 local HACKATHON_COLOR = Color3.fromRGB(150, 110, 255)
+-- hackathon_banner.png 1600×300 (Images.social.hackathonBanner): над текстовой плашкой
+local ART_HEIGHT = BANNER_WIDTH * 300 // 1600
 
 local LiveOpsBanner = {}
 
@@ -54,14 +57,33 @@ end
 
 function LiveOpsBanner.start()
 	local stack = Ui.bannerStack()
-	local banner = Ui.label(stack, "", BANNER_HEIGHT, Ui.titleFontFor(ClientState.lang), Ui.colors.text)
-	banner.Name = "HackathonBanner"
-	banner.LayoutOrder = 5
+	-- Обёртка в стеке: картинка хакатона (если загружена) и под ней плашка с отсчётом.
+	-- Без картинки обёртка ровно по плашке — как раньше
+	local artId = Images.social.hackathonBanner
+	local artHeight = if artId > 0 then ART_HEIGHT else 0
+	local holder = Instance.new("Frame")
+	holder.Name = "HackathonBanner"
+	holder.BackgroundTransparency = 1
+	holder.LayoutOrder = 5
+	holder.Size = UDim2.fromOffset(BANNER_WIDTH, artHeight + BANNER_HEIGHT)
+	holder.Visible = false
+	holder.Parent = stack
+	if artId > 0 then
+		local art = Instance.new("ImageLabel")
+		art.Name = "Art"
+		art.BackgroundTransparency = 1
+		art.Size = UDim2.fromOffset(BANNER_WIDTH, artHeight)
+		art.ScaleType = Enum.ScaleType.Fit
+		art.Image = "rbxassetid://" .. artId
+		Ui.corner(art, 10)
+		art.Parent = holder
+	end
+	local banner = Ui.label(holder, "", BANNER_HEIGHT, Ui.titleFontFor(ClientState.lang), Ui.colors.text)
+	banner.Position = UDim2.fromOffset(0, artHeight)
 	banner.Size = UDim2.fromOffset(BANNER_WIDTH, BANNER_HEIGHT)
 	banner.BackgroundTransparency = 0.2
 	banner.BackgroundColor3 = HACKATHON_COLOR
 	banner.TextXAlignment = Enum.TextXAlignment.Center
-	banner.Visible = false
 	Ui.corner(banner, 10)
 
 	LiveOpsRemotes.LiveOpsToast.OnClientEvent:Connect(function(payload)
@@ -94,7 +116,7 @@ function LiveOpsBanner.start()
 						ClientState.t("hackathon_soon", { x = multiplier, time = clock(startsAt - now) })
 				end
 			end
-			banner.Visible = visible
+			holder.Visible = visible
 			task.wait(1)
 		end
 	end)
