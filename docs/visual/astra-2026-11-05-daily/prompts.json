@@ -1,0 +1,112 @@
+[
+  {
+    "filename": "daily_board_bg.png",
+    "size": [
+      1200,
+      700
+    ],
+    "transparent": false,
+    "prompt": "Use case: ui-mockup. Production Game Studio Tycoon original UI asset, polished cartoon low-poly, thick#1E1E2E outline, blue#3D7BFF/gold#FFC93C consistent visual family. Child-friendly, no weapons, brands, logos, watermark, signatures. Landscape aspect12:7 studio reward calendar background: warm wood outer frame, elegant navy recessed notice board, gold corner brackets and subtle blue light. Large completely empty central rectangle occupying80%canvas, space for seven game-rendered cards in a row or two rows on mobile. Do not draw cards, labels, rewards or text. Decorative tiny plants only in bottom corners outside content zone.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-e8fc828c-9d79-4d22-9c6d-1233f6df4a4a.png"
+  },
+  {
+    "filename": "daily_card_normal.png",
+    "size": [
+      256,
+      320
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Production Game Studio Tycoon original UI asset, polished cartoon low-poly, thick#1E1E2E outline, blue#3D7BFF/gold#FFC93C consistent visual family. Child-friendly, no weapons, brands, logos, watermark, signatures. Portrait aspect4:5 empty reward-card UI panel. Rounded navy-blue rectangle with thick#1E1E2E outline, a blue rim#3D7BFF and softly shaded empty center. No reward illustration, numbers, words or labels, no buttons. Transparent outside rounded corners. Keep broad empty middle for game-rendered reward and text.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-bcaa4f1a-939d-43c5-9ebb-18815aa6e381.png"
+  },
+  {
+    "filename": "daily_card_today.png",
+    "size": [
+      256,
+      320
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Production Game Studio Tycoon original UI asset, polished cartoon low-poly, thick#1E1E2E outline, blue#3D7BFF/gold#FFC93C consistent visual family. Child-friendly, no weapons, brands, logos, watermark, signatures. Edit reference reward card. Keep EXACTLY same panel shape, proportions and empty center. Change rim to glowing golden#FFC93C and subtle warm gold top highlight to mark today's reward. No icons, no text, no reward illustration. Transparent exterior.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-6d80e78a-9ca8-42e6-ae67-87483bd113a3.png"
+  },
+  {
+    "filename": "daily_card_claimed.png",
+    "size": [
+      256,
+      320
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Production Game Studio Tycoon original UI asset, polished cartoon low-poly, thick#1E1E2E outline, blue#3D7BFF/gold#FFC93C consistent visual family. Child-friendly, no weapons, brands, logos, watermark, signatures. Edit reference reward card. Keep EXACTLY same panel shape, proportions and empty center. Use subdued teal rim and add one bold green#3DDC84 checkmark in a small bottom-right circular tab. No text or reward illustration. Transparent exterior.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-dfc7ffc7-4e76-46ff-bda5-b3be8df651ae.png"
+  },
+  {
+    "filename": "daily_card_locked.png",
+    "size": [
+      256,
+      320
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Production Game Studio Tycoon original UI asset, polished cartoon low-poly, thick#1E1E2E outline, blue#3D7BFF/gold#FFC93C consistent visual family. Child-friendly, no weapons, brands, logos, watermark, signatures. Edit reference reward card. Keep EXACTLY same panel shape, proportions and empty center. Darken navy panel and use muted gray-blue rim#46485A, one small closed padlock icon in bottom-right tab. No text or reward illustration. Transparent exterior.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-4cbddea7-8220-45f1-a6e6-efd67f6e5ae8.png"
+  },
+  {
+    "filename": "reward_cash.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Production Game Studio Tycoon original UI asset, polished cartoon low-poly, thick#1E1E2E outline, blue#3D7BFF/gold#FFC93C consistent visual family. Child-friendly, no weapons, brands, logos, watermark, signatures. Square1:1 isolated reward icon: neat fan of generic blue-green banknotes with blank circular seal, three chunky gold coins with simple star embossing. No words, numerals or real currency symbols. Glossy cartoon3D, thicknavyoutline.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-635580a9-58de-4004-a834-4f526366506e.png"
+  },
+  {
+    "filename": "reward_coffee.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Production Game Studio Tycoon original UI asset, polished cartoon low-poly, thick#1E1E2E outline, blue#3D7BFF/gold#FFC93C consistent visual family. Child-friendly, no weapons, brands, logos, watermark, signatures. Square1:1 isolated reward icon: friendly plump warm coffee mug with cream foam, blue body and gold handle, three soft steam curls. No writing or logo. Thicknavyoutline, glossy cartoon3D.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-cce3d056-4317-43aa-b8a3-973977fe191d.png"
+  },
+  {
+    "filename": "reward_research.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Production Game Studio Tycoon original UI asset, polished cartoon low-poly, thick#1E1E2E outline, blue#3D7BFF/gold#FFC93C consistent visual family. Child-friendly, no weapons, brands, logos, watermark, signatures. Square1:1 isolated reward icon: chunky round laboratory flask with bright turquoise liquid, blue neck collar, two rising round bubbles and one golden star sparkle. No writing, thicknavyoutline, glossy cartoon3D.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-f7ac7664-18a8-4034-932d-0f13c57e4c6f.png"
+  },
+  {
+    "filename": "reward_skin.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Production Game Studio Tycoon original UI asset, polished cartoon low-poly, thick#1E1E2E outline, blue#3D7BFF/gold#FFC93C consistent visual family. Child-friendly, no weapons, brands, logos, watermark, signatures. Square1:1 isolated reward icon: one neatly displayed plump blue t-shirt with golden collar and original small four-pixel colorful geometric patch. No words, logos, hanger or human. Thicknavyoutline, glossy cartoon3D.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-4680a533-7486-438f-8ec9-fbeff61f075e.png"
+  },
+  {
+    "filename": "reward_big.png",
+    "size": [
+      256,
+      256
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Production Game Studio Tycoon original UI asset, polished cartoon low-poly, thick#1E1E2E outline, blue#3D7BFF/gold#FFC93C consistent visual family. Child-friendly, no weapons, brands, logos, watermark, signatures. Square1:1 isolated seventh-day reward icon: lovely large pink-purple#D65CA8 wrapped present with big golden#FFC93C ribbon and bow, a few gold star sparkles. Ordinary guaranteed gift box, never a treasure chest, no lid open or question mark. Thicknavyoutline, glossy cartoon3D, no text.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-d0e8215b-f12f-4da6-8d12-cc4308f08eaa.png"
+  },
+  {
+    "filename": "daily_streak_flame.png",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Use case: ui-mockup. Production Game Studio Tycoon original UI asset, polished cartoon low-poly, thick#1E1E2E outline, blue#3D7BFF/gold#FFC93C consistent visual family. Child-friendly, no weapons, brands, logos, watermark, signatures. Square1:1 isolated streak icon: one friendly rounded flame, outer vividorange/gold, warmyellow inner flame, thicknavy#1E1E2E outline, oneglossyhighlight. Simple boldsilhouette readableat24pixels. No face, text or numbers.",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-6b779a2d-930a-4076-a012-97831dd00642.png"
+  }
+]
