@@ -688,6 +688,13 @@ local function onGoHome(player: Player)
 	sendHome(player)
 end
 
+-- Очередь за участком видна клиенту: атрибут PlotWaiting = место в очереди (nil — не ждёт)
+local function refreshWaiting()
+	for index, waiter in waiting do
+		waiter:SetAttribute("PlotWaiting", index)
+	end
+end
+
 local function assignPlot(player: Player)
 	local plotsFolder = workspace:FindFirstChild("Plots")
 	if not plotsFolder then
@@ -697,6 +704,7 @@ local function assignPlot(player: Player)
 	for _, plot in plotsFolder:GetChildren() do
 		if plot:IsA("BasePart") and not owners[plot] then
 			owners[plot] = player
+			player:SetAttribute("PlotWaiting", nil)
 			player:SetAttribute("PlotName", plot.Name)
 			-- Восстанавливаем купленное, потом ставим кнопки
 			task.spawn(function()
@@ -728,6 +736,7 @@ local function assignPlot(player: Player)
 	if not table.find(waiting, player) then
 		table.insert(waiting, player)
 	end
+	refreshWaiting()
 end
 
 onMoveStudio = function(player: Player)
@@ -914,6 +923,7 @@ function PlotService.start()
 				assignPlot(nextPlayer)
 			end
 		end
+		refreshWaiting()
 	end)
 	Remotes.BuyUpgrade.OnServerEvent:Connect(onBuyUpgrade)
 	StartRemotes.GoHome.OnServerEvent:Connect(onGoHome)

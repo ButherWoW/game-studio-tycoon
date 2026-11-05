@@ -1264,6 +1264,7 @@ return {
 	studio_name_placeholder = "Наприклад: Pixel Bananas",
 	studio_name_rule = "Від {min} до {max} символів. Назву побачать усі гравці",
 	studio_name_done = "Готово",
+	fixc_plot_waiting = "⏳ Усі ділянки на сервері зайняті — чекаємо на вільну… Ти {n}-й у черзі",
 	studio_name_err_length = "Потрібно від {min} до {max} символів",
 	studio_name_err_filtered = "Фільтр Roblox не пропустив назву — придумай іншу",
 	studio_name_err_error = "Фільтр зараз недоступний — спробуй ще раз",

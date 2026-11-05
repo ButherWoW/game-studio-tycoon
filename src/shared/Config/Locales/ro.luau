@@ -1264,6 +1264,7 @@ return {
 	studio_name_placeholder = "De exemplu: Pixel Bananas",
 	studio_name_rule = "Între {min} și {max} caractere. Toți jucătorii vor vedea numele",
 	studio_name_done = "Gata",
+	fixc_plot_waiting = "⏳ Toate parcelele de pe server sunt ocupate — așteptăm una liberă… Ești al {n}-lea la rând",
 	studio_name_err_length = "Folosește între {min} și {max} caractere",
 	studio_name_err_filtered = "Filtrul Roblox n-a acceptat numele — încearcă altul",
 	studio_name_err_error = "Filtrul nu e disponibil acum — mai încearcă o dată",

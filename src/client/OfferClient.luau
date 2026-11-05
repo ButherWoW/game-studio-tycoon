@@ -16,8 +16,9 @@ local Products = require(Shared.Config.Products)
 local GamePasses = require(Shared.Config.GamePasses)
 local HitCartridges = require(Shared.Config.HitCartridges)
 local Texts = require(Shared.Config.Texts)
-local OfferRemotes = require(Shared.OfferRemotes)
-local ShopRemotes = require(Shared.ShopRemotes)
+-- Remotes предложений и магазина грузим в своём потоке (ниже): OfferClient нужен HUD, а require
+-- ждёт сервер без таймаута (аудит P2-20). До загрузки аналитика и запросы просто пропускаются
+local offerRemotes: typeof(require(Shared.OfferRemotes))? = nil
 local ArtIcon = require(script.Parent.ArtIcon)
 local ClientState = require(script.Parent.ClientState)
 local Ui = require(script.Parent.Ui)
@@ -90,7 +91,10 @@ end
 -- ===== Аналитика =====
 
 function OfferClient.track(kind: string, stage: string)
-	OfferRemotes.OfferEvent:FireServer(kind, stage)
+	local remotes = offerRemotes
+	if remotes then
+		remotes.OfferEvent:FireServer(kind, stage)
+	end
 end
 
 -- Один раз за сессию по ключу (показ баннера в магазине, кнопки у одного проекта)
@@ -551,11 +555,17 @@ end
 
 -- ===== Состояние =====
 
+local requestWanted = false
 function OfferClient.request()
-	OfferRemotes.OfferStateRequest:FireServer()
+	local remotes = offerRemotes
+	if remotes then
+		remotes.OfferStateRequest:FireServer()
+	else
+		requestWanted = true
+	end
 end
 
-OfferRemotes.OfferState.OnClientEvent:Connect(function(raw: any)
+local function onOfferState(raw: any)
 	if type(raw) ~= "table" then
 		return
 	end
@@ -570,13 +580,26 @@ OfferRemotes.OfferState.OnClientEvent:Connect(function(raw: any)
 	}
 	OfferClient.loaded = true
 	changed:Fire()
+end
+
+task.spawn(function()
+	local remotes = require(Shared.OfferRemotes)
+	offerRemotes = remotes
+	remotes.OfferState.OnClientEvent:Connect(onOfferState)
+	if requestWanted then
+		requestWanted = false
+		remotes.OfferStateRequest:FireServer()
+	end
 end)
 
-ShopRemotes.ShopState.OnClientEvent:Connect(function(raw: any)
-	if type(raw) == "table" and type(raw.passes) == "table" then
-		OfferClient.passes = raw.passes
-		changed:Fire()
-	end
+task.spawn(function()
+	local ShopRemotes = require(Shared.ShopRemotes)
+	ShopRemotes.ShopState.OnClientEvent:Connect(function(raw: any)
+		if type(raw) == "table" and type(raw.passes) == "table" then
+			OfferClient.passes = raw.passes
+			changed:Fire()
+		end
+	end)
 end)
 
 MarketplaceService.PromptProductPurchaseFinished:Connect(

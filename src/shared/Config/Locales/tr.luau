@@ -1262,6 +1262,7 @@ return {
 	studio_name_placeholder = "Örneğin: Pixel Bananas",
 	studio_name_rule = "{min} ile {max} karakter arası. Bu ismi tüm oyuncular görecek",
 	studio_name_done = "Tamam",
+	fixc_plot_waiting = "⏳ Sunucudaki tüm arsalar dolu — boş bir arsa bekleniyor… Sırada {n}. sıradasın",
 	studio_name_err_length = "{min} ile {max} karakter arası olmalı",
 	studio_name_err_filtered = "Roblox filtresi bu ismi kabul etmedi — başka bir tane dene",
 	studio_name_err_error = "Filtre şu an kullanılamıyor — tekrar dene",

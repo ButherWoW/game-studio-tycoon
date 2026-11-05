@@ -1263,6 +1263,7 @@ return {
 	studio_name_placeholder = "Например: Pixel Bananas",
 	studio_name_rule = "От {min} до {max} символа. Всички играчи ще го виждат",
 	studio_name_done = "Готово",
+	fixc_plot_waiting = "⏳ Всички парцели на сървъра са заети — чакаме свободен… Ти си №{n} на опашката",
 	studio_name_err_length = "Трябват от {min} до {max} символа",
 	studio_name_err_filtered = "Филтърът на Roblox не прие името — измисли друго",
 	studio_name_err_error = "Филтърът в момента не е достъпен — опитай пак",

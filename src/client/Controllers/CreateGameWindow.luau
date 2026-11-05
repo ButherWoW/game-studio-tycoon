@@ -31,13 +31,17 @@ local PREVIEW_REQUEST_GAP = 0.6
 -- не успевал пересчитать высоту, и строка «Что скажут критики?» наезжала
 -- на «На что тратим силы» (отчёт #2, п. 10)
 local GRID_COLUMNS = 5
-local CARD_HEIGHT = 40
+-- На тач-экране окно ужимается до 0.65: карточка 40 px была ~26 px — мимо пальца. Там крупнее (аудит P2-16)
+local CARD_HEIGHT = if Ui.touch then 56 else 40
 local CARD_GAP = 6
 -- Запас по ширине ячейки: при округлении пикселей (UIScale окна, узкий экран) пятая карточка
 -- не влезала, сетка уходила в лишний ряд и снова наезжала на строки ниже (отчёт #3, P1-3)
 local CARD_SLACK = 2
 -- Иконка жанра/темы на карточке (V21): влезает в 40 px по высоте и в пятую часть окна на телефоне
-local CARD_ICON = 24
+local CARD_ICON = if Ui.touch then 32 else 24
+-- Строка фокуса и её кнопки −/+ (квадратные): на тач-экране 56 → ~36 px после UIScale окна
+local FOCUS_ROW = if Ui.touch then 56 else 34
+local FOCUS_GAP = 8
 
 type Item = { id: string, name: string, nameEn: string, unlockCost: number, requires: Genres.Requires? }
 
@@ -227,6 +231,11 @@ local function buildGrid(
 			onCardClick(kind, item, unlocked, reason)
 		end)
 		card.LayoutOrder = i
+		-- Туториал (шаг «выбери жанр и тему») ставит стрелку на открытую карточку
+		if unlocked then
+			card:SetAttribute("TutorialPick", kind)
+			card:SetAttribute("Selected", selected == item.id)
+		end
 		-- Иконка жанра/темы (V21) слева от названия; 0 — карточка как раньше
 		local art = if kind == "genre" then Images.genres[item.id] else Images.topics[item.id]
 		ArtIcon.prefix(card, "", art or 0, CARD_ICON)
@@ -268,23 +277,23 @@ end
 local function buildFocusRow(parent: Instance, key: string, order: number)
 	local row = Instance.new("Frame")
 	row.BackgroundTransparency = 1
-	row.Size = UDim2.new(1, 0, 0, 34)
+	row.Size = UDim2.new(1, 0, 0, FOCUS_ROW)
 	row.LayoutOrder = order
 
-	local name = Ui.label(row, ClientState.t("focus_" .. key), 34)
+	local name = Ui.label(row, ClientState.t("focus_" .. key), FOCUS_ROW)
 	name.Size = UDim2.new(0.28, 0, 1, 0)
 
 	local minus = Ui.button(row, "−", Ui.colors.locked, function()
 		focus[key] = math.max(focus[key] - 1, 0)
 		onFocusChanged()
 	end)
-	minus.Size = UDim2.new(0, 34, 1, 0)
+	minus.Size = UDim2.new(0, FOCUS_ROW, 1, 0)
 	minus.Position = UDim2.new(0.28, 0, 0, 0)
 
 	local bar = Instance.new("Frame")
 	bar.BackgroundColor3 = Ui.colors.locked
-	bar.Size = UDim2.new(0.5, -84, 0, 14)
-	bar.Position = UDim2.new(0.28, 42, 0.5, -7)
+	bar.Size = UDim2.new(0.5, -2 * (FOCUS_ROW + FOCUS_GAP), 0, 14)
+	bar.Position = UDim2.new(0.28, FOCUS_ROW + FOCUS_GAP, 0.5, -7)
 	Ui.corner(bar, 7)
 	local fill = Instance.new("Frame")
 	fill.BackgroundColor3 = Ui.colors.money
@@ -297,11 +306,11 @@ local function buildFocusRow(parent: Instance, key: string, order: number)
 		focus[key] = math.min(focus[key] + 1, MAX_FOCUS)
 		onFocusChanged()
 	end)
-	plus.Size = UDim2.new(0, 34, 1, 0)
-	plus.Position = UDim2.new(0.78, -34, 0, 0)
+	plus.Size = UDim2.new(0, FOCUS_ROW, 1, 0)
+	plus.Position = UDim2.new(0.78, -FOCUS_ROW, 0, 0)
 
 	local pct =
-		Ui.label(row, focusPercent(key) .. "%", 34, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
+		Ui.label(row, focusPercent(key) .. "%", FOCUS_ROW, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
 	pct.Size = UDim2.new(0.2, 0, 1, 0)
 	pct.Position = UDim2.new(0.8, 0, 0, 0)
 	pct.TextXAlignment = Enum.TextXAlignment.Right
@@ -501,8 +510,7 @@ local function buildShell(screen: ScreenGui)
 	local close = Ui.button(window, "", Ui.colors.locked, function()
 		CreateGameWindow.close()
 	end)
-	close.Size = UDim2.fromOffset(40, 40)
-	close.Position = UDim2.new(1, -52, 0, 8)
+	Ui.headerClose(close)
 	closeButton = close
 
 	local body = Instance.new("ScrollingFrame")
@@ -691,7 +699,11 @@ function CreateGameWindow.open()
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 	gui = screen
 	pendingUnlock = nil
-	Ui.windowOpened()
+	-- Окно меню (аудит P2-19): открытие магазина/команды… закрывает «Создать игру» и наоборот —
+	-- окна больше не лежат друг на друге. Пока идёт туториал — по-старому (не взаимоисключающее):
+	-- туториал ведёт игрока по этому окну, его не должно закрыть случайное окно меню
+	local tutorial = Players.LocalPlayer:GetAttribute("TutorialActive") == true
+	Ui.windowOpened(if tutorial then nil else CreateGameWindow.close)
 	FranchiseClient.request()
 	render()
 end

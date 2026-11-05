@@ -1264,6 +1264,7 @@ return {
 	studio_name_placeholder = "Napríklad: Pixel Bananas",
 	studio_name_rule = "{min} až {max} znakov. Názov uvidia všetci hráči",
 	studio_name_done = "Hotovo",
+	fixc_plot_waiting = "⏳ Všetky pozemky na serveri sú obsadené — čakáme na voľný… Si {n}. v poradí",
 	studio_name_err_length = "Potrebuješ {min} až {max} znakov",
 	studio_name_err_filtered = "Filter Robloxu názov nepustil — vymysli iný",
 	studio_name_err_error = "Filter teraz nie je dostupný — skús to znova",

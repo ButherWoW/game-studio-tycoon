@@ -528,8 +528,7 @@ render = function()
 	local close = Ui.button(window, ClientState.t("create_close"), Ui.colors.locked, function()
 		StudioWindow.close()
 	end)
-	close.Size = UDim2.fromOffset(40, 40)
-	close.Position = UDim2.new(1, -52, 0, 8)
+	Ui.headerClose(close)
 
 	local tabs = Instance.new("Frame")
 	tabs.BackgroundTransparency = 1

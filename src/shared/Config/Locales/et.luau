@@ -1263,6 +1263,7 @@ return {
 	studio_name_placeholder = "Näiteks: Pixel Bananas",
 	studio_name_rule = "{min} kuni {max} märki. Nime näevad kõik mängijad",
 	studio_name_done = "Valmis",
+	fixc_plot_waiting = "⏳ Kõik serveri krundid on hõivatud — ootame vaba… Oled järjekorras {n}.",
 	studio_name_err_length = "Kasuta {min} kuni {max} märki",
 	studio_name_err_filtered = "Robloxi filter ei lubanud seda nime — mõtle uus",
 	studio_name_err_error = "Filter pole praegu saadaval — proovi uuesti",

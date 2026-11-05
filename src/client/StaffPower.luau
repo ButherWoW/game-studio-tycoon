@@ -5,7 +5,6 @@
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local Skills = require(ReplicatedStorage.Shared.Config.Skills)
 
 export type Power = {
@@ -91,9 +90,13 @@ function StaffPower.compact(power: Power): string
 	return line
 end
 
-StaffRemotes.StaffPower.OnClientEvent:Connect(function(raw: any)
-	StaffPower.power = StaffPower.parse(raw)
-	changed:Fire()
+-- В своём потоке: StaffRemotes ждут сервер, а модуль нужен HUD с первой секунды (аудит P2-20)
+task.spawn(function()
+	local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
+	StaffRemotes.StaffPower.OnClientEvent:Connect(function(raw: any)
+		StaffPower.power = StaffPower.parse(raw)
+		changed:Fire()
+	end)
 end)
 
 return StaffPower

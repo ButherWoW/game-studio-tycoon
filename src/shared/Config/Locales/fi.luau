@@ -1263,6 +1263,7 @@ return {
 	studio_name_placeholder = "Esimerkiksi: Pixel Bananas",
 	studio_name_rule = "{min}–{max} merkkiä. Kaikki pelaajat näkevät nimen",
 	studio_name_done = "Valmis",
+	fixc_plot_waiting = "⏳ Kaikki palvelimen tontit ovat varattuja — odotetaan vapaata… Olet jonossa {n}.",
 	studio_name_err_length = "Käytä {min}–{max} merkkiä",
 	studio_name_err_filtered = "Robloxin suodatin ei hyväksynyt nimeä — keksi toinen",
 	studio_name_err_error = "Suodatin ei ole nyt käytettävissä — yritä uudelleen",

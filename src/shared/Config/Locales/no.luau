@@ -1263,6 +1263,7 @@ return {
 	studio_name_placeholder = "For eksempel: Pixel Bananas",
 	studio_name_rule = "{min} til {max} tegn. Alle spillere vil se det",
 	studio_name_done = "Ferdig",
+	fixc_plot_waiting = "⏳ Alle tomtene på serveren er opptatt — venter på en ledig… Du er nr. {n} i køen",
 	studio_name_err_length = "Bruk {min} til {max} tegn",
 	studio_name_err_filtered = "Roblox-filteret godtok ikke navnet — prøv et annet",
 	studio_name_err_error = "Filteret er utilgjengelig akkurat nå — prøv igjen",

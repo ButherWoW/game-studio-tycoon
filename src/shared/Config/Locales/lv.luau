@@ -1263,6 +1263,7 @@ return {
 	studio_name_placeholder = "Piemēram: Pixel Bananas",
 	studio_name_rule = "No {min} līdz {max} rakstzīmēm. Nosaukumu redzēs visi spēlētāji",
 	studio_name_done = "Gatavs",
+	fixc_plot_waiting = "⏳ Visi servera zemes gabali ir aizņemti — gaidām brīvu… Tu esi {n}. rindā",
 	studio_name_err_length = "Vajag no {min} līdz {max} rakstzīmēm",
 	studio_name_err_filtered = "Roblox filtrs nepieņēma nosaukumu — izdomā citu",
 	studio_name_err_error = "Filtrs pašlaik nav pieejams — mēģini vēlreiz",
