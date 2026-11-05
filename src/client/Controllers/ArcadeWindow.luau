@@ -756,7 +756,7 @@ function ArcadeWindow.open(info: any)
 	hint.Position = UDim2.fromOffset(16, 52)
 	hint.Size = UDim2.new(1, -32, 0, 22)
 	hint.TextXAlignment = Enum.TextXAlignment.Center
-	local closeButton = Ui.button(window, "✕", Ui.colors.locked, close)
+	local closeButton = Ui.button(window, "×", Ui.colors.locked, close)
 	closeButton.Size = UDim2.fromOffset(40, 40)
 	closeButton.Position = UDim2.new(1, -52, 0, 10)
 

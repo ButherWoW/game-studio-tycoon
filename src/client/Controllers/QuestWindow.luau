@@ -38,13 +38,16 @@ local function nameOf(item: { id: string, name: string, nameEn: string }): strin
 end
 
 -- «N мин дохода (~$X)» и т.п.; деньги — подсказка по текущим данным, выдаёт сервер
-function QuestWindow.describeReward(reward: Rewards.Reward): string
+-- cash — сколько сервер на самом деле начислил за incomeMinutes (тост сразу после выдачи:
+-- ClientState ещё может быть старым, например до переезда в офис)
+function QuestWindow.describeReward(reward: Rewards.Reward, cash: number?): string
 	local t = ClientState.t
 	local parts = {}
 	if reward.incomeMinutes then
 		local data = ClientState.data
-		local money = if data
-			then RewardFormulas.incomeForMinutes({
+		local money = if cash
+			then cash
+			elseif data then RewardFormulas.incomeForMinutes({
 				-- Как RewardService.incomeState на сервере
 				score = tonumber(data.runBestScore) or 0,
 				studioLevel = data.studioLevel,
