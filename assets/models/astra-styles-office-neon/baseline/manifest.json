@@ -1,0 +1,27 @@
+{
+  "sourceCommit": "fe8c7a7300ae885931254c375bb6a652a4151a37",
+  "zones": {
+    "office": [
+      "OfficeDesk",
+      "Cooler",
+      "MeetingRoom",
+      "FloorDesk",
+      "ServerRoom",
+      "Lounge",
+      "SkyDesk",
+      "SoundStudio",
+      "ArtWall"
+    ]
+  },
+  "sources": {
+    "OfficeDesk": "assets/models/astra-office/models/OfficeDesk.rbxmx",
+    "Cooler": "assets/models/astra-office/models/Cooler.rbxmx",
+    "MeetingRoom": "assets/models/astra-office/models/MeetingRoom.rbxmx",
+    "FloorDesk": "assets/models/astra-floor/models/FloorDesk.rbxmx",
+    "ServerRoom": "assets/models/astra-floor/models/ServerRoom.rbxmx",
+    "Lounge": "assets/models/astra-floor/models/Lounge.rbxmx",
+    "SkyDesk": "assets/models/astra-sky/models/SkyDesk.rbxmx",
+    "SoundStudio": "assets/models/astra-sky/models/SoundStudio.rbxmx",
+    "ArtWall": "assets/models/astra-sky/models/ArtWall.rbxmx"
+  }
+}
