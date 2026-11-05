@@ -29,6 +29,7 @@ local CompanyEvents = require(Shared.Config.CompanyEvents)
 local Expenses = require(Shared.Config.Expenses)
 local Employees = require(Shared.Config.Employees)
 local Debug = require(Shared.Config.Debug)
+local Images = require(Shared.Config.Images)
 local StudioLayout = require(Shared.StudioLayout)
 local Upgrades = require(Shared.Config.Upgrades)
 local CompanyEventRemotes = require(Shared.CompanyEventRemotes)
@@ -318,8 +319,67 @@ local function hasStaff(profile: DataService.Profile): boolean
 	return StaffService ~= nil and next(StaffService.hired(profile)) ~= nil
 end
 
+-- Дымок над сломанным предметом (V24: текстура Images.fx.smoke). 0 — дыма нет, как раньше
+local SMOKE_NAME = "BrokenSmoke"
+
+local function syncSmoke(player: Player)
+	local plot = PlotService.getPlot(player)
+	local profile = DataService.get(player)
+	if not plot or not profile then
+		return
+	end
+	local old = plot:FindFirstChild(SMOKE_NAME)
+	local broken = hasEffect(dataOf(profile), "broken")
+	local item = broken and broken.item
+	local position: Vector3? = nil
+	if item and Images.fx.smoke > 0 then
+		for _, upgrade in Upgrades do
+			if upgrade.id == item then
+				position = upgrade.position
+				break
+			end
+		end
+	end
+	if old and position and old:GetAttribute("Item") == item then
+		return
+	end
+	if old then
+		old:Destroy()
+	end
+	if not position then
+		return
+	end
+	-- Модель: PlotService.rebuild сносит её вместе с остальными (plotChanged ставит заново)
+	local model = Instance.new("Model")
+	model.Name = SMOKE_NAME
+	model:SetAttribute("Item", item)
+	local anchor = Instance.new("Part")
+	anchor.Name = "SmokeAnchor"
+	anchor.Anchored = true
+	anchor.CanCollide = false
+	anchor.CanTouch = false
+	anchor.CanQuery = false
+	anchor.Transparency = 1
+	anchor.Size = Vector3.new(2, 0.2, 2)
+	anchor.CFrame = plot.CFrame * CFrame.new(position + Vector3.new(0, 3, 0))
+	anchor.Parent = model
+	local smoke = Instance.new("ParticleEmitter")
+	smoke.Texture = "rbxassetid://" .. Images.fx.smoke
+	smoke.Rate = 4
+	smoke.Lifetime = NumberRange.new(1.5, 2.5)
+	smoke.Speed = NumberRange.new(1.5, 3)
+	smoke.SpreadAngle = Vector2.new(20, 20)
+	smoke.Rotation = NumberRange.new(0, 360)
+	smoke.RotSpeed = NumberRange.new(-30, 30)
+	smoke.Size = NumberSequence.new(1, 2.5)
+	smoke.Transparency = NumberSequence.new(0.3, 1)
+	smoke.Parent = anchor
+	model.Parent = plot
+end
+
 local function refreshStaff(player: Player)
 	call("StaffService", "refreshPower", player)
+	syncSmoke(player)
 end
 
 -- Применить исход. damage — 1 или множитель страховки (только для урона, не для выгоды)
@@ -956,6 +1016,8 @@ function CompanyEventService.start()
 	CompanyEventRemotes.CompanyEventSeen.OnServerEvent:Connect(onSeen)
 	CompanyEventRemotes.BuyInsurance.OnServerEvent:Connect(onBuyInsurance)
 	CompanyEventRemotes.RepairItem.OnServerEvent:Connect(onRepair)
+	-- Участок пересобран (вход, переезд): вернуть дымок над сломанным предметом
+	PlotService.plotChanged:Connect(syncSmoke)
 	CompanyEventRemotes.CompanyEventStateRequest.OnServerEvent:Connect(function(player: Player)
 		if not throttled(player) then
 			CompanyEventService.pushState(player)

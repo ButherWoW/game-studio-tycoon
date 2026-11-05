@@ -12,6 +12,8 @@ local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local Employees = require(ReplicatedStorage.Shared.Config.Employees)
 local Skills = require(ReplicatedStorage.Shared.Config.Skills)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local StaffPower = require(script.Parent.Parent.StaffPower)
 local Ui = require(script.Parent.Parent.Ui)
@@ -26,6 +28,7 @@ local HELLO_SECONDS = 3
 local FLOAT_SECONDS = 1.6
 local GLOW_SECONDS = 1.1
 local EPSILON = 0.004
+local HEART_COOLDOWN = 30
 
 local player = Players.LocalPlayer
 
@@ -155,6 +158,10 @@ local function confetti(npc: Model)
 	end
 	local root = npcPart(npc, "HumanoidRootPart") or npcPart(npc, "Head")
 	if not root then
+		return
+	end
+	-- Конфетти Астры (Images.fx, V24); нет текстур — цветные квадратики, как раньше
+	if ArtIcon.burst({ Images.fx.confetti1, Images.fx.confetti2 }, CONFETTI_COUNT, root) then
 		return
 	end
 	local attachment = Instance.new("Attachment")
@@ -324,6 +331,8 @@ local function onFeel(event: any)
 		if npc then
 			glow(npc, Ui.colors.money)
 			floatUp(npc, "+1 " .. StaffPower.icons[key], Ui.colors.money)
+			-- Искры повышения (Images.fx.sparkle, V24); 0 — только вспышка контура
+			ArtIcon.burst({ Images.fx.sparkle }, 16, npcPart(npc, "HumanoidRootPart") or npcPart(npc, "Head"))
 		end
 	elseif kind == "fire" then
 		local lines = changeLines(before, after)
@@ -345,6 +354,19 @@ function StaffFeel.start()
 		if not ok then
 			warn("[StaffFeel] failed:", err)
 		end
+	end)
+	-- Настроение команды выросло (атрибут TeamMood, MoodService) — сердечки над игроком
+	-- (Images.fx.heart, V24), не чаще раза в HEART_COOLDOWN с. 0 — эффекта нет, как раньше
+	local lastMood = tonumber(player:GetAttribute("TeamMood"))
+	local heartAt = -math.huge
+	player:GetAttributeChangedSignal("TeamMood"):Connect(function()
+		local mood = tonumber(player:GetAttribute("TeamMood"))
+		if mood and lastMood and mood > lastMood and os.clock() - heartAt >= HEART_COOLDOWN then
+			if ArtIcon.burst({ Images.fx.heart }, 8) then
+				heartAt = os.clock()
+			end
+		end
+		lastMood = mood
 	end)
 end
 

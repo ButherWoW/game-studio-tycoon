@@ -44,6 +44,14 @@ local Console = {
 	-- Доход игр на своей консоли × (1 + доля% × shareRevenueBonus): 25% => ×1.25
 	shareRevenueBonus = 0.01,
 	tickSeconds = 10, -- как часто начислять роялти и таять доле
+	-- Модель консоли на 3-м этаже (V23, Астра): ServerStorage.Upgrades.Console_<Design|Prototype|Launch>
+	-- по этапу (идёт этап — его модель, запущена — Launch). Нет модели — ничего не ставим.
+	-- Место — справа от лифта (зона лифта X −23..−17, Z 21..27): габарит ≤ 6×6 → X −16..−10,
+	-- Z 23..29 (до передней стены), лицом в зал (−Z). Свободно от кнопок покупки (на 3-м этаже
+	-- 1–2 кнопки у центра, X −6..6), растений (±26, 22), звукостудии (X −24..−12, Z ≤ 18) и декора
+	stageModels = { "Console_Design", "Console_Prototype", "Console_Launch" },
+	modelPosition = Vector3.new(-13, 0.5, 26), -- от центра участка, y — над полом 3-го этажа
+	modelRotation = 180,
 
 	streamer = {
 		minStudioLevel = 2, -- с офиса

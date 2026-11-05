@@ -4,12 +4,15 @@
 -- + Gotw.hallGotwPoints за место в «Игре недели» (GotwService.lastWeekRows).
 -- На пьедестале — аватар владельца (Players:CreateHumanoidModelFromUserId, уменьшенный и
 -- закреплённый), табличка с названием студии и очками. Обновление — раз в Gotw.hallRefreshSeconds.
+-- Пьедесталы — модели Астры HallPedestal_1..3 (ServerStorage.Upgrades или ServerStorage, V28:
+-- pivot — центр основания, лицо +Z, табличка-деталь Plate), иначе цветные блоки из деталей.
 -- Название студии: из «Игры недели», иначе DataStore StudioCards_v1 (пишется при входе игрока
 -- с названием студии), иначе «Studio <имя>». Текст на табличках — через BroadcastText.
 
 local DataStoreService = game:GetService("DataStoreService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerStorage = game:GetService("ServerStorage")
 local UserService = game:GetService("UserService")
 
 local Shared = ReplicatedStorage.Shared
@@ -110,6 +113,14 @@ local function surfaceLabel(p: BasePart, name: string, size: UDim2, position: UD
 	return label
 end
 
+-- Пьедестал Астры HallPedestal_<место> (1 — золото, 2 — серебро, 3 — бронза) или nil
+local function pedestalTemplate(rank: number): Model?
+	local name = "HallPedestal_" .. rank
+	local upgrades = ServerStorage:FindFirstChild("Upgrades")
+	local found = (upgrades and upgrades:FindFirstChild(name)) or ServerStorage:FindFirstChild(name)
+	return if found and found:IsA("Model") then found else nil
+end
+
 local function build()
 	local spot = StartPark.hallOfFame
 	local park = workspace:FindFirstChild("StartPark")
@@ -174,14 +185,44 @@ local function build()
 	subtitle:SetAttribute("TextKey", "hall_subtitle")
 
 	for _, info in PEDESTALS do
-		local pedestal = part(
-			model,
-			Vector3.new(PEDESTAL_SIZE, info.height, PEDESTAL_SIZE),
-			base * CFrame.new(info.x, PLATFORM_HEIGHT + info.height / 2, 0.2),
-			info.color,
-			Enum.Material.Marble
-		)
-		pedestal.Name = "Pedestal" .. info.rank
+		local pedestal: BasePart
+		local topY = PLATFORM_HEIGHT + info.height -- верх пьедестала над помостом
+		local source = pedestalTemplate(info.rank)
+		if source then
+			-- Модель Астры: ставим основанием на помост, тексты — на табличку Plate
+			local imported = source:Clone()
+			imported.Name = "Pedestal" .. info.rank
+			for _, item in imported:GetDescendants() do
+				if item:IsA("BaseScript") then
+					item:Destroy()
+				elseif item:IsA("BasePart") then
+					item.Anchored = true
+				end
+			end
+			imported:PivotTo(base * CFrame.new(info.x, PLATFORM_HEIGHT, 0.2))
+			imported.Parent = model
+			local box, boxSize = imported:GetBoundingBox()
+			topY = box.Position.Y + boxSize.Y / 2 - base.Position.Y
+			local plate = imported:FindFirstChild("Plate", true)
+			local anchor = if plate and plate:IsA("BasePart")
+				then plate
+				else imported.PrimaryPart or imported:FindFirstChildWhichIsA("BasePart", true)
+			if not (anchor and anchor:IsA("BasePart")) then
+				imported:Destroy()
+				continue
+			end
+			pedestal = anchor :: BasePart
+		else
+			pedestal = part(
+				model,
+				Vector3.new(PEDESTAL_SIZE, info.height, PEDESTAL_SIZE),
+				base * CFrame.new(info.x, PLATFORM_HEIGHT + info.height / 2, 0.2),
+				info.color,
+				Enum.Material.Marble
+			)
+			pedestal.Name = "Pedestal" .. info.rank
+		end
+		local top = base * CFrame.new(info.x, topY, 0.2)
 		local medal = surfaceLabel(
 			pedestal,
 			"Medal",
@@ -209,7 +250,7 @@ local function build()
 		nameGui.Name = "HallName"
 		nameGui.Size = UDim2.fromScale(4, 0.8)
 		-- Над головой уменьшенного аватара (≈ 3.6 studs), под вывеской
-		nameGui.StudsOffsetWorldSpace = Vector3.new(0, info.height / 2 + 4.3, 0)
+		nameGui.StudsOffsetWorldSpace = Vector3.new(0, top.Position.Y - pedestal.Position.Y + 4.3, 0)
 		nameGui.MaxDistance = 90
 		nameGui.LightInfluence = 0
 		nameGui.Enabled = false
@@ -224,7 +265,7 @@ local function build()
 		nameLabel.Parent = nameGui
 		slots[info.rank] = {
 			pedestal = pedestal,
-			top = base * CFrame.new(info.x, PLATFORM_HEIGHT + info.height, 0.2),
+			top = top,
 			studio = studio,
 			points = points,
 			nameGui = nameGui,

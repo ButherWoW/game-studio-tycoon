@@ -12,7 +12,9 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local Images = require(ReplicatedStorage.Shared.Config.Images)
 local Titles = require(ReplicatedStorage.Shared.Config.Titles)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 
 local ATTRIBUTE = "Title"
@@ -20,6 +22,9 @@ local UNTIL_ATTRIBUTE = "TitleUntil"
 local GOTW_RANK_ATTRIBUTE = "GotwRank"
 local HIDE_ATTRIBUTE = "HideTitles"
 local HEAD_WAIT = 10
+-- Плашка Астры title_frame.png 512×96 (Images.misc.titleFrame, V28): 9-slice, центр однотонный
+local FRAME_SLICE = Rect.new(48, 24, 464, 72)
+local FRAME_SLICE_SCALE = 0.25
 
 local TitleTags = {}
 local localPlayer = Players.LocalPlayer
@@ -87,6 +92,18 @@ local function update(player: Player)
 	label.TextStrokeTransparency = 0.3
 	label.Text = tagText(player, title)
 	label.Parent = gui
+	-- Плашка под текстом (ZIndex 0 при Global); 0 — без плашки, только текст с обводкой
+	local frame =
+		ArtIcon.fill(label, Images.misc.titleFrame, Enum.ScaleType.Slice, FRAME_SLICE, FRAME_SLICE_SCALE)
+	if frame then
+		gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+		local padding = Instance.new("UIPadding")
+		padding.PaddingLeft = UDim.new(0.06, 0)
+		padding.PaddingRight = UDim.new(0.06, 0)
+		padding.PaddingTop = UDim.new(0.12, 0)
+		padding.PaddingBottom = UDim.new(0.12, 0)
+		padding.Parent = label
+	end
 	gui.Parent = localPlayer:WaitForChild("PlayerGui")
 	tags[player] = gui
 end

@@ -5,10 +5,13 @@
 -- Раз в Billboards.rotateSeconds показ меняется: купленные за Robux всегда на щитах (если их
 -- больше, чем щитов, — по кругу), за $ — по кругу на оставшихся щитах.
 -- Названия игры и студии — ввод игроков: перед показом BroadcastText (TextService для всех).
+-- Модель щита — Billboard Астры (ServerStorage.Upgrades или ServerStorage, V28: pivot — центр
+-- основания, лицо +Z, экран — плоская деталь Screen), иначе опора + панель из деталей.
 -- Подписи «Новинка от студии» и «Здесь может быть твоя игра» переводит клиент (SignText + TextKey).
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerStorage = game:GetService("ServerStorage")
 
 local Shared = ReplicatedStorage.Shared
 local AdCampaigns = require(Shared.Config.AdCampaigns)
@@ -85,7 +88,49 @@ local function onPlotPath(position: Vector3): boolean
 	return false
 end
 
-local function buildBoard(folder: Instance, index: number, base: CFrame): Board
+-- Щит Астры «Billboard» с деталью Screen или nil
+local function importedTemplate(): Model?
+	local upgrades = ServerStorage:FindFirstChild("Upgrades")
+	local found = (upgrades and upgrades:FindFirstChild("Billboard"))
+		or ServerStorage:FindFirstChild("Billboard")
+	if found and found:IsA("Model") then
+		local screen = found:FindFirstChild("Screen", true)
+		if screen and screen:IsA("BasePart") then
+			return found
+		end
+	end
+	return nil
+end
+
+-- Грань детали, которая смотрит ближе всего к look (лицо щита +Z): на неё вешаем SurfaceGui
+local function faceToward(p: BasePart, look: Vector3): Enum.NormalId
+	local best, bestDot = Enum.NormalId.Back, -math.huge
+	for _, face in Enum.NormalId:GetEnumItems() do
+		local dir = p.CFrame:VectorToWorldSpace(Vector3.FromNormalId(face))
+		local dot = dir:Dot(look)
+		if dot > bestDot then
+			best, bestDot = face, dot
+		end
+	end
+	return best
+end
+
+local function importedBoard(template: Model, index: number, base: CFrame): (Model, BasePart)
+	local model = template:Clone()
+	model.Name = "Billboard" .. index
+	for _, item in model:GetDescendants() do
+		if item:IsA("BaseScript") then
+			item:Destroy()
+		elseif item:IsA("BasePart") then
+			item.Anchored = true
+		end
+	end
+	model:PivotTo(base)
+	-- importedTemplate уже проверил, что Screen — деталь
+	return model, model:FindFirstChild("Screen", true) :: BasePart
+end
+
+local function partsBoard(index: number, base: CFrame): (Model, BasePart)
 	local model = Instance.new("Model")
 	model.Name = "Billboard" .. index
 	local pole = Instance.new("Part")
@@ -115,10 +160,21 @@ local function buildBoard(folder: Instance, index: number, base: CFrame): Board
 	strip.Color = Color3.fromRGB(255, 80, 200)
 	strip.Material = Enum.Material.Neon
 	strip.Parent = model
+	return model, panel
+end
 
-	-- Лицо модели — +Z (к спавну): грань Back
+local function buildBoard(folder: Instance, index: number, base: CFrame): Board
+	local template = importedTemplate()
+	local model: Model, panel: BasePart
+	if template then
+		model, panel = importedBoard(template, index, base)
+	else
+		model, panel = partsBoard(index, base)
+	end
+
+	-- Лицо модели — +Z (к спавну): у запасной панели это грань Back
 	local gui = Instance.new("SurfaceGui")
-	gui.Face = Enum.NormalId.Back
+	gui.Face = if template then faceToward(panel, base.LookVector * -1) else Enum.NormalId.Back
 	gui.LightInfluence = 0
 	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
 	gui.PixelsPerStud = Billboards.pixelsPerStud
