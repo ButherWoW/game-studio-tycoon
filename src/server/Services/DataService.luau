@@ -13,6 +13,7 @@ local RunService = game:GetService("RunService")
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local Debug = require(ReplicatedStorage.Shared.Config.Debug)
 local Bailiffs = require(ReplicatedStorage.Shared.Config.Bailiffs)
+local Research = require(ReplicatedStorage.Shared.Config.Research)
 
 export type Profile = {
 	cash: number,
@@ -72,6 +73,9 @@ export type Profile = {
 	-- Дерево перков Rebirth (RebirthPerkService, Config/RebirthPerks): уровни веток и
 	-- использован ли бесплатный сброс. Звёзды = rebirths − цена купленного. Rebirth не сбрасывает
 	rebirthPerks: { levels: { [string]: number }, respecUsed: boolean },
+	-- Исследования (ResearchService, Config/Research): ОИ, изученные узлы, активный таймер лаборатории
+	-- и кредиты ускорений за Robux. Rebirth не сбрасывает (кроме открытия жанра/темы за $)
+	research: Research.Data,
 	-- Титулы над головой (TitleService, Config/Titles): открытые (id -> os.time) и выбранный
 	titles: {
 		owned: { [string]: number },
@@ -192,6 +196,7 @@ local function defaultProfile(): Profile
 		console = { stage = 0, started = false, progress = 0, share = 0, earned = 0 },
 		streamer = { hype = 0, earned = 0, scores = {} },
 		rebirthPerks = { levels = {}, respecUsed = false },
+		research = Research.defaultData(),
 		titles = { owned = {}, selected = nil },
 		settings = {},
 		gotw = defaultGotw(),
@@ -615,6 +620,8 @@ local function onPlayerAdded(player: Player)
 			end
 		end
 		perks.respecUsed = perks.respecUsed == true
+		-- Исследования: изученное остаётся, битый таймер/кредиты — по умолчанию (Research.sanitize)
+		profile.research = Research.sanitize(profile.research)
 		local titles: any = profile.titles
 		if type(titles) ~= "table" then
 			titles = {}

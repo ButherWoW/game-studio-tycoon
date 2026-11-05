@@ -125,10 +125,49 @@ local deals: { [string]: OfferProduct } = {
 	skin_wizard_dev = { productId = Universe.pick({ test = 3728448090, main = 0 }), robuxPrice = 104 },
 }
 
+-- Ускорение исследования (Config/Research.TIMING, ResearchService.grantProduct). Не в list:
+-- продаются только из окна «Исследования» (выбор «⚡ Ускорить»). seconds — на сколько раньше
+-- закончится активное исследование (не раньше «сейчас»); skip = true — закончить сразу.
+-- Нет активного — ускорение копится и применяется к следующему (Robux не пропадают).
+-- Цены — предложение (владелец решает); у фиксированного товара цена одна, поэтому «Завершить
+-- сейчас» одна на все таймеры, а для коротких остатков окно показывает только −5 мин.
+export type ResearchProduct = {
+	id: string,
+	productId: number,
+	robuxPrice: number,
+	seconds: number,
+	skip: boolean,
+}
+
+local research: { ResearchProduct } = {
+	{
+		id = "researchSpeed5",
+		productId = Universe.pick({ test = 0, main = 0 }),
+		robuxPrice = 15,
+		seconds = 5 * 60,
+		skip = false,
+	},
+	{
+		id = "researchSpeed30",
+		productId = Universe.pick({ test = 0, main = 0 }),
+		robuxPrice = 49,
+		seconds = 30 * 60,
+		skip = false,
+	},
+	{
+		id = "researchSkip",
+		productId = Universe.pick({ test = 0, main = 0 }),
+		robuxPrice = 99,
+		seconds = 0,
+		skip = true,
+	},
+}
+
 return {
 	list = list,
 	offers = offers,
 	deals = deals,
+	research = research,
 	effects = {
 		coffeeSpeed = 2, -- ×2 скорость разработки
 		coffeeSeconds = 10 * 60, -- покупка продлевает от текущего конца

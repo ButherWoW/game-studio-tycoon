@@ -105,6 +105,9 @@ Developer Products, GamePasses и Badges принадлежат **вселенн
 | Products | `deals.skin_cyber_dev` | Developer Product | 3728448069 |  |
 | Products | `deals.skin_space_dev` | Developer Product | 3728448070 |  |
 | Products | `deals.skin_wizard_dev` | Developer Product | 3728448090 |  |
+| Products | `researchSpeed5` | Developer Product | — |  |
+| Products | `researchSpeed30` | Developer Product | — |  |
+| Products | `researchSkip` | Developer Product | — |  |
 | Season | `seasonPass` | Developer Product | 3728448106 |  |
 | Season | `seasonSkip` | Developer Product | 3728448111 |  |
 | Skins | `neon_streamer` | Developer Product | 3728448093 |  |
@@ -125,5 +128,5 @@ Developer Products, GamePasses и Badges принадлежат **вселенн
 | Social | `gift_golden_trophy` | Developer Product | — |  |
 | Social | `gift_cosmic_whale` | Developer Product | — |  |
 
-Всего записей: 65; создано в test: 52; заполнено в main: 0.
+Всего записей: 68; создано в test: 52; заполнено в main: 0.
 <!-- ids:end -->

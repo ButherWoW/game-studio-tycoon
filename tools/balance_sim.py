@@ -45,6 +45,9 @@ ASSUMPTIONS = {
     "offline_gaps_h": [5.0, 17.5],  # перерыв после каждой сессии
     "daily_income_minutes": 24.0,  # ежедневное задание 15 + награды за вход ~9 (среднее)
     "max_days": 40,
+    # Таймер лаборатории (Config/Research.TIMING): узел даёт эффект через minutes реального времени
+    # (идёт и офлайн). --instant-research — как до 05.11, для сравнения
+    "research_timer": True,
     # --extras: системы с офиса (этап 2+), которых нет в основной модели
     "extras": False,
     "franchise_avg": 1.09,  # средний множитель франшизы на релиз (часть игр — продолжения, усталость)
@@ -189,12 +192,15 @@ def load():
 
     res_text = read("Research")
     research = []
-    for uid, cost, req, eff in re.findall(
-        r'id = "(\w+)",[\s\S]*?cost = (\d+),\s*requires = \{([^}]*)\},\s*effect = \{([^}]*)\}', res_text
+    for uid, cost, req, eff, minutes in re.findall(
+        r'id = "(\w+)",[\s\S]*?cost = (\d+),\s*requires = \{([^}]*)\},\s*effect = \{([^}]*)\},\s*minutes = (\d+)',
+        res_text,
     ):
         research.append(
-            {"id": uid, "cost": int(cost), "requires": re.findall(r'"(\w+)"', req), "effect": eff}
+            {"id": uid, "cost": int(cost), "requires": re.findall(r'"(\w+)"', req), "effect": eff,
+             "minutes": int(minutes)}
         )
+    research_min_s = field(res_text.split("Research.TIMING")[1], "minSeconds")
     publishing_share = field(res_text.split("Research.PUBLISHING")[1], "share")
 
     off = read("Offline")
@@ -274,6 +280,7 @@ def load():
         "exp": expenses,
         "employees": employees,
         "research": research,
+        "research_min_s": research_min_s,
         "publishing": publishing_share,
         "offline": offline,
         "rebirth": rebirth,
@@ -296,6 +303,9 @@ class Sim:
         self.staff = []  # сотрудники (dict)
         self.ri = 0  # очки исследований
         self.research = set()
+        self.lab_node = None  # исследование в лаборатории (таймер) и реальное время его конца
+        self.lab_until = 0.0
+        self.lab_wait = 0.0  # сколько секунд лаборатория была занята (для отчёта)
         self.best = 0
         self.earned = 0.0
         self.ad_until = -1.0
@@ -309,7 +319,7 @@ class Sim:
         self.marks = {}
         # --all / --rebirth2 (без них всё нейтрально)
         self.rebirths = 0
-        self.perk = {"devTime": 0.0, "expenses": 0.0, "startCash": 0.0, "offline": 0.0, "hitSlots": 0.0, "researchDiscount": 0.0}
+        self.perk = {"devTime": 0.0, "expenses": 0.0, "startCash": 0.0, "offline": 0.0, "hitSlots": 0.0, "researchDiscount": 0.0, "researchTime": 0.0}
         self.golden_until = -1.0
         self.coffee_until = -1.0
         self.critics_until = -1.0
@@ -500,15 +510,28 @@ class Sim:
                 return n
         return None
 
+    def lab_tick(self):
+        """Таймер закончился (по реальному времени, с офлайном) — эффект узла применяется."""
+        if self.lab_node and self.wall >= self.lab_until:
+            self.research.add(self.lab_node["id"])
+            self.lab_node = None
+
     def buy_all(self):
+        self.lab_tick()
         bought = True
         while bought:
             bought = False
-            n = self.next_research()
+            n = self.next_research() if self.lab_node is None else None
             if n and self.ri >= n["cost"]:
                 self.ri -= n["cost"]
-                self.research.add(n["id"])
-                bought = True
+                if ASSUMPTIONS["research_timer"]:
+                    secs = max(n["minutes"] * 60 * (1 - self.perk["researchTime"]), self.c["research_min_s"])
+                    self.lab_node = n
+                    self.lab_until = self.wall + secs
+                    self.lab_wait += secs
+                else:
+                    self.research.add(n["id"])
+                    bought = True
                 continue
             # сотрудник за пустой стол / замена слабейшего
             free = len(self.desks()) - len(self.staff)
@@ -794,6 +817,8 @@ def report(sim, rows, quiet=False, rebirth_label="Хватает на 1-й Rebir
         else:
             print(f"{label:<22}| {'не дошёл':>12} |      |      |")
     print(f"Офлайн-доход всего: ${sim.offline_total:,.0f}; актив: ${sim.active_income:,.0f}")
+    if ASSUMPTIONS["research_timer"]:
+        print(f"Лаборатория: таймеры узлов {sim.lab_wait / 3600:.1f} ч реального времени, изучено {len(sim.research)}")
     if not quiet:
         print("\nдень | игра  | этап | игр  | деньги       | $/мин актив | расходы/мин | ~оценка")
         for r in rows[::2]:
@@ -866,6 +891,7 @@ def sanity(c):
 
 if __name__ == "__main__":
     ASSUMPTIONS["all"] = "--all" in sys.argv
+    ASSUMPTIONS["research_timer"] = "--instant-research" not in sys.argv
     ASSUMPTIONS["premium"] = "--premium" in sys.argv
     ASSUMPTIONS["extras"] = "--extras" in sys.argv or ASSUMPTIONS["all"]
     s, r = run()
