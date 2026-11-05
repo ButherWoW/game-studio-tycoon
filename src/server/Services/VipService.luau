@@ -152,6 +152,18 @@ local function setTag(player: Player, on: boolean)
 	label.TextStrokeTransparency = 0.2
 	label.Text = "👑 VIP"
 	label.Parent = gui
+	-- Корона V14 (Images.vip) слева вместо эмодзи
+	if Images.vip > 0 then
+		label.Text = "VIP"
+		label.Position = UDim2.fromScale(0.25, 0)
+		label.Size = UDim2.fromScale(0.75, 1)
+		local crown = Instance.new("ImageLabel")
+		crown.BackgroundTransparency = 1
+		crown.Size = UDim2.fromScale(0.25, 1)
+		crown.ScaleType = Enum.ScaleType.Fit
+		crown.Image = "rbxassetid://" .. Images.vip
+		crown.Parent = gui
+	end
 	gui.Parent = head
 end
 

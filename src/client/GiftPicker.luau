@@ -3,11 +3,13 @@
 -- PosterShop) и окно выбора получателя из игроков на сервере. Выбор уходит на сервер
 -- (GiftSelect) — GiftService проверяет и сам открывает окно покупки Roblox.
 -- Себе подарить нельзя: себя в списке нет, сервер тоже проверяет.
+-- Картинки (V14): Images.monetization.gift вместо 🎁, Images.vip вместо 👑; 0 — эмодзи.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage.Shared
+local Images = require(Shared.Config.Images)
 local Social = require(Shared.Config.Social)
 local ClientState = require(script.Parent.ClientState)
 local Ui = require(script.Parent.Ui)
@@ -77,7 +79,9 @@ local function render(gift: Social.Gift, itemName: string)
 			continue
 		end
 		any = true
-		local crown = if other:GetAttribute("IsVip") == true then "👑 " else ""
+		local vip = other:GetAttribute("IsVip") == true
+		local crownArt = vip and Images.vip > 0
+		local crown = if vip and not crownArt then "👑 " else ""
 		local b = Ui.button(
 			body,
 			crown .. other.DisplayName .. " (@" .. other.Name .. ")",
@@ -89,6 +93,14 @@ local function render(gift: Social.Gift, itemName: string)
 		)
 		b.LayoutOrder = i
 		b.Size = UDim2.new(1, -8, 0, ROW_HEIGHT)
+		-- Корона у левого края кнопки; отступы с двух сторон, чтобы имя осталось по центру
+		local art = if crownArt then Ui.artImage(b, Images.vip, "left") else nil
+		local padding = b:FindFirstChildOfClass("UIPadding")
+		if art and padding then
+			padding.PaddingLeft = UDim.new(0, ROW_HEIGHT)
+			padding.PaddingRight = UDim.new(0, ROW_HEIGHT)
+			art.Position = UDim2.new(0, 8 - ROW_HEIGHT, 0.5, 0)
+		end
 	end
 	if not any then
 		local none = Ui.label(body, ClientState.t("gift_nobody"), 24, nil, Ui.colors.muted)
@@ -131,6 +143,16 @@ function GiftPicker.button(cell: Frame, gift: Social.Gift, itemName: string, bot
 	b.Position = UDim2.new(0.5, 0, 0, bottomY - 4)
 	b.Size = UDim2.new(1, -28, 0, 30)
 	b.ZIndex = 3
+	-- Иконка подарка (Images.monetization.gift) слева вместо 🎁 в тексте
+	local art = Ui.artImage(b, Images.monetization.gift, "left")
+	if art then
+		b.Text = Ui.stripIcon(b.Text, "🎁")
+		art.Position = UDim2.new(0, -20, 0.5, 0)
+		local padding = b:FindFirstChildOfClass("UIPadding")
+		if padding then
+			padding.PaddingLeft = UDim.new(0, 26)
+		end
+	end
 	return b
 end
 
