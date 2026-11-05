@@ -62,8 +62,8 @@ local Season = {
 	-- Developer Products (Dev 1 создаёт в Dashboard и вписывает productId; 0 — кнопка «скоро»).
 	-- robuxPrice — предложение, финальную цену решает владелец
 	products = {
-		seasonPass = { productId = 0, robuxPrice = 399 }, -- премиум-дорожка до конца сезона
-		seasonSkip = { productId = 0, robuxPrice = 49 }, -- +1 уровень
+		seasonPass = { productId = 3728448106, robuxPrice = 399 }, -- премиум-дорожка до конца сезона
+		seasonSkip = { productId = 3728448111, robuxPrice = 49 }, -- +1 уровень
 	},
 	-- Награда, если премиум купили повторно в том же сезоне (минут дохода)
 	repeatPassMinutes = 60,
