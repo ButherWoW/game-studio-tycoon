@@ -174,19 +174,19 @@ local Console = {
 		{
 			id = "consoleSpeed5",
 			seconds = 5 * 60,
-			productId = Universe.pick({ test = 0, main = 0 }),
+			productId = Universe.pick({ test = 3728502848, main = 3728503139 }),
 			robuxPrice = 15,
 		},
 		{
 			id = "consoleSpeed30",
 			seconds = 30 * 60,
-			productId = Universe.pick({ test = 0, main = 0 }),
+			productId = Universe.pick({ test = 3728502968, main = 3728503201 }),
 			robuxPrice = 69,
 		},
 		{
 			id = "consoleSkip",
 			seconds = nil,
-			productId = Universe.pick({ test = 0, main = 0 }),
+			productId = Universe.pick({ test = 3728503072, main = 3728503265 }),
 			robuxPrice = 99,
 		},
 	} :: { ConsoleSpeedup },
