@@ -4,7 +4,8 @@
 Читает числа прямо из src/shared/Config (Upgrades, Stages, Economy, Expenses, Employees,
 Research, Offline, Rebirth, HitCartridges, AdCampaigns), поэтому после правки конфигов
 достаточно перезапустить:  python3 tools/balance_sim.py
-Флаги: --quiet — только таблица вех, --variants — ещё медленный игрок и 30 мин в день.
+Флаги: --quiet — только таблица вех, --variants — ещё медленный игрок и 30 мин в день,
+--extras — с контрактами, франшизами, портативкой и стримером (с офиса).
 
 Это приближение, а не повтор кода сервера. Допущения (см. ASSUMPTIONS ниже):
 - парк до гаража ~5 мин; дальше игрок сразу покупает всё, на что хватает денег,
@@ -41,6 +42,13 @@ ASSUMPTIONS = {
     "offline_gaps_h": [5.0, 17.5],  # перерыв после каждой сессии
     "daily_income_minutes": 24.0,  # ежедневное задание 15 + награды за вход ~9 (среднее)
     "max_days": 40,
+    # --extras: системы с офиса (этап 2+), которых нет в основной модели
+    "extras": False,
+    "franchise_avg": 1.09,  # средний множитель франшизы на релиз (часть игр — продолжения, усталость)
+    "platform_avg": 1.07,  # портативка: casual/puzzle ×1.2, остальное ~×1
+    "streamer_avg": 1.02,  # хайп стримера почти весь тратится сразу (−25 за релиз)
+    "contract_every_min": 12.0,  # предложение раз в ~10 мин + выполнение
+    "contract_success": 0.8,
 }
 
 
@@ -187,7 +195,13 @@ def load():
             ad_list.append({"bonus": field(block, "bonus"), "cost": num(m.group(1)), "secs": 15 * 60})
 
     rewards = read("Rewards")
+    contracts_text = read("Contracts")
     return {
+        "contracts": {
+            "advanceMinutes": field(contracts_text, "advanceMinutes"),
+            "bonusMinutes": field(contracts_text, "bonusMinutes"),
+            "releasesPerMinute": field(read("Products"), "releasesPerMinute"),
+        },
         "upgrades": upgrades,
         "stages": stages,
         "eco": economy,
@@ -319,7 +333,19 @@ class Sim:
         research = 1 + self.research_mod("revenue")
         reward = 1.05 if self.earned >= 100_000 else 1.0
         ad = 1 + (self.ad_bonus if self.t < self.ad_until else 0)
-        return self.c["eco"]["revenueBase"] * self.level_mult() * power * research * reward * ad
+        extras = 1.0
+        if ASSUMPTIONS["extras"] and self.level >= 2:
+            extras = ASSUMPTIONS["franchise_avg"] * ASSUMPTIONS["platform_avg"] * ASSUMPTIONS["streamer_avg"]
+        return self.c["eco"]["revenueBase"] * self.level_mult() * power * research * reward * ad * extras
+
+    def contract_income_per_min(self):
+        # Контракт: аванс + бонус в «минутах дохода» ShopService.incomePerMinute (база × 1.6 релиза/мин)
+        if not (ASSUMPTIONS["extras"] and self.level >= 2):
+            return 0.0
+        c = self.c["contracts"]
+        base = self.c["eco"]["revenueBase"] * max(self.best, 5) ** 2 * self.level_mult() * c["releasesPerMinute"]
+        minutes = c["advanceMinutes"] + c["bonusMinutes"]
+        return base * minutes * ASSUMPTIONS["contract_success"] / ASSUMPTIONS["contract_every_min"]
 
     @property
     def strike(self):
@@ -492,7 +518,7 @@ class Sim:
                 self.hits = sorted(self.hits, reverse=True)[: int(slots)]
             self.recent_rev = (self.recent_rev + [rev])[-10:]
             publishing = self.c["publishing"] * sum(self.recent_rev) * minutes if "publishing" in self.research else 0
-            income = rev + publishing + self.hit_income_per_min() * minutes
+            income = rev + publishing + (self.hit_income_per_min() + self.contract_income_per_min()) * minutes
             cost = self.expenses_per_min() * minutes
             self.cash += income - cost
             self.earned += income
@@ -589,6 +615,7 @@ VARIANTS = {
 
 
 if __name__ == "__main__":
+    ASSUMPTIONS["extras"] = "--extras" in sys.argv
     s, r = run()
     report(s, r, quiet="--quiet" in sys.argv)
     if "--variants" in sys.argv:
