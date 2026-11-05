@@ -623,6 +623,50 @@ local function onCommand(player: Player, text: string)
 	end
 end
 
+-- Панель владельца (SafeAdminPanel): поля проверяем здесь заново и прогоняем через ту же
+-- логику, что и /safe. Не владелец — тишина
+local FIELD_PATTERN = "^[%w%.%-:]*$"
+local function onAdmin(player: Player, payload: any)
+	if not isOwner(player) or type(payload) ~= "table" then
+		return
+	end
+	local action = payload.action
+	if action == "clear" or action == "status" then
+		onCommand(player, "/safe " .. action)
+		return
+	end
+	if action ~= "set" then
+		return
+	end
+	local parts = { "/safe", "set" }
+	local code = payload.code
+	if type(code) ~= "string" or #code ~= Safe.codeLength or not code:match("^%d+$") then
+		adminReply(player, "Нужен код из " .. Safe.codeLength .. " цифр")
+		return
+	end
+	table.insert(parts, code)
+	for _, field in { "cash", "limit", "until" } do
+		local value = payload[field]
+		if value ~= nil then
+			if type(value) ~= "string" or #value > 32 or not value:match(FIELD_PATTERN) then
+				adminReply(player, "Не понял поле " .. field)
+				return
+			end
+			if value ~= "" then
+				table.insert(parts, field .. "=" .. value)
+			end
+		end
+	end
+	onCommand(player, table.concat(parts, " "))
+end
+
+-- Атрибут SafeAdmin: клиент показывает кнопку 🔐 панели только владельцам (решает сервер)
+local function markOwner(player: Player)
+	if isOwner(player) then
+		player:SetAttribute("SafeAdmin", true)
+	end
+end
+
 local function setupCommand()
 	if TextChatService.ChatVersion ~= Enum.ChatVersion.TextChatService then
 		-- В старом чате «/safe …» ушло бы в общий чат вместе с кодом: команду не включаем
@@ -928,6 +972,8 @@ end
 function SafeService.start()
 	ensureModel()
 	SafeRemotes.SafeTry.OnServerEvent:Connect(onTry)
+	SafeRemotes.SafeAdmin.OnServerEvent:Connect(onAdmin)
+	Players.PlayerAdded:Connect(markOwner)
 	Players.PlayerRemoving:Connect(function(player)
 		busy[player] = nil
 		lastCommand[player] = nil
@@ -944,6 +990,9 @@ function SafeService.start()
 	end
 	task.spawn(function()
 		resolveOwners()
+		for _, player in Players:GetPlayers() do
+			markOwner(player)
+		end
 		local ok, err = pcall(function()
 			MessagingService:SubscribeAsync(Safe.topic, onMessage)
 		end)

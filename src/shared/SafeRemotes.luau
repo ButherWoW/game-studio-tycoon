@@ -16,6 +16,9 @@ local NAMES = {
 	"SafeResult",
 	-- сервер -> клиент: { kind: "new", cash } — баннер всем; { kind: "admin", text } — ответ владельцу
 	"SafeNotice",
+	-- клиент -> сервер (только владелец, сервер проверяет): { action: "set" | "clear" | "status",
+	-- code: string?, cash: string?, limit: string?, until: string? } — как поля /safe set
+	"SafeAdmin",
 }
 
 local folder: Folder
