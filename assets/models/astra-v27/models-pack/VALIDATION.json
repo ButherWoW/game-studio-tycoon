@@ -1,0 +1,220 @@
+{
+  "method": "Independent RBXMX XML parser + 15-axis OBB SAT; no builder imports",
+  "toleranceStuds": 1e-05,
+  "models": {
+    "ParkSafe": {
+      "status": "PASS",
+      "parts": 41,
+      "budget": 80,
+      "bounds": [
+        [
+          -2.0,
+          0.0,
+          -2.0
+        ],
+        [
+          2.0,
+          5.0,
+          2.0
+        ]
+      ],
+      "dimensionsXYZ": [
+        4.0,
+        5.0,
+        4.0
+      ],
+      "baseY": 0.0,
+      "pivotXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "identityPivotRotation": true,
+      "faceConvention": "+Z in manifest; identity model pivot verified",
+      "pointLights": 0,
+      "lightShadowsFalse": true,
+      "nativeClasses": [
+        "Model",
+        "Part"
+      ],
+      "anchored": true,
+      "noncolliding": true,
+      "finiteOrthonormal": true,
+      "uniqueReferences": true,
+      "intersectionPairChecks": 820,
+      "positiveVolumeIntersections": []
+    },
+    "Trophy_Blitz": {
+      "status": "PASS",
+      "parts": 19,
+      "budget": 30,
+      "bounds": [
+        [
+          -0.51,
+          0.0,
+          -0.36
+        ],
+        [
+          0.51,
+          1.5,
+          0.36
+        ]
+      ],
+      "dimensionsXYZ": [
+        1.02,
+        1.5,
+        0.72
+      ],
+      "baseY": 0.0,
+      "pivotXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "identityPivotRotation": true,
+      "faceConvention": "+Z in manifest; identity model pivot verified",
+      "pointLights": 0,
+      "lightShadowsFalse": true,
+      "nativeClasses": [
+        "Model",
+        "Part"
+      ],
+      "anchored": true,
+      "noncolliding": true,
+      "finiteOrthonormal": true,
+      "uniqueReferences": true,
+      "intersectionPairChecks": 171,
+      "positiveVolumeIntersections": []
+    }
+  },
+  "runtimeTested": false,
+  "status": "PASS",
+  "doorSweep": {
+    "anglesDegrees": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      55,
+      60,
+      65,
+      70,
+      75,
+      80,
+      85,
+      90,
+      95,
+      100,
+      105,
+      110,
+      115
+    ],
+    "positiveVolumeIntersections": [
+      {
+        "angle": 0,
+        "collisions": []
+      },
+      {
+        "angle": 5,
+        "collisions": []
+      },
+      {
+        "angle": 10,
+        "collisions": []
+      },
+      {
+        "angle": 15,
+        "collisions": []
+      },
+      {
+        "angle": 20,
+        "collisions": []
+      },
+      {
+        "angle": 25,
+        "collisions": []
+      },
+      {
+        "angle": 30,
+        "collisions": []
+      },
+      {
+        "angle": 35,
+        "collisions": []
+      },
+      {
+        "angle": 40,
+        "collisions": []
+      },
+      {
+        "angle": 45,
+        "collisions": []
+      },
+      {
+        "angle": 50,
+        "collisions": []
+      },
+      {
+        "angle": 55,
+        "collisions": []
+      },
+      {
+        "angle": 60,
+        "collisions": []
+      },
+      {
+        "angle": 65,
+        "collisions": []
+      },
+      {
+        "angle": 70,
+        "collisions": []
+      },
+      {
+        "angle": 75,
+        "collisions": []
+      },
+      {
+        "angle": 80,
+        "collisions": []
+      },
+      {
+        "angle": 85,
+        "collisions": []
+      },
+      {
+        "angle": 90,
+        "collisions": []
+      },
+      {
+        "angle": 95,
+        "collisions": []
+      },
+      {
+        "angle": 100,
+        "collisions": []
+      },
+      {
+        "angle": 105,
+        "collisions": []
+      },
+      {
+        "angle": 110,
+        "collisions": []
+      },
+      {
+        "angle": 115,
+        "collisions": []
+      }
+    ],
+    "status": "PASS",
+    "note": "Exactly mirrors SafeController axis * rotationY(-angle), Door Model descendants move; includes115deg Back easing overshoot reserve."
+  }
+}

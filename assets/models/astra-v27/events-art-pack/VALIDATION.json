@@ -1,0 +1,154 @@
+{
+  "expected": 15,
+  "ready": 15,
+  "assets": [
+    {
+      "file": "devent_coffeeRush.png",
+      "size": [
+        256,
+        256
+      ],
+      "transparent": true,
+      "sha256": "c87b17b63843e3970eca2b1cd0c79cf47f775fba306f20e7741e722bcdca1d30",
+      "visualReview": "PASS full and40px"
+    },
+    {
+      "file": "devent_investors.png",
+      "size": [
+        256,
+        256
+      ],
+      "transparent": true,
+      "sha256": "5a78339e4375ccb831a6bace0096946415b285cc77659e726671589b21534d18",
+      "visualReview": "PASS full and40px"
+    },
+    {
+      "file": "devent_bugHunt.png",
+      "size": [
+        256,
+        256
+      ],
+      "transparent": true,
+      "sha256": "d0313a5a2b5485d94a2de908b65b2bfc700e6344c87599ff87fcc8a03da0eb21",
+      "visualReview": "PASS full and40px"
+    },
+    {
+      "file": "devent_cartridgeRush.png",
+      "size": [
+        256,
+        256
+      ],
+      "transparent": true,
+      "sha256": "f8613099e1f23449dbb88eaff16f349e8ca548e3011412353a46769cb08fb93b",
+      "visualReview": "PASS full and40px"
+    },
+    {
+      "file": "devent_blitzJam.png",
+      "size": [
+        256,
+        256
+      ],
+      "transparent": true,
+      "sha256": "f70ef975157e2865717eb7fc342f511a8d957d54ccbf4ddff15ca65a4d161134",
+      "visualReview": "PASS full and40px"
+    },
+    {
+      "file": "devent_critics.png",
+      "size": [
+        256,
+        256
+      ],
+      "transparent": true,
+      "sha256": "65643e96b72a4ae3614a224d464b70e13f3be183260259b13f47b162e0451bc9",
+      "visualReview": "PASS full and40px"
+    },
+    {
+      "file": "devent_pizza.png",
+      "size": [
+        256,
+        256
+      ],
+      "transparent": true,
+      "sha256": "5d6bee92d1804962a29e13f0ac85e511d4aac5ce12427fb56346613375b38025",
+      "visualReview": "PASS full and40px"
+    },
+    {
+      "file": "devent_talentHunt.png",
+      "size": [
+        256,
+        256
+      ],
+      "transparent": true,
+      "sha256": "25649e48d1e85b544911394a03997dc6a504a99d568a9256683ba5470064e33d",
+      "visualReview": "PASS full and40px"
+    },
+    {
+      "file": "devent_flashSale.png",
+      "size": [
+        256,
+        256
+      ],
+      "transparent": true,
+      "sha256": "28d258bc96a52796365335cb00ba174707a0d73a11bd8c160d3d5dbbf77c25bc",
+      "visualReview": "PASS full and40px"
+    },
+    {
+      "file": "devent_mascotParade.png",
+      "size": [
+        256,
+        256
+      ],
+      "transparent": true,
+      "sha256": "0887d0510fe14c4c130098421635580763626294691f52e6b7ac1ac99700cc16",
+      "visualReview": "PASS full and40px"
+    },
+    {
+      "file": "devent_golden.png",
+      "size": [
+        256,
+        256
+      ],
+      "transparent": true,
+      "sha256": "048a979e69e8cf1780b85a706160e26fc41214944726961fd2dbe0c0db0d65c6",
+      "visualReview": "PASS full and40px"
+    },
+    {
+      "file": "devent_nightShift.png",
+      "size": [
+        256,
+        256
+      ],
+      "transparent": true,
+      "sha256": "951abd7141a486a65b79b8e820eb91c0ff92cefd7817dc2cdde5668e053d4b44",
+      "visualReview": "PASS full and40px"
+    },
+    {
+      "file": "safe_icon.png",
+      "size": [
+        256,
+        256
+      ],
+      "sha256": "fadec65ae62d8a11d96375b5a4cce2d01bef3f6488b2537d0bf4cdd205f101f9",
+      "visualReview": "PASS no text; clear center for UI/background; icon matches actualSafe"
+    },
+    {
+      "file": "safe_keypad_bg.png",
+      "size": [
+        512,
+        640
+      ],
+      "sha256": "aeb05b1ab25a91ae54a5266fe0bd486262a84bff0ab6ffffdd9feacce66d3de3",
+      "visualReview": "PASS no text; clear center for UI/background; icon matches actualSafe"
+    },
+    {
+      "file": "devent_banner.png",
+      "size": [
+        1600,
+        300
+      ],
+      "sha256": "19c2aad9c69eb296f3b9f6bb91c1205f5c82c40412f6aafd0606f3a3ce84e303",
+      "visualReview": "PASS no text; clear center for UI/background; icon matches actualSafe"
+    }
+  ],
+  "runtimeTested": false
+}

@@ -1,0 +1,12 @@
+{
+  "art": "events-art-pack/VALIDATION.json",
+  "safeAndTrophy": "models-pack/INDEPENDENT_VALIDATION.json",
+  "investor": "investor-pack/VALIDATION.json",
+  "visualReview": "PASS models actualgeometry,investor actualUV,15artoutputs",
+  "sourceChecks": {
+    "stylua": "PASS",
+    "selene": "PASS",
+    "rojoBuild": "PASS"
+  },
+  "runtimeTested": false
+}
