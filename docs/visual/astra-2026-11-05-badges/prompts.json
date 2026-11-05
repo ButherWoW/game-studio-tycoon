@@ -1,0 +1,126 @@
+{
+  "tool": "OpenAI built-in ImageGen",
+  "export": "Each generated PNG resized for 512px output; transparent padded to place whole medal inside 420px circle.",
+  "assets": [
+    {
+      "id": "garage",
+      "tier": "bronze",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-76fe7423-e6be-4dfe-b77f-2ef18132dadf.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color bronze #CD7F32. Central symbol: a single friendly garage facade with a large closed sectional roll-up garage door, blue walls, simple roof. "
+    },
+    {
+      "id": "office_1",
+      "tier": "bronze",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-9125f9f3-7e27-451d-bd43-838c7ea08194.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color bronze #CD7F32. Central symbol: one compact three-storey office building: exactly the bottom row of windows glows gold; upper two rows are dark blue. "
+    },
+    {
+      "id": "office_2",
+      "tier": "silver",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-ee6b25e3-a714-4c18-af48-177cde3f471f.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color silver #C0C7D1. Central symbol: one compact three-storey office building: exactly the bottom two rows of windows glow gold; top row is dark blue. "
+    },
+    {
+      "id": "office_3",
+      "tier": "gold",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-ad484b77-bfb8-42b6-9bf8-b19d6ca74531.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color gold #FFC93C. Central symbol: one compact three-storey office building: all three rows of windows glow gold brightly. "
+    },
+    {
+      "id": "games_10",
+      "tier": "bronze",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-44bd0c25-c6e6-4d8b-92df-705589314a34.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color bronze #CD7F32. Central symbol: one original chunky blue game cartridge with a large golden star embossed on its blank label. "
+    },
+    {
+      "id": "games_100",
+      "tier": "silver",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-402655eb-3d58-44cf-b75f-d46ea9c0b1a2.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color silver #C0C7D1. Central symbol: a tidy overlapping stack of three original chunky blue game cartridges, front cartridge has a gold star. "
+    },
+    {
+      "id": "games_1000",
+      "tier": "gold",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-27f10a3b-734d-4094-83f8-8d8c2a5f4318.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color gold #FFC93C. Central symbol: a compact pyramid mound of seven chunky blue game cartridges topped by a large golden crown. "
+    },
+    {
+      "id": "hire_1",
+      "tier": "bronze",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-f9e71da2-a51a-420a-8cfe-93ea50036913.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color bronze #CD7F32. Central symbol: one cheerful original developer bust in a bright royal-blue T-shirt, warm skin, simple hair, friendly smile. "
+    },
+    {
+      "id": "hire_10",
+      "tier": "gold",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-c3040e3b-71f8-4f49-a6b3-4ed34aef15bc.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color gold #FFC93C. Central symbol: a friendly compact group of five varied developer busts in colorful blue, teal and purple shirts, clear separate heads. "
+    },
+    {
+      "id": "score_10",
+      "tier": "gold",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-8278b885-cd79-4a5a-b73d-7ee48422b843.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color gold #FFC93C. Central symbol: exactly ten small golden five-point stars arranged evenly on a circular path, no central symbol, count exactly TEN stars. "
+    },
+    {
+      "id": "hits_10",
+      "tier": "silver",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-21498ec7-e18e-4870-ace0-3eb039b64c4b.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color silver #C0C7D1. Central symbol: one blue game cartridge with a luminous gold blank label and a golden glow, with two bold sparkle shapes. "
+    },
+    {
+      "id": "expo_1",
+      "tier": "gold",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-1601b8ea-549d-447e-bf49-d73665059556.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color gold #FFC93C. Central symbol: a large golden two-handled trophy standing on a small royal-blue circular stage. "
+    },
+    {
+      "id": "steal_1",
+      "tier": "silver",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-205358d1-1df9-4813-983b-049d738c9afc.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color silver #C0C7D1. Central symbol: a playful violet eye mask above and overlapping a chunky blue game cartridge with golden star; mischievous but child-friendly. "
+    },
+    {
+      "id": "catch_1",
+      "tier": "silver",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-0a6ba7fc-b4d4-4f33-a455-dc4db5b245f5.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color silver #C0C7D1. Central symbol: a simple blue-handled catching net hovering over a chunky blue game cartridge with a golden star, easy readable silhouette. "
+    },
+    {
+      "id": "rebirth_1",
+      "tier": "special",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-e0c948b5-3142-45f0-a68a-2817a0ecaa5c.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color special #7C4DFF with subtle violet neon highlights. Central symbol: two curved bright cyan circular arrows chasing each other around one large golden star. "
+    },
+    {
+      "id": "loan_repaid",
+      "tier": "silver",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-af997390-6464-4b99-a179-0cbcdf277880.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color silver #C0C7D1. Central symbol: a friendly blue bank building with three columns and a large vivid green checkmark in front; roof completely blank. "
+    },
+    {
+      "id": "genres_all",
+      "tier": "gold",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-880e975b-dbfa-458c-9840-69c598cfa20b.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color gold #FFC93C. Central symbol: five blank blue, teal and purple genre cards fanned out, each bearing a simple pictogram: star, car, rocket, puzzle piece, leaf. "
+    },
+    {
+      "id": "qte_100",
+      "tier": "special",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-2457dd36-bc95-4d57-9d96-eb75f1cfa272.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color special #7C4DFF with subtle violet neon highlights. Central symbol: a large cyan and blue concentric round target with a golden dot exactly in the center, two small golden sparkle shapes, no arrows or weapons. "
+    },
+    {
+      "id": "days_30",
+      "tier": "special",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-691fd7d2-8b37-485d-9328-a4d80626cdba.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color special #7C4DFF with subtle violet neon highlights. Central symbol: a chunky blue desk calendar with two binding loops and a large golden star on its blank page; no date numbers or grid. "
+    },
+    {
+      "id": "laptop_star",
+      "tier": "special",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-11b08861-431f-42f1-a989-995ad89324d7.png",
+      "prompt": "Use case: stylized-concept. Asset: original achievement badge for a child-friendly studio tycoon. One square PNG512x512 with transparent background. Consistent collection design: a perfectly round medal disc centered at(256,256), outside diameter410px, leaving generous transparent margin. Broad raised metallic rim, very thick clean dark outline #1E1E2E, inner face deep royal-blue #244BB0. Polished chunky cartoon game UI, simple low-poly cel-shaded facets, upper-left small glossy highlights, V3 game icon style. One large simple central symbol entirely inside the inner circle, reads at150px. No text, letters, numbers, logo, brand, watermark, ribbons, banner, background scenery, extra outer ornaments. Important artwork stays within central circle diameter420px. Rim metal color special #7C4DFF with subtle violet neon highlights. Central symbol: a large golden five-point star bearing one clearly recognizable dark-blue question mark, no other letters or numbers. Exception: the single question-mark pictogram is explicitly required."
+    }
+  ]
+}
