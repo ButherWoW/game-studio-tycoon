@@ -14,6 +14,8 @@
 -- но не pay-to-win: бонус меньше, чем у одного апгрейда студии.
 -- Переводы названий — ключи mascot_<id> в Texts и Locales.
 
+local Universe = require(script.Parent.Universe)
+
 export type Rarity = "common" | "rare" | "epic" | "legendary"
 export type How = "cash" | "robux" | "achievement" | "group" | "season"
 export type BonusKind = "devSpeed" | "mood" | "perfect" | "revenue" | "review"
@@ -142,7 +144,7 @@ local list: { Mascot } = {
 		nameEn = "Neon Fox",
 		rarity = "epic",
 		how = "robux",
-		productId = 3728447955,
+		productId = Universe.pick({ test = 3728447955, main = 0 }),
 		robuxPrice = 149,
 		bonus = { kind = "devSpeed", value = 0.06 },
 		emoji = "🦊",
@@ -154,7 +156,7 @@ local list: { Mascot } = {
 		nameEn = "Byte Dragon",
 		rarity = "epic",
 		how = "robux",
-		productId = 3728447957,
+		productId = Universe.pick({ test = 3728447957, main = 0 }),
 		robuxPrice = 199,
 		bonus = { kind = "revenue", value = 0.05 },
 		emoji = "🐉",
@@ -167,7 +169,7 @@ local list: { Mascot } = {
 		nameEn = "Golden Trophy",
 		rarity = "legendary",
 		how = "robux",
-		productId = 3728447964,
+		productId = Universe.pick({ test = 3728447964, main = 0 }),
 		robuxPrice = 349,
 		bonus = { kind = "review", value = 0.25 },
 		emoji = "🏆",
@@ -179,7 +181,7 @@ local list: { Mascot } = {
 		nameEn = "Cosmic Whale",
 		rarity = "legendary",
 		how = "robux",
-		productId = 3728447966,
+		productId = Universe.pick({ test = 3728447966, main = 0 }),
 		robuxPrice = 399,
 		bonus = { kind = "devSpeed", value = 0.08 },
 		emoji = "🐋",

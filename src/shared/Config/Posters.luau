@@ -7,6 +7,7 @@
 -- Переводы названий — ключи poster_<id> в Texts и Locales.
 
 local Stages = require(script.Parent.Stages)
+local Universe = require(script.Parent.Universe)
 
 export type Poster = {
 	id: string,
@@ -140,7 +141,7 @@ local list: { Poster } = {
 		name = "Неоновый город",
 		nameEn = "Neon City",
 		premium = true,
-		productId = 3728447969,
+		productId = Universe.pick({ test = 3728447969, main = 0 }),
 		robuxPrice = 49,
 		emoji = "🌃",
 		title = "NEON CITY",
@@ -152,7 +153,7 @@ local list: { Poster } = {
 		name = "Хрустальное королевство",
 		nameEn = "Crystal Kingdom",
 		premium = true,
-		productId = 3728447971,
+		productId = Universe.pick({ test = 3728447971, main = 0 }),
 		robuxPrice = 79,
 		emoji = "💎",
 		title = "CRYSTAL KINGDOM",
@@ -164,7 +165,7 @@ local list: { Poster } = {
 		name = "Мех-титан",
 		nameEn = "Mech Titan",
 		premium = true,
-		productId = 3728447973,
+		productId = Universe.pick({ test = 3728447973, main = 0 }),
 		robuxPrice = 99,
 		emoji = "🦾",
 		title = "MECH TITAN",
@@ -176,7 +177,7 @@ local list: { Poster } = {
 		name = "Легенды галактики",
 		nameEn = "Galaxy Legends",
 		premium = true,
-		productId = 3728447981,
+		productId = Universe.pick({ test = 3728447981, main = 0 }),
 		robuxPrice = 129,
 		emoji = "🌌",
 		title = "GALAXY LEGENDS",
@@ -188,7 +189,7 @@ local list: { Poster } = {
 		name = "Золотой геймпад",
 		nameEn = "Golden Controller",
 		premium = true,
-		productId = 3728447985,
+		productId = Universe.pick({ test = 3728447985, main = 0 }),
 		robuxPrice = 149,
 		emoji = "🎮",
 		title = "GOLDEN CONTROLLER",

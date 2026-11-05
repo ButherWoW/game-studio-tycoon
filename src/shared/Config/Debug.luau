@@ -38,6 +38,10 @@ local Debug = {
 	dailyEventForce = nil :: string?,
 	dailyEventShort = false,
 	dailyGoldenForce = false,
+	-- Набор ID товаров/геймпассов/значков (Config/Universe, docs/IDS.md), только Studio:
+	-- "main" — как в основной игре (где main = 0 — «Скоро»), "test" — тестовая v2.
+	-- nil — по game.GameId
+	forceUniverse = nil :: string?,
 }
 
 return Debug
