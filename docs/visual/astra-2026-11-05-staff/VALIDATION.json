@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "employees": 15,
+  "batches": 3,
+  "faceDimensions": [
+    256,
+    256
+  ],
+  "clothingDimensions": [
+    585,
+    559
+  ],
+  "previewDimensions": [
+    512,
+    512
+  ],
+  "headIntersections": 0,
+  "studioTested": false,
+  "checks": [
+    "unique face pixel hashes",
+    "exact official UV rectangles",
+    "real mask neckline alpha",
+    "visible hair bounding boxes outside target head",
+    "Accessory/Handle/HatAttachment",
+    "Massless unanchored noncolliding",
+    "every Part welded to Handle",
+    "<=30 Parts each hair",
+    "no scripts meshes external textures PointLights",
+    "real texture/geometry previews"
+  ]
+}

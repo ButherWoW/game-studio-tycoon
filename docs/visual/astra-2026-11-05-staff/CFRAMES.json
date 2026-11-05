@@ -1,0 +1,6976 @@
+{
+  "mila": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          101,
+          69,
+          47
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "Crown",
+        "p": [
+          0,
+          0.72,
+          0
+        ],
+        "s": [
+          1.3,
+          0.2,
+          1.17
+        ],
+        "c": [
+          101,
+          69,
+          47
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.42,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          101,
+          69,
+          47
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.14,
+          0.55,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          101,
+          69,
+          47
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.14,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          101,
+          69,
+          47
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.42,
+          0.56,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          101,
+          69,
+          47
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "PonyTie",
+        "p": [
+          0,
+          0.68,
+          0.75
+        ],
+        "s": [
+          0.5,
+          0.3,
+          0.4
+        ],
+        "c": [
+          61,
+          123,
+          255
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Ponytail",
+        "p": [
+          0,
+          0.54,
+          1.0
+        ],
+        "s": [
+          0.6,
+          0.7,
+          0.5
+        ],
+        "c": [
+          101,
+          69,
+          47
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Ponytail",
+        "p": [
+          0,
+          -0.03,
+          1.04
+        ],
+        "s": [
+          0.48,
+          0.65,
+          0.4
+        ],
+        "c": [
+          101,
+          69,
+          47
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Ponytail",
+        "p": [
+          0,
+          -0.49,
+          0.98
+        ],
+        "s": [
+          0.34,
+          0.38,
+          0.3
+        ],
+        "c": [
+          101,
+          69,
+          47
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          -0.29,
+          -0.13,
+          -0.604
+        ],
+        "s": [
+          0.47,
+          0.05,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          -0.29,
+          0.15,
+          -0.604
+        ],
+        "s": [
+          0.47,
+          0.05,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          -0.5249999999999999,
+          0.01,
+          -0.604
+        ],
+        "s": [
+          0.05,
+          0.28,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          -0.05499999999999999,
+          0.01,
+          -0.604
+        ],
+        "s": [
+          0.05,
+          0.28,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          0.29,
+          -0.13,
+          -0.604
+        ],
+        "s": [
+          0.47,
+          0.05,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          0.29,
+          0.15,
+          -0.604
+        ],
+        "s": [
+          0.47,
+          0.05,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          0.05499999999999999,
+          0.01,
+          -0.604
+        ],
+        "s": [
+          0.05,
+          0.28,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          0.5249999999999999,
+          0.01,
+          -0.604
+        ],
+        "s": [
+          0.05,
+          0.28,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesBridge",
+        "p": [
+          0,
+          0.01,
+          -0.604
+        ],
+        "s": [
+          0.12,
+          0.05,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "tim": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          109,
+          63,
+          39
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "Crown",
+        "p": [
+          0,
+          0.72,
+          0
+        ],
+        "s": [
+          1.3,
+          0.2,
+          1.17
+        ],
+        "c": [
+          109,
+          63,
+          39
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.42,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          109,
+          63,
+          39
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.14,
+          0.55,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          109,
+          63,
+          39
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.14,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          109,
+          63,
+          39
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.42,
+          0.56,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          109,
+          63,
+          39
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "ShaggyTuft",
+        "p": [
+          -0.5,
+          0.86,
+          0.1
+        ],
+        "s": [
+          0.4,
+          0.44,
+          0.43
+        ],
+        "c": [
+          109,
+          63,
+          39
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "ShaggyTuft",
+        "p": [
+          -0.3,
+          0.86,
+          -0.3
+        ],
+        "s": [
+          0.4,
+          0.44,
+          0.43
+        ],
+        "c": [
+          109,
+          63,
+          39
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "ShaggyTuft",
+        "p": [
+          0.25,
+          0.86,
+          -0.25
+        ],
+        "s": [
+          0.4,
+          0.44,
+          0.43
+        ],
+        "c": [
+          109,
+          63,
+          39
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "ShaggyTuft",
+        "p": [
+          0.48,
+          0.86,
+          0.1
+        ],
+        "s": [
+          0.4,
+          0.44,
+          0.43
+        ],
+        "c": [
+          109,
+          63,
+          39
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SoftBeret",
+        "p": [
+          -0.1,
+          1.17,
+          0.08
+        ],
+        "s": [
+          1.58,
+          0.48,
+          1.38
+        ],
+        "c": [
+          87,
+          111,
+          145
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "BeretStem",
+        "p": [
+          -0.1,
+          1.47,
+          0.08
+        ],
+        "s": [
+          0.1,
+          0.16,
+          0.1
+        ],
+        "c": [
+          52,
+          73,
+          101
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "zoe": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          48,
+          38,
+          59
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "Crown",
+        "p": [
+          0,
+          0.72,
+          0
+        ],
+        "s": [
+          1.3,
+          0.2,
+          1.17
+        ],
+        "c": [
+          48,
+          38,
+          59
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.42,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          48,
+          38,
+          59
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.14,
+          0.55,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          48,
+          38,
+          59
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.14,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          48,
+          38,
+          59
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.42,
+          0.56,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          48,
+          38,
+          59
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SideLocks",
+        "p": [
+          -0.7,
+          0.375,
+          0.08
+        ],
+        "s": [
+          0.18,
+          0.55,
+          1.12
+        ],
+        "c": [
+          48,
+          38,
+          59
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SideLocks",
+        "p": [
+          0.7,
+          0.375,
+          0.08
+        ],
+        "s": [
+          0.18,
+          0.55,
+          1.12
+        ],
+        "c": [
+          48,
+          38,
+          59
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "BackLocks",
+        "p": [
+          0,
+          0.375,
+          0.65
+        ],
+        "s": [
+          1.25,
+          0.55,
+          0.18
+        ],
+        "c": [
+          48,
+          38,
+          59
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "HairBun",
+        "p": [
+          -0.83,
+          0.98,
+          0.15
+        ],
+        "s": [
+          0.5,
+          0.55,
+          0.55
+        ],
+        "c": [
+          48,
+          38,
+          59
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "HairBun",
+        "p": [
+          0.83,
+          0.98,
+          0.15
+        ],
+        "s": [
+          0.5,
+          0.55,
+          0.55
+        ],
+        "c": [
+          48,
+          38,
+          59
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "NeckHeadphone",
+        "p": [
+          -0.7,
+          -0.98,
+          -0.62
+        ],
+        "s": [
+          0.27,
+          0.37,
+          0.3
+        ],
+        "c": [
+          31,
+          104,
+          80
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "NeckHeadphone",
+        "p": [
+          0.7,
+          -0.98,
+          -0.62
+        ],
+        "s": [
+          0.27,
+          0.37,
+          0.3
+        ],
+        "c": [
+          31,
+          104,
+          80
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "NeckBand",
+        "p": [
+          0,
+          -0.86,
+          0.68
+        ],
+        "s": [
+          1.48,
+          0.15,
+          0.15
+        ],
+        "c": [
+          31,
+          104,
+          80
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "ilya": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          136,
+          82,
+          45
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "Crown",
+        "p": [
+          0,
+          0.72,
+          0
+        ],
+        "s": [
+          1.3,
+          0.2,
+          1.17
+        ],
+        "c": [
+          136,
+          82,
+          45
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Curl",
+        "p": [
+          -0.45,
+          0.84,
+          -0.35
+        ],
+        "s": [
+          0.42,
+          0.42,
+          0.42
+        ],
+        "c": [
+          136,
+          82,
+          45
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Curl",
+        "p": [
+          0,
+          0.94,
+          -0.4
+        ],
+        "s": [
+          0.42,
+          0.42,
+          0.42
+        ],
+        "c": [
+          136,
+          82,
+          45
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Curl",
+        "p": [
+          0.45,
+          0.84,
+          -0.35
+        ],
+        "s": [
+          0.42,
+          0.42,
+          0.42
+        ],
+        "c": [
+          136,
+          82,
+          45
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Curl",
+        "p": [
+          -0.5,
+          0.94,
+          0.2
+        ],
+        "s": [
+          0.42,
+          0.42,
+          0.42
+        ],
+        "c": [
+          136,
+          82,
+          45
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Curl",
+        "p": [
+          0,
+          0.84,
+          0.2
+        ],
+        "s": [
+          0.42,
+          0.42,
+          0.42
+        ],
+        "c": [
+          136,
+          82,
+          45
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Curl",
+        "p": [
+          0.5,
+          0.94,
+          0.2
+        ],
+        "s": [
+          0.42,
+          0.42,
+          0.42
+        ],
+        "c": [
+          136,
+          82,
+          45
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Scarf",
+        "p": [
+          0,
+          -0.82,
+          -0.65
+        ],
+        "s": [
+          1.53,
+          0.22,
+          0.18
+        ],
+        "c": [
+          217,
+          177,
+          109
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "ScarfTail",
+        "p": [
+          0.46,
+          -1.2,
+          -0.65
+        ],
+        "s": [
+          0.24,
+          0.63,
+          0.18
+        ],
+        "c": [
+          217,
+          177,
+          109
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "oleg": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          72,
+          58,
+          50
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "Crown",
+        "p": [
+          0,
+          0.72,
+          0
+        ],
+        "s": [
+          1.3,
+          0.2,
+          1.17
+        ],
+        "c": [
+          72,
+          58,
+          50
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Temple",
+        "p": [
+          -0.5,
+          0.44,
+          -0.62
+        ],
+        "s": [
+          0.22,
+          0.35,
+          0.14
+        ],
+        "c": [
+          72,
+          58,
+          50
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Temple",
+        "p": [
+          0.5,
+          0.44,
+          -0.62
+        ],
+        "s": [
+          0.22,
+          0.35,
+          0.14
+        ],
+        "c": [
+          72,
+          58,
+          50
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "sara": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          36,
+          43,
+          67
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "Crown",
+        "p": [
+          0,
+          0.72,
+          0
+        ],
+        "s": [
+          1.3,
+          0.2,
+          1.17
+        ],
+        "c": [
+          36,
+          43,
+          67
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SideLocks",
+        "p": [
+          -0.7,
+          -0.025000000000000022,
+          0.08
+        ],
+        "s": [
+          0.18,
+          1.35,
+          1.12
+        ],
+        "c": [
+          36,
+          43,
+          67
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SideLocks",
+        "p": [
+          0.7,
+          -0.025000000000000022,
+          0.08
+        ],
+        "s": [
+          0.18,
+          1.35,
+          1.12
+        ],
+        "c": [
+          36,
+          43,
+          67
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "BackLocks",
+        "p": [
+          0,
+          -0.025000000000000022,
+          0.65
+        ],
+        "s": [
+          1.25,
+          1.35,
+          0.18
+        ],
+        "c": [
+          36,
+          43,
+          67
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.42,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          36,
+          43,
+          67
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.14,
+          0.55,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          36,
+          43,
+          67
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.14,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          36,
+          43,
+          67
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.42,
+          0.56,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          36,
+          43,
+          67
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "BrightStreak",
+        "p": [
+          0.8,
+          0.05,
+          -0.32
+        ],
+        "s": [
+          0.06,
+          1.14,
+          0.25
+        ],
+        "c": [
+          255,
+          110,
+          180
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "max": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          79,
+          60,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "Crown",
+        "p": [
+          0,
+          0.72,
+          0
+        ],
+        "s": [
+          1.3,
+          0.2,
+          1.17
+        ],
+        "c": [
+          79,
+          60,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "TurtleneckCollar",
+        "p": [
+          0,
+          -0.71,
+          0
+        ],
+        "s": [
+          1.25,
+          0.18,
+          1.12
+        ],
+        "c": [
+          43,
+          150,
+          86
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SweptLock",
+        "p": [
+          -0.5,
+          0.87,
+          0.15
+        ],
+        "s": [
+          0.23,
+          0.15,
+          0.92
+        ],
+        "c": [
+          79,
+          60,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SweptLock",
+        "p": [
+          -0.25,
+          0.895,
+          0.15
+        ],
+        "s": [
+          0.23,
+          0.15,
+          0.92
+        ],
+        "c": [
+          79,
+          60,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SweptLock",
+        "p": [
+          0.0,
+          0.92,
+          0.15
+        ],
+        "s": [
+          0.23,
+          0.15,
+          0.92
+        ],
+        "c": [
+          79,
+          60,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SweptLock",
+        "p": [
+          0.25,
+          0.9450000000000001,
+          0.15
+        ],
+        "s": [
+          0.23,
+          0.15,
+          0.92
+        ],
+        "c": [
+          79,
+          60,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SweptLock",
+        "p": [
+          0.5,
+          0.97,
+          0.15
+        ],
+        "s": [
+          0.23,
+          0.15,
+          0.92
+        ],
+        "c": [
+          79,
+          60,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "nika": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          180,
+          112,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "Crown",
+        "p": [
+          0,
+          0.72,
+          0
+        ],
+        "s": [
+          1.3,
+          0.2,
+          1.17
+        ],
+        "c": [
+          180,
+          112,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SideLocks",
+        "p": [
+          -0.7,
+          -0.29999999999999993,
+          0.08
+        ],
+        "s": [
+          0.18,
+          1.9,
+          1.12
+        ],
+        "c": [
+          180,
+          112,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SideLocks",
+        "p": [
+          0.7,
+          -0.29999999999999993,
+          0.08
+        ],
+        "s": [
+          0.18,
+          1.9,
+          1.12
+        ],
+        "c": [
+          180,
+          112,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "BackLocks",
+        "p": [
+          0,
+          -0.29999999999999993,
+          0.65
+        ],
+        "s": [
+          1.25,
+          1.9,
+          0.18
+        ],
+        "c": [
+          180,
+          112,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.42,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          180,
+          112,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.14,
+          0.55,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          180,
+          112,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.14,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          180,
+          112,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.42,
+          0.56,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          180,
+          112,
+          54
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Clip",
+        "p": [
+          0.81,
+          0.3,
+          -0.42
+        ],
+        "s": [
+          0.08,
+          0.42,
+          0.12
+        ],
+        "c": [
+          233,
+          200,
+          126
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Feather",
+        "p": [
+          0.875,
+          0.49,
+          -0.43
+        ],
+        "s": [
+          0.42953463189829055,
+          0.09,
+          0.09
+        ],
+        "c": [
+          233,
+          200,
+          126
+        ],
+        "shape": "cyl",
+        "r": [
+          0.20952908873087367,
+          -0.0,
+          0.9778024140774095,
+          0.9778024140774094,
+          0.0,
+          -0.2095290887308737,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "den": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "Crown",
+        "p": [
+          0,
+          0.72,
+          0
+        ],
+        "s": [
+          1.3,
+          0.2,
+          1.17
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrewSpike",
+        "p": [
+          -0.45,
+          0.87,
+          -0.3
+        ],
+        "s": [
+          0.22,
+          0.3,
+          0.22
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrewSpike",
+        "p": [
+          -0.45,
+          0.87,
+          0.12
+        ],
+        "s": [
+          0.22,
+          0.3,
+          0.22
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrewSpike",
+        "p": [
+          -0.45,
+          0.87,
+          0.42
+        ],
+        "s": [
+          0.22,
+          0.3,
+          0.22
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrewSpike",
+        "p": [
+          -0.15,
+          0.87,
+          -0.3
+        ],
+        "s": [
+          0.22,
+          0.3,
+          0.22
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrewSpike",
+        "p": [
+          -0.15,
+          0.87,
+          0.12
+        ],
+        "s": [
+          0.22,
+          0.3,
+          0.22
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrewSpike",
+        "p": [
+          -0.15,
+          0.87,
+          0.42
+        ],
+        "s": [
+          0.22,
+          0.3,
+          0.22
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrewSpike",
+        "p": [
+          0.15,
+          0.87,
+          -0.3
+        ],
+        "s": [
+          0.22,
+          0.3,
+          0.22
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrewSpike",
+        "p": [
+          0.15,
+          0.87,
+          0.12
+        ],
+        "s": [
+          0.22,
+          0.3,
+          0.22
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrewSpike",
+        "p": [
+          0.15,
+          0.87,
+          0.42
+        ],
+        "s": [
+          0.22,
+          0.3,
+          0.22
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrewSpike",
+        "p": [
+          0.45,
+          0.87,
+          -0.3
+        ],
+        "s": [
+          0.22,
+          0.3,
+          0.22
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrewSpike",
+        "p": [
+          0.45,
+          0.87,
+          0.12
+        ],
+        "s": [
+          0.22,
+          0.3,
+          0.22
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrewSpike",
+        "p": [
+          0.45,
+          0.87,
+          0.42
+        ],
+        "s": [
+          0.22,
+          0.3,
+          0.22
+        ],
+        "c": [
+          49,
+          52,
+          64
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "aya": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          84,
+          44,
+          77
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "Crown",
+        "p": [
+          0,
+          0.72,
+          0
+        ],
+        "s": [
+          1.3,
+          0.2,
+          1.17
+        ],
+        "c": [
+          84,
+          44,
+          77
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.42,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          84,
+          44,
+          77
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.14,
+          0.55,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          84,
+          44,
+          77
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.14,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          84,
+          44,
+          77
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.42,
+          0.56,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          84,
+          44,
+          77
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "PonyRibbon",
+        "p": [
+          0,
+          0.89,
+          0.62
+        ],
+        "s": [
+          0.5,
+          0.18,
+          0.35
+        ],
+        "c": [
+          255,
+          110,
+          180
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "HighPony",
+        "p": [
+          0,
+          1.23,
+          0.72
+        ],
+        "s": [
+          0.6,
+          0.65,
+          0.55
+        ],
+        "c": [
+          84,
+          44,
+          77
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "PonySegment",
+        "p": [
+          0,
+          1.05,
+          1.08
+        ],
+        "s": [
+          0.4,
+          0.6,
+          0.38
+        ],
+        "c": [
+          84,
+          44,
+          77
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "PonySegment",
+        "p": [
+          0,
+          0.58,
+          1.16
+        ],
+        "s": [
+          0.4,
+          0.6,
+          0.38
+        ],
+        "c": [
+          84,
+          44,
+          77
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "PonySegment",
+        "p": [
+          0,
+          0.12,
+          1.13
+        ],
+        "s": [
+          0.4,
+          0.6,
+          0.38
+        ],
+        "c": [
+          84,
+          44,
+          77
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Brush",
+        "p": [
+          0.7749999999999999,
+          1.04,
+          0.55
+        ],
+        "s": [
+          0.657343137181792,
+          0.08,
+          0.08
+        ],
+        "c": [
+          200,
+          162,
+          122
+        ],
+        "shape": "cyl",
+        "r": [
+          0.2281913227893283,
+          -0.0,
+          0.973616310567801,
+          0.9736163105678007,
+          0.0,
+          -0.22819132278932835,
+          0.0,
+          0.9999999999999999,
+          0.0
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "BrushBristle",
+        "p": [
+          0.87,
+          1.49,
+          0.55
+        ],
+        "s": [
+          0.18,
+          0.28,
+          0.16
+        ],
+        "c": [
+          232,
+          201,
+          131
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "leo": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          45,
+          59,
+          53
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "Crown",
+        "p": [
+          0,
+          0.72,
+          0
+        ],
+        "s": [
+          1.3,
+          0.2,
+          1.17
+        ],
+        "c": [
+          45,
+          59,
+          53
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Mohawk",
+        "p": [
+          0,
+          0.89,
+          -0.4
+        ],
+        "s": [
+          0.28,
+          0.32,
+          0.19
+        ],
+        "c": [
+          37,
+          76,
+          53
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Mohawk",
+        "p": [
+          0,
+          0.9450000000000001,
+          -0.2
+        ],
+        "s": [
+          0.28,
+          0.43,
+          0.19
+        ],
+        "c": [
+          37,
+          76,
+          53
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Mohawk",
+        "p": [
+          0,
+          1.0,
+          0.0
+        ],
+        "s": [
+          0.28,
+          0.54,
+          0.19
+        ],
+        "c": [
+          37,
+          76,
+          53
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Mohawk",
+        "p": [
+          0,
+          1.055,
+          0.20000000000000007
+        ],
+        "s": [
+          0.28,
+          0.65,
+          0.19
+        ],
+        "c": [
+          37,
+          76,
+          53
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Mohawk",
+        "p": [
+          0,
+          1.11,
+          0.4
+        ],
+        "s": [
+          0.28,
+          0.76,
+          0.19
+        ],
+        "c": [
+          37,
+          76,
+          53
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "StudioCup",
+        "p": [
+          -0.85,
+          0.02,
+          0
+        ],
+        "s": [
+          0.3,
+          0.63,
+          0.6
+        ],
+        "c": [
+          38,
+          62,
+          56
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "StudioPad",
+        "p": [
+          -0.66,
+          0.02,
+          0
+        ],
+        "s": [
+          0.08,
+          0.53,
+          0.44
+        ],
+        "c": [
+          21,
+          31,
+          35
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "StudioCup",
+        "p": [
+          0.85,
+          0.02,
+          0
+        ],
+        "s": [
+          0.3,
+          0.63,
+          0.6
+        ],
+        "c": [
+          38,
+          62,
+          56
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "StudioPad",
+        "p": [
+          0.66,
+          0.02,
+          0
+        ],
+        "s": [
+          0.08,
+          0.53,
+          0.44
+        ],
+        "c": [
+          21,
+          31,
+          35
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "StudioSide",
+        "p": [
+          -0.85,
+          0.395,
+          0.36
+        ],
+        "s": [
+          1.0396634070698074,
+          0.12,
+          0.12
+        ],
+        "c": [
+          33,
+          62,
+          49
+        ],
+        "shape": "cyl",
+        "r": [
+          0.0,
+          0.0,
+          -1.0,
+          0.7213873210309515,
+          0.6925318281897135,
+          0.0,
+          0.6925318281897135,
+          -0.7213873210309515,
+          0.0
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "StudioSide",
+        "p": [
+          0.85,
+          0.395,
+          0.36
+        ],
+        "s": [
+          1.0396634070698074,
+          0.12,
+          0.12
+        ],
+        "c": [
+          33,
+          62,
+          49
+        ],
+        "shape": "cyl",
+        "r": [
+          0.0,
+          0.0,
+          -1.0,
+          0.7213873210309515,
+          0.6925318281897135,
+          0.0,
+          0.6925318281897135,
+          -0.7213873210309515,
+          0.0
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "StudioBand",
+        "p": [
+          0,
+          0.77,
+          0.72
+        ],
+        "s": [
+          1.8,
+          0.14,
+          0.25
+        ],
+        "c": [
+          33,
+          62,
+          49
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "vera": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          116,
+          114,
+          135
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "Crown",
+        "p": [
+          0,
+          0.72,
+          0
+        ],
+        "s": [
+          1.3,
+          0.2,
+          1.17
+        ],
+        "c": [
+          116,
+          114,
+          135
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.42,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          116,
+          114,
+          135
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.14,
+          0.55,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          116,
+          114,
+          135
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.14,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          116,
+          114,
+          135
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.42,
+          0.56,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          116,
+          114,
+          135
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SideLocks",
+        "p": [
+          -0.7,
+          0.45,
+          0.08
+        ],
+        "s": [
+          0.18,
+          0.4,
+          1.12
+        ],
+        "c": [
+          116,
+          114,
+          135
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "SideLocks",
+        "p": [
+          0.7,
+          0.45,
+          0.08
+        ],
+        "s": [
+          0.18,
+          0.4,
+          1.12
+        ],
+        "c": [
+          116,
+          114,
+          135
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "BackLocks",
+        "p": [
+          0,
+          0.45,
+          0.65
+        ],
+        "s": [
+          1.25,
+          0.4,
+          0.18
+        ],
+        "c": [
+          116,
+          114,
+          135
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "HairKnot",
+        "p": [
+          0,
+          0.78,
+          0.65
+        ],
+        "s": [
+          0.5,
+          0.3,
+          0.2
+        ],
+        "c": [
+          116,
+          114,
+          135
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "HairBun",
+        "p": [
+          0,
+          0.93,
+          0.9
+        ],
+        "s": [
+          0.72,
+          0.7,
+          0.55
+        ],
+        "c": [
+          116,
+          114,
+          135
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Pencil",
+        "p": [
+          0.035,
+          1.155,
+          0.9
+        ],
+        "s": [
+          0.9630160954002793,
+          0.07,
+          0.07
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "cyl",
+        "r": [
+          0.9657159464333187,
+          -0.25960106086917173,
+          0.0,
+          0.25960106086917173,
+          0.9657159464333187,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          -0.29,
+          -0.13,
+          -0.604
+        ],
+        "s": [
+          0.47,
+          0.05,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          -0.29,
+          0.15,
+          -0.604
+        ],
+        "s": [
+          0.47,
+          0.05,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          -0.5249999999999999,
+          0.01,
+          -0.604
+        ],
+        "s": [
+          0.05,
+          0.28,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          -0.05499999999999999,
+          0.01,
+          -0.604
+        ],
+        "s": [
+          0.05,
+          0.28,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          0.29,
+          -0.13,
+          -0.604
+        ],
+        "s": [
+          0.47,
+          0.05,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          0.29,
+          0.15,
+          -0.604
+        ],
+        "s": [
+          0.47,
+          0.05,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          0.05499999999999999,
+          0.01,
+          -0.604
+        ],
+        "s": [
+          0.05,
+          0.28,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesFrame",
+        "p": [
+          0.5249999999999999,
+          0.01,
+          -0.604
+        ],
+        "s": [
+          0.05,
+          0.28,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlassesBridge",
+        "p": [
+          0,
+          0.01,
+          -0.604
+        ],
+        "s": [
+          0.12,
+          0.05,
+          0.055
+        ],
+        "c": [
+          41,
+          51,
+          68
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "robo": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          89,
+          106,
+          125
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "MonitorSide",
+        "p": [
+          -0.76,
+          0,
+          0
+        ],
+        "s": [
+          0.2,
+          1.55,
+          1.43
+        ],
+        "c": [
+          81,
+          100,
+          120
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "MonitorSide",
+        "p": [
+          0.76,
+          0,
+          0
+        ],
+        "s": [
+          0.2,
+          1.55,
+          1.43
+        ],
+        "c": [
+          81,
+          100,
+          120
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "MonitorTopBottom",
+        "p": [
+          0,
+          -0.74,
+          0
+        ],
+        "s": [
+          1.33,
+          0.16,
+          1.43
+        ],
+        "c": [
+          113,
+          133,
+          152
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "MonitorTopBottom",
+        "p": [
+          0,
+          0.74,
+          0
+        ],
+        "s": [
+          1.33,
+          0.16,
+          1.43
+        ],
+        "c": [
+          113,
+          133,
+          152
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "MonitorBack",
+        "p": [
+          0,
+          0,
+          0.7
+        ],
+        "s": [
+          1.33,
+          1.34,
+          0.14
+        ],
+        "c": [
+          81,
+          100,
+          120
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "FaceScreen",
+        "p": [
+          0,
+          0,
+          -0.7
+        ],
+        "s": [
+          1.33,
+          1.34,
+          0.14
+        ],
+        "c": [
+          24,
+          60,
+          75
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "NeonEye",
+        "p": [
+          -0.239,
+          0.094,
+          -0.784
+        ],
+        "s": [
+          0.145,
+          0.173,
+          0.025
+        ],
+        "c": [
+          116,
+          242,
+          242
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "Neon",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "NeonEye",
+        "p": [
+          0.239,
+          0.094,
+          -0.784
+        ],
+        "s": [
+          0.145,
+          0.173,
+          0.025
+        ],
+        "c": [
+          116,
+          242,
+          242
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "Neon",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "NeonSmile",
+        "p": [
+          -0.2078125,
+          -0.16808159722222227,
+          -0.784
+        ],
+        "s": [
+          0.10489354176806562,
+          0.062,
+          0.062
+        ],
+        "c": [
+          116,
+          242,
+          242
+        ],
+        "shape": "cyl",
+        "r": [
+          0.7924701425737065,
+          0.609910709144551,
+          -0.0,
+          -0.609910709144551,
+          0.7924701425737065,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "mat": "Neon",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "NeonSmile",
+        "p": [
+          -0.1246875,
+          -0.21926215277777777,
+          -0.784
+        ],
+        "s": [
+          0.09155984839258748,
+          0.062,
+          0.062
+        ],
+        "c": [
+          116,
+          242,
+          242
+        ],
+        "shape": "cyl",
+        "r": [
+          0.9078761210217301,
+          0.4192385345820885,
+          -0.0,
+          -0.4192385345820885,
+          0.9078761210217301,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "mat": "Neon",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "NeonSmile",
+        "p": [
+          -0.0415625,
+          -0.24485243055555556,
+          -0.784
+        ],
+        "s": [
+          0.08410399041773202,
+          0.062,
+          0.062
+        ],
+        "c": [
+          116,
+          242,
+          242
+        ],
+        "shape": "cyl",
+        "r": [
+          0.9883597625645405,
+          0.15213474206559546,
+          -0.0,
+          -0.15213474206559546,
+          0.9883597625645405,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "mat": "Neon",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "NeonSmile",
+        "p": [
+          0.0415625,
+          -0.24485243055555556,
+          -0.784
+        ],
+        "s": [
+          0.08410399041773202,
+          0.062,
+          0.062
+        ],
+        "c": [
+          116,
+          242,
+          242
+        ],
+        "shape": "cyl",
+        "r": [
+          0.9883597625645405,
+          -0.15213474206559546,
+          0.0,
+          0.15213474206559546,
+          0.9883597625645405,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "mat": "Neon",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "NeonSmile",
+        "p": [
+          0.1246875,
+          -0.21926215277777777,
+          -0.784
+        ],
+        "s": [
+          0.09155984839258748,
+          0.062,
+          0.062
+        ],
+        "c": [
+          116,
+          242,
+          242
+        ],
+        "shape": "cyl",
+        "r": [
+          0.9078761210217301,
+          -0.4192385345820885,
+          0.0,
+          0.4192385345820885,
+          0.9078761210217301,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "mat": "Neon",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "NeonSmile",
+        "p": [
+          0.2078125,
+          -0.16808159722222227,
+          -0.784
+        ],
+        "s": [
+          0.10489354176806562,
+          0.062,
+          0.062
+        ],
+        "c": [
+          116,
+          242,
+          242
+        ],
+        "shape": "cyl",
+        "r": [
+          0.7924701425737065,
+          -0.609910709144551,
+          0.0,
+          0.609910709144551,
+          0.7924701425737065,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "mat": "Neon",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Antenna",
+        "p": [
+          0.55,
+          0.9850000000000001,
+          0.2
+        ],
+        "s": [
+          0.27000000000000013,
+          0.06,
+          0.06
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "cyl",
+        "r": [
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "AntennaTip",
+        "p": [
+          0.55,
+          1.19,
+          0.2
+        ],
+        "s": [
+          0.18,
+          0.18,
+          0.18
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "ghost": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          107,
+          191,
+          224
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "HoodTop",
+        "p": [
+          0,
+          0.76,
+          0.05
+        ],
+        "s": [
+          1.5,
+          0.26,
+          1.44
+        ],
+        "c": [
+          107,
+          191,
+          224
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0.25,
+        "cls": "Part"
+      },
+      {
+        "name": "HoodSide",
+        "p": [
+          -0.75,
+          -0.1,
+          0.05
+        ],
+        "s": [
+          0.22,
+          1.5,
+          1.44
+        ],
+        "c": [
+          107,
+          191,
+          224
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0.25,
+        "cls": "Part"
+      },
+      {
+        "name": "HoodSide",
+        "p": [
+          0.75,
+          -0.1,
+          0.05
+        ],
+        "s": [
+          0.22,
+          1.5,
+          1.44
+        ],
+        "c": [
+          107,
+          191,
+          224
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0.25,
+        "cls": "Part"
+      },
+      {
+        "name": "HoodBack",
+        "p": [
+          0,
+          -0.1,
+          0.78
+        ],
+        "s": [
+          1.3,
+          1.5,
+          0.18
+        ],
+        "c": [
+          107,
+          191,
+          224
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0.25,
+        "cls": "Part"
+      },
+      {
+        "name": "GlowEye",
+        "p": [
+          -0.212,
+          0.084,
+          -0.57
+        ],
+        "s": [
+          0.129,
+          0.155,
+          0.035
+        ],
+        "c": [
+          223,
+          255,
+          255
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "Neon",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GlowEye",
+        "p": [
+          0.212,
+          0.084,
+          -0.57
+        ],
+        "s": [
+          0.129,
+          0.155,
+          0.035
+        ],
+        "c": [
+          223,
+          255,
+          255
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "Neon",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "legend": {
+    "attachment": [
+      "HatAttachment",
+      [
+        0,
+        0.5,
+        0
+      ]
+    ],
+    "coordinateSpace": "head-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          89,
+          64,
+          89
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "Crown",
+        "p": [
+          0,
+          0.72,
+          0
+        ],
+        "s": [
+          1.3,
+          0.2,
+          1.17
+        ],
+        "c": [
+          89,
+          64,
+          89
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.42,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          89,
+          64,
+          89
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          -0.14,
+          0.55,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          89,
+          64,
+          89
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.14,
+          0.51,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          89,
+          64,
+          89
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "Fringe",
+        "p": [
+          0.42,
+          0.56,
+          -0.62
+        ],
+        "s": [
+          0.3,
+          0.28,
+          0.14
+        ],
+        "c": [
+          89,
+          64,
+          89
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrownBand",
+        "p": [
+          0,
+          0.98,
+          0
+        ],
+        "s": [
+          1.52,
+          0.16,
+          1.4
+        ],
+        "c": [
+          177,
+          126,
+          43
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrownPixel",
+        "p": [
+          -0.6,
+          1.15,
+          -0.68
+        ],
+        "s": [
+          0.24,
+          0.38,
+          0.16
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrownPixel",
+        "p": [
+          -0.3,
+          1.29,
+          -0.68
+        ],
+        "s": [
+          0.24,
+          0.66,
+          0.16
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrownPixel",
+        "p": [
+          0,
+          1.15,
+          -0.68
+        ],
+        "s": [
+          0.24,
+          0.38,
+          0.16
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrownPixel",
+        "p": [
+          0.3,
+          1.29,
+          -0.68
+        ],
+        "s": [
+          0.24,
+          0.66,
+          0.16
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrownPixel",
+        "p": [
+          0.6,
+          1.15,
+          -0.68
+        ],
+        "s": [
+          0.24,
+          0.38,
+          0.16
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrownPixel",
+        "p": [
+          -0.6,
+          1.15,
+          0.68
+        ],
+        "s": [
+          0.24,
+          0.38,
+          0.16
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrownPixel",
+        "p": [
+          -0.3,
+          1.29,
+          0.68
+        ],
+        "s": [
+          0.24,
+          0.66,
+          0.16
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrownPixel",
+        "p": [
+          0,
+          1.15,
+          0.68
+        ],
+        "s": [
+          0.24,
+          0.38,
+          0.16
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrownPixel",
+        "p": [
+          0.3,
+          1.29,
+          0.68
+        ],
+        "s": [
+          0.24,
+          0.66,
+          0.16
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrownPixel",
+        "p": [
+          0.6,
+          1.15,
+          0.68
+        ],
+        "s": [
+          0.24,
+          0.38,
+          0.16
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrownSide",
+        "p": [
+          -0.68,
+          1.13,
+          0
+        ],
+        "s": [
+          0.16,
+          0.3,
+          1.12
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "CrownSide",
+        "p": [
+          0.68,
+          1.13,
+          0
+        ],
+        "s": [
+          0.16,
+          0.3,
+          1.12
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "FrontGem",
+        "p": [
+          0,
+          1.15,
+          -0.79
+        ],
+        "s": [
+          0.22,
+          0.22,
+          0.12
+        ],
+        "c": [
+          121,
+          223,
+          222
+        ],
+        "shape": "ball",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "Neon",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  },
+  "legend_cape": {
+    "attachment": [
+      "BodyBackAttachment",
+      [
+        0,
+        0,
+        0.5
+      ]
+    ],
+    "coordinateSpace": "torso-local",
+    "parts": [
+      {
+        "name": "Handle",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "s": [
+          0.08,
+          0.08,
+          0.08
+        ],
+        "c": [
+          68,
+          56,
+          80
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 1,
+        "cls": "Part"
+      },
+      {
+        "name": "CapeBack",
+        "p": [
+          0,
+          -0.55,
+          0.76
+        ],
+        "s": [
+          1.85,
+          2.8,
+          0.22
+        ],
+        "c": [
+          123,
+          53,
+          84
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GoldHem",
+        "p": [
+          0,
+          -1.94,
+          0.77
+        ],
+        "s": [
+          1.85,
+          0.12,
+          0.25
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GoldEdge",
+        "p": [
+          -0.82,
+          -0.55,
+          0.9
+        ],
+        "s": [
+          0.12,
+          2.65,
+          0.05
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      },
+      {
+        "name": "GoldEdge",
+        "p": [
+          0.82,
+          -0.55,
+          0.9
+        ],
+        "s": [
+          0.12,
+          2.65,
+          0.05
+        ],
+        "c": [
+          255,
+          201,
+          60
+        ],
+        "shape": "box",
+        "r": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mat": "SmoothPlastic",
+        "collide": false,
+        "alpha": 0,
+        "cls": "Part"
+      }
+    ]
+  }
+}
