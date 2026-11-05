@@ -1,0 +1,61 @@
+{
+  "studioTested": false,
+  "targetHeadSize": [
+    1.18,
+    1.2,
+    1.05
+  ],
+  "targetHatAttachment": [
+    0,
+    0.5,
+    0
+  ],
+  "employees": {
+    "leo": {
+      "parts": 14,
+      "specialization": "sound",
+      "gender": "male",
+      "faceSha256": "5726f627138173891de027e64c8cd7c4b292df77d9391f2c828a82d90dd767be",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    },
+    "vera": {
+      "parts": 21,
+      "specialization": "story",
+      "gender": "female",
+      "faceSha256": "f5cb4eed93367c7c8bff842280cfa277ee440d37edd28a6849e5a079798829fb",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    },
+    "robo": {
+      "parts": 17,
+      "specialization": "all",
+      "gender": "other",
+      "faceSha256": "c6759b3499cd249c3bc4a147917573ce1a25ba93141b6186890852afd6e4c6cd",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    },
+    "ghost": {
+      "parts": 7,
+      "specialization": "all",
+      "gender": "other",
+      "faceSha256": "1b90d1a3f48267843c69995de5386ddcbe541eff51f21ecef7b2312126450376",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    },
+    "legend": {
+      "parts": 20,
+      "specialization": "all",
+      "gender": "other",
+      "faceSha256": "5aad9b4cb6e37b06d4d6da0324ba3d0e1456030a523628295a6f24cbdda3d6f4",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    }
+  },
+  "status": "PASS"
+}
