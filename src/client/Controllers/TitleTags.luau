@@ -6,6 +6,8 @@
 -- Это единственная табличка титула: временные титулы (блиц-джем, «Игра недели») — тоже здесь.
 -- "TitleUntil" — конец временного титула (табличка прячется вовремя, сервер снимает его следом),
 -- "GotwRank" — место в «Игре недели» для текста титула gotw_winner.
+-- Настройка «Скрыть титулы других игроков» (атрибут LocalPlayer "HideTitles", ClientSettings):
+-- чужие таблички не рисуем, свою — рисуем.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -16,6 +18,7 @@ local ClientState = require(script.Parent.Parent.ClientState)
 local ATTRIBUTE = "Title"
 local UNTIL_ATTRIBUTE = "TitleUntil"
 local GOTW_RANK_ATTRIBUTE = "GotwRank"
+local HIDE_ATTRIBUTE = "HideTitles"
 local HEAD_WAIT = 10
 
 local TitleTags = {}
@@ -42,6 +45,9 @@ end
 
 local function update(player: Player)
 	removeTag(player)
+	if player ~= localPlayer and localPlayer:GetAttribute(HIDE_ATTRIBUTE) == true then
+		return
+	end
 	local id = player:GetAttribute(ATTRIBUTE)
 	local title = if type(id) == "string" then Titles.byId[id] else nil
 	local character = player.Character
@@ -135,12 +141,14 @@ function TitleTags.start()
 		end
 		connections[player] = nil
 	end)
-	-- Сменили язык: перерисовать все таблички
-	ClientState.langChanged:Connect(function()
+	-- Сменили язык или настройку «скрыть титулы»: перерисовать все таблички
+	local function updateAll()
 		for _, player in Players:GetPlayers() do
 			update(player)
 		end
-	end)
+	end
+	ClientState.langChanged:Connect(updateAll)
+	localPlayer:GetAttributeChangedSignal(HIDE_ATTRIBUTE):Connect(updateAll)
 end
 
 return TitleTags

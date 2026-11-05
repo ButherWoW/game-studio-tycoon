@@ -68,7 +68,10 @@ local function celebrate(level: number)
 	scale.Scale = 0.3
 	scale.Parent = banner
 	TweenService:Create(scale, TweenInfo.new(0.5, Enum.EasingStyle.Back), { Scale = 1 }):Play()
-	confetti(gui)
+	-- «Меньше эффектов» (настройки): без конфетти
+	if Players.LocalPlayer:GetAttribute("LowGraphics") ~= true then
+		confetti(gui)
+	end
 
 	-- Звук переезда, если SoundController подключён (ID присылает Dev 1)
 	-- (переезд в офис — это покупка апгрейда office, его звук уже играет SoundController)

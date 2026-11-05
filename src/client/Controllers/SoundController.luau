@@ -2,6 +2,7 @@
 -- Звуки и фоновая музыка (5.6). Ключи и громкость — Config/Sounds; id = 0 — молчим.
 -- Подключено к событиям без правки чужих окон: релиз, разработка, покупки, клики по кнопкам.
 -- Другие контроллеры могут звать SoundController.play(key) сами.
+-- Громкость из настроек (Config/Settings): музыка (looped) — SoundGroup «Music», остальное — «Effects».
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -11,11 +12,29 @@ local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local Sounds = require(ReplicatedStorage.Shared.Config.Sounds)
 local Critics = require(ReplicatedStorage.Shared.Config.Critics)
 local ClientState = require(script.Parent.Parent.ClientState)
+local ClientSettings = require(script.Parent.Parent.ClientSettings)
 
 local SoundController = {}
 
 local folder: Folder? = nil
 local cache: { [string]: Sound } = {}
+local groups: { [string]: SoundGroup } = {}
+
+-- Группа громкости: "Music" или "Effects" (Volume = множитель из настроек)
+local function getGroup(name: string): SoundGroup
+	local group = groups[name]
+	if not group then
+		local g = Instance.new("SoundGroup")
+		g.Name = name
+		g.Volume = if name == "Music"
+			then ClientSettings.values.musicVolume
+			else ClientSettings.values.sfxVolume
+		g.Parent = SoundService
+		groups[name] = g
+		group = g
+	end
+	return group
+end
 
 local function getFolder(): Folder
 	if not folder then
@@ -39,6 +58,7 @@ local function getSound(key: string): Sound?
 		s.SoundId = "rbxassetid://" .. config.id
 		s.Volume = config.volume
 		s.Looped = config.looped == true
+		s.SoundGroup = getGroup(if config.looped then "Music" else "Effects")
 		s.Parent = getFolder()
 		cache[key] = s
 		sound = s
@@ -98,6 +118,13 @@ local function countKeys(set: any): number
 end
 
 function SoundController.start()
+	ClientSettings.changed:Connect(function(key: string)
+		if key == "musicVolume" then
+			getGroup("Music").Volume = ClientSettings.values.musicVolume
+		elseif key == "sfxVolume" then
+			getGroup("Effects").Volume = ClientSettings.values.sfxVolume
+		end
+	end)
 	SoundController.play("music_garage")
 
 	-- Разработка: первый тик — dev_start, дальше тихий dev_tick раз в несколько секунд
