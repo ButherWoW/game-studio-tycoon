@@ -1,0 +1,5 @@
+{
+  "prompt": "Use case: precise-object-edit. Edit the supplied original season banner for our Roblox game. Change ONLY the central headline from 'SEASON 1' to exactly 'SEASON' (S E A S O N). Completely remove the numeral1 and re-center the remaining word across the former text area with balanced spacing. Preserve the original golden chunky beveled letters with darkoutline and highlights, golden trophy with star, all floatingcartridges/colors/art, blue-purple gamestudio background, plants, furniture, glossylighting and fullcomposition. Do not add any date, seasonnumber, badge, newtext, brand, watermark or logo. Final widebanner aspect4:1 intended1600x400, fullbleedopaque. Keep the complete trophy handles andcartridges withincanvas, no new cropping. One final image, not a mockup.",
+  "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-e66a31ce-985d-46ef-93fa-e286ffa24c96.png",
+  "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-social/V18/season_banner.png"
+}

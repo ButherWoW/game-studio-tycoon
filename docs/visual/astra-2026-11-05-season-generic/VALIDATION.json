@@ -1,0 +1,20 @@
+{
+  "file": "season_banner_generic.png",
+  "size": [
+    1600,
+    400
+  ],
+  "sourceSize": [
+    2172,
+    724
+  ],
+  "fullyOpaque": true,
+  "sha256": "b07bfc1d5aa41696d25fcad435badff040c17c311c2ac5df117dda9f720794b7",
+  "visualReview": "PASS: exactSEASON, no numeral/date, composition retained;1600x400 and400x100 reviewed",
+  "runtimeTested": false,
+  "sourceChecks": {
+    "stylua": "PASS",
+    "selene": "PASS",
+    "rojoBuild": "PASS"
+  }
+}
