@@ -11,6 +11,7 @@ local ServerStorage = game:GetService("ServerStorage")
 
 local Shared = ReplicatedStorage.Shared
 local Decor = require(Shared.Config.Decor)
+local DailyEvents = require(Shared.Config.DailyEvents)
 local Stages = require(Shared.Config.Stages)
 local DecorRemotes = require(Shared.DecorRemotes)
 local DataService = require(script.Parent.DataService)
@@ -155,7 +156,8 @@ local function onBuy(player: Player, itemId: any, floor: any)
 	if list[key] then
 		return
 	end
-	if DataService.trySpend(player, Decor.cost(item, floor)) then
+	-- «Флеш-распродажа» (DailyEventService): дешевле на 30%, окно показывает ту же цену
+	if DataService.trySpend(player, DailyEvents.cashPrice(Decor.cost(item, floor))) then
 		list[key] = true
 		place(player)
 		MoodService.refresh(player)
