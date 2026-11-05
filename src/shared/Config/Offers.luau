@@ -5,6 +5,8 @@
 -- (кроме стартового набора), не поверх других окон. Продукты (productId) — в Config/Products:
 -- offers.doubleRelease, offers.starterPack и deals (скидочные копии для «Сделки дня»).
 
+local ContentDrops = require(script.Parent.ContentDrops)
+
 export type OfferKind =
 	"doubleRelease"
 	| "x2Reminder"
@@ -125,11 +127,27 @@ function Offers.secondsToMidnight(unixTime: number): number
 	return DAY - (math.floor(unixTime) % DAY)
 end
 
--- Товар дня: детерминированно от даты, одинаков на всех серверах и у клиента
+-- Постер или скин ещё не вышел к дню day (Config/ContentDrops) — в сделку дня не берём
+local function dealReleased(item: DealItem, day: number): boolean
+	if item.kind == "product" then
+		return true
+	end
+	return ContentDrops.isReleased((item.kind :: any) :: ContentDrops.Kind, item.itemId, day * DAY)
+end
+
+-- Товар дня: детерминированно от даты, одинаков на всех серверах и у клиента.
+-- Невышедший товар пропускаем — берём следующий по пулу (товары-продукты есть всегда)
 function Offers.dealFor(day: number): DealItem
 	local pool = Offers.dailyDeal.pool
 	-- Шаг 7 взаимно прост с длиной пула (15): за 15 дней покажем все товары, соседние дни разные
-	return pool[(day * 7) % #pool + 1]
+	local start = (day * 7) % #pool
+	for step = 0, #pool - 1 do
+		local item = pool[(start + step) % #pool + 1]
+		if dealReleased(item, day) then
+			return item
+		end
+	end
+	return pool[start + 1]
 end
 
 -- «12:05:09» — без слов, одинаково на всех языках

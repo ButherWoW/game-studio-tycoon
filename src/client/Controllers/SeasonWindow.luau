@@ -19,6 +19,7 @@ local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local QuestWindow = require(script.Parent.QuestWindow)
+local ContentDropClient = require(script.Parent.Parent.ContentDropClient)
 
 type Tab = "season" | "jam"
 
@@ -62,6 +63,13 @@ end
 
 local function describe(reward: Season.Reward): string
 	local parts = {}
+	-- График контента: предмет ещё не вышел — сервер выдаст fallbackMinutes дохода, так и пишем
+	local function soon(kind: "poster" | "skin" | "mascot", id: string, text: string): string
+		if ContentDropClient.isReleased(kind, id) then
+			return text
+		end
+		return t("drop_reward_soon", { item = text, minutes = reward.fallbackMinutes or 0 })
+	end
 	local base = QuestWindow.describeReward({
 		incomeMinutes = reward.incomeMinutes,
 		coffeeMinutes = reward.coffeeMinutes,
@@ -76,13 +84,18 @@ local function describe(reward: Season.Reward): string
 		local name = if poster
 			then ClientState.localText("poster_" .. poster.id, poster.name, poster.nameEn)
 			else reward.poster
-		table.insert(parts, t("season_reward_poster", { name = name }))
+		table.insert(parts, soon("poster", reward.poster, t("season_reward_poster", { name = name })))
 	end
 	if reward.skin then
-		table.insert(parts, t("season_reward_skin", { name = t("skin_" .. reward.skin) }))
+		local skin = reward.skin
+		table.insert(parts, soon("skin", skin, t("season_reward_skin", { name = t("skin_" .. skin) })))
 	end
 	if reward.mascot then
-		table.insert(parts, t("season_reward_mascot", { name = t("season_mascot_" .. reward.mascot) }))
+		local mascot = reward.mascot
+		table.insert(
+			parts,
+			soon("mascot", mascot, t("season_reward_mascot", { name = t("season_mascot_" .. mascot) }))
+		)
 	end
 	if reward.title then
 		table.insert(parts, t("season_reward_title"))
@@ -240,6 +253,7 @@ local function renderSeason(frame: ScrollingFrame)
 		Ui.colors.money
 	)
 	header.LayoutOrder = nextOrder()
+	ContentDropClient.nextLine(frame, nextOrder())
 
 	-- Уровень и полоса опыта до следующего
 	local into = if tier >= maxTier then Season.xpPerTier else xp - tier * Season.xpPerTier

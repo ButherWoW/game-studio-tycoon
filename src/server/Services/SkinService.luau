@@ -14,6 +14,7 @@ local ServerStorage = game:GetService("ServerStorage")
 
 local Shared = ReplicatedStorage.Shared
 local Skins = require(Shared.Config.Skins)
+local ContentDrops = require(Shared.Config.ContentDrops)
 local Images = require(Shared.Config.Images)
 local SkinRemotes = require(Shared.SkinRemotes)
 local DataService = require(script.Parent.DataService)
@@ -236,6 +237,10 @@ local function onBuy(player: Player, skinId: any)
 	local profile = DataService.get(player)
 	-- Премиум за $ не продаётся; открытый второй раз не продаём
 	if not skin or skin.premium or not profile then
+		return
+	end
+	-- График контента (Config/ContentDrops): до выхода не продаём
+	if not ContentDrops.isReleased("skin", skin.id) then
 		return
 	end
 	local cost = skin.cost

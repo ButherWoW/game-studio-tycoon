@@ -6,6 +6,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Genres = require(ReplicatedStorage.Shared.Config.Genres)
+local ContentDrops = require(ReplicatedStorage.Shared.Config.ContentDrops)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local Trends = require(ReplicatedStorage.Shared.Config.Trends)
 
@@ -33,13 +34,26 @@ for _, id in sortedKeys(Topics) do
 	end
 end
 
+-- Только вышедшие по графику контента (Config/ContentDrops)
+local function released(ids: { string }, kind: ContentDrops.Kind): { string }
+	local list = {}
+	for _, id in ids do
+		if ContentDrops.isReleased(kind, id) then
+			table.insert(list, id)
+		end
+	end
+	return if #list > 0 then list else ids
+end
+
 local function pickTrend()
 	-- Не повторяем ту же пару два раза подряд
+	local genres = released(genreIds, "genre")
+	local topics = released(topicIds, "topic")
 	local genreId, topicId
 	repeat
-		genreId = genreIds[rng:NextInteger(1, #genreIds)]
-		topicId = topicIds[rng:NextInteger(1, #topicIds)]
-	until genreId ~= currentGenre or topicId ~= currentTopic or #genreIds * #topicIds <= 1
+		genreId = genres[rng:NextInteger(1, #genres)]
+		topicId = topics[rng:NextInteger(1, #topics)]
+	until genreId ~= currentGenre or topicId ~= currentTopic or #genres * #topics <= 1
 	currentGenre, currentTopic = genreId, topicId
 	ReplicatedStorage:SetAttribute("TrendGenre", genreId)
 	ReplicatedStorage:SetAttribute("TrendTopic", topicId)

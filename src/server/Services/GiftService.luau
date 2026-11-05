@@ -12,6 +12,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage.Shared
 local Social = require(Shared.Config.Social)
+local ContentDrops = require(Shared.Config.ContentDrops)
 local SocialRemotes = require(Shared.SocialRemotes)
 local DataService = require(script.Parent.DataService)
 local SkinService = require(script.Parent.SkinService)
@@ -76,7 +77,8 @@ local function onSelect(player: Player, giftId: any, userId: any)
 		return
 	end
 	local base = { itemKind = gift.kind, itemId = gift.itemId }
-	if gift.productId == 0 then
+	-- productId 0 или предмет ещё не вышел по графику контента (Config/ContentDrops) — «скоро»
+	if gift.productId == 0 or not ContentDrops.isReleased(gift.kind, gift.itemId) then
 		notice(player, { kind = "giftSoon" })
 		return
 	end

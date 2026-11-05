@@ -11,6 +11,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage.Shared
 local Posters = require(Shared.Config.Posters)
+local ContentDrops = require(Shared.Config.ContentDrops)
 local Images = require(Shared.Config.Images)
 local PosterRemotes = require(Shared.PosterRemotes)
 local DataService = require(script.Parent.DataService)
@@ -312,6 +313,10 @@ local function onBuy(player: Player, posterId: any)
 	local profile = DataService.get(player)
 	-- Премиум за $ не продаётся; купленный второй раз не продаём
 	if not poster or poster.premium or not profile then
+		return
+	end
+	-- График контента (Config/ContentDrops): до выхода не продаём
+	if not ContentDrops.isReleased("poster", poster.id) then
 		return
 	end
 	local cost = poster.cost
