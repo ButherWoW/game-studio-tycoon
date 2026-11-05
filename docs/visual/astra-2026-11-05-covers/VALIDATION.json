@@ -1,0 +1,160 @@
+{
+  "expected": 10,
+  "ready": 10,
+  "titleStripHeight": 60,
+  "studioUploadTested": false,
+  "assets": [
+    {
+      "file": "cover_action.png",
+      "size": [
+        256,
+        320
+      ],
+      "opaque": true,
+      "sha256": "c12d162a486d92b6a5efa9597fa4c3c8abf5e85882c64646c6010dd2428e6011",
+      "visualReview": "PASS: blank bottom title strip, top star, no text/branding, friendly scene and readable genre at64px",
+      "sourceSize": [
+        1122,
+        1402
+      ],
+      "aspectRatioRelativeChange": 0.0003566333808844302
+    },
+    {
+      "file": "cover_adventure.png",
+      "size": [
+        256,
+        320
+      ],
+      "opaque": true,
+      "sha256": "37eef87f8217fd8da7cf7530c0250098194ee0ff705f870683ed2350efb924ec",
+      "visualReview": "PASS: blank bottom title strip, top star, no text/branding, friendly scene and readable genre at64px",
+      "sourceSize": [
+        1122,
+        1402
+      ],
+      "aspectRatioRelativeChange": 0.0003566333808844302
+    },
+    {
+      "file": "cover_casual.png",
+      "size": [
+        256,
+        320
+      ],
+      "opaque": true,
+      "sha256": "8764ae180417e410e31ab617aed94fefc97d1451ac4464edc1c2590f421d2457",
+      "visualReview": "PASS: blank bottom title strip, top star, no text/branding, friendly scene and readable genre at64px",
+      "sourceSize": [
+        1122,
+        1402
+      ],
+      "aspectRatioRelativeChange": 0.0003566333808844302
+    },
+    {
+      "file": "cover_rpg.png",
+      "size": [
+        256,
+        320
+      ],
+      "opaque": true,
+      "sha256": "33ff9aa8e128fe03d1231a3ab714e606c4862ee0189c4fadb60f7fbff0f0df9b",
+      "visualReview": "PASS: blank bottom title strip, top star, no text/branding, friendly scene and readable genre at64px",
+      "sourceSize": [
+        1122,
+        1402
+      ],
+      "aspectRatioRelativeChange": 0.0003566333808844302
+    },
+    {
+      "file": "cover_simulation.png",
+      "size": [
+        256,
+        320
+      ],
+      "opaque": true,
+      "sha256": "0e9e9598b681c3af4daad73ac0c917204e28c031fc513c42a93015d3474df999",
+      "visualReview": "PASS: blank bottom title strip, top star, no text/branding, friendly scene and readable genre at64px",
+      "sourceSize": [
+        1122,
+        1402
+      ],
+      "aspectRatioRelativeChange": 0.0003566333808844302
+    },
+    {
+      "file": "cover_puzzle.png",
+      "size": [
+        256,
+        320
+      ],
+      "opaque": true,
+      "sha256": "83031637777c7dbdf596c4a09faf2040958110a7fa2a90eff16c13b02327af0a",
+      "visualReview": "PASS: blank bottom title strip, top star, no text/branding, friendly scene and readable genre at64px",
+      "sourceSize": [
+        1122,
+        1402
+      ],
+      "aspectRatioRelativeChange": 0.0003566333808844302
+    },
+    {
+      "file": "cover_racing.png",
+      "size": [
+        256,
+        320
+      ],
+      "opaque": true,
+      "sha256": "34cccab946cd55a6ded4d43b39c779a3f5f9d9688e704bc69e54c6ff38ff5b16",
+      "visualReview": "PASS: blank bottom title strip, top star, no text/branding, friendly scene and readable genre at64px",
+      "sourceSize": [
+        1122,
+        1402
+      ],
+      "aspectRatioRelativeChange": 0.0003566333808844302
+    },
+    {
+      "file": "cover_strategy.png",
+      "size": [
+        256,
+        320
+      ],
+      "opaque": true,
+      "sha256": "d46fe54ed11f2d40819a4443dbb55408de5b0896458369fe0803aac5b5343c92",
+      "visualReview": "PASS: blank bottom title strip, top star, no text/branding, friendly scene and readable genre at64px",
+      "sourceSize": [
+        1122,
+        1402
+      ],
+      "aspectRatioRelativeChange": 0.0003566333808844302
+    },
+    {
+      "file": "cover_sports.png",
+      "size": [
+        256,
+        320
+      ],
+      "opaque": true,
+      "sha256": "9acfddbfcc9f06832c03d97ae1e0168ecd53a9153a262ceaad2ed4cb3e20a980",
+      "visualReview": "PASS: blank bottom title strip, top star, no text/branding, friendly scene and readable genre at64px",
+      "sourceSize": [
+        1122,
+        1402
+      ],
+      "aspectRatioRelativeChange": 0.0003566333808844302
+    },
+    {
+      "file": "cover_horror.png",
+      "size": [
+        256,
+        320
+      ],
+      "opaque": true,
+      "sha256": "e4bbc0f395d6edb67653241eca4e48adc844a694e62cf1a66070d4350b6b8f0a",
+      "visualReview": "PASS: blank bottom title strip, top star, no text/branding, friendly scene and readable genre at64px",
+      "sourceSize": [
+        1122,
+        1402
+      ],
+      "aspectRatioRelativeChange": 0.0003566333808844302
+    }
+  ],
+  "visualReview": "PASS",
+  "method": "Built-in ImageGen, one prompt per genre; sips resize; Pillow metadata/hash/contact-sheet QA"
+}
