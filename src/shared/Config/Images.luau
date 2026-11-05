@@ -343,4 +343,11 @@ Images.consoleStages = {
 	launch = 0, -- cstage_launch.png (консоль с ракетой)
 } :: { [string]: number }
 
+-- Одежда строителей (V29; assets/models/astra-v29/builder-pack). 0 — нет: цвета/одежда модели BuilderNPC.
+-- Dev 1: загрузить builder_shirt.png / builder_pants.png как Shirt/Pants (Classic Clothing) и вставить ID
+Images.builder = {
+	shirt = 0, -- builder_shirt.png 585×559
+	pants = 0, -- builder_pants.png 585×559
+} :: { [string]: number }
+
 return Images

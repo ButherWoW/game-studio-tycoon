@@ -19,6 +19,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
 
 local Construction = require(ReplicatedStorage.Shared.Config.Construction)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
@@ -704,6 +705,18 @@ local function makeBuilder(index: number): Model?
 		model = result :: Model
 	end
 	model.Name = "Builder" .. index
+	-- Одежда Астры V29 (builder_shirt/pants, Images.builder): поверх цветов и пустых шаблонов модели
+	local clothes = Images.builder
+	if clothes and clothes.shirt > 0 then
+		local shirt = model:FindFirstChildOfClass("Shirt") or Instance.new("Shirt")
+		shirt.ShirtTemplate = "rbxassetid://" .. clothes.shirt
+		shirt.Parent = model
+	end
+	if clothes and clothes.pants > 0 then
+		local pants = model:FindFirstChildOfClass("Pants") or Instance.new("Pants")
+		pants.PantsTemplate = "rbxassetid://" .. clothes.pants
+		pants.Parent = model
+	end
 	for _, item in model:GetDescendants() do
 		if item:IsA("Script") or item:IsA("LocalScript") then
 			item:Destroy()
