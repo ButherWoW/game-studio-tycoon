@@ -2,10 +2,10 @@
 -- Контракты издателей (Config/Contracts). С этапа офиса раз в ~intervalSeconds — предложение
 -- (только в памяти, ждёт offerSeconds). Принял — аванс сразу, активный контракт хранится в
 -- profile.contracts.active, срок тикает, пока игрок в игре. Прогресс — хук DevelopmentService
--- после релиза. Провал — вернуть аванс × failRepayFactor: BailiffService.addDebt, если есть,
--- иначе в долг банка (profile.loanDebt, гасится долей дохода игр), а без банка — из денег,
--- остаток (owed) забирается половиной дохода следующих игр.
--- Данные: profile.contracts = { active = Contract?, done, failed, owed? }.
+-- после релиза. Провал — вернуть аванс × failRepayFactor: сумма уходит в долг банка
+-- (profile.loanDebt, LoanService гасит его долей дохода каждой игры).
+-- Данные: profile.contracts = { active = Contract?, done, failed }. Старое поле owed (ветка «без
+-- банка», которая никогда не срабатывала) при загрузке переносится в loanDebt.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -36,11 +36,10 @@ export type Contract = {
 	expiresAt: number?, -- предложение: до какого os.time() ждёт ответа
 }
 
-type Data = { active: Contract?, done: number, failed: number, owed: number }
+type Data = { active: Contract?, done: number, failed: number }
 
 local TICK = 1
 local REQUEST_COOLDOWN = 0.5
-local OWED_SHARE = 0.5 -- без банка: доля дохода игры в погашение провала
 
 local ContractService = {}
 local offers: { [Player]: Contract } = {}
@@ -113,8 +112,13 @@ local function data(profile: DataService.Profile): Data
 		active = sanitize(raw.active),
 		done = math.max(math.floor(num(raw.done, 0)), 0),
 		failed = math.max(math.floor(num(raw.failed, 0)), 0),
-		owed = math.max(math.floor(num(raw.owed, 0)), 0),
 	}
+	-- Старые сохранения с owed: в долг банка (атрибут LoanDebt LoanService выставит при входе)
+	local owed = math.max(math.floor(num(raw.owed, 0)), 0)
+	if owed > 0 then
+		local p = profile :: any
+		p.loanDebt = math.max(math.floor(tonumber(p.loanDebt) or 0), 0) + owed
+	end
 	profile.contracts = fixed
 	return fixed
 end
@@ -122,7 +126,7 @@ end
 -- Сохранения уже чинятся при первом обращении, дальше — прямой доступ
 local function dataOf(profile: DataService.Profile): Data
 	local raw = profile.contracts
-	if type(raw) == "table" and raw.done ~= nil and raw.owed ~= nil then
+	if type(raw) == "table" and raw.done ~= nil and raw.failed ~= nil and raw.owed == nil then
 		return raw :: Data
 	end
 	return data(profile)
@@ -140,13 +144,6 @@ local function noteNonEarned(player: Player, amount: number)
 	local rewards = optional("RewardService")
 	if rewards and type(rewards.noteNonEarned) == "function" then
 		pcall(rewards.noteNonEarned, player, amount)
-	end
-end
-
-local function noteExpense(player: Player, amount: number)
-	local rewards = optional("RewardService")
-	if rewards and type(rewards.noteExpense) == "function" then
-		pcall(rewards.noteExpense, player, amount)
 	end
 end
 
@@ -236,36 +233,17 @@ local function scheduleNext(player: Player)
 	nextOfferAt[player] = os.clock() + interval
 end
 
--- Провал: вернуть аванс × failRepayFactor. Сколько ушло в долг — для тоста
-local function applyPenalty(player: Player, profile: DataService.Profile, d: Data, amount: number): number
+-- Провал: вернуть аванс × failRepayFactor — целиком в долг банка (LoanService гасит его долей
+-- дохода каждой игры). Возвращает, сколько ушло в долг — для тоста
+local function applyPenalty(player: Player, profile: DataService.Profile, amount: number): number
 	if amount <= 0 then
 		return 0
 	end
-	-- Приставы (другая фича): если есть — свой учёт долга
-	local bailiff = optional("BailiffService")
-	if bailiff and type(bailiff.addDebt) == "function" then
-		local ok = pcall(bailiff.addDebt, player, amount, "contract")
-		if ok then
-			return amount
-		end
-	end
-	-- Долг банка (LoanService): гасится repayShare дохода каждой игры
-	if optional("LoanService") then
-		local p = profile :: any
-		local debt = math.max(math.floor(tonumber(p.loanDebt) or 0), 0) + amount
-		p.loanDebt = debt
-		player:SetAttribute("LoanDebt", debt)
-		return amount
-	end
-	-- Без банка: из денег, остаток — с дохода следующих игр
-	local pay = math.min(amount, math.max(math.floor(profile.cash), 0))
-	if pay > 0 and DataService.trySpend(player, pay) then
-		noteExpense(player, pay)
-	else
-		pay = 0
-	end
-	d.owed += amount - pay
-	return amount - pay
+	local p = profile :: any
+	local debt = math.max(math.floor(tonumber(p.loanDebt) or 0), 0) + amount
+	p.loanDebt = debt
+	player:SetAttribute("LoanDebt", debt)
+	return amount
 end
 
 local function finish(player: Player, profile: DataService.Profile, d: Data, success: boolean)
@@ -288,7 +266,7 @@ local function finish(player: Player, profile: DataService.Profile, d: Data, suc
 	else
 		d.failed += 1
 		local penalty = math.ceil(c.advance * Contracts.failRepayFactor)
-		local debt = applyPenalty(player, profile, d, penalty)
+		local debt = applyPenalty(player, profile, penalty)
 		DepthRemotes.ContractResult:FireClient(
 			player,
 			{ result = "failed", publisher = name, amount = penalty, debt = debt }
@@ -326,14 +304,6 @@ function ContractService.onGameReleased(
 		return
 	end
 	local d = dataOf(profile)
-	-- Провал без банка: половина дохода игры в погашение
-	if d.owed > 0 and type(info.revenue) == "number" and info.revenue > 0 then
-		local pay = math.min(math.floor(info.revenue * OWED_SHARE), d.owed, math.floor(profile.cash))
-		if pay > 0 and DataService.trySpend(player, pay) then
-			d.owed -= pay
-			noteExpense(player, pay)
-		end
-	end
 	local c = d.active
 	if not c or not matches(c, info) then
 		return
