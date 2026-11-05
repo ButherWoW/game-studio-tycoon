@@ -69,6 +69,11 @@ export type Profile = {
 	-- Своя консоль и стример (ConsoleService, StreamerService); формат проверяют сервисы
 	console: any?,
 	streamer: any?,
+	-- Дерево перков Rebirth (RebirthPerkService, Config/RebirthPerks): уровни веток и
+	-- использован ли бесплатный сброс. Звёзды = rebirths − цена купленного. Rebirth не сбрасывает
+	rebirthPerks: { levels: { [string]: number }, respecUsed: boolean },
+	-- Титулы над головой (TitleService, Config/Titles): открытые (id -> os.time) и выбранный
+	titles: { owned: { [string]: number }, selected: string? },
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
@@ -144,6 +149,8 @@ local function defaultProfile(): Profile
 		rivals = { minutes = 0, passed = {} },
 		console = { stage = 0, started = false, progress = 0, share = 0, earned = 0 },
 		streamer = { hype = 0, earned = 0, scores = {} },
+		rebirthPerks = { levels = {}, respecUsed = false },
+		titles = { owned = {}, selected = nil },
 		processedReceipts = {},
 		receiptLog = {},
 		lastLogout = os.time(),
@@ -503,6 +510,40 @@ local function onPlayerAdded(player: Player)
 		end
 		-- Минус (долг, Config/Bailiffs) — не глубже самого большого лимита овердрафта
 		profile.cash = math.max(profile.cash, -Bailiffs.maxLimit())
+		-- Перки Rebirth и титулы: битый формат — заново, неизвестные id (ветки/титулы из будущих
+		-- версий или убранные из конфига) не удаляем — только числа/строки нужного типа
+		local perks: any = profile.rebirthPerks
+		if type(perks) ~= "table" then
+			perks = {}
+			profile.rebirthPerks = perks
+		end
+		if type(perks.levels) ~= "table" then
+			perks.levels = {}
+		end
+		for id, level in perks.levels do
+			if type(id) ~= "string" or type(level) ~= "number" or level ~= level or level < 0 then
+				perks.levels[id] = nil
+			end
+		end
+		perks.respecUsed = perks.respecUsed == true
+		local titles: any = profile.titles
+		if type(titles) ~= "table" then
+			titles = {}
+			profile.titles = titles
+		end
+		if type(titles.owned) ~= "table" then
+			titles.owned = {}
+		end
+		for id, at in titles.owned do
+			if type(id) ~= "string" then
+				titles.owned[id] = nil
+			elseif type(at) ~= "number" then
+				titles.owned[id] = os.time()
+			end
+		end
+		if type(titles.selected) ~= "string" or #titles.selected > 64 then
+			titles.selected = nil
+		end
 	end
 	profiles[player] = profile
 	states[player] = { persistent = persistent, closed = false }

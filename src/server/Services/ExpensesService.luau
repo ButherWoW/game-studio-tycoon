@@ -12,6 +12,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Expenses = require(ReplicatedStorage.Shared.Config.Expenses)
 local Bailiffs = require(ReplicatedStorage.Shared.Config.Bailiffs)
+local RebirthPerks = require(ReplicatedStorage.Shared.Config.RebirthPerks)
 local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService)
 local StaffService = require(script.Parent.StaffService)
@@ -26,8 +27,14 @@ local salaryAccrued: { [Player]: number } = {}
 local nextPayday: { [Player]: number } = {}
 
 -- Расходы студии в минуту: зарплаты всех нанятых + аренда
+-- Скидка звёзд студии (Config/RebirthPerks, ветка «Экономия»): множитель аренды и зарплат
+local function perkMultiplier(profile: DataService.Profile): number
+	return 1 - RebirthPerks.forProfile(profile).expenses
+end
+
 function ExpensesService.perMinute(profile: DataService.Profile): number
-	return StaffService.salaryPerMinute(profile) + Expenses.rentFor(profile.studioLevel)
+	return (StaffService.salaryPerMinute(profile) + Expenses.rentFor(profile.studioLevel))
+		* perkMultiplier(profile)
 end
 
 local function setStrike(player: Player, profile: DataService.Profile, strike: boolean)
@@ -92,9 +99,10 @@ local function charge(player: Player)
 		setStrike(player, profile, false)
 		return
 	end
-	local salaryPerMinute = StaffService.salaryPerMinute(profile)
+	local discount = perkMultiplier(profile)
+	local salaryPerMinute = StaffService.salaryPerMinute(profile) * discount
 	-- Грант (события компании): аренда на время не списывается
-	local rentPerMinute = Expenses.rentFor(profile.studioLevel) * rentMultiplier(player)
+	local rentPerMinute = Expenses.rentFor(profile.studioLevel) * rentMultiplier(player) * discount
 	player:SetAttribute("ExpensesPerMinute", salaryPerMinute + rentPerMinute)
 	local now = os.clock()
 	if not nextPayday[player] then

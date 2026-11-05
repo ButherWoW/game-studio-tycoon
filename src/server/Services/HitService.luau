@@ -14,6 +14,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
 
 local HitCartridges = require(ReplicatedStorage.Shared.Config.HitCartridges)
+local RebirthPerks = require(ReplicatedStorage.Shared.Config.RebirthPerks)
 local HitRemotes = require(ReplicatedStorage.Shared.HitRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local DataService = require(script.Parent.DataService)
@@ -108,7 +109,9 @@ local function hitsOf(profile: DataService.Profile): { Hit }
 end
 
 local function capacity(profile: DataService.Profile): number
-	return HitCartridges.slots(profile.studioLevel)
+	-- + места за звёзды студии (Config/RebirthPerks, ветка «Пассив»), не больше мест на модели
+	local bonus = RebirthPerks.forProfile(profile).hitSlots
+	return math.min(HitCartridges.slots(profile.studioLevel) + bonus, HitCartridges.maxSlots)
 end
 
 -- На полке стоят сильнейшие capacity штук (после Rebirth слотов меньше — лишние «в коробке»).
@@ -757,6 +760,12 @@ function HitService.onGameReleased(
 		-- Мог перестать быть новичком: открыть prompts
 		refreshPrompts(player)
 	end
+	sendState(player)
+end
+
+-- Перки Rebirth изменили число мест (RebirthPerkService): переставить картриджи
+function HitService.refreshShelf(player: Player)
+	renderShelf(player)
 	sendState(player)
 end
 

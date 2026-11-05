@@ -18,6 +18,7 @@ local Genres = require(Shared.Config.Genres)
 local Topics = require(Shared.Config.Topics)
 local Upgrades = require(Shared.Config.Upgrades)
 local Rebirth = require(Shared.Config.Rebirth)
+local RebirthPerks = require(Shared.Config.RebirthPerks)
 local Employees = require(Shared.Config.Employees)
 local GamePasses = require(Shared.Config.GamePasses)
 local Research = require(Shared.Config.Research)
@@ -202,7 +203,9 @@ local function durationFactor(player: Player): number
 	local items = math.min(upgradeBonus(player, "speed"), Economy.maxUpgradeSpeed)
 	-- Перк «Кранчер» и подобные: множитель времени (0.9 = −10%)
 	local perkTime = tonumber(perks(player).devTime) or 1
-	return math.max(devTime * perkTime, 0.25) * (1 - items) / moodSpeed(player)
+	-- Звёзды студии (Config/RebirthPerks, ветка «Скорость»): под тем же полом 0.25
+	local starTime = 1 - RebirthPerks.forProfile(DataService.get(player)).devTime
+	return math.max(devTime * perkTime * starTime, 0.25) * (1 - items) / moodSpeed(player)
 end
 local StaffService = require(script.Parent.StaffService)
 local PlotService = require(script.Parent.PlotService)
