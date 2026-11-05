@@ -1,9 +1,8 @@
 --!strict
 -- «Игра недели» на клиенте: плашка по воскресеньям (UTC) «итоги сегодня, лидер …», тост
--- победителю и титул «🏆 Игра недели #N» над головой победителей (атрибут игрока GotwRank,
--- ставит GotwService). Таблица — вкладка окна 📊 (GotwPanel).
+-- победителю. Титул «🏆 Игра недели #N» над головой — общий титул gotw_winner (TitleService,
+-- табличка TitleTags берёт место из атрибута GotwRank). Таблица — вкладка окна 📊 (GotwPanel).
 
-local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage.Shared
@@ -17,72 +16,8 @@ local Ui = require(script.Parent.Parent.Ui)
 
 local BANNER_HEIGHT = 26
 local BANNER_WIDTH = 460
-local TAG_NAME = "GotwTitle"
-local TAG_DISTANCE = 60
-
-local player = Players.LocalPlayer
 
 local GotwController = {}
-
--- ===== Титул над головой =====
-
-local tags: { [Player]: BillboardGui } = {}
-
-local function updateTag(target: Player)
-	local rank = tonumber(target:GetAttribute("GotwRank")) or 0
-	local character = target.Character
-	local head = character and character:FindFirstChild("Head")
-	local existing = tags[target]
-	if rank <= 0 or not head or not head:IsA("BasePart") then
-		if existing then
-			existing:Destroy()
-			tags[target] = nil
-		end
-		return
-	end
-	local gui = existing
-	if not gui or gui.Adornee ~= head then
-		if gui then
-			gui:Destroy()
-		end
-		local newGui = Instance.new("BillboardGui")
-		newGui.Name = TAG_NAME
-		newGui.Size = UDim2.fromScale(5, 0.9)
-		-- Выше таблички VIP (StudsOffset 3)
-		newGui.StudsOffset = Vector3.new(0, 4.1, 0)
-		newGui.MaxDistance = TAG_DISTANCE
-		newGui.LightInfluence = 0
-		newGui.Adornee = head
-		local label = Instance.new("TextLabel")
-		label.Name = "Text"
-		label.Size = UDim2.fromScale(1, 1)
-		label.BackgroundTransparency = 1
-		label.Font = Enum.Font.GothamBold
-		label.TextScaled = true
-		label.TextColor3 = Color3.fromRGB(255, 200, 50)
-		label.TextStrokeColor3 = Color3.fromRGB(70, 45, 0)
-		label.TextStrokeTransparency = 0.2
-		label.Parent = newGui
-		newGui.Parent = player:WaitForChild("PlayerGui")
-		tags[target] = newGui
-		gui = newGui
-	end
-	local label = (gui :: BillboardGui):FindFirstChild("Text")
-	if label and label:IsA("TextLabel") then
-		label.Text = ClientState.t("gotw_head_title", { rank = rank })
-	end
-end
-
-local function watchPlayer(target: Player)
-	target:GetAttributeChangedSignal("GotwRank"):Connect(function()
-		updateTag(target)
-	end)
-	target.CharacterAdded:Connect(function(character: Model)
-		character:WaitForChild("Head", 10)
-		updateTag(target)
-	end)
-	updateTag(target)
-end
 
 -- ===== Плашка воскресенья =====
 
@@ -154,22 +89,6 @@ function GotwController.start()
 				}),
 				Ui.colors.good
 			)
-		end
-	end)
-	Players.PlayerAdded:Connect(watchPlayer)
-	for _, other in Players:GetPlayers() do
-		task.spawn(watchPlayer, other)
-	end
-	Players.PlayerRemoving:Connect(function(target: Player)
-		local gui = tags[target]
-		if gui then
-			gui:Destroy()
-		end
-		tags[target] = nil
-	end)
-	ClientState.langChanged:Connect(function()
-		for target in tags do
-			updateTag(target)
 		end
 	end)
 end

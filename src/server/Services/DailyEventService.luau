@@ -15,8 +15,9 @@
 --   StaffService: talentStar (охота за талантами); Decor/FurnitureStyle: DailyEvents.cashPrice (распродажа);
 --   ShopWindow (клиент): кофе — скидочная копия «Сделки дня» (кофе-раш).
 -- Свои объекты в мире: жуки (workspace.DailyBugs) и NPC-инвестор у фонтана (workspace.DailyInvestor).
--- Данные: (profile :: any).dailyTitle = { key, untilAt } — титул победителя блиц-джема на сутки
--- (атрибут игрока DailyTitle), лениво, defaultProfile не трогаем.
+-- Титул победителя блиц-джема на сутки — общий временный титул blitz_champion (TitleService.grant
+-- с untilAt, одна табличка над головой). Старое поле (profile :: any).dailyTitle = { key, untilAt }
+-- переносится в TitleService при входе и удаляется.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -739,23 +740,16 @@ function DailyEventService.onGameReleased(player: Player, info: any)
 	boardDirty = true
 end
 
-local function titleData(profile: DataService.Profile): { key: string, untilAt: number }?
+-- Старый формат (до общих титулов): действующий титул блиц-джема → TitleService, поле удаляем
+local function migrateTitle(player: Player, profile: DataService.Profile)
 	local raw = (profile :: any).dailyTitle
-	if type(raw) == "table" and type(raw.key) == "string" and tonumber(raw.untilAt) then
-		return { key = raw.key, untilAt = tonumber(raw.untilAt) :: number }
+	if raw == nil then
+		return
 	end
-	return nil
-end
-
-local function applyTitle(player: Player, profile: DataService.Profile)
-	local title = titleData(profile)
-	if title and title.untilAt > os.time() then
-		player:SetAttribute("DailyTitle", title.key)
-		player:SetAttribute("DailyTitleUntil", title.untilAt)
-	else
-		(profile :: any).dailyTitle = nil
-		player:SetAttribute("DailyTitle", nil)
-		player:SetAttribute("DailyTitleUntil", nil)
+	(profile :: any).dailyTitle = nil
+	local untilAt = type(raw) == "table" and tonumber(raw.untilAt)
+	if untilAt and untilAt > os.time() then
+		call("TitleService", "grant", player, DailyEvents.blitzJam.titleId, untilAt)
 	end
 end
 
@@ -786,9 +780,8 @@ local function finishBlitz()
 	if not profile then
 		return
 	end
-	RewardService.grant(winner, { trophy = cfg.trophy, incomeMinutes = cfg.winnerIncomeMinutes });
-	(profile :: any).dailyTitle = { key = cfg.title, untilAt = os.time() + cfg.titleSeconds }
-	applyTitle(winner, profile)
+	RewardService.grant(winner, { trophy = cfg.trophy, incomeMinutes = cfg.winnerIncomeMinutes })
+	call("TitleService", "grant", winner, cfg.titleId, os.time() + cfg.titleSeconds)
 	call("AchievementService", "note", winner, "blitzWins", 1)
 	log(winner, "blitzJam_win", winnerEntry.score)
 	for _, player in Players:GetPlayers() do
@@ -992,7 +985,7 @@ function DailyEventService.start()
 	ReplicatedStorage:SetAttribute("DailyGoldenActive", false)
 	DailyEventRemotes.RequestDailyEvent.OnServerEvent:Connect(onRequest)
 	DataService.onProfileLoaded(function(player: Player, profile: DataService.Profile)
-		applyTitle(player, profile)
+		migrateTitle(player, profile)
 		applyPizza(player)
 	end)
 	Players.PlayerRemoving:Connect(function(player)

@@ -238,4 +238,41 @@ Images.covers = {
 	horror = 0, -- cover_horror.png
 } :: { [string]: number }
 
+-- Иконки жанров и тем (V21; docs/visual/astra-2026-11-05-genre-topic-icons/V21; Config/Genres, Config/Topics).
+-- 0 — картинки нет: как раньше, эмодзи жанра/темы. Показываются в окне создания игры (выбор жанра
+-- и темы), в исследованиях, открывающих жанр/тему, и в баннере тренда.
+-- Dev 1: загрузить genre_<id>.png / topic_<id>.png как Image и вставить Image ID напротив id
+Images.genres = {
+	action = 0, -- genre_action.png
+	adventure = 0, -- genre_adventure.png
+	casual = 0, -- genre_casual.png
+	rpg = 0, -- genre_rpg.png
+	simulation = 0, -- genre_simulation.png
+	puzzle = 0, -- genre_puzzle.png
+	racing = 0, -- genre_racing.png
+	strategy = 0, -- genre_strategy.png
+	sports = 0, -- genre_sports.png
+	horror = 0, -- genre_horror.png
+} :: { [string]: number }
+
+Images.topics = {
+	space = 0, -- topic_space.png
+	fantasy = 0, -- topic_fantasy.png
+	zombies = 0, -- topic_zombies.png
+	pets = 0, -- topic_pets.png
+	cars = 0, -- topic_cars.png
+	cooking = 0, -- topic_cooking.png
+	pirates = 0, -- topic_pirates.png
+	business = 0, -- topic_business.png
+	school = 0, -- topic_school.png
+	ninja = 0, -- topic_ninja.png
+	robots = 0, -- topic_robots.png
+	football = 0, -- topic_football.png
+	superheroes = 0, -- topic_superheroes.png
+	detective = 0, -- topic_detective.png
+	ghosts = 0, -- topic_ghosts.png
+	pumpkins = 0, -- topic_pumpkins.png
+	newyear = 0, -- topic_newyear.png
+} :: { [string]: number }
+
 return Images

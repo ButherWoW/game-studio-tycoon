@@ -115,7 +115,7 @@ local DailyEvents = {
 		topics = { "space", "fantasy", "zombies" },
 		trophy = "blitzJam", -- RewardService: rewards.trophies (полка)
 		winnerIncomeMinutes = 20,
-		title = "devent_title_blitz", -- титул на день (текст)
+		titleId = "blitz_champion", -- временный титул (Config/Titles, TitleService.grant)
 		titleSeconds = 24 * 60 * 60,
 		boardSize = 3,
 	},

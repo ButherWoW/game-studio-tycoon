@@ -9,6 +9,7 @@ local ExpoRemotes = require(ReplicatedStorage.Shared.ExpoRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
 
 -- Плашка и итоги — в общем стеке под HUD (Ui.bannerStack): тренд 1, выставка 2, итоги 3.
 -- Размеры небольшие: стек не должен закрывать студию (отчёт #2, п. 14)
@@ -16,6 +17,8 @@ local BANNER_HEIGHT = 28
 local BANNER_WIDTH = 400
 local RESULT_HEIGHT = 52
 local RESULT_WIDTH = 420
+-- Обложка игры-победителя (V20) слева в плашке итогов; 0 — плашка как раньше
+local COVER_SIZE = 44
 
 local ExpoBanner = {}
 
@@ -49,6 +52,21 @@ local function showResult(stack: Frame, result: any)
 			score = result.score,
 			prize = Texts.money(result.prize),
 		})
+		local coverId = if type(result.genreId) == "string" then Images.covers[result.genreId] or 0 else 0
+		if coverId > 0 then
+			local thumb = Instance.new("Frame")
+			thumb.Name = "Cover"
+			thumb.BackgroundTransparency = 1
+			thumb.AnchorPoint = Vector2.new(0, 0.5)
+			thumb.Size = UDim2.fromOffset(COVER_SIZE, COVER_SIZE)
+			thumb.Parent = panel
+			Ui.artImage(thumb, coverId)
+			local padding = Instance.new("UIPadding")
+			padding.PaddingLeft = UDim.new(0, COVER_SIZE + 8)
+			padding.Parent = panel
+			-- Дети тоже сдвинуты отступом: возвращаем обложку к левому краю
+			thumb.Position = UDim2.new(0, -(COVER_SIZE + 4), 0.5, 0)
+		end
 	else
 		panel.TextColor3 = Ui.colors.muted
 		panel.Text = ClientState.t("expo_no_games")

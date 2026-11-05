@@ -818,6 +818,7 @@ local function release(player: Player, project: Project)
 	local p = project.points
 	hook("ExpoService", "onGameReleased", player, {
 		name = project.name,
+		genreId = project.genreId,
 		score = score,
 		points = p.gameplay + p.graphics + p.sound + p.story,
 	})
