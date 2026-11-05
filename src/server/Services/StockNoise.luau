@@ -49,7 +49,9 @@ function StockNoise.candles(companyId: number, basePrice: number, now: number, l
 	local size = Stocks.candleSeconds
 	local step = Stocks.candleSampleSeconds
 	local lastStart = now - now % size
-	local firstStart = math.max(lastStart - (Stocks.candleCount - 1) * size, listedAt - listedAt % size)
+	-- График полный с первой минуты на бирже: шум есть и «до IPO» (listedAt оставлен для совместимости)
+	local _ = listedAt
+	local firstStart = lastStart - (Stocks.candleCount - 1) * size
 	local list: { Candle } = {}
 	local start = firstStart
 	while start <= lastStart do

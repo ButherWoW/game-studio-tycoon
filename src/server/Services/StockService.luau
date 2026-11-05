@@ -801,6 +801,61 @@ function StockService.revenueMultiplier(player: Player): number
 	return 1
 end
 
+-- Только Studio (DebugService → StudioDebug "call"): тестовая компания и сделки без второго игрока
+if game:GetService("RunService"):IsStudio() then
+	function StockService.debugCreate(id: number, income: number, avg: number): string
+		local now = os.time()
+		local record = updateRecord(id, function()
+			return {
+				id = id,
+				name = "Test Corp " .. id,
+				owner = "Studio",
+				income = income,
+				offline = income * 0.3,
+				avg = avg,
+				base = Stocks.priceFor(income, avg),
+				sold = 0,
+				listedAt = now,
+				updatedAt = now,
+				delisted = false,
+			},
+				true
+		end)
+		if record then
+			writeBoard(record)
+			listAt = -math.huge
+		end
+		return if record then "created " .. record.base else "failed"
+	end
+	function StockService.debugDelist(id: number): string
+		local record = updateRecord(id, function(old)
+			if not old then
+				return nil, false
+			end
+			old.delisted = true
+			return old, true
+		end)
+		if record then
+			writeBoard(record)
+		end
+		return if record then "delisted" else "failed"
+	end
+	function StockService.debugBuy(player: Player, id: number, shares: number)
+		lastRequest[player] = nil
+		buy(player, id, shares)
+	end
+	function StockService.debugSell(player: Player, id: number, shares: number)
+		lastRequest[player] = nil
+		onSell(player, id, shares)
+	end
+	function StockService.debugDividends(player: Player, minutes: number)
+		payDividends(player, minutes)
+	end
+	function StockService.debugRecord(id: number): any
+		return getRecord(id, true)
+	end
+end
+
 function StockService.start()
 	StockRemotes.StockRequest.OnServerEvent:Connect(function(player, selected)
 		if throttled(player) then

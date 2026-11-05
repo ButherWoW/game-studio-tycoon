@@ -216,10 +216,10 @@ end
 local function renderMarket(right: Frame)
 	local company = findCompany(selected)
 	if not company then
-		local hint = Ui.label(right, ClientState.t("stock_pick"), 60, Enum.Font.GothamMedium, Ui.colors.muted)
-		hint.TextWrapped = true
+		local hint = Ui.label(right, ClientState.t("stock_pick"), 28, Enum.Font.GothamMedium, Ui.colors.muted)
 		hint.TextXAlignment = Enum.TextXAlignment.Center
-		hint.Size = UDim2.new(1, 0, 0, 60)
+		hint.Position = UDim2.new(0, 0, 0.4, 0)
+		hint.Size = UDim2.new(1, 0, 0, 28)
 		return
 	end
 	local header = Ui.label(right, tostring(company.name), 30, Ui.titleFontFor(ClientState.lang))
