@@ -1,0 +1,183 @@
+{
+  "models": {
+    "Console_Design": {
+      "status": "PASS",
+      "parts": 39,
+      "budget": 60,
+      "bounds": [
+        [
+          -2.8,
+          0.0,
+          -2.6
+        ],
+        [
+          2.8,
+          2.78,
+          2.6
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.6,
+        2.78,
+        5.2
+      ],
+      "baseY": 0.0,
+      "pivotXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "identityPivotRotation": true,
+      "faceConvention": "+Z in manifest; identity model pivot verified",
+      "pointLights": 0,
+      "lightShadowsFalse": true,
+      "nativeClasses": [
+        "Model",
+        "Part"
+      ],
+      "anchored": true,
+      "noncolliding": true,
+      "finiteOrthonormal": true,
+      "uniqueReferences": true,
+      "intersectionPairChecks": 741,
+      "positiveVolumeIntersections": []
+    },
+    "Console_Prototype": {
+      "status": "PASS",
+      "parts": 46,
+      "budget": 80,
+      "bounds": [
+        [
+          -2.8,
+          0.0,
+          -2.6
+        ],
+        [
+          2.8,
+          3.64,
+          2.6
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.6,
+        3.64,
+        5.2
+      ],
+      "baseY": 0.0,
+      "pivotXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "identityPivotRotation": true,
+      "faceConvention": "+Z in manifest; identity model pivot verified",
+      "pointLights": 0,
+      "lightShadowsFalse": true,
+      "nativeClasses": [
+        "Model",
+        "Part"
+      ],
+      "anchored": true,
+      "noncolliding": true,
+      "finiteOrthonormal": true,
+      "uniqueReferences": true,
+      "intersectionPairChecks": 1035,
+      "positiveVolumeIntersections": []
+    },
+    "Console_Launch": {
+      "status": "PASS",
+      "parts": 34,
+      "budget": 100,
+      "bounds": [
+        [
+          -2.8,
+          0.0,
+          -2.6
+        ],
+        [
+          2.8,
+          3.67,
+          2.6
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.6,
+        3.67,
+        5.2
+      ],
+      "baseY": 0.0,
+      "pivotXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "identityPivotRotation": true,
+      "faceConvention": "+Z in manifest; identity model pivot verified",
+      "pointLights": 1,
+      "lightShadowsFalse": true,
+      "nativeClasses": [
+        "Model",
+        "Part",
+        "PointLight"
+      ],
+      "anchored": true,
+      "noncolliding": true,
+      "finiteOrthonormal": true,
+      "uniqueReferences": true,
+      "intersectionPairChecks": 561,
+      "positiveVolumeIntersections": []
+    }
+  },
+  "modelsStatus": "PASS",
+  "intersectionPairs": 2337,
+  "icons": [
+    {
+      "file": "platform_pc.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "a1b366684b50af3769d3c8071abeb64afbf7cd8863c3c689faf769488cedd738",
+      "visualReview": "PASS:128px light/dark and40px reviewed; console silhouette matches Launch reference"
+    },
+    {
+      "file": "platform_phone.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "7b71451b2051b72991e9d5918b110c0c705f088af93f01be436a31591ea0e48c",
+      "visualReview": "PASS:128px light/dark and40px reviewed; console silhouette matches Launch reference"
+    },
+    {
+      "file": "platform_console.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "ccf2c2c2da627852427c676ab09d6b37a10c228b8e0d62d3e7a632a7544ccca9",
+      "visualReview": "PASS:128px light/dark and40px reviewed; console silhouette matches Launch reference"
+    }
+  ],
+  "placementReport": "PLACEMENT_CANDIDATE_VALIDATION.json",
+  "placementIsCandidateOnly": true,
+  "sourceChecks": {
+    "stylua": "PASS",
+    "selene": "PASS",
+    "rojoBuild": "PASS"
+  },
+  "runtimeTested": false,
+  "uploadedToRoblox": false
+}
