@@ -76,6 +76,9 @@ function BailiffBanner.start()
 	padding.PaddingRight = UDim.new(0, 8)
 	padding.Parent = panel
 	panel.Parent = stack
+	-- Значок ⚖️ (или картинка пристава) первым в лотке плашек; приставы пришли — объявление сверху
+	Ui.bannerMeta(panel, "bailiff", ICON, Images.contracts.bailiffIcon, Ui.colors.bad)
+	local wasRaid = false
 
 	local text = Ui.label(panel, "", TEXT_HEIGHT, Ui.titleFontFor(ClientState.lang), Ui.colors.bad)
 	text.TextXAlignment = Enum.TextXAlignment.Center
@@ -132,6 +135,10 @@ function BailiffBanner.start()
 			percent = math.floor(Bailiffs.sellShare * 100),
 		}
 		local active = Players.LocalPlayer:GetAttribute("BailiffsActive") == true
+		if active and not wasRaid then
+			Ui.bannerAnnounce(panel)
+		end
+		wasRaid = active
 		text.Text = ArtIcon.strip(
 			ClientState.t(if active then "bailiff_active" else "bailiff_warning", vars),
 			ICON,

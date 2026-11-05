@@ -357,6 +357,7 @@ function HolidayController.start()
 	padding.Parent = banner
 	-- Новичку — с гаража, как и кнопка 🎉 (Config/Unlocks.holiday)
 	Ui.gate(banner, "holiday")
+	Ui.bannerMeta(banner, "holiday", "🎉")
 
 	local menu = Ui.menuButton(MENU_SLOT, "🎉", function()
 		if gui then
@@ -379,6 +380,7 @@ function HolidayController.start()
 			return
 		end
 		banner.Visible = true
+		banner:SetAttribute("BannerIcon", holiday.icon)
 		banner.Font = Ui.titleFontFor(ClientState.lang)
 		banner.Text = ClientState.t("holiday_banner", {
 			icon = holiday.icon,

@@ -127,6 +127,7 @@ local function buildBanner(): TextButton
 	padding.PaddingBottom = UDim.new(0, 3)
 	padding.Parent = banner
 	banner.Parent = Ui.bannerStack()
+	Ui.bannerMeta(banner, "contract", CONTRACT_EMOJI, Images.contracts.contract)
 	ArtIcon.prefix(banner, CONTRACT_EMOJI, Images.contracts.contract, BANNER_ICON)
 	return banner
 end

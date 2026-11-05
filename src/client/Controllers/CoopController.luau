@@ -291,6 +291,7 @@ local function build()
 	label.BackgroundTransparency = 0.2
 	label.Visible = false
 	Ui.corner(label, 10)
+	Ui.bannerMeta(label, "coop", "👥")
 	banner = label
 end
 

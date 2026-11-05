@@ -233,6 +233,7 @@ local function buildHitBanner()
 	padding.Parent = banner
 	-- Вместе с кнопкой 📊 — со 2-го этажа (Config/Unlocks.rivals)
 	Ui.gate(banner, "rivals")
+	Ui.bannerMeta(banner, "rivalHit")
 
 	-- Логотип студии слева (Images.rivals); меняется вместе с хитом
 	local art: ImageLabel? = nil

@@ -45,6 +45,7 @@ local function buildBanner()
 	padding.Parent = banner
 	-- Вместе с окном 📊 (вкладка «Игра недели») — со 2-го этажа (Config/Unlocks.gotw)
 	Ui.gate(banner, "gotw")
+	Ui.bannerMeta(banner, "gotw", "🏆")
 
 	local requested = false
 	local function refresh()

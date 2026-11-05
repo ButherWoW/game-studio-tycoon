@@ -35,7 +35,7 @@ local function showToast(stack: Frame, payload: any)
 	if not FeatureGate.isOpen("season") then
 		return
 	end
-	local old = stack:FindFirstChild("LiveOpsToast")
+	local old = Ui.bannerFind("LiveOpsToast")
 	if old then
 		old:Destroy()
 	end
@@ -75,6 +75,7 @@ function LiveOpsBanner.start()
 	holder.Parent = stack
 	-- Хакатон «Ночная смена» — из семьи событий дня: новичку с гаража (Config/Unlocks)
 	Ui.gate(holder, "dailyEvents")
+	Ui.bannerMeta(holder, "hackathon", "🌙", nil, HACKATHON_COLOR)
 	if artId > 0 then
 		local art = Instance.new("ImageLabel")
 		art.Name = "Art"

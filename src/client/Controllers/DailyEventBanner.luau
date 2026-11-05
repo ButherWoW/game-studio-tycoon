@@ -1,6 +1,6 @@
 --!strict
--- «События дня» (DailyEventService, Config/DailyEvents): плашка в общем стеке под HUD
--- (Ui.bannerStack, LayoutOrder 5, как хакатон). За 2 минуты — «Через 1:59: событие», во время —
+-- «События дня» (DailyEventService, Config/DailyEvents): плашка в лотке плашек справа
+-- (Ui.bannerStack, значок с таймером; нажатие — карточка). За 2 минуты — «Через 1:59: событие», во время —
 -- событие с таймером и таблицей сервера (жуки, гранты инвестора, лидеры блиц-джема), отдельной
 -- строкой — «Золотой час». Между событиями — тонкая строка «Дальше: … в 18:30»; нажатие на плашку
 -- открывает расписание: ближайшие события, золотой час и «Ночная смена» (хакатон, Config/Hackathon).
@@ -83,7 +83,7 @@ local function showToast(stack: Frame, payload: any)
 	if type(payload.eventId) == "string" then
 		vars.name = eventName(payload.eventId)
 	end
-	local old = stack:FindFirstChild("DailyEventToast")
+	local old = Ui.bannerFind("DailyEventToast")
 	if old then
 		old:Destroy()
 	end
@@ -208,6 +208,11 @@ function DailyEventBanner.start()
 	holder.Parent = stack
 	-- События дня и «Золотой час» новичку — только с гаража (Config/Unlocks.dailyEvents)
 	Ui.gate(holder, "dailyEvents")
+	-- Значок в лотке плашек (Config/Hud): эмодзи события или 🌟 Золотого часа; между событиями —
+	-- в конце лотка. Событие или Золотой час начались — объявление сверху
+	Ui.bannerMeta(holder, "dailyEvent", "📅", nil, EVENT_COLOR)
+	local lastMode = "idle"
+	local lastGolden = false
 	local layout = Ui.list(holder, 4)
 	layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 
@@ -371,6 +376,16 @@ function DailyEventBanner.start()
 				end
 			end
 			goldenLine.Visible = goldenVisible
+			local eventInfo = if type(id) == "string" then DailyEvents.get(id) else nil
+			holder:SetAttribute(
+				"BannerIcon",
+				if gActive then "🌟" elseif eventInfo and not idle then eventInfo.icon else "📅"
+			)
+			Ui.bannerIdle(holder, idle and not goldenVisible)
+			if (mode ~= lastMode and mode ~= "idle") or (gActive and not lastGolden) then
+				Ui.bannerAnnounce(holder)
+			end
+			lastMode, lastGolden = mode, gActive
 
 			-- Открытое расписание обновляем раз в 10 с («сейчас» и время)
 			if schedule.Visible and os.clock() - scheduleBuiltAt > 10 then

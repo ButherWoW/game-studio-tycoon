@@ -5,7 +5,9 @@ local GuiService = game:GetService("GuiService")
 local TextChatService = game:GetService("TextChatService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
 
+local Hud = require(ReplicatedStorage.Shared.Config.Hud)
 local Images = require(ReplicatedStorage.Shared.Config.Images)
 local Unlocks = require(ReplicatedStorage.Shared.Config.Unlocks)
 
@@ -136,7 +138,7 @@ end
 
 -- Боковое меню (Ui.menuButton): колонка кнопок, нужна окнам (дыра в подложке) и плашкам
 local menuColumn: Frame? = nil
--- Пересчитать стек плашек (задаёт Ui.bannerStack): меню на тач-экране сменило ширину
+-- Пересчитать лоток плашек (задаёт Ui.bannerStack): экран или меню сменили размер
 local refitBanners: () -> () = function() end
 
 -- Прямоугольник бокового меню в координатах экрана; nil — меню нет или оно пустое
@@ -556,8 +558,9 @@ local MENU_TOUCH_GAP = 4
 local MENU_HUD_GAP = 8 -- зазор от меню до плашек HUD
 local MENU_TOUCH_MIN_SCALE = 0.7
 
--- Ширина плашек HUD по центру сверху (HudController): меню на тач-экране правее не заходит
-Ui.HUD_PLATE_WIDTH = 300
+-- Ширина верхней строки HUD (HudController, Config/Hud): меню на тач-экране правее не заходит.
+-- Плашки событий по центру больше не висят — они в лотке справа (Ui.bannerStack)
+Ui.HUD_PLATE_WIDTH = if Ui.touch then Hud.topBarWidthTouch else Hud.topBarWidth
 
 local function visibleButtons(column: Frame): number
 	local count = 0
@@ -643,6 +646,9 @@ local lockers: { [Instance]: Frame } = {}
 local newBadges: { [GuiObject]: Instance } = {}
 -- Системы с 🆕 в этой сессии: кнопка, созданная позже Ui.markNew, тоже получит значок
 local newFeatures: { [string]: boolean } = {}
+-- Рамки, где лежат плашки Ui.bannerStack (склад, объявление, карточка): плашка из карточки
+-- закрывается воротами так же, как со склада
+local bannerHosts: { [Instance]: boolean } = {}
 
 local function locker(home: Instance): Frame
 	local parent: Instance = home:FindFirstAncestorWhichIsA("LayerCollector") or home
@@ -666,11 +672,13 @@ local function applyGate(object: GuiObject, open: boolean)
 	if not home then
 		return
 	end
+	local parent = object.Parent
+	local inBanners = parent ~= nil and bannerHosts[parent] == true
 	if open then
-		if object.Parent ~= home then
+		if parent ~= home and not inBanners then
 			object.Parent = home
 		end
-	elseif object.Parent == home then
+	elseif parent == home or inBanners then
 		object.Parent = locker(home)
 	end
 end
@@ -850,116 +858,727 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 	return b
 end
 
--- Общий стек плашек под HUD (тренд, выставка, итоги выставки, тревога): каждая плашка
--- кладётся сюда со своим LayoutOrder, скрытые не занимают места — плашки не наезжают друг на друга.
--- Стек прижат к низу HUD: деньги и строка игр — y 12..86, под ними строки прогресса
--- разработки. HUD сообщает, где кончается (Ui.setBannerTop), — плашки не висят посреди
--- экрана над студией (отчёт #2, п. 14)
-local BANNER_TOP = 94
+-- ===== Плашки событий: лоток значков справа и объявления сверху (Config/Hud) =====
+-- Контроллеры, как раньше, кладут свои плашки в Ui.bannerStack() и сами меняют Visible и текст.
+-- Стек — теперь «склад» за краем экрана (отзыв владельца 06.11: плашки висели посреди экрана
+-- над персонажем). Игрок видит плашку:
+--   * объявлением — полосой во всю ширину под HUD на Hud.announceSeconds, когда она появилась
+--     (Visible false → true) или контроллер позвал Ui.bannerAnnounce (начался Золотой час);
+--   * значком в лотке справа: эмодзи или картинка + таймер «9:22» из текста плашки. Нажатие —
+--     карточка ≤ Hud.cardWidth слева от значка: та же плашка, уменьшенная UIScale, её кнопки
+--     (банк/погасить/уволить, контракт, ⚡ стройки) работают — это тот же объект.
+-- Ui.bannerMeta(object, key, …) — ключ приоритета (Hud.bannerPriority) и значок. Плашка без ключа
+-- (тосты, итоги выставки) — только объявление; пережила его — значок в конце лотка.
+-- Ворота онбординга (Ui.gate) работают как раньше: закрытая плашка лежит в LockedFeatures того же
+-- ScreenGui, не на складе — значка у неё нет.
 local BANNER_GAP = 6
--- Низкий экран (телефон в альбомной): плашки стека чуть меньше, чтобы не дойти до кнопки «Создать игру»
+-- Низкий экран (телефон в альбомной): объявление чуть меньше
 local SHORT_SCREEN = 500
 local SHORT_SCALE = 0.8
--- Тач или низкий экран: стек целиком помещается между HUD и кнопкой «Создать игру» (низ −24,
--- высота 56) и не заходит под боковое меню — уменьшается, но не мельче BANNER_MIN_SCALE.
--- HUD длинный (настроение, мощность, 2 проекта) — стек поднимается на нижние строки HUD,
--- оставляя себе BANNER_MIN_SPACE: кнопки плашек (контракт, долг) должны быть на экране
-local BANNER_BOTTOM = 86
-local BANNER_MIN_SPACE = 64
-local BANNER_MIN_SCALE = 0.5
-local BANNER_MENU_GAP = 8
-local bannerStack: Frame? = nil
-local bannerTop = BANNER_TOP
+local HUD_BOTTOM_MIN = 46 -- под верхней строкой HUD (HudController зовёт Ui.setHudBottom)
+local TRAY_RIGHT = 8
+local CARD_PAD = 6
+local CARD_GAP = 6
+local ANNOUNCE_EXPLICIT_COOLDOWN = 10
+local SYNC_SECONDS = 0.5
+
+type BannerUi = {
+	screen: ScreenGui,
+	source: Frame,
+	strip: Frame,
+	stripBody: Frame,
+	stripScale: UIScale,
+	card: Frame,
+	cardBody: Frame,
+	cardScale: UIScale,
+	tray: Frame,
+	grid: UIGridLayout,
+	more: TextButton,
+}
+
+type Chip = {
+	button: TextButton,
+	stroke: UIStroke,
+	icon: TextLabel,
+	image: ImageLabel,
+	timer: TextLabel,
+}
+
+local bannerUi: BannerUi? = nil
+local bannerStarted = os.clock()
+local hudBottom = HUD_BOTTOM_MIN
+local watchedBanners: { [GuiObject]: boolean } = {}
+local wasActive: { [GuiObject]: boolean } = {}
+local lastAnnounced: { [GuiObject]: number } = {}
+local announceQueue: { GuiObject } = {}
+local announcing: GuiObject? = nil
+local announceToken = 0
+local announceFresh = false
+local stripTween: Tween? = nil
+local selectedBanner: GuiObject? = nil
+local chips: { [GuiObject]: Chip } = {}
+local trayExpanded = false
+local bannerSyncScheduled = false
+local syncBanners: () -> () = function() end
+
+local function scheduleBannerSync()
+	if bannerSyncScheduled then
+		return
+	end
+	bannerSyncScheduled = true
+	task.defer(function()
+		bannerSyncScheduled = false
+		syncBanners()
+	end)
+end
+
+local function lowGraphics(): boolean
+	return game:GetService("Players").LocalPlayer:GetAttribute("LowGraphics") == true
+end
+
+local function textOf(node: Instance): string?
+	if node:IsA("TextLabel") then
+		return if node.Visible then node.Text else nil
+	elseif node:IsA("TextButton") then
+		return if node.Visible then node.Text else nil
+	end
+	return nil
+end
+
+-- Видимые тексты плашки без rich-text тегов (сверху вниз по дереву)
+local function bannerTexts(object: GuiObject): { string }
+	local result = {}
+	local function add(node: Instance)
+		local text = textOf(node)
+		if text and text ~= "" then
+			table.insert(result, (string.gsub(text, "<[^>]+>", "")))
+		end
+	end
+	add(object)
+	for _, node in object:GetDescendants() do
+		add(node)
+	end
+	return result
+end
+
+-- Эмодзи в начале текста («🔥 В тренде…» → «🔥»); кириллица и латиница — не эмодзи
+local function leadingEmoji(text: string): string?
+	local s = string.gsub(text, "^%s+", "")
+	if s == "" then
+		return nil
+	end
+	local ok, code = pcall(utf8.codepoint, s, 1)
+	if not ok or type(code) ~= "number" or code < 0x2190 then
+		return nil
+	end
+	local word = string.match(s, "^[^%s]+")
+	if word and #word <= 12 then
+		return word
+	end
+	local nextAt = utf8.offset(s, 2)
+	return if nextAt then string.sub(s, 1, nextAt - 1) else s
+end
+
+local function bannerPriority(object: GuiObject): number
+	local key = object:GetAttribute("BannerKey")
+	local value = if type(key) == "string"
+		then Hud.bannerPriority[key] or Hud.othersPriority
+		else Hud.othersPriority
+	if object:GetAttribute("BannerIdle") == true then
+		value += Hud.idlePriority
+	end
+	return value
+end
+
+local function bannerAccent(object: GuiObject): Color3
+	local color = object:GetAttribute("BannerColor")
+	if typeof(color) == "Color3" then
+		return color
+	end
+	if object:IsA("TextLabel") then
+		return object.TextColor3
+	elseif object:IsA("TextButton") then
+		return object.TextColor3
+	end
+	local stroke = object:FindFirstChildOfClass("UIStroke")
+	if stroke then
+		return stroke.Color
+	end
+	return Ui.colors.money
+end
+
+-- Размер плашки в «дизайнерских» px (без UIScale карточки или объявления)
+local function designSize(object: GuiObject, ui: BannerUi): Vector2
+	local size = object.Size
+	if size.X.Scale == 0 and size.Y.Scale == 0 and object.AutomaticSize == Enum.AutomaticSize.None then
+		return Vector2.new(size.X.Offset, size.Y.Offset)
+	end
+	local scale = 1
+	if object.Parent == ui.stripBody then
+		scale = ui.stripScale.Scale
+	elseif object.Parent == ui.cardBody then
+		scale = ui.cardScale.Scale
+	end
+	local absolute = object.AbsoluteSize / math.max(scale, 0.01)
+	return Vector2.new(math.max(absolute.X, size.X.Offset, 1), math.max(absolute.Y, size.Y.Offset, 1))
+end
+
+local function screenHeight(ui: BannerUi): number
+	local height = ui.screen.AbsoluteSize.Y
+	if height <= 0 then
+		local camera = workspace.CurrentCamera
+		height = (if camera then camera.ViewportSize.Y else 720) - GuiService:GetGuiInset().Y
+	end
+	return height
+end
+
+local function chipSize(): number
+	return if Ui.touch then Hud.chipSizeTouch else Hud.chipSize
+end
+
+-- Сколько значков в столбце лотка: тач — сверху справа до кнопки прыжка, ПК — по центру справа
+local function trayCapacity(ui: BannerUi): number
+	local pitch = chipSize() + Hud.chipGap
+	local height = screenHeight(ui)
+	local room = if Ui.touch
+		then height - Hud.trayTouchTop - Hud.trayTouchBottom
+		else height * Hud.trayDesktopShare
+	return math.clamp(math.floor((room + Hud.chipGap) / pitch), 1, Hud.maxChips)
+end
+
+local function queueAnnounce(object: GuiObject, front: boolean)
+	if object == announcing or object == selectedBanner or table.find(announceQueue, object) then
+		return
+	end
+	if front then
+		table.insert(announceQueue, 1, object)
+	else
+		table.insert(announceQueue, object)
+	end
+	while #announceQueue > Hud.announceQueueMax do
+		table.remove(announceQueue)
+	end
+end
+
+-- Плашка появилась: объявить (после входа — только важные и тосты)
+local function onBannerActivated(object: GuiObject, now: number)
+	local key = object:GetAttribute("BannerKey")
+	if type(key) ~= "string" then
+		queueAnnounce(object, false)
+		return
+	end
+	-- «В фоне» (событие дня между событиями) не объявляем: контроллер позовёт Ui.bannerAnnounce
+	if object:GetAttribute("BannerIdle") == true then
+		return
+	end
+	local important = Hud.announceImportant[key] == true
+	if not important and now - bannerStarted < Hud.joinQuietSeconds then
+		return
+	end
+	local last = lastAnnounced[object]
+	if last and now - last < Hud.announceCooldown then
+		return
+	end
+	queueAnnounce(object, important)
+end
+
+local function startNextAnnounce(present: { [GuiObject]: boolean })
+	while #announceQueue > 0 do
+		local object = table.remove(announceQueue, 1) :: GuiObject
+		if present[object] and object.Visible and object ~= selectedBanner then
+			announcing = object
+			announceFresh = true
+			lastAnnounced[object] = os.clock()
+			announceToken += 1
+			local token = announceToken
+			task.delay(Hud.announceSeconds, function()
+				if announceToken == token then
+					announcing = nil
+					scheduleBannerSync()
+				end
+			end)
+			return
+		end
+	end
+end
+
+local function watchBanner(object: GuiObject)
+	if watchedBanners[object] then
+		return
+	end
+	watchedBanners[object] = true
+	object:GetPropertyChangedSignal("Visible"):Connect(scheduleBannerSync)
+	object:GetPropertyChangedSignal("AbsoluteSize"):Connect(scheduleBannerSync)
+	object.Destroying:Connect(function()
+		watchedBanners[object] = nil
+		wasActive[object] = nil
+		lastAnnounced[object] = nil
+		local index = table.find(announceQueue, object)
+		if index then
+			table.remove(announceQueue, index)
+		end
+		if announcing == object then
+			announcing = nil
+			announceToken += 1
+		end
+		if selectedBanner == object then
+			selectedBanner = nil
+		end
+		scheduleBannerSync()
+	end)
+end
+
+local function makeChip(ui: BannerUi, object: GuiObject): Chip
+	local button = Instance.new("TextButton")
+	button.Name = "Chip_" .. object.Name
+	button.Text = ""
+	button.AutoButtonColor = true
+	button.BackgroundColor3 = Ui.colors.panel
+	button.BackgroundTransparency = 0.15
+	Ui.corner(button, 10)
+	local stroke = Instance.new("UIStroke")
+	stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	stroke.Thickness = 2
+	stroke.Parent = button
+	local icon = Instance.new("TextLabel")
+	icon.Name = "Icon"
+	icon.BackgroundTransparency = 1
+	icon.TextScaled = true
+	icon.Font = Ui.bodyFont
+	icon.TextColor3 = Ui.colors.text
+	icon.Parent = button
+	local image = Instance.new("ImageLabel")
+	image.Name = "Image"
+	image.BackgroundTransparency = 1
+	image.ScaleType = Enum.ScaleType.Fit
+	image.Visible = false
+	image.Parent = button
+	local timer = Instance.new("TextLabel")
+	timer.Name = "Timer"
+	timer.BackgroundTransparency = 1
+	timer.TextScaled = true
+	timer.Font = Ui.bodyFont
+	timer.TextColor3 = Ui.colors.text
+	timer.Position = UDim2.new(0, 2, 0.62, 0)
+	timer.Size = UDim2.new(1, -4, 0.34, 0)
+	timer.Parent = button
+	local lastClick = 0
+	button.Activated:Connect(function()
+		local now = os.clock()
+		if now - lastClick < CLICK_DEBOUNCE then
+			return
+		end
+		lastClick = now
+		selectedBanner = if selectedBanner == object then nil else object
+		scheduleBannerSync()
+	end)
+	if not lowGraphics() then
+		local pop = Instance.new("UIScale")
+		pop.Scale = 0.6
+		pop.Parent = button
+		TweenService:Create(pop, TweenInfo.new(0.15, Enum.EasingStyle.Back), { Scale = 1 }):Play()
+	end
+	button.Parent = ui.tray
+	return { button = button, stroke = stroke, icon = icon, image = image, timer = timer }
+end
+
+local function updateChip(chip: Chip, object: GuiObject, selected: boolean)
+	local texts = bannerTexts(object)
+	local timer: string? = nil
+	local emoji: string? = nil
+	for _, text in texts do
+		timer = timer or string.match(text, "(%d+:%d%d)")
+		emoji = emoji or leadingEmoji(text)
+	end
+	local iconAttr = object:GetAttribute("BannerIcon")
+	local imageAttr = object:GetAttribute("BannerImage")
+	local imageId = if type(imageAttr) == "number" then imageAttr else 0
+	local iconText = if type(iconAttr) == "string" then iconAttr else emoji or "🔔"
+	local iconSize = if timer then UDim2.new(1, -6, 0.6, 0) else UDim2.new(1, -8, 1, -8)
+	local iconPosition = if timer then UDim2.fromOffset(3, 3) else UDim2.fromOffset(4, 4)
+	chip.icon.Size, chip.image.Size = iconSize, iconSize
+	chip.icon.Position, chip.image.Position = iconPosition, iconPosition
+	chip.image.Visible = imageId > 0
+	chip.icon.Visible = imageId <= 0
+	if imageId > 0 then
+		local image = "rbxassetid://" .. imageId
+		if chip.image.Image ~= image then
+			chip.image.Image = image
+		end
+	elseif chip.icon.Text ~= iconText then
+		chip.icon.Text = iconText
+	end
+	chip.timer.Visible = timer ~= nil
+	chip.timer.Text = timer or ""
+	chip.stroke.Color = if selected then Ui.colors.text else bannerAccent(object)
+	chip.stroke.Thickness = if selected then 3 else 2
+end
+
+local function layoutStrip(ui: BannerUi)
+	local object = announcing
+	if not object then
+		ui.strip.Visible = false
+		return
+	end
+	local size = designSize(object, ui)
+	local camera = workspace.CurrentCamera
+	local short = (if camera then camera.ViewportSize.Y else 720) < SHORT_SCREEN
+	-- Тач: меню сверху слева и лоток сверху справа — полоса между ними, не поверх кнопок
+	local origin = ui.screen.AbsolutePosition
+	local left, right = 0, 0
+	if Ui.touch then
+		local menuPosition, menuSize = menuRect()
+		if menuPosition and menuSize then
+			left = math.max(menuPosition.X - origin.X + menuSize.X + CARD_GAP, 0)
+		end
+		if ui.tray.Visible then
+			right = ui.tray.AbsoluteSize.X + TRAY_RIGHT + CARD_GAP
+		end
+	end
+	local width = ui.screen.AbsoluteSize.X - left - right
+	local scale = if short then SHORT_SCALE else 1
+	if width > 0 then
+		scale = math.min(scale, (width - 16) / size.X)
+	end
+	ui.stripScale.Scale = scale
+	ui.stripBody.Size = UDim2.fromOffset(size.X, size.Y)
+	ui.strip.Size = UDim2.new(1, -(left + right), 0, math.ceil(size.Y * scale) + 8)
+	local target = UDim2.fromOffset(left, hudBottom)
+	if announceFresh then
+		announceFresh = false
+		if stripTween then
+			stripTween:Cancel()
+			stripTween = nil
+		end
+		if lowGraphics() then
+			ui.strip.Position = target
+		else
+			ui.strip.Position = UDim2.fromOffset(left, hudBottom - 16)
+			local tween = TweenService:Create(ui.strip, TweenInfo.new(0.2), { Position = target })
+			stripTween = tween
+			tween:Play()
+		end
+	elseif not stripTween or stripTween.PlaybackState ~= Enum.PlaybackState.Playing then
+		ui.strip.Position = target
+	end
+	ui.strip.Visible = true
+end
+
+local function layoutCard(ui: BannerUi)
+	local object = selectedBanner
+	if not object then
+		ui.card.Visible = false
+		return
+	end
+	local size = designSize(object, ui)
+	local scale = math.min(1, Hud.cardWidth / size.X)
+	ui.cardScale.Scale = scale
+	ui.cardBody.Size = UDim2.fromOffset(size.X, size.Y)
+	local width = math.ceil(size.X * scale) + 2 * CARD_PAD
+	local height = math.ceil(size.Y * scale) + 2 * CARD_PAD
+	ui.card.Size = UDim2.fromOffset(width, height)
+	local chip = chips[object]
+	local anchor: GuiObject = if chip and chip.button.Visible then chip.button else ui.tray
+	local origin = ui.screen.AbsolutePosition
+	local right = ui.tray.AbsolutePosition.X - origin.X - CARD_GAP
+	local y = anchor.AbsolutePosition.Y - origin.Y
+	y = math.clamp(y, 4, math.max(screenHeight(ui) - height - 4, 4))
+	ui.card.Position = UDim2.fromOffset(right, y)
+	ui.card.Visible = true
+end
+
+syncBanners = function()
+	local ui = bannerUi
+	if not ui then
+		return
+	end
+	local now = os.clock()
+	local objects: { GuiObject } = {}
+	for _, host in { ui.source, ui.stripBody, ui.cardBody } do
+		for _, child in host:GetChildren() do
+			if child:IsA("GuiObject") then
+				table.insert(objects, child)
+			end
+		end
+	end
+	local present: { [GuiObject]: boolean } = {}
+	for _, object in objects do
+		present[object] = true
+		watchBanner(object)
+		local active = object.Visible
+		if active and not wasActive[object] then
+			onBannerActivated(object, now)
+		end
+		wasActive[object] = active
+	end
+	local selected = selectedBanner
+	if selected and not (present[selected] and selected.Visible) then
+		selectedBanner = nil
+	end
+	local current = announcing
+	if current and not (present[current] and current.Visible) then
+		announcing = nil
+		announceToken += 1
+	end
+	if not announcing then
+		startNextAnnounce(present)
+	end
+	for _, object in objects do
+		local target = if object == announcing
+			then ui.stripBody
+			elseif object == selectedBanner then ui.cardBody
+			else ui.source
+		if object.Parent ~= target then
+			object.Parent = target
+		end
+	end
+
+	-- Значки: активные плашки по приоритету. Тост в очереди объявления значка не получает
+	local list: { GuiObject } = {}
+	for _, object in objects do
+		local waiting = object:GetAttribute("BannerKey") == nil and table.find(announceQueue, object) ~= nil
+		if object.Visible and object ~= announcing and not waiting then
+			table.insert(list, object)
+		end
+	end
+	table.sort(list, function(a, b)
+		local pa, pb = bannerPriority(a), bannerPriority(b)
+		if pa ~= pb then
+			return pa < pb
+		end
+		if a.LayoutOrder ~= b.LayoutOrder then
+			return a.LayoutOrder < b.LayoutOrder
+		end
+		return a.Name < b.Name
+	end)
+	if #list <= Hud.maxChips then
+		trayExpanded = false
+	end
+	local size = chipSize()
+	ui.grid.CellSize = UDim2.fromOffset(size, size)
+	ui.grid.FillDirectionMaxCells = trayCapacity(ui)
+	local shownCount = if #list > Hud.maxChips and not trayExpanded then Hud.maxChips - 1 else #list
+	local used: { [GuiObject]: boolean } = {}
+	for i, object in list do
+		local chip = chips[object]
+		if i <= shownCount then
+			if not chip then
+				chip = makeChip(ui, object)
+				chips[object] = chip
+			end
+			local shown = chip :: Chip
+			shown.button.LayoutOrder = i
+			shown.button.Visible = true
+			updateChip(shown, object, object == selectedBanner)
+			used[object] = true
+		end
+	end
+	for object, chip in chips do
+		if not present[object] then
+			chip.button:Destroy()
+			chips[object] = nil
+		elseif not used[object] then
+			chip.button.Visible = false
+		end
+	end
+	ui.more.Visible = #list > Hud.maxChips
+	ui.more.LayoutOrder = shownCount + 1
+	ui.more.Text = if trayExpanded then "▲" else "+" .. (#list - shownCount)
+	ui.tray.Visible = #list > 0
+	if Ui.touch then
+		ui.tray.AnchorPoint = Vector2.new(1, 0)
+		ui.tray.Position = UDim2.new(1, -TRAY_RIGHT, 0, Hud.trayTouchTop)
+	else
+		ui.tray.AnchorPoint = Vector2.new(1, 0.5)
+		ui.tray.Position = UDim2.new(1, -TRAY_RIGHT, 0.5, 0)
+	end
+	layoutStrip(ui)
+	layoutCard(ui)
+end
+
+local function bannerHost(parent: Instance, name: string): (Frame, UIScale)
+	local body = Instance.new("Frame")
+	body.Name = name
+	body.BackgroundTransparency = 1
+	local scale = Instance.new("UIScale")
+	scale.Parent = body
+	local layout = Ui.list(body, 0)
+	layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	body.Parent = parent
+	bannerHosts[body] = true
+	return body, scale
+end
 
 function Ui.bannerStack(): Frame
-	local existing = bannerStack
+	local existing = bannerUi
 	if existing then
-		return existing
+		return existing.source
 	end
 	local Players = game:GetService("Players")
 	local screen = Instance.new("ScreenGui")
 	screen.Name = "Banners"
 	screen.ResetOnSpawn = false
 	screen.DisplayOrder = 1 -- над HUD (0), под окнами (10+)
-	local stack = Instance.new("Frame")
-	stack.Name = "Stack"
-	stack.BackgroundTransparency = 1
-	stack.AnchorPoint = Vector2.new(0.5, 0)
-	stack.Position = UDim2.new(0.5, 0, 0, bannerTop)
-	stack.Size = UDim2.new(1, 0, 0, 0)
-	stack.AutomaticSize = Enum.AutomaticSize.Y
-	local layout = Ui.list(stack, BANNER_GAP)
-	layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-	local scale = Instance.new("UIScale")
-	scale.Parent = stack
-	local function fit()
-		local camera = workspace.CurrentCamera
-		local viewportHeight = if camera then camera.ViewportSize.Y else 720
-		local short = viewportHeight < SHORT_SCREEN
-		local value = if short then SHORT_SCALE else 1
-		local top = bannerTop
-		local size = screen.AbsoluteSize
-		if (short or Ui.touch) and size.Y > 0 then
-			local current = math.max(scale.Scale, 0.01)
-			top = math.max(math.min(top, size.Y - BANNER_BOTTOM - BANNER_MIN_SPACE), 0)
-			-- Высота и ширина в «дизайнерских» px: AbsoluteSize уже умножен на текущий масштаб
-			local height = layout.AbsoluteContentSize.Y / current
-			if height > 0 then
-				value = math.min(value, (size.Y - BANNER_BOTTOM - top) / height)
-			end
-			local menuPosition, menuSize = menuRect()
-			if Ui.touch and menuPosition and menuSize then
-				local menuRight = menuPosition.X - screen.AbsolutePosition.X + menuSize.X
-				local room = size.X - 2 * (menuRight + BANNER_MENU_GAP)
-				local widest = 0
-				for _, child in stack:GetChildren() do
-					if child:IsA("GuiObject") and child.Visible and child.Size.X.Scale == 0 then
-						widest = math.max(widest, child.AbsoluteSize.X / current)
-					end
-				end
-				if widest > 0 then
-					value = math.min(value, room / widest)
-				end
-			end
-			value = math.max(value, BANNER_MIN_SCALE)
-		end
-		if math.abs(scale.Scale - value) > 0.01 then
-			scale.Scale = value
-		end
-		stack.Position = UDim2.new(0.5, 0, 0, top)
+
+	-- Склад: плашки контроллеров, которые сейчас не в объявлении и не в карточке
+	local source = Instance.new("Frame")
+	source.Name = "Stack"
+	source.BackgroundTransparency = 1
+	source.Position = UDim2.fromOffset(-10000, -10000)
+	source.Size = UDim2.fromOffset(600, 0)
+	source.AutomaticSize = Enum.AutomaticSize.Y
+	Ui.list(source, BANNER_GAP)
+	source.Parent = screen
+	bannerHosts[source] = true
+
+	local strip = Instance.new("Frame")
+	strip.Name = "Announce"
+	strip.BackgroundColor3 = Ui.colors.panel
+	strip.BackgroundTransparency = 0.35
+	strip.BorderSizePixel = 0
+	strip.Visible = false
+	strip.Parent = screen
+	local stripBody, stripScale = bannerHost(strip, "Body")
+	stripBody.AnchorPoint = Vector2.new(0.5, 0)
+	stripBody.Position = UDim2.new(0.5, 0, 0, 4)
+
+	local tray = Instance.new("Frame")
+	tray.Name = "Tray"
+	tray.BackgroundTransparency = 1
+	tray.Size = UDim2.new()
+	tray.AutomaticSize = Enum.AutomaticSize.XY
+	tray.Visible = false
+	local grid = Instance.new("UIGridLayout")
+	grid.SortOrder = Enum.SortOrder.LayoutOrder
+	grid.FillDirection = Enum.FillDirection.Vertical
+	grid.StartCorner = Enum.StartCorner.TopRight
+	grid.CellPadding = UDim2.fromOffset(Hud.chipGap, Hud.chipGap)
+	grid.Parent = tray
+	tray.Parent = screen
+	local more = Instance.new("TextButton")
+	more.Name = "More"
+	more.BackgroundColor3 = Ui.colors.panel
+	more.BackgroundTransparency = 0.15
+	more.TextColor3 = Ui.colors.text
+	more.Font = Ui.bodyFont
+	more.TextScaled = true
+	more.Visible = false
+	Ui.corner(more, 10)
+	local morePadding = Instance.new("UIPadding")
+	morePadding.PaddingTop = UDim.new(0, 8)
+	morePadding.PaddingBottom = UDim.new(0, 8)
+	morePadding.PaddingLeft = UDim.new(0, 6)
+	morePadding.PaddingRight = UDim.new(0, 6)
+	morePadding.Parent = more
+	more.Activated:Connect(function()
+		trayExpanded = not trayExpanded
+		scheduleBannerSync()
+	end)
+	more.Parent = tray
+
+	local card = Instance.new("Frame")
+	card.Name = "Card"
+	card.AnchorPoint = Vector2.new(1, 0)
+	card.BackgroundColor3 = Ui.colors.panel
+	card.BackgroundTransparency = 0.1
+	card.Visible = false
+	Ui.corner(card, 12)
+	local cardStroke = Instance.new("UIStroke")
+	cardStroke.Color = Ui.colors.stroke
+	cardStroke.Thickness = 2
+	cardStroke.Parent = card
+	card.Parent = screen
+	local cardBody, cardScale = bannerHost(card, "Body")
+	cardBody.Position = UDim2.fromOffset(CARD_PAD, CARD_PAD)
+
+	bannerUi = {
+		screen = screen,
+		source = source,
+		strip = strip,
+		stripBody = stripBody,
+		stripScale = stripScale,
+		card = card,
+		cardBody = cardBody,
+		cardScale = cardScale,
+		tray = tray,
+		grid = grid,
+		more = more,
+	}
+	bannerStarted = os.clock()
+	refitBanners = scheduleBannerSync
+	for _, host in { source, stripBody, cardBody } do
+		host.ChildAdded:Connect(scheduleBannerSync)
+		host.ChildRemoved:Connect(scheduleBannerSync)
 	end
-	-- Плашки появляются, прячутся и меняют текст часто: пересчёт раз в кадр
-	local scheduled = false
-	refitBanners = function()
-		if scheduled then
-			return
-		end
-		scheduled = true
-		task.defer(function()
-			scheduled = false
-			fit()
-		end)
-	end
-	fit()
+	screen:GetPropertyChangedSignal("AbsoluteSize"):Connect(scheduleBannerSync)
+	tray:GetPropertyChangedSignal("AbsolutePosition"):Connect(scheduleBannerSync)
 	local camera = workspace.CurrentCamera
 	if camera then
-		camera:GetPropertyChangedSignal("ViewportSize"):Connect(refitBanners)
+		camera:GetPropertyChangedSignal("ViewportSize"):Connect(scheduleBannerSync)
 	end
-	screen:GetPropertyChangedSignal("AbsoluteSize"):Connect(refitBanners)
-	layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(refitBanners)
-	stack.Parent = screen
+	-- Таймеры значков («9:22») берутся из текста плашек: обновляем дважды в секунду
+	task.spawn(function()
+		while screen.Parent do
+			task.wait(SYNC_SECONDS)
+			syncBanners()
+		end
+	end)
 	screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
-	bannerStack = stack
-	return stack
+	return source
 end
 
--- Верх стека плашек (px от верха экрана): HUD зовёт, когда меняется число строк прогресса
-function Ui.setBannerTop(y: number)
-	bannerTop = math.max(y, BANNER_TOP)
-	local stack = bannerStack
-	if stack then
-		stack.Position = UDim2.new(0.5, 0, 0, bannerTop)
-		refitBanners()
+-- Ключ приоритета (Config/Hud.bannerPriority), значок (эмодзи или id картинки) и цвет обводки
+-- значка плашки из Ui.bannerStack. Без значка — эмодзи из начала текста плашки
+function Ui.bannerMeta(object: GuiObject, key: string, icon: string?, imageId: number?, color: Color3?)
+	object:SetAttribute("BannerKey", key)
+	if icon then
+		object:SetAttribute("BannerIcon", icon)
+	end
+	if imageId and imageId > 0 then
+		object:SetAttribute("BannerImage", imageId)
+	end
+	if color then
+		object:SetAttribute("BannerColor", color)
+	end
+	scheduleBannerSync()
+end
+
+-- Плашка «в фоне» (событие дня между событиями): значок в конце лотка
+function Ui.bannerIdle(object: GuiObject, idle: boolean)
+	if object:GetAttribute("BannerIdle") ~= idle then
+		object:SetAttribute("BannerIdle", idle)
+		scheduleBannerSync()
+	end
+end
+
+-- Объявить плашку полосой сверху ещё раз (началось событие внутри уже видимой плашки)
+function Ui.bannerAnnounce(object: GuiObject)
+	local last = lastAnnounced[object]
+	if last and os.clock() - last < ANNOUNCE_EXPLICIT_COOLDOWN then
+		return
+	end
+	local key = object:GetAttribute("BannerKey")
+	queueAnnounce(object, type(key) == "string" and Hud.announceImportant[key] == true)
+	scheduleBannerSync()
+end
+
+-- Найти плашку по имени, где бы она сейчас ни была (склад, объявление, карточка)
+function Ui.bannerFind(name: string): Instance?
+	local ui = bannerUi
+	if not ui then
+		return nil
+	end
+	return ui.source:FindFirstChild(name)
+		or ui.stripBody:FindFirstChild(name)
+		or ui.cardBody:FindFirstChild(name)
+end
+
+-- Низ HUD (верхняя строка и строки разработки), px от верха экрана: под ним полоса объявлений
+function Ui.setHudBottom(y: number)
+	local value = math.max(y, HUD_BOTTOM_MIN)
+	if value ~= hudBottom then
+		hudBottom = value
+		scheduleBannerSync()
 	end
 end
 
