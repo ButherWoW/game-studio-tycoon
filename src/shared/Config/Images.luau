@@ -88,4 +88,40 @@ Images.mascots = {
 	cosmic_whale = 0,
 } :: { [string]: number }
 
+-- Награда за вход (docs/visual/astra-2026-11-05-daily/V17; окно DailyRewardWindow), 0 — плитки цветом и эмодзи
+Images.daily = {
+	boardBg = 0, -- daily_board_bg.png (1200×700), фон окна
+	cardNormal = 0, -- daily_card_normal.png (256×320), завтрашний день
+	cardToday = 0, -- daily_card_today.png, сегодняшний день
+	cardClaimed = 0, -- daily_card_claimed.png, уже забранные дни
+	cardLocked = 0, -- daily_card_locked.png, дни после завтрашнего
+	rewardCash = 0, -- reward_cash.png (256×256), деньги и реклама
+	rewardCoffee = 0, -- reward_coffee.png, кофе
+	rewardResearch = 0, -- reward_research.png, очки исследований
+	rewardSkin = 0, -- reward_skin.png, скин
+	rewardBig = 0, -- reward_big.png, большая награда (несколько сразу, кубок, постер, маскот)
+	streakFlame = 0, -- daily_streak_flame.png (128×128), у заголовка окна
+} :: { [string]: number }
+
+-- Сезон, гейм-джем, хакатон, студии, коды (docs/visual/astra-2026-11-05-social/V18), 0 — как раньше: эмодзи и цвет
+Images.social = {
+	seasonBanner = 0, -- season_banner.png (1600×400), шапка вкладки «Сезон»
+	gamejamBanner = 0, -- gamejam_banner.png (1600×400), шапка вкладки «Гейм-джем»
+	hackathonBanner = 0, -- hackathon_banner.png (1600×300), над плашкой хакатона
+	seasonTierFree = 0, -- season_tier_free.png, рамка иконки бесплатной награды уровня
+	seasonTierPremium = 0, -- season_tier_premium.png, рамка иконки премиум-награды уровня
+	seasonPremiumBadge = 0, -- season_premium_badge.png, вместо ⭐ у «Премиум»
+	gamejamMedalTop10 = 0, -- gamejam_medal_top10.png, отметка «Топ-10 джема»
+	gamejamMedalTop100 = 0, -- gamejam_medal_top100.png, отметка «Топ-100 джема»
+	iconLike = 0, -- icon_like.png, вместо 👍 в окне «Студии»
+	iconVisit = 0, -- icon_visit.png, на кнопке «Посетить»
+	iconLeaderboard = 0, -- icon_leaderboard.png, вместо 🏆 у вкладки «Рейтинги»
+	iconCodes = 0, -- icon_codes.png, вместо 🎟 у кнопки и окна «Коды»
+	menuGamejam = 0, -- menu_gamejam.png, вместо 🎮 у вкладки «Гейм-джем»
+} :: { [string]: number }
+
+-- Кнопки меню V18: ключи, которые уже передают Ui.menuButton окна «Студии» и «Сезон»
+Images.menu.menu_tours = 0 -- menu_studios.png, 🏘 (слот 15)
+Images.menu.menu_season = 0 -- menu_season.png, 🎫 (слот 16), и вкладка «Сезон»
+
 return Images

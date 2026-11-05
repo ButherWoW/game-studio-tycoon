@@ -10,9 +10,11 @@ local Shared = ReplicatedStorage.Shared
 local Tours = require(Shared.Config.Tours)
 local Stages = require(Shared.Config.Stages)
 local Texts = require(Shared.Config.Texts)
+local Images = require(Shared.Config.Images)
 local TourRemotes = require(Shared.TourRemotes)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local StudioCamera = require(script.Parent.StudioCamera)
 local HoldingPanel = require(script.Parent.Parent.HoldingPanel)
 local FriendsController = require(script.Parent.FriendsController)
@@ -185,6 +187,9 @@ local function studioRow(parent: Instance, order: number, item: any, recentRow: 
 			)
 			likeButton.LayoutOrder = 1
 			likeButton.Size = UDim2.new(0.4, -3, 1, 0)
+			if not liked then
+				ArtIcon.replace(likeButton, Images.social.iconLike)
+			end
 		end
 		if item.garage and not recentRow then
 			local visit = Ui.button(buttons, ClientState.t("tour_visit"), Ui.colors.primary, function()
@@ -194,6 +199,7 @@ local function studioRow(parent: Instance, order: number, item: any, recentRow: 
 			end)
 			visit.LayoutOrder = 2
 			visit.Size = UDim2.new(0.6, -3, 1, 0)
+			ArtIcon.prefix(visit, "", Images.social.iconVisit, 28)
 		end
 	end
 	row.Parent = parent
@@ -281,6 +287,9 @@ local function renderRatings(frame: ScrollingFrame)
 		)
 		button.LayoutOrder = i
 		button.Size = UDim2.new(1 / 3, -4, 1, 0)
+		if kind == "likes" then
+			ArtIcon.prefix(button, "👍", Images.social.iconLike, 28)
+		end
 	end
 	switch.Parent = frame
 
@@ -423,6 +432,11 @@ function TourWindow.open()
 		end)
 		button.LayoutOrder = i
 		button.Size = UDim2.new(1 / 3, -6, 1, 0)
+		if name == "studios" then
+			ArtIcon.prefix(button, "🏘", Images.menu.menu_tours or 0, 28)
+		elseif name == "ratings" then
+			ArtIcon.prefix(button, "🏆", Images.social.iconLeaderboard, 28)
+		end
 		tabButtons[name] = button
 	end
 
@@ -505,6 +519,7 @@ local function ensureLikeButton(): TextButton
 	button.Position = UDim2.new(0.5, 0, 1, -96)
 	button.Size = UDim2.fromOffset(300, 46)
 	button.Visible = false
+	ArtIcon.prefix(button, "👍", Images.social.iconLike, 34)
 	likeButton = button
 	return button
 end
@@ -539,7 +554,11 @@ local function refreshLikeButton()
 	local button = ensureLikeButton()
 	button.Visible = show
 	if show and owner then
-		button.Text = ClientState.t("tour_like_button", { name = studioNameFor(owner) })
+		button.Text = ArtIcon.strip(
+			ClientState.t("tour_like_button", { name = studioNameFor(owner) }),
+			"👍",
+			Images.social.iconLike
+		)
 	end
 end
 
@@ -644,7 +663,11 @@ function TourWindow.start()
 		end
 		local target = likeTarget
 		if likeButton and target then
-			likeButton.Text = ClientState.t("tour_like_button", { name = studioNameFor(target) })
+			likeButton.Text = ArtIcon.strip(
+				ClientState.t("tour_like_button", { name = studioNameFor(target) }),
+				"👍",
+				Images.social.iconLike
+			)
 		end
 	end)
 

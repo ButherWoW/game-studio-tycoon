@@ -10,8 +10,10 @@ local Shared = ReplicatedStorage.Shared
 local Texts = require(Shared.Config.Texts)
 local Skins = require(Shared.Config.Skins)
 local Posters = require(Shared.Config.Posters)
+local Images = require(Shared.Config.Images)
 local ClientState = require(script.Parent.ClientState)
 local Ui = require(script.Parent.Ui)
+local ArtIcon = require(script.Parent.ArtIcon)
 
 local CodeWindow = {}
 local gui: ScreenGui? = nil
@@ -103,6 +105,7 @@ function CodeWindow.open()
 	local title = Ui.label(window, ClientState.t("codes_title"), 34, Ui.titleFontFor(ClientState.lang))
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -80, 0, 34)
+	ArtIcon.prefix(title, "🎟", Images.social.iconCodes, 34)
 	local close = Ui.button(window, ClientState.t("create_close"), Ui.colors.locked, CodeWindow.close)
 	close.Size = UDim2.fromOffset(40, 40)
 	close.Position = UDim2.new(1, -52, 0, 8)

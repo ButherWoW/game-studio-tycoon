@@ -16,6 +16,7 @@ local AdCampaigns = require(Shared.Config.AdCampaigns)
 local GamePasses = require(Shared.Config.GamePasses)
 local Products = require(Shared.Config.Products)
 local Texts = require(Shared.Config.Texts)
+local Images = require(Shared.Config.Images)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local PosterShop = require(script.Parent.Parent.PosterShop)
@@ -23,6 +24,7 @@ local SkinShop = require(script.Parent.Parent.SkinShop)
 local OfferShop = require(script.Parent.Parent.OfferShop)
 local MascotShop = require(script.Parent.Parent.MascotShop)
 local CodeWindow = require(script.Parent.Parent.CodeWindow)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 
 type Tab = "ads" | "passes" | "boosts" | "posters" | "skins" | "mascots"
 type ShopState = {
@@ -219,6 +221,7 @@ render = function()
 	end)
 	codes.Size = UDim2.fromOffset(150, 40)
 	codes.Position = UDim2.new(1, -212, 0, 8)
+	ArtIcon.prefix(codes, "🎟", Images.social.iconCodes, 28)
 
 	local tabs = Instance.new("Frame")
 	tabs.BackgroundTransparency = 1
