@@ -1,0 +1,332 @@
+{
+  "modelCount": 12,
+  "iconCount": 12,
+  "xmlChecks": "PASS: only Model/Part classes; Body PrimaryPart; pivot transformations equal base origin; counts <=60",
+  "studioPlayTest": "Not run; developer import/play-test pending",
+  "assets": [
+    {
+      "id": "pixel_cat",
+      "tier": "ordinary",
+      "parts": 20,
+      "height": 2.5349999999999997,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "face": "+Z",
+      "primaryPart": "Body",
+      "pointLights": 0,
+      "checks": "PASS",
+      "icon": {
+        "file": "mascot_pixel_cat_icon.png",
+        "size": [
+          256,
+          256
+        ],
+        "alphaRange": [
+          0,
+          255
+        ],
+        "visualReview": "PASS"
+      }
+    },
+    {
+      "id": "bug_beetle",
+      "tier": "ordinary",
+      "parts": 30,
+      "height": 2.5577354902660527,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "face": "+Z",
+      "primaryPart": "Body",
+      "pointLights": 0,
+      "checks": "PASS",
+      "icon": {
+        "file": "mascot_bug_beetle_icon.png",
+        "size": [
+          256,
+          256
+        ],
+        "alphaRange": [
+          0,
+          255
+        ],
+        "visualReview": "PASS"
+      }
+    },
+    {
+      "id": "coffee_cup",
+      "tier": "ordinary",
+      "parts": 16,
+      "height": 2.22,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "face": "+Z",
+      "primaryPart": "Body",
+      "pointLights": 0,
+      "checks": "PASS",
+      "icon": {
+        "file": "mascot_coffee_cup_icon.png",
+        "size": [
+          256,
+          256
+        ],
+        "alphaRange": [
+          0,
+          255
+        ],
+        "visualReview": "PASS"
+      }
+    },
+    {
+      "id": "floppy_dog",
+      "tier": "ordinary",
+      "parts": 18,
+      "height": 2.08,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "face": "+Z",
+      "primaryPart": "Body",
+      "pointLights": 0,
+      "checks": "PASS",
+      "icon": {
+        "file": "mascot_floppy_dog_icon.png",
+        "size": [
+          256,
+          256
+        ],
+        "alphaRange": [
+          0,
+          255
+        ],
+        "visualReview": "PASS"
+      }
+    },
+    {
+      "id": "cloud_ghost",
+      "tier": "ordinary",
+      "parts": 19,
+      "height": 2.43,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "face": "+Z",
+      "primaryPart": "Body",
+      "pointLights": 0,
+      "checks": "PASS",
+      "icon": {
+        "file": "mascot_cloud_ghost_icon.png",
+        "size": [
+          256,
+          256
+        ],
+        "alphaRange": [
+          0,
+          255
+        ],
+        "visualReview": "PASS"
+      }
+    },
+    {
+      "id": "controller_bunny",
+      "tier": "rare",
+      "parts": 17,
+      "height": 2.965,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "face": "+Z",
+      "primaryPart": "Body",
+      "pointLights": 0,
+      "checks": "PASS",
+      "icon": {
+        "file": "mascot_controller_bunny_icon.png",
+        "size": [
+          256,
+          256
+        ],
+        "alphaRange": [
+          0,
+          255
+        ],
+        "visualReview": "PASS"
+      }
+    },
+    {
+      "id": "robo_owl",
+      "tier": "rare",
+      "parts": 15,
+      "height": 2.7261500244216,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "face": "+Z",
+      "primaryPart": "Body",
+      "pointLights": 0,
+      "checks": "PASS",
+      "icon": {
+        "file": "mascot_robo_owl_icon.png",
+        "size": [
+          256,
+          256
+        ],
+        "alphaRange": [
+          0,
+          255
+        ],
+        "visualReview": "PASS"
+      }
+    },
+    {
+      "id": "slime_star",
+      "tier": "rare",
+      "parts": 18,
+      "height": 2.1463322076663194,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "face": "+Z",
+      "primaryPart": "Body",
+      "pointLights": 0,
+      "checks": "PASS",
+      "icon": {
+        "file": "mascot_slime_star_icon.png",
+        "size": [
+          256,
+          256
+        ],
+        "alphaRange": [
+          0,
+          255
+        ],
+        "visualReview": "PASS"
+      }
+    },
+    {
+      "id": "neon_fox",
+      "tier": "epic",
+      "parts": 20,
+      "height": 2.6921702162364194,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "face": "+Z",
+      "primaryPart": "Body",
+      "pointLights": 0,
+      "checks": "PASS",
+      "icon": {
+        "file": "mascot_neon_fox_icon.png",
+        "size": [
+          256,
+          256
+        ],
+        "alphaRange": [
+          0,
+          255
+        ],
+        "visualReview": "PASS"
+      }
+    },
+    {
+      "id": "dragon_byte",
+      "tier": "epic",
+      "parts": 21,
+      "height": 2.8125655316528073,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "face": "+Z",
+      "primaryPart": "Body",
+      "pointLights": 0,
+      "checks": "PASS",
+      "icon": {
+        "file": "mascot_dragon_byte_icon.png",
+        "size": [
+          256,
+          256
+        ],
+        "alphaRange": [
+          0,
+          255
+        ],
+        "visualReview": "PASS"
+      }
+    },
+    {
+      "id": "golden_trophy",
+      "tier": "legendary",
+      "parts": 27,
+      "height": 2.31,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "face": "+Z",
+      "primaryPart": "Body",
+      "pointLights": 0,
+      "checks": "PASS",
+      "icon": {
+        "file": "mascot_golden_trophy_icon.png",
+        "size": [
+          256,
+          256
+        ],
+        "alphaRange": [
+          0,
+          255
+        ],
+        "visualReview": "PASS"
+      }
+    },
+    {
+      "id": "cosmic_whale",
+      "tier": "legendary",
+      "parts": 27,
+      "height": 2.1999999999999997,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "face": "+Z",
+      "primaryPart": "Body",
+      "pointLights": 0,
+      "checks": "PASS",
+      "icon": {
+        "file": "mascot_cosmic_whale_icon.png",
+        "size": [
+          256,
+          256
+        ],
+        "alphaRange": [
+          0,
+          255
+        ],
+        "visualReview": "PASS"
+      }
+    }
+  ]
+}
