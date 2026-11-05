@@ -1,0 +1,275 @@
+{
+  "generator": "built-in image_gen",
+  "requestedPixels": [
+    256,
+    256
+  ],
+  "alpha": true,
+  "visualReview": "All9 individually inspected: original symbols, no text/watermark/real brands; glossy low-poly/bold navy outline family.",
+  "configIDs": [
+    "tinfoilOwl",
+    "mangoComet",
+    "quokkaPixel",
+    "gloomberry",
+    "brassfern",
+    "velvetAnvil",
+    "nimbusTurtle",
+    "okraLantern",
+    "bluemoth"
+  ],
+  "note": "VISUAL says8 rivals; current Config/Rivals contains9 and all9 are delivered.",
+  "assets": {
+    "tinfoilOwl": {
+      "filename": "rival_tinfoilOwl.png",
+      "sourceFilename": "exec-c6ddf911-938f-466a-8d3f-d609dfdc976c.png",
+      "sourceCopy": "sources/exec-c6ddf911-938f-466a-8d3f-d609dfdc976c.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceSHA256": "8dd2e7b69fda3a1b243972efa9b133d7eeaef2c76b81ac691c0a6b96778544f9",
+      "finalSHA256": "65e485c86ff9e06fc27d9f1e03be1b8c48811e1db4f4cb51d7f495dfeb17b7b4",
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "alphaMinMax": [
+        0,
+        255
+      ],
+      "transparentPixels": 39286,
+      "nontransparentBBox": [
+        23,
+        21,
+        231,
+        229
+      ],
+      "checks": "PASS"
+    },
+    "mangoComet": {
+      "filename": "rival_mangoComet.png",
+      "sourceFilename": "exec-8d2ca2f4-22c0-48bb-85a4-f10e828df96b.png",
+      "sourceCopy": "sources/exec-8d2ca2f4-22c0-48bb-85a4-f10e828df96b.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceSHA256": "084d9a3192c91c87f1bb1a3016e117d2920057403bfa7daa5d61f94ba5814615",
+      "finalSHA256": "45cf094c5a3ce0e8b0d909b9c5508edb52a6f2f3ce8c96006a591ac6d5da5f17",
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "alphaMinMax": [
+        0,
+        255
+      ],
+      "transparentPixels": 47157,
+      "nontransparentBBox": [
+        27,
+        37,
+        222,
+        217
+      ],
+      "checks": "PASS"
+    },
+    "quokkaPixel": {
+      "filename": "rival_quokkaPixel.png",
+      "sourceFilename": "exec-0dd2698a-fe18-4309-80d1-874eea3ee1a1.png",
+      "sourceCopy": "sources/exec-0dd2698a-fe18-4309-80d1-874eea3ee1a1.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceSHA256": "8e0bdd2cda5e303f453741db89577f83ab36e79e538c91808ce66a9e71b259f6",
+      "finalSHA256": "dc4f3470f47a7a96bd0fb383192656b7a02d764597b1524f7a2c4f9006e62cab",
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "alphaMinMax": [
+        0,
+        255
+      ],
+      "transparentPixels": 35994,
+      "nontransparentBBox": [
+        25,
+        22,
+        232,
+        232
+      ],
+      "checks": "PASS"
+    },
+    "gloomberry": {
+      "filename": "rival_gloomberry.png",
+      "sourceFilename": "exec-f007fdd0-ce39-4bb9-baaf-365947ca7e97.png",
+      "sourceCopy": "sources/exec-f007fdd0-ce39-4bb9-baaf-365947ca7e97.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceSHA256": "7dd13e9b0cb8f6d46e6f3024fdd23ef39fa5c3e44c6a53a3ed6c1deff8f58026",
+      "finalSHA256": "b1d02b12ee50799be619d5062ce74397afca71db337b17d32890680a06b3700e",
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "alphaMinMax": [
+        0,
+        255
+      ],
+      "transparentPixels": 43802,
+      "nontransparentBBox": [
+        21,
+        21,
+        234,
+        236
+      ],
+      "checks": "PASS"
+    },
+    "brassfern": {
+      "filename": "rival_brassfern.png",
+      "sourceFilename": "exec-fb56ca30-3d74-4ce8-a988-a1f42e29d812.png",
+      "sourceCopy": "sources/exec-fb56ca30-3d74-4ce8-a988-a1f42e29d812.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceSHA256": "ec891e7566a4a8e94e73625924bb12f5339364167d9256625ee793868b1db6b1",
+      "finalSHA256": "3a31206bd9e7a389146686cdcceeca1a9ae32d394f7cda69f38a4e092fc3cfeb",
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "alphaMinMax": [
+        0,
+        255
+      ],
+      "transparentPixels": 48758,
+      "nontransparentBBox": [
+        63,
+        32,
+        197,
+        229
+      ],
+      "checks": "PASS"
+    },
+    "velvetAnvil": {
+      "filename": "rival_velvetAnvil.png",
+      "sourceFilename": "exec-44aba552-49e3-4f1c-b885-686d59eb5413.png",
+      "sourceCopy": "sources/exec-44aba552-49e3-4f1c-b885-686d59eb5413.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceSHA256": "7730524633b2c0b6de1585a1efc61147cb022994f5b83a99de96fbdcb984e611",
+      "finalSHA256": "2101d2fb370884dff549ad531f21b609a778c9372c427981fe63b7a42892e0fe",
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "alphaMinMax": [
+        0,
+        255
+      ],
+      "transparentPixels": 45447,
+      "nontransparentBBox": [
+        30,
+        32,
+        234,
+        225
+      ],
+      "checks": "PASS"
+    },
+    "nimbusTurtle": {
+      "filename": "rival_nimbusTurtle.png",
+      "sourceFilename": "exec-483ad7f7-a33e-47a5-ac44-1de9ea171c03.png",
+      "sourceCopy": "sources/exec-483ad7f7-a33e-47a5-ac44-1de9ea171c03.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceSHA256": "14017e2398f618c26ca6d16ba57c844b3e778f98ff96d70a297701dba2d1883c",
+      "finalSHA256": "36b06231454df4c6f850d3e2f5a7fb4d1c8fa861e0a7f92f37a686318f71a746",
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "alphaMinMax": [
+        0,
+        255
+      ],
+      "transparentPixels": 42052,
+      "nontransparentBBox": [
+        25,
+        33,
+        233,
+        236
+      ],
+      "checks": "PASS"
+    },
+    "okraLantern": {
+      "filename": "rival_okraLantern.png",
+      "sourceFilename": "exec-75ed42c1-826f-451e-990f-e355b5260fab.png",
+      "sourceCopy": "sources/exec-75ed42c1-826f-451e-990f-e355b5260fab.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceSHA256": "2559b7eb56c97da1747d1fd2affffdc5862242cf9aa3f00c1dbe4eb043305449",
+      "finalSHA256": "52e1ea98ab9db671af6a0477c44e2903162892ac288a23e3d9c25a556673fcb4",
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "alphaMinMax": [
+        0,
+        255
+      ],
+      "transparentPixels": 48785,
+      "nontransparentBBox": [
+        62,
+        23,
+        201,
+        227
+      ],
+      "checks": "PASS"
+    },
+    "bluemoth": {
+      "filename": "rival_bluemoth.png",
+      "sourceFilename": "exec-5183464b-9b54-4a89-a108-aa37b5171683.png",
+      "sourceCopy": "sources/exec-5183464b-9b54-4a89-a108-aa37b5171683.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceSHA256": "9f27815a34f9128b01ba6ec9ba84f206db3fedcce42307f4f4d57838620eae0b",
+      "finalSHA256": "d4b19faededd431f4b39543dbae799409cd178e4c84b57b81a8be6b18e9feb4e",
+      "mode": "RGBA",
+      "size": [
+        256,
+        256
+      ],
+      "alphaMinMax": [
+        0,
+        255
+      ],
+      "transparentPixels": 45474,
+      "nontransparentBBox": [
+        22,
+        39,
+        233,
+        227
+      ],
+      "checks": "PASS"
+    }
+  }
+}
