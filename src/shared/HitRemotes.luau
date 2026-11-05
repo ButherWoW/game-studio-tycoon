@@ -16,6 +16,7 @@ local NAMES = {
 	"HitAlarm",
 	"RequestHitState", -- клиент -> сервер
 	"RequestLock", -- клиент -> сервер: «Закрыть студию»
+	"RequestHitUpdate", -- клиент -> сервер: hitId — «Обновление / DLC» хита на полке
 	-- сервер -> клиент: { server: { Row }, global: { available: boolean, rows: { Row } } }
 	-- Row = { userId, name, steals, catches }
 	"ThiefBoard",

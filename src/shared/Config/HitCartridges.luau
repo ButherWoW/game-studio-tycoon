@@ -54,6 +54,17 @@ local HitCartridges = {
 	lockSeconds = 60,
 	lockCooldown = 300, -- от момента закрытия
 
+	-- «Обновление / DLC» хита (кнопка в окне 🔒): раз в UTC-день на картридж.
+	-- Доход картриджа ×updateBoost на updateBoostMinutes, оценка +updateScore (не выше updateMaxScore).
+	-- Цена — updatePriceMinutes минут дохода студии (ShopService.incomePerMinute), не меньше updateMinPrice
+	updateBoost = 2,
+	updateBoostMinutes = 30,
+	updateScore = 0.5,
+	updateMaxScore = 10,
+	updatePriceMinutes = 8,
+	updateMinPrice = 500,
+	updateCooldown = 1, -- секунд между запросами игрока
+
 	-- Таблица воров
 	boardWriteInterval = 60,
 	boardReadInterval = 120,
@@ -74,6 +85,14 @@ end
 
 function HitCartridges.income(score: number): number
 	return math.floor(HitCartridges.baseIncome * HitCartridges.rarity(score).multiplier)
+end
+
+-- Цена обновления хита по доходу студии в минуту
+function HitCartridges.updatePrice(incomePerMinute: number): number
+	local income = if incomePerMinute == incomePerMinute and incomePerMinute < math.huge
+		then math.max(incomePerMinute, 0)
+		else 0
+	return math.max(math.floor(income * HitCartridges.updatePriceMinutes), HitCartridges.updateMinPrice)
 end
 
 function HitCartridges.slots(studioLevel: number): number

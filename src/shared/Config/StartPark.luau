@@ -75,6 +75,20 @@ local StartPark = {
 	landscapePawnshop = { position = Vector3.new(-9.148114, 0, -43.038494), yaw = 12 },
 	landscapeFountain = { position = Vector3.new(43.466662, 0, 11.646857), yaw = 0 },
 	cartridgeRadius = 42, -- только начальная раскладка точек (WorldService), дальше — случайно
+
+	-- Рекламные щиты (BillboardService, Config/Billboards): угол/радиус от спавна, лицом к спавну.
+	-- Проверено по astra-park (дорожки, деревья, пруд, фонари, скамейки, доска, ломбард, фонтан,
+	-- доска лайков, ёлка праздника): опора на газоне с запасом ≥ 1.5 studs, панель выше крон.
+	-- В плейсе без парка Астры щит, опора которого легла на PlotPaths, не ставится
+	billboards = {
+		{ angle = 37, radius = 58 },
+		{ angle = 129, radius = 56 },
+		{ angle = 218, radius = 61 },
+		{ angle = 320, radius = 55 },
+	} :: { { angle: number, radius: number } },
+	-- Зал славы (HallOfFameService): три пьедестала на помосте 13×5 studs, лицом к спавну.
+	-- Поляна между выходами к участкам 60° и 90°, перед помостом 3 studs свободно
+	hallOfFame = { angle = 77, radius = 46, width = 13, depth = 5 },
 }
 
 return StartPark
