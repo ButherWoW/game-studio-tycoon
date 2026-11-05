@@ -127,6 +127,8 @@ Developer Products, GamePasses и Badges принадлежат **вселенн
 | Social | `gift_dragon_byte` | Developer Product | — |  |
 | Social | `gift_golden_trophy` | Developer Product | — |  |
 | Social | `gift_cosmic_whale` | Developer Product | — |  |
+| Training | `skillSkip` | Developer Product | — |  |
+| Training | `skillSkipAll` | Developer Product | — |  |
 
-Всего записей: 68; создано в test: 52; заполнено в main: 0.
+Всего записей: 70; создано в test: 52; заполнено в main: 0.
 <!-- ids:end -->

@@ -1,16 +1,21 @@
 --!strict
 -- Окно «Команда» (3.3 + 3.5 + 3.7): найм, переезд студии, столы по этапам, легендарные,
 -- навыки, перки, внешность и скин сотрудников (кнопка ✏️; скины — SkinShop), увольнение
--- (два нажатия «Уволить»), наставничество (Config/Mentoring: опытный учит младшего).
+-- (два нажатия «Уволить»), наставничество (Config/Mentoring: опытный учит младшего),
+-- обучение навыку (Config/Training): полоска «📘 Учится» в строке и карточке, «Доучить» за Robux/жетон.
 -- Клиент только показывает и просит; цену, этап, свободный стол и всё остальное проверяет сервер.
 
+local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
 
 local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local Employees = require(ReplicatedStorage.Shared.Config.Employees)
 local Skills = require(ReplicatedStorage.Shared.Config.Skills)
 local Mentoring = require(ReplicatedStorage.Shared.Config.Mentoring)
+local Training = require(ReplicatedStorage.Shared.Config.Training)
 local StaffLooks = require(ReplicatedStorage.Shared.Config.StaffLooks)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
@@ -36,6 +41,9 @@ local SMALL_TEXT = 16
 local ROW_HEIGHT = 96
 local STAGE_PANEL_HEIGHT = 132
 local FIRE_CONFIRM_SECONDS = 5 -- сколько ждём второе нажатие «Уволить»
+local TRAIN_TICK = 0.25 -- как часто двигать полоски обучения (без перерисовки окна)
+local TRAIN_COLOR = Color3.fromRGB(110, 170, 255)
+local FLASH_SECONDS = 1.2 -- вспышка строки, когда сотрудник доучился
 
 local TeamWindow = {}
 local gui: ScreenGui? = nil
@@ -48,6 +56,15 @@ local unlocked: { [string]: boolean } = {}
 local raises: { [string]: number } = {}
 -- Наставничество: mentorId -> menteeId (с сервера, уже проверенное)
 local mentoring: { [string]: string } = {}
+-- Обучение навыку (Config/Training): employeeId -> { key, from, startAt, endAt } (os.time сервера)
+type TrainingEntry = { key: string, from: number, startAt: number, endAt: number }
+local training: { [string]: TrainingEntry } = {}
+local trainingCredits = 0 -- жетоны «Доучить» (покупка пришла, когда учить было некого)
+-- Полоски текущей отрисовки: тикер двигает их сам, окно не перерисовывается каждую секунду
+type Bar = { fill: Frame, label: TextLabel?, entry: TrainingEntry, prefix: string }
+local bars: { Bar } = {}
+local rows: { [string]: Frame } = {}
+local justTrained: { [string]: number } = {} -- employeeId -> os.clock() конца обучения (вспышка)
 -- «Звезда» события дня «Охота за талантами» (StaffService): кого и почём можно нанять сейчас
 local star: { id: string, cost: number }? = nil
 local serverOffset = 0 -- os.time() сервера − клиента (перезарядка смены перка)
@@ -318,6 +335,66 @@ local function mentorOf(employeeId: string): string?
 	return nil
 end
 
+local function clockText(seconds: number): string
+	local s = math.max(math.ceil(seconds), 0)
+	return string.format("%d:%02d", s // 60, s % 60)
+end
+
+local function trainingProgress(entry: TrainingEntry): (number, number)
+	local now = workspace:GetServerTimeNow()
+	local total = math.max(entry.endAt - entry.startAt, 1)
+	return math.clamp((now - entry.startAt) / total, 0, 1), math.max(entry.endAt - now, 0)
+end
+
+local function updateBar(bar: Bar)
+	local progress, left = trainingProgress(bar.entry)
+	bar.fill.Size = UDim2.fromScale(progress, 1)
+	if bar.label then
+		bar.label.Text = bar.prefix .. " — " .. clockText(left)
+	end
+end
+
+-- Полоска прогресса (fill растёт слева направо); label — текст «… — 1:24», его тоже обновляет тикер
+local function progressBar(
+	parent: Instance,
+	entry: TrainingEntry,
+	height: number,
+	label: TextLabel?,
+	prefix: string
+): Frame
+	local track = Instance.new("Frame")
+	track.BackgroundColor3 = Color3.fromRGB(20, 20, 32)
+	track.Size = UDim2.new(1, 0, 0, height)
+	Ui.corner(track, math.floor(height / 2))
+	track.Parent = parent
+	local fill = Instance.new("Frame")
+	fill.BackgroundColor3 = TRAIN_COLOR
+	fill.Size = UDim2.fromScale(0, 1)
+	Ui.corner(fill, math.floor(height / 2))
+	fill.Parent = track
+	local bar: Bar = { fill = fill, label = label, entry = entry, prefix = prefix }
+	table.insert(bars, bar)
+	updateBar(bar)
+	return track
+end
+
+local function trainingPrefix(entry: TrainingEntry): string
+	return ClientState.t("train_active", {
+		skill = ClientState.t("focus_" .. entry.key),
+		from = entry.from,
+		to = entry.from + 1,
+	})
+end
+
+-- «Доучить»: жетон — сразу на сервере; иначе сервер запоминает сотрудника, покупку открываем тут
+local function skipTraining(employeeId: string)
+	StaffRemotes.SkipTraining:FireServer(employeeId)
+	local productId = Training.products.skillSkip.productId
+	if trainingCredits <= 0 and productId ~= 0 then
+		MarketplaceService:PromptProductPurchase(Players.LocalPlayer, productId)
+	end
+end
+
 local function smallButton(parent: Instance, text: string, color: Color3, onClick: () -> ()): TextButton
 	local b = Ui.button(parent, text, color, onClick)
 	if color == Ui.colors.locked then
@@ -374,26 +451,91 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 	-- Навыки
 	Ui.label(frame, ClientState.t("team_skills", { level = level }), 24, Ui.titleFont).LayoutOrder =
 		nextOrder()
+	local mentored = mentorOf(employee.id) ~= nil
+	local studying = training[employee.id]
+	-- Обучение (Config/Training): «+1» учится по таймеру, пока учится — стол медленнее
+	local trainHint = Ui.label(
+		frame,
+		ClientState.t("train_hint", {
+			slow = math.floor((1 - Training.workSpeed) * 100 + 0.5),
+			mentor = Training.menteeSpeed,
+		}),
+		40,
+		nil,
+		Ui.colors.muted
+	)
+	trainHint.TextScaled = false
+	trainHint.TextSize = SMALL_TEXT
+	trainHint.TextWrapped = true
+	trainHint.LayoutOrder = nextOrder()
+	if studying then
+		-- «📘 Учится: Графика 2 → 3 — 1:24», полоска и «Доучить»
+		local box = Instance.new("Frame")
+		box.BackgroundTransparency = 1
+		box.Size = UDim2.new(1, 0, 0, 0)
+		box.AutomaticSize = Enum.AutomaticSize.Y
+		box.LayoutOrder = nextOrder()
+		Ui.list(box, 4)
+		box.Parent = frame
+		local line = Instance.new("Frame")
+		line.BackgroundTransparency = 1
+		line.Size = UDim2.new(1, 0, 0, 34)
+		line.LayoutOrder = 1
+		line.Parent = box
+		local label = Ui.label(line, "", 24, nil, TRAIN_COLOR)
+		label.Position = UDim2.fromOffset(0, 5)
+		label.Size = UDim2.new(0.56, 0, 0, 24)
+		local productId = Training.products.skillSkip.productId
+		local skipText = if trainingCredits > 0
+			then ClientState.t("train_skip_token", { n = trainingCredits })
+			elseif productId ~= 0 then ClientState.t(
+				"train_skip",
+				{ price = Training.products.skillSkip.robuxPrice }
+			)
+			else ClientState.t("train_soon")
+		local canSkip = trainingCredits > 0 or productId ~= 0
+		local skip = smallButton(
+			line,
+			skipText,
+			if canSkip then Ui.colors.primary else Ui.colors.locked,
+			function()
+				if canSkip then
+					skipTraining(employee.id)
+				end
+			end
+		)
+		skip.AnchorPoint = Vector2.new(1, 0)
+		skip.Position = UDim2.new(1, 0, 0, 0)
+		skip.Size = UDim2.new(0.42, 0, 0, 32)
+		local track = progressBar(box, studying, 14, label, trainingPrefix(studying))
+		track.LayoutOrder = 2
+	end
 	for _, key in Skills.keys do
 		local skill = tonumber(employeeInfo.skills[key]) or 0
 		local dots = string.rep("●", skill) .. string.rep("○", Skills.maxLevel - skill)
-		local line = detailLine(frame, ClientState.t("focus_" .. key) .. "  " .. dots, nextOrder())
+		local lineText = ClientState.t("focus_" .. key) .. "  " .. dots
+		if skill < Skills.maxLevel and not studying then
+			-- Сколько будет учиться (ученик наставника — быстрее, сервер считает так же)
+			local seconds = Training.duration(employee.stage, employee.legendary, skill + 1, mentored)
+			lineText ..= "  ⏱" .. clockText(seconds)
+		end
+		local line = detailLine(frame, lineText, nextOrder())
 		local text: string
 		local color = Ui.colors.locked
 		local price = 0
 		if skill >= Skills.maxLevel then
 			text = ClientState.t("team_skill_max")
+		elseif studying then
+			-- Один навык за раз: пока учится, остальные «+1» закрыты
+			text = if studying.key == key then ClientState.t("train_tag") else ClientState.t("train_busy")
 		else
 			-- Ученику наставника «+1» дешевле (сервер считает так же)
-			price = Mentoring.skillCost(
-				Skills.skillCost(employee.stage, employee.legendary, skill),
-				mentorOf(employee.id) ~= nil
-			)
+			price = Mentoring.skillCost(Skills.skillCost(employee.stage, employee.legendary, skill), mentored)
 			text = ClientState.t("team_skill_up", { price = Texts.money(price) })
 			color = if data.cash >= price then Ui.colors.money else Ui.colors.locked
 		end
 		local button = smallButton(line, text, color, function()
-			if skill < Skills.maxLevel and data.cash >= price then
+			if skill < Skills.maxLevel and not studying and data.cash >= price then
 				StaffRemotes.UpgradeSkill:FireServer(employee.id, key)
 			end
 		end)
@@ -595,6 +737,52 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 	SkinShop.buildPicker(frame, employee.id, nextOrder())
 end
 
+-- Кто сейчас учится: сколько, жетоны и «Доучить всех» (только если учится хоть кто-то или есть жетоны)
+local function buildTrainingPanel(parent: Instance, order: number)
+	local count = 0
+	for employeeId in training do
+		if staff[employeeId] then
+			count += 1
+		end
+	end
+	if count == 0 and trainingCredits <= 0 then
+		return
+	end
+	local panel = Instance.new("Frame")
+	panel.BackgroundColor3 = ROW_COLOR
+	panel.Size = UDim2.new(1, 0, 0, 52)
+	panel.LayoutOrder = order
+	Ui.corner(panel, 10)
+	panel.Parent = parent
+	local text = ClientState.t("train_panel", { count = count })
+	if trainingCredits > 0 then
+		text ..= " · " .. ClientState.t("train_tokens", { n = trainingCredits })
+	end
+	local label = Ui.label(panel, text, 24, nil, TRAIN_COLOR)
+	label.Position = UDim2.fromOffset(12, 14)
+	label.Size = UDim2.new(0.56, -12, 0, 24)
+	if count == 0 then
+		return
+	end
+	local product = Training.products.skillSkipAll
+	local ready = product.productId ~= 0
+	local all = smallButton(
+		panel,
+		if ready
+			then ClientState.t("train_skip_all", { price = product.robuxPrice })
+			else ClientState.t("train_soon"),
+		if ready then Ui.colors.primary else Ui.colors.locked,
+		function()
+			if ready then
+				MarketplaceService:PromptProductPurchase(Players.LocalPlayer, product.productId)
+			end
+		end
+	)
+	all.AnchorPoint = Vector2.new(1, 0.5)
+	all.Position = UDim2.new(1, -10, 0.5, 0)
+	all.Size = UDim2.new(0.42, -10, 0, 40)
+end
+
 local function buildRow(
 	parent: Instance,
 	employee: Employees.Employee,
@@ -660,6 +848,10 @@ local function buildRow(
 	if streamTag then
 		details ..= " · " .. streamTag
 	end
+	local studying = if deskId then training[employee.id] else nil
+	if studying then
+		details ..= " · " .. ClientState.t("train_tag")
+	end
 	-- Подтверждение увольнения: что потеряем (с сервера, StaffPower.losses) вместо описания
 	local armedNow = fireArmed == employee.id and os.clock() - fireArmedAt <= FIRE_CONFIRM_SECONDS
 	local loss = StaffPower.power and StaffPower.power.losses[employee.id]
@@ -678,6 +870,16 @@ local function buildRow(
 	sub.ClipsDescendants = true
 	sub.Position = UDim2.fromOffset(24, 36)
 	sub.Size = UDim2.new(0.62, -84, 0, 54)
+	rows[employee.id] = row
+	if studying then
+		-- Тонкая полоска обучения внизу строки: видно, не открывая карточку ✏️
+		local holder = Instance.new("Frame")
+		holder.BackgroundTransparency = 1
+		holder.Position = UDim2.new(0, 24, 1, -7)
+		holder.Size = UDim2.new(0.62, -84, 0, 6)
+		holder.Parent = row
+		progressBar(holder, studying, 6, nil, "")
+	end
 
 	local text: string
 	local color = Ui.colors.locked
@@ -794,6 +996,8 @@ render = function()
 		end
 		old:Destroy()
 	end
+	bars = {}
+	rows = {}
 
 	local window = Ui.window(gui, "Window", Vector2.new(680, 680))
 	local title = Ui.label(window, ClientState.t("team_title"), 36, Ui.titleFont)
@@ -818,9 +1022,10 @@ render = function()
 	body.Parent = window
 
 	buildPowerPanel(body, 0)
-	buildStagePanel(body, data, 1)
-	buildDeskPanel(body, data, 2)
-	buildMoodPanel(body, 3)
+	buildTrainingPanel(body, 1)
+	buildStagePanel(body, data, 2)
+	buildDeskPanel(body, data, 3)
+	buildMoodPanel(body, 4) -- занимает 4 и 5
 	local free, total = deskCounts(data)
 	local anyDesk = total > 0
 	-- Сотрудники по этапам, легендарные — отдельной группой в конце
@@ -852,6 +1057,44 @@ render = function()
 			body.CanvasPosition = scrollPosition
 		end
 	end)
+	-- Доучился: короткая вспышка строки (в течение FLASH_SECONDS после конца, и при перерисовке)
+	local clockNow = os.clock()
+	for employeeId, at in justTrained do
+		local row = rows[employeeId]
+		local left = FLASH_SECONDS - (clockNow - at)
+		if left <= 0 then
+			justTrained[employeeId] = nil
+		elseif row then
+			row.BackgroundColor3 = Ui.colors.good
+			TweenService:Create(row, TweenInfo.new(left), { BackgroundColor3 = ROW_COLOR }):Play()
+		end
+	end
+end
+
+-- Обучение из StaffChanged; кто был в списке и пропал (не уволен) — доучился, строке вспышка
+local function readTraining(raw: any)
+	local fresh: { [string]: TrainingEntry } = {}
+	if type(raw) == "table" then
+		for employeeId, entry in raw do
+			if
+				type(employeeId) == "string"
+				and type(entry) == "table"
+				and Skills.isKey(entry.key)
+				and type(entry.from) == "number"
+				and type(entry.startAt) == "number"
+				and type(entry.endAt) == "number"
+			then
+				fresh[employeeId] =
+					{ key = entry.key, from = entry.from, startAt = entry.startAt, endAt = entry.endAt }
+			end
+		end
+	end
+	for employeeId in training do
+		if not fresh[employeeId] and staff[employeeId] then
+			justTrained[employeeId] = os.clock()
+		end
+	end
+	training = fresh
 end
 
 function TeamWindow.open()
@@ -897,6 +1140,8 @@ function TeamWindow.start()
 			unlocked = if type(extra.unlocked) == "table" then extra.unlocked else {}
 			raises = if type(extra.raises) == "table" then extra.raises else {}
 			mentoring = if type(extra.mentoring) == "table" then extra.mentoring else {}
+			readTraining(extra.training)
+			trainingCredits = if type(extra.trainingCredits) == "number" then extra.trainingCredits else 0
 			local s = extra.star
 			star = if type(s) == "table"
 					and type(s.id) == "string"
@@ -923,6 +1168,23 @@ function TeamWindow.start()
 	end)
 	StaffPower.changed:Connect(function()
 		render()
+	end)
+	-- Полоски обучения ползут сами (окно не перерисовываем каждую секунду)
+	local tickAt = 0
+	RunService.Heartbeat:Connect(function()
+		if not gui or #bars == 0 then
+			return
+		end
+		local t = os.clock()
+		if t < tickAt then
+			return
+		end
+		tickAt = t + TRAIN_TICK
+		for _, bar in bars do
+			if bar.fill.Parent then
+				updateBar(bar)
+			end
+		end
 	end)
 	-- Стримера назначили или сняли (донаты каждые 10 с окно не перерисовывают)
 	local shownStreamer: string? = nil
