@@ -9,11 +9,13 @@ local FOLDER_NAME = "ConsoleRemotes"
 
 local NAMES = {
 	"ConsoleRequest", -- клиент -> сервер: прислать ConsoleState
-	-- сервер -> клиент: { platforms = { [id]: true }, console = { unlocked, stage, started, progress,
-	-- need, launched, share, royaltyPerMinute, licensePerMinute, earned }, streamer = { allowed,
+	-- сервер -> клиент: { platforms = { [id]: true }, console = { unlocked, free, stage, running,
+	-- endsAt, duration, now, worker?, equipment, credit, skips, nextStage? (чек-лист), launched,
+	-- share, royaltyPerMinute, licensePerMinute, earned }, streamer = { allowed,
 	-- employeeId?, hype, perMinute, earned, hypeBonus } }
 	"ConsoleState",
-	"ConsoleStage", -- клиент -> сервер: начать следующий этап консоли (оплата)
+	"ConsoleStage", -- клиент -> сервер: начать следующий этап консоли (оплата, дальше таймер)
+	"ConsoleEquip", -- клиент -> сервер: id оборудования (Config/Console.equipment) — купить
 	"StreamerAssign", -- клиент -> сервер: employeeId (string) — назначить стримером, false — снять
 	-- сервер -> клиент: { kind = "stageDone" | "launched" | "hype", stage?, percent? }
 	"ConsoleNotice",

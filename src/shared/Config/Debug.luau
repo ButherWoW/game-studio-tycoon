@@ -25,11 +25,13 @@ local Debug = {
 	-- даже в гараже; хит конкурента — через 20 с после старта сервера
 	contractForceOffer = false,
 	rivalForceHit = false,
-	-- Своя консоль и стример (только Studio): консоль открыта на любом этапе, этапы бесплатные;
-	-- этапу хватает consoleStageGames игр (nil — как в Config/Console); хайп и донаты стримера
+	-- Своя консоль и стример (только Studio): консоль открыта на любом этапе, этапы и
+	-- оборудование бесплатные; этап идёт consoleStageSeconds секунд (nil — как в Config/Console);
+	-- consoleSkipSkills — не требовать навыков сотрудников; хайп и донаты стримера
 	-- идут в streamerSpeed раз быстрее (например 10)
 	consoleForceUnlock = false,
-	consoleStageGames = nil :: number?,
+	consoleStageSeconds = nil :: number?,
+	consoleSkipSkills = false,
 	streamerSpeed = 1,
 	-- События дня (Config/DailyEvents, только Studio): dailyEventForce — id события (например
 	-- "bugHunt"), без dailyEventShort оно идёт всё время; dailyEventShort — короткий цикл

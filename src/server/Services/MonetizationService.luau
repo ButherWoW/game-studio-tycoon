@@ -18,6 +18,7 @@ local MascotService = require(script.Parent.MascotService)
 local SeasonService = require(script.Parent.SeasonService)
 local FurnitureStyleService = require(script.Parent.FurnitureStyleService)
 local InteriorFinishService = require(script.Parent.InteriorFinishService)
+local ConsoleService = require(script.Parent.ConsoleService)
 
 local MonetizationService = {}
 
@@ -122,6 +123,7 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 			or SeasonService.grantProduct(player, profile, receipt.ProductId)
 			or FurnitureStyleService.grantProduct(player, profile, receipt.ProductId)
 			or InteriorFinishService.grantProduct(player, profile, receipt.ProductId)
+			or ConsoleService.grantProduct(player, profile, receipt.ProductId)
 	end)
 	if not ok then
 		warn("[Monetization] Grant failed:", receipt.ProductId, receipt.PurchaseId, handled)

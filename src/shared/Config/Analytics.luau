@@ -84,7 +84,9 @@ local Analytics = {
 		coop = "Coop",
 		holding = "Holding",
 		-- Консоль и стример: платформа релиза (значение — оценка, поле — pc/phone/console),
-		-- этап консоли (значение — номер, поле — "design_started" / "launch_done"),
+		-- этап консоли (значение — номер этапа, поле — "<этап>_started" / "<этап>_done" /
+		-- "<этап>_skip"; покупка оборудования — "equip_<id>", значение — цена; Robux-ускорение —
+		-- "speed_<consoleSpeed5|consoleSpeed30|consoleSkip>"),
 		-- стример (поле — assigned / unassigned, значение при снятии — заработано донатами)
 		platform = "Platform",
 		console = "Console",
