@@ -17,28 +17,28 @@ Images.menu = {
 	menu_holiday = 108939585178579, -- menu_holiday.png, 🎉
 	menu_camera = 113053777664719, -- menu_camera.png, 🎥
 	menu_bank = 82427982778270, -- menu_bank.png, 🏦
-	menu_achievements = 0, -- menu_achievements.png, 🏆 (V10)
-	menu_studio = 0, -- menu_studio.png, 🛋️ (окно «Студия»: декор и настроение), PNG ещё нет
-	home = 0, -- 🏠, PNG в V3 нет
+	menu_achievements = 97631283620169, -- menu_achievements.png, 🏆 (V10)
+	menu_studio = 127200595653936, -- menu_studio.png, 🛋️ (окно «Студия»: декор и настроение)
+	home = 112336651662592, -- home.png, 🏠
 } :: { [string]: number }
 
 -- Постеры магазина (docs/VISUAL.md, V8; Config/Posters). 0 — картинки ещё нет: постер рисуется
 -- цветом, эмодзи и названием. Dev 1: загрузить poster_<id>.png (768×1024) так же, как иконки
 -- меню, и вставить Image ID напротив id постера
 Images.posters = {
-	pixelHero = 0, -- poster_pixelHero.png
-	puzzleBlocks = 0, -- poster_puzzleBlocks.png
-	turboRacer = 0, -- poster_turboRacer.png
-	starBlaster = 0, -- poster_starBlaster.png
-	ninjaCat = 0, -- poster_ninjaCat.png
-	ghostManor = 0, -- poster_ghostManor.png
-	robotArena = 0, -- poster_robotArena.png
-	dragonValley = 0, -- poster_dragonValley.png
-	neonCity = 0, -- poster_neonCity.png, премиум
-	crystalKingdom = 0, -- poster_crystalKingdom.png, премиум
-	mechTitan = 0, -- poster_mechTitan.png, премиум
-	galaxyLegends = 0, -- poster_galaxyLegends.png, премиум
-	goldenController = 0, -- poster_goldenController.png, премиум
+	pixelHero = 125799592519740, -- poster_pixelHero.png
+	puzzleBlocks = 124079163255858, -- poster_puzzleBlocks.png
+	turboRacer = 137373149436998, -- poster_turboRacer.png
+	starBlaster = 139118042720776, -- poster_starBlaster.png
+	ninjaCat = 78345176584706, -- poster_ninjaCat.png
+	ghostManor = 125688331125992, -- poster_ghostManor.png
+	robotArena = 83554589844882, -- poster_robotArena.png
+	dragonValley = 139344957694595, -- poster_dragonValley.png
+	neonCity = 96784967978775, -- poster_neonCity.png, премиум
+	crystalKingdom = 85457514580817, -- poster_crystalKingdom.png, премиум
+	mechTitan = 140307562859835, -- poster_mechTitan.png, премиум
+	galaxyLegends = 87137781625902, -- poster_galaxyLegends.png, премиум
+	goldenController = 139514087995847, -- poster_goldenController.png, премиум
 } :: { [string]: number }
 
 -- Медали достижений (V10, Астра #88): окно 🏆 вместо 🥉🥈🥇
