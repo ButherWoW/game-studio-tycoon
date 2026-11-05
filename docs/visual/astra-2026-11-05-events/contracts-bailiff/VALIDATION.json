@@ -1,0 +1,110 @@
+{
+  "status": "PASS",
+  "expected": 4,
+  "ready": 4,
+  "pending": [],
+  "assets": [
+    {
+      "file": "bailiff_icon.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        16,
+        22,
+        242,
+        236
+      ],
+      "sha256": "7e80bfc30d82260c7a16d3547b103a5ca27b66546ff9741ab312bbd5b852b7c3",
+      "exactPromptMetadata": "contracts-bailiff/metadata/bailiff_icon.json"
+    },
+    {
+      "file": "icon_contract.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        24,
+        23,
+        220,
+        238
+      ],
+      "sha256": "9d40462a5a152e5c8d47fa9c40758d6c2dd87cb86ca472e47647a1005dfc6966",
+      "exactPromptMetadata": "contracts-bailiff/metadata/icon_contract.json"
+    },
+    {
+      "file": "icon_publisher.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        28,
+        10,
+        228,
+        250
+      ],
+      "sha256": "21c36b6c2dab982373cca25cb37c1252403bdb749bfc7e7c675fc7be5da127cb",
+      "exactPromptMetadata": "contracts-bailiff/metadata/icon_publisher.json"
+    },
+    {
+      "file": "icon_franchise.png",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBounds": [
+        17,
+        41,
+        240,
+        219
+      ],
+      "sha256": "26ef6396b2f719a54308ce259f12e9e95bd8ad99c3136de21f8c8f5c11230022",
+      "exactPromptMetadata": "contracts-bailiff/metadata/icon_franchise.json"
+    }
+  ],
+  "generation": "one built-in image_gen call per raster asset; genuine tool-generated alpha preserved; final resize through sips",
+  "studioTested": false,
+  "clothing": [
+    {
+      "file": "bailiff_shirt.png",
+      "size": [
+        585,
+        559
+      ],
+      "mode": "RGBA",
+      "authored": "original SVG on exact accepted classic-clothing UV map"
+    },
+    {
+      "file": "bailiff_pants.png",
+      "size": [
+        585,
+        559
+      ],
+      "mode": "RGBA",
+      "authored": "original SVG on exact accepted classic-clothing UV map"
+    }
+  ]
+}

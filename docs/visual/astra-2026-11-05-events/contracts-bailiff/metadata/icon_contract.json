@@ -1,0 +1,14 @@
+{
+  "file": "icon_contract.png",
+  "folder": "contracts-bailiff",
+  "id": "icon_contract",
+  "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A chunky cream parchment contract scroll rolled at both ends with a large golden seal attached by a blue ribbon. No writing or lettering, only two short abstract blue horizontal strokes. Every coin and document seal must use only a blank surface or a simple geometric star; no currency glyphs, letters or digits anywhere.",
+  "tool": "built-in image_gen",
+  "transparent_background": true,
+  "source": "/Users/erland/.codex/generated_images/01a1a77e-dda0-7870-a069-1c56f93bc065/exec-3d074bb0-db5b-4254-85b8-66ae471b5b22.png",
+  "final": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-events-v19/contracts-bailiff/V19/icon_contract.png",
+  "finalDimensions": [
+    256,
+    256
+  ]
+}
