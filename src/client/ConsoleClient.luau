@@ -12,6 +12,8 @@ local Console = require(Shared.Config.Console)
 local Platforms = require(Shared.Config.Platforms)
 local Employees = require(Shared.Config.Employees)
 local Texts = require(Shared.Config.Texts)
+local Images = require(Shared.Config.Images)
+local ArtIcon = require(script.Parent.ArtIcon)
 local ClientState = require(script.Parent.ClientState)
 local Ui = require(script.Parent.Ui)
 
@@ -117,7 +119,10 @@ function ConsoleClient.buildPicker(
 		local open = ConsoleClient.platformOpen(id)
 		local selected = ConsoleClient.selectedPlatform == id
 		local def = Platforms.get(id)
-		local caption = (if def then def.icon .. " " else "") .. ClientState.t("platform_" .. id)
+		-- Иконка Астры (Images.platforms, V23) вместо эмодзи платформы; 0 — эмодзи как раньше
+		local imageId = Images.platforms[id] or 0
+		local caption = (if def and imageId <= 0 then def.icon .. " " else "")
+			.. ClientState.t("platform_" .. id)
 		local b = Ui.button(
 			row,
 			if open then caption else "🔒 " .. caption,
@@ -135,6 +140,7 @@ function ConsoleClient.buildPicker(
 		)
 		b.Size = UDim2.new(1 / #Platforms.order, -6, 1, 0)
 		b.LayoutOrder = i
+		ArtIcon.prefix(b, "", imageId, PICKER_HEIGHT - 12)
 		if not open then
 			b.TextColor3 = Ui.colors.muted
 		end
@@ -197,8 +203,10 @@ local function buildConsole(body: Instance, start: number): number
 		order += 1
 		return order
 	end
-	Ui.label(body, ClientState.t("console_title"), 30, Ui.titleFontFor(ClientState.lang), Ui.colors.money).LayoutOrder =
-		nextOrder()
+	local heading =
+		Ui.label(body, ClientState.t("console_title"), 30, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
+	heading.LayoutOrder = nextOrder()
+	ArtIcon.prefix(heading, "🎮", Images.platforms.console, 28)
 	if c.launched == true then
 		text(
 			body,

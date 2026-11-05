@@ -238,4 +238,60 @@ Images.covers = {
 	horror = 0, -- cover_horror.png
 } :: { [string]: number }
 
+-- Платформы игр (V23; Config/Platforms). 0 — картинки нет: эмодзи 🖥️ 📱 🎮.
+-- PNG 128×128 из папки V23
+Images.platforms = {
+	pc = 0, -- platform_pc.png (монитор)
+	phone = 0, -- platform_phone.png (портативка/телефон)
+	console = 0, -- platform_console.png (своя консоль из Console_Launch)
+} :: { [string]: number }
+
+-- Текстуры частиц (V24). 0 — текстуры нет: эффекты как раньше (стандартные Sparkles/детали).
+-- PNG 128×128 на прозрачном фоне; Dev 1: загрузить как Image (Decal) и вставить ID
+Images.fx = {
+	coin = 0, -- fx_coin.png: релиз и хит (монеты)
+	star = 0, -- fx_star.png: релиз и хит (звёзды)
+	sparkle = 0, -- fx_sparkle.png: повышение сотрудника
+	confetti1 = 0, -- fx_confetti_1.png: оценка 10, Rebirth, переезд
+	confetti2 = 0, -- fx_confetti_2.png: оценка 10, Rebirth, переезд
+	heart = 0, -- fx_heart.png: настроение команды
+	note = 0, -- fx_note.png: нотка (звукостудия)
+	smoke = 0, -- fx_smoke.png: поломка
+} :: { [string]: number }
+
+-- Логотипы критиков (V25; id из Config/Critics). 0 — логотипа нет: только название издания.
+-- PNG 256×256, прозрачный фон, без текста
+Images.critics = {
+	herald = 0, -- critic_herald.png (Pixel Herald)
+	gamertime = 0, -- critic_gamertime.png (GamerTime)
+	cube = 0, -- critic_cube.png (Cube Review)
+	hardcore = 0, -- critic_hardcore.png (Hardcore Digest)
+} :: { [string]: number }
+
+-- Одежда NPC-инвестора «Часа инвесторов» (V27, DailyEventService). Шаблоны 585×559 —
+-- Dev 1: загрузить как Shirt/Pants (Classic Clothing) и вставить ID. 0 — инвестор как раньше
+Images.investor = {
+	shirt = 0, -- investor_shirt.png: ShirtTemplate (костюм)
+	pants = 0, -- investor_pants.png: PantsTemplate
+} :: { [string]: number }
+
+-- Иконки новых систем (V28). 0 — картинки нет: как раньше, эмодзи или простая плашка
+Images.misc = {
+	gotwIcon = 0, -- gotw_icon.png (256×256): «Игра недели» (окно GotwPanel)
+	rebirthStar = 0, -- rebirth_star.png (256×256): звёзды Rebirth (вкладка перков)
+	mentorIcon = 0, -- mentor_icon.png (128×128): блок наставничества в окне сотрудника
+	titleFrame = 0, -- title_frame.png (512×96, 9-slice): плашка титула над головой
+} :: { [string]: number }
+
+-- Иконки веток перков Rebirth (V28; ветки Config/RebirthPerks). 0 — эмодзи ветки.
+-- PNG 128×128. Ветка → ключ: speed → speed, thrift → costs, capital → start, passive → offline;
+-- у lab своей иконки в брифе нет (остаётся 🔬), hits — запас (полка хитов — эффект passive)
+Images.rebirthPerks = {
+	speed = 0, -- rperk_speed.png (часы-молния)
+	costs = 0, -- rperk_costs.png (копилка)
+	start = 0, -- rperk_start.png (мешок монет)
+	hits = 0, -- rperk_hits.png (полка с картриджем)
+	offline = 0, -- rperk_offline.png (луна с монеткой)
+} :: { [string]: number }
+
 return Images

@@ -11,7 +11,10 @@ local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local Critics = require(ReplicatedStorage.Shared.Config.Critics)
 local AdCampaigns = require(ReplicatedStorage.Shared.Config.AdCampaigns)
+local HitCartridges = require(ReplicatedStorage.Shared.Config.HitCartridges)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local CreateGameWindow = require(script.Parent.CreateGameWindow)
@@ -159,6 +162,8 @@ local function show(info: any)
 		local nameLabel = Ui.label(row, criticName, 20, nil, Ui.colors.muted)
 		nameLabel.Position = UDim2.fromOffset(64, 4)
 		nameLabel.Size = UDim2.new(1, -72, 0, 20)
+		-- Логотип издания (Images.critics, V25) слева от названия; 0 — только название
+		ArtIcon.prefix(nameLabel, "", Images.critics[critic.id] or 0, 20)
 
 		local quote = Ui.label(row, "", 26, Enum.Font.GothamMedium)
 		quote.Position = UDim2.fromOffset(64, 26)
@@ -301,6 +306,13 @@ local function show(info: any)
 		scale.Scale = 1.4
 		scale.Parent = total
 		TweenService:Create(scale, TweenInfo.new(0.3, Enum.EasingStyle.Back), { Scale = 1 }):Play()
+		-- Частицы Астры над игроком (Images.fx, V24): релиз — монеты, хит — ещё звёзды, 10 — конфетти.
+		-- Текстур нет (0) — ничего, как раньше
+		local score = tonumber(info.score) or 0
+		ArtIcon.burst({ Images.fx.coin, if score >= HitCartridges.minScore then Images.fx.star else 0 }, 24)
+		if score >= 10 then
+			ArtIcon.burst({ Images.fx.confetti1, Images.fx.confetti2 }, 40)
+		end
 
 		local moneyText = ClientState.t("release_revenue", { money = Texts.money(revenue) })
 		if type(info.adBonus) == "number" and info.adBonus > 0 then

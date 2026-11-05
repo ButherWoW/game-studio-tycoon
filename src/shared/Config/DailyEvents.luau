@@ -85,7 +85,9 @@ local DailyEvents = {
 		grants = 10, -- первые N игроков сервера
 		incomeMinutes = 10, -- грант: N минут дохода (RewardService)
 		reachDistance = 14, -- ProximityPrompt 10 + запас на лаги
-		-- Модель ServerStorage.DailyEvents.Investor (Астра); нет — заглушка из деталей
+		-- Модель ServerStorage.DailyEvents.Investor или InvestorNPC Астры (V27: ServerStorage.Upgrades /
+		-- ServerStorage / DailyEvents; одежда — Images.investor, кейс — Accessory InvestorCase);
+		-- нет — заглушка из деталей
 		modelFolder = "DailyEvents",
 		modelName = "Investor",
 	},
@@ -114,6 +116,10 @@ local DailyEvents = {
 		genres = { "action", "adventure", "casual" },
 		topics = { "space", "fantasy", "zombies" },
 		trophy = "blitzJam", -- RewardService: rewards.trophies (полка)
+		-- Кубок на крыше полки хитов (HitService), если победил хоть раз: модель Астры
+		-- ServerStorage.Upgrades.Trophy_Blitz (V27). Нет модели — кубка нет, как раньше
+		trophyModel = "Trophy_Blitz",
+		trophyOffset = CFrame.new(-4.4, 5, 0), -- слева на крыше HitShelf (справа — Trophy_GOTW)
 		winnerIncomeMinutes = 20,
 		title = "devent_title_blitz", -- титул на день (текст)
 		titleSeconds = 24 * 60 * 60,

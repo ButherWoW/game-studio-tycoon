@@ -13,6 +13,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
 
+local DailyEvents = require(ReplicatedStorage.Shared.Config.DailyEvents)
 local Gotw = require(ReplicatedStorage.Shared.Config.Gotw)
 local HitCartridges = require(ReplicatedStorage.Shared.Config.HitCartridges)
 local RebirthPerks = require(ReplicatedStorage.Shared.Config.RebirthPerks)
@@ -384,6 +385,40 @@ local function renderTrophy(profile: DataService.Profile, shelf: Shelf)
 	trophy.Parent = shelf.model
 end
 
+-- Кубок блиц-джема (DailyEventService → rewards.trophies.blitzJam): только модель Астры
+-- Trophy_Blitz из ServerStorage.Upgrades (или ServerStorage); нет модели — ничего не ставим
+local function renderBlitzTrophy(profile: DataService.Profile, shelf: Shelf)
+	local cfg = DailyEvents.blitzJam
+	if shelf.model:FindFirstChild("BlitzTrophy") then
+		return
+	end
+	local rewards = (profile :: any).rewards
+	local trophies = type(rewards) == "table" and rewards.trophies
+	local wins = if type(trophies) == "table" then tonumber(trophies[cfg.trophy]) or 0 else 0
+	if wins <= 0 then
+		return
+	end
+	local folder = ServerStorage:FindFirstChild("Upgrades")
+	local source = (folder and folder:FindFirstChild(cfg.trophyModel))
+		or ServerStorage:FindFirstChild(cfg.trophyModel)
+	if not (source and source:IsA("Model")) then
+		return
+	end
+	local trophy = source:Clone()
+	trophy.Name = "BlitzTrophy"
+	for _, item in trophy:GetDescendants() do
+		if item:IsA("BaseScript") then
+			item:Destroy()
+		elseif item:IsA("BasePart") then
+			item.Anchored = true
+			item.CanCollide = false
+			item.CanTouch = false
+		end
+	end
+	trophy:PivotTo(shelf.model:GetPivot() * cfg.trophyOffset)
+	trophy.Parent = shelf.model
+end
+
 local function makeCartridge(hit: Hit): Part
 	local rarity = HitCartridges.rarity(hit.score)
 	local p = Instance.new("Part")
@@ -506,6 +541,7 @@ local function renderShelf(player: Player)
 		end
 	end
 	renderTrophy(profile, current)
+	renderBlitzTrophy(profile, current)
 end
 
 -- ===== Кража =====

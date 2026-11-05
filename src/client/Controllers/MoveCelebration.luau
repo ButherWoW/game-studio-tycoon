@@ -6,6 +6,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 
+local Images = require(ReplicatedStorage.Shared.Config.Images)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
@@ -24,11 +25,29 @@ local MoveCelebration = {}
 
 local function confetti(gui: ScreenGui)
 	local rng = Random.new()
+	-- Конфетти Астры (Images.fx.confetti1/2, V24): картинки вместо цветных прямоугольников
+	local textures = {}
+	for _, id in { Images.fx.confetti1, Images.fx.confetti2 } do
+		if id > 0 then
+			table.insert(textures, "rbxassetid://" .. id)
+		end
+	end
 	for _ = 1, CONFETTI do
-		local piece = Instance.new("Frame")
-		piece.BorderSizePixel = 0
-		piece.BackgroundColor3 = COLORS[rng:NextInteger(1, #COLORS)]
-		piece.Size = UDim2.fromOffset(rng:NextInteger(6, 12), rng:NextInteger(10, 18))
+		local piece: GuiObject
+		if #textures > 0 then
+			local image = Instance.new("ImageLabel")
+			image.BackgroundTransparency = 1
+			image.Image = textures[rng:NextInteger(1, #textures)]
+			local side = rng:NextInteger(14, 22)
+			image.Size = UDim2.fromOffset(side, side)
+			piece = image
+		else
+			local frame = Instance.new("Frame")
+			frame.BorderSizePixel = 0
+			frame.BackgroundColor3 = COLORS[rng:NextInteger(1, #COLORS)]
+			frame.Size = UDim2.fromOffset(rng:NextInteger(6, 12), rng:NextInteger(10, 18))
+			piece = frame
+		end
 		piece.Position = UDim2.new(rng:NextNumber(), 0, -0.05, 0)
 		piece.Rotation = rng:NextInteger(0, 360)
 		piece.Parent = gui

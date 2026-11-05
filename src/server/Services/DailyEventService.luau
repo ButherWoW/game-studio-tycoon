@@ -27,11 +27,13 @@ local Shared = ReplicatedStorage.Shared
 local DailyEvents = require(Shared.Config.DailyEvents)
 local DailyEventRemotes = require(Shared.DailyEventRemotes)
 local Employees = require(Shared.Config.Employees)
+local Images = require(Shared.Config.Images)
 local Mascots = require(Shared.Config.Mascots)
 local Mood = require(Shared.Config.Mood)
 local Texts = require(Shared.Config.Texts)
 local DataService = require(script.Parent.DataService)
 local RewardService = require(script.Parent.RewardService)
+local StaffAppearance = require(script.Parent.StaffAppearance)
 
 type Entry = { name: string, score: number, revenue: number }
 type BoardRow = { name: string, value: number }
@@ -616,14 +618,81 @@ local function investorPlaceholder(): (Model, BasePart)
 	return model, root
 end
 
+-- Модель инвестора: ServerStorage.DailyEvents.Investor (Config/DailyEvents) или InvestorNPC Астры
+-- (V27: ServerStorage.Upgrades / ServerStorage / ServerStorage.DailyEvents)
+local function investorSource(name: string, folderName: string?): Instance?
+	local folders: { string } = if folderName then { folderName } else { "Upgrades", "DailyEvents", "" }
+	for _, folder in folders do
+		-- "" — сам ServerStorage
+		local parent = if folder == "" then ServerStorage else ServerStorage:FindFirstChild(folder)
+		local found = parent and parent:FindFirstChild(name)
+		if found then
+			return found
+		end
+	end
+	return nil
+end
+
+-- Одежда Астры (Images.investor, шаблоны 585×559) и кейс-аксессуар InvestorCase на NPC с Humanoid.
+-- Своя одежда / свой аксессуар в модели не трогаем
+local function dressInvestor(model: Model)
+	local humanoid = model:FindFirstChildOfClass("Humanoid")
+	if not humanoid then
+		return
+	end
+	humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+	if Images.investor.shirt > 0 and not model:FindFirstChildOfClass("Shirt") then
+		local shirt = Instance.new("Shirt")
+		shirt.ShirtTemplate = "rbxassetid://" .. Images.investor.shirt
+		shirt.Parent = model
+	end
+	if Images.investor.pants > 0 and not model:FindFirstChildOfClass("Pants") then
+		local pants = Instance.new("Pants")
+		pants.PantsTemplate = "rbxassetid://" .. Images.investor.pants
+		pants.Parent = model
+	end
+	local case = investorSource("InvestorCase")
+	if case and case:IsA("Accessory") and not model:FindFirstChildOfClass("Accessory") then
+		StaffAppearance.addAccessory(model, humanoid, case)
+	end
+end
+
+-- Нет модели, но есть одежда Астры — R15-NPC в её костюме (как пристав, BailiffService)
+local function investorRig(): Model?
+	if Images.investor.shirt <= 0 and Images.investor.pants <= 0 then
+		return nil
+	end
+	local description = Instance.new("HumanoidDescription")
+	local skin = Color3.fromRGB(234, 184, 146)
+	description.HeadColor = skin
+	description.LeftArmColor = skin
+	description.RightArmColor = skin
+	description.TorsoColor = skin
+	description.LeftLegColor = skin
+	description.RightLegColor = skin
+	local ok, result = pcall(function()
+		return Players:CreateHumanoidModelFromDescription(description, Enum.HumanoidRigType.R15)
+	end)
+	if not ok or typeof(result) ~= "Instance" or not result:IsA("Model") then
+		warn("[DailyEventService] Investor NPC build failed:", result)
+		return nil
+	end
+	return result
+end
+
 local function buildInvestor(): (Model, BasePart)
 	local cfg = DailyEvents.investors
-	local source = ServerStorage:FindFirstChild(cfg.modelFolder)
-	local template = source and source:FindFirstChild(cfg.modelName)
+	local template = investorSource(cfg.modelName, cfg.modelFolder) or investorSource("InvestorNPC")
+	local model: Model? = nil
 	if template and template:IsA("Model") then
-		local model = template:Clone()
-		local root = model.PrimaryPart
-			or model:FindFirstChild("HumanoidRootPart", true)
+		model = template:Clone()
+	else
+		model = investorRig()
+	end
+	if model then
+		dressInvestor(model)
+		local root = model:FindFirstChild("HumanoidRootPart", true)
+			or model.PrimaryPart
 			or model:FindFirstChildWhichIsA("BasePart", true)
 		if root and root:IsA("BasePart") then
 			return model, root
@@ -790,6 +859,8 @@ local function finishBlitz()
 	(profile :: any).dailyTitle = { key = cfg.title, untilAt = os.time() + cfg.titleSeconds }
 	applyTitle(winner, profile)
 	call("AchievementService", "note", winner, "blitzWins", 1)
+	-- Кубок Trophy_Blitz на полке хитов (если Dev 1 импортировал модель)
+	call("HitService", "refreshShelf", winner)
 	log(winner, "blitzJam_win", winnerEntry.score)
 	for _, player in Players:GetPlayers() do
 		if player == winner then
