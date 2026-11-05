@@ -10,7 +10,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
 local Season = require(ReplicatedStorage.Shared.Config.Season)
-local ContentDrops = require(ReplicatedStorage.Shared.Config.ContentDrops)
 local Debug = require(ReplicatedStorage.Shared.Config.Debug)
 local HitCartridges = require(ReplicatedStorage.Shared.Config.HitCartridges)
 local LiveOpsRemotes = require(ReplicatedStorage.Shared.LiveOpsRemotes)
@@ -216,9 +215,8 @@ local function grantReward(
 	end
 	if reward.poster then
 		local posters = optional("PosterService")
-		-- График контента (Config/ContentDrops): до выхода предмета — fallbackMinutes дохода
+		-- Награды сезона — сразу, даже до выхода волны (ContentDrops): бонус пропуска «раньше всех»
 		local granted = posters ~= nil
-			and ContentDrops.isReleased("poster", reward.poster)
 			and not posters.ownsIn(profile, reward.poster)
 			and posters.grantPoster(player, profile, reward.poster) == true
 		if not granted then
@@ -228,19 +226,13 @@ local function grantReward(
 	if reward.skin then
 		local skins = optional("SkinService")
 		local granted = skins ~= nil
-			and ContentDrops.isReleased("skin", reward.skin)
 			and not skins.ownsSkin(profile, reward.skin)
 			and skins.grantSkin(player, profile, reward.skin) == true
 		if not granted then
 			fallback(player, reward)
 		end
 	end
-	if
-		reward.mascot
-		and not (
-			ContentDrops.isReleased("mascot", reward.mascot) and grantMascot(player, profile, reward.mascot)
-		)
-	then
+	if reward.mascot and not (grantMascot(player, profile, reward.mascot)) then
 		fallback(player, reward)
 	end
 	if reward.title then

@@ -63,12 +63,10 @@ end
 
 local function describe(reward: Season.Reward): string
 	local parts = {}
-	-- График контента: предмет ещё не вышел — сервер выдаст fallbackMinutes дохода, так и пишем
-	local function soon(kind: "poster" | "skin" | "mascot", id: string, text: string): string
-		if ContentDropClient.isReleased(kind, id) then
-			return text
-		end
-		return t("drop_reward_soon", { item = text, minutes = reward.fallbackMinutes or 0 })
+	-- График контента: награды сезона выдаются сразу, даже до выхода волны (бонус пропуска —
+	-- «раньше всех»); иначе сезон кончился бы раньше волны и предмет пропал
+	local function soon(_kind: "poster" | "skin" | "mascot", _id: string, text: string): string
+		return text
 	end
 	local base = QuestWindow.describeReward({
 		incomeMinutes = reward.incomeMinutes,

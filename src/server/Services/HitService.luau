@@ -999,12 +999,6 @@ function HitService.onGameReleased(
 	sendState(player)
 end
 
--- Перки Rebirth изменили число мест (RebirthPerkService): переставить картриджи
-function HitService.refreshShelf(player: Player)
-	renderShelf(player)
-	sendState(player)
-end
-
 local function onPlayerRemoving(player: Player)
 	leaving[player] = true
 	for _, carry in carries do

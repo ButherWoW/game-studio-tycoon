@@ -185,6 +185,13 @@ local function grantStarter(player: Player, profile: DataService.Profile)
 end
 
 local function grantDeal(player: Player, profile: DataService.Profile, dealId: string)
+	-- Скидка только на сделку дня (или вчерашнюю — покупка на стыке суток), иначе товар со скидкой
+	-- можно было купить в любой день через PromptProductPurchase
+	local today = Offers.dayOf(os.time())
+	if Offers.dealFor(today).id ~= dealId and Offers.dealFor(today - 1).id ~= dealId then
+		grantFallback(player, profile)
+		return
+	end
 	for _, item in Offers.dailyDeal.pool do
 		if item.id ~= dealId then
 			continue
