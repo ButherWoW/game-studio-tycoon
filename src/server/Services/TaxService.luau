@@ -125,6 +125,22 @@ local function onPay(player: Player)
 	publish(player, data, profile.studioLevel)
 end
 
+-- Для RebirthService: налог прошлой студии (счёт, база, проверка) сгорает вместе с ней,
+-- как и деньги, с которых он считался. Время до следующего счёта — заново
+function TaxService.reset(player: Player)
+	local profile = DataService.get(player)
+	if not profile then
+		return
+	end
+	local data = dataOf(profile)
+	data.played = 0
+	data.income = 0
+	data.bill = 0
+	data.due = 0
+	data.auditUntil = 0
+	publish(player, data, profile.studioLevel)
+end
+
 -- Хук DevelopmentService: доход релиза идёт в налоговую базу периода
 function TaxService.onGameReleased(player: Player, revenue: number)
 	local profile = DataService.get(player)

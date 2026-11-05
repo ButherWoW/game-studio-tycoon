@@ -804,6 +804,7 @@ return {
 	rebirth_next = "Depois de renascer: renda ×{mult} para sempre",
 	rebirth_need_office = "Mudar para um escritório",
 	rebirth_need_cash = "Dinheiro: {price}",
+	rebirth_need_no_stocks = "Primeiro venda todas as ações (bolsa)",
 	rebirth_resets = "Zera: dinheiro (você fica com $100), melhorias, gêneros e temas desbloqueados",
 	rebirth_keeps = "Fica: seu recorde e os jogos lançados",
 	rebirth_button = "Recomeçar",

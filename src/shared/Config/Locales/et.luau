@@ -804,6 +804,7 @@ return {
 	rebirth_next = "Pärast taassündi: tulu ×{mult} igaveseks",
 	rebirth_need_office = "Koli kontorisse",
 	rebirth_need_cash = "Raha: {price}",
+	rebirth_need_no_stocks = "Müü enne kõik aktsiad (börs)",
 	rebirth_resets = "Läheb nulli: raha (alles jääb $100), täiendused, avatud žanrid ja teemad",
 	rebirth_keeps = "Jääb alles: parim tulemus ja välja antud mängud",
 	rebirth_button = "Alusta otsast",

@@ -804,6 +804,7 @@ return {
 	rebirth_next = "Efter rebirth: inkomst ×{mult} för alltid",
 	rebirth_need_office = "Flytta till ett kontor",
 	rebirth_need_cash = "Pengar: {price}",
+	rebirth_need_no_stocks = "Sälj alla dina aktier först (börs)",
 	rebirth_resets = "Nollställs: pengar (du behåller $100), uppgraderingar, upplåsta genrer och teman",
 	rebirth_keeps = "Sparas: bästa betyg och antal släppta spel",
 	rebirth_button = "Börja om",

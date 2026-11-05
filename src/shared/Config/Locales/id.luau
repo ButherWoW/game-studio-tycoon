@@ -804,6 +804,7 @@ return {
 	rebirth_next = "Setelah rebirth: penghasilan ×{mult} selamanya",
 	rebirth_need_office = "Pindah ke kantor",
 	rebirth_need_cash = "Uang: {price}",
+	rebirth_need_no_stocks = "Jual dulu semua sahammu (bursa)",
 	rebirth_resets = "Direset: uang (tersisa $100), upgrade, genre dan tema yang terbuka",
 	rebirth_keeps = "Tetap: skor terbaik dan jumlah game yang dirilis",
 	rebirth_button = "Mulai lagi",

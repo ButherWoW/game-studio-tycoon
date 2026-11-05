@@ -101,20 +101,23 @@ local function buildRebirthPage(page: ScrollingFrame): () -> ()
 	office.LayoutOrder = 4
 	local cash = Ui.label(page, "", 24)
 	cash.LayoutOrder = 5
+	-- Акции других студий: Rebirth только с пустым портфелем (RebirthService, «has_stocks»)
+	local stocks = Ui.label(page, "", 24)
+	stocks.LayoutOrder = 6
 	local resets =
 		Ui.label(page, ClientState.t("rebirth_resets"), 36, Enum.Font.GothamMedium, Ui.colors.muted)
 	resets.TextWrapped = true
-	resets.LayoutOrder = 6
+	resets.LayoutOrder = 7
 	local keeps = Ui.label(page, ClientState.t("rebirth_keeps"), 20, Enum.Font.GothamMedium, Ui.colors.muted)
-	keeps.LayoutOrder = 7
+	keeps.LayoutOrder = 8
 	-- Сколько денег будет после Rebirth с перком «Стартовый капитал»
 	local startCash = Ui.label(page, "", 20, Enum.Font.GothamMedium, Ui.colors.money)
-	startCash.LayoutOrder = 8
+	startCash.LayoutOrder = 9
 
 	local buttons = Instance.new("Frame")
 	buttons.BackgroundTransparency = 1
 	buttons.Size = UDim2.new(1, -8, 0, 52)
-	buttons.LayoutOrder = 9
+	buttons.LayoutOrder = 10
 	local layout = Instance.new("UIListLayout")
 	layout.FillDirection = Enum.FillDirection.Horizontal
 	layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -136,7 +139,8 @@ local function buildRebirthPage(page: ScrollingFrame): () -> ()
 		local cost = Rebirth.cost(rebirths) + (tonumber(Players.LocalPlayer:GetAttribute("LoanDebt")) or 0)
 		local hasOffice = data.upgrades and data.upgrades[Rebirth.requiredUpgrade] == true
 		local hasCash = data.cash >= cost
-		canRebirth = hasOffice and hasCash
+		local holdings = tonumber(Players.LocalPlayer:GetAttribute("StockHoldings")) or 0
+		canRebirth = hasOffice and hasCash and holdings <= 0
 
 		count.Text = ClientState.t("rebirth_count", { count = rebirths, mult = multText(rebirths) })
 		nextLine.Text = ClientState.t("rebirth_next", { mult = multText(rebirths + 1) })
@@ -145,6 +149,9 @@ local function buildRebirthPage(page: ScrollingFrame): () -> ()
 		cash.Text = (if hasCash then "✅ " else "❌ ")
 			.. ClientState.t("rebirth_need_cash", { price = Texts.money(cost) })
 		cash.TextColor3 = if hasCash then Ui.colors.good else Ui.colors.bad
+		stocks.Visible = holdings > 0
+		stocks.Text = "❌ " .. ClientState.t("rebirth_need_no_stocks")
+		stocks.TextColor3 = Ui.colors.bad
 		local after = RebirthPerks.levelEffects("capital", levelOf("capital")).startCash
 		startCash.Visible = after > Rebirth.cashAfter
 		startCash.Text = "💰 " .. ClientState.t("rperk_eff_startCash", { value = Texts.money(after) })
@@ -440,6 +447,11 @@ function RebirthWindow.start()
 	end, "menu_rebirth")
 
 	ClientState.changed:Connect(function()
+		if refresh then
+			refresh()
+		end
+	end)
+	Players.LocalPlayer:GetAttributeChangedSignal("StockHoldings"):Connect(function()
 		if refresh then
 			refresh()
 		end

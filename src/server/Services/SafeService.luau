@@ -307,6 +307,37 @@ local function nearSafe(player: Player): boolean
 		and (root.Position - part.Position).Magnitude <= Safe.maxTryDistance
 end
 
+-- Вернуть занятое место победителя (UpdateAsync −1), если приз так и не выдали
+local function releaseWinner(id: string)
+	local ds = store
+	if not ds then
+		return
+	end
+	task.spawn(function()
+		local count: number? = nil
+		local ok, err = pcall(function()
+			ds:UpdateAsync(winnersKey(id), function(old: any)
+				local n = math.max(math.floor(tonumber(old) or 0), 0)
+				if n <= 0 then
+					return nil
+				end
+				count = n - 1
+				return count
+			end)
+		end)
+		if not ok then
+			warn("[SafeService] UpdateAsync winners release failed:", err)
+			return
+		end
+		-- Счётчик этого сервера — точное значение из хранилища (другие узнают при перечитывании)
+		local current = record
+		if count and current and current.id == id then
+			winners = count
+			applyState()
+		end
+	end)
+end
+
 local function onTry(player: Player, digits: any)
 	if busy[player] then
 		return
@@ -386,8 +417,10 @@ local function onTry(player: Player, digits: any)
 		analytics(player, "empty")
 		return
 	end
-	-- Игрок мог выйти, пока ждали хранилище
+	-- Игрок мог выйти, пока ждали хранилище: приз не выдан — место в лимите возвращаем
+	-- (claimed не отмечен, при следующем входе он может ввести код снова)
 	if not player.Parent or DataService.get(player) ~= profile then
+		releaseWinner(current.id)
 		return
 	end
 	data.claimed[current.id] = now

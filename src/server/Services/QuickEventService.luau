@@ -69,8 +69,8 @@ local function isAfk(player: Player): boolean
 	return (ignoredStreak[player] or 0) >= QuickEvents.afkAfter
 end
 
--- Время нажатия на сервере. Клиентскому времени верим, только если оно правдоподобно:
--- не позже получения и не раньше «получено − пинг − допуск». Иначе — оценка сервера
+-- Время нажатия на сервере: получено − пинг/2. Время клиента принимаем только как уточнение
+-- в пределах [оценка − maxBackdate, получено] — подделкой метки «в прошлое» оценку не сдвинуть
 local function inputTime(player: Player, clientTime: any): number
 	local now = serverNow()
 	local okPing, rawPing = pcall(function()
@@ -82,11 +82,7 @@ local function inputTime(player: Player, clientTime: any): number
 	if type(clientTime) ~= "number" or clientTime ~= clientTime then
 		return estimate
 	end
-	-- Часы клиента синхронизированы с сервером не идеально: чуть «из будущего» допускаем
-	if clientTime > now + QuickEvents.clockSkew or clientTime < now - ping - QuickEvents.latencyTolerance then
-		return estimate
-	end
-	return math.min(clientTime, now)
+	return math.clamp(clientTime, estimate - QuickEvents.maxBackdate, now)
 end
 
 local function logAnalytics(player: Player, kind: Kind, grade: Grade)
