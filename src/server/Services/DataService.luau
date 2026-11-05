@@ -74,6 +74,9 @@ export type Profile = {
 	rebirthPerks: { levels: { [string]: number }, respecUsed: boolean },
 	-- Титулы над головой (TitleService, Config/Titles): открытые (id -> os.time) и выбранный
 	titles: { owned: { [string]: number }, selected: string? },
+	-- Настройки игрока (SettingsService, Config/Settings): громкость, «меньше эффектов» и т.п.
+	-- Сырые данные: читать только через Settings.sanitize
+	settings: { [string]: any },
 	-- «Игра недели» (GotwService): лучшая игра недели weekId, неделя последней проверки награды,
 	-- место титула (0 — нет) и до какого os.time держатся титул и статуэтка на полке
 	gotw: {
@@ -182,6 +185,7 @@ local function defaultProfile(): Profile
 		streamer = { hype = 0, earned = 0, scores = {} },
 		rebirthPerks = { levels = {}, respecUsed = false },
 		titles = { owned = {}, selected = nil },
+		settings = {},
 		gotw = defaultGotw(),
 		lastGame = nil,
 		processedReceipts = {},

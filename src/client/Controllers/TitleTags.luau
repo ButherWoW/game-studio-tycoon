@@ -3,6 +3,8 @@
 -- Сервер (TitleService) проверяет титул и ставит атрибут игрока "Title" (id из Config/Titles);
 -- табличку рисует каждый клиент сам — на своём языке. BillboardGui лежит в PlayerGui
 -- (Adornee = голова), поэтому не мешает VIP-табличке VipService в самом персонаже.
+-- Настройка «Скрыть титулы других игроков» (атрибут LocalPlayer "HideTitles", ClientSettings):
+-- чужие таблички не рисуем, свою — рисуем.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -11,6 +13,7 @@ local Titles = require(ReplicatedStorage.Shared.Config.Titles)
 local ClientState = require(script.Parent.Parent.ClientState)
 
 local ATTRIBUTE = "Title"
+local HIDE_ATTRIBUTE = "HideTitles"
 local HEAD_WAIT = 10
 
 local TitleTags = {}
@@ -28,6 +31,9 @@ end
 
 local function update(player: Player)
 	removeTag(player)
+	if player ~= localPlayer and localPlayer:GetAttribute(HIDE_ATTRIBUTE) == true then
+		return
+	end
 	local id = player:GetAttribute(ATTRIBUTE)
 	local title = if type(id) == "string" then Titles.byId[id] else nil
 	local character = player.Character
@@ -106,12 +112,14 @@ function TitleTags.start()
 		end
 		connections[player] = nil
 	end)
-	-- Сменили язык: перерисовать все таблички
-	ClientState.langChanged:Connect(function()
+	-- Сменили язык или настройку «скрыть титулы»: перерисовать все таблички
+	local function updateAll()
 		for _, player in Players:GetPlayers() do
 			update(player)
 		end
-	end)
+	end
+	ClientState.langChanged:Connect(updateAll)
+	localPlayer:GetAttributeChangedSignal(HIDE_ATTRIBUTE):Connect(updateAll)
 end
 
 return TitleTags

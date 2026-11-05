@@ -13,6 +13,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage.Shared
 local Friends = require(Shared.Config.Friends)
+local Settings = require(Shared.Config.Settings)
 local FriendRemotes = require(Shared.FriendRemotes)
 local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService)
@@ -65,6 +66,10 @@ local function check(player: Player, session: Session)
 		session.asked = true
 		return
 	end
+	-- Игрок выключил уведомления в настройках: окно Roblox не предлагаем (включит — предложим)
+	if not Settings.sanitize(profile.settings).notifications then
+		return
+	end
 	if os.clock() - session.joinedAt < Friends.notify.minSessionSeconds then
 		return
 	end
@@ -105,9 +110,10 @@ end
 -- Игрок видел окно «Включить уведомления» (Roblox не говорит, нажал ли он «Да»): таким
 -- «События дня» (DailyEventService) шлют пинг со звуком за 2 минуты до начала. Пуш вне игры —
 -- внешний сервис по тому же расписанию (Config/DailyEvents.slotAt), см. docs/NOTIFY_REFER_TRADE.md
+-- Выключено в настройках (Config/Settings.notifications) — пингов нет
 function NotifyService.wantsPings(player: Player): boolean
 	local profile = DataService.get(player)
-	return profile ~= nil and data(profile).prompted
+	return profile ~= nil and data(profile).prompted and Settings.sanitize(profile.settings).notifications
 end
 
 function NotifyService.start()
