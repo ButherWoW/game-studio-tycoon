@@ -49,7 +49,12 @@ end
 local function caption(parent: Instance, text: string, y: number)
 	local label = Ui.label(parent, text, 40, Ui.bodyFont, Ui.colors.muted)
 	label.Position = UDim2.fromOffset(16, y)
-	label.Size = UDim2.fromOffset(130, 40)
+	label.Size = UDim2.fromOffset(126, 40)
+	-- На телефоне окно сжимается: подпись не должна налезать на поле справа
+	label.TextScaled = true
+	local limit = Instance.new("UITextSizeConstraint")
+	limit.MaxTextSize = 22
+	limit.Parent = label
 end
 
 local function open()
@@ -67,7 +72,7 @@ local function open()
 		Ui.label(window, "🔐 Сейф — панель владельца", 32, Enum.Font.GothamBold)
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -80, 0, 32)
-	local closeButton = Ui.button(window, "✕", Ui.colors.locked, close)
+	local closeButton = Ui.button(window, "×", Ui.colors.locked, close)
 	closeButton.Size = UDim2.fromOffset(40, 40)
 	closeButton.Position = UDim2.new(1, -52, 0, 8)
 

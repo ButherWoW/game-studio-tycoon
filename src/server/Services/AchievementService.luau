@@ -241,8 +241,13 @@ local function evaluate(
 				end
 			end
 		else
+			-- Сумма — по тому же состоянию, что и выдача: тост показывает реально начисленное
+			local minutes = (a.reward :: any).incomeMinutes
+			local cash = if type(minutes) == "number"
+				then RewardService.incomeForMinutes(player, profile, minutes)
+				else nil
 			RewardService.grant(player, a.reward)
-			AchievementRemotes.AchievementUnlocked:FireClient(player, { id = a.id })
+			AchievementRemotes.AchievementUnlocked:FireClient(player, { id = a.id, cash = cash })
 		end
 	end
 	return unlocked, total :: any

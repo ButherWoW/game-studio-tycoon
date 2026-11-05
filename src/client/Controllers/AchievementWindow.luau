@@ -474,7 +474,12 @@ local function onUnlocked(info: any)
 	end
 	toast(
 		ClientState.t("ach_unlocked", { name = nameOf(a) }),
-		ClientState.t("ach_reward", { reward = QuestWindow.describeReward(a.reward) })
+		ClientState.t("ach_reward", {
+			reward = QuestWindow.describeReward(
+				a.reward,
+				if type(info.cash) == "number" then info.cash else nil
+			),
+		})
 	)
 end
 
