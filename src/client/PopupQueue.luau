@@ -4,7 +4,7 @@
 -- (DisplayOrder 15 и 25) и выскакивали поверх туториала. Теперь — по одному: следующее ждёт,
 -- пока закроются окна, кончится туториал и событие разработки уйдёт с экрана (busy), и ещё
 -- GAP_SECONDS после этого. Открытие по кнопке (меню, плашка) идёт мимо очереди — сразу.
--- Не контроллер: общий модуль DailyRewardWindow, OfflineWindow, LoanWindow, StrikeTip;
+-- Не контроллер: общий модуль DailyRewardWindow, OfflineWindow, ComebackWindow, LoanWindow, StrikeTip;
 -- busy() берёт и карточка события компании (CompanyEventController).
 
 local Players = game:GetService("Players")
