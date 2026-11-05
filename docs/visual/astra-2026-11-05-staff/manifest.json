@@ -1,0 +1,168 @@
+{
+  "sourceSpecRevision": "fe8c7a7",
+  "employees": [
+    {
+      "id": "mila",
+      "specialization": "gameplay",
+      "gender": "female",
+      "hairColor": "65452F",
+      "pantsColor": "32476D",
+      "bodyColor": "F3C8A6",
+      "expression": "bright"
+    },
+    {
+      "id": "tim",
+      "specialization": "graphics",
+      "gender": "male",
+      "hairColor": "6D3F27",
+      "pantsColor": "42415C",
+      "bodyColor": "EBC19D",
+      "expression": "cheeky"
+    },
+    {
+      "id": "zoe",
+      "specialization": "sound",
+      "gender": "female",
+      "hairColor": "30263B",
+      "pantsColor": "344A43",
+      "bodyColor": "B87955",
+      "expression": "delighted"
+    },
+    {
+      "id": "ilya",
+      "specialization": "story",
+      "gender": "male",
+      "hairColor": "88522D",
+      "pantsColor": "3C3A52",
+      "bodyColor": "F1C99C",
+      "expression": "dreamy"
+    },
+    {
+      "id": "oleg",
+      "specialization": "gameplay",
+      "gender": "male",
+      "hairColor": "483A32",
+      "pantsColor": "34404F",
+      "bodyColor": "DCA87D",
+      "expression": "calm"
+    },
+    {
+      "id": "sara",
+      "specialization": "graphics",
+      "gender": "female",
+      "hairColor": "242B43",
+      "pantsColor": "3F5873",
+      "bodyColor": "DCA078",
+      "expression": "confident"
+    },
+    {
+      "id": "max",
+      "specialization": "sound",
+      "gender": "male",
+      "hairColor": "4F3C36",
+      "pantsColor": "273B38",
+      "bodyColor": "E9BD98",
+      "expression": "sleepy"
+    },
+    {
+      "id": "nika",
+      "specialization": "story",
+      "gender": "female",
+      "hairColor": "B47036",
+      "pantsColor": "494057",
+      "bodyColor": "F0C3A4",
+      "expression": "warm"
+    },
+    {
+      "id": "den",
+      "specialization": "gameplay",
+      "gender": "male",
+      "hairColor": "313440",
+      "pantsColor": "3F4956",
+      "bodyColor": "B98361",
+      "expression": "focused"
+    },
+    {
+      "id": "aya",
+      "specialization": "graphics",
+      "gender": "female",
+      "hairColor": "542C4D",
+      "pantsColor": "373C58",
+      "bodyColor": "A96D50",
+      "expression": "proud"
+    },
+    {
+      "id": "leo",
+      "specialization": "sound",
+      "gender": "male",
+      "hairColor": "2D3B35",
+      "pantsColor": "293B39",
+      "bodyColor": "E7B585",
+      "expression": "cool"
+    },
+    {
+      "id": "vera",
+      "specialization": "story",
+      "gender": "female",
+      "hairColor": "747287",
+      "pantsColor": "494357",
+      "bodyColor": "D8B29D",
+      "expression": "wise"
+    },
+    {
+      "id": "robo",
+      "specialization": "all",
+      "gender": "other",
+      "hairColor": "596A7D",
+      "pantsColor": "516172",
+      "bodyColor": "A5B6CA",
+      "expression": "robot"
+    },
+    {
+      "id": "ghost",
+      "specialization": "all",
+      "gender": "other",
+      "hairColor": "6BBFE0",
+      "pantsColor": "72BDD1",
+      "bodyColor": "9AD9EA",
+      "expression": "ghost"
+    },
+    {
+      "id": "legend",
+      "specialization": "all",
+      "gender": "other",
+      "hairColor": "594059",
+      "pantsColor": "443850",
+      "bodyColor": "E8C49E",
+      "expression": "legend"
+    }
+  ],
+  "targetHead": {
+    "size": [
+      1.18,
+      1.2,
+      1.05
+    ],
+    "HatAttachment": [
+      0,
+      0.5,
+      0
+    ]
+  },
+  "runtimeOverrides": {
+    "robo": {
+      "faceTarget": "hair_robo.Handle assembly FaceScreen, front normal -Z",
+      "bodyColor": "A5B6CA"
+    },
+    "ghost": {
+      "bodyColor": "9AD9EA",
+      "bodyTransparency": 0.35,
+      "faceTarget": "Head front; native GlowEye geometry also present"
+    },
+    "legend": {
+      "extraAccessory": "look_legend_cape.rbxmx",
+      "attachment": "BodyBackAttachment"
+    }
+  },
+  "studioTested": false
+}

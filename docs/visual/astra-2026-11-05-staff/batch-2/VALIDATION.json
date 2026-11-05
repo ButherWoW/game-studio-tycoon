@@ -1,0 +1,61 @@
+{
+  "studioTested": false,
+  "targetHeadSize": [
+    1.18,
+    1.2,
+    1.05
+  ],
+  "targetHatAttachment": [
+    0,
+    0.5,
+    0
+  ],
+  "employees": {
+    "sara": {
+      "parts": 10,
+      "specialization": "graphics",
+      "gender": "female",
+      "faceSha256": "fd40950cb0c3ddb748e7f8727d2d9bf4a0e2d188c80fc9221b96a8c92c002bcf",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    },
+    "max": {
+      "parts": 8,
+      "specialization": "sound",
+      "gender": "male",
+      "faceSha256": "72cd2e30dc1d14bc1c0db081086c4cef5a362d1cc58ccabd770f33a07ef17660",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    },
+    "nika": {
+      "parts": 11,
+      "specialization": "story",
+      "gender": "female",
+      "faceSha256": "5e1ad688badbaeea804d21f175e9369d6c4f84e3e47d997c82dd2483fd8da430",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    },
+    "den": {
+      "parts": 14,
+      "specialization": "gameplay",
+      "gender": "male",
+      "faceSha256": "feda7b1d126ab9e2e7c96f26c052c3bf1964d946417e230dda819e0089607fd8",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    },
+    "aya": {
+      "parts": 13,
+      "specialization": "graphics",
+      "gender": "female",
+      "faceSha256": "58bc7ccf2ba154842cf11dd5f7527759caf4c6e3a2a800ba78b280c8b8b2c443",
+      "headIntersections": 0,
+      "hairAttachment": "HatAttachment",
+      "checks": "PASS"
+    }
+  },
+  "status": "PASS"
+}
