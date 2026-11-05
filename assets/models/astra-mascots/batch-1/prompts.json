@@ -1,0 +1,29 @@
+{
+  "tool": "OpenAI built-in ImageGen",
+  "assets": [
+    {
+      "id": "pixel_cat",
+      "prompt": "Use case: stylized-concept. Asset: original collectible studio mascot icon for a child-friendly Roblox game, final256x256 PNG with genuine transparent background. Single cute mascot, full body centered, all parts inside canvas with10%clear transparent margin. Style matches polished cartoon game-menu V3 icons: thick clean dark #1E1E2E outline, chunky simple low-poly cel-shaded shapes, broad upper-left highlights, large head and huge friendly eyes, readable at44px. No ground, cast shadow, badge circle, border, letters, numerals, text, brands or watermark. Mascot design: blue pixel cat with square head, turquoise muzzle, pink inner square ears and a stepped tail. Make a coherent simple toy-like figure, front three-quarter view facing viewer, cheerful and approachable; own design, no borrowed characters.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-05fa6b73-ab60-4c46-a4b5-25dca6819ce0.png",
+      "file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-mascots-v16/batch-1/mascot_pixel_cat_icon.png"
+    },
+    {
+      "id": "bug_beetle",
+      "prompt": "Use case: stylized-concept. Asset: original collectible studio mascot icon for a child-friendly Roblox game, final256x256 PNG with genuine transparent background. Single cute mascot, full body centered, all parts inside canvas with10%clear transparent margin. Style matches polished cartoon game-menu V3 icons: thick clean dark #1E1E2E outline, chunky simple low-poly cel-shaded shapes, broad upper-left highlights, large head and huge friendly eyes, readable at44px. No ground, cast shadow, badge circle, border, letters, numerals, text, brands or watermark. Mascot design: mint beetle with blue shell, six short legs and big round navy glasses. Make a coherent simple toy-like figure, front three-quarter view facing viewer, cheerful and approachable; own design, no borrowed characters.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-b406a1f9-5169-42cb-a990-e0b7ef5424e5.png",
+      "file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-mascots-v16/batch-1/mascot_bug_beetle_icon.png"
+    },
+    {
+      "id": "coffee_cup",
+      "prompt": "Use case: stylized-concept. Asset: original collectible studio mascot icon for a child-friendly Roblox game, final256x256 PNG with genuine transparent background. Single cute mascot, full body centered, all parts inside canvas with10%clear transparent margin. Style matches polished cartoon game-menu V3 icons: thick clean dark #1E1E2E outline, chunky simple low-poly cel-shaded shapes, broad upper-left highlights, large head and huge friendly eyes, readable at44px. No ground, cast shadow, badge circle, border, letters, numerals, text, brands or watermark. Mascot design: living ivory coffee mug with gold rim, brown coffee top, blue handle and tiny blue feet. Make a coherent simple toy-like figure, front three-quarter view facing viewer, cheerful and approachable; own design, no borrowed characters.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-2b24d4bb-13f1-4d24-aa29-92f44c842ba1.png",
+      "file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-mascots-v16/batch-1/mascot_coffee_cup_icon.png"
+    },
+    {
+      "id": "floppy_dog",
+      "prompt": "Use case: stylized-concept. Asset: original collectible studio mascot icon for a child-friendly Roblox game, final256x256 PNG with genuine transparent background. Single cute mascot, full body centered, all parts inside canvas with10%clear transparent margin. Style matches polished cartoon game-menu V3 icons: thick clean dark #1E1E2E outline, chunky simple low-poly cel-shaded shapes, broad upper-left highlights, large head and huge friendly eyes, readable at44px. No ground, cast shadow, badge circle, border, letters, numerals, text, brands or watermark. Mascot design: blue floppy-disk puppy with ivory muzzle, dark floppy ears and a silver disk shutter on forehead. Make a coherent simple toy-like figure, front three-quarter view facing viewer, cheerful and approachable; own design, no borrowed characters.",
+      "source": "/Users/erland/.codex/generated_images/01a1a780-e210-7733-8c89-60bd9c63dfec/exec-02ebcd6e-a56e-4ba9-9f52-f775d89e247b.png",
+      "file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-mascots-v16/batch-1/mascot_floppy_dog_icon.png"
+    }
+  ]
+}
