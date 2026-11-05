@@ -1,0 +1,161 @@
+{
+  "count": 11,
+  "normalization": "Aspect preserved: contain transparent assets, center-cover opaque backgrounds. Daily card near-opaque alpha>=240 normalized255.",
+  "visualReview": "All inspected at export size and in contact sheet. Headlines complete; season frames have transparent center; daily cards have filled opaque center.",
+  "assets": [
+    {
+      "file": "daily_board_bg.png",
+      "dimensions": [
+        1200,
+        700
+      ],
+      "alphaRange": [
+        255,
+        255
+      ],
+      "centerAlpha": 255,
+      "sha256": "2f7b3bb7fd5e4cf4c655c5fc7e5393b52465a4d774fc19795d1acbc8c90039b4",
+      "checks": "PASS"
+    },
+    {
+      "file": "daily_card_normal.png",
+      "dimensions": [
+        256,
+        320
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "centerAlpha": 255,
+      "sha256": "e29ca7bd2f9f672602b3c1380c07a439baec6942f900355f67d9b12be062088f",
+      "checks": "PASS"
+    },
+    {
+      "file": "daily_card_today.png",
+      "dimensions": [
+        256,
+        320
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "centerAlpha": 255,
+      "sha256": "0f65f4cc9b58b5f106364eac786cebd7b31b3e96432be640016f7e0fd9c9e189",
+      "checks": "PASS"
+    },
+    {
+      "file": "daily_card_claimed.png",
+      "dimensions": [
+        256,
+        320
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "centerAlpha": 255,
+      "sha256": "6b1d8151bfb738de59ae746ec2d121e51cab0d3f776855bf5b971a91f6c2c40a",
+      "checks": "PASS"
+    },
+    {
+      "file": "daily_card_locked.png",
+      "dimensions": [
+        256,
+        320
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "centerAlpha": 255,
+      "sha256": "30aaf9ffa8070f8dceaf36d24a6748ac7e86a21ef585ebc21efcd89ee80637f2",
+      "checks": "PASS"
+    },
+    {
+      "file": "reward_cash.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "centerAlpha": 253,
+      "sha256": "93bb65c5892d8cf5019269165f725ec97ccbd15460e8760a0c625d260064c658",
+      "checks": "PASS"
+    },
+    {
+      "file": "reward_coffee.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "centerAlpha": 253,
+      "sha256": "326e26e39245c9866d8c0be99cfd1c72ac67de7645beaf147fc26af9a200ff5a",
+      "checks": "PASS"
+    },
+    {
+      "file": "reward_research.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "centerAlpha": 253,
+      "sha256": "9732b8d16e8c22b5a141bcee9ed0179078f7f162f16b7f925690512a88e60aae",
+      "checks": "PASS"
+    },
+    {
+      "file": "reward_skin.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "centerAlpha": 253,
+      "sha256": "7c8ada77df92507d79bab10ea8e65fe95edcd5bf2fd893ef4e0771f1f954f28d",
+      "checks": "PASS"
+    },
+    {
+      "file": "reward_big.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "centerAlpha": 253,
+      "sha256": "08cf8dfd7564b1f29b15213412966a43162932e64c7277b1ef0cce7dda3b9e2d",
+      "checks": "PASS"
+    },
+    {
+      "file": "daily_streak_flame.png",
+      "dimensions": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "centerAlpha": 253,
+      "sha256": "25301b152d4bb773cce18120b740d77efb1e16e3f9c36d505b36cdbef5e43c22",
+      "checks": "PASS"
+    }
+  ]
+}
