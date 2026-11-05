@@ -650,14 +650,13 @@ local function lastWeekRank(weekId: number, userId: number): (boolean, number?)
 	return true, (top :: any)[userId]
 end
 
-local function checkWeeklyReward(player: Player, profile: DataService.Profile, lastWeekCount: number)
+-- Рейтинг прошлой недели проверяем всегда, даже без лайков в профиле: лайки, пришедшие офлайн,
+-- пишутся сразу в недельный OrderedDataStore, а в профиль — только при входе (и уже в новую неделю).
+-- Топ недели читается один раз на сервер и кэшируется (lastWeekTop)
+local function checkWeeklyReward(player: Player, profile: DataService.Profile)
 	local data = tourOf(profile)
 	local current = Tours.weekId()
 	if data.rewardWeek >= current then
-		return
-	end
-	if lastWeekCount <= 0 then
-		data.rewardWeek = current
 		return
 	end
 	local ok, rank = lastWeekRank(current - 1, player.UserId)
@@ -922,12 +921,6 @@ end
 -- ===== Вход и выход =====
 
 local function onProfileLoaded(player: Player, profile: DataService.Profile)
-	-- Лайки прошлой недели — до того, как likesOf обнулит неделю
-	local raw = (profile :: any).likes
-	local lastWeekCount = 0
-	if type(raw) == "table" and type(raw.week) == "table" and num(raw.week.weekId) == Tours.weekId() - 1 then
-		lastWeekCount = num(raw.week.count)
-	end
 	-- Новый игрок или первый вход с этой системой: награду ждать не за что
 	local tours = (profile :: any).tours
 	if type(tours) ~= "table" then
@@ -937,7 +930,7 @@ local function onProfileLoaded(player: Player, profile: DataService.Profile)
 	applySign(player)
 	mergeQueued(player, profile)
 	if player.Parent and DataService.get(player) == profile then
-		checkWeeklyReward(player, profile, lastWeekCount)
+		checkWeeklyReward(player, profile)
 	end
 end
 

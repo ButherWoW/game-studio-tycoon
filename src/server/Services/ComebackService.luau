@@ -3,7 +3,7 @@
 -- его DataService пишет при каждом сохранении), при входе получает incomeMinutes минут дохода
 -- и coffeeMinutes минут кофе. Бонус ждёт в профиле (comebackPending) до «Забрать» в окне
 -- «С возвращением!» (ComebackWindow, очередь окон входа) и переживает выход без «Забрать».
--- Один раз на возвращение: lastLogout считаем сразу после загрузки, до первого автосейва;
+-- Один раз на возвращение: «уход» — снимок DataService.awaySeconds при загрузке;
 -- новое возвращение заменяет несобранный бонус, а не складывается с ним.
 
 local Players = game:GetService("Players")
@@ -43,9 +43,9 @@ end
 
 local function onProfileLoaded(player: Player, profile: DataService.Profile)
 	local data = profile :: any
-	-- Сразу, до первого сохранения: оно перепишет lastLogout текущим временем
-	local lastLogout = tonumber(data.lastLogout)
-	local away = if lastLogout then os.time() - lastLogout else 0
+	-- Снимок DataService при загрузке: другие onProfileLoaded могли уже сохранить профиль
+	-- и переписать lastLogout текущим временем
+	local away = DataService.awaySeconds(player)
 	if away >= Comeback.minAwayDays * DAY then
 		local cash = math.floor(RewardService.incomeForMinutes(player, profile, Comeback.incomeMinutes))
 		data.comebackPending = {

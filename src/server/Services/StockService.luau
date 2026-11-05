@@ -3,7 +3,9 @@
 -- Компании — общий DataStore StockMarket_v1 (ключ c_<userId>), список — OrderedDataStore по стоимости.
 -- Запись компании пишет только сервер владельца (доход, средняя оценка, основа цены); число
 -- проданных акций (sold) меняют сделки на любом сервере через UpdateAsync.
--- Цена акции = основа × рыночный шум (StockNoise) — одинаково на всех серверах.
+-- Цена акции = основа × рыночный шум (StockNoise) — одинаково на всех серверах. Зерно шума —
+-- секрет компании (record.seed, выдаётся при IPO); у старых компаний без зерна его выдаёт первый
+-- прочитавший запись сервер (ensureSeed) — их будущий график один раз меняет рисунок.
 -- Данные игрока — (profile :: any).stocks = { listed, listedAt, recent = { оценки }, holdings }.
 -- holdings[tostring(companyId)] = { shares, cost, listedAt } — listedAt компании на момент покупки:
 -- после банкротства и нового IPO старые акции не оживают.
@@ -45,6 +47,8 @@ type Record = {
 	listedAt: number,
 	updatedAt: number,
 	delisted: boolean?,
+	-- Секретное зерно рыночного шума (StockNoise): только в DataStore и на серверах, клиенту не уходит
+	seed: number?,
 }
 type Holding = { shares: number, cost: number, listedAt: number }
 type StockData = {
@@ -144,8 +148,13 @@ local function sanitize(raw: any, id: number): Record?
 		listedAt = tonumber(raw.listedAt) or 0,
 		updatedAt = tonumber(raw.updatedAt) or 0,
 		delisted = raw.delisted == true,
+		seed = StockNoise.validSeed(raw.seed),
 	}
 end
+
+-- Компании, которым этот сервер уже выдаёт зерно (старые записи без seed)
+local seeding: { [number]: boolean } = {}
+local ensureSeed: (id: number) -> ()
 
 -- Запись компании (fresh — мимо кэша, для сделок)
 local function getRecord(id: number, fresh: boolean?): Record?
@@ -172,6 +181,9 @@ local function getRecord(id: number, fresh: boolean?): Record?
 	end
 	local record = sanitize(raw, id)
 	cache[id] = { record = record, at = os.clock() }
+	if record and record.seed == nil and not record.delisted then
+		ensureSeed(id)
+	end
 	return record
 end
 
@@ -202,6 +214,37 @@ local function updateRecord(id: number, mutate: (Record?) -> (Record?, boolean))
 	return result
 end
 
+-- Старая запись без секретного зерна: выдать его один раз (UpdateAsync — кто первый, того и зерно;
+-- остальные серверы получат то же из хранилища). С этого момента график компании меняет рисунок
+ensureSeed = function(id: number)
+	if seeding[id] or not store then
+		return
+	end
+	seeding[id] = true
+	task.spawn(function()
+		local seen: Record? = nil
+		local ok, err = pcall(function()
+			(store :: DataStore):UpdateAsync(key(id), function(raw: any): any
+				local record = sanitize(raw, id)
+				seen = record
+				if not record or record.seed ~= nil then
+					return nil
+				end
+				record.seed = StockNoise.newSeed()
+				return record
+			end)
+		end)
+		if not ok then
+			warn("[StockService] seed UpdateAsync failed:", err)
+			seeding[id] = nil
+			return
+		end
+		if seen then
+			cache[id] = { record = seen, at = os.clock() }
+		end
+	end)
+end
+
 local function writeBoard(record: Record)
 	if not board then
 		return
@@ -218,7 +261,7 @@ local function writeBoard(record: Record)
 end
 
 local function priceNow(record: Record): number
-	return StockNoise.price(record.id, record.base, os.time())
+	return StockNoise.price(record.id, record.seed, record.base, os.time())
 end
 
 -- Доход компании, по которому платятся дивиденды: владелец давно не обновлял запись — он не в игре
@@ -422,8 +465,8 @@ local function refreshList()
 end
 
 local function companyView(record: Record, now: number)
-	local price = StockNoise.price(record.id, record.base, now)
-	local dayAgo = StockNoise.price(record.id, record.base, now - 24 * 60 * 60)
+	local price = StockNoise.price(record.id, record.seed, record.base, now)
+	local dayAgo = StockNoise.price(record.id, record.seed, record.base, now - 24 * 60 * 60)
 	local income = liveIncome(record)
 	return {
 		id = record.id,
@@ -437,6 +480,15 @@ local function companyView(record: Record, now: number)
 		dividend = Stocks.dividendPerMinute(income, 1),
 		online = os.time() - record.updatedAt <= Stocks.ownerOfflineAfter,
 	}
+end
+
+-- Для окна Rebirth: с акциями в портфеле Rebirth нельзя (RebirthService, «has_stocks»)
+local function publishHoldings(player: Player, data: StockData)
+	local count = 0
+	for _ in data.holdings do
+		count += 1
+	end
+	player:SetAttribute("StockHoldings", count)
 end
 
 local function sendState(player: Player, selected: number?)
@@ -493,9 +545,10 @@ local function sendState(player: Player, selected: number?)
 	if type(selected) == "number" then
 		local record = getRecord(selected)
 		if record and not record.delisted then
-			candles = StockNoise.candles(record.id, record.base, now, record.listedAt)
+			candles = StockNoise.candles(record.id, record.seed, record.base, now, record.listedAt)
 		end
 	end
+	publishHoldings(player, data)
 	StockRemotes.StockState:FireClient(player, {
 		available = store ~= nil,
 		companies = companies,
@@ -555,6 +608,12 @@ local function buy(player: Player, id: any, amount: any)
 		end
 		if not holding and count >= Stocks.maxCompaniesInPortfolio then
 			notice(player, "stock_err_portfolio", { count = Stocks.maxCompaniesInPortfolio })
+			return
+		end
+		-- Свежее чтение (мимо кэша и резерва бюджета GetAsync) — только для компаний из списка биржи
+		-- или портфеля: иначе запросы с произвольными id выедали бы бюджет DataStore всего сервера
+		if not holding and not table.find(listIds, id) then
+			notice(player, "stock_err_gone")
 			return
 		end
 		local record = getRecord(id, true)
@@ -709,6 +768,8 @@ local function onIpo(player: Player)
 				listedAt = now,
 				updatedAt = now,
 				delisted = false,
+				-- Новое IPO — новое секретное зерно: график прошлой компании не подсказывает новый
+				seed = StockNoise.newSeed(),
 			},
 				true
 		end)
@@ -767,6 +828,7 @@ local function step(player: Player)
 	end
 	local data = dataOf(profile)
 	player:SetAttribute("StockListed", data.listed)
+	publishHoldings(player, data)
 	if data.listed then
 		-- Банкротство: баланс в минусе слишком долго
 		if profile.cash < 0 then
@@ -830,6 +892,7 @@ if game:GetService("RunService"):IsStudio() then
 				listedAt = now,
 				updatedAt = now,
 				delisted = false,
+				seed = StockNoise.newSeed(),
 			},
 				true
 		end)
@@ -854,6 +917,10 @@ if game:GetService("RunService"):IsStudio() then
 	end
 	function StockService.debugBuy(player: Player, id: number, shares: number)
 		lastRequest[player] = nil
+		-- Тестовая компания могла ещё не попасть в список биржи (OrderedDataStore с задержкой)
+		if not table.find(listIds, id) then
+			table.insert(listIds, id)
+		end
 		buy(player, id, shares)
 	end
 	function StockService.debugSell(player: Player, id: number, shares: number)

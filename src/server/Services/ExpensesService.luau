@@ -86,6 +86,16 @@ local function reset(player: Player)
 	player:SetAttribute("PaydayAmount", nil)
 end
 
+-- Для RebirthService: набежавшая зарплата и таймер выплаты прошлой команды сгорают со студией
+-- (без этого зарплату до Rebirth списали бы с новых денег на ближайшей выплате)
+function ExpensesService.reset(player: Player)
+	reset(player)
+	local profile = DataService.get(player)
+	if profile then
+		(profile :: any).payday = nil
+	end
+end
+
 local function charge(player: Player)
 	local profile = DataService.get(player)
 	if not profile then

@@ -804,6 +804,7 @@ return {
 	rebirth_next = "Etter gjenfødsel: inntekt ×{mult} for alltid",
 	rebirth_need_office = "Flytt til et kontor",
 	rebirth_need_cash = "Penger: {price}",
+	rebirth_need_no_stocks = "Selg alle aksjene dine først (børs)",
 	rebirth_resets = "Nullstilles: penger (du beholder $100), oppgraderinger, opplåste sjangre og temaer",
 	rebirth_keeps = "Beholdes: beste poengsum og utgitte spill",
 	rebirth_button = "Start på nytt",

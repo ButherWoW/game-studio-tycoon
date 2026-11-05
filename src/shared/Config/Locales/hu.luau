@@ -804,6 +804,7 @@ return {
 	rebirth_next = "Újjászületés után: bevétel ×{mult} örökre",
 	rebirth_need_office = "Költözz irodába",
 	rebirth_need_cash = "Pénz: {price}",
+	rebirth_need_no_stocks = "Előbb add el az összes részvényt (tőzsde)",
 	rebirth_resets = "Nullázódik: a pénz (marad $100), a fejlesztések, a feloldott műfajok és témák",
 	rebirth_keeps = "Megmarad: a rekord és a kiadott játékok száma",
 	rebirth_button = "Újrakezdés",

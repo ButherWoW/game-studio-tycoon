@@ -804,6 +804,7 @@ return {
 	rebirth_next = "重生后：收入永久 ×{mult}",
 	rebirth_need_office = "搬进办公室",
 	rebirth_need_cash = "资金：{price}",
+	rebirth_need_no_stocks = "请先卖出所有股票（股市）",
 	rebirth_resets = "将重置：资金（保留 $100）、升级、已解锁的类型和题材",
 	rebirth_keeps = "将保留：最高分和已发行游戏数",
 	rebirth_button = "重新开始",

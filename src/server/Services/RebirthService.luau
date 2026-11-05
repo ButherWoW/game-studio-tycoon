@@ -38,6 +38,12 @@ function RebirthService.check(profile: DataService.Profile): string?
 	if not profile.upgrades[Rebirth.requiredUpgrade] then
 		return "no_office"
 	end
+	-- Акции других студий — деньги вне баланса: проданные после Rebirth обошли бы сброс денег.
+	-- Сначала продать всё (окно биржи), потом Rebirth
+	local stocks = (profile :: any).stocks
+	if type(stocks) == "table" and type(stocks.holdings) == "table" and next(stocks.holdings) ~= nil then
+		return "has_stocks"
+	end
 	-- Кредит банка гасится вместе с ребёрзом: денег нужно на ребёрз + долг
 	local debt = math.max(math.floor(tonumber((profile :: any).loanDebt) or 0), 0)
 	if profile.cash < Rebirth.cost(profile.rebirths) + debt then
@@ -81,9 +87,16 @@ local function onRequestRebirth(player: Player)
 	-- Перк «Стартовый капитал» (Config/RebirthPerks) заменяет cashAfter, если больше
 	profile.cash = math.max(Rebirth.cashAfter, RebirthPerks.forProfile(profile).startCash)
 	profile.upgrades = {}
-	-- Набежавшая зарплата прошлой команды (ExpensesService) после Rebirth не переносится
+	-- Набежавшая зарплата прошлой команды (ExpensesService) после Rebirth не переносится:
+	-- и в профиле, и в памяти сервиса (иначе её списали бы на ближайшей выплате)
 	local stored: any = profile
 	stored.payday = nil
+	for _, name in { "ExpensesService", "TaxService" } do
+		local module = script.Parent:FindFirstChild(name)
+		if module and module:IsA("ModuleScript") then
+			(require(module) :: any).reset(player)
+		end
+	end
 	profile.unlockedGenres = freeSet(Genres)
 	profile.unlockedTopics = freeSet(Topics)
 	-- Награды «N минут дохода» — по новой студии, а не по рекорду до Rebirth (отчёт #2)
