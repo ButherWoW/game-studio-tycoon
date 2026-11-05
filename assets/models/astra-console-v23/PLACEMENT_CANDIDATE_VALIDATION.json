@@ -1,0 +1,144 @@
+{
+  "scope": "Candidate only; no code placement. Conservative6x5x6body plus4stud front apron. Actual3templates are smaller5.6x5.2footprint.",
+  "configStage4Count": 13,
+  "configSHA256": "42cecfb5f2426d1a9ab54edf5ca6dd92cc518d7aa299a386b5dd9bbb2b3bc227",
+  "sourceModels": "Currentmain assets/models/astra-sky/models",
+  "assumptions": [
+    "floor supporting surface excluded fromshellcollision; final code chooses flooroffset",
+    "current11SkyDesk/SoundStudio/ArtWall positions yaw0",
+    "legacy playerdesk/coffee/hits preserved using previousSkyvalidation bounds",
+    "fullbuttonrowZ22.5..27.5 keptclear acrossentireplot",
+    "existingSkybooth6studdoorapproach keptclear",
+    "actual runtimeNPC routes andlatermodelvariants needStudioverification"
+  ],
+  "rejectedCandidate": {
+    "centerXZ": [
+      -23,
+      13
+    ],
+    "body": [
+      [
+        -26,
+        0,
+        10
+      ],
+      [
+        -20,
+        5,
+        16
+      ]
+    ],
+    "frontApron4": [
+      [
+        -26,
+        0,
+        16
+      ],
+      [
+        -20,
+        5,
+        20
+      ]
+    ],
+    "conflicts": [
+      "body/soundStudio",
+      "front4/soundStudio",
+      "front4/boothDoor6studApproach",
+      "clearance4/soundStudio"
+    ],
+    "status": "FAIL"
+  },
+  "recommendedCandidate": {
+    "centerXZ": [
+      -24,
+      1
+    ],
+    "body": [
+      [
+        -27,
+        0,
+        -2
+      ],
+      [
+        -21,
+        5,
+        4
+      ]
+    ],
+    "frontApron4": [
+      [
+        -27,
+        0,
+        4
+      ],
+      [
+        -21,
+        5,
+        8
+      ]
+    ],
+    "conflicts": [],
+    "status": "PASS"
+  },
+  "passingNearLeftWall": [
+    [
+      -24,
+      1
+    ],
+    [
+      -24,
+      2
+    ],
+    [
+      -23,
+      1
+    ],
+    [
+      -23,
+      2
+    ],
+    [
+      -22,
+      1
+    ],
+    [
+      -22,
+      2
+    ],
+    [
+      -21,
+      1
+    ],
+    [
+      -21,
+      2
+    ],
+    [
+      -20,
+      1
+    ],
+    [
+      -20,
+      2
+    ],
+    [
+      -19,
+      1
+    ],
+    [
+      -19,
+      2
+    ],
+    [
+      -18,
+      1
+    ],
+    [
+      -18,
+      2
+    ]
+  ],
+  "runtimeTested": false,
+  "worldY": "thirdfloorbase28 plusactualflooroffset",
+  "status": "PASS"
+}

@@ -1,0 +1,64 @@
+[
+  {
+    "file": "platform_pc.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaRange": [
+      0,
+      255
+    ],
+    "alphaBBox": [
+      0,
+      3,
+      123,
+      126
+    ],
+    "meaningfulAlphaBBox": [
+      11,
+      14,
+      116,
+      120
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "sha256": "a1b366684b50af3769d3c8071abeb64afbf7cd8863c3c689faf769488cedd738",
+    "visualReview": "PASS:128px and40px onlight/dark backgrounds, fullsilhouette, no text/brands, actualtransparentalpha"
+  },
+  {
+    "file": "platform_phone.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaRange": [
+      0,
+      255
+    ],
+    "alphaBBox": [
+      5,
+      6,
+      120,
+      123
+    ],
+    "meaningfulAlphaBBox": [
+      24,
+      8,
+      103,
+      121
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "sha256": "7b71451b2051b72991e9d5918b110c0c705f088af93f01be436a31591ea0e48c",
+    "visualReview": "PASS:128px and40px onlight/dark backgrounds, fullsilhouette, no text/brands, actualtransparentalpha"
+  }
+]

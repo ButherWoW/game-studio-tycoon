@@ -1,0 +1,99 @@
+{
+  "Console_Design": {
+    "parts": 39,
+    "partLimit": 60,
+    "dimensionsXYZ": [
+      5.6,
+      2.78,
+      5.2
+    ],
+    "bounds": [
+      [
+        -2.8,
+        0.0,
+        -2.6
+      ],
+      [
+        2.8,
+        2.78,
+        2.6
+      ]
+    ],
+    "pivot": "center_of_base Y0",
+    "front": "+Z",
+    "classes": [
+      "Model",
+      "Part"
+    ],
+    "lights": 0,
+    "lightShadows": false,
+    "intersectionPairsChecked": 741,
+    "positiveVolumeIntersections": 0,
+    "checks": "PASS"
+  },
+  "Console_Prototype": {
+    "parts": 46,
+    "partLimit": 80,
+    "dimensionsXYZ": [
+      5.6,
+      3.64,
+      5.2
+    ],
+    "bounds": [
+      [
+        -2.8,
+        0.0,
+        -2.6
+      ],
+      [
+        2.8,
+        3.64,
+        2.6
+      ]
+    ],
+    "pivot": "center_of_base Y0",
+    "front": "+Z",
+    "classes": [
+      "Model",
+      "Part"
+    ],
+    "lights": 0,
+    "lightShadows": false,
+    "intersectionPairsChecked": 1035,
+    "positiveVolumeIntersections": 0,
+    "checks": "PASS"
+  },
+  "Console_Launch": {
+    "parts": 34,
+    "partLimit": 100,
+    "dimensionsXYZ": [
+      5.6,
+      3.67,
+      5.2
+    ],
+    "bounds": [
+      [
+        -2.8,
+        0.0,
+        -2.6
+      ],
+      [
+        2.8,
+        3.67,
+        2.6
+      ]
+    ],
+    "pivot": "center_of_base Y0",
+    "front": "+Z",
+    "classes": [
+      "Model",
+      "Part",
+      "PointLight"
+    ],
+    "lights": 1,
+    "lightShadows": false,
+    "intersectionPairsChecked": 561,
+    "positiveVolumeIntersections": 0,
+    "checks": "PASS"
+  }
+}

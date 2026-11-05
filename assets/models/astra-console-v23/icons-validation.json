@@ -1,0 +1,41 @@
+[
+  {
+    "file": "platform_pc.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaRange": [
+      0,
+      255
+    ],
+    "sha256": "a1b366684b50af3769d3c8071abeb64afbf7cd8863c3c689faf769488cedd738",
+    "visualReview": "PASS:128px light/dark and40px reviewed; console silhouette matches Launch reference"
+  },
+  {
+    "file": "platform_phone.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaRange": [
+      0,
+      255
+    ],
+    "sha256": "7b71451b2051b72991e9d5918b110c0c705f088af93f01be436a31591ea0e48c",
+    "visualReview": "PASS:128px light/dark and40px reviewed; console silhouette matches Launch reference"
+  },
+  {
+    "file": "platform_console.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaRange": [
+      0,
+      255
+    ],
+    "sha256": "ccf2c2c2da627852427c676ab09d6b37a10c228b8e0d62d3e7a632a7544ccca9",
+    "visualReview": "PASS:128px light/dark and40px reviewed; console silhouette matches Launch reference"
+  }
+]

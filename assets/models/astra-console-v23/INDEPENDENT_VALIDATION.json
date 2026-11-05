@@ -1,0 +1,135 @@
+{
+  "method": "Independent RBXMX XML parser + 15-axis OBB SAT; no builder imports",
+  "toleranceStuds": 1e-05,
+  "models": {
+    "Console_Design": {
+      "status": "PASS",
+      "parts": 39,
+      "budget": 60,
+      "bounds": [
+        [
+          -2.8,
+          0.0,
+          -2.6
+        ],
+        [
+          2.8,
+          2.78,
+          2.6
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.6,
+        2.78,
+        5.2
+      ],
+      "baseY": 0.0,
+      "pivotXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "identityPivotRotation": true,
+      "faceConvention": "+Z in manifest; identity model pivot verified",
+      "pointLights": 0,
+      "lightShadowsFalse": true,
+      "nativeClasses": [
+        "Model",
+        "Part"
+      ],
+      "anchored": true,
+      "noncolliding": true,
+      "finiteOrthonormal": true,
+      "uniqueReferences": true,
+      "intersectionPairChecks": 741,
+      "positiveVolumeIntersections": []
+    },
+    "Console_Prototype": {
+      "status": "PASS",
+      "parts": 46,
+      "budget": 80,
+      "bounds": [
+        [
+          -2.8,
+          0.0,
+          -2.6
+        ],
+        [
+          2.8,
+          3.64,
+          2.6
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.6,
+        3.64,
+        5.2
+      ],
+      "baseY": 0.0,
+      "pivotXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "identityPivotRotation": true,
+      "faceConvention": "+Z in manifest; identity model pivot verified",
+      "pointLights": 0,
+      "lightShadowsFalse": true,
+      "nativeClasses": [
+        "Model",
+        "Part"
+      ],
+      "anchored": true,
+      "noncolliding": true,
+      "finiteOrthonormal": true,
+      "uniqueReferences": true,
+      "intersectionPairChecks": 1035,
+      "positiveVolumeIntersections": []
+    },
+    "Console_Launch": {
+      "status": "PASS",
+      "parts": 34,
+      "budget": 100,
+      "bounds": [
+        [
+          -2.8,
+          0.0,
+          -2.6
+        ],
+        [
+          2.8,
+          3.67,
+          2.6
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.6,
+        3.67,
+        5.2
+      ],
+      "baseY": 0.0,
+      "pivotXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "identityPivotRotation": true,
+      "faceConvention": "+Z in manifest; identity model pivot verified",
+      "pointLights": 1,
+      "lightShadowsFalse": true,
+      "nativeClasses": [
+        "Model",
+        "Part",
+        "PointLight"
+      ],
+      "anchored": true,
+      "noncolliding": true,
+      "finiteOrthonormal": true,
+      "uniqueReferences": true,
+      "intersectionPairChecks": 561,
+      "positiveVolumeIntersections": []
+    }
+  },
+  "runtimeTested": false,
+  "status": "PASS"
+}
