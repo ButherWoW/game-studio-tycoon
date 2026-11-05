@@ -16,6 +16,7 @@ local GiftService = require(script.Parent.GiftService)
 local OfferService = require(script.Parent.OfferService)
 local MascotService = require(script.Parent.MascotService)
 local SeasonService = require(script.Parent.SeasonService)
+local FurnitureStyleService = require(script.Parent.FurnitureStyleService)
 
 local MonetizationService = {}
 
@@ -85,7 +86,7 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 	end
 
 	-- Диспетчер по productId: реклама здесь, премиум-постеры — PosterService, премиум-скины —
-	-- SkinService, остальное — ShopService
+	-- SkinService, стиль мебели «Неон» — FurnitureStyleService, остальное — ShopService
 	local campaign = findByProduct(receipt.ProductId)
 	if campaign then
 		applyAd(player, campaign, true)
@@ -98,6 +99,7 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 		and not ShopService.grantProduct(player, profile, receipt.ProductId)
 		and not OfferService.grantProduct(player, profile, receipt.ProductId)
 		and not SeasonService.grantProduct(player, profile, receipt.ProductId)
+		and not FurnitureStyleService.grantProduct(player, profile, receipt.ProductId)
 	then
 		warn("[Monetization] Unknown product", receipt.ProductId)
 		return Enum.ProductPurchaseDecision.NotProcessedYet

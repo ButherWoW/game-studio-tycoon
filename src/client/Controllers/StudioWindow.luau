@@ -1,9 +1,11 @@
 --!strict
 -- Окно «🛋️ Студия»: вкладки «Интерьер» (то же, что кнопки на полу, — покупка через BuyUpgrade
 -- с теми же проверками на сервере), «Декор» (Config/Decor, DecorService), «Настроение»
--- (разбор MoodService) и «Консоль» (своя консоль и стример, ConsoleClient).
+-- (разбор MoodService), «Консоль» (своя консоль и стример, ConsoleClient) и «Стиль» (стиль мебели
+-- всей студии, Config/FurnitureStyles, FurnitureStyleService; за Robux — PromptProductPurchase).
 -- Клиент только показывает и просит; цены и замки проверяет сервер.
 
+local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -11,6 +13,7 @@ local Shared = ReplicatedStorage.Shared
 local Remotes = require(Shared.Remotes)
 local DecorRemotes = require(Shared.DecorRemotes)
 local Decor = require(Shared.Config.Decor)
+local FurnitureStyles = require(Shared.Config.FurnitureStyles)
 local Mood = require(Shared.Config.Mood)
 local Stages = require(Shared.Config.Stages)
 local Texts = require(Shared.Config.Texts)
@@ -22,12 +25,17 @@ local CompanyEvents = require(Shared.Config.CompanyEvents)
 local Ui = require(script.Parent.Parent.Ui)
 local ConsoleClient = require(script.Parent.Parent.ConsoleClient)
 
-type Tab = "interior" | "decor" | "mood" | "console"
+type Tab = "interior" | "decor" | "mood" | "console" | "style"
+type StyleState = { owned: { [string]: boolean }, selected: string }
 
 local MENU_SLOT = 13
 local ROW_HEIGHT = 72
 local ROW_COLOR = Color3.fromRGB(44, 46, 66)
-local TABS: { Tab } = { "interior", "decor", "mood", "console" }
+local TABS: { Tab } = { "interior", "decor", "style", "mood", "console" }
+-- Узкий экран (телефон 844×390): окно ужимается UIScale, и 5 подписей вкладок не читаются —
+-- у невыбранных вкладок остаётся только значок, выбранная шире
+local COMPACT_WIDTH = 900
+local COMPACT_HEIGHT = 520
 
 local StudioWindow = {}
 local gui: ScreenGui? = nil
@@ -35,6 +43,10 @@ local tab: Tab = "decor"
 local decorFloor: number? = nil -- выбранный этаж во вкладке «Декор» (nil — верхний открытый)
 local scrollY = 0
 local render: () -> ()
+-- Стиль мебели с сервера (StyleRemotes.StyleState); до ответа — классика
+local styleState: StyleState =
+	{ owned = { [FurnitureStyles.default] = true }, selected = FurnitureStyles.default }
+local styleRemotes: { [string]: RemoteEvent }? = nil
 
 local function upgradeName(id: string): string
 	local upgrade = StudioLayout.get(id)
@@ -281,6 +293,75 @@ local function buildMood(body: Instance)
 	note(body, ClientState.t("mood_how"), 100)
 end
 
+local function styleButton(frame: Frame, style: FurnitureStyles.Style)
+	local remotes = styleRemotes
+	if styleState.selected == style.id then
+		rowButton(frame, ClientState.t("fstyle_selected"), Ui.colors.good, function() end)
+	elseif styleState.owned[style.id] then
+		rowButton(frame, ClientState.t("fstyle_select"), Ui.colors.primary, function()
+			if remotes then
+				remotes.SelectStyle:FireServer(style.id)
+			end
+		end)
+	elseif FurnitureStyles.isPremium(style) then
+		-- productId 0 — продукт ещё не создан в Dashboard: «Скоро»
+		local soon = style.productId == 0
+		rowButton(
+			frame,
+			if soon
+				then ClientState.t("shop_soon")
+				else ClientState.t("shop_robux", { price = style.robuxPrice or 0 }),
+			if soon then Ui.colors.locked else Ui.colors.good,
+			function()
+				if not soon then
+					MarketplaceService:PromptProductPurchase(Players.LocalPlayer, style.productId)
+				end
+			end
+		)
+	else
+		priceButton(frame, style.cost or 0, remotes ~= nil, function()
+			if remotes then
+				remotes.BuyStyle:FireServer(style.id)
+			end
+		end)
+	end
+end
+
+-- Вкладка «Стиль»: 4 карточки, один стиль на всю студию (только вид, на работу не влияет)
+local function buildStyle(body: Instance)
+	note(body, ClientState.t("fstyle_hint"), 1)
+	for i, style in FurnitureStyles.list do
+		local frame = row(
+			body,
+			1 + i,
+			style.emoji,
+			ClientState.t("fstyle_" .. style.id),
+			ClientState.t("fstyle_" .. style.id .. "_desc")
+		)
+		local stroke = Instance.new("UIStroke")
+		stroke.Thickness = if styleState.selected == style.id then 3 else 1
+		stroke.Color = if styleState.selected == style.id then Ui.colors.good else style.color
+		stroke.Transparency = if styleState.selected == style.id then 0 else 0.5
+		stroke.Parent = frame
+		styleButton(frame, style)
+	end
+end
+
+local function isCompact(): boolean
+	local camera = workspace.CurrentCamera
+	local viewport = if camera then camera.ViewportSize else Vector2.new(1280, 720)
+	return viewport.X < COMPACT_WIDTH or viewport.Y < COMPACT_HEIGHT
+end
+
+local function tabText(id: Tab, compact: boolean): string
+	local text = ClientState.t(if id == "style" then "fstyle_tab" else "studio_tab_" .. id)
+	if compact and id ~= tab then
+		-- Подписи вкладок начинаются со значка: «🛠 Интерьер» -> «🛠»
+		return string.match(text, "^(%S+)%s") or text
+	end
+	return text
+end
+
 render = function()
 	if not gui then
 		return
@@ -313,10 +394,13 @@ render = function()
 	tabsLayout.Padding = UDim.new(0, 8)
 	tabsLayout.Parent = tabs
 	tabs.Parent = window
+	local compact = isCompact()
+	-- Выбранная вкладка в компактном режиме — в 3 доли ширины, остальные — по одной
+	local shares = if compact then #TABS + 2 else #TABS
 	for _, id in TABS do
 		local b = Ui.button(
 			tabs,
-			ClientState.t("studio_tab_" .. id),
+			tabText(id, compact),
 			if id == tab then Ui.colors.primary else Ui.colors.locked,
 			function()
 				if tab ~= id then
@@ -326,7 +410,8 @@ render = function()
 				end
 			end
 		)
-		b.Size = UDim2.new(1 / #TABS, -6, 1, 0)
+		local share = if compact and id == tab then 3 else 1
+		b.Size = UDim2.new(share / shares, -6, 1, 0)
 	end
 
 	local body = Instance.new("ScrollingFrame")
@@ -348,6 +433,8 @@ render = function()
 	elseif tab == "console" then
 		-- Своя консоль и стример (ConsoleClient)
 		ConsoleClient.buildTab(body)
+	elseif tab == "style" then
+		buildStyle(body)
 	else
 		buildMood(body)
 	end
@@ -374,6 +461,9 @@ function StudioWindow.open()
 	render()
 	StudioState.request()
 	ConsoleClient.request()
+	if styleRemotes then
+		styleRemotes.StyleStateRequest:FireServer()
+	end
 end
 
 function StudioWindow.close()
@@ -402,6 +492,25 @@ function StudioWindow.start()
 		if tab == "console" then
 			render()
 		end
+	end)
+	-- Remotes стилей ждём в своём потоке: окно не должно зависнуть, если сервис не поднялся
+	task.spawn(function()
+		local remotes = require(Shared.StyleRemotes)
+		styleRemotes = remotes
+		remotes.StyleState.OnClientEvent:Connect(function(newState: any)
+			if
+				type(newState) ~= "table"
+				or type(newState.owned) ~= "table"
+				or type(newState.selected) ~= "string"
+			then
+				return
+			end
+			styleState = { owned = newState.owned, selected = newState.selected }
+			if tab == "style" then
+				render()
+			end
+		end)
+		remotes.StyleStateRequest:FireServer()
 	end)
 	-- Деньги поменялись — перекрасить кнопки цены
 	ClientState.changed:Connect(function()
