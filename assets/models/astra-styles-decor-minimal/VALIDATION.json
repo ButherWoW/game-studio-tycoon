@@ -1,0 +1,415 @@
+{
+  "sourceCommit": "fe8c7a7300ae885931254c375bb6a652a4151a37",
+  "zone": "decor",
+  "style": "Minimal",
+  "studioTested": false,
+  "models": {
+    "Plant_Minimal": {
+      "classicParts": 31,
+      "variantParts": 34,
+      "addedParts": 3,
+      "classicDimensionsXYZ": [
+        2.4668,
+        4.2405,
+        2.112
+      ],
+      "variantDimensionsXYZ": [
+        2.4668,
+        4.2405,
+        2.112
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 0,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 90,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 3,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalOakInset",
+        "MinimalRoundedCap",
+        "MinimalRoundedCap"
+      ],
+      "checks": "PASS"
+    },
+    "Rug_Minimal": {
+      "classicParts": 70,
+      "variantParts": 73,
+      "addedParts": 3,
+      "classicDimensionsXYZ": [
+        21.0,
+        0.129,
+        23.0
+      ],
+      "variantDimensionsXYZ": [
+        21.0,
+        0.16,
+        23.0
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 0,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 207,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 3,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalWovenInlay",
+        "MinimalWovenInlay",
+        "MinimalWovenInlay"
+      ],
+      "checks": "PASS"
+    },
+    "Sofa_Minimal": {
+      "classicParts": 281,
+      "variantParts": 282,
+      "addedParts": 1,
+      "classicDimensionsXYZ": [
+        8.83,
+        3.07,
+        3.2
+      ],
+      "variantDimensionsXYZ": [
+        8.83,
+        3.07,
+        3.2455
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 0,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 280,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 0,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalExteriorBinding"
+      ],
+      "checks": "PASS"
+    },
+    "CoffeeTable_Minimal": {
+      "classicParts": 61,
+      "variantParts": 64,
+      "addedParts": 3,
+      "classicDimensionsXYZ": [
+        5.8,
+        3.1892,
+        2.5
+      ],
+      "variantDimensionsXYZ": [
+        5.8,
+        3.1892,
+        2.539
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 2,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 180,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 3,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalOakInset",
+        "MinimalRoundedCap",
+        "MinimalRoundedCap"
+      ],
+      "checks": "PASS"
+    },
+    "PendantLamp_Minimal": {
+      "classicParts": 10,
+      "variantParts": 12,
+      "addedParts": 2,
+      "classicDimensionsXYZ": [
+        2.35,
+        3.05,
+        2.35
+      ],
+      "variantDimensionsXYZ": [
+        2.35,
+        3.05,
+        2.39
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 0,
+      "nativeLights": 1,
+      "newBaseSAT": {
+        "pairs": 18,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 1,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalRimBinding",
+        "MinimalRimBinding"
+      ],
+      "checks": "PASS"
+    },
+    "WallBench_Minimal": {
+      "classicParts": 26,
+      "variantParts": 29,
+      "addedParts": 3,
+      "classicDimensionsXYZ": [
+        5.8,
+        1.725,
+        1.7
+      ],
+      "variantDimensionsXYZ": [
+        5.8,
+        1.725,
+        1.744
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 0,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 75,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 3,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalOakInset",
+        "MinimalRoundedCap",
+        "MinimalRoundedCap"
+      ],
+      "checks": "PASS"
+    },
+    "BeanBags_Minimal": {
+      "classicParts": 15,
+      "variantParts": 18,
+      "addedParts": 3,
+      "classicDimensionsXYZ": [
+        7.8,
+        2.41,
+        2.65
+      ],
+      "variantDimensionsXYZ": [
+        7.8,
+        2.41,
+        2.65
+      ],
+      "functionalParts": 3,
+      "preservedArtSemanticParts": 0,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 45,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 3,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalSeatTuft",
+        "MinimalSeatTuft",
+        "MinimalSeatTuft"
+      ],
+      "checks": "PASS"
+    },
+    "Bookshelf_Minimal": {
+      "classicParts": 57,
+      "variantParts": 60,
+      "addedParts": 3,
+      "classicDimensionsXYZ": [
+        5.8,
+        5.0,
+        1.44
+      ],
+      "variantDimensionsXYZ": [
+        5.8,
+        5.0,
+        1.44
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 21,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 171,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 3,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalOakInset",
+        "MinimalRoundedCap",
+        "MinimalRoundedCap"
+      ],
+      "checks": "PASS"
+    },
+    "MiniFridge_Minimal": {
+      "classicParts": 42,
+      "variantParts": 45,
+      "addedParts": 3,
+      "classicDimensionsXYZ": [
+        2.4,
+        4.0,
+        2.46
+      ],
+      "variantDimensionsXYZ": [
+        2.4,
+        4.0,
+        2.46
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 19,
+      "nativeLights": 1,
+      "newBaseSAT": {
+        "pairs": 126,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 3,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalOakInset",
+        "MinimalRoundedCap",
+        "MinimalRoundedCap"
+      ],
+      "checks": "PASS"
+    },
+    "NeonSign_Minimal": {
+      "classicParts": 18,
+      "variantParts": 19,
+      "addedParts": 1,
+      "classicDimensionsXYZ": [
+        5.7,
+        2.3,
+        0.26
+      ],
+      "variantDimensionsXYZ": [
+        5.7,
+        2.37,
+        0.26
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 17,
+      "nativeLights": 1,
+      "newBaseSAT": {
+        "pairs": 18,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 0,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalBezelTopCap"
+      ],
+      "checks": "PASS"
+    },
+    "Aquarium_Minimal": {
+      "classicParts": 45,
+      "variantParts": 48,
+      "addedParts": 3,
+      "classicDimensionsXYZ": [
+        5.9,
+        4.96,
+        1.9825
+      ],
+      "variantDimensionsXYZ": [
+        5.9,
+        4.96,
+        2.004
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 13,
+      "nativeLights": 1,
+      "newBaseSAT": {
+        "pairs": 135,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 3,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalOakInset",
+        "MinimalRoundedCap",
+        "MinimalRoundedCap"
+      ],
+      "checks": "PASS"
+    },
+    "ArcadeMachine_Minimal": {
+      "classicParts": 34,
+      "variantParts": 35,
+      "addedParts": 1,
+      "classicDimensionsXYZ": [
+        2.86,
+        6.0,
+        2.5
+      ],
+      "variantDimensionsXYZ": [
+        2.86,
+        6.0,
+        2.5455
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 14,
+      "nativeLights": 1,
+      "newBaseSAT": {
+        "pairs": 34,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 0,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "MinimalExteriorBinding"
+      ],
+      "checks": "PASS"
+    }
+  },
+  "checks": [
+    "all original Part class/name/CFrame/size unchanged",
+    "native Seat and BlueSeat*/SeatCushion preserved",
+    "all original PivotOffsets/PrimaryPart preserved",
+    "same shelf-board positions",
+    "all original artwork/screen/semantic colors and materials preserved",
+    "same monitor/table-top heights",
+    "AABB dimension delta<=.2",
+    "same lowerY",
+    "Part count<=classic+20%",
+    "physical design additions present on every model",
+    "new/base oriented-bounds SAT zero intersections",
+    "new/new oriented-bounds SAT zero intersections",
+    "no scripts/mesh/texture",
+    "native light count unchanged;Shadows=false",
+    "unique referents",
+    "Rojo binary builds"
+  ]
+}
