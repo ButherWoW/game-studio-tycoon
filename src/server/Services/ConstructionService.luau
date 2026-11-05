@@ -1010,8 +1010,8 @@ function ConstructionService.grantProduct(
 		local amount = 0
 		if shop and shop:IsA("ModuleScript") then
 			local service = require(shop) :: any
-			amount =
-				math.max(0, service.incomePerMinute(player, profile) * Construction.fallbackIncomeMinutes)
+			local minutes = speedup.robuxPrice * Construction.fallbackMinutesPerRobux
+			amount = math.max(0, math.floor(service.incomePerMinute(player, profile) * minutes))
 		end
 		if amount > 0 then
 			DataService.addCash(player, amount)
