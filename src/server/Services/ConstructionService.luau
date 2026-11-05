@@ -13,6 +13,7 @@
 -- Всё снаружи участка 60×60: внутри стоит гараж/офис, где игрок продолжает работать; лифт
 -- (X −23..−17, Z 21..27) не задет. Спереди (+Z) площадка открыта — там вход, кнопки и тропинка.
 
+local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
@@ -857,6 +858,12 @@ local function spawnBuilders(player: Player, site: Site)
 				model:Destroy()
 			end
 			return
+		end
+		-- Стук молотка слышен рядом (SoundController: тег SoundEmitter, пауза 0.6–1.5 с)
+		local root = model:FindFirstChild("HumanoidRootPart")
+		if root then
+			root:SetAttribute("SoundKey", "construction_hammer")
+			CollectionService:AddTag(root, "SoundEmitter")
 		end
 		local builder: Builder = {
 			model = model,

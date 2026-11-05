@@ -411,6 +411,8 @@ function RebirthWindow.open()
 		showTab()
 	end)
 	starsTab.Size = UDim2.new(0.5, -4, 1, 0)
+	rebirthTab:SetAttribute("SoundKey", "tab_switch")
+	starsTab:SetAttribute("SoundKey", "tab_switch")
 	-- Звезда Rebirth Астры (Images.misc.rebirthStar, V28) вместо ⭐ в названии вкладки
 	ArtIcon.prefix(starsTab, "⭐", Images.misc.rebirthStar, 24)
 

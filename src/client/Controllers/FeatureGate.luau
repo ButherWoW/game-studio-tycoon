@@ -14,6 +14,7 @@ local FeatureRemotes = require(ReplicatedStorage.Shared.FeatureRemotes)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local UnlockNotice = require(script.Parent.UnlockNotice)
+local SoundController = require(script.Parent.SoundController)
 
 local player = Players.LocalPlayer
 
@@ -87,6 +88,7 @@ local function announce(ids: { string })
 		-- Не раньше, чем окно релиза покажет оценку (открыть могла эта игра)
 		ClientState.afterReveal(function()
 			UnlockNotice.toast(ClientState.t("unlock_opened", { list = table.concat(names, ", ") }))
+			SoundController.play("unlock_feature")
 		end)
 	end
 end

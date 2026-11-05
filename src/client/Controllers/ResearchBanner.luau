@@ -13,6 +13,7 @@ local DepthToast = require(script.Parent.Parent.DepthToast)
 local PopupQueue = require(script.Parent.Parent.PopupQueue)
 local Ui = require(script.Parent.Parent.Ui)
 local ResearchWindow = require(script.Parent.ResearchWindow)
+local SoundController = require(script.Parent.SoundController)
 
 local BANNER_HEIGHT = 26
 local BANNER_WIDTH = 340
@@ -77,6 +78,7 @@ function ResearchBanner.start()
 			-- Узел дерева — «Исследование готово», жанр/тема за $ — «Открыто»
 			local key = if info.kind == "node" then "rtime_done" else "rtime_done_unlock"
 			DepthToast.show(ClientState.t(key, { name = ResearchWindow.itemName(info.kind, info.id) }))
+			SoundController.play("research_done")
 		end
 		if info.offline == true then
 			-- Закончилось, пока игрока не было: после награды за вход и «Пока тебя не было»

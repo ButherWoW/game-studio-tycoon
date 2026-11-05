@@ -23,6 +23,7 @@ local ConstructionRemotes = require(ReplicatedStorage.Shared.ConstructionRemotes
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local MoveCelebration = require(script.Parent.MoveCelebration)
+local SoundController = require(script.Parent.SoundController)
 
 local WIDTH = 460
 local HEIGHT = 44
@@ -225,6 +226,7 @@ local function startBanner()
 					else ClientState.t("build_done_floor", { floor = floorName(stage) }),
 				Ui.colors.good
 			)
+			SoundController.play("construction_done")
 			task.delay(CELEBRATE_DELAY, MoveCelebration.celebrate, stage)
 		elseif event.kind == "speed" and event.skip ~= true then
 			toast(

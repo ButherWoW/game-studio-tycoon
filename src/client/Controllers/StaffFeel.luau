@@ -327,7 +327,7 @@ local function onFeel(event: any)
 				{ name = name, skill = skillName, from = from, to = to }
 			)
 		toast(title, changeLines(before, after, key), Ui.colors.money)
-		SoundController.play("unlock")
+		SoundController.play(if event.trained == true then "training_done" else "level_up")
 		if npc then
 			glow(npc, Ui.colors.money)
 			floatUp(npc, "+1 " .. StaffPower.icons[key], Ui.colors.money)

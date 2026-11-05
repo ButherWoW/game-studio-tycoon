@@ -558,6 +558,7 @@ render = function()
 		)
 		local share = if compact and id == tab then 3 else 1
 		b.Size = UDim2.new(share / shares, -6, 1, 0)
+		b:SetAttribute("SoundKey", "tab_switch")
 	end
 
 	local body = Instance.new("ScrollingFrame")

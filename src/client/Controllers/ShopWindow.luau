@@ -292,6 +292,7 @@ render = function()
 			end
 		)
 		b.Size = UDim2.new(1 / #TABS, -6, 1, 0)
+		b:SetAttribute("SoundKey", "tab_switch")
 	end
 
 	local body = Instance.new("ScrollingFrame")

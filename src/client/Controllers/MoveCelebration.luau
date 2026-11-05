@@ -96,6 +96,14 @@ local function celebrate(level: number)
 		confetti(gui)
 	end
 
+	-- Хлопушка конфетти (звук играет и при «Меньше эффектов»)
+	local popModule = script.Parent:FindFirstChild("SoundController")
+	if popModule and popModule:IsA("ModuleScript") then
+		pcall(function()
+			(require(popModule) :: any).play("confetti_pop")
+		end)
+	end
+
 	-- Звук переезда, если SoundController подключён (ID присылает Dev 1)
 	-- (переезд в офис — это покупка апгрейда office, его звук уже играет SoundController)
 	local soundModule = script.Parent:FindFirstChild("SoundController")
