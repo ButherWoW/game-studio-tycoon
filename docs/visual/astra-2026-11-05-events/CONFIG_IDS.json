@@ -1,0 +1,68 @@
+{
+  "source": "origin/main fe8c7a7",
+  "events": [
+    "angel",
+    "streamer",
+    "award",
+    "conference",
+    "grant",
+    "donations",
+    "luckybug",
+    "hype",
+    "crash",
+    "leak",
+    "flood",
+    "audit",
+    "outage",
+    "reviewbomb",
+    "burnout",
+    "lawsuit",
+    "poach",
+    "rush",
+    "sponsor",
+    "gamble",
+    "takeover",
+    "bankrupt"
+  ],
+  "rivals": [
+    {
+      "id": "tinfoilOwl",
+      "name": "Tinfoil Owl"
+    },
+    {
+      "id": "mangoComet",
+      "name": "Mango Comet"
+    },
+    {
+      "id": "quokkaPixel",
+      "name": "Quokka Pixel Works"
+    },
+    {
+      "id": "gloomberry",
+      "name": "Gloomberry"
+    },
+    {
+      "id": "brassfern",
+      "name": "Brassfern Interactive"
+    },
+    {
+      "id": "velvetAnvil",
+      "name": "Velvet Anvil"
+    },
+    {
+      "id": "nimbusTurtle",
+      "name": "Nimbus Turtle"
+    },
+    {
+      "id": "okraLantern",
+      "name": "Okra Lantern"
+    },
+    {
+      "id": "bluemoth",
+      "name": "Bluemoth Games"
+    }
+  ],
+  "actualEventCount": 22,
+  "actualRivalCount": 9,
+  "specMismatch": "VISUAL says20events/8rivals; actualconfig22events/9rivals"
+}

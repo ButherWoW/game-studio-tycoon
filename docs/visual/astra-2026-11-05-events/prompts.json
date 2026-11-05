@@ -1,0 +1,226 @@
+{
+  "tool": "built-in image_gen",
+  "additionalConstraintForAssetsAfterFirstBatch": "Every coin and document seal must use only a blank surface or a simple geometric star; no currency glyphs, letters or digits anywhere.",
+  "transparent_background": true,
+  "assets": [
+    {
+      "file": "cev_angel.png",
+      "folder": "events-1",
+      "id": "angel",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: An angel investor symbol: one chunky blue business briefcase with a large gold coin attached, two tiny white wings and a small gold halo. Friendly prosperous game event, no human character."
+    },
+    {
+      "file": "cev_streamer.png",
+      "folder": "events-1",
+      "id": "streamer",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A blue desktop monitor showing a simple cheerful cartoon face, topped with a compact webcam; a small gold broadcast sparkle beside it. Communicates a streamer covering the game."
+    },
+    {
+      "file": "cev_award.png",
+      "folder": "events-1",
+      "id": "award",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A shiny golden game-award trophy on a compact blue pedestal, with one large blue star inset in its cup. Proud and celebratory."
+    },
+    {
+      "file": "cev_conference.png",
+      "folder": "events-1",
+      "id": "conference",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A large blue conference microphone on a small gold podium with a simple blue presentation-card shape behind it, no writing. Communicates developer conference."
+    },
+    {
+      "file": "cev_grant.png",
+      "folder": "events-1",
+      "id": "grant",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A small blue civic building with three chunky columns and a large gold grant-document seal in front. No currency letters or numbers."
+    },
+    {
+      "file": "cev_donations.png",
+      "folder": "events-1",
+      "id": "donations",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A blue open gift box with a large pink heart above its opening and two chunky gold coins beside it. Warm fan donations."
+    },
+    {
+      "file": "cev_luckybug.png",
+      "folder": "events-1",
+      "id": "luckybug",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A cheerful rounded green cartoon software bug with six short legs, small blue wing covers and a large golden lucky star behind it. Cute, not a realistic insect."
+    },
+    {
+      "file": "cev_hype.png",
+      "folder": "events-1",
+      "id": "hype",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A chunky blue megaphone with a gold rim, emitting three large gold star shapes. Exciting positive press and growing popularity."
+    },
+    {
+      "file": "cev_crash.png",
+      "folder": "events-1",
+      "id": "crash",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A squat blue server tower tilted slightly, with a disconnected cable and a small coral jagged error spark beside it. Comical software crash, no violent explosion or danger."
+    },
+    {
+      "file": "cev_leak.png",
+      "folder": "events-1",
+      "id": "leak",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A blue code-document folder with a simple abstract circuit pictogram, and two small cyan drops escaping through an open corner, with a gold padlock hanging open. A software source leak, no letters."
+    },
+    {
+      "file": "cev_flood.png",
+      "folder": "events-1",
+      "id": "flood",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A chunky blue office computer standing in a shallow stylized cyan puddle, a gold rubber duck beside it. A small harmless office flood, funny, no disaster scene."
+    },
+    {
+      "file": "cev_audit.png",
+      "folder": "events-2",
+      "id": "audit",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A blue clipboard with abstract horizontal marks and a gold magnifying glass inspecting it; one gold coin at the corner. Friendly tax audit illustration, no written characters."
+    },
+    {
+      "file": "cev_outage.png",
+      "folder": "events-2",
+      "id": "outage",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: An unplugged chunky blue electric plug beside a dim gray light bulb, with one small gold zigzag spark between them. Power outage, simple and harmless."
+    },
+    {
+      "file": "cev_reviewbomb.png",
+      "folder": "events-2",
+      "id": "reviewbomb",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A blue game-review card containing three big star shapes, only the first gold and the other two gray, with one coral downward arrow. Negative review surge, no bombs or weapons."
+    },
+    {
+      "file": "cev_burnout.png",
+      "folder": "events-2",
+      "id": "burnout",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A cute tired game developer face with sleepy eyes leaning beside a blue laptop and an empty gold coffee cup. Comical mild fatigue, no distress or illness."
+    },
+    {
+      "file": "cev_lawsuit.png",
+      "folder": "events-2",
+      "id": "lawsuit",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: Chunky golden balance scales with a blue document folder at the base. A friendly business lawsuit symbol, no legal lettering."
+    },
+    {
+      "file": "cev_poach.png",
+      "folder": "events-2",
+      "id": "poach",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A small cheerful blue-shirt developer figure being gently attracted sideways by a golden horseshoe magnet holding a coin. Employee recruiting by a rival, playful, no force or danger."
+    },
+    {
+      "file": "cev_rush.png",
+      "folder": "events-2",
+      "id": "rush",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A chunky blue clock with gold hands and two large gold fast-forward chevrons beside it. A rushed development deadline, no written numbers on the clock."
+    },
+    {
+      "file": "cev_sponsor.png",
+      "folder": "events-2",
+      "id": "sponsor",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: Two friendly chunky cartoon hands shaking, one blue sleeve and one purple sleeve, with a single gold coin floating above. Sponsor partnership, clean simple silhouette."
+    },
+    {
+      "file": "cev_gamble.png",
+      "folder": "events-2",
+      "id": "gamble",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: One rounded blue investment dice with gold dot pips beside two large gold coins and a small blue upward-or-downward fork arrow. A playful uncertain business investment, no casino setting."
+    },
+    {
+      "file": "cev_takeover.png",
+      "folder": "events-2",
+      "id": "takeover",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A compact blue studio building held gently between two oversized gold cartoon hands approaching from either side, with a small blue office flag on its roof. Corporate takeover, child-friendly and nonthreatening."
+    },
+    {
+      "file": "cev_bankrupt.png",
+      "folder": "events-2",
+      "id": "bankrupt",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A squat blue bank building with an open, nearly empty gold coin purse in front and a small gray coin falling out. A bank failure business event, humorous, intact building, no destruction."
+    },
+    {
+      "file": "rival_tinfoilOwl.png",
+      "folder": "rivals",
+      "id": "tinfoilOwl",
+      "name": "Tinfoil Owl",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: Create only an original symbol for an invented rival studio; do not render its name. An original friendly owl mascot emblem made of folded silver-blue foil shapes, two large blue eyes, tiny gold beak and symmetric gold wing tips. Invent a unique simple silhouette."
+    },
+    {
+      "file": "rival_mangoComet.png",
+      "folder": "rivals",
+      "id": "mangoComet",
+      "name": "Mango Comet",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: Create only an original symbol for an invented rival studio; do not render its name. An original ripe golden-orange mango comet with a single green leaf and a sweeping chunky blue comet trail. One bold compact emblem, no literal stars field."
+    },
+    {
+      "file": "rival_quokkaPixel.png",
+      "folder": "rivals",
+      "id": "quokkaPixel",
+      "name": "Quokka Pixel Works",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: Create only an original symbol for an invented rival studio; do not render its name. An original cheerful quokka face mascot, warm brown with rounded ears, happy simple smile and three small blue-and-gold pixel blocks forming one cheek edge. Unique animal face, not a known character."
+    },
+    {
+      "file": "rival_gloomberry.png",
+      "folder": "rivals",
+      "id": "gloomberry",
+      "name": "Gloomberry",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: Create only an original symbol for an invented rival studio; do not render its name. An original cute deep-purple berry cluster mascot, three large berries with calm crescent eyes, blue leaves and one tiny golden sparkle. Whimsical and gentle, not spooky."
+    },
+    {
+      "file": "rival_brassfern.png",
+      "folder": "rivals",
+      "id": "brassfern",
+      "name": "Brassfern Interactive",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: Create only an original symbol for an invented rival studio; do not render its name. An original brass-gold fern emblem: one bold curved stem with three pairs of thick stylized leaflets, a small blue diamond at the base. Compact strong silhouette."
+    },
+    {
+      "file": "rival_velvetAnvil.png",
+      "folder": "rivals",
+      "id": "velvetAnvil",
+      "name": "Velvet Anvil",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: Create only an original symbol for an invented rival studio; do not render its name. An original chunky purple velvet-colored anvil with a broad blue top and a compact golden crafting hammer resting diagonally above it. Friendly studio emblem, no weapons."
+    },
+    {
+      "file": "rival_nimbusTurtle.png",
+      "folder": "rivals",
+      "id": "nimbusTurtle",
+      "name": "Nimbus Turtle",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: Create only an original symbol for an invented rival studio; do not render its name. An original cheerful blue turtle mascot with a big soft white cloud-shaped shell and gold shell accent, four tiny rounded flippers. Compact emblem, no scenery."
+    },
+    {
+      "file": "rival_okraLantern.png",
+      "folder": "rivals",
+      "id": "okraLantern",
+      "name": "Okra Lantern",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: Create only an original symbol for an invented rival studio; do not render its name. An original green okra-pod-shaped lantern emblem, chunky ribbed green body with warm gold glowing center and a blue hanging loop. Invented playful silhouette, no letters or cultural symbols."
+    },
+    {
+      "file": "rival_bluemoth.png",
+      "folder": "rivals",
+      "id": "bluemoth",
+      "name": "Bluemoth Games",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: Create only an original symbol for an invented rival studio; do not render its name. An original symmetric vivid blue moth emblem, four broad rounded wings with cyan inner panels and a gold central body, two short antennae. Clearly a gentle moth, unique simple silhouette."
+    },
+    {
+      "file": "bailiff_icon.png",
+      "folder": "contracts-bailiff",
+      "id": "bailiff_icon",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A chunky golden judge's gavel resting diagonally across a blue document folder with a plain gold clasp. Friendly comic business bailiff icon, no scary official or lettering."
+    },
+    {
+      "file": "icon_contract.png",
+      "folder": "contracts-bailiff",
+      "id": "icon_contract",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A chunky cream parchment contract scroll rolled at both ends with a large golden seal attached by a blue ribbon. No writing or lettering, only two short abstract blue horizontal strokes."
+    },
+    {
+      "file": "icon_publisher.png",
+      "folder": "contracts-bailiff",
+      "id": "icon_publisher",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: A compact blue publishing-company skyscraper with three stepped towers, big gold window panels and a simple gold open-book emblem on the facade. One building, no skyline or writing."
+    },
+    {
+      "file": "icon_franchise.png",
+      "folder": "contracts-bailiff",
+      "id": "icon_franchise",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 256x256 Roblox game UI illustration. Polished chunky cartoon sticker style matching a blue-and-gold game menu icon set. Thick smooth outline #1E1E2E, rounded beveled shapes, restrained glossy edge highlights, large simple silhouettes readable at 48x48. Primary colors #3D7BFF and #FFC93C, limited subject-specific accent colors. Center the single compact composition in a square canvas, occupy about84%, leave clear safe margin. Genuine transparent background and clear alpha around the subject. No surrounding panel, border, ground, scenery, drop shadow, lettering, words, brands, logos, watermarks or realistic textures. Primary request: Three chunky blue game boxes stacked in a fan, all sharing the same large gold star emblem on the cover to indicate one game series. No text or brands."
+    }
+  ]
+}
