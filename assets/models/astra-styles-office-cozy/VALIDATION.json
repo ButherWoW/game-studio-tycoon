@@ -1,0 +1,319 @@
+{
+  "sourceCommit": "fe8c7a7300ae885931254c375bb6a652a4151a37",
+  "zone": "office",
+  "style": "Cozy",
+  "studioTested": false,
+  "models": {
+    "OfficeDesk_Cozy": {
+      "classicParts": 187,
+      "variantParts": 188,
+      "addedParts": 1,
+      "classicDimensionsXYZ": [
+        6.0,
+        4.8,
+        3.83
+      ],
+      "variantDimensionsXYZ": [
+        6.0,
+        4.87,
+        3.83
+      ],
+      "functionalParts": 23,
+      "preservedArtSemanticParts": 47,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 185,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 0,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "CozyBezelTopCap"
+      ],
+      "checks": "PASS"
+    },
+    "Cooler_Cozy": {
+      "classicParts": 49,
+      "variantParts": 53,
+      "addedParts": 4,
+      "classicDimensionsXYZ": [
+        1.92,
+        3.65,
+        1.86
+      ],
+      "variantDimensionsXYZ": [
+        1.92,
+        3.65,
+        1.86
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 2,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 192,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 6,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "CozyPaddedBinding",
+        "CozyStitchedSeam",
+        "CozySoftEnd",
+        "CozySoftEnd"
+      ],
+      "checks": "PASS"
+    },
+    "MeetingRoom_Cozy": {
+      "classicParts": 82,
+      "variantParts": 86,
+      "addedParts": 4,
+      "classicDimensionsXYZ": [
+        14.0,
+        7.0,
+        9.96
+      ],
+      "variantDimensionsXYZ": [
+        14.0,
+        7.0,
+        9.96
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 6,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 308,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 6,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "CozyPaddedBinding",
+        "CozyStitchedSeam",
+        "CozySoftEnd",
+        "CozySoftEnd"
+      ],
+      "checks": "PASS"
+    },
+    "FloorDesk_Cozy": {
+      "classicParts": 192,
+      "variantParts": 193,
+      "addedParts": 1,
+      "classicDimensionsXYZ": [
+        5.0,
+        4.8,
+        3.83
+      ],
+      "variantDimensionsXYZ": [
+        5.0,
+        4.87,
+        3.83
+      ],
+      "functionalParts": 23,
+      "preservedArtSemanticParts": 47,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 190,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 0,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "CozyBezelTopCap"
+      ],
+      "checks": "PASS"
+    },
+    "ServerRoom_Cozy": {
+      "classicParts": 172,
+      "variantParts": 176,
+      "addedParts": 4,
+      "classicDimensionsXYZ": [
+        10.0,
+        7.8,
+        4.0
+      ],
+      "variantDimensionsXYZ": [
+        10.0,
+        7.8,
+        4.0
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 36,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 684,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 6,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "CozyPaddedBinding",
+        "CozyStitchedSeam",
+        "CozySoftEnd",
+        "CozySoftEnd"
+      ],
+      "checks": "PASS"
+    },
+    "Lounge_Cozy": {
+      "classicParts": 158,
+      "variantParts": 159,
+      "addedParts": 1,
+      "classicDimensionsXYZ": [
+        8.0,
+        4.37,
+        8.875
+      ],
+      "variantDimensionsXYZ": [
+        8.0,
+        4.37,
+        8.9205
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 12,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 157,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 0,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "CozyExteriorBinding"
+      ],
+      "checks": "PASS"
+    },
+    "SkyDesk_Cozy": {
+      "classicParts": 70,
+      "variantParts": 71,
+      "addedParts": 1,
+      "classicDimensionsXYZ": [
+        4.0,
+        4.775,
+        3.575
+      ],
+      "variantDimensionsXYZ": [
+        4.0,
+        4.845,
+        3.575
+      ],
+      "functionalParts": 1,
+      "preservedArtSemanticParts": 37,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 70,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 0,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "CozyBezelTopCap"
+      ],
+      "checks": "PASS"
+    },
+    "SoundStudio_Cozy": {
+      "classicParts": 91,
+      "variantParts": 95,
+      "addedParts": 4,
+      "classicDimensionsXYZ": [
+        10.8,
+        7.2,
+        8.6
+      ],
+      "variantDimensionsXYZ": [
+        10.8,
+        7.2,
+        8.6
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 18,
+      "nativeLights": 1,
+      "newBaseSAT": {
+        "pairs": 364,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 6,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "CozyPaddedBinding",
+        "CozyStitchedSeam",
+        "CozySoftEnd",
+        "CozySoftEnd"
+      ],
+      "checks": "PASS"
+    },
+    "ArtWall_Cozy": {
+      "classicParts": 28,
+      "variantParts": 31,
+      "addedParts": 3,
+      "classicDimensionsXYZ": [
+        13.5,
+        7.8,
+        0.9
+      ],
+      "variantDimensionsXYZ": [
+        13.5,
+        7.8,
+        0.9
+      ],
+      "functionalParts": 0,
+      "preservedArtSemanticParts": 18,
+      "nativeLights": 0,
+      "newBaseSAT": {
+        "pairs": 84,
+        "overlaps": 0
+      },
+      "newNewSAT": {
+        "pairs": 3,
+        "overlaps": 0
+      },
+      "satToleranceStuds": 0.0001,
+      "newPartNames": [
+        "CozyBezelTopCap",
+        "CozyBezelTopCap",
+        "CozyBezelTopCap"
+      ],
+      "checks": "PASS"
+    }
+  },
+  "checks": [
+    "all original Part class/name/CFrame/size unchanged",
+    "native Seat and BlueSeat*/SeatCushion preserved",
+    "all original PivotOffsets/PrimaryPart preserved",
+    "same shelf-board positions",
+    "all original artwork/screen/semantic colors and materials preserved",
+    "same monitor/table-top heights",
+    "AABB dimension delta<=.2",
+    "same lowerY",
+    "Part count<=classic+20%",
+    "physical design additions present on every model",
+    "new/base oriented-bounds SAT zero intersections",
+    "new/new oriented-bounds SAT zero intersections",
+    "no scripts/mesh/texture",
+    "native light count unchanged;Shadows=false",
+    "unique referents",
+    "Rojo binary builds"
+  ]
+}
