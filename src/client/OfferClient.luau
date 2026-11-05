@@ -138,6 +138,22 @@ function OfferClient.sessionSeconds(): number
 	return os.clock() - sessionStart
 end
 
+-- Внешние «сейчас нельзя» (PopupQueue: ждут окна входа — сначала они, потом предложения).
+-- Регистрируют сами модули, чтобы OfferClient не требовал их (PopupQueue требует OfferClient)
+local blockers: { () -> boolean } = {}
+
+function OfferClient.addBlocker(blocked: () -> boolean)
+	table.insert(blockers, blocked)
+end
+
+-- Новичок: туториал, ещё нет гаража или первые Offers.popup.newPlayerSeconds — никакого доната
+-- ни во всплывашках, ни в окне релиза, ни у строки прогресса (стартовый набор — после гаража)
+function OfferClient.newbieQuiet(): boolean
+	return player:GetAttribute("TutorialActive") == true
+		or player:GetAttribute("OwnsGarage") ~= true
+		or newPlayerLeft() > 0
+end
+
 -- Можно ли сейчас показать всплывающее предложение этого вида
 function OfferClient.canPopup(kind: string): boolean
 	local cfg = Offers.popup
@@ -146,6 +162,15 @@ function OfferClient.canPopup(kind: string): boolean
 	end
 	if Ui.anyWindowOpen() or player:GetAttribute("TutorialActive") == true then
 		return false
+	end
+	-- Без гаража (парк) — ни одного предложения, даже стартового набора
+	if player:GetAttribute("OwnsGarage") ~= true then
+		return false
+	end
+	for _, blocked in blockers do
+		if blocked() then
+			return false
+		end
 	end
 	local now = os.clock()
 	if popupCount >= cfg.maxPerSession or now - lastPopup < cfg.cooldownSeconds then
@@ -404,6 +429,9 @@ end
 -- nil — сейчас ничего не предлагаем. Вызывать один раз на релиз (считает релизы)
 function OfferClient.releaseOffer(info: any): ((parent: Instance, order: number) -> ())?
 	releaseCount += 1
+	if OfferClient.newbieQuiet() then
+		return nil
+	end
 	local score = num(info.score, 0)
 	local revenue = num(info.revenue, 0)
 	if revenue <= 0 then
@@ -505,7 +533,7 @@ function OfferClient.longDevOffer(remaining: number?): boolean
 		and OfferClient.hasId(product.productId)
 		and type(remaining) == "number"
 		and remaining > Offers.longDev.minRemainingSeconds
-		and player:GetAttribute("TutorialActive") ~= true
+		and not OfferClient.newbieQuiet()
 end
 
 function OfferClient.longDevText(): string

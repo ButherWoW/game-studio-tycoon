@@ -45,6 +45,8 @@ function TrendBanner.start()
 	padding.PaddingTop = UDim.new(0, 3)
 	padding.PaddingBottom = UDim.new(0, 3)
 	padding.Parent = banner
+	-- Новичку — с гаража (Config/Unlocks.trends)
+	Ui.gate(banner, "trends")
 
 	-- Держатели иконок за пределами отступа текста: пустые и прозрачные, пока картинок нет
 	local function iconHolder(name: string, x: number): Frame

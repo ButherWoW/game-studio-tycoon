@@ -10,6 +10,7 @@ local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local Images = require(ReplicatedStorage.Shared.Config.Images)
+local FeatureGate = require(script.Parent.FeatureGate)
 
 -- Плашка и итоги — в общем стеке под HUD (Ui.bannerStack): тренд 1, выставка 2, итоги 3.
 -- Размеры небольшие: стек не должен закрывать студию (отчёт #2, п. 14)
@@ -88,9 +89,13 @@ function ExpoBanner.start()
 	banner.BackgroundColor3 = Ui.colors.panel
 	banner.TextXAlignment = Enum.TextXAlignment.Center
 	Ui.corner(banner, 10)
+	-- Выставка новичку — с офиса (Config/Unlocks.expo)
+	Ui.gate(banner, "expo")
 
 	ExpoRemotes.ExpoResult.OnClientEvent:Connect(function(result)
-		showResult(stack, result)
+		if FeatureGate.isOpen("expo") then
+			showResult(stack, result)
+		end
 	end)
 
 	task.spawn(function()

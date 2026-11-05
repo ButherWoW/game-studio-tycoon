@@ -24,6 +24,7 @@ local Posters = require(Shared.Config.Posters)
 local Mascots = require(Shared.Config.Mascots)
 local FriendRemotes = require(Shared.FriendRemotes)
 local DataService = require(script.Parent.DataService)
+local FeatureUnlockService = require(script.Parent.FeatureUnlockService)
 local SkinService = require(script.Parent.SkinService)
 local PosterService = require(script.Parent.PosterService)
 local MascotService = require(script.Parent.MascotService)
@@ -207,6 +208,9 @@ local function blocker(player: Player): string?
 		return "tradeUnavailable"
 	elseif trades[player] then
 		return "tradeBusy"
+	elseif not FeatureUnlockService.isOpen(player, "trade") then
+		-- Обмен открывается со 2-го этажа (Config/Unlocks): новичку запросы не приходят
+		return "tradeUnavailable"
 	elseif profile.cash < 0 then
 		return "tradeDebt"
 	elseif (cooldownUntil[player] or 0) > os.clock() then

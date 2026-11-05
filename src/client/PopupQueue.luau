@@ -67,6 +67,10 @@ local function run()
 	running = false
 end
 
+-- Предложения доната ждут, пока очередь окон входа (награда, офлайн-доход…) не опустеет:
+-- стартовый набор не выскакивает между наградой за вход и «Пока тебя не было»
+OfferClient.addBlocker(PopupQueue.pending)
+
 -- Поставить окно в очередь; окно с тем же key заменяется (не показываем дважды)
 function PopupQueue.push(key: string, show: () -> ())
 	PopupQueue.remove(key)

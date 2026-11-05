@@ -18,6 +18,7 @@ local ClientState = require(script.Parent.Parent.ClientState)
 local DepthToast = require(script.Parent.Parent.DepthToast)
 local GotwPanel = require(script.Parent.Parent.GotwPanel)
 local Ui = require(script.Parent.Parent.Ui)
+local FeatureGate = require(script.Parent.FeatureGate)
 
 local MENU_SLOT = 17
 local ROW_HEIGHT = 40
@@ -230,6 +231,8 @@ local function buildHitBanner()
 	padding.PaddingTop = UDim.new(0, 3)
 	padding.PaddingBottom = UDim.new(0, 3)
 	padding.Parent = banner
+	-- Вместе с кнопкой 📊 — со 2-го этажа (Config/Unlocks.rivals)
+	Ui.gate(banner, "rivals")
 
 	-- Логотип студии слева (Images.rivals); меняется вместе с хитом
 	local art: ImageLabel? = nil
@@ -305,7 +308,8 @@ function RivalWindow.start()
 		end
 	end)
 	DepthRemotes.RivalNotice.OnClientEvent:Connect(function(info: any)
-		if type(info) ~= "table" then
+		-- Топ индустрии ещё закрыт (Config/Unlocks.rivals) — тосты о конкурентах новичку ни о чём
+		if type(info) ~= "table" or not FeatureGate.isOpen("rivals") then
 			return
 		end
 		-- Есть логотип — эмодзи из текста убираем, логотип рисует тост слева

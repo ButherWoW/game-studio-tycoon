@@ -19,6 +19,7 @@ local Images = require(Shared.Config.Images)
 local SafeRemotes = require(Shared.SafeRemotes)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local FeatureGate = require(script.Parent.FeatureGate)
 local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local DepthToast = require(script.Parent.Parent.DepthToast)
 
@@ -378,6 +379,10 @@ local function onNotice(info: any)
 	end
 	if info.kind == "new" then
 		claimed = false
+		-- Новичку в парке баннер сейфа не показываем (Config/Unlocks.safe): сейф виден в мире и так
+		if not FeatureGate.isOpen("safe") then
+			return
+		end
 		DepthToast.show(ClientState.t("safe_banner"), Ui.colors.money, Images.safe.icon)
 	elseif info.kind == "admin" and type(info.text) == "string" then
 		adminMessage(info.text)
