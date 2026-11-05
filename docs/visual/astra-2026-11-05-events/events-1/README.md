@@ -7,3 +7,5 @@ Filenames correspond to the actual origin/main config IDs. CONFIG_IDS.json recor
 Upload PNGs to Roblox and connect the resulting IDs in the existing UI. No gameplay code or Git state changed. Validate small-screen readability and moderation/upload results in Studio before release.
 
 The contracts-bailiff batch additionally includes original585×559 shirt/pants SVG artwork and PNGs using the accepted classic-clothing UV system. Clothing is authored deterministically because exact UV geometry matters; its raster icons use image_gen like every other V19 icon.
+
+Standalone validation from the package root: `python3 source/validate_assets.py --batch events-1`.
