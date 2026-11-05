@@ -1,0 +1,272 @@
+[
+  {
+    "file": "genre_action.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "alphaAbove8BBox": [
+      24,
+      12,
+      104,
+      116
+    ],
+    "alphaBBox": [
+      22,
+      10,
+      106,
+      118
+    ],
+    "sha256": "fe9aa308973bbea494c011e2b15518913b0d52bac2baecc69b70c5fd0b07f5d1",
+    "visualReview": "PASS: inspected128px and40px on light/dark backgrounds; clear genre silhouette, no text, no cropping",
+    "resize": "Pillow RGBA LANCZOS from native square; source alpha preserved",
+    "alphaNote": "Bounding-box margin test uses alpha>8 to ignore nearly invisible generator residue; raw alpha bbox also reported"
+  },
+  {
+    "file": "genre_adventure.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "alphaAbove8BBox": [
+      19,
+      8,
+      108,
+      123
+    ],
+    "alphaBBox": [
+      17,
+      6,
+      110,
+      125
+    ],
+    "sha256": "a73c485943685ca77a76f1005f4b74f6bf39090ae61776df89ac72d9fca5d5ee",
+    "visualReview": "PASS: inspected128px and40px on light/dark backgrounds; clear genre silhouette, no text, no cropping",
+    "resize": "Pillow RGBA LANCZOS from native square; source alpha preserved",
+    "alphaNote": "Bounding-box margin test uses alpha>8 to ignore nearly invisible generator residue; raw alpha bbox also reported"
+  },
+  {
+    "file": "genre_casual.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "alphaAbove8BBox": [
+      5,
+      35,
+      122,
+      100
+    ],
+    "alphaBBox": [
+      3,
+      33,
+      124,
+      102
+    ],
+    "sha256": "446e938e1f0f6501861247aa81bc7d7368f988bb12e215f8b4b37efed88334a1",
+    "visualReview": "PASS: inspected128px and40px on light/dark backgrounds; clear genre silhouette, no text, no cropping",
+    "resize": "Pillow RGBA LANCZOS from native square; source alpha preserved",
+    "alphaNote": "Bounding-box margin test uses alpha>8 to ignore nearly invisible generator residue; raw alpha bbox also reported"
+  },
+  {
+    "file": "genre_rpg.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "alphaAbove8BBox": [
+      13,
+      15,
+      115,
+      118
+    ],
+    "alphaBBox": [
+      11,
+      13,
+      117,
+      120
+    ],
+    "sha256": "5ecca2d9a8a5271bc2b0c68c14c93cd08e88ec57cea153c114a018365b5d0bc7",
+    "visualReview": "PASS: inspected128px and40px on light/dark backgrounds; clear genre silhouette, no text, no cropping",
+    "resize": "Pillow RGBA LANCZOS from native square; source alpha preserved",
+    "alphaNote": "Bounding-box margin test uses alpha>8 to ignore nearly invisible generator residue; raw alpha bbox also reported"
+  },
+  {
+    "file": "genre_simulation.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "alphaAbove8BBox": [
+      9,
+      9,
+      119,
+      121
+    ],
+    "alphaBBox": [
+      7,
+      7,
+      121,
+      123
+    ],
+    "sha256": "33d70005717c24f719dabd86df0e24362f13a7b36cfd3f10276fa56fb9fa3bb4",
+    "visualReview": "PASS: inspected128px and40px on light/dark backgrounds; clear genre silhouette, no text, no cropping",
+    "resize": "Pillow RGBA LANCZOS from native square; source alpha preserved",
+    "alphaNote": "Bounding-box margin test uses alpha>8 to ignore nearly invisible generator residue; raw alpha bbox also reported"
+  },
+  {
+    "file": "genre_puzzle.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "alphaAbove8BBox": [
+      11,
+      11,
+      121,
+      119
+    ],
+    "alphaBBox": [
+      9,
+      9,
+      123,
+      121
+    ],
+    "sha256": "d54f41f3382be817a3bfc6b24bcc747e1fd3b95a11917ece9c957d73173a768f",
+    "visualReview": "PASS: inspected128px and40px on light/dark backgrounds; clear genre silhouette, no text, no cropping",
+    "resize": "Pillow RGBA LANCZOS from native square; source alpha preserved",
+    "alphaNote": "Bounding-box margin test uses alpha>8 to ignore nearly invisible generator residue; raw alpha bbox also reported"
+  },
+  {
+    "file": "genre_racing.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "alphaAbove8BBox": [
+      9,
+      17,
+      117,
+      114
+    ],
+    "alphaBBox": [
+      4,
+      15,
+      121,
+      116
+    ],
+    "sha256": "1a61605f8ea415de9ad58b9cc025c609fb3cc3aa03d6a1c9c0b2886922a33c57",
+    "visualReview": "PASS: inspected128px and40px on light/dark backgrounds; clear genre silhouette, no text, no cropping",
+    "resize": "Pillow RGBA LANCZOS from native square; source alpha preserved",
+    "alphaNote": "Bounding-box margin test uses alpha>8 to ignore nearly invisible generator residue; raw alpha bbox also reported"
+  },
+  {
+    "file": "genre_strategy.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "alphaAbove8BBox": [
+      21,
+      12,
+      105,
+      117
+    ],
+    "alphaBBox": [
+      19,
+      10,
+      119,
+      119
+    ],
+    "sha256": "e1919658dce93c8f68f96e93ed55e84b8a0d3df40c3a4caf7b878128607c1b45",
+    "visualReview": "PASS: inspected128px and40px on light/dark backgrounds; clear genre silhouette, no text, no cropping",
+    "resize": "Pillow RGBA LANCZOS from native square; source alpha preserved",
+    "alphaNote": "Bounding-box margin test uses alpha>8 to ignore nearly invisible generator residue; raw alpha bbox also reported"
+  },
+  {
+    "file": "genre_sports.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "alphaAbove8BBox": [
+      16,
+      19,
+      110,
+      115
+    ],
+    "alphaBBox": [
+      14,
+      16,
+      113,
+      117
+    ],
+    "sha256": "03c906cfc43eb08b2515009ebcb645f1d53b291b54503aa20734a7c216688a1f",
+    "visualReview": "PASS: inspected128px and40px on light/dark backgrounds; clear genre silhouette, no text, no cropping",
+    "resize": "Pillow RGBA LANCZOS from native square; source alpha preserved",
+    "alphaNote": "Bounding-box margin test uses alpha>8 to ignore nearly invisible generator residue; raw alpha bbox also reported"
+  },
+  {
+    "file": "genre_horror.png",
+    "size": [
+      128,
+      128
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "alphaAbove8BBox": [
+      15,
+      17,
+      112,
+      115
+    ],
+    "alphaBBox": [
+      3,
+      7,
+      127,
+      128
+    ],
+    "sha256": "30335d99a8602fc4b81e697014cdfd0db7d384f4a81226af81790c6f31145b03",
+    "visualReview": "PASS: inspected128px and40px on light/dark backgrounds; clear genre silhouette, no text, no cropping",
+    "resize": "Pillow RGBA LANCZOS from native square; source alpha preserved",
+    "alphaNote": "Bounding-box margin test uses alpha>8 to ignore nearly invisible generator residue; raw alpha bbox also reported"
+  }
+]

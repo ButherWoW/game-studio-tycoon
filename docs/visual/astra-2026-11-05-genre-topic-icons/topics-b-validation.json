@@ -1,0 +1,194 @@
+{
+  "expected": 8,
+  "ready": 8,
+  "assets": [
+    {
+      "file": "topic_ninja.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        0,
+        15,
+        119,
+        117
+      ],
+      "sha256": "112b38d69f54b46d65fa64d93ccb056ecbb16419fd80b62b03059d7a1f8093d0",
+      "visualQA": "PASS: centered complete silhouette, transparent perimeter, no text, child friendly, readable at40px",
+      "sourceSize": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "file": "topic_robots.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        9,
+        7,
+        119,
+        128
+      ],
+      "sha256": "6eb4a0139d433600b669d1e133615450b8a399790866f16ff7966d2b4104d7b6",
+      "visualQA": "PASS: centered complete silhouette, transparent perimeter, no text, child friendly, readable at40px",
+      "sourceSize": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "file": "topic_football.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        7,
+        15,
+        121,
+        128
+      ],
+      "sha256": "c911c7e9143c6251b9f76328b7725920ae9c2926539c2635ef2bf1404bc4f3e9",
+      "visualQA": "PASS: centered complete silhouette, transparent perimeter, no text, child friendly, readable at40px",
+      "sourceSize": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "file": "topic_superheroes.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        8,
+        20,
+        121,
+        117
+      ],
+      "sha256": "8dce5c49b9621252d98adbd1ea4938c18170bd69dc3b91c3a3b0e98ca2c98dbd",
+      "visualQA": "PASS: centered complete silhouette, transparent perimeter, no text, child friendly, readable at40px",
+      "sourceSize": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "file": "topic_detective.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        8,
+        10,
+        120,
+        122
+      ],
+      "sha256": "daa5802dcd12310f6477ad0ba6842fbc522116435ed3df2302336c7c7a3bd9f6",
+      "visualQA": "PASS: centered complete silhouette, transparent perimeter, no text, child friendly, readable at40px",
+      "sourceSize": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "file": "topic_ghosts.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        0,
+        22,
+        119,
+        110
+      ],
+      "sha256": "37b678e5259963a774cdcd7d3d2482dbcfae30fca94636600bb01af0d93d6b5a",
+      "visualQA": "PASS: centered complete silhouette, transparent perimeter, no text, child friendly, readable at40px",
+      "sourceSize": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "file": "topic_pumpkins.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        0,
+        11,
+        119,
+        124
+      ],
+      "sha256": "c8b7e08dae702931c5078a0bea8fea35962f00ad882aa9a89109fccef2c4f2f2",
+      "visualQA": "PASS: centered complete silhouette, transparent perimeter, no text, child friendly, readable at40px",
+      "sourceSize": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "file": "topic_newyear.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        6,
+        12,
+        115,
+        120
+      ],
+      "sha256": "f2c7a9e08dee50f87b3b26b0e547d72729cd5ab4f6442fc5109b0b007ac84785",
+      "visualQA": "PASS: centered complete silhouette, transparent perimeter, no text, child friendly, readable at40px",
+      "sourceSize": [
+        1254,
+        1254
+      ]
+    }
+  ],
+  "visualQA": "PASS",
+  "generation": "Built-in ImageGen, one call per icon, transparent_background=true",
+  "resampling": "sips downsample to128x128, preserve generated alpha",
+  "phoneQA": "Contact sheet reviewed at40x40; all eight recognizable"
+}

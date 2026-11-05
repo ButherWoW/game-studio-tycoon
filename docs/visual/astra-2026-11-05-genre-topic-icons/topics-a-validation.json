@@ -1,0 +1,233 @@
+{
+  "expected": 9,
+  "ready": 9,
+  "method": "Built-in ImageGen native transparent output; sips downsample preserving alpha; Pillow QA",
+  "assets": [
+    {
+      "filename": "topic_space.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        0,
+        17,
+        114,
+        128
+      ],
+      "sha256": "37a27df2ecab89f40e5b29200ad50955cc94aa85970d305cde02afcfb90f4a7f",
+      "visualReview": "PASS: complete silhouette, clear at40px on light and dark; no text/branding/background; child friendly",
+      "meaningfulAlphaBBoxThreshold8": [
+        17,
+        18,
+        114,
+        113
+      ]
+    },
+    {
+      "filename": "topic_fantasy.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        9,
+        15,
+        115,
+        128
+      ],
+      "sha256": "38440a09c6fbf131451436d239b011e5d597aedaa105bc57285cb5a0edbe6039",
+      "visualReview": "PASS: complete silhouette, clear at40px on light and dark; no text/branding/background; child friendly",
+      "meaningfulAlphaBBoxThreshold8": [
+        9,
+        15,
+        115,
+        113
+      ]
+    },
+    {
+      "filename": "topic_zombies.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        11,
+        11,
+        117,
+        123
+      ],
+      "sha256": "c08f62277b57f3812e44d152cb861be889816cee6b37ab0d5e44272a0e54646d",
+      "visualReview": "PASS: complete silhouette, clear at40px on light and dark; no text/branding/background; child friendly",
+      "meaningfulAlphaBBoxThreshold8": [
+        11,
+        11,
+        117,
+        123
+      ]
+    },
+    {
+      "filename": "topic_pets.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        2,
+        15,
+        124,
+        128
+      ],
+      "sha256": "a705bed8f5ae81248d2f8c288357414a67779072e9dd0c7310d5d93953457c8c",
+      "visualReview": "PASS: complete silhouette, clear at40px on light and dark; no text/branding/background; child friendly",
+      "meaningfulAlphaBBoxThreshold8": [
+        2,
+        15,
+        124,
+        117
+      ]
+    },
+    {
+      "filename": "topic_cars.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        7,
+        23,
+        121,
+        119
+      ],
+      "sha256": "68b70357c6248eecffbf06d54bae88954958cd24f012920e001a7d81d175e2c5",
+      "visualReview": "PASS: complete silhouette, clear at40px on light and dark; no text/branding/background; child friendly",
+      "meaningfulAlphaBBoxThreshold8": [
+        7,
+        23,
+        121,
+        119
+      ]
+    },
+    {
+      "filename": "topic_cooking.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        0,
+        12,
+        113,
+        121
+      ],
+      "sha256": "d205f33ee715b7daad7f730e532f6b244a8648b1bed60dfdc0c6c1754bd3af3e",
+      "visualReview": "PASS: complete silhouette, clear at40px on light and dark; no text/branding/background; child friendly",
+      "meaningfulAlphaBBoxThreshold8": [
+        12,
+        12,
+        113,
+        121
+      ]
+    },
+    {
+      "filename": "topic_pirates.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        4,
+        24,
+        124,
+        106
+      ],
+      "sha256": "4b1049225efeb034d06970ef96850e2aad85838d0e307b8c696031f06e0552ed",
+      "visualReview": "PASS: complete silhouette, clear at40px on light and dark; no text/branding/background; child friendly",
+      "meaningfulAlphaBBoxThreshold8": [
+        4,
+        24,
+        124,
+        106
+      ]
+    },
+    {
+      "filename": "topic_business.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        0,
+        17,
+        112,
+        128
+      ],
+      "sha256": "0c7166210868c5fcb64a836a26f77c59f447312a84396b8d436baedd4a15eedb",
+      "visualReview": "PASS: complete silhouette, clear at40px on light and dark; no text/branding/background; child friendly",
+      "meaningfulAlphaBBoxThreshold8": [
+        14,
+        18,
+        112,
+        117
+      ]
+    },
+    {
+      "filename": "topic_school.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        10,
+        14,
+        116,
+        128
+      ],
+      "sha256": "6243e96ced2dbaa1b79d105f73e09e9cd9c2d6d0761eec23ad7c8fb2ede5f3b6",
+      "visualReview": "PASS: complete silhouette, clear at40px on light and dark; no text/branding/background; child friendly",
+      "meaningfulAlphaBBoxThreshold8": [
+        10,
+        14,
+        116,
+        117
+      ]
+    }
+  ],
+  "visualReview": "PASS"
+}

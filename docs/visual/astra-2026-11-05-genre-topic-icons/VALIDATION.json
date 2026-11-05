@@ -1,0 +1,716 @@
+{
+  "expected": 27,
+  "ready": 27,
+  "runtimeTested": false,
+  "assets": [
+    {
+      "file": "genre_action.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        22,
+        10,
+        106,
+        118
+      ],
+      "transparentCorners": true,
+      "sha256": "fe9aa308973bbea494c011e2b15518913b0d52bac2baecc69b70c5fd0b07f5d1",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        24,
+        12,
+        104,
+        116
+      ]
+    },
+    {
+      "file": "genre_adventure.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        17,
+        6,
+        110,
+        125
+      ],
+      "transparentCorners": true,
+      "sha256": "a73c485943685ca77a76f1005f4b74f6bf39090ae61776df89ac72d9fca5d5ee",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        19,
+        8,
+        108,
+        123
+      ]
+    },
+    {
+      "file": "genre_casual.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        3,
+        33,
+        124,
+        102
+      ],
+      "transparentCorners": true,
+      "sha256": "446e938e1f0f6501861247aa81bc7d7368f988bb12e215f8b4b37efed88334a1",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        5,
+        35,
+        122,
+        100
+      ]
+    },
+    {
+      "file": "genre_rpg.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        11,
+        13,
+        117,
+        120
+      ],
+      "transparentCorners": true,
+      "sha256": "5ecca2d9a8a5271bc2b0c68c14c93cd08e88ec57cea153c114a018365b5d0bc7",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        13,
+        15,
+        115,
+        118
+      ]
+    },
+    {
+      "file": "genre_simulation.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        7,
+        7,
+        121,
+        123
+      ],
+      "transparentCorners": true,
+      "sha256": "33d70005717c24f719dabd86df0e24362f13a7b36cfd3f10276fa56fb9fa3bb4",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        9,
+        9,
+        119,
+        121
+      ]
+    },
+    {
+      "file": "genre_puzzle.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        9,
+        9,
+        123,
+        121
+      ],
+      "transparentCorners": true,
+      "sha256": "d54f41f3382be817a3bfc6b24bcc747e1fd3b95a11917ece9c957d73173a768f",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        11,
+        11,
+        121,
+        119
+      ]
+    },
+    {
+      "file": "genre_racing.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        4,
+        15,
+        121,
+        116
+      ],
+      "transparentCorners": true,
+      "sha256": "1a61605f8ea415de9ad58b9cc025c609fb3cc3aa03d6a1c9c0b2886922a33c57",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        9,
+        17,
+        117,
+        114
+      ]
+    },
+    {
+      "file": "genre_strategy.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        19,
+        10,
+        119,
+        119
+      ],
+      "transparentCorners": true,
+      "sha256": "e1919658dce93c8f68f96e93ed55e84b8a0d3df40c3a4caf7b878128607c1b45",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        21,
+        12,
+        105,
+        117
+      ]
+    },
+    {
+      "file": "genre_sports.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        14,
+        16,
+        113,
+        117
+      ],
+      "transparentCorners": true,
+      "sha256": "03c906cfc43eb08b2515009ebcb645f1d53b291b54503aa20734a7c216688a1f",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        16,
+        19,
+        110,
+        115
+      ]
+    },
+    {
+      "file": "genre_horror.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        3,
+        7,
+        127,
+        128
+      ],
+      "transparentCorners": true,
+      "sha256": "30335d99a8602fc4b81e697014cdfd0db7d384f4a81226af81790c6f31145b03",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        15,
+        17,
+        112,
+        115
+      ]
+    },
+    {
+      "file": "topic_space.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        0,
+        17,
+        114,
+        128
+      ],
+      "transparentCorners": true,
+      "sha256": "37a27df2ecab89f40e5b29200ad50955cc94aa85970d305cde02afcfb90f4a7f",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        17,
+        18,
+        114,
+        113
+      ]
+    },
+    {
+      "file": "topic_fantasy.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        9,
+        15,
+        115,
+        128
+      ],
+      "transparentCorners": true,
+      "sha256": "38440a09c6fbf131451436d239b011e5d597aedaa105bc57285cb5a0edbe6039",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        9,
+        15,
+        115,
+        113
+      ]
+    },
+    {
+      "file": "topic_zombies.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        11,
+        11,
+        117,
+        123
+      ],
+      "transparentCorners": true,
+      "sha256": "c08f62277b57f3812e44d152cb861be889816cee6b37ab0d5e44272a0e54646d",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        11,
+        11,
+        117,
+        123
+      ]
+    },
+    {
+      "file": "topic_pets.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        2,
+        15,
+        124,
+        128
+      ],
+      "transparentCorners": true,
+      "sha256": "a705bed8f5ae81248d2f8c288357414a67779072e9dd0c7310d5d93953457c8c",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        2,
+        15,
+        124,
+        117
+      ]
+    },
+    {
+      "file": "topic_cars.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        7,
+        23,
+        121,
+        119
+      ],
+      "transparentCorners": true,
+      "sha256": "68b70357c6248eecffbf06d54bae88954958cd24f012920e001a7d81d175e2c5",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        7,
+        23,
+        121,
+        119
+      ]
+    },
+    {
+      "file": "topic_cooking.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        0,
+        12,
+        113,
+        121
+      ],
+      "transparentCorners": true,
+      "sha256": "d205f33ee715b7daad7f730e532f6b244a8648b1bed60dfdc0c6c1754bd3af3e",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        12,
+        12,
+        113,
+        121
+      ]
+    },
+    {
+      "file": "topic_pirates.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        4,
+        24,
+        124,
+        106
+      ],
+      "transparentCorners": true,
+      "sha256": "4b1049225efeb034d06970ef96850e2aad85838d0e307b8c696031f06e0552ed",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        4,
+        24,
+        124,
+        106
+      ]
+    },
+    {
+      "file": "topic_business.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        0,
+        17,
+        112,
+        128
+      ],
+      "transparentCorners": true,
+      "sha256": "0c7166210868c5fcb64a836a26f77c59f447312a84396b8d436baedd4a15eedb",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        14,
+        18,
+        112,
+        117
+      ]
+    },
+    {
+      "file": "topic_school.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        10,
+        14,
+        116,
+        128
+      ],
+      "transparentCorners": true,
+      "sha256": "6243e96ced2dbaa1b79d105f73e09e9cd9c2d6d0761eec23ad7c8fb2ede5f3b6",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        10,
+        14,
+        116,
+        117
+      ]
+    },
+    {
+      "file": "topic_ninja.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        0,
+        15,
+        119,
+        117
+      ],
+      "transparentCorners": true,
+      "sha256": "112b38d69f54b46d65fa64d93ccb056ecbb16419fd80b62b03059d7a1f8093d0",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        14,
+        15,
+        119,
+        117
+      ]
+    },
+    {
+      "file": "topic_robots.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        9,
+        7,
+        119,
+        128
+      ],
+      "transparentCorners": true,
+      "sha256": "6eb4a0139d433600b669d1e133615450b8a399790866f16ff7966d2b4104d7b6",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        9,
+        7,
+        119,
+        123
+      ]
+    },
+    {
+      "file": "topic_football.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        7,
+        15,
+        121,
+        128
+      ],
+      "transparentCorners": true,
+      "sha256": "c911c7e9143c6251b9f76328b7725920ae9c2926539c2635ef2bf1404bc4f3e9",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        11,
+        15,
+        117,
+        120
+      ]
+    },
+    {
+      "file": "topic_superheroes.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        8,
+        20,
+        121,
+        117
+      ],
+      "transparentCorners": true,
+      "sha256": "8dce5c49b9621252d98adbd1ea4938c18170bd69dc3b91c3a3b0e98ca2c98dbd",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        8,
+        32,
+        120,
+        104
+      ]
+    },
+    {
+      "file": "topic_detective.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        8,
+        10,
+        120,
+        122
+      ],
+      "transparentCorners": true,
+      "sha256": "daa5802dcd12310f6477ad0ba6842fbc522116435ed3df2302336c7c7a3bd9f6",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        8,
+        10,
+        120,
+        122
+      ]
+    },
+    {
+      "file": "topic_ghosts.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        0,
+        22,
+        119,
+        110
+      ],
+      "transparentCorners": true,
+      "sha256": "37b678e5259963a774cdcd7d3d2482dbcfae30fca94636600bb01af0d93d6b5a",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        11,
+        22,
+        119,
+        110
+      ]
+    },
+    {
+      "file": "topic_pumpkins.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        0,
+        11,
+        119,
+        124
+      ],
+      "transparentCorners": true,
+      "sha256": "c8b7e08dae702931c5078a0bea8fea35962f00ad882aa9a89109fccef2c4f2f2",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        11,
+        11,
+        114,
+        122
+      ]
+    },
+    {
+      "file": "topic_newyear.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBBox": [
+        6,
+        12,
+        115,
+        120
+      ],
+      "transparentCorners": true,
+      "sha256": "f2c7a9e08dee50f87b3b26b0e547d72729cd5ab4f6442fc5109b0b007ac84785",
+      "visualReview": "PASS: subject retained; readable at40px on contact sheet; transparent background; no text/brands",
+      "meaningfulAlphaBBox": [
+        6,
+        12,
+        115,
+        120
+      ]
+    }
+  ],
+  "configCoverage": "PASS:10/10Genres,17/17Topics",
+  "visualReview": "PASS: all27 reviewed on light/dark backgrounds at64px and dark at40px",
+  "sourceChecks": {
+    "stylua": "PASS",
+    "selene": "PASS",
+    "rojoBuild": "PASS"
+  }
+}
