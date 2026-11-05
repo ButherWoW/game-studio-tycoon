@@ -8,8 +8,8 @@
 - Роадмап: `docs/ROADMAP.md`. Инструкция для второго разработчика: `docs/DEV2.md`.
 
 ## Роли
-- **Dev 1 — Claude (на ПК владельца)**: **Roblox Studio** (через computer use: плейс, карта, модели в `ServerStorage.Upgrades`, NPC), **все тесты** и «Отчёт #N» в Issues, ревью и мёрдж PR Dev 2, публикация, Creator Dashboard (ID продуктов → в `Config`). Код в `src/` сам не пишет, только мелкие правки по итогам теста (с комментарием в PR/issue).
-- **Dev 2 — Claude (ButherWoW, без Studio)**: **весь код в `src/`** (с 2026-11-04 забрал у Dev 1 по решению владельца), геймдизайн и контент, баланс, тексты. Работает ветками этого репо, PR в `main` с разделом «Как проверить в Studio».
+- **Dev 1 — Claude (на ПК владельца)**: с 2026-11-05 по решению владельца ведёт **всё**, кроме визуала: **весь код в `src/`** (пишет и сам вливает в `main` через PR), Roblox Studio (плейс, модели в `ServerStorage.Upgrades`), тесты и отчёты в Issues, публикация, Creator Dashboard (товары/геймпассы → ID в `Config`), геймдизайн, баланс, тексты.
+- **Dev 2 — Claude (ButherWoW, без Studio)**: с 2026-11-05 **не участвует** — его работу забрал Dev 1. Если Dev 2 вернётся, владелец скажет отдельно.
 - Репозиторий: **https://github.com/ButherWoW/game-studio-tycoon** (перенесён 2026-11-04 из `erlbro-debug/game-studio-tycoon`, тот больше не используется). Источник правды — репозиторий.
 - На ПК владельца Claude работает из VS Code: терминал есть, `gh` залогинен (ButherWoW), Rokit в `%USERPROFILE%\.rokit\bin` (rojo/stylua/selene), git — встроенный в GitHub Desktop (`%LOCALAPPDATA%\GitHubDesktop\app-*\resources\app\git\cmd`, добавлять в PATH). Код в Studio — через `rojo build -o build.rbxl` или `rojo serve` + плагин Rojo.
 
@@ -31,7 +31,8 @@
 - **Весь код по роадмапу в `main`** (04.11: смёржены #38 → #41 → #49, #25, #50). Дальше — тест в Studio и «Отчёт #2» (#20), по нему Dev 2 исправляет.
 - **Плейсы:** «Game Studio Tycoon» (Place ID 91848575533083) и «Game Studio Tycoon v2» (75334772365832). Модель гаража из Creator Store (132604421) стоит в `ServerStorage.Upgrades.Garage` плейса (в репо `assets/models` ещё нет).
 - **Тестовые деньги** в Studio: `Config/Debug.studioStartCash` ($999 999); для замеров баланса ставить 0.
-- **Роли:** Dev 1 — Studio, тесты, отчёты, мёрдж, Dashboard, публикация; Dev 2 — весь код, контент, баланс, переводы, аудит; Dev 3 (GPT Астра) — визуал (#26, `docs/VISUAL.md`).
+- **Роли (с 2026-11-05):** Dev 1 — всё, кроме визуала (код, Studio, тесты, публикация, Dashboard); Dev 3 (GPT Астра) — визуал (#26, `docs/VISUAL.md`). Dev 2 не участвует.
+- **Robux-товары:** 43 Developer Products созданы во вселенной v2 (10774624686), ID в `Config` (#165). Для основной игры нужен свой набор. Геймпассы (6) ещё не созданы.
 - **Ждём:** владелец — название игры (#4); Dev 1 — мёрдж и «Отчёт #2» (#20), ID звуков (#22), продукты/геймпассы в Dashboard (5.10); Астра — визуал и иконка (#26).
 - **Перед релизом:** заменить тестовые модели без коммерческой лицензии, проверить переводы носителями, `studioForce` праздников = nil, `studioStartCash` не влияет на живые серверы (проверено в коде).
 
