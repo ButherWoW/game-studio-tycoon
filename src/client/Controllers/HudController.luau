@@ -1,6 +1,6 @@
 --!strict
--- HUD: верхняя строка (деньги + значки: фанаты студии, игры, реклама, роялти, расходы, долг, забастовка,
--- настроение, мощность команды; нажатие на значок — подсказка с полным текстом), прогресс
+-- HUD: верхняя строка (значки: фанаты студии, игры, реклама, расходы, долг, забастовка, настроение,
+-- мощность команды; нажатие на значок — подсказка с полным текстом), деньги и роялти справа внизу, прогресс
 -- разработки (строка на каждый проект, с кнопкой «⚡ Закончить»), тумблер «Авто-релиз» и кнопка
 -- «Создать игру». Плашки событий — в лотке справа (Ui.bannerStack, Config/Hud).
 
@@ -24,13 +24,18 @@ local HudController = {}
 
 -- Верхняя строка сверху по центру (отзыв владельца 06.11: деньги, «Игр», настроение и мощность
 -- были отдельными большими плашками и закрывали студию). Сверху слева чат Roblox, справа список
--- игроков; ScreenGui с ScreenInsets по умолчанию — y 0 уже под верхней панелью Roblox
+-- игроков; ScreenGui с ScreenInsets по умолчанию — y 0 уже под верхней панелью Roblox.
+-- Деньги и доход (роялти) — отдельный блок в правом нижнем углу (отзыв владельца v71, п. 7)
 local TOP_Y = 6
 local BAR_HEIGHT = Hud.topBarHeight
 local BAR_WIDTH = Ui.HUD_PLATE_WIDTH -- боковое меню на тач-экране не заходит под строку (Ui)
-local CASH_TEXT = if Ui.touch then 22 else 24
-local CHIP_TEXT = if Ui.touch then 15 else 16
+local CASH_TEXT = if Ui.touch then 22 else 26
+local CHIP_TEXT = if Ui.touch then 16 else 18 -- значки читаемы: не меньше 16 px
 local CHIP_HEIGHT = BAR_HEIGHT - 8
+-- Блок денег: правый нижний угол. На телефоне правее — кнопка прыжка Roblox (внизу справа,
+-- до ~110 px от края; крупные кнопки — шире), поэтому блок сдвинут левее неё
+local MONEY_RIGHT = if Ui.touch then 150 else 12
+local MONEY_BOTTOM = if Ui.touch then 10 else 12
 local CASH_SHORT_FROM = 100000000 -- деньги от $100 млн — коротко: «$123.4M»
 -- Строки прогресса разработки — под верхней строкой, узкие
 local PROGRESS_WIDTH = 300
@@ -80,7 +85,7 @@ end
 
 type Row = { label: TextLabel, finish: TextButton, projectId: number? }
 type Progress = { percent: number, paused: boolean, remaining: number? }
-type Chip = { button: TextButton, detail: string }
+type Chip = { button: TextButton, detail: string, atMoney: boolean }
 
 -- Купили заряд кнопкой «⚡ Закончить сейчас»: потратить его на этот проект, когда сервер выдаст
 local FINISH_AFTER_PURCHASE_SECONDS = 60
@@ -118,17 +123,42 @@ function HudController.start()
 	barLayout.Parent = bar
 	bar.Parent = gui
 
+	-- ===== Деньги: правый нижний угол (над ними — доход, если есть роялти) =====
+	local money = Instance.new("Frame")
+	money.Name = "Money"
+	money.AnchorPoint = Vector2.new(1, 1)
+	money.Position = UDim2.new(1, -MONEY_RIGHT, 1, -MONEY_BOTTOM)
+	money.Size = UDim2.fromOffset(0, 0)
+	money.AutomaticSize = Enum.AutomaticSize.XY
+	money.BackgroundColor3 = Ui.colors.panel
+	money.BackgroundTransparency = 0.25
+	Ui.corner(money, 10)
+	local moneyPadding = Instance.new("UIPadding")
+	moneyPadding.PaddingLeft = UDim.new(0, 10)
+	moneyPadding.PaddingRight = UDim.new(0, 10)
+	moneyPadding.PaddingTop = UDim.new(0, 4)
+	moneyPadding.PaddingBottom = UDim.new(0, 4)
+	moneyPadding.Parent = money
+	local moneyLayout = Instance.new("UIListLayout")
+	moneyLayout.FillDirection = Enum.FillDirection.Vertical
+	moneyLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+	moneyLayout.VerticalAlignment = Enum.VerticalAlignment.Bottom
+	moneyLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	moneyLayout.Padding = UDim.new(0, 4)
+	moneyLayout.Parent = money
+	money.Parent = gui
+
 	local cash = Instance.new("TextLabel")
 	cash.Name = "Cash"
 	cash.BackgroundTransparency = 1
-	cash.Size = UDim2.new(0, 0, 1, 0)
+	cash.Size = UDim2.fromOffset(0, CASH_TEXT + 8)
 	cash.AutomaticSize = Enum.AutomaticSize.X
 	cash.TextSize = CASH_TEXT
 	cash.TextColor3 = Ui.colors.money
 	cash.Font = Ui.titleFontFor(ClientState.lang)
 	cash.Text = ""
-	cash.LayoutOrder = 0
-	cash.Parent = bar
+	cash.LayoutOrder = 1
+	cash.Parent = money
 
 	-- Подсказка под строкой: полный текст значка, пока не нажали ещё раз или Hud.popoverSeconds
 	local popover = Ui.label(gui, "", 0)
@@ -163,6 +193,14 @@ function HudController.start()
 		end
 		popoverOwner = chip
 		popover.Font = Ui.bodyFont
+		-- Значок из блока денег — подсказка над блоком, остальные — под верхней строкой
+		if chip.atMoney then
+			popover.AnchorPoint = Vector2.new(1, 1)
+			popover.Position = UDim2.new(1, -MONEY_RIGHT, 1, -(MONEY_BOTTOM + money.AbsoluteSize.Y + 6))
+		else
+			popover.AnchorPoint = Vector2.new(0.5, 0)
+			popover.Position = UDim2.new(0.5, 0, 0, TOP_Y + BAR_HEIGHT + 4)
+		end
 		popover.Text = chip.detail
 		popover.Visible = true
 		local token = popoverToken
@@ -174,7 +212,7 @@ function HudController.start()
 		end)
 	end
 
-	local function makeChip(name: string, order: number): Chip
+	local function makeChip(name: string, order: number, atMoney: boolean?): Chip
 		local b = Instance.new("TextButton")
 		b.Name = name
 		b.AutoButtonColor = true
@@ -192,8 +230,8 @@ function HudController.start()
 		padding.PaddingLeft = UDim.new(0, 6)
 		padding.PaddingRight = UDim.new(0, 6)
 		padding.Parent = b
-		b.Parent = bar
-		local chip: Chip = { button = b, detail = "" }
+		b.Parent = if atMoney then money else bar
+		local chip: Chip = { button = b, detail = "", atMoney = atMoney == true }
 		b.Activated:Connect(function()
 			togglePopover(chip)
 		end)
@@ -206,7 +244,8 @@ function HudController.start()
 	local expensesChip = makeChip("Expenses", 4)
 	local debtChip = makeChip("Debt", 5)
 	local adChip = makeChip("Ad", 6)
-	local royaltyChip = makeChip("Royalty", 7)
+	-- Доход (роялти в минуту) — в блоке денег, над суммой
+	local royaltyChip = makeChip("Royalty", 0, true)
 	-- Настроение команды (MoodService, атрибут TeamMood): только когда есть сотрудники
 	local moodChip = makeChip("Mood", 8)
 	-- Мощность команды (StaffPower) — пока идёт разработка и есть сотрудники
@@ -352,9 +391,16 @@ function HudController.start()
 		PaidRemotes.SetAutoRelease:FireServer(not DevState.autoReleaseOn)
 	end)
 	autoRelease.Name = "AutoReleaseToggle"
-	autoRelease.AnchorPoint = Vector2.new(0, 1)
-	autoRelease.Position = UDim2.new(0.5, 140, 1, -30)
-	autoRelease.Size = UDim2.fromOffset(170, 44)
+	if Ui.touch then
+		-- Телефон: справа от «Создать игру» теперь блок денег — тумблер над кнопкой
+		autoRelease.AnchorPoint = Vector2.new(0.5, 1)
+		autoRelease.Position = UDim2.new(0.5, 0, 1, -86)
+		autoRelease.Size = UDim2.fromOffset(170, 36)
+	else
+		autoRelease.AnchorPoint = Vector2.new(0, 1)
+		autoRelease.Position = UDim2.new(0.5, 140, 1, -30)
+		autoRelease.Size = UDim2.fromOffset(170, 44)
+	end
 	autoRelease.Visible = false
 
 	local function refresh()

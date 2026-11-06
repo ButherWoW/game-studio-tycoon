@@ -899,7 +899,7 @@ local BANNER_GAP = 6
 -- Низкий экран (телефон в альбомной): объявление чуть меньше
 local SHORT_SCREEN = 500
 local SHORT_SCALE = 0.8
-local HUD_BOTTOM_MIN = 46 -- под верхней строкой HUD (HudController зовёт Ui.setHudBottom)
+local HUD_BOTTOM_MIN = 50 -- под верхней строкой HUD (HudController зовёт Ui.setHudBottom)
 local TRAY_RIGHT = 8
 local CARD_PAD = 6
 local CARD_GAP = 6
