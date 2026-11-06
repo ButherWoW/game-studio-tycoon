@@ -518,15 +518,13 @@ function StockWindow.open()
 	title.Size = UDim2.new(1, -260, 0, 40)
 	ArtIcon.prefix(title, "📈", Images.windows.stock, 40)
 	local close = Ui.button(window, ClientState.t("create_close"), Ui.colors.bad, StockWindow.close)
-	close.AnchorPoint = Vector2.new(1, 0)
-	close.Position = UDim2.new(1, -12, 0, 10)
-	close.Size = UDim2.fromOffset(40, 40)
+	Ui.headerClose(close)
 	local ipoButton = Ui.button(window, ClientState.t("stock_tab_ipo"), Ui.colors.primary, function()
 		view = if view == "ipo" then "market" else "ipo"
 		StockWindow.render()
 	end)
 	ipoButton.AnchorPoint = Vector2.new(1, 0)
-	ipoButton.Position = UDim2.new(1, -60, 0, 10)
+	ipoButton.Position = UDim2.new(1, -(Ui.HEADER_BUTTON + Ui.HEADER_RIGHT + 8), 0, 10)
 	ipoButton.Size = UDim2.fromOffset(170, 40)
 	refs.ipoButton = ipoButton
 
