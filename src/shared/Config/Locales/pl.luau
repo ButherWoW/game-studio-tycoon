@@ -803,6 +803,7 @@ return {
 	rebirth_count = "Rebirthy: {count} · dochód ×{mult}",
 	rebirth_next = "Po rebirthcie dochód ×{mult} na zawsze",
 	rebirth_need_office = "Przeprowadzka do biura",
+	rebirth_need_floor3 = "Odblokowane 3. piętro biura",
 	rebirth_need_cash = "Pieniądze: {price}",
 	rebirth_need_no_stocks = "Najpierw sprzedaj wszystkie akcje (giełda)",
 	rebirth_resets = "Zresetuje się: kasa (zostanie $100), ulepszenia, odblokowane gatunki i tematy",

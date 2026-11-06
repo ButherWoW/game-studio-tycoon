@@ -802,6 +802,7 @@ return {
 	rebirth_count = "Ponovna rođenja: {count} · prihod ×{mult}",
 	rebirth_next = "Nakon ponovnog rođenja: prihod ×{mult} zauvijek",
 	rebirth_need_office = "Preseli se u ured",
+	rebirth_need_floor3 = "Otključan 3. kat ureda",
 	rebirth_need_cash = "Novac: {price}",
 	rebirth_need_no_stocks = "Prvo prodaj sve dionice (burza)",
 	rebirth_resets = "Poništava: novac (ostaje ti $100), nadogradnje, otključane žanrove i teme",

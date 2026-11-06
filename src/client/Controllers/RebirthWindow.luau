@@ -137,14 +137,17 @@ local function buildRebirthPage(page: ScrollingFrame): () -> ()
 		local rebirths = data.rebirths or 0
 		-- Долг банка гасится вместе с ребёрзом (LoanService)
 		local cost = Rebirth.cost(rebirths) + (tonumber(Players.LocalPlayer:GetAttribute("LoanDebt")) or 0)
-		local hasOffice = data.upgrades and data.upgrades[Rebirth.requiredUpgrade] == true
+		-- Условие «3-й этаж открыт» (Rebirth.requiredStudioLevel) уже включает переезд в офис
+		local hasOffice = data.upgrades ~= nil
+			and data.upgrades[Rebirth.requiredUpgrade] == true
+			and (tonumber(data.studioLevel) or 1) >= Rebirth.requiredStudioLevel
 		local hasCash = data.cash >= cost
 		local holdings = tonumber(Players.LocalPlayer:GetAttribute("StockHoldings")) or 0
 		canRebirth = hasOffice and hasCash and holdings <= 0
 
 		count.Text = ClientState.t("rebirth_count", { count = rebirths, mult = multText(rebirths) })
 		nextLine.Text = ClientState.t("rebirth_next", { mult = multText(rebirths + 1) })
-		office.Text = (if hasOffice then "✅ " else "❌ ") .. ClientState.t("rebirth_need_office")
+		office.Text = (if hasOffice then "✅ " else "❌ ") .. ClientState.t("rebirth_need_floor3")
 		office.TextColor3 = if hasOffice then Ui.colors.good else Ui.colors.bad
 		cash.Text = (if hasCash then "✅ " else "❌ ")
 			.. ClientState.t("rebirth_need_cash", { price = Texts.money(cost) })

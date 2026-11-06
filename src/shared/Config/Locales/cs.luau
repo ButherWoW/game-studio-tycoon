@@ -803,6 +803,7 @@ return {
 	rebirth_count = "Rebirthy: {count} · příjem ×{mult}",
 	rebirth_next = "Po rebirthu příjem ×{mult} navždy",
 	rebirth_need_office = "Stěhování do kanceláře",
+	rebirth_need_floor3 = "Odemčené 3. patro kanceláře",
 	rebirth_need_cash = "Peníze: {price}",
 	rebirth_need_no_stocks = "Nejdřív prodej všechny akcie (burza)",
 	rebirth_resets = "Resetuje se: peníze (zůstane $100), vylepšení, odemčené žánry a témata",

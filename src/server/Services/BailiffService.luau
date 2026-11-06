@@ -50,6 +50,8 @@ type Decay = { folder: Folder, level: number, lights: { Light }, scannedAt: numb
 local BailiffService = {}
 local joinedAt: { [Player]: number } = {}
 local lastSeize: { [Player]: number } = {}
+-- os.time() начала последнего визита приставов (не чаще Bailiffs.visitCooldownSeconds)
+local lastVisit: { [Player]: number } = {}
 local busy: { [Player]: boolean } = {}
 local decays: { [Player]: Decay } = {}
 local debugForced: { [Player]: boolean } = {}
@@ -601,6 +603,8 @@ local function check(player: Player)
 		if p.bailiffs then
 			p.bailiffs = nil
 			BailiffRemotes.BailiffSeized:FireClient(player, { left = true })
+			-- Налоговые каникулы: ExpensesService не списывает аренду и зарплату до этого времени
+			player:SetAttribute("ExpensesHolidayUntil", os.time() + Bailiffs.holidaySeconds)
 		end
 		setAttr(player, "BailiffsActive", false)
 		clearDecay(player)
@@ -609,7 +613,11 @@ local function check(player: Player)
 	end
 	ensureDecay(player, profile)
 	if debt >= limit and PlotService.ownsGarage(player) then
-		p.bailiffs = true
+		-- Новый визит — не чаще раза в Bailiffs.visitCooldownSeconds; уже идущий визит не прерываем
+		if p.bailiffs ~= true and os.time() - (lastVisit[player] or 0) >= Bailiffs.visitCooldownSeconds then
+			lastVisit[player] = os.time()
+			p.bailiffs = true
+		end
 	end
 	setAttr(player, "BailiffsActive", p.bailiffs == true)
 	if p.bailiffs ~= true or busy[player] or not canSeize(player, profile) then
@@ -658,6 +666,7 @@ function BailiffService.start()
 		clearDecay(player)
 		joinedAt[player] = nil
 		lastSeize[player] = nil
+		lastVisit[player] = nil
 		busy[player] = nil
 		debugForced[player] = nil
 	end)

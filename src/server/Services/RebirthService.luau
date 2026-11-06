@@ -40,6 +40,9 @@ function RebirthService.check(profile: DataService.Profile): string?
 	if not profile.upgrades[Rebirth.requiredUpgrade] then
 		return "no_office"
 	end
+	if (tonumber(profile.studioLevel) or 1) < Rebirth.requiredStudioLevel then
+		return "no_floor3"
+	end
 	-- Акции других студий — деньги вне баланса: проданные после Rebirth обошли бы сброс денег.
 	-- Сначала продать всё (окно биржи), потом Rebirth
 	local stocks = (profile :: any).stocks

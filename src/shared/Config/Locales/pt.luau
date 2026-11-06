@@ -803,6 +803,7 @@ return {
 	rebirth_count = "Renascimentos: {count} · renda ×{mult}",
 	rebirth_next = "Depois de renascer: renda ×{mult} para sempre",
 	rebirth_need_office = "Mudar para um escritório",
+	rebirth_need_floor3 = "3.º andar do escritório desbloqueado",
 	rebirth_need_cash = "Dinheiro: {price}",
 	rebirth_need_no_stocks = "Primeiro venda todas as ações (bolsa)",
 	rebirth_resets = "Zera: dinheiro (você fica com $100), melhorias, gêneros e temas desbloqueados",

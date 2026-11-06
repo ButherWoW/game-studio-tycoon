@@ -803,6 +803,7 @@ return {
 	rebirth_count = "Taassünde: {count} · tulu ×{mult}",
 	rebirth_next = "Pärast taassündi: tulu ×{mult} igaveseks",
 	rebirth_need_office = "Koli kontorisse",
+	rebirth_need_floor3 = "Kontori 3. korrus avatud",
 	rebirth_need_cash = "Raha: {price}",
 	rebirth_need_no_stocks = "Müü enne kõik aktsiad (börs)",
 	rebirth_resets = "Läheb nulli: raha (alles jääb $100), täiendused, avatud žanrid ja teemad",

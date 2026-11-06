@@ -803,6 +803,7 @@ return {
 	rebirth_count = "Renașteri: {count} · venit ×{mult}",
 	rebirth_next = "După renaștere: venit ×{mult} pentru totdeauna",
 	rebirth_need_office = "Mută-te într-un birou",
+	rebirth_need_floor3 = "Etajul 3 al biroului deblocat",
 	rebirth_need_cash = "Bani: {price}",
 	rebirth_need_no_stocks = "Mai întâi vinde toate acțiunile (bursă)",
 	rebirth_resets = "Se resetează: banii (îți rămân $100), upgrade-urile, genurile și temele deblocate",

@@ -802,6 +802,7 @@ return {
 	rebirth_count = "Yeniden doğuş: {count} · gelir ×{mult}",
 	rebirth_next = "Yeniden doğuştan sonra: sonsuza dek gelir ×{mult}",
 	rebirth_need_office = "Bir ofise taşın",
+	rebirth_need_floor3 = "Ofisin 3. katı açıldı",
 	rebirth_need_cash = "Para: {price}",
 	rebirth_need_no_stocks = "Önce tüm hisselerini sat (borsa)",
 	rebirth_resets = "Sıfırlanır: para ($100 sende kalır), geliştirmeler, açılan türler ve konular",

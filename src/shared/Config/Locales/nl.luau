@@ -803,6 +803,7 @@ return {
 	rebirth_count = "Rebirths: {count} · inkomen ×{mult}",
 	rebirth_next = "Na de rebirth: inkomen ×{mult} voor altijd",
 	rebirth_need_office = "Verhuis naar een kantoor",
+	rebirth_need_floor3 = "3e verdieping van het kantoor ontgrendeld",
 	rebirth_need_cash = "Geld: {price}",
 	rebirth_need_no_stocks = "Verkoop eerst al je aandelen (beurs)",
 	rebirth_resets = "Wordt gereset: geld (je houdt $100), upgrades, vrijgespeelde genres en thema’s",
