@@ -63,12 +63,12 @@ Developer Products, GamePasses и Badges принадлежат **вселенн
 | AdCampaigns | `streamers` | Developer Product | 3728447889 | 3728498043 |
 | AdCampaigns | `tv` | Developer Product | 3728447939 | 3728498063 |
 | AdCampaigns | `worldwide` | Developer Product | 3728447942 | 3728498075 |
-| Console | `consoleSpeed5` | Developer Product | — |  |
-| Console | `consoleSpeed30` | Developer Product | — |  |
-| Console | `consoleSkip` | Developer Product | — |  |
-| Construction | `buildSpeed5` | Developer Product | — |  |
-| Construction | `buildSpeed30` | Developer Product | — |  |
-| Construction | `buildSkip` | Developer Product | — |  |
+| Console | `consoleSpeed5` | Developer Product | 3728502848 | 3728503139 |
+| Console | `consoleSpeed30` | Developer Product | 3728502968 | 3728503201 |
+| Console | `consoleSkip` | Developer Product | 3728503072 | 3728503265 |
+| Construction | `buildSpeed5` | Developer Product | 3728500645 | 3728500862 |
+| Construction | `buildSpeed30` | Developer Product | 3728500661 | 3728500873 |
+| Construction | `buildSkip` | Developer Product | 3728500681 | 3728500885 |
 | FurnitureStyles | `neon` | Developer Product | 3728447945 | 3728498090 |
 | GamePasses | `doubleCash` | GamePass | 2071008855 | 2070540998 |
 | GamePasses | `autoRelease` | GamePass | 2072480376 | 2071816553 |
@@ -111,9 +111,9 @@ Developer Products, GamePasses и Badges принадлежат **вселенн
 | Products | `deals.skin_cyber_dev` | Developer Product | 3728448069 | 3728498585 |
 | Products | `deals.skin_space_dev` | Developer Product | 3728448070 | 3728498600 |
 | Products | `deals.skin_wizard_dev` | Developer Product | 3728448090 | 3728498619 |
-| Products | `researchSpeed5` | Developer Product | — |  |
-| Products | `researchSpeed30` | Developer Product | — |  |
-| Products | `researchSkip` | Developer Product | — |  |
+| Products | `researchSpeed5` | Developer Product | 3728500562 | 3728500791 |
+| Products | `researchSpeed30` | Developer Product | 3728500582 | 3728500806 |
+| Products | `researchSkip` | Developer Product | 3728500600 | 3728500828 |
 | Season | `seasonPass` | Developer Product | 3728448106 | 3728498962 |
 | Season | `seasonSkip` | Developer Product | 3728448111 | 3728498976 |
 | Skins | `neon_streamer` | Developer Product | 3728448093 | 3728498913 |
@@ -133,8 +133,8 @@ Developer Products, GamePasses и Badges принадлежат **вселенн
 | Social | `gift_dragon_byte` | Developer Product | 3728497896 | 3728498830 |
 | Social | `gift_golden_trophy` | Developer Product | 3728497908 | 3728498845 |
 | Social | `gift_cosmic_whale` | Developer Product | 3728497923 | 3728498858 |
-| Training | `skillSkip` | Developer Product | — |  |
-| Training | `skillSkipAll` | Developer Product | — |  |
+| Training | `skillSkip` | Developer Product | 3728500528 | 3728500763 |
+| Training | `skillSkipAll` | Developer Product | 3728500547 | 3728500777 |
 
-Всего записей: 76; создано в test: 65; заполнено в main: 65.
+Всего записей: 76; создано в test: 76; заполнено в main: 76.
 <!-- ids:end -->
