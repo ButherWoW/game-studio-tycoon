@@ -1,0 +1,165 @@
+{
+  "method": "Built-in ImageGen edit of V22 original, then targeted edit for safe headline margins. Only proportionate raster resize for final formatting; no text overlays.",
+  "images": [
+    {
+      "n": 1,
+      "lang": "es",
+      "text": "DEL GARAJE A LA SEDE",
+      "file": "thumb_v2_1_es.png",
+      "prompt": "Use case: text-localization. EDIT THIS EXACT SUPPLIED V22 THUMBNAIL, NOT A NEW SCENE. Change ONLY the original English headline to this exact uppercase Spanish headline, letter for letter: \"DEL GARAJE A LA SEDE\". Preserve scene composition, all characters, faces, clothing, objects, lighting, colors, camera, geometry and all art outside headline exactly as the edit target. Keep original bold chunky white letters, darknavy thick outline and original headline position; preserve gold emphasis on final SEDE for thumbnail1 and MASCOTA/MASCOTE for thumbnail4. Header may use TWO lines if needed so every letter fits fully within6%left/right/top outer margin. Do NOT crop or distort the scene. Do NOT translate by yourself or add/change words. Accents are mandatory: DEL GARAJE A LA SEDE. No extra text or watermark.   Final opaque16:9 PNG1920x1080.",
+      "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_1.png",
+      "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-d48b976e-4604-4804-8fef-e600c0d5f5d6.png",
+      "edits": [
+        {
+          "prompt": "EDIT this exact image. Fix headline safe margins only. Exact title must remain \"DEL GARAJE A LA SEDE\". Shrink and reposition the entire headline and its outline/decorations so its topmost pixel is at Y=85 or lower in a 1920x1080 canvas (8% from top), and leftmost/rightmost pixels are within X=150..1770 (8% side margins). Leave a clearly visible empty strip of background above the text, 85px tall. Use two lines for this title if necessary, both entirely inside this safe box. Preserve bold white navy-outline typography and existing gold emphasis. Restore former text area with matching original background. Preserve all scenes, characters, furniture, composition and lighting. Do not add text.   Exact accents: \"DEL GARAJE A LA SEDE\".",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_1_es.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-1ac3a105-2f8c-443e-b81c-99c7622f9441.png"
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "lang": "es",
+      "text": "ARMA TU EQUIPO",
+      "file": "thumb_v2_2_es.png",
+      "prompt": "Use case: text-localization. EDIT THIS EXACT SUPPLIED V22 THUMBNAIL, NOT A NEW SCENE. Change ONLY the original English headline to this exact uppercase Spanish headline, letter for letter: \"ARMA TU EQUIPO\". Preserve scene composition, all characters, faces, clothing, objects, lighting, colors, camera, geometry and all art outside headline exactly as the edit target. Keep original bold chunky white letters, darknavy thick outline and original headline position; preserve gold emphasis on final SEDE for thumbnail1 and MASCOTA/MASCOTE for thumbnail4. Header may use TWO lines if needed so every letter fits fully within6%left/right/top outer margin. Do NOT crop or distort the scene. Do NOT translate by yourself or add/change words. Accents are mandatory: ARMA TU EQUIPO. No extra text or watermark.   Final opaque16:9 PNG1920x1080.",
+      "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_2.png",
+      "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-beb3b05f-556e-4f1a-a442-c4ae9629129a.png",
+      "edits": [
+        {
+          "prompt": "EDIT this exact image. Fix headline safe margins only. Exact title must remain \"ARMA TU EQUIPO\". Shrink and reposition the entire headline and its outline/decorations so its topmost pixel is at Y=85 or lower in a 1920x1080 canvas (8% from top), and leftmost/rightmost pixels are within X=150..1770 (8% side margins). Leave a clearly visible empty strip of background above the text, 85px tall. Use two lines for this title if necessary, both entirely inside this safe box. Preserve bold white navy-outline typography and existing gold emphasis. Restore former text area with matching original background. Preserve all scenes, characters, furniture, composition and lighting. Do not add text.   Exact accents: \"ARMA TU EQUIPO\".",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_2_es.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-eeb2cb3c-08ba-4f8a-b15e-7f0983b645c5.png"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "lang": "es",
+      "text": "CREA UN ÉXITO",
+      "file": "thumb_v2_3_es.png",
+      "prompt": "Use case: text-localization. EDIT THIS EXACT SUPPLIED V22 THUMBNAIL, NOT A NEW SCENE. Change ONLY the original English headline to this exact uppercase Spanish headline, letter for letter: \"CREA UN ÉXITO\". Preserve scene composition, all characters, faces, clothing, objects, lighting, colors, camera, geometry and all art outside headline exactly as the edit target. Keep original bold chunky white letters, darknavy thick outline and original headline position; preserve gold emphasis on final SEDE for thumbnail1 and MASCOTA/MASCOTE for thumbnail4. Header may use TWO lines if needed so every letter fits fully within6%left/right/top outer margin. Do NOT crop or distort the scene. Do NOT translate by yourself or add/change words. Accents are mandatory: CREA UN ÉXITO. No extra text or watermark. The large 10/10 rating must stay EXACTLY10/10 in its original position and style.  Final opaque16:9 PNG1920x1080.",
+      "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_3.png",
+      "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-b70a15dc-cd56-42f9-93e1-ffc2d00e44c9.png",
+      "edits": [
+        {
+          "prompt": "EDIT this exact image. Fix headline safe margins only. Exact title must remain \"CREA UN ÉXITO\". Shrink and reposition the entire headline and its outline/decorations so its topmost pixel is at Y=85 or lower in a 1920x1080 canvas (8% from top), and leftmost/rightmost pixels are within X=150..1770 (8% side margins). Leave a clearly visible empty strip of background above the text, 85px tall. Use two lines for this title if necessary, both entirely inside this safe box. Preserve bold white navy-outline typography and existing gold emphasis. Restore former text area with matching original background. Preserve all scenes, characters, furniture, composition and lighting. Do not add text. Preserve 10/10 exactly.  Exact accents: \"CREA UN ÉXITO\".",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_3_es.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-38c0df13-1b7d-47dc-bec1-c527d17e33eb.png"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "lang": "es",
+      "text": "CONOCE A TU MASCOTA",
+      "file": "thumb_v2_4_es.png",
+      "prompt": "Use case: text-localization. EDIT THIS EXACT SUPPLIED V22 THUMBNAIL, NOT A NEW SCENE. Change ONLY the original English headline to this exact uppercase Spanish headline, letter for letter: \"CONOCE A TU MASCOTA\". Preserve scene composition, all characters, faces, clothing, objects, lighting, colors, camera, geometry and all art outside headline exactly as the edit target. Keep original bold chunky white letters, darknavy thick outline and original headline position; preserve gold emphasis on final SEDE for thumbnail1 and MASCOTA/MASCOTE for thumbnail4. Header may use TWO lines if needed so every letter fits fully within6%left/right/top outer margin. Do NOT crop or distort the scene. Do NOT translate by yourself or add/change words. Accents are mandatory: CONOCE A TU MASCOTA. No extra text or watermark.   Final opaque16:9 PNG1920x1080.",
+      "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_4.png",
+      "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-515b28ba-1828-4be6-bb74-e70c3e05e750.png",
+      "edits": [
+        {
+          "prompt": "EDIT this exact image. Fix headline safe margins only. Exact title must remain \"CONOCE A TU MASCOTA\". Shrink and reposition the entire headline and its outline/decorations so its topmost pixel is at Y=85 or lower in a 1920x1080 canvas (8% from top), and leftmost/rightmost pixels are within X=150..1770 (8% side margins). Leave a clearly visible empty strip of background above the text, 85px tall. Use two lines for this title if necessary, both entirely inside this safe box. Preserve bold white navy-outline typography and existing gold emphasis. Restore former text area with matching original background. Preserve all scenes, characters, furniture, composition and lighting. Do not add text.   Exact accents: \"CONOCE A TU MASCOTA\".",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_4_es.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-b891d5b5-b349-4f3a-97fc-cb7e8fc97a25.png"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "lang": "es",
+      "text": "ELIGE TU ESTILO",
+      "file": "thumb_v2_5_es.png",
+      "prompt": "Use case: text-localization. EDIT THIS EXACT SUPPLIED V22 THUMBNAIL, NOT A NEW SCENE. Change ONLY the original English headline to this exact uppercase Spanish headline, letter for letter: \"ELIGE TU ESTILO\". Preserve scene composition, all characters, faces, clothing, objects, lighting, colors, camera, geometry and all art outside headline exactly as the edit target. Keep original bold chunky white letters, darknavy thick outline and original headline position; preserve gold emphasis on final SEDE for thumbnail1 and MASCOTA/MASCOTE for thumbnail4. Header may use TWO lines if needed so every letter fits fully within6%left/right/top outer margin. Do NOT crop or distort the scene. Do NOT translate by yourself or add/change words. Accents are mandatory: ELIGE TU ESTILO. No extra text or watermark.  ALSO remove ALL FOUR bottom labels CLASSIC, NEON, COZY, MINIMAL and their four rounded pill backgrounds. Restore the corresponding continuous floor/carpet underneath each former pill with matching local scene texture; keep all desks, chairs, furniture, panels and headline scene framing unchanged. No replacement style labels in any language. Final opaque16:9 PNG1920x1080.",
+      "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_5.png",
+      "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-517cfdd3-18f9-43ba-ae0f-14a764f89ff5.png",
+      "edits": [
+        {
+          "prompt": "EDIT this exact image. Fix headline safe margins only. Exact title must remain \"ELIGE TU ESTILO\". Shrink and reposition the entire headline and its outline/decorations so its topmost pixel is at Y=85 or lower in a 1920x1080 canvas (8% from top), and leftmost/rightmost pixels are within X=150..1770 (8% side margins). Leave a clearly visible empty strip of background above the text, 85px tall. Use two lines for this title if necessary, both entirely inside this safe box. Preserve bold white navy-outline typography and existing gold emphasis. Restore former text area with matching original background. Preserve all scenes, characters, furniture, composition and lighting. Do not add text.  Keep all four lower style label pills absent. Exact accents: \"ELIGE TU ESTILO\".",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_5_es.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-34b9884c-f7d5-4e1c-8997-8f62d82d1b1a.png"
+        }
+      ]
+    },
+    {
+      "n": 1,
+      "lang": "pt",
+      "text": "DA GARAGEM À SEDE",
+      "file": "thumb_v2_1_pt.png",
+      "prompt": "Use case: text-localization. EDIT THIS EXACT SUPPLIED V22 THUMBNAIL, NOT A NEW SCENE. Change ONLY the original English headline to this exact uppercase Brazilian Portuguese headline, letter for letter: \"DA GARAGEM À SEDE\". Preserve scene composition, all characters, faces, clothing, objects, lighting, colors, camera, geometry and all art outside headline exactly as the edit target. Keep original bold chunky white letters, darknavy thick outline and original headline position; preserve gold emphasis on final SEDE for thumbnail1 and MASCOTA/MASCOTE for thumbnail4. Header may use TWO lines if needed so every letter fits fully within6%left/right/top outer margin. Do NOT crop or distort the scene. Do NOT translate by yourself or add/change words. Accents are mandatory: DA GARAGEM À SEDE. No extra text or watermark.   Final opaque16:9 PNG1920x1080.",
+      "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_1.png",
+      "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-16558ea6-de2c-448a-8d4a-210a4031e7bc.png",
+      "edits": [
+        {
+          "prompt": "EDIT this exact image. Fix headline safe margins only. Exact title must remain \"DA GARAGEM À SEDE\". Shrink and reposition the entire headline and its outline/decorations so its topmost pixel is at Y=85 or lower in a 1920x1080 canvas (8% from top), and leftmost/rightmost pixels are within X=150..1770 (8% side margins). Leave a clearly visible empty strip of background above the text, 85px tall. Use two lines for this title if necessary, both entirely inside this safe box. Preserve bold white navy-outline typography and existing gold emphasis. Restore former text area with matching original background. Preserve all scenes, characters, furniture, composition and lighting. Do not add text.   Exact accents: \"DA GARAGEM À SEDE\".",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_1_pt.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-291418a1-9092-4554-b0f0-6f6bceddc0f9.png"
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "lang": "pt",
+      "text": "MONTE SUA EQUIPE",
+      "file": "thumb_v2_2_pt.png",
+      "prompt": "Use case: text-localization. EDIT THIS EXACT SUPPLIED V22 THUMBNAIL, NOT A NEW SCENE. Change ONLY the original English headline to this exact uppercase Brazilian Portuguese headline, letter for letter: \"MONTE SUA EQUIPE\". Preserve scene composition, all characters, faces, clothing, objects, lighting, colors, camera, geometry and all art outside headline exactly as the edit target. Keep original bold chunky white letters, darknavy thick outline and original headline position; preserve gold emphasis on final SEDE for thumbnail1 and MASCOTA/MASCOTE for thumbnail4. Header may use TWO lines if needed so every letter fits fully within6%left/right/top outer margin. Do NOT crop or distort the scene. Do NOT translate by yourself or add/change words. Accents are mandatory: MONTE SUA EQUIPE. No extra text or watermark.   Final opaque16:9 PNG1920x1080.",
+      "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_2.png",
+      "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-9596732e-26b1-45b1-b90d-39e496e351d8.png",
+      "edits": [
+        {
+          "prompt": "EDIT this exact image. Fix headline safe margins only. Exact title must remain \"MONTE SUA EQUIPE\". Shrink and reposition the entire headline and its outline/decorations so its topmost pixel is at Y=85 or lower in a 1920x1080 canvas (8% from top), and leftmost/rightmost pixels are within X=150..1770 (8% side margins). Leave a clearly visible empty strip of background above the text, 85px tall. Use two lines for this title if necessary, both entirely inside this safe box. Preserve bold white navy-outline typography and existing gold emphasis. Restore former text area with matching original background. Preserve all scenes, characters, furniture, composition and lighting. Do not add text.   Exact accents: \"MONTE SUA EQUIPE\".",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_2_pt.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-bb4c00ae-3cb2-419f-b9a8-715a8124588a.png"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "lang": "pt",
+      "text": "CRIE UM SUCESSO",
+      "file": "thumb_v2_3_pt.png",
+      "prompt": "Use case: text-localization. EDIT THIS EXACT SUPPLIED V22 THUMBNAIL, NOT A NEW SCENE. Change ONLY the original English headline to this exact uppercase Brazilian Portuguese headline, letter for letter: \"CRIE UM SUCESSO\". Preserve scene composition, all characters, faces, clothing, objects, lighting, colors, camera, geometry and all art outside headline exactly as the edit target. Keep original bold chunky white letters, darknavy thick outline and original headline position; preserve gold emphasis on final SEDE for thumbnail1 and MASCOTA/MASCOTE for thumbnail4. Header may use TWO lines if needed so every letter fits fully within6%left/right/top outer margin. Do NOT crop or distort the scene. Do NOT translate by yourself or add/change words. Accents are mandatory: CRIE UM SUCESSO. No extra text or watermark. The large 10/10 rating must stay EXACTLY10/10 in its original position and style.  Final opaque16:9 PNG1920x1080.",
+      "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_3.png",
+      "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-ce7d8091-7997-4011-b9e4-8004004fdbcf.png",
+      "edits": [
+        {
+          "prompt": "EDIT this exact image. Fix headline safe margins only. Exact title must remain \"CRIE UM SUCESSO\". Shrink and reposition entire headline including outline and decorations so topmost pixel is Y=90 or lower in 1920x1080 canvas and all headline pixels inside X=150..1770. Clearly visible background strip above headline at least90pixels. Preserve bold white navy outline and gold MASCOTE if present. Restore former text area with original background. Preserve all characters furniture scene composition camera and lighting. No new text. Keep large 10/10 unchanged. Accents mandatory \"CRIE UM SUCESSO\".",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_3_pt.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-a854ca0e-dea1-4413-af8b-95d5323369ff.png"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "lang": "pt",
+      "text": "CONHEÇA SEU MASCOTE",
+      "file": "thumb_v2_4_pt.png",
+      "prompt": "Use case: text-localization. EDIT THIS EXACT SUPPLIED V22 THUMBNAIL, NOT A NEW SCENE. Change ONLY the original English headline to this exact uppercase Brazilian Portuguese headline, letter for letter: \"CONHEÇA SEU MASCOTE\". Preserve scene composition, all characters, faces, clothing, objects, lighting, colors, camera, geometry and all art outside headline exactly as the edit target. Keep original bold chunky white letters, darknavy thick outline and original headline position; preserve gold emphasis on final SEDE for thumbnail1 and MASCOTA/MASCOTE for thumbnail4. Header may use TWO lines if needed so every letter fits fully within6%left/right/top outer margin. Do NOT crop or distort the scene. Do NOT translate by yourself or add/change words. Accents are mandatory: CONHEÇA SEU MASCOTE. No extra text or watermark.   Final opaque16:9 PNG1920x1080.",
+      "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_4.png",
+      "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-e338c9f1-7ece-4006-872b-003207c93d80.png",
+      "edits": [
+        {
+          "prompt": "EDIT this exact image. Fix headline safe margins only. Exact title must remain \"CONHEÇA SEU MASCOTE\". Shrink and reposition entire headline including outline and decorations so topmost pixel is Y=90 or lower in 1920x1080 canvas and all headline pixels inside X=150..1770. Clearly visible background strip above headline at least90pixels. Preserve bold white navy outline and gold MASCOTE if present. Restore former text area with original background. Preserve all characters furniture scene composition camera and lighting. No new text.  Accents mandatory \"CONHEÇA SEU MASCOTE\".",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_4_pt.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-c16afc74-70d1-4bcc-a616-ef74a04e296d.png"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "lang": "pt",
+      "text": "ESCOLHA SEU ESTILO",
+      "file": "thumb_v2_5_pt.png",
+      "prompt": "Use case: text-localization. EDIT THIS EXACT SUPPLIED V22 THUMBNAIL, NOT A NEW SCENE. Change ONLY the original English headline to this exact uppercase Brazilian Portuguese headline, letter for letter: \"ESCOLHA SEU ESTILO\". Preserve scene composition, all characters, faces, clothing, objects, lighting, colors, camera, geometry and all art outside headline exactly as the edit target. Keep original bold chunky white letters, darknavy thick outline and original headline position; preserve gold emphasis on final SEDE for thumbnail1 and MASCOTA/MASCOTE for thumbnail4. Header may use TWO lines if needed so every letter fits fully within6%left/right/top outer margin. Do NOT crop or distort the scene. Do NOT translate by yourself or add/change words. Accents are mandatory: ESCOLHA SEU ESTILO. No extra text or watermark.  ALSO remove ALL FOUR bottom labels CLASSIC, NEON, COZY, MINIMAL and their four rounded pill backgrounds. Restore the corresponding continuous floor/carpet underneath each former pill with matching local scene texture; keep all desks, chairs, furniture, panels and headline scene framing unchanged. No replacement style labels in any language. Final opaque16:9 PNG1920x1080.",
+      "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_5.png",
+      "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-7b6ce557-c979-41ca-8468-c6afbf57c34b.png",
+      "edits": [
+        {
+          "prompt": "EDIT exact supplied image: only move and shrink headline \"ESCOLHA SEU ESTILO\" so all letters and outline are within safe box X=150..1770 and Y=90..260 on 1920x1080 canvas. Leave90pixels clear background above headline. Same bold white letters dark navy outline. Restore former text area using matching wall backgrounds. Preserve four room panels furniture and lighting exactly. Keep all four lower style labels and their pills absent, only matching floors. No extra words.",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_5_pt.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-6d98ff1a-7caa-4c10-9b6d-bff8d886784c.png"
+        }
+      ]
+    }
+  ]
+}

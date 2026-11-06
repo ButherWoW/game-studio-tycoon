@@ -1,0 +1,131 @@
+{
+  "expected": 10,
+  "ready": 10,
+  "assets": [
+    {
+      "file": "thumb_v2_1_de.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "opaque": true,
+      "expectedHeadline": "VON DER GARAGE ZUM HQ",
+      "sha256": "41605b296b3390d25053d6f0a50aee288277681337e4f0226d6ecb03e884e4b8",
+      "visualReview": "PASS"
+    },
+    {
+      "file": "thumb_v2_2_de.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "opaque": true,
+      "expectedHeadline": "BAU DEIN TEAM AUF",
+      "sha256": "9e43ea91cbf03837df67a13ef2426fafc4efff4e6ca7ec9357c809e9225d6b81",
+      "visualReview": "PASS"
+    },
+    {
+      "file": "thumb_v2_3_de.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "opaque": true,
+      "expectedHeadline": "LANDE EINEN HIT",
+      "sha256": "19c20a98159668255491e401a5e8e026b31ea972813bc5fa6f732066a28f0ffd",
+      "visualReview": "PASS"
+    },
+    {
+      "file": "thumb_v2_4_de.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "opaque": true,
+      "expectedHeadline": "TRIFF DEIN MASKOTTCHEN",
+      "sha256": "ec71be3e7c1fa46997e15038bef585aef3537fc39735c5842ee43b2e2ea85e87",
+      "visualReview": "PASS"
+    },
+    {
+      "file": "thumb_v2_5_de.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "opaque": true,
+      "expectedHeadline": "WÄHLE DEINEN STIL",
+      "sha256": "ae190c72a6d021a4fbfc24dc48cc09c4e0dbcc1e31af45e41ae0593990b3399c",
+      "visualReview": "PASS"
+    },
+    {
+      "file": "thumb_v2_1_fr.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "opaque": true,
+      "expectedHeadline": "DU GARAGE AU QG",
+      "sha256": "d98a97781f814ca649603f4caf2e75c0c4a639e01e9ed8520ba7faf7fa188348",
+      "visualReview": "PASS"
+    },
+    {
+      "file": "thumb_v2_2_fr.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "opaque": true,
+      "expectedHeadline": "FORME TON ÉQUIPE",
+      "sha256": "be65b73f468734b05964561d0a470d623e1d9845ddd9bf6338b759079381424a",
+      "visualReview": "PASS"
+    },
+    {
+      "file": "thumb_v2_3_fr.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "opaque": true,
+      "expectedHeadline": "CRÉE UN TUBE",
+      "sha256": "0903c3cc522ae340ea2a18c2c7e9e008875880ace23fafa898acbba2a384b44e",
+      "visualReview": "PASS"
+    },
+    {
+      "file": "thumb_v2_4_fr.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "opaque": true,
+      "expectedHeadline": "RENCONTRE TA MASCOTTE",
+      "sha256": "c44db5a3acac5e8dbe4d5b94af51c1cdac73c8ae690e37bcebd5d54cc95744e3",
+      "visualReview": "PASS"
+    },
+    {
+      "file": "thumb_v2_5_fr.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "opaque": true,
+      "expectedHeadline": "CHOISIS TON STYLE",
+      "sha256": "ec358ca01f7c7e7582af45b7b07476c95f6a3734eec71ebfc6c7d3548b24a854",
+      "visualReview": "PASS"
+    }
+  ],
+  "runtimeUploaded": false,
+  "status": "PASS",
+  "method": "Built-in ImageGen edits; aspect-preserving resize only; full scene and headline visual QA",
+  "checks": {
+    "exactHeadlinesAndDiacritics": true,
+    "headlineMarginsAtLeast6Percent": true,
+    "longHeadlinesTwoLines": true,
+    "score10of10Preserved": true,
+    "styleLabelsAndPillsRemoved": true,
+    "sceneCompositionPreservedVisually": true,
+    "noTextOverlay": true
+  },
+  "limitations": [
+    "Scene preservation checked visually; generated edits are not pixel-identical."
+  ]
+}

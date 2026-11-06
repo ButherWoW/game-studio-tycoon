@@ -1,0 +1,165 @@
+[
+  {
+    "file": "thumb_v2_1_de.png",
+    "lang": "de",
+    "n": 1,
+    "expectedHeadline": "VON DER GARAGE ZUM HQ",
+    "prompt": "Use case: text-localization. EDIT the supplied original image, do NOT create a new scene. Replace ONLY its top English headline with this EXACT uppercase German headline: \"VON DER GARAGE ZUM HQ\". Preserve all characters, poses, objects, windows, buildings, furniture, lighting, colors and framing identically. Retain the original chunky bold font, dark outline, white headline color with final HQ/QG in gold, placement at top. Use two lines if necessary for long headline. Keep at least6% canvas margin left/right around ALL headline letters and6% at top, every letter fully visible; fit by reducing title size rather than changing scene. Verify exact spelling and accent marks.   Do not add any other writing, watermark, logo, letter or number. Final image1920x1080 opaque16:9, full original scene and camera remain unchanged.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_1.png",
+    "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-75a3c8ee-2a61-4f38-a19c-51842456658f.png",
+    "edits": [
+      {
+        "prompt": "Use case: text-localization. EDIT this thumbnail. Only fix headline position. Exact text \"VON DER GARAGE\nZUM HQ\". Use exactly 2 lines as shown. Title including accents/outline MUST start below y100 (top9%) and fit x150..1770/y100..290 of1920x1080. Reduce font if needed. Keep headline original white/gold colors and heavy font dark outline. Preserve ALL characters objects furniture background lighting framing.   No new text.",
+        "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_1_de.png",
+        "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-752b52f1-01fc-47c4-a551-e7ac902dfc6f.png"
+      }
+    ]
+  },
+  {
+    "file": "thumb_v2_2_de.png",
+    "lang": "de",
+    "n": 2,
+    "expectedHeadline": "BAU DEIN TEAM AUF",
+    "prompt": "Use case: text-localization. EDIT the supplied original image, do NOT create a new scene. Replace ONLY its top English headline with this EXACT uppercase German headline: \"BAU DEIN TEAM AUF\". Preserve all characters, poses, objects, windows, buildings, furniture, lighting, colors and framing identically. Retain the original chunky bold font, dark outline, white headline color, placement at top. Use two lines if necessary for long headline. Keep at least6% canvas margin left/right around ALL headline letters and6% at top, every letter fully visible; fit by reducing title size rather than changing scene. Verify exact spelling and accent marks.   Do not add any other writing, watermark, logo, letter or number. Final image1920x1080 opaque16:9, full original scene and camera remain unchanged.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_2.png",
+    "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-7b894e91-6434-4055-8ba7-bc4dcf24bb9e.png"
+  },
+  {
+    "file": "thumb_v2_3_de.png",
+    "lang": "de",
+    "n": 3,
+    "expectedHeadline": "LANDE EINEN HIT",
+    "prompt": "Use case: text-localization. EDIT the supplied original image, do NOT create a new scene. Replace ONLY its top English headline with this EXACT uppercase German headline: \"LANDE EINEN HIT\". Preserve all characters, poses, objects, windows, buildings, furniture, lighting, colors and framing identically. Retain the original chunky bold font, dark outline, white headline color, placement at top. Use two lines if necessary for long headline. Keep at least6% canvas margin left/right around ALL headline letters and6% at top, every letter fully visible; fit by reducing title size rather than changing scene. Verify exact spelling and accent marks. Keep the central 10/10 digits and all score panel graphics EXACTLY unchanged.  Do not add any other writing, watermark, logo, letter or number. Final image1920x1080 opaque16:9, full original scene and camera remain unchanged.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_3.png",
+    "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-62bcd851-7f9c-4762-be00-f194a8d2d390.png",
+    "edits": [
+      {
+        "prompt": "Use case: text-localization. EDIT this thumbnail. Only fix headline position. Exact text \"LANDE EINEN HIT\".  Title including accents/outline MUST start below y100 (top9%) and fit x150..1770/y100..290 of1920x1080. Reduce font if needed. Keep headline original white/gold colors and heavy font dark outline. Preserve ALL characters objects furniture background lighting framing. Keep 10/10 unchanged.  No new text.",
+        "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_3_de.png",
+        "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-e338453b-099a-41f3-823b-ce91509b702d.png"
+      }
+    ]
+  },
+  {
+    "file": "thumb_v2_4_de.png",
+    "lang": "de",
+    "n": 4,
+    "expectedHeadline": "TRIFF DEIN MASKOTTCHEN",
+    "prompt": "Use case: text-localization. EDIT the supplied original image, do NOT create a new scene. Replace ONLY its top English headline with this EXACT uppercase German headline: \"TRIFF DEIN MASKOTTCHEN\". Preserve all characters, poses, objects, windows, buildings, furniture, lighting, colors and framing identically. Retain the original chunky bold font, dark outline, white headline color with final word in gold, placement at top. Use two lines if necessary for long headline. Keep at least6% canvas margin left/right around ALL headline letters and6% at top, every letter fully visible; fit by reducing title size rather than changing scene. Verify exact spelling and accent marks.   Do not add any other writing, watermark, logo, letter or number. Final image1920x1080 opaque16:9, full original scene and camera remain unchanged.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_4.png",
+    "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-bfb38fc0-903d-404e-9ee3-e18fee55db11.png",
+    "edits": [
+      {
+        "prompt": "Use case: text-localization. EDIT this thumbnail. Only fix headline position. Exact text \"TRIFF DEIN\nMASKOTTCHEN\". Use exactly 2 lines as shown. Title including accents/outline MUST start below y100 (top9%) and fit x150..1770/y100..290 of1920x1080. Reduce font if needed. Keep headline original white/gold colors and heavy font dark outline. Preserve ALL characters objects furniture background lighting framing.   No new text.",
+        "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_4_de.png",
+        "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-39b00614-aa8b-41d6-ad4b-259ac312bb8a.png"
+      },
+      {
+        "prompt": "Edit only the two-line headline. It is currently too close to top. Move BOTH lines DOWN by 100 pixels and make letters 25% smaller. Put first top outline at y130, never above y100. Text exactly \"TRIFF DEIN\" then second line \"MASKOTTCHEN\". Keep white first line gold second, heavy dark outline. Do not change anything else whatsoever in scene, characters, cat, crown, furniture or lighting. 1920x1080 image.",
+        "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_4_de.png",
+        "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-a92bbaad-7c74-49f7-8901-8fa266036e43.png"
+      }
+    ]
+  },
+  {
+    "file": "thumb_v2_5_de.png",
+    "lang": "de",
+    "n": 5,
+    "expectedHeadline": "WÄHLE DEINEN STIL",
+    "prompt": "Use case: text-localization. EDIT the supplied original image, do NOT create a new scene. Replace ONLY its top English headline with this EXACT uppercase German headline: \"WÄHLE DEINEN STIL\". Preserve all characters, poses, objects, windows, buildings, furniture, lighting, colors and framing identically. Retain the original chunky bold font, dark outline, white headline color, placement at top. Use two lines if necessary for long headline. Keep at least6% canvas margin left/right around ALL headline letters and6% at top, every letter fully visible; fit by reducing title size rather than changing scene. Verify exact spelling and accent marks: Ä must have two dots.  Remove ALL four bottom style name labels CLASSIC, NEON, COZY and MINIMAL and their rounded label plates. Fill those vacated areas naturally with the existing matching floor/rug per panel. Preserve all four furniture panels exactly, including their order/colors and boundaries. Do not add any translated style names or replacement labels. Do not add any other writing, watermark, logo, letter or number. Final image1920x1080 opaque16:9, full original scene and camera remain unchanged.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_5.png",
+    "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-e0916bb4-1855-4084-b61b-4a2d754a3657.png",
+    "edits": [
+      {
+        "prompt": "Use case: text-localization. EDIT this existing localized thumbnail. ONLY fix title positioning and size. Exact headline \"WÄHLE DEINEN STIL\".  Make entire title including accents and outline fit in rectangle x=150..1770 y=100..290 on 1920x1080 canvas. Leave 100px clear above letters, no letters or accents above y100. Keep exact original font, white and gold color assignment, dark outline. Preserve ALL scene pixels visually, characters furniture background camera lighting.  Keep bottom floor free of all style labels/pills. No other text changes.",
+        "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_5_de.png",
+        "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-136ecdef-86c2-41b2-b298-f92edb2ae7dc.png"
+      }
+    ]
+  },
+  {
+    "file": "thumb_v2_1_fr.png",
+    "lang": "fr",
+    "n": 1,
+    "expectedHeadline": "DU GARAGE AU QG",
+    "prompt": "Use case: text-localization. EDIT the supplied original image, do NOT create a new scene. Replace ONLY its top English headline with this EXACT uppercase French headline: \"DU GARAGE AU QG\". Preserve all characters, poses, objects, windows, buildings, furniture, lighting, colors and framing identically. Retain the original chunky bold font, dark outline, white headline color with final HQ/QG in gold, placement at top. Use two lines if necessary for long headline. Keep at least6% canvas margin left/right around ALL headline letters and6% at top, every letter fully visible; fit by reducing title size rather than changing scene. Verify exact spelling and accent marks.   Do not add any other writing, watermark, logo, letter or number. Final image1920x1080 opaque16:9, full original scene and camera remain unchanged.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_1.png",
+    "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-fc6a8e25-cd0b-4e72-8eda-e54503e22e16.png",
+    "edits": [
+      {
+        "prompt": "Use case: text-localization. EDIT this thumbnail. Only fix headline position. Exact text \"DU GARAGE AU QG\".  Title including accents/outline MUST start below y100 (top9%) and fit x150..1770/y100..290 of1920x1080. Reduce font if needed. Keep headline original white/gold colors and heavy font dark outline. Preserve ALL characters objects furniture background lighting framing.   No new text.",
+        "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_1_fr.png",
+        "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-333890ff-f687-4cf5-9b25-4faaa1a5b8fa.png"
+      }
+    ]
+  },
+  {
+    "file": "thumb_v2_2_fr.png",
+    "lang": "fr",
+    "n": 2,
+    "expectedHeadline": "FORME TON ÉQUIPE",
+    "prompt": "Use case: text-localization. EDIT the supplied original image, do NOT create a new scene. Replace ONLY its top English headline with this EXACT uppercase French headline: \"FORME TON ÉQUIPE\". Preserve all characters, poses, objects, windows, buildings, furniture, lighting, colors and framing identically. Retain the original chunky bold font, dark outline, white headline color, placement at top. Use two lines if necessary for long headline. Keep at least6% canvas margin left/right around ALL headline letters and6% at top, every letter fully visible; fit by reducing title size rather than changing scene. Verify exact spelling and accent marks: É must have acute accent.   Do not add any other writing, watermark, logo, letter or number. Final image1920x1080 opaque16:9, full original scene and camera remain unchanged.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_2.png",
+    "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-19934398-f66c-461b-bc98-09dbc0fe8328.png",
+    "edits": [
+      {
+        "prompt": "Use case: text-localization. EDIT this localized thumbnail: only reposition title lower and slightly smaller. EXACT text \"FORME TON ÉQUIPE\".  Entire title INCLUDING outline and accents must be inside x150..1770 y100..290 on 1920x1080 canvas. Leave top100 pixels clear of text/outline/accents. Maintain exact bold font white/gold colors dark outline. Preserve original scene characters poses furniture and lighting unchanged.   No new text.",
+        "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_2_fr.png",
+        "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-4d1454a6-ab47-4cea-af4a-cca9ee67d568.png"
+      }
+    ]
+  },
+  {
+    "file": "thumb_v2_3_fr.png",
+    "lang": "fr",
+    "n": 3,
+    "expectedHeadline": "CRÉE UN TUBE",
+    "prompt": "Use case: text-localization. EDIT the supplied original image, do NOT create a new scene. Replace ONLY its top English headline with this EXACT uppercase French headline: \"CRÉE UN TUBE\". Preserve all characters, poses, objects, windows, buildings, furniture, lighting, colors and framing identically. Retain the original chunky bold font, dark outline, white headline color, placement at top. Use two lines if necessary for long headline. Keep at least6% canvas margin left/right around ALL headline letters and6% at top, every letter fully visible; fit by reducing title size rather than changing scene. Verify exact spelling and accent marks: É must have acute accent. Keep the central 10/10 digits and all score panel graphics EXACTLY unchanged.  Do not add any other writing, watermark, logo, letter or number. Final image1920x1080 opaque16:9, full original scene and camera remain unchanged.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_3.png",
+    "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-a46331f4-6a18-499a-982f-0353e3e7c861.png",
+    "edits": [
+      {
+        "prompt": "Use case: text-localization. EDIT this localized thumbnail: only reposition title lower and slightly smaller. EXACT text \"CRÉE UN TUBE\".  Entire title INCLUDING outline and accents must be inside x150..1770 y100..290 on 1920x1080 canvas. Leave top100 pixels clear of text/outline/accents. Maintain exact bold font white/gold colors dark outline. Preserve original scene characters poses furniture and lighting unchanged. Keep 10/10.  No new text.",
+        "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_3_fr.png",
+        "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-3f1acb70-3316-45c4-9fad-573a62453fb4.png"
+      }
+    ]
+  },
+  {
+    "file": "thumb_v2_4_fr.png",
+    "lang": "fr",
+    "n": 4,
+    "expectedHeadline": "RENCONTRE TA MASCOTTE",
+    "prompt": "Use case: text-localization. EDIT the supplied original image, do NOT create a new scene. Replace ONLY its top English headline with this EXACT uppercase French headline: \"RENCONTRE TA MASCOTTE\". Preserve all characters, poses, objects, windows, buildings, furniture, lighting, colors and framing identically. Retain the original chunky bold font, dark outline, white headline color with final word in gold, placement at top. Use two lines if necessary for long headline. Keep at least6% canvas margin left/right around ALL headline letters and6% at top, every letter fully visible; fit by reducing title size rather than changing scene. Verify exact spelling and accent marks.   Do not add any other writing, watermark, logo, letter or number. Final image1920x1080 opaque16:9, full original scene and camera remain unchanged.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_4.png",
+    "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-d4be6395-d5a5-4181-acd1-22898c785986.png",
+    "edits": [
+      {
+        "prompt": "Use case: text-localization. EDIT this thumbnail. Only fix headline position. Exact text \"RENCONTRE TA\nMASCOTTE\". Use exactly 2 lines as shown. Title including accents/outline MUST start below y100 (top9%) and fit x150..1770/y100..290 of1920x1080. Reduce font if needed. Keep headline original white/gold colors and heavy font dark outline. Preserve ALL characters objects furniture background lighting framing.   No new text.",
+        "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_4_fr.png",
+        "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-61623c30-7abf-4f71-8dd3-c9d04e5e9ae9.png"
+      },
+      {
+        "prompt": "Edit only the two-line headline. It is currently too close to top. Move BOTH lines DOWN by 100 pixels and make letters 25% smaller. Put first top outline at y130, never above y100. Text exactly \"RENCONTRE TA\" then second line \"MASCOTTE\". Keep white first line gold second, heavy dark outline. Do not change anything else whatsoever in scene, characters, cat, crown, furniture or lighting. 1920x1080 image.",
+        "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_4_fr.png",
+        "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-2dcfa6d0-1d82-4877-89d0-8f996601eaf7.png"
+      }
+    ]
+  },
+  {
+    "file": "thumb_v2_5_fr.png",
+    "lang": "fr",
+    "n": 5,
+    "expectedHeadline": "CHOISIS TON STYLE",
+    "prompt": "Use case: text-localization. EDIT the supplied original image, do NOT create a new scene. Replace ONLY its top English headline with this EXACT uppercase French headline: \"CHOISIS TON STYLE\". Preserve all characters, poses, objects, windows, buildings, furniture, lighting, colors and framing identically. Retain the original chunky bold font, dark outline, white headline color, placement at top. Use two lines if necessary for long headline. Keep at least6% canvas margin left/right around ALL headline letters and6% at top, every letter fully visible; fit by reducing title size rather than changing scene. Verify exact spelling and accent marks.  Remove ALL four bottom style name labels CLASSIC, NEON, COZY and MINIMAL and their rounded label plates. Fill those vacated areas naturally with the existing matching floor/rug per panel. Preserve all four furniture panels exactly, including their order/colors and boundaries. Do not add any translated style names or replacement labels. Do not add any other writing, watermark, logo, letter or number. Final image1920x1080 opaque16:9, full original scene and camera remain unchanged.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_5.png",
+    "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-4b455ec9-1bd4-4b97-99c8-0dd9b5a6a2da.png",
+    "edits": [
+      {
+        "prompt": "Use case: text-localization. EDIT this thumbnail. Only fix headline position. Exact text \"CHOISIS TON STYLE\".  Title including accents/outline MUST start below y100 (top9%) and fit x150..1770/y100..290 of1920x1080. Reduce font if needed. Keep headline original white/gold colors and heavy font dark outline. Preserve ALL characters objects furniture background lighting framing.  Keep bottom4 labels/pills removed. No new text.",
+        "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_5_fr.png",
+        "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-06bc23d6-4d75-412d-a2f9-7c0a3e2c9d5a.png"
+      }
+    ]
+  }
+]
