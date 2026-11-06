@@ -17,6 +17,7 @@ local Shared = ReplicatedStorage.Shared
 local Arcade = require(Shared.Config.Arcade)
 local ArcadeRemotes = require(Shared.ArcadeRemotes)
 local DataService = require(script.Parent.DataService)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 type Release = { projectId: number, revenue: number, genreId: string, at: number, started: boolean }
 type Session = {
@@ -176,7 +177,7 @@ local function onSubmit(player: Player, token: any, score: any)
 	})
 end
 
-function ArcadeService.start()
+local function startNow()
 	Players.PlayerRemoving:Connect(function(player)
 		releases[player] = nil
 		sessions[player] = nil
@@ -184,6 +185,16 @@ function ArcadeService.start()
 	end)
 	ArcadeRemotes.ArcadeStart.OnServerEvent:Connect(onStart)
 	ArcadeRemotes.ArcadeSubmit.OnServerEvent:Connect(onSubmit)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «arcade» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function ArcadeService.start()
+	FeatureReleaseService.mute("arcade", {
+		ArcadeRemotes.ArcadeStart,
+		ArcadeRemotes.ArcadeSubmit,
+	})
+	FeatureReleaseService.whenReleased("arcade", "ArcadeService", startNow)
 end
 
 return ArcadeService

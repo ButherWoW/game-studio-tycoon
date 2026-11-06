@@ -8,6 +8,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local AdCampaigns = require(ReplicatedStorage.Shared.Config.AdCampaigns)
+local Features = require(ReplicatedStorage.Shared.Config.Features)
 local DataService = require(script.Parent.DataService)
 local ShopService = require(script.Parent.ShopService)
 local PosterService = require(script.Parent.PosterService)
@@ -68,7 +69,11 @@ local function applyAd(player: Player, campaign: AdCampaigns.AdCampaign, paid: b
 end
 
 -- Последняя игра — на рекламные щиты у спавна (BillboardService); без модуля ничего не ломается
+-- Щиты выходят обновлением по средам (Config/Features): до выхода реклама только даёт бонус
 local function toBillboards(player: Player, campaign: AdCampaigns.AdCampaign, paid: boolean)
+	if not Features.serviceReleased("BillboardService") then
+		return
+	end
 	local module = script.Parent:FindFirstChild("BillboardService")
 	if not module or not module:IsA("ModuleScript") then
 		return

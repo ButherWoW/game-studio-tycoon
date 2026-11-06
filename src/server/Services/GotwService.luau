@@ -20,6 +20,7 @@ local Gotw = require(Shared.Config.Gotw)
 local GotwRemotes = require(Shared.GotwRemotes)
 local DataService = require(script.Parent.DataService)
 local RewardService = require(script.Parent.RewardService)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 export type Entry = {
 	player: string, -- имя автора (DisplayName на момент релиза)
@@ -469,7 +470,7 @@ local function onPlayerRemoving(player: Player)
 	end
 end
 
-function GotwService.start()
+local function startNow()
 	GotwRemotes.GotwRequest.OnServerEvent:Connect(onRequest)
 	Players.PlayerRemoving:Connect(onPlayerRemoving)
 	DataService.onProfileLoaded(function(player: Player, profile: DataService.Profile)
@@ -530,6 +531,15 @@ function GotwService.start()
 			task.wait(0.2)
 		end
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «gotw» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function GotwService.start()
+	FeatureReleaseService.mute("gotw", {
+		GotwRemotes.GotwRequest,
+	})
+	FeatureReleaseService.whenReleased("gotw", "GotwService", startNow)
 end
 
 return GotwService

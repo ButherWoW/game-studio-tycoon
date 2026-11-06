@@ -20,6 +20,7 @@ local Images = require(Shared.Config.Images)
 local StartPark = require(Shared.Config.StartPark)
 local DataService = require(script.Parent.DataService)
 local BroadcastText = require(script.Parent.BroadcastText)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 type Ad = {
 	userId: number,
@@ -437,12 +438,17 @@ function BillboardService.onAdPurchased(player: Player, campaign: AdCampaigns.Ad
 	end)
 end
 
-function BillboardService.start()
+local function startNow()
 	-- Сразу в start: StartParkService (стартует позже по алфавиту) учтёт щиты как препятствия
 	local ok, err = pcall(build)
 	if not ok then
 		warn("[BillboardService] build failed:", err)
 	end
+	local names = {}
+	for index = 1, #StartPark.billboards do
+		table.insert(names, "Billboard" .. index)
+	end
+	FeatureReleaseService.parkObstacles(names)
 	Players.PlayerRemoving:Connect(function(player: Player)
 		-- Купленный показ остаётся до конца кампании; чистим только служебное
 		filtering[player.UserId] = nil
@@ -458,6 +464,12 @@ function BillboardService.start()
 			end
 		end
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «billboards» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function BillboardService.start()
+	FeatureReleaseService.whenReleased("billboards", "BillboardService", startNow)
 end
 
 return BillboardService

@@ -8,6 +8,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Hackathon = require(ReplicatedStorage.Shared.Config.Hackathon)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 local HackathonService = {}
 
@@ -31,7 +32,7 @@ local function logStart()
 	end
 end
 
-function HackathonService.start()
+local function startNow()
 	task.spawn(function()
 		local announcedStart = 0
 		while true do
@@ -48,6 +49,12 @@ function HackathonService.start()
 			task.wait(1)
 		end
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «hackathon» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function HackathonService.start()
+	FeatureReleaseService.whenReleased("hackathon", "HackathonService", startNow)
 end
 
 return HackathonService

@@ -13,6 +13,10 @@
 -- доля рынка %, заработано роялти. Rebirth не сбрасывает. Старый формат (3 этапа по играм) —
 -- migrate() по Console.legacyStageMap.
 -- Robux: grantProduct (MonetizationService) — consoleSpeed5 / consoleSpeed30 / consoleSkip.
+-- Обновления по средам (Config/Features): строка платформ (ПК, телефоны) — с запуска; своя
+-- консоль ("console") и её платформа ("platforms") — обновлением «Своя консоль». До выхода:
+-- этапы/оборудование не принимаются, таймер и роялти стоят, модель не ставится, ускорение
+-- за Robux выдаётся деньгами; данные profile.console лежат до выхода.
 -- Модель консоли (stage.model, V23) и оборудование (V30) ставятся на 3-й этаж при сборке
 -- участка (PlotService.plotChanged) и пересобираются при смене этапа / покупке;
 -- нет модели консоли — ничего, нет модели оборудования — заглушка из деталей.
@@ -31,6 +35,8 @@ local ConsoleRemotes = require(Shared.ConsoleRemotes)
 local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService)
 local StudioLayout = require(Shared.StudioLayout)
+local Features = require(Shared.Config.Features)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 type Data = {
 	v: number,
@@ -170,8 +176,12 @@ local function running(d: Data): boolean
 	return d.endsAt > 0 and not launched(d)
 end
 
+local function released(): boolean
+	return Features.isReleased("console")
+end
+
 local function consoleUnlocked(profile: DataService.Profile): boolean
-	return forceUnlock or profile.studioLevel >= Console.minStudioLevel
+	return released() and (forceUnlock or profile.studioLevel >= Console.minStudioLevel)
 end
 
 local function stageSeconds(index: number): number
@@ -185,7 +195,7 @@ end
 -- Открыта ли платформа игроку
 local function platformOpen(profile: DataService.Profile, platform: Platforms.Platform): boolean
 	if platform.needsConsole then
-		return launched(data(profile))
+		return released() and Features.isReleased("platforms") and launched(data(profile))
 	end
 	return profile.studioLevel >= platform.minStudioLevel
 end
@@ -374,7 +384,8 @@ local function renderModel(player: Player)
 		return
 	end
 	local d = data(profile)
-	local onFloor = profile.studioLevel >= Console.minStudioLevel
+	-- До выхода консоли модели и оборудования нет (данные не трогаем)
+	local onFloor = released() and profile.studioLevel >= Console.minStudioLevel
 	renderEquipment(plot, d, onFloor)
 	local name = if onFloor then shownModel(d) else nil
 	local old = plot:FindFirstChild(MODEL_NAME)
@@ -408,7 +419,7 @@ function ConsoleService.pushState(player: Player)
 		end
 	end
 	local royalty = royaltyPerMinute(player, profile, d)
-	local streamer = optional("StreamerService")
+	local streamer = if Features.isReleased("streamer") then optional("StreamerService") else nil
 	local streamerState = nil
 	if streamer then
 		local ok, value = pcall(streamer.stateFor, player, profile)
@@ -523,10 +534,13 @@ function ConsoleService.onGameReleased(player: Player, info: any)
 		return
 	end
 	local d = data(profile)
-	checkTimer(player, d)
 	local platform = if type(info.platform) == "string" then info.platform else "pc"
 	local score = num(info.score, 0)
 	logEvent(player, "platform", score, platform)
+	if not released() then
+		return
+	end
+	checkTimer(player, d)
 	if launched(d) and platform == "console" and score >= Console.hitScore then
 		d.share = math.min(d.share + Console.shareHit, Console.shareMax)
 	end
@@ -618,7 +632,8 @@ function ConsoleService.grantProduct(player: Player, profile: DataService.Profil
 	end
 	local d = data(profile)
 	logEvent(player, "console", d.stage + 1, "speed_" .. product.id)
-	if launched(d) then
+	-- Консоль ещё не вышла (кнопок нет, но чек мог прийти) или уже запущена — деньгами
+	if launched(d) or not released() then
 		local rewards = optional("RewardService")
 		if rewards then
 			-- Минуты — по цене товара, как у пакета «10 минут дохода» (49 R$): не дешёвый пакет денег
@@ -661,7 +676,7 @@ end
 -- Таймер этапа, роялти и таяние доли рынка (пока игрок в игре)
 local function tick(player: Player)
 	local profile = DataService.get(player)
-	if not profile then
+	if not profile or not released() then
 		return
 	end
 	local d = data(profile)
@@ -691,11 +706,24 @@ function ConsoleService.start()
 	-- мог выйти офлайн — завершаем сразу
 	DataService.onProfileLoaded(function(player)
 		local profile = DataService.get(player)
-		if profile then
+		if profile and released() then
 			checkTimer(player, data(profile))
 		end
 		task.defer(ConsoleService.pushState, player)
 	end)
+	-- Консоль вышла, пока сервер работает: модели, таймеры и окно — всем в игре
+	if not released() then
+		FeatureReleaseService.whenReleased("console", "ConsoleService", function()
+			for _, player in Players:GetPlayers() do
+				local profile = DataService.get(player)
+				if profile then
+					pcall(checkTimer, player, data(profile))
+					pcall(renderModel, player)
+					ConsoleService.pushState(player)
+				end
+			end
+		end)
+	end
 	Players.PlayerRemoving:Connect(function(player)
 		lastRequest[player] = nil
 		lastStage[player] = nil

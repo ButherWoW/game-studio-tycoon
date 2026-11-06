@@ -1,6 +1,7 @@
 --!strict
 -- Remotes графика контента (ContentDropService, Config/ContentDrops), по образцу TitleRemotes.
--- Новая волна для окна «Что нового» — атрибут игрока ContentDropNew (номер волны, 0 — нет).
+-- Новая волна для окна «Что нового» — атрибут игрока ContentDropNew (номер волны, 0 — нет);
+-- новое обновление систем по средам (FeatureReleaseService) — FeatureUpdateNew / FeatureUpdateSeen.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
@@ -9,6 +10,7 @@ local FOLDER_NAME = "ContentDropRemotes"
 
 local NAMES = {
 	"SeenDrop", -- клиент -> сервер: номер волны, окно «Что нового» закрыто
+	"SeenUpdate", -- клиент -> сервер: номер обновления систем (Config/Features), окно закрыто
 }
 
 local folder: Folder

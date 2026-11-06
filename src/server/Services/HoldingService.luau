@@ -24,6 +24,7 @@ local CoopRemotes = require(Shared.CoopRemotes)
 local TextSafe = require(Shared.TextSafe)
 local WordFilter = require(Shared.WordFilter)
 local DataService = require(script.Parent.DataService)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 local STORE_NAME = "Holdings_v1"
 local TAG_NAME = "HoldingTag"
@@ -962,7 +963,7 @@ local function watchTag(player: Player)
 	end)
 end
 
-function HoldingService.start()
+local function startNow()
 	CoopRemotes.HoldingRequest.OnServerEvent:Connect(function(player)
 		if cooldownPassed(lastRequest, player, REQUEST_COOLDOWN) then
 			sendState(player)
@@ -1027,6 +1028,20 @@ function HoldingService.start()
 			pcall(flush)
 		end
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «holdings» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function HoldingService.start()
+	FeatureReleaseService.mute("holdings", {
+		CoopRemotes.HoldingRequest,
+		CoopRemotes.HoldingCreate,
+		CoopRemotes.HoldingInvite,
+		CoopRemotes.HoldingReply,
+		CoopRemotes.HoldingLeave,
+		CoopRemotes.HoldingKick,
+	})
+	FeatureReleaseService.whenReleased("holdings", "HoldingService", startNow)
 end
 
 return HoldingService

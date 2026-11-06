@@ -12,6 +12,7 @@ local Shared = ReplicatedStorage.Shared
 local DailyEventRemotes = require(Shared.DailyEventRemotes)
 local DailyEvents = require(Shared.Config.DailyEvents)
 local Hackathon = require(Shared.Config.Hackathon)
+local Features = require(Shared.Config.Features)
 local Genres = require(Shared.Config.Genres)
 local Topics = require(Shared.Config.Topics)
 local Images = require(Shared.Config.Images)
@@ -169,14 +170,17 @@ local function fillSchedule(frame: Frame)
 		live = t >= golden.startsAt and t < golden.endsAt,
 	})
 	local hackathon = Hackathon.window(t)
-	table.insert(rows, {
-		at = hackathon.startsAt,
-		text = "🌙 " .. ClientState.t("devent_name_nightShift") .. " — " .. ClientState.t(
-			"devent_desc_nightShift",
-			{ x = Hackathon.speedMultiplier }
-		),
-		live = t >= hackathon.startsAt and t < hackathon.endsAt,
-	})
+	-- Ночь хакатона выходит обновлением «Аркада» (Config/Features)
+	if Features.isReleased("hackathon") then
+		table.insert(rows, {
+			at = hackathon.startsAt,
+			text = "🌙 " .. ClientState.t("devent_name_nightShift") .. " — " .. ClientState.t(
+				"devent_desc_nightShift",
+				{ x = Hackathon.speedMultiplier }
+			),
+			live = t >= hackathon.startsAt and t < hackathon.endsAt,
+		})
+	end
 	table.sort(rows, function(a, b)
 		return a.at < b.at
 	end)

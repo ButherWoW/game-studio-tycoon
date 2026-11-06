@@ -19,6 +19,7 @@ local Topics = require(Shared.Config.Topics)
 local Debug = require(Shared.Config.Debug)
 local DepthRemotes = require(Shared.DepthRemotes)
 local DataService = require(script.Parent.DataService)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 export type Contract = {
 	id: number,
@@ -409,7 +410,7 @@ local function tickPlayer(player: Player)
 	end
 end
 
-function ContractService.start()
+local function startNow()
 	DepthRemotes.ContractRequest.OnServerEvent:Connect(onRequest)
 	DepthRemotes.ContractRespond.OnServerEvent:Connect(onRespond)
 	DataService.onProfileLoaded(function(player, profile)
@@ -432,6 +433,16 @@ function ContractService.start()
 			end
 		end
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «contracts» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function ContractService.start()
+	FeatureReleaseService.mute("contracts", {
+		DepthRemotes.ContractRequest,
+		DepthRemotes.ContractRespond,
+	})
+	FeatureReleaseService.whenReleased("contracts", "ContractService", startNow)
 end
 
 return ContractService

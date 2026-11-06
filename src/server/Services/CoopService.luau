@@ -20,6 +20,7 @@ local CoopRemotes = require(Shared.CoopRemotes)
 local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService)
 local DevelopmentService = require(script.Parent.DevelopmentService)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 local TICK = 1
 local REPLY_COOLDOWN = 0.5
@@ -333,7 +334,7 @@ function CoopService.partnerOf(player: Player): Player?
 	return if session.host == player then session.guest else session.host
 end
 
-function CoopService.start()
+local function startNow()
 	CoopRemotes.CoopInvite.OnServerEvent:Connect(onInvite)
 	CoopRemotes.CoopReply.OnServerEvent:Connect(onReply)
 	CoopRemotes.CoopLeave.OnServerEvent:Connect(onLeave)
@@ -378,6 +379,17 @@ function CoopService.start()
 			end
 		end
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «coop» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function CoopService.start()
+	FeatureReleaseService.mute("coop", {
+		CoopRemotes.CoopInvite,
+		CoopRemotes.CoopReply,
+		CoopRemotes.CoopLeave,
+	})
+	FeatureReleaseService.whenReleased("coop", "CoopService", startNow)
 end
 
 return CoopService

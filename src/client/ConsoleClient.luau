@@ -15,6 +15,7 @@ local Shared = ReplicatedStorage.Shared
 local consoleRemotes: typeof(require(Shared.ConsoleRemotes))? = nil
 local Console = require(Shared.Config.Console)
 local Platforms = require(Shared.Config.Platforms)
+local Features = require(Shared.Config.Features)
 local Employees = require(Shared.Config.Employees)
 local Texts = require(Shared.Config.Texts)
 local Images = require(Shared.Config.Images)
@@ -143,7 +144,15 @@ function ConsoleClient.buildPicker(
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
 	layout.Parent = row
 	row.Parent = parent
-	for i, id in Platforms.order do
+	-- «Своя консоль» в строке — с обновлением «Своя консоль» (Config/Features); до него ПК и телефоны
+	local shown: { string } = {}
+	for _, id in Platforms.order do
+		local def = Platforms.get(id)
+		if not (def and def.needsConsole) or Features.isReleased("platforms") then
+			table.insert(shown, id)
+		end
+	end
+	for i, id in shown do
 		local open = ConsoleClient.platformOpen(id)
 		local selected = ConsoleClient.selectedPlatform == id
 		local def = Platforms.get(id)
@@ -166,7 +175,7 @@ function ConsoleClient.buildPicker(
 				end
 			end
 		)
-		b.Size = UDim2.new(1 / #Platforms.order, -6, 1, 0)
+		b.Size = UDim2.new(1 / #shown, -6, 1, 0)
 		b.LayoutOrder = i
 		ArtIcon.prefix(b, "", imageId, PICKER_HEIGHT - 12)
 		if not open then
@@ -639,7 +648,7 @@ end
 -- ===== Окно «Команда»: строка в карточке сотрудника =====
 
 function ConsoleClient.streamerButton(parent: Instance, employeeId: string, order: number)
-	if streamer().allowed ~= true then
+	if streamer().allowed ~= true or not Features.isReleased("streamer") then
 		return
 	end
 	local isStreamer = ConsoleClient.streamerId() == employeeId
@@ -660,6 +669,9 @@ end
 
 -- Пометка в строке сотрудника: «🎥 стримит»
 function ConsoleClient.streamerTag(employeeId: string): string?
+	if not Features.isReleased("streamer") then
+		return nil
+	end
 	return if ConsoleClient.streamerId() == employeeId then ClientState.t("streamer_tag") else nil
 end
 
