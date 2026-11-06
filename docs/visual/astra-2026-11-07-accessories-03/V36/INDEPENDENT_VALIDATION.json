@@ -1,0 +1,42 @@
+[
+  {
+    "file": "skin_cyber_dev_acc.rbxmx",
+    "parts": 16,
+    "welds": 15,
+    "pairChecks": 105,
+    "overlap": 0,
+    "binaryRoundtrip": "PASS",
+    "structural": "PASS",
+    "sha256": "298f941a5a6782cf134bf5339891605d48064e11be8c11445f848834f8c723bd"
+  },
+  {
+    "file": "skin_neon_streamer_acc.rbxmx",
+    "parts": 30,
+    "welds": 29,
+    "pairChecks": 406,
+    "overlap": 0,
+    "binaryRoundtrip": "PASS",
+    "structural": "PASS",
+    "sha256": "a815ef9e8e4b430f889ea5f7650844f75024daba62fbbc8df5207df6b18482d1"
+  },
+  {
+    "file": "skin_space_dev_acc.rbxmx",
+    "parts": 13,
+    "welds": 12,
+    "pairChecks": 66,
+    "overlap": 0,
+    "binaryRoundtrip": "PASS",
+    "structural": "PASS",
+    "sha256": "60aad8b33ca2c6e0528266a5e0298f78cbeabb7eb419286049dadb38294e2f4f"
+  },
+  {
+    "file": "skin_wizard_dev_acc.rbxmx",
+    "parts": 12,
+    "welds": 11,
+    "pairChecks": 55,
+    "overlap": 0,
+    "binaryRoundtrip": "PASS",
+    "structural": "PASS",
+    "sha256": "f1f670c3096e3b5df652bc09b1049801dd4fd462da73308ae2e1cb54093e52a7"
+  }
+]
