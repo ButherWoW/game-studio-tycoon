@@ -42,7 +42,8 @@ local PlotService = require(script.Parent.PlotService)
 local RewardService = require(script.Parent.RewardService)
 
 type Reply = { ok: boolean, text: string, confirm: string?, data: any? }
-type Ctx = { player: Player, args: { [string]: any }, confirmed: string? }
+-- player — над кем действие (у «игровых» действий это выбранный игрок или сам владелец), actor — кто вызвал
+type Ctx = { player: Player, actor: Player?, args: { [string]: any }, confirmed: string? }
 type Pending = { token: string, action: string, key: string, expires: number }
 type Handler = (ctx: Ctx) -> Reply
 
@@ -51,6 +52,9 @@ local EVENT_ATTRIBUTES = { "AdminEventId", "AdminEventStartsAt", "AdminEventEnds
 local GOLDEN_ATTRIBUTES = { "AdminGoldenStartsAt", "AdminGoldenEndsAt" }
 -- Готовые ответы без записи в лог: окно опрашивает их при открытии и переключении вкладок
 local QUIET = { players = true, status = true }
+-- Действия над игроком: по умолчанию на себе, с args.target (UserId) — на любом игроке этого сервера
+-- (владелец 07.11: «выбрать игрока и прописать ему то же, что себе»)
+local SUBJECT_ACTIONS = { cash = true, points = true, stage = true, finish = true }
 
 local AdminService = {}
 
@@ -711,7 +715,15 @@ local function onRequest(player: Player, action: any, rawArgs: any): Reply?
 		return reply(false, "Не понял запрос")
 	end
 	-- Токен подтверждения: только тот, что выдан этому игроку для этого же действия, и не просрочен
-	local ctx: Ctx = { player = player, args = args, confirmed = nil }
+	local subject = player
+	if type(action) == "string" and SUBJECT_ACTIONS[action] and args.target ~= nil then
+		local picked = targetOf(args)
+		if not picked then
+			return reply(false, "Игрока нет на сервере")
+		end
+		subject = picked
+	end
+	local ctx: Ctx = { player = subject, actor = player, args = args, confirmed = nil }
 	local token = args.confirm
 	if token ~= nil then
 		local entry = pending[player]
@@ -727,6 +739,10 @@ local function onRequest(player: Player, action: any, rawArgs: any): Reply?
 	if not ok then
 		warn("[AdminService] " .. tostring(action) .. " failed:", result)
 		return reply(false, "Ошибка на сервере (см. Output)")
+	end
+	-- Над другим игроком — отдельная строка в логе: кто и кому
+	if subject ~= player and result.ok then
+		logAction(player, tostring(action) .. "_for", who(subject))
 	end
 	if not QUIET[action] and not result.ok then
 		warn("[AdminService] " .. who(player) .. " ✗ " .. tostring(action) .. ": " .. result.text)

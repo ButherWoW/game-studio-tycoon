@@ -214,6 +214,17 @@ end
 
 -- ===== Вкладки =====
 
+-- Кому действия вкладки «Игрок»: nil — себе, иначе UserId игрока на сервере (AdminService.SUBJECT_ACTIONS)
+local actionTarget: number? = nil
+
+-- Аргументы действия с выбранной целью
+local function withActionTarget(args: { [string]: any }): { [string]: any }
+	if actionTarget then
+		args.target = actionTarget
+	end
+	return args
+end
+
 local function amountRow(parent: Instance, order: number, title: string, action: string)
 	local r = row(parent, order)
 	caption(r, title, 110)
@@ -224,7 +235,7 @@ local function amountRow(parent: Instance, order: number, title: string, action:
 			setStatus("Введи положительное число", Ui.colors.bad)
 			return
 		end
-		send(action, { amount = sign * amount })
+		send(action, withActionTarget({ amount = sign * amount }))
 	end
 	button(r, "Выдать", Ui.colors.good, 150, function()
 		go(1)
@@ -235,18 +246,87 @@ local function amountRow(parent: Instance, order: number, title: string, action:
 end
 
 local function buildPlayer(parent: Instance)
-	note(parent, 1, "Действия на этой вкладке — только на тебе.")
-	amountRow(parent, 2, "Деньги $", "cash")
-	amountRow(parent, 3, "ОИ", "points")
-	local stages = row(parent, 4)
+	actionTarget = nil
+	local chosen = note(
+		parent,
+		1,
+		"Кому: тебе. Выбери игрока ниже, чтобы выдать ему то же самое."
+	)
+	-- Выбор цели: «Я» и все игроки сервера (список обновляется кнопкой 🔄)
+	local targets = Instance.new("Frame")
+	targets.BackgroundTransparency = 1
+	targets.LayoutOrder = 2
+	targets.Size = UDim2.new(1, 0, 0, 0)
+	targets.AutomaticSize = Enum.AutomaticSize.Y
+	local grid = Instance.new("UIGridLayout")
+	grid.CellSize = UDim2.fromOffset(170, ROW - 8)
+	grid.CellPadding = UDim2.fromOffset(8, 8)
+	grid.SortOrder = Enum.SortOrder.LayoutOrder
+	grid.Parent = targets
+	targets.Parent = parent
+	local function paint()
+		for _, child in targets:GetChildren() do
+			if child:IsA("GuiButton") then
+				local id = child:GetAttribute("TargetId")
+				local on = (id == 0 and actionTarget == nil) or id == actionTarget
+				child.BackgroundColor3 = if on then Ui.colors.good else Ui.colors.locked
+			end
+		end
+	end
+	local function addTarget(order: number, userId: number, name: string)
+		local b = Ui.button(targets, name, Ui.colors.locked, function()
+			actionTarget = if userId == 0 then nil else userId
+			chosen.Text = if userId == 0
+				then "Кому: тебе. Выбери игрока ниже, чтобы выдать ему то же самое."
+				else "Кому: " .. name .. " (" .. userId .. ")"
+			paint()
+		end)
+		b:SetAttribute("TargetId", userId)
+		b.LayoutOrder = order
+	end
+	local function refreshTargets()
+		send("players", nil, function(data: any)
+			if type(data) ~= "table" or not targets.Parent then
+				return
+			end
+			for _, child in targets:GetChildren() do
+				if child:IsA("GuiButton") then
+					child:Destroy()
+				end
+			end
+			addTarget(0, 0, "👤 Я")
+			for i, entry in data do
+				if
+					type(entry) == "table"
+					and type(entry.userId) == "number"
+					and entry.userId ~= Players.LocalPlayer.UserId
+				then
+					addTarget(i, entry.userId, tostring(entry.name))
+				end
+			end
+			paint()
+		end)
+	end
+	button(
+		row(parent, 3),
+		"🔄 Обновить список игроков",
+		Ui.colors.locked,
+		300,
+		refreshTargets
+	)
+	addTarget(0, 0, "👤 Я")
+	paint()
+	amountRow(parent, 4, "Деньги $", "cash")
+	amountRow(parent, 5, "ОИ", "points")
+	local stages = row(parent, 6)
 	caption(stages, "Этап", 110)
 	for _, stage in Stages do
 		local level = stage.level
 		button(stages, level .. ". " .. stage.name, Ui.colors.primary, 140, function()
-			send("stage", { level = level })
+			send("stage", withActionTarget({ level = level }))
 		end)
 	end
-	local timers = row(parent, 5)
+	local timers = row(parent, 7)
 	caption(timers, "Закончить", 110)
 	for _, item in
 		{
@@ -259,7 +339,7 @@ local function buildPlayer(parent: Instance)
 	do
 		local kind = item[2]
 		button(timers, item[1], if kind == "all" then Ui.colors.good else Ui.colors.primary, 112, function()
-			send("finish", { kind = kind })
+			send("finish", withActionTarget({ kind = kind }))
 		end)
 	end
 end
