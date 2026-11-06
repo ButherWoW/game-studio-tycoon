@@ -1,0 +1,67 @@
+{
+  "status": "PASS",
+  "models": [
+    {
+      "model": "GarageWalls",
+      "parts": 369,
+      "opaquePanels": 12,
+      "geometryAndModelPivot": "byte-identical XML properties to accepted snapshot",
+      "otherPartProperties": "identical",
+      "newGeometryIntersections": 0,
+      "baselineInternalDecorativeJoints": "preserved; not claimed absent",
+      "lights": 1,
+      "lightShadows": false,
+      "sha256": {
+        "GarageWalls.rbxmx": "dc3ff1cc93a45e139c593349f6aa635997c0163a16229f23aa96a014b27f2d50",
+        "GarageWalls.rbxm": "2ea56d9ca9aba777bd0d2bb558bd540bccb7bfdb9b220099930ea83296ab54d8"
+      }
+    },
+    {
+      "model": "GarageWalls_Aurora",
+      "parts": 524,
+      "opaquePanels": 12,
+      "geometryAndModelPivot": "byte-identical XML properties to accepted snapshot",
+      "otherPartProperties": "identical",
+      "newGeometryIntersections": 0,
+      "baselineInternalDecorativeJoints": "preserved; not claimed absent",
+      "lights": 1,
+      "lightShadows": false,
+      "sha256": {
+        "GarageWalls_Aurora.rbxmx": "36939be3ad6c9a64d384d5717ee711f6aece371dd209a09548df12e379bf45c4",
+        "GarageWalls_Aurora.rbxm": "9b406efae994931b3e1c74a4b296f6b76e27fefaba03fa78ba24cdbc0c1d59ff"
+      }
+    },
+    {
+      "model": "GarageWalls_ObsidianGold",
+      "parts": 526,
+      "opaquePanels": 12,
+      "geometryAndModelPivot": "byte-identical XML properties to accepted snapshot",
+      "otherPartProperties": "identical",
+      "newGeometryIntersections": 0,
+      "baselineInternalDecorativeJoints": "preserved; not claimed absent",
+      "lights": 1,
+      "lightShadows": false,
+      "sha256": {
+        "GarageWalls_ObsidianGold.rbxmx": "e06403359499358b76673cb832822cab0b3f21d7d7342b4eafd9a236e7cf6d08",
+        "GarageWalls_ObsidianGold.rbxm": "4edf4ec6b5c8b9873f6c6e8e718082ad43199deb403863263f4d38e381439d21"
+      }
+    },
+    {
+      "model": "GarageWalls_Sakura",
+      "parts": 541,
+      "opaquePanels": 12,
+      "geometryAndModelPivot": "byte-identical XML properties to accepted snapshot",
+      "otherPartProperties": "identical",
+      "newGeometryIntersections": 0,
+      "baselineInternalDecorativeJoints": "preserved; not claimed absent",
+      "lights": 1,
+      "lightShadows": false,
+      "sha256": {
+        "GarageWalls_Sakura.rbxmx": "95eabbbb6eca8602864f11ea5fdf4f8624d22ea2fa02d12335f172f829df3d6d",
+        "GarageWalls_Sakura.rbxm": "4f0dfef9510cb80d19ed94f98041d8f0d71fa40aa48b676f10a3e162c77a9d8c"
+      }
+    }
+  ],
+  "runtimeTested": false,
+  "limits": "Unchanged geometry implies no NEW geometric intersections; this is not a claim of zero pre-existing internal decorative joins. Runtime double-shell removal is a separate Dev2 patch."
+}

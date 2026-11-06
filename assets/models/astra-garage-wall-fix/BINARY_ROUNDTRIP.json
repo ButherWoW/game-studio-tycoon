@@ -1,0 +1,22 @@
+[
+  {
+    "file": "GarageWalls.rbxm",
+    "parts": 369,
+    "binaryRoundtrip": "PASS: names/classes/geometry/transparency/material/light"
+  },
+  {
+    "file": "GarageWalls_Aurora.rbxm",
+    "parts": 524,
+    "binaryRoundtrip": "PASS: names/classes/geometry/transparency/material/light"
+  },
+  {
+    "file": "GarageWalls_ObsidianGold.rbxm",
+    "parts": 526,
+    "binaryRoundtrip": "PASS: names/classes/geometry/transparency/material/light"
+  },
+  {
+    "file": "GarageWalls_Sakura.rbxm",
+    "parts": 541,
+    "binaryRoundtrip": "PASS: names/classes/geometry/transparency/material/light"
+  }
+]
