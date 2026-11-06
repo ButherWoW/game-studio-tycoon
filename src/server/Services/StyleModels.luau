@@ -7,7 +7,8 @@
 -- (сидушки столов), VipService (кресло), BailiffService, PlotService (PcSeat у Desk1).
 -- Данные: profile.furniture = { owned = { [styleId]: true }, selected = styleId }.
 -- Отделка студии (Config/InteriorFinishes) — отдельный выбор с тем же поиском шаблона: оболочки
--- этапов (InteriorFinishes.SHELLS) берут суффикс отделки, всё остальное — суффикс стиля мебели.
+-- этапов (InteriorFinishes.SHELLS) берут суффикс отделки, мебель — суффикс стиля мебели, а при
+-- «Классике» — суффикс отделки (мебель в тон отделке, если шаблон <Имя><suffix> импортирован).
 -- Данные: profile.interior = { owned = { [finishId]: true }, selected = finishId }.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -120,7 +121,13 @@ function StyleModels.find(folder: Instance?, name: string, profile: DataService.
 		local finish = StyleModels.finish(profile)
 		styled = if finish then variant(folder, shell, finish.suffix) else nil
 	else
+		-- Мебель: купленный стиль мебели важнее; при «Классике» — мебель в тон отделке
+		-- (Desk1_Sakura от Астры), если такой шаблон импортирован
 		styled = variant(folder, name, StyleModels.suffix(profile))
+		if not styled and StyleModels.suffix(profile) == "" then
+			local finish = StyleModels.finish(profile)
+			styled = if finish then variant(folder, name, finish.suffix) else nil
+		end
 	end
 	return styled or folder:FindFirstChild(name)
 end
