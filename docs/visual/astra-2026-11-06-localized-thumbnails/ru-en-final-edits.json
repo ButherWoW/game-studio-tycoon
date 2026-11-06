@@ -1,0 +1,62 @@
+[
+  {
+    "n": 1,
+    "lang": "ru",
+    "headline": "ИЗ ГАРАЖА В ОФИС",
+    "file": "thumb_v2_1_ru.png",
+    "prompt": "Use case: text-localization. Edit target attached existing image. Reposition ONLY main title \"ИЗ ГАРАЖА В ОФИС\" downward so its very top including diacritics and black outline starts at Y=110 pixels (10% down from top), and horizontally fully inside X=160 to1760 on1920x1080 canvas. This is mandatory: generous empty space ABOVE the title, more than6% image height; no title glyph or accent in top100pixels. Reduce title size as necessary, no moving entire scene, no crop/zoom/scene reconstruction.  All objects, characters, framing, decorations and10/10 remain unchanged. No style labels forimage5. Exact same headline spelling, colors, outline.",
+    "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_1_ru.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-d6c1cd96-e322-4530-9c14-876520b08e1e.png",
+    "previous": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-f1af2955-e9db-4a1e-8bf2-3b52888af43a.png"
+  },
+  {
+    "n": 2,
+    "lang": "ru",
+    "headline": "СОБЕРИ КОМАНДУ",
+    "file": "thumb_v2_2_ru.png",
+    "prompt": "Use case: text-localization. Edit target attached existing image. Reposition ONLY main title \"СОБЕРИ КОМАНДУ\" downward so its very top including diacritics and black outline starts at Y=110 pixels (10% down from top), and horizontally fully inside X=160 to1760 on1920x1080 canvas. This is mandatory: generous empty space ABOVE the title, more than6% image height; no title glyph or accent in top100pixels. Reduce title size as necessary, no moving entire scene, no crop/zoom/scene reconstruction.  All objects, characters, framing, decorations and10/10 remain unchanged. No style labels forimage5. Exact same headline spelling, colors, outline.",
+    "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_2_ru.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-bb50f1e5-a681-4647-8d4b-dde86a1f6f8d.png",
+    "previous": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-652a4c08-dc84-4c04-bf38-51b9690c755d.png"
+  },
+  {
+    "n": 3,
+    "lang": "ru",
+    "headline": "СДЕЛАЙ ХИТ",
+    "file": "thumb_v2_3_ru.png",
+    "prompt": "Use case: text-localization. Edit target attached existing image. Reposition ONLY main title \"СДЕЛАЙ ХИТ\" downward so its very top including diacritics and black outline starts at Y=110 pixels (10% down from top), and horizontally fully inside X=160 to1760 on1920x1080 canvas. This is mandatory: generous empty space ABOVE the title, more than6% image height; no title glyph or accent in top100pixels. Reduce title size as necessary, no moving entire scene, no crop/zoom/scene reconstruction.  All objects, characters, framing, decorations and10/10 remain unchanged. No style labels forimage5. Exact same headline spelling, colors, outline.",
+    "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_3_ru.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-0e81e751-9dc4-45dc-9476-75ce4a6a4fb3.png",
+    "previous": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-76b8fc6e-4365-4012-8289-c099efe33a98.png"
+  },
+  {
+    "n": 4,
+    "lang": "ru",
+    "headline": "ЗНАКОМЬСЯ: ТВОЙ ТАЛИСМАН",
+    "file": "thumb_v2_4_ru.png",
+    "prompt": "Use case: text-localization. Edit target attached existing image. Reposition ONLY main title \"ЗНАКОМЬСЯ: ТВОЙ ТАЛИСМАН\" downward so its very top including diacritics and black outline starts at Y=110 pixels (10% down from top), and horizontally fully inside X=160 to1760 on1920x1080 canvas. This is mandatory: generous empty space ABOVE the title, more than6% image height; no title glyph or accent in top100pixels. Reduce title size as necessary, no moving entire scene, no crop/zoom/scene reconstruction. Two lines: ЗНАКОМЬСЯ: ТВОЙ / ТАЛИСМАН. All objects, characters, framing, decorations and10/10 remain unchanged. No style labels forimage5. Exact same headline spelling, colors, outline.",
+    "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_4_ru.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-7e3796dd-a95e-44dc-b5e2-42949212c0ca.png",
+    "previous": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-c3fbeafe-791f-4cd7-b2b7-114645e03b25.png"
+  },
+  {
+    "n": 5,
+    "lang": "ru",
+    "headline": "ВЫБЕРИ СВОЙ СТИЛЬ",
+    "file": "thumb_v2_5_ru.png",
+    "prompt": "Use case: text-localization. Edit target attached existing image. Reposition ONLY main title \"ВЫБЕРИ СВОЙ СТИЛЬ\" downward so its very top including diacritics and black outline starts at Y=110 pixels (10% down from top), and horizontally fully inside X=160 to1760 on1920x1080 canvas. This is mandatory: generous empty space ABOVE the title, more than6% image height; no title glyph or accent in top100pixels. Reduce title size as necessary, no moving entire scene, no crop/zoom/scene reconstruction.  All objects, characters, framing, decorations and10/10 remain unchanged. No style labels forimage5. Exact same headline spelling, colors, outline.",
+    "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_5_ru.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-c0a7cd0f-6966-4368-9b15-a618d5002cdc.png",
+    "previous": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-bdd568fe-7ede-4493-806d-66db73a5f129.png"
+  },
+  {
+    "n": 5,
+    "lang": "en",
+    "headline": "CHOOSE YOUR STYLE",
+    "file": "thumb_v2_5_en.png",
+    "prompt": "Use case: text-localization. Edit target attached existing image. Reposition ONLY main title \"CHOOSE YOUR STYLE\" downward so its very top including diacritics and black outline starts at Y=110 pixels (10% down from top), and horizontally fully inside X=160 to1760 on1920x1080 canvas. This is mandatory: generous empty space ABOVE the title, more than6% image height; no title glyph or accent in top100pixels. Reduce title size as necessary, no moving entire scene, no crop/zoom/scene reconstruction.  All objects, characters, framing, decorations and10/10 remain unchanged. No style labels forimage5. Exact same headline spelling, colors, outline.",
+    "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-v32/V32/thumb_v2_5_en.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-8a9a19d2-c1c3-4ac1-abf6-db104c07a284.png",
+    "previous": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-f99b3032-2912-4427-b6c7-adca05e97156.png"
+  }
+]

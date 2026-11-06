@@ -1,0 +1,56 @@
+[
+  {
+    "n": 1,
+    "lang": "ru",
+    "headline": "ИЗ ГАРАЖА В ОФИС",
+    "file": "thumb_v2_1_ru.png",
+    "prompt": "Use case: text-localization. EDITthisexistingthumbnail, doNOTcreateanewscene. ChangeONLYthemainheadline to exactly \"ИЗ ГАРАЖА В ОФИС\" in uppercase Cyrillic Russian. Exactspellingletterbyletter, no translationsoradditionalwords. Keepthesameboldroundedfontstyle darknavyoutline white/goldfills bevels andplacementattop as original. Fitwith6%left/right/topmargins, allletterscomplete, longheadlinecanbe2lines ONLYintheoriginaltopheadlinezone; donotmoveorcovercharacters/mainscene.   PreserveALLothersceneobjects, faces, clothing, positions, colors, monitors,pictures, architecture, lighting,camera andcomposition EXACTLY as supplied. Do notaddanynewtext/logo/watermark. Final16:9image1920x1080fullbleedopaque.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_1.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-29aaca56-6943-4015-8074-6e1abef8d414.png"
+  },
+  {
+    "n": 2,
+    "lang": "ru",
+    "headline": "СОБЕРИ КОМАНДУ",
+    "file": "thumb_v2_2_ru.png",
+    "prompt": "Use case: text-localization. EDITthisexistingthumbnail, doNOTcreateanewscene. ChangeONLYthemainheadline to exactly \"СОБЕРИ КОМАНДУ\" in uppercase Cyrillic Russian. Exactspellingletterbyletter, no translationsoradditionalwords. Keepthesameboldroundedfontstyle darknavyoutline white/goldfills bevels andplacementattop as original. Fitwith6%left/right/topmargins, allletterscomplete, longheadlinecanbe2lines ONLYintheoriginaltopheadlinezone; donotmoveorcovercharacters/mainscene.   PreserveALLothersceneobjects, faces, clothing, positions, colors, monitors,pictures, architecture, lighting,camera andcomposition EXACTLY as supplied. Do notaddanynewtext/logo/watermark. Final16:9image1920x1080fullbleedopaque.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_2.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-93c38ec1-326d-4729-a198-64860a5f61d3.png"
+  },
+  {
+    "n": 3,
+    "lang": "ru",
+    "headline": "СДЕЛАЙ ХИТ",
+    "file": "thumb_v2_3_ru.png",
+    "prompt": "Use case: text-localization. EDITthisexistingthumbnail, doNOTcreateanewscene. ChangeONLYthemainheadline to exactly \"СДЕЛАЙ ХИТ\" in uppercase Cyrillic Russian. Exactspellingletterbyletter, no translationsoradditionalwords. Keepthesameboldroundedfontstyle darknavyoutline white/goldfills bevels andplacementattop as original. Fitwith6%left/right/topmargins, allletterscomplete, longheadlinecanbe2lines ONLYintheoriginaltopheadlinezone; donotmoveorcovercharacters/mainscene. Keeptheexisting10/10 exactlyunchanged.  PreserveALLothersceneobjects, faces, clothing, positions, colors, monitors,pictures, architecture, lighting,camera andcomposition EXACTLY as supplied. Do notaddanynewtext/logo/watermark. Final16:9image1920x1080fullbleedopaque.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_3.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-29079158-92a5-4cdb-96a8-b5d54cb4b96b.png"
+  },
+  {
+    "n": 4,
+    "lang": "ru",
+    "headline": "ЗНАКОМЬСЯ: ТВОЙ ТАЛИСМАН",
+    "file": "thumb_v2_4_ru.png",
+    "prompt": "Use case: text-localization. EDITthisexistingthumbnail, doNOTcreateanewscene. ChangeONLYthemainheadline to exactly \"ЗНАКОМЬСЯ: ТВОЙ ТАЛИСМАН\" in uppercase Cyrillic Russian. Exactspellingletterbyletter, no translationsoradditionalwords. Keepthesameboldroundedfontstyle darknavyoutline white/goldfills bevels andplacementattop as original. Fitwith6%left/right/topmargins, allletterscomplete, longheadlinecanbe2lines ONLYintheoriginaltopheadlinezone; donotmoveorcovercharacters/mainscene.   PreserveALLothersceneobjects, faces, clothing, positions, colors, monitors,pictures, architecture, lighting,camera andcomposition EXACTLY as supplied. Do notaddanynewtext/logo/watermark. Final16:9image1920x1080fullbleedopaque.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_4.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-f8079df9-d22f-4993-9667-a3a7376df0a6.png"
+  },
+  {
+    "n": 5,
+    "lang": "ru",
+    "headline": "ВЫБЕРИ СВОЙ СТИЛЬ",
+    "file": "thumb_v2_5_ru.png",
+    "prompt": "Use case: text-localization. EDITthisexistingthumbnail, doNOTcreateanewscene. ChangeONLYthemainheadline to exactly \"ВЫБЕРИ СВОЙ СТИЛЬ\" in uppercase Cyrillic Russian. Exactspellingletterbyletter, no translationsoradditionalwords. Keepthesameboldroundedfontstyle darknavyoutline white/goldfills bevels andplacementattop as original. Fitwith6%left/right/topmargins, allletterscomplete, longheadlinecanbe2lines ONLYintheoriginaltopheadlinezone; donotmoveorcovercharacters/mainscene.  REMOVEthefourbottomstylelabelsCLASSIC/NEON/COZY/MINIMAL entirelyINCLUDINGtheirpillbackplates, fillonlythosesmalllabelregionswithmatchingfloorfromeachpanel. Keepallfourfurniturepanelsunaltered. PreserveALLothersceneobjects, faces, clothing, positions, colors, monitors,pictures, architecture, lighting,camera andcomposition EXACTLY as supplied. Do notaddanynewtext/logo/watermark. Final16:9image1920x1080fullbleedopaque.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_5.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-baf2a613-ec3f-4b74-ad65-2154984ccb74.png"
+  },
+  {
+    "n": 5,
+    "lang": "en",
+    "headline": "CHOOSE YOUR STYLE",
+    "file": "thumb_v2_5_en.png",
+    "prompt": "Use case: text-localization. EDITthisexistingthumbnail, doNOTcreateanewscene. ChangeONLYthemainheadline to exactly \"CHOOSE YOUR STYLE\" in uppercase English. Exactspellingletterbyletter, no translationsoradditionalwords. Keepthesameboldroundedfontstyle darknavyoutline white/goldfills bevels andplacementattop as original. Fitwith6%left/right/topmargins, allletterscomplete, longheadlinecanbe2lines ONLYintheoriginaltopheadlinezone; donotmoveorcovercharacters/mainscene.  REMOVEthefourbottomstylelabelsCLASSIC/NEON/COZY/MINIMAL entirelyINCLUDINGtheirpillbackplates, fillonlythosesmalllabelregionswithmatchingfloorfromeachpanel. Keepallfourfurniturepanelsunaltered. PreserveALLothersceneobjects, faces, clothing, positions, colors, monitors,pictures, architecture, lighting,camera andcomposition EXACTLY as supplied. Do notaddanynewtext/logo/watermark. Final16:9image1920x1080fullbleedopaque.",
+    "reference": "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_5.png",
+    "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-8b68edaa-2906-4656-8bd5-be9e44dfc81b.png"
+  }
+]
