@@ -1919,4 +1919,14 @@ return {
 	guide_floor2_3 = "Progresmu terlihat di jendela 🛋️ Studio; di lift 🛗 tekan lantai 🔒, nanti kami tunjukkan apa yang kurang",
 	platform_notice_phone = "📱 Platform Ponsel terbuka! Pilih di jendela “Game baru”",
 	build_prompt = "⚡ Percepat pembangunan",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Dinding transparan",
+	setting_wallfade_hint = "Dinding di antara kamera dan karaktermu menjadi tembus pandang",
+	intro_1 = "Kamu berumur 17 tahun. Seumur hidup kamu bermain game, dan sekarang kamu ingin membuatnya. Tidak ada uang, tidak ada kantor. Hanya ada laptop tua dan sebuah mimpi.",
+	intro_2 = "Mulai dari yang kecil: duduklah dengan laptop di bangku taman dan buat game pertamamu. Pilih genre dan tema, lalu bagi tenagamu untuk gameplay, grafis, suara, dan cerita.",
+	intro_3 = "Kritikus memberi nilai 1 sampai 10. Game bagus mendatangkan uang dan fans, game jelek membuat mereka kabur. Beli garasi, rekrut tim, pindah ke kantor.",
+	intro_4 = "Tujuanmu: dari bangku taman sampai gedung pencakar langit dan jadi studio paling terkenal di dunia. Siap? Studiomu butuh nama!",
+	intro_next = "Lanjut",
+	intro_skip = "Lewati",
+	intro_start = "Mulai",
 }
