@@ -499,7 +499,11 @@ function HudController.start()
 		local paused = data.paused == true
 		local hintUntil = if previous then previous.hintUntil else nil
 		-- Подсказка — только в момент, когда игрок отошёл, и не чаще раза в минуту
-		if paused and not (previous and previous.paused) and os.clock() - lastPauseHint >= PAUSE_HINT_COOLDOWN then
+		if
+			paused
+			and not (previous and previous.paused)
+			and os.clock() - lastPauseHint >= PAUSE_HINT_COOLDOWN
+		then
 			lastPauseHint = os.clock()
 			hintUntil = lastPauseHint + PAUSE_HINT_SECONDS
 			task.delay(PAUSE_HINT_SECONDS + 0.1, renderProgress)
