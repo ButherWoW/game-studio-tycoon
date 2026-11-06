@@ -1,0 +1,42 @@
+[
+  {
+    "file": "skin_bug_hunter_acc.rbxmx",
+    "parts": 28,
+    "welds": 27,
+    "pairChecks": 351,
+    "overlap": 0,
+    "binaryRoundtrip": "PASS",
+    "structural": "PASS",
+    "sha256": "ec1b56ecc402fdce158bdf413bf329939c298bf7cfe9a5eed71fae6606f89f30"
+  },
+  {
+    "file": "skin_pixel_artist_acc.rbxmx",
+    "parts": 9,
+    "welds": 8,
+    "pairChecks": 28,
+    "overlap": 0,
+    "binaryRoundtrip": "PASS",
+    "structural": "PASS",
+    "sha256": "ed8a7f17a42578310953badd575d9c257c8f244a9f471a0c0efcf4e13cb38e57"
+  },
+  {
+    "file": "skin_retro_gamer_acc.rbxmx",
+    "parts": 10,
+    "welds": 9,
+    "pairChecks": 36,
+    "overlap": 0,
+    "binaryRoundtrip": "PASS",
+    "structural": "PASS",
+    "sha256": "811a9eb8fb48f4891b326c8fe79e64ee2121070df8bac02e68694688853abe41"
+  },
+  {
+    "file": "skin_speedrunner_acc.rbxmx",
+    "parts": 27,
+    "welds": 26,
+    "pairChecks": 325,
+    "overlap": 0,
+    "binaryRoundtrip": "PASS",
+    "structural": "PASS",
+    "sha256": "1b037292fa88d08bf3ff23e79dcdfca48626573533a8b25983395ece591a7a0c"
+  }
+]
