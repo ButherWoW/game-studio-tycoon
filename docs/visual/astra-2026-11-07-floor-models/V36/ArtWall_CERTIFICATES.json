@@ -1,0 +1,6173 @@
+[
+  {
+    "a": "RBX1",
+    "b": "RBX3",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 10.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX4",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 8.881784197001252e-16,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX5",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 11.600000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX6",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 2.7755575615628914e-16,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX7",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 7.8,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX8",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.20000000000000018,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX9",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 8.881784197001252e-16,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX10",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 11.600000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX11",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.8500000000000003,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX12",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 2.2,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX13",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.2,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX14",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 9.39,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX15",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 9.64,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX16",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 9.89,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX17",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 10.14,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX18",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 10.39,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX19",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 10.64,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX20",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 1.05,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX21",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.085,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX22",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 4.9,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX23",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 2.8,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX24",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 2.55,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX25",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.11,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX26",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 7.93,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX27",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.11,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX28",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.11,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX29",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.27,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX30",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.675,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX31",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.5,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX32",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 7.18,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX33",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 7.125,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX34",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.44,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX1",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 7.54,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX4",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 11.600000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX5",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.881784197001252e-16,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX6",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 2.7755575615628914e-16,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX7",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 7.8,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX8",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.20000000000000018,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX9",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 11.600000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX10",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.881784197001252e-16,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX11",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 8.2,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX12",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.2,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX13",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.2000000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX14",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.4900000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX15",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.2400000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX16",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.8500000000000003,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX17",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.8500000000000003,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX18",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.8500000000000003,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX19",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.8500000000000003,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX20",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 11.115,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX21",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.845,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX22",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 8.55,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX23",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 8.8,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX24",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.55,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX25",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.73,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX26",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.9100000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX27",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.9100000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX28",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.9100000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX29",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.07,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX30",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.675,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX31",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.9,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX32",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.22,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX33",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.425,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.4399999999999995,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX3",
+    "b": "RBX35",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.34,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX5",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 13.200000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX6",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.10000000000000053,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX7",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX8",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.8000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX9",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 2.220446049250313e-16,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX10",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 13.200000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX11",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.8000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX12",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.8000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX13",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 7.800000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX14",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 10.990000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX15",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 11.240000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX16",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 11.490000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX17",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 11.740000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX18",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 11.990000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX19",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 12.240000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX20",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.41500000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX21",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.6850000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX22",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.1500000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX23",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.4000000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX24",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 4.15,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX25",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.710000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX26",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 9.530000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX27",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.710000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX28",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.710000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX29",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.870000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX30",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 7.275,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX31",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.100000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX32",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.780000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX33",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.725000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX34",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 7.040000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX4",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 9.14,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX6",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.10000000000000053,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX7",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX8",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.8000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX9",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 13.200000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX10",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 2.220446049250313e-16,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX11",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 9.8,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX12",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 6.800000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX13",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.8000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX14",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.0900000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX15",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.8400000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX16",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.5900000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX17",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.3400000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX18",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.0900000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX19",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.8400000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX20",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 12.715,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX21",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 6.445,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX22",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 10.15,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX23",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 10.4,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX24",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 7.15,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX25",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 6.33,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX26",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.5100000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX27",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.5100000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX28",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.5100000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX29",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.6700000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX30",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.275,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX31",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.5,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX32",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.8200000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX33",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.025,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 6.040000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX5",
+    "b": "RBX35",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.9400000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX7",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX8",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 2.220446049250313e-16,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX9",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.10000000000000053,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX10",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.10000000000000053,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX11",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX12",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX13",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX14",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX15",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX16",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX17",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX18",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX19",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX20",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX21",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX22",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.11999999999999998,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX23",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.11999999999999998,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX24",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.11999999999999998,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX25",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.22999999999999998,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX26",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.22999999999999998,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX27",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.22999999999999998,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX28",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.22999999999999998,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX29",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.26,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX30",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.32,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX31",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.32,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX32",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.32,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX33",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.32,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX34",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.11999999999999998,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX6",
+    "b": "RBX35",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.11999999999999998,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX8",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 7.8,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX9",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 7.8,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX10",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 7.8,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX11",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.8499999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX12",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.8499999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX13",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.8499999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX14",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.8499999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX15",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.8499999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX16",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.8499999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX17",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.8499999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX18",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.8499999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX19",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.8499999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX20",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 1.049999999999999,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX21",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 1.049999999999999,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX22",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 1.7000000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX23",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 3.5999999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX24",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 5.549999999999999,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX25",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 2.3499999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX26",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 2.3499999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX27",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 4.6499999999999995,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX28",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 2.1899999999999995,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX29",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 2.3499999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX30",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 3.5999999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX31",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 3.2,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX32",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 3.8,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX33",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 2.6050000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX34",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 3.4400000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX7",
+    "b": "RBX35",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 3.4400000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX9",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.8000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX10",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.8000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX11",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.8500000000000003,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX12",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.8500000000000003,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX13",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.8500000000000003,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX14",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.8500000000000003,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX15",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.8500000000000003,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX16",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.09000000000000075,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX17",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.34000000000000075,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX18",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.5900000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX19",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.8400000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX20",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.3150000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX21",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 1.05,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX22",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 4.9,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX23",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 2.8,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX24",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 1.55,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX25",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 3.1499999999999995,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX26",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 3.1499999999999995,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX27",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 2.99,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX28",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 5.45,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX29",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 3.1499999999999995,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX30",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 3.3999999999999995,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX31",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 3.3999999999999995,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX32",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 3.4000000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX33",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 4.745,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX34",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 4.24,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX8",
+    "b": "RBX35",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 4.24,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX10",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 13.200000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX11",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.8000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX12",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.8000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX13",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 7.800000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX14",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 10.990000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX15",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 11.240000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX16",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 11.490000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX17",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 11.740000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX18",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 11.990000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX19",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 12.240000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX20",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.41500000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX21",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.6850000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX22",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.1500000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX23",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.4000000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX24",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 4.15,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX25",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.710000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX26",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 9.530000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX27",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.710000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX28",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.710000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX29",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.870000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX30",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 7.275,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX31",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.100000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX32",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.780000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX33",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.725000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX34",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 7.040000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX9",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 9.14,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX11",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 9.8,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX12",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 6.800000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX13",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.8000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX14",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.0900000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX15",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.8400000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX16",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.5900000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX17",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.3400000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX18",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.0900000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX19",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.8400000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX20",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 12.715,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX21",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 6.445,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX22",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 10.15,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX23",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 10.4,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX24",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 7.15,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX25",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 6.33,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX26",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.5100000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX27",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.5100000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX28",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.5100000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX29",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.6700000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX30",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.275,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX31",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.5,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX32",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.8200000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX33",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.025,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 6.040000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX10",
+    "b": "RBX35",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.9400000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX12",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.40000000000000036,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX13",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 4.4,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX14",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 7.590000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX15",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 7.840000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX16",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.09,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX17",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.34,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX18",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.59,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX19",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.84,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX20",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.3150000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX21",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.285,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX22",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX23",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX24",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.75,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX25",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.31,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX26",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.13,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX27",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.3100000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX28",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.3100000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX29",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.47,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX30",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.875,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX31",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 4.7,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX32",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.380000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX33",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.325,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX34",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.64,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX11",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.74,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX13",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.4,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX14",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 4.590000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX15",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 4.840000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX16",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.090000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX17",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.340000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX18",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.590000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX19",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.840000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX20",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.3150000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX21",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.2849999999999999,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX22",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.75,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX23",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX24",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX25",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.30999999999999994,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX26",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.13,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX27",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.31000000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX28",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.31000000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX29",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.47,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX30",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.875,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX31",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.7,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX32",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 2.38,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX33",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 2.325,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX34",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.6399999999999999,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX12",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 2.74,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX14",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.5900000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX15",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.8400000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX16",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.0900000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX17",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.3400000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX18",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.5900000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX19",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.8400000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX20",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 7.315,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX21",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.045,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX22",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.75,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX23",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX24",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.75,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX25",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.9299999999999999,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX26",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.11,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX27",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.11,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX28",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.11,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX29",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.14,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX30",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.2,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX31",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.2,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX32",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.2,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX33",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.2,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.6399999999999999,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX13",
+    "b": "RBX35",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX15",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.13000000000000078,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX16",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.3800000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX17",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.6300000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX18",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.8800000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX19",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.1300000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX20",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 10.505,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX21",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.235,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX22",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 7.94,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX23",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 8.190000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX24",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.94,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX25",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.120000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX26",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.3000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX27",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.3000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX28",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.3000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX29",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.4600000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX30",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.0650000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX31",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.2900000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX32",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.6100000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX33",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.8150000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.8300000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX14",
+    "b": "RBX35",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.7300000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX16",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.13000000000000078,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX17",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.3800000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX18",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.6300000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX19",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.8800000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX20",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 10.755,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX21",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.485,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX22",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 8.190000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX23",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 8.440000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX24",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.19,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX25",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.370000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX26",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.5500000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX27",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.5500000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX28",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.5500000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX29",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.7100000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX30",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.3150000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX31",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.5400000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX32",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.8600000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX33",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.0650000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.08,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX15",
+    "b": "RBX35",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.9800000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX17",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.13000000000000078,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX18",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.3800000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX19",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.6300000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX20",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 11.005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX21",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.735,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX22",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 8.440000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX23",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 8.690000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX24",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.44,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX25",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.620000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX26",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.8000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX27",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.8000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX28",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.8000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX29",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.9600000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX30",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.5650000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX31",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.7900000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX32",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.1100000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX33",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.3150000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.33,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX16",
+    "b": "RBX35",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.2300000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX18",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.13000000000000078,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX19",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.3800000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX20",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 11.255,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX21",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.985,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX22",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 8.690000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX23",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 8.940000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX24",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.69,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX25",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.870000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX26",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.0500000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX27",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.0500000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX28",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.0500000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX29",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.2100000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX30",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.8150000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX31",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.0400000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX32",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.3600000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX33",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.5650000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.58,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX17",
+    "b": "RBX35",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.4800000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX19",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.13000000000000078,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX20",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 11.505,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX21",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.235,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX22",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 8.940000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX23",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 9.190000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX24",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.94,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX25",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.120000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX26",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.3000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX27",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.3000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX28",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.3000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX29",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.4600000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX30",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.065,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX31",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.2900000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX32",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.6100000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX33",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.8150000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.83,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX18",
+    "b": "RBX35",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.7300000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX20",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 11.755,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX21",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.485,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX22",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 9.190000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX23",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 9.440000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX24",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 6.19,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX25",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.370000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX26",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.5500000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX27",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.5500000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX28",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.5500000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX29",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.7100000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX30",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 4.315,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX31",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.5400000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX32",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.8600000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX33",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.0650000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 5.08,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX19",
+    "b": "RBX35",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.9800000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX21",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.2,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX22",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.665,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX23",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.915,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX24",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.665,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX25",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.2250000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX26",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 9.045,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX27",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.2250000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX28",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.2250000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX29",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.385,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX30",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.79,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX31",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 7.615,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX32",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.295,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX33",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.24,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX34",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.555000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX20",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 8.655000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX22",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.635,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX23",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 3.885,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX24",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.635,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX25",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.05,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX26",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 2.775,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX27",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.05,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX28",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 0.05,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX29",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.11500000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX30",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.52,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX31",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.345,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX32",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 2.0250000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX33",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.97,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX34",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.28500000000000003,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX21",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 2.3850000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX22",
+    "b": "RBX23",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.7000000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX22",
+    "b": "RBX24",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.0999999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX22",
+    "b": "RBX25",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.6599999999999997,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX22",
+    "b": "RBX26",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.4799999999999995,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX22",
+    "b": "RBX27",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.66,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX22",
+    "b": "RBX28",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.66,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX22",
+    "b": "RBX29",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.82,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX22",
+    "b": "RBX30",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 4.225,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX22",
+    "b": "RBX31",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.05,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX22",
+    "b": "RBX32",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.73,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX22",
+    "b": "RBX33",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.675,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX22",
+    "b": "RBX34",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.9899999999999998,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX22",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.09,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX23",
+    "b": "RBX24",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.3499999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX23",
+    "b": "RBX25",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.9099999999999997,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX23",
+    "b": "RBX26",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.7299999999999995,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX23",
+    "b": "RBX27",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.91,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX23",
+    "b": "RBX28",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.91,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX23",
+    "b": "RBX29",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 4.07,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX23",
+    "b": "RBX30",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 4.475,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX23",
+    "b": "RBX31",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.3,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX23",
+    "b": "RBX32",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.98,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX23",
+    "b": "RBX33",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 5.925,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX23",
+    "b": "RBX34",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 4.24,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX23",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 6.34,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX24",
+    "b": "RBX25",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.66,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX24",
+    "b": "RBX26",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.4799999999999995,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX24",
+    "b": "RBX27",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.6600000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX24",
+    "b": "RBX28",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.6600000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX24",
+    "b": "RBX29",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.8200000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX24",
+    "b": "RBX30",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.225,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX24",
+    "b": "RBX31",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 2.05,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX24",
+    "b": "RBX32",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 2.7300000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX24",
+    "b": "RBX33",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 2.675,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX24",
+    "b": "RBX34",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.99,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX24",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 3.09,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX25",
+    "b": "RBX26",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 2.6599999999999997,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX25",
+    "b": "RBX27",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": -4.440892098500626e-16,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX25",
+    "b": "RBX28",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX25",
+    "b": "RBX29",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX25",
+    "b": "RBX30",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.405,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX25",
+    "b": "RBX31",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.23,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX25",
+    "b": "RBX32",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.9100000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX25",
+    "b": "RBX33",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.855,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX25",
+    "b": "RBX34",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.16999999999999998,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX25",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 2.27,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX26",
+    "b": "RBX27",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": -4.440892098500626e-16,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX26",
+    "b": "RBX28",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX26",
+    "b": "RBX29",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": -4.440892098500626e-16,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX26",
+    "b": "RBX30",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.6049999999999998,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX26",
+    "b": "RBX31",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.8299999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX26",
+    "b": "RBX32",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.1499999999999999,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX26",
+    "b": "RBX33",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.35499999999999954,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX26",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 2.3699999999999997,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX26",
+    "b": "RBX35",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.2699999999999996,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX27",
+    "b": "RBX28",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 2.3,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX27",
+    "b": "RBX29",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": -4.440892098500626e-16,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX27",
+    "b": "RBX30",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.24999999999999956,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX27",
+    "b": "RBX31",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.24999999999999956,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX27",
+    "b": "RBX32",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.25,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX27",
+    "b": "RBX33",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 1.5949999999999998,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX27",
+    "b": "RBX34",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 1.0899999999999999,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX27",
+    "b": "RBX35",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 1.0899999999999999,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX28",
+    "b": "RBX29",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.0,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX28",
+    "b": "RBX30",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 1.25,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX28",
+    "b": "RBX31",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.8500000000000005,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX28",
+    "b": "RBX32",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 1.4500000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX28",
+    "b": "RBX33",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.2550000000000008,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX28",
+    "b": "RBX34",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 1.0900000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX28",
+    "b": "RBX35",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 1.0900000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX29",
+    "b": "RBX30",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 2.7755575615628914e-17,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX29",
+    "b": "RBX31",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 2.7755575615628914e-17,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX29",
+    "b": "RBX32",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 2.7755575615628914e-17,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX29",
+    "b": "RBX33",
+    "axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "gap": 2.7755575615628914e-17,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX29",
+    "b": "RBX34",
+    "axis": [
+      -0.0,
+      -0.0,
+      -1.0
+    ],
+    "gap": -1.3877787807814457e-17,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX29",
+    "b": "RBX35",
+    "axis": [
+      -0.0,
+      -0.0,
+      -1.0
+    ],
+    "gap": -1.3877787807814457e-17,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX30",
+    "b": "RBX31",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.17500000000000004,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX30",
+    "b": "RBX32",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.8550000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX30",
+    "b": "RBX33",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.8,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX30",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.11499999999999999,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX30",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.215,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX31",
+    "b": "RBX32",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.08000000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX31",
+    "b": "RBX33",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.02499999999999991,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX31",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 0.94,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX31",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 0.43999999999999995,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX32",
+    "b": "RBX33",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.7450000000000001,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX32",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.62,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX32",
+    "b": "RBX35",
+    "axis": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gap": 0.2400000000000002,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX33",
+    "b": "RBX34",
+    "axis": [
+      -1.0,
+      -0.0,
+      -0.0
+    ],
+    "gap": 1.565,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX33",
+    "b": "RBX35",
+    "axis": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "gap": 0.3850000000000007,
+    "method": "analytic-support-axis"
+  },
+  {
+    "a": "RBX34",
+    "b": "RBX35",
+    "axis": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gap": 1.98,
+    "method": "analytic-support-axis"
+  }
+]
