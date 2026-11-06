@@ -1,0 +1,439 @@
+{
+  "status": "PASS for proposed envelopes vs listed assets/reservations",
+  "zones": [
+    {
+      "id": "A",
+      "floor": 2,
+      "name": "Green lounge",
+      "box": [
+        -4,
+        6,
+        8,
+        16
+      ],
+      "height": [
+        0,
+        5
+      ],
+      "replace": "Lounge",
+      "idea": "Upgrade existing lounge within its reserved 12x10 footprint"
+    },
+    {
+      "id": "B",
+      "floor": 2,
+      "name": "Game gallery",
+      "box": [
+        -27,
+        -29,
+        -17,
+        -28.6
+      ],
+      "height": [
+        3,
+        8
+      ],
+      "replace": null,
+      "idea": "Shallow wall-mounted artwork, no floor furniture"
+    },
+    {
+      "id": "C",
+      "floor": 3,
+      "name": "Panorama corner",
+      "box": [
+        17,
+        5,
+        27,
+        11
+      ],
+      "height": [
+        0,
+        5
+      ],
+      "replace": null,
+      "idea": "Two reading chairs, side table and plant facing east windows"
+    },
+    {
+      "id": "D",
+      "floor": 3,
+      "name": "Acoustic art",
+      "box": [
+        8,
+        15.5,
+        22,
+        16.5
+      ],
+      "height": [
+        0,
+        9
+      ],
+      "replace": "ArtWall",
+      "idea": "Replace existing ArtWall with acoustic art within its 14x1 footprint; leave glazing untouched"
+    }
+  ],
+  "checks": [
+    {
+      "idea": "A",
+      "overlapsExceptExplicitReplacement": [],
+      "liftClear": true,
+      "buttonsBandClear": true
+    },
+    {
+      "idea": "B",
+      "overlapsExceptExplicitReplacement": [],
+      "liftClear": true,
+      "buttonsBandClear": true
+    },
+    {
+      "idea": "C",
+      "overlapsExceptExplicitReplacement": [],
+      "liftClear": true,
+      "buttonsBandClear": true
+    },
+    {
+      "idea": "D",
+      "overlapsExceptExplicitReplacement": [],
+      "liftClear": true,
+      "buttonsBandClear": true
+    }
+  ],
+  "floors": {
+    "2": [
+      {
+        "name": "FloorDesk",
+        "box": [
+          -2.50000005,
+          -21.9,
+          2.50000005,
+          -18.07
+        ],
+        "height": [
+          -0.025,
+          4.8
+        ]
+      },
+      {
+        "name": "FloorDesk",
+        "box": [
+          6.49999995,
+          -21.9,
+          11.500000049999999,
+          -18.07
+        ],
+        "height": [
+          -0.025,
+          4.8
+        ]
+      },
+      {
+        "name": "FloorDesk",
+        "box": [
+          15.499999950000001,
+          -21.9,
+          20.50000005,
+          -18.07
+        ],
+        "height": [
+          -0.025,
+          4.8
+        ]
+      },
+      {
+        "name": "FloorDesk",
+        "box": [
+          -14.500000049999999,
+          -7.9,
+          -9.499999950000001,
+          -4.069999999999999
+        ],
+        "height": [
+          -0.025,
+          4.8
+        ]
+      },
+      {
+        "name": "FloorDesk",
+        "box": [
+          -4.50000005,
+          -7.9,
+          0.5000000499999999,
+          -4.069999999999999
+        ],
+        "height": [
+          -0.025,
+          4.8
+        ]
+      },
+      {
+        "name": "FloorDesk",
+        "box": [
+          5.49999995,
+          -7.9,
+          10.500000049999999,
+          -4.069999999999999
+        ],
+        "height": [
+          -0.025,
+          4.8
+        ]
+      },
+      {
+        "name": "FloorDesk",
+        "box": [
+          15.499999950000001,
+          -7.9,
+          20.50000005,
+          -4.069999999999999
+        ],
+        "height": [
+          -0.025,
+          4.8
+        ]
+      },
+      {
+        "name": "ServerRoom",
+        "box": [
+          24.5,
+          -19.0,
+          28.5,
+          -9.0
+        ],
+        "height": [
+          -0.025,
+          7.8
+        ]
+      },
+      {
+        "name": "Lounge",
+        "box": [
+          -2.0,
+          6.3,
+          6.0,
+          15.175
+        ],
+        "height": [
+          -0.025,
+          4.37
+        ]
+      }
+    ],
+    "3": [
+      {
+        "name": "SkyDesk",
+        "box": [
+          -5.0,
+          -21.7875,
+          -1.0,
+          -18.2125
+        ],
+        "height": [
+          0.0,
+          4.7749999999999995
+        ]
+      },
+      {
+        "name": "SkyDesk",
+        "box": [
+          3.0,
+          -21.7875,
+          7.0,
+          -18.2125
+        ],
+        "height": [
+          0.0,
+          4.7749999999999995
+        ]
+      },
+      {
+        "name": "SkyDesk",
+        "box": [
+          11.0,
+          -21.7875,
+          15.0,
+          -18.2125
+        ],
+        "height": [
+          0.0,
+          4.7749999999999995
+        ]
+      },
+      {
+        "name": "SkyDesk",
+        "box": [
+          19.0,
+          -21.7875,
+          23.0,
+          -18.2125
+        ],
+        "height": [
+          0.0,
+          4.7749999999999995
+        ]
+      },
+      {
+        "name": "SkyDesk",
+        "box": [
+          -20.0,
+          -9.7875,
+          -16.0,
+          -6.2125
+        ],
+        "height": [
+          0.0,
+          4.7749999999999995
+        ]
+      },
+      {
+        "name": "SkyDesk",
+        "box": [
+          -11.0,
+          -9.7875,
+          -7.0,
+          -6.2125
+        ],
+        "height": [
+          0.0,
+          4.7749999999999995
+        ]
+      },
+      {
+        "name": "SkyDesk",
+        "box": [
+          -2.0,
+          -9.7875,
+          2.0,
+          -6.2125
+        ],
+        "height": [
+          0.0,
+          4.7749999999999995
+        ]
+      },
+      {
+        "name": "SkyDesk",
+        "box": [
+          7.0,
+          -9.7875,
+          11.0,
+          -6.2125
+        ],
+        "height": [
+          0.0,
+          4.7749999999999995
+        ]
+      },
+      {
+        "name": "SkyDesk",
+        "box": [
+          16.0,
+          -9.7875,
+          20.0,
+          -6.2125
+        ],
+        "height": [
+          0.0,
+          4.7749999999999995
+        ]
+      },
+      {
+        "name": "SkyDesk",
+        "box": [
+          -8.0,
+          2.2125,
+          -4.0,
+          5.7875
+        ],
+        "height": [
+          0.0,
+          4.7749999999999995
+        ]
+      },
+      {
+        "name": "SkyDesk",
+        "box": [
+          4.0,
+          2.2125,
+          8.0,
+          5.7875
+        ],
+        "height": [
+          0.0,
+          4.7749999999999995
+        ]
+      },
+      {
+        "name": "SoundStudio",
+        "box": [
+          -23.400000000000002,
+          9.7,
+          -12.6,
+          18.3
+        ],
+        "height": [
+          -2.7755575615628914e-17,
+          7.2
+        ]
+      },
+      {
+        "name": "ArtWall",
+        "box": [
+          8.25,
+          15.55,
+          21.75,
+          16.45
+        ],
+        "height": [
+          0.0,
+          7.8
+        ]
+      }
+    ]
+  },
+  "legacyReservations": [
+    {
+      "name": "Player desk",
+      "box": [
+        -15.8,
+        -21.75,
+        -8.2,
+        -15.8
+      ],
+      "height": [
+        0,
+        8
+      ]
+    },
+    {
+      "name": "Coffee",
+      "box": [
+        23.5,
+        -27.5,
+        26.5,
+        -20.5
+      ],
+      "height": [
+        0,
+        8
+      ]
+    },
+    {
+      "name": "Hits",
+      "box": [
+        -29,
+        -20,
+        -26.2,
+        -10
+      ],
+      "height": [
+        0,
+        8
+      ]
+    }
+  ],
+  "limitations": [
+    "No detailed new models created. Internal part intersections cannot yet be tested.",
+    "Existing shell plants/decor and live Studio changes not exhaustively included.",
+    "Wall artwork must occupy opaque panel sections, not cover active glass.",
+    "Minimum passage geometry must be checked again after modeling."
+  ],
+  "runtimeTested": false
+}
