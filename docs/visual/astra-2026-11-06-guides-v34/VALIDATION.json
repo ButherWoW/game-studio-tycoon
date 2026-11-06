@@ -1,0 +1,21 @@
+{
+  "file": "V34/menu_guides.png",
+  "size": [
+    256,
+    256
+  ],
+  "mode": "RGBA",
+  "alphaRange": [
+    0,
+    255
+  ],
+  "corners": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "sha256": "68f97c873f6b2757db644eda845cdca4325059802c0b286241292e23381571f9",
+  "visualReview": "PASS: open blue book, gold ribbon, distinct bulb overhead; no text/letters/digits; reviewed at256px and40px on white and#161826; no visible halo",
+  "runtimeTested": false
+}

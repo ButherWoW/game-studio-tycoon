@@ -1,0 +1,5 @@
+{
+  "prompt": "Use case: precise-object-edit. Edit target: attached accepted menu_guides open-book icon. Change ONLY by adding a small bright golden LIGHTBULB hovering above the open book, centered above its spine, with a short dark navy screw base and two tiny gold ray marks. Keep existing book design, cream blank pages, vivid blue cover, golden ribbon bookmark, thick #1E1E2E outlines and glossy cartoon style unchanged. Slightly reduce/reposition book only enough to fit bulb overhead with generous transparent padding; keep the bulb distinct from the pages at40x40. One cohesive handbook-with-hint icon, not a background tile. Real transparent background preserved. No writing, letters, digits, speech bubble, logo, watermark, additional decorations or shadow. Target final256x256; large clean simple shapes.",
+  "reference": "docs/visual/astra-2026-11-06-guides-icon/menu_guides.png",
+  "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-c70d24fc-698f-4271-809b-5a533d8ab937.png"
+}
