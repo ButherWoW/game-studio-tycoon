@@ -79,8 +79,13 @@ local function shortMoney(amount: number): string
 end
 
 type Row = { label: TextLabel, finish: TextButton, projectId: number? }
-type Progress = { percent: number, paused: boolean, remaining: number? }
+type Progress = { percent: number, paused: boolean, remaining: number?, hintUntil: number? }
 type Chip = { button: TextButton, detail: string }
+
+-- Подсказка «Пауза — сядь за компьютер»: коротко (на PAUSE_HINT_SECONDS) и не чаще раза в
+-- PAUSE_HINT_COOLDOWN секунд; в остальное время строка паузы выглядит как обычный прогресс
+local PAUSE_HINT_SECONDS = 4
+local PAUSE_HINT_COOLDOWN = 60
 
 -- Купили заряд кнопкой «⚡ Закончить сейчас»: потратить его на этот проект, когда сервер выдаст
 local FINISH_AFTER_PURCHASE_SECONDS = 60
@@ -237,6 +242,7 @@ function HudController.start()
 
 	-- Прогресс по id проекта (из DevelopmentProgress)
 	local progressById: { [number]: Progress } = {}
+	local lastPauseHint = -math.huge
 	local rows: { Row } = {}
 	local pendingFinish: { id: number, untilAt: number }? = nil
 
@@ -304,7 +310,8 @@ function HudController.start()
 			if project and progress then
 				row.label.Font = font
 				local text: string
-				if progress.paused then
+				local showPause = progress.paused and os.clock() < (progress.hintUntil or 0)
+				if showPause then
 					text = ClientState.t("hud_paused")
 				elseif #list > 1 then
 					text = ClientState.t(
@@ -315,7 +322,7 @@ function HudController.start()
 					text = ClientState.t("hud_developing", { percent = progress.percent })
 				end
 				row.label.Text = text
-				row.label.TextColor3 = if progress.paused then Ui.colors.bad else Ui.colors.text
+				row.label.TextColor3 = if showPause then Ui.colors.bad else Ui.colors.text
 				-- «Мгновенно закончить» — только если есть заряды и не на ноутбуке в парке.
 				-- Зарядов нет, а ждать ещё долго — «⚡ Закончить сейчас» за Robux
 				local charges = DevState.instantFinish > 0
@@ -488,9 +495,19 @@ function HudController.start()
 		if type(data) ~= "table" or type(data.id) ~= "number" or type(data.progress) ~= "number" then
 			return
 		end
+		local previous = progressById[data.id]
+		local paused = data.paused == true
+		local hintUntil = if previous then previous.hintUntil else nil
+		-- Подсказка — только в момент, когда игрок отошёл, и не чаще раза в минуту
+		if paused and not (previous and previous.paused) and os.clock() - lastPauseHint >= PAUSE_HINT_COOLDOWN then
+			lastPauseHint = os.clock()
+			hintUntil = lastPauseHint + PAUSE_HINT_SECONDS
+			task.delay(PAUSE_HINT_SECONDS + 0.1, renderProgress)
+		end
 		progressById[data.id] = {
 			percent = math.floor(data.progress * 100),
-			paused = data.paused == true,
+			paused = paused,
+			hintUntil = hintUntil,
 			-- Пауза (встал из-за ПК) не присылает остаток — держим последний
 			remaining = if type(data.remaining) == "number"
 				then data.remaining
