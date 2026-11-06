@@ -401,26 +401,34 @@ end
 -- (Garage из Creator Store): её лампы ослабляем один раз при старте сервера.
 -- Отчёт #2, п. 16: при 0.5 лампы всё ещё давали пересвеченные пятна на полу — режем сильнее,
 -- ограничиваем яркость и дальность и включаем тени, чтобы свет не пробивал всё насквозь
-local GARAGE_LIGHT_SCALE = 0.3
-local GARAGE_LIGHT_MAX_BRIGHTNESS = 0.4
-local GARAGE_LIGHT_MAX_RANGE = 16
-local DIMMED_MODELS = { "Garage" }
+-- 06.11 (владелец): «2-й этаж слишком много света, очень ярко» — оболочки 2-го этажа (Floor и три
+-- платные отделки) ослабляем так же, чуть мягче гаража: этаж большой, в нём не должно быть темно
+type LightLimit = { scale: number, maxBrightness: number, maxRange: number }
+local GARAGE_LIGHT: LightLimit = { scale = 0.3, maxBrightness = 0.4, maxRange = 16 }
+local FLOOR_LIGHT: LightLimit = { scale = 0.35, maxBrightness = 0.5, maxRange = 20 }
+local DIMMED_MODELS: { [string]: LightLimit } = {
+	Garage = GARAGE_LIGHT,
+	Floor = FLOOR_LIGHT,
+	Floor_Aurora = FLOOR_LIGHT,
+	Floor_Sakura = FLOOR_LIGHT,
+	Floor_ObsidianGold = FLOOR_LIGHT,
+}
 
 local function dimImportedLights()
 	local folder = ServerStorage:FindFirstChild("Upgrades")
 	if not folder then
 		return
 	end
-	for _, name in DIMMED_MODELS do
+	for name, limit in DIMMED_MODELS do
 		local model = folder:FindFirstChild(name)
 		if model and not model:GetAttribute("LightsDimmed") then
 			model:SetAttribute("LightsDimmed", true)
 			for _, d in model:GetDescendants() do
 				if d:IsA("Light") then
-					d.Brightness = math.min(d.Brightness * GARAGE_LIGHT_SCALE, GARAGE_LIGHT_MAX_BRIGHTNESS)
+					d.Brightness = math.min(d.Brightness * limit.scale, limit.maxBrightness)
 					d.Shadows = true
 					if d:IsA("PointLight") or d:IsA("SpotLight") or d:IsA("SurfaceLight") then
-						d.Range = math.min(d.Range, GARAGE_LIGHT_MAX_RANGE)
+						d.Range = math.min(d.Range, limit.maxRange)
 					end
 				end
 			end
