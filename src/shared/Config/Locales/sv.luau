@@ -803,6 +803,7 @@ return {
 	rebirth_count = "Rebirths: {count} · inkomst ×{mult}",
 	rebirth_next = "Efter rebirth: inkomst ×{mult} för alltid",
 	rebirth_need_office = "Flytta till ett kontor",
+	rebirth_need_floor3 = "Kontorets våning 3 upplåst",
 	rebirth_need_cash = "Pengar: {price}",
 	rebirth_need_no_stocks = "Sälj alla dina aktier först (börs)",
 	rebirth_resets = "Nollställs: pengar (du behåller $100), uppgraderingar, upplåsta genrer och teman",

@@ -803,6 +803,7 @@ return {
 	rebirth_count = "रीबर्थ: {count} · कमाई ×{mult}",
 	rebirth_next = "रीबर्थ के बाद: कमाई हमेशा के लिए ×{mult}",
 	rebirth_need_office = "ऑफ़िस में शिफ़्ट हो जाओ",
+	rebirth_need_floor3 = "ऑफ़िस की तीसरी मंज़िल अनलॉक",
 	rebirth_need_cash = "पैसे: {price}",
 	rebirth_need_no_stocks = "पहले सारे शेयर बेचो (बाज़ार)",
 	rebirth_resets = "रीसेट होगा: पैसे ($100 बचेंगे), अपग्रेड, अनलॉक किए जॉनर और टॉपिक",

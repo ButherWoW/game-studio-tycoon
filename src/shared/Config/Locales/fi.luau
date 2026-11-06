@@ -803,6 +803,7 @@ return {
 	rebirth_count = "Uudestisyntymiä: {count} · tulot ×{mult}",
 	rebirth_next = "Uudestisyntymisen jälkeen: tulot ×{mult} ikuisesti",
 	rebirth_need_office = "Muuta toimistoon",
+	rebirth_need_floor3 = "Toimiston 3. kerros avattu",
 	rebirth_need_cash = "Rahaa: {price}",
 	rebirth_need_no_stocks = "Myy ensin kaikki osakkeet (pörssi)",
 	rebirth_resets = "Nollautuu: rahat (saat pitää $100), päivitykset, avatut genret ja aiheet",

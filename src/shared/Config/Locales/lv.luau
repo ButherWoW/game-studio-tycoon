@@ -803,6 +803,7 @@ return {
 	rebirth_count = "Atdzimšanas: {count} · ienākumi ×{mult}",
 	rebirth_next = "Pēc atdzimšanas: ienākumi ×{mult} uz visiem laikiem",
 	rebirth_need_office = "Pārcelies uz biroju",
+	rebirth_need_floor3 = "Biroja 3. stāvs atbloķēts",
 	rebirth_need_cash = "Nauda: {price}",
 	rebirth_need_no_stocks = "Vispirms pārdod visas akcijas (birža)",
 	rebirth_resets = "Tiek atiestatīts: nauda (paliek $100), uzlabojumi, atvērtie žanri un tēmas",

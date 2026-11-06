@@ -113,6 +113,13 @@ local function charge(player: Player)
 	local salaryPerMinute = StaffService.salaryPerMinute(profile) * discount
 	-- Грант (события компании): аренда на время не списывается
 	local rentPerMinute = Expenses.rentFor(profile.studioLevel) * rentMultiplier(player) * discount
+	-- Налоговые каникулы после ухода приставов (BailiffService): ничего не списываем и не копим
+	if (tonumber(player:GetAttribute("ExpensesHolidayUntil")) or 0) > os.time() then
+		salaryPerMinute = 0
+		rentPerMinute = 0
+		salaryAccrued[player] = 0
+		owedRent[player] = 0
+	end
 	player:SetAttribute("ExpensesPerMinute", salaryPerMinute + rentPerMinute)
 	local now = os.clock()
 	if not nextPayday[player] then
