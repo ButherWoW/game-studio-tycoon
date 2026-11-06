@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Φόρτιση!",
 	qte_hold_hint = "Κράτα και άφησε στην πράσινη ζώνη",
 	qte_ready = "Ετοιμάσου…",
+	qte_speed_hint = "Βιάσου — το παιχνίδι βγαίνει πιο γρήγορα",
 	qte_press = "ΠΑΤΑ!",
 	qte_hold_button = "ΚΡΑΤΑ",
 	qte_perfect = "Τέλεια!",

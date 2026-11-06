@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Заряджання!",
 	qte_hold_hint = "Тримай і відпусти в зеленій зоні",
 	qte_ready = "Приготуйся…",
+	qte_speed_hint = "Встигни — гра вийде швидше",
 	qte_press = "ТИСНИ!",
 	qte_hold_button = "ТРИМАЙ",
 	qte_perfect = "Чудово!",

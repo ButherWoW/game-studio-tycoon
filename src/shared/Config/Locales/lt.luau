@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Įkrovimas!",
 	qte_hold_hint = "Laikyk ir paleisk žaliojoje zonoje",
 	qte_ready = "Pasiruošk…",
+	qte_speed_hint = "Paskubėk — žaidimas išeis greičiau",
 	qte_press = "SPAUSK!",
 	qte_hold_button = "LAIKYK",
 	qte_perfect = "Puiku!",

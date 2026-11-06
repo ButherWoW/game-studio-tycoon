@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 चार्ज करो!",
 	qte_hold_hint = "दबाए रखो और हरे हिस्से में छोड़ो",
 	qte_ready = "तैयार हो जाओ…",
+	qte_speed_hint = "जल्दी करो — गेम जल्दी रिलीज़ होगा",
 	qte_press = "दबाओ!",
 	qte_hold_button = "दबाए रखो",
 	qte_perfect = "शानदार!",

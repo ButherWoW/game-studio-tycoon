@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Lataus!",
 	qte_hold_hint = "Pidä pohjassa ja päästä vihreällä alueella",
 	qte_ready = "Valmistaudu…",
+	qte_speed_hint = "Kiirehdi — peli julkaistaan nopeammin",
 	qte_press = "PAINA!",
 	qte_hold_button = "PIDÄ",
 	qte_perfect = "Täydellistä!",

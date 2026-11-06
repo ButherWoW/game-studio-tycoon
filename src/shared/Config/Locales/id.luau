@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Isi daya!",
 	qte_hold_hint = "Tahan dan lepas di zona hijau",
 	qte_ready = "Bersiap…",
+	qte_speed_hint = "Cepat — game rilis lebih cepat",
 	qte_press = "TEKAN!",
 	qte_hold_button = "TAHAN",
 	qte_perfect = "Sempurna!",

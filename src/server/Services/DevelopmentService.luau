@@ -624,7 +624,14 @@ local function beginProject(
 	project.laptop = onLaptop(player)
 	project.pending = false
 	-- Быстрые события (Config/QuickEvents); у игр «Авто-релиза» их нет — игрок может быть AFK
-	QuickEventService.plan(player, project.id, project.duration, sequel == true)
+	local profileNow = DataService.get(player)
+	QuickEventService.plan(
+		player,
+		project.id,
+		project.duration,
+		sequel == true,
+		profileNow ~= nil and profileNow.gamesReleased == 0
+	)
 	DevelopmentService.pushState(player)
 end
 
@@ -1391,6 +1398,29 @@ function DevelopmentService.cancel(player: Player)
 end
 
 function DevelopmentService.start()
+	-- Быстрое событие меняет оставшееся время игры (Config/QuickEvents.timeFactor). Очков за игру
+	-- остаётся столько же: темп растёт во столько же раз, во сколько сократилось время
+	QuickEventService.onSpeed = function(
+		player: Player,
+		projectId: number,
+		_grade: any,
+		factor: number
+	): number
+		for _, project in projects[player] or {} do
+			if project.id == projectId and not project.pending then
+				local remaining = project.duration - project.elapsed
+				if remaining <= 2 then
+					return 0
+				end
+				local newRemaining = math.max(remaining * factor, 1.5)
+				local applied = newRemaining / remaining
+				project.duration = project.elapsed + newRemaining
+				project.tempo /= applied
+				return math.floor((applied - 1) * 100 + 0.5)
+			end
+		end
+		return 0
+	end
 	Remotes.DevEventChoice.OnServerEvent:Connect(onEventChoice)
 	Remotes.StartDevelopment.OnServerEvent:Connect(onStartDevelopment)
 	PaidRemotes.InstantFinish.OnServerEvent:Connect(onInstantFinish)

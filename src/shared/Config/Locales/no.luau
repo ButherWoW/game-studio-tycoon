@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Lading!",
 	qte_hold_hint = "Hold inne og slipp i den grønne sonen",
 	qte_ready = "Gjør deg klar…",
+	qte_speed_hint = "Skynd deg — spillet kommer raskere",
 	qte_press = "TRYKK!",
 	qte_hold_button = "HOLD",
 	qte_perfect = "Perfekt!",

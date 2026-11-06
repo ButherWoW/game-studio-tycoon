@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Aufladen!",
 	qte_hold_hint = "Halten und im grünen Bereich loslassen",
 	qte_ready = "Mach dich bereit…",
+	qte_speed_hint = "Beeil dich — das Spiel erscheint schneller",
 	qte_press = "DRÜCK!",
 	qte_hold_button = "HALTEN",
 	qte_perfect = "Perfekt!",
