@@ -351,6 +351,14 @@ function Ui.label(parent: Instance, text: string, height: number, font: Enum.Fon
 	return l
 end
 
+-- Нижняя граница размера для TextScaled-подписей фиксированной высоты: без неё длинные
+-- переводы (DE/FI) ужимались до 6–9 px, особенно после UIScale окна на телефоне
+function Ui.minText(label: GuiObject, minSize: number)
+	local limit = Instance.new("UITextSizeConstraint")
+	limit.MinTextSize = minSize
+	limit.Parent = label
+end
+
 -- Кнопка с эффектом нажатия (сжимается до 95%)
 function Ui.button(parent: Instance, text: string, color: Color3, onClick: () -> ()): TextButton
 	local b = Instance.new("TextButton")

@@ -425,6 +425,12 @@ local function skipTraining(employeeId: string)
 	end
 end
 
+-- Строки с мелкими кнопками справа («+1», ◀ ▶, «Пропустить»): на тач-экране окно уменьшено до
+-- 0.65, поэтому кнопки 44 px (зона нажатия не меньше пальца), строка чуть выше
+local SMALL_HEIGHT = if Ui.touch then 44 else 32
+local LINE_HEIGHT = SMALL_HEIGHT + 2
+local LABEL_Y = (LINE_HEIGHT - 24) // 2
+
 local function smallButton(parent: Instance, text: string, color: Color3, onClick: () -> ()): TextButton
 	local b = Ui.button(parent, text, color, onClick)
 	if color == Ui.colors.locked then
@@ -439,11 +445,11 @@ end
 local function detailLine(parent: Instance, text: string, order: number): Frame
 	local line = Instance.new("Frame")
 	line.BackgroundTransparency = 1
-	line.Size = UDim2.new(1, 0, 0, 34)
+	line.Size = UDim2.new(1, 0, 0, LINE_HEIGHT)
 	line.LayoutOrder = order
 	line.Parent = parent
 	local label = Ui.label(line, text, 24)
-	label.Position = UDim2.fromOffset(0, 5)
+	label.Position = UDim2.fromOffset(0, LABEL_Y)
 	label.Size = UDim2.new(0.55, 0, 0, 24)
 	return line
 end
@@ -509,11 +515,11 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 		box.Parent = frame
 		local line = Instance.new("Frame")
 		line.BackgroundTransparency = 1
-		line.Size = UDim2.new(1, 0, 0, 34)
+		line.Size = UDim2.new(1, 0, 0, LINE_HEIGHT)
 		line.LayoutOrder = 1
 		line.Parent = box
 		local label = Ui.label(line, "", 24, nil, TRAIN_COLOR)
-		label.Position = UDim2.fromOffset(0, 5)
+		label.Position = UDim2.fromOffset(0, LABEL_Y)
 		label.Size = UDim2.new(0.56, 0, 0, 24)
 		local productId = Training.products.skillSkip.productId
 		local skipText = if trainingCredits > 0
@@ -536,7 +542,7 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 		)
 		skip.AnchorPoint = Vector2.new(1, 0)
 		skip.Position = UDim2.new(1, 0, 0, 0)
-		skip.Size = UDim2.new(0.42, 0, 0, 32)
+		skip.Size = UDim2.new(0.42, 0, 0, SMALL_HEIGHT)
 		local track = progressBar(box, studying, 14, label, trainingPrefix(studying))
 		track.LayoutOrder = 2
 	end
@@ -572,7 +578,7 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 		end)
 		button.AnchorPoint = Vector2.new(1, 0)
 		button.Position = UDim2.new(1, 0, 0, 0)
-		button.Size = UDim2.new(0.42, 0, 0, 32)
+		button.Size = UDim2.new(0.42, 0, 0, SMALL_HEIGHT)
 	end
 
 	-- Наставничество выходит обновлением «Издатели» (Config/Features)
@@ -605,7 +611,7 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 			end)
 			stop.AnchorPoint = Vector2.new(1, 0)
 			stop.Position = UDim2.new(1, 0, 0, 0)
-			stop.Size = UDim2.new(0.42, 0, 0, 32)
+			stop.Size = UDim2.new(0.42, 0, 0, SMALL_HEIGHT)
 		elseif not Mentoring.canMentor(level) then
 			Ui.label(
 				frame,
@@ -654,7 +660,7 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 				)
 				pick.AnchorPoint = Vector2.new(1, 0)
 				pick.Position = UDim2.new(1, 0, 0, 0)
-				pick.Size = UDim2.new(0.42, 0, 0, 32)
+				pick.Size = UDim2.new(0.42, 0, 0, SMALL_HEIGHT)
 			end
 		end
 	end
@@ -761,8 +767,8 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 				StaffRemotes.SetLook:FireServer(employee.id, field, nextValue)
 			end)
 			b.AnchorPoint = Vector2.new(1, 0)
-			b.Position = UDim2.new(1, if i == 1 then -44 else 0, 0, 0)
-			b.Size = UDim2.fromOffset(40, 32)
+			b.Position = UDim2.new(1, if i == 1 then -48 else 0, 0, 0)
+			b.Size = UDim2.fromOffset(44, SMALL_HEIGHT)
 		end
 	end
 

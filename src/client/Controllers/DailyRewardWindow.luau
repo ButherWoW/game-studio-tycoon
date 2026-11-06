@@ -65,9 +65,7 @@ local function show(day: number)
 	-- Огонёк серии слева от заголовка (номер дня серии — на плитке и кнопке)
 	ArtIcon.prefix(title, "", Images.daily.streakFlame, 40)
 	local closeButton = Ui.button(window, "×", Ui.colors.bad, close)
-	closeButton.AnchorPoint = Vector2.new(1, 0)
-	closeButton.Position = UDim2.new(1, -12, 0, 10)
-	closeButton.Size = UDim2.fromOffset(40, 40)
+	Ui.headerClose(closeButton)
 
 	local tiles = Instance.new("Frame")
 	tiles.BackgroundTransparency = 1

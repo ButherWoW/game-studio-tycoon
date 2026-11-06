@@ -166,9 +166,7 @@ function RivalWindow.open()
 	title.Size = UDim2.new(1, -80, 0, 40)
 	ArtIcon.prefix(title, "📊", Images.windows.rivals, 40)
 	local close = Ui.button(window, ClientState.t("create_close"), Ui.colors.bad, RivalWindow.close)
-	close.AnchorPoint = Vector2.new(1, 0)
-	close.Position = UDim2.new(1, -12, 0, 10)
-	close.Size = UDim2.fromOffset(40, 40)
+	Ui.headerClose(close)
 
 	-- Вкладки: «Индустрия» и «🏆 Игра недели»
 	for i, id in { "industry", "gotw" } do

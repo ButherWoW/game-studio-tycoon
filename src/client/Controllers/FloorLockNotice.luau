@@ -63,8 +63,9 @@ local function line(parent: Instance, text: string, done: boolean?, order: numbe
 		then Ui.colors.good
 		elseif done == false then Ui.colors.text
 		else Ui.colors.muted
-	local label = Ui.label(parent, text, 28, Enum.Font.GothamMedium, color)
+	local label = Ui.label(parent, text, 40, Enum.Font.GothamMedium, color)
 	label.TextWrapped = true
+	Ui.minText(label, 14)
 	label.TextXAlignment = Enum.TextXAlignment.Left
 	label.LayoutOrder = order
 end

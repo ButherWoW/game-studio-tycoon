@@ -530,9 +530,7 @@ function SeasonWindow.open(startTab: Tab?)
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -80, 0, 40)
 	local close = Ui.button(window, "×", Ui.colors.bad, SeasonWindow.close)
-	close.AnchorPoint = Vector2.new(1, 0)
-	close.Position = UDim2.new(1, -12, 0, 10)
-	close.Size = UDim2.fromOffset(40, 40)
+	Ui.headerClose(close)
 
 	local tabs = Instance.new("Frame")
 	tabs.BackgroundTransparency = 1

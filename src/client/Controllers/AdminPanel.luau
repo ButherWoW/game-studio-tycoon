@@ -571,8 +571,7 @@ local function open()
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -80, 0, 32)
 	local closeButton = Ui.button(window, "×", Ui.colors.locked, close)
-	closeButton.Size = UDim2.fromOffset(40, 40)
-	closeButton.Position = UDim2.new(1, -52, 0, 8)
+	Ui.headerClose(closeButton)
 
 	local tabs = Instance.new("Frame")
 	tabs.BackgroundTransparency = 1

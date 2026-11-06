@@ -297,9 +297,7 @@ local function open()
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -80, 0, 40)
 	local closeButton = Ui.button(window, "×", Ui.colors.bad, close)
-	closeButton.AnchorPoint = Vector2.new(1, 0)
-	closeButton.Position = UDim2.new(1, -12, 0, 10)
-	closeButton.Size = UDim2.fromOffset(40, 40)
+	Ui.headerClose(closeButton)
 
 	local scroll = Instance.new("ScrollingFrame")
 	scroll.BackgroundTransparency = 1

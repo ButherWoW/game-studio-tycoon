@@ -407,8 +407,7 @@ local function buildPicker(window: Frame, current: Research.Active)
 		pickerOpen = false
 		render()
 	end)
-	close.Position = UDim2.new(1, -50, 0, 8)
-	close.Size = UDim2.fromOffset(40, 40)
+	Ui.headerClose(close)
 
 	for i, product in shown do
 		local y = 58 + (i - 1) * (rowHeight + 8)

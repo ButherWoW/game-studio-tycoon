@@ -165,7 +165,7 @@ local function show(info: any)
 	for i, critic in Critics do
 		local row = Instance.new("Frame")
 		row.BackgroundColor3 = Color3.fromRGB(44, 46, 66)
-		row.Size = UDim2.new(1, 0, 0, 58)
+		row.Size = UDim2.new(1, 0, 0, 68)
 		row.LayoutOrder = 2 + i
 		Ui.corner(row, 10)
 
@@ -183,7 +183,9 @@ local function show(info: any)
 
 		local quote = Ui.label(row, "", 26, Enum.Font.GothamMedium)
 		quote.Position = UDim2.fromOffset(64, 26)
-		quote.Size = UDim2.new(1, -72, 0, 26)
+		quote.Size = UDim2.new(1, -72, 0, 38)
+		quote.TextWrapped = true
+		Ui.minText(quote, 13)
 		row.Parent = body
 
 		local value = math.clamp(info.score + (spread[i] or 0), 1, 10)
@@ -223,6 +225,8 @@ local function show(info: any)
 	total.LayoutOrder = 20
 	local money = Ui.label(body, "", 32, Ui.titleFontFor(ClientState.lang), Ui.colors.money)
 	money.TextXAlignment = Enum.TextXAlignment.Center
+	money.TextWrapped = true
+	Ui.minText(money, 16)
 	money.LayoutOrder = 21
 	local loan = Ui.label(body, "", 24, nil, Ui.colors.bad)
 	loan.TextXAlignment = Enum.TextXAlignment.Center
@@ -346,6 +350,9 @@ local function show(info: any)
 		if info.isRecord then
 			moneyText ..= "\n" .. ClientState.t("release_best")
 		end
+		-- Две строки (рекорд, бонус рекламы) — выше, иначе шрифт ужимался до 9 px
+		local tall = info.isRecord == true or (type(info.adBonus) == "number" and info.adBonus > 0)
+		money.Size = UDim2.new(1, 0, 0, if tall then 64 else 36)
 		money.Text = moneyText
 		if fansDelta ~= 0 then
 			local n = Texts.money(math.abs(fansDelta)):sub(2)
