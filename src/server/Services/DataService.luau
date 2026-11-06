@@ -108,6 +108,8 @@ export type Profile = {
 	-- Постепенное открытие систем (FeatureUnlockService, Config/Unlocks): какие системы игрок уже
 	-- видел открытыми (больше не прячутся) и разметил ли сервер старое сохранение (init)
 	features: { seen: { [string]: boolean }, init: boolean },
+	-- Обучение по ходу игры (GuideService, Config/Guides): прочитанные карточки «Как это работает»
+	guides: { seen: { [string]: boolean }, init: boolean },
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
@@ -216,6 +218,7 @@ local function defaultProfile(): Profile
 		settings = {},
 		gotw = defaultGotw(),
 		features = { seen = {}, init = false },
+		guides = { seen = {}, init = false },
 		lastGame = nil,
 		construction = nil,
 		processedReceipts = {},

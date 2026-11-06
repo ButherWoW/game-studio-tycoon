@@ -53,6 +53,8 @@ Unlocks.features = {
 	tax = { stage = GARAGE, menuSlot = 18, toast = false },
 	-- Баннер «в сейфе новый приз» (сам сейф в парке виден всем)
 	safe = { stage = GARAGE, toast = false },
+	-- «📖 Справочник» обучения (Config/Guides, GuideController): с гаража, когда есть что читать
+	guides = { stage = GARAGE, menuSlot = 20, toast = false },
 	-- Исследования: ОИ копятся с первой игры, а тратить есть смысл, когда их набралось
 	research = { stage = GARAGE, games = 12, menuSlot = 1, toast = true, textKey = "unlock_name_research" },
 	-- Хиты: окно со списком своих картриджей — с первого хита

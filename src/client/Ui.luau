@@ -780,6 +780,10 @@ function Ui.markNew(featureId: string)
 end
 
 -- imageKey — ключ из Config/Images.menu: есть id картинки — вместо эмодзи показываем её
+-- Нажата кнопка бокового меню (slot): GuideController показывает карточку обучения системы
+local menuClickedEvent = Instance.new("BindableEvent")
+Ui.menuClicked = menuClickedEvent.Event
+
 function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: string?): TextButton
 	if not menuColumn then
 		local Players = game:GetService("Players")
@@ -843,12 +847,14 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 	-- Слот задаёт порядок сверху вниз: 1 исследования, 2 команда, 3 задания, 4 магазин, 5 rebirth,
 	-- 6 язык, 7 хиты, 8 воры, 9 праздничный ивент (видна только во время ивента), 10 вид студии,
 	-- 11 банк (с долгом), 12 домой (к своему участку), 13 студия (интерьер, декор, настроение),
-	-- 14 достижения, 15 студии игроков и рейтинги (TourWindow), 16 сезон и гейм-джем, 17 топ индустрии
+	-- 14 достижения, 15 студии игроков и рейтинги (TourWindow), 16 сезон и гейм-джем, 17 топ индустрии,
+	-- 18 налоги, 19 биржа, 20 справочник обучения (GuideController)
 	local b: TextButton
 	-- Нажатие снимает значок 🆕 (Ui.markNew)
 	b = Ui.button(menuColumn :: Frame, icon, Ui.colors.panel, function()
 		clearNewBadge(b)
 		onClick()
+		menuClickedEvent:Fire(slot)
 	end)
 	b.Name = "Slot" .. slot
 	b.LayoutOrder = slot
