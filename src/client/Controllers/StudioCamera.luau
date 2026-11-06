@@ -22,6 +22,8 @@ local Ui = require(script.Parent.Parent.Ui)
 local MENU_SLOT = 10
 -- Атрибут игрока (только у себя, на сервер не уходит): включён ли авто-вид при посадке за ПК
 local AUTO_ATTRIBUTE = "AutoStudioView"
+-- Атрибут игрока (ClientSettings, настройка wallFade): стены оболочки тоже полупрозрачные
+local WALL_FADE_ATTRIBUTE = "WallFade"
 -- Как часто проверять, не сменил ли игрок этаж (лифт), пока включён вид студии
 local FLOOR_POLL = 0.3
 
@@ -127,8 +129,9 @@ local function fadeFor(plot: BasePart, part: BasePart): number?
 	if model and model:FindFirstChildOfClass("Humanoid") then
 		return nil
 	end
-	-- Стены текущего этажа остаются непрозрачными (в гараже — оболочка Garage/GarageWalls*)
-	if height >= 0 and isShellWall(plot, part) then
+	-- Стены текущего этажа остаются непрозрачными (в гараже — оболочка Garage/GarageWalls*),
+	-- если игрок не включил «Прозрачные стены» (атрибут WallFade из ClientSettings)
+	if height >= 0 and player:GetAttribute(WALL_FADE_ATTRIBUTE) ~= true and isShellWall(plot, part) then
 		return nil
 	end
 	if height > CameraConfig.fadeHeight then
@@ -446,6 +449,15 @@ function StudioCamera.start()
 	-- Участок поменялся (переезд на другой участок) — уходим из вида, чтобы не смотреть на чужой
 	player:GetAttributeChangedSignal("PlotName"):Connect(function()
 		StudioCamera.exit()
+	end)
+
+	-- Переключил «Прозрачные стены» на ходу: пересчитываем прозрачность участка
+	player:GetAttributeChangedSignal(WALL_FADE_ATTRIBUTE):Connect(function()
+		local plot = activePlot
+		if active and plot then
+			restoreParts()
+			fadePlot(plot)
+		end
 	end)
 
 	-- Поехал на лифте, пока смотришь сверху: показываем новый этаж
