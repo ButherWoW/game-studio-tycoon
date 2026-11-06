@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "Titeln har fula ord — hitta på en annan",
 	move_celebrate = "🎉 Ny studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Vakten jagar dig! Spring till din hylla",
+	hit_guard_slipped = "🛡 Vakten tog tag i dig, men du slet dig loss! Spring!",
+	hit_guard_lost = "🛡 Vakten tappade tjuven",
 	order_title = "📋 Dagens beställningar",
 	order_reset = "Nya om {time}",
 	order_done = "📋 Beställning slutförd: {genre} ★{score}+ — {money}",

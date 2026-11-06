@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "Názov obsahuje vulgárne slová — vymysli iný",
 	move_celebrate = "🎉 Nové štúdio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Strážnik ťa naháňa! Utekaj k svojej polici",
+	hit_guard_slipped = "🛡 Strážnik ťa chytil, ale vytrhol si sa! Utekaj!",
+	hit_guard_lost = "🛡 Strážnik stratil zlodeja",
 	order_title = "📋 Zákazky dňa",
 	order_reset = "Nové o {time}",
 	order_done = "📋 Zákazka splnená: {genre} ★{score}+ — {money}",

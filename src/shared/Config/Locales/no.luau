@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "Tittelen har stygge ord — finn på en annen",
 	move_celebrate = "🎉 Nytt studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Vakten jager deg! Løp til hylla di",
+	hit_guard_slipped = "🛡 Vakten tok deg, men du rev deg løs! Løp!",
+	hit_guard_lost = "🛡 Vakten mistet tyven",
 	order_title = "📋 Dagens bestillinger",
 	order_reset = "Nye om {time}",
 	order_done = "📋 Bestilling fullført: {genre} ★{score}+ — {money}",

@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "Pealkirjas on inetuid sõnu — mõtle teine",
 	move_celebrate = "🎉 Uus stuudio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Turvamees ajab sind taga! Jookse oma riiuli juurde",
+	hit_guard_slipped = "🛡 Turvamees haaras sind, aga sa pääsesid lahti! Jookse!",
+	hit_guard_lost = "🛡 Turvamees kaotas varga",
 	order_title = "📋 Päeva tellimused",
 	order_reset = "Uued {time} pärast",
 	order_done = "📋 Tellimus täidetud: {genre} ★{score}+ — {money}",

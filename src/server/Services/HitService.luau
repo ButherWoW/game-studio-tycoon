@@ -26,6 +26,7 @@ local PlotService = require(script.Parent.PlotService)
 local ModelFactory = require(script.Parent.ModelFactory)
 local StyleModels = require(script.Parent.StyleModels)
 local ThiefBoardService = require(script.Parent.ThiefBoardService)
+local GuardService = require(script.Parent.GuardService)
 
 export type Hit = {
 	id: string,
@@ -57,6 +58,7 @@ type Carry = {
 	startedAt: number,
 	lastPosition: Vector3,
 	lastCheck: number,
+	guard: GuardService.Guard?, -- охранник студии жертвы (GuardService)
 }
 
 local DELIVER_SPEED_SLACK = 2 -- studs запаса на лаги при проверке пути перед доставкой
@@ -569,6 +571,7 @@ local function cleanup(carry: Carry)
 	if carriedIds[carry.hit.id] == carry then
 		carriedIds[carry.hit.id] = nil
 	end
+	GuardService.destroy(carry.guard)
 	carry.part:Destroy()
 	carry.highlight:Destroy()
 	if carry.humanoid.Parent and carry.humanoid.Health > 0 then
@@ -790,7 +793,13 @@ tryStartSteal = function(thief: Player, owner: Player, hitId: string, source: Ba
 		startedAt = now,
 		lastPosition = root.Position,
 		lastCheck = now,
+		guard = nil,
 	}
+	-- Охранник выбегает от полки жертвы (не ловит наверняка, см. Config/HitCartridges.guard)
+	local victimShelf = shelves[owner]
+	if victimShelf and victimShelf.model.Parent then
+		carry.guard = GuardService.spawn(victimShelf.model:GetPivot().Position, now)
+	end
 	humanoid.WalkSpeed = HitCartridges.carrySpeed
 	carries[thief] = carry
 	carriedIds[hit.id] = carry
@@ -872,6 +881,19 @@ local function checkCarry(carry: Carry)
 	then
 		caught(carry)
 		return
+	end
+	-- Охранник: поймал (удачная попытка), упустил или сдался — вору и хозяину сообщаем
+	local guardEvent = GuardService.step(carry.guard, position, now)
+	if guardEvent == "catch" then
+		caught(carry)
+		return
+	elseif guardEvent == "chase" then
+		toast(thief, "hit_guard_chase")
+	elseif guardEvent == "slipped" then
+		toast(thief, "hit_guard_slipped")
+	elseif guardEvent == "lost" then
+		toast(thief, "hit_guard_lost")
+		toast(victim, "hit_guard_lost")
 	end
 	local shelf = shelves[thief]
 	if shelf and shelf.model.Parent then

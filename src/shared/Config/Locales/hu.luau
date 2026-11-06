@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "A címben csúnya szavak vannak — találj ki másikat",
 	move_celebrate = "🎉 Új stúdió: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Az őr üldöz! Fuss a polcodhoz",
+	hit_guard_slipped = "🛡 Az őr elkapott, de kiszabadultál! Fuss!",
+	hit_guard_lost = "🛡 Az őr elvesztette a tolvajt",
 	order_title = "📋 Napi megrendelések",
 	order_reset = "Újak {time} múlva",
 	order_done = "📋 Megrendelés teljesítve: {genre} ★{score}+ — {money}",

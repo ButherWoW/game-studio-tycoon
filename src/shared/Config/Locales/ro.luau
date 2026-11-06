@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "Titlul are cuvinte urâte — inventează altul",
 	move_celebrate = "🎉 Studio nou: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Paznicul te urmărește! Fugi spre raftul tău",
+	hit_guard_slipped = "🛡 Paznicul te-a prins, dar te-ai eliberat! Fugi!",
+	hit_guard_lost = "🛡 Paznicul l-a pierdut pe hoț",
 	order_title = "📋 Comenzile zilei",
 	order_reset = "Noi în {time}",
 	order_done = "📋 Comandă finalizată: {genre} ★{score}+ — {money}",

@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "El título tiene palabrotas: piensa otro",
 	move_celebrate = "🎉 ¡Nuevo estudio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 ¡El guardia te persigue! Corre a tu estante",
+	hit_guard_slipped = "🛡 ¡El guardia te agarró, pero te soltaste! ¡Corre!",
+	hit_guard_lost = "🛡 El guardia perdió al ladrón",
 	order_title = "📋 Encargos del día",
 	order_reset = "Nuevos en {time}",
 	order_done = "📋 Encargo completado: {genre} ★{score}+ — {money}",

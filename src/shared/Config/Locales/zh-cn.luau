@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "名字里有不文明的词——换一个吧",
 	move_celebrate = "🎉 新工作室：{stage}！",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 保安在追你！快跑回你的架子",
+	hit_guard_slipped = "🛡 保安抓住了你，但你挣脱了！快跑！",
+	hit_guard_lost = "🛡 保安跟丢了小偷",
 	order_title = "📋 每日订单",
 	order_reset = "{time}后刷新",
 	order_done = "📋 订单完成: {genre} ★{score}+ — {money}",
