@@ -1,0 +1,97 @@
+{
+  "Flowerbed": {
+    "model": "Flowerbed",
+    "parts": 119,
+    "budget": 120,
+    "dimensionsXYZ": [
+      3.8,
+      1.42,
+      3.8
+    ],
+    "bounds": {
+      "min": [
+        -1.9000000000000001,
+        0.0,
+        -1.9
+      ],
+      "max": [
+        1.9,
+        1.42,
+        1.9
+      ]
+    },
+    "baseY": 0.0,
+    "pivotXYZ": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "front": "+Z",
+    "allAnchored": true,
+    "nativeClasses": [
+      "Model",
+      "Part"
+    ],
+    "scriptsLightsMeshesTexturesText": 0,
+    "obbSat": {
+      "axes": 15,
+      "pairChecks": 7021,
+      "toleranceStuds": 1e-06,
+      "positiveVolumeOverlaps": [],
+      "count": 0,
+      "conservative": "Primitive OBBs used even for ellipsoids. Zero OBB intersections proves zero actual Part volume intersections."
+    },
+    "runtimeTested": false,
+    "sha256": {
+      "Flowerbed.rbxm": "0f972ec40c128d7d5a1e17add0b68202c6ba621f9c0205ecba0212916b6e34f6",
+      "Flowerbed.rbxmx": "2fa90ad5df8e21f969a5d908221341f11cb015f8521425b61c74d7acc6bea37e"
+    },
+    "status": "PASS"
+  },
+  "Pigeon": {
+    "status": "PASS",
+    "nativeParts": 53,
+    "partBudget": 60,
+    "partClasses": {
+      "Model": 1,
+      "Part": 46,
+      "WedgePart": 7
+    },
+    "actualConvexPairs": 1378,
+    "unresolvedOrOverlap": [],
+    "positiveVolumeIntersections": 0,
+    "method": "Analytic native convex support mappings (ellipsoid Ball, elliptic Cylinder, box, six-vertex WedgePart). Accept only a verified separating support plane with gap >= -1e-6 studs. OBB used only as search axes; no claim that all OBBs are disjoint. See per-pair SEPARATION_CERTIFICATES.",
+    "certificateMethods": {
+      "analytic-support-axis": 1354,
+      "GJK-support-plane": 24
+    },
+    "toleranceStuds": 1e-06,
+    "dimensionsXYZ": [
+      1.05249622,
+      1.7926376,
+      2.5152362
+    ],
+    "baseY": 0.0,
+    "footprintCenterXZ": [
+      0.0,
+      0.0
+    ],
+    "pivotXYZ": [
+      0,
+      0,
+      0
+    ],
+    "front": "+Z",
+    "Anchored": true,
+    "scripts": 0,
+    "lights": 0,
+    "externalMeshTextureDependencies": 0,
+    "runtimeTested": false,
+    "sha256": {
+      "Pigeon.rbxm": "f4151b061105aef43898bd5e71540f68ddcf2755cc2801bc6a30dcfc3d9524df",
+      "Pigeon.rbxmx": "556d264732fbbaaa2297ae4aed0cdc7b547d7b56a01afa663541682bcb2ca7f4"
+    },
+    "binaryRoundtrip": "PASS"
+  },
+  "StudioTested": false
+}

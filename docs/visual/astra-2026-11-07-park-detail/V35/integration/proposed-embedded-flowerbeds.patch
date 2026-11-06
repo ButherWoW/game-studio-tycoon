@@ -1,0 +1,22 @@
+--- a/src/server/Services/WorldService.luau
++++ b/src/server/Services/WorldService.luau
+@@ -465,6 +465,19 @@
+ 		else Vector3.zero
+ 	local park = template:Clone()
+ 	park:PivotTo(CFrame.new(center))
++	-- V35: Park contains five embedded Flowerbed_XX models. Replace at their accepted pivots.
++	local flowerbed = landscapeTemplate("Flowerbed")
++	if flowerbed and flowerbed:IsA("Model") and flowerbed:GetAttribute("Generated") ~= true then
++		for _, item in park:GetDescendants() do
++			if item:IsA("Model") and item.Parent and string.match(item.Name, "^Flowerbed_%d+$") then
++				local replacement = flowerbed:Clone()
++				replacement.Name = item.Name
++				replacement:PivotTo(item:GetPivot())
++				replacement.Parent = item.Parent
++				item:Destroy()
++			end
++		end
++	end
+ 	for _, item in park:GetDescendants() do
+ 		if item:IsA("BasePart") and isMeadow(item) then
+ 			grassify(item)
