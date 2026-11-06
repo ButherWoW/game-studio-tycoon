@@ -14,6 +14,7 @@ local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local Debug = require(ReplicatedStorage.Shared.Config.Debug)
 local Bailiffs = require(ReplicatedStorage.Shared.Config.Bailiffs)
 local Research = require(ReplicatedStorage.Shared.Config.Research)
+local Fans = require(ReplicatedStorage.Shared.Config.Fans)
 
 export type Profile = {
 	cash: number,
@@ -31,6 +32,8 @@ export type Profile = {
 	-- Для условий открытия жанров/тем (shared/UnlockRules): игр по жанрам и хитов за всё время
 	genreGames: { [string]: number },
 	hitsReleased: number,
+	-- Фанаты студии (FansService, Config/Fans): целое ≥ 0; Rebirth оставляет Fans.rebirthKeep
+	fans: number,
 	strikeTipSeen: boolean?, -- закрыл подсказку о первой забастовке (StaffService)
 	-- Наставничество (StaffService, Config/Mentoring): mentorId -> menteeId; пары проверяет StaffService
 	mentoring: { [string]: string },
@@ -185,6 +188,7 @@ local function defaultProfile(): Profile
 		recentCombos = {},
 		genreGames = {},
 		hitsReleased = 0,
+		fans = 0,
 		strikeTipSeen = false,
 		mentoring = {},
 		activeAd = nil,
@@ -440,6 +444,7 @@ function DataService.replicate(player: Player)
 		runBestScore = p.runBestScore,
 		genreGames = p.genreGames,
 		hitsReleased = p.hitsReleased,
+		fans = p.fans,
 		employees = employeeCount(p),
 		activeAd = p.activeAd,
 		construction = p.construction,
@@ -644,6 +649,9 @@ local function onPlayerAdded(player: Player)
 			end
 			profile.hitsReleased = own
 		end
+		-- Фанаты: старые сохранения без поля и мусор — 0, дробные — вниз (Config/Fans.maxFans)
+		local fans = tonumber(profile.fans)
+		profile.fans = if fans and fans == fans then math.clamp(math.floor(fans), 0, Fans.maxFans) else 0
 		profile.gotw = validGotw(profile.gotw)
 		profile.lastGame = validLastGame(profile.lastGame)
 		profile.construction = validConstruction(profile.construction)

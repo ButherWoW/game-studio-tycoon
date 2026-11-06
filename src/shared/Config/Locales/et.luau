@@ -880,6 +880,12 @@ return {
 	leaders_games = "Välja antud mänge",
 	leaders_unavailable = "Edetabel pole saadaval",
 	leaders_empty = "Veel kedagi pole",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Stuudio fännid: {count}. Mängude ja hitiriiuli müük +{percent}%. Head mängud ja messid toovad fänne, alla 5 mängud peletavad nad eemale",
+	fans_release_gain = "👥 +{n} uut fänni",
+	fans_release_loss = "👥 −{n} fänni pettunud",
+	fans_expo = "🏆 Mess: +{n} fänni",
+	fans_leaders = "👥 Stuudio fännid",
 	daily_reward_title = "Päevaauhind",
 	daily_reward_day = "Päev {day}",
 	daily_reward_claim = "Päev {day} – võta",

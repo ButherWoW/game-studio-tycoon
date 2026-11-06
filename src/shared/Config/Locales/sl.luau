@@ -879,6 +879,12 @@ return {
 	leaders_games = "Izdane igre",
 	leaders_unavailable = "Lestvica ni na voljo",
 	leaders_empty = "Še nikogar",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Oboževalci studia: {count}. Prodaja iger in police uspešnic +{percent} %. Dobre igre in sejmi prinašajo oboževalce, igre pod 5 jih odganjajo",
+	fans_release_gain = "👥 +{n} novih oboževalcev",
+	fans_release_loss = "👥 −{n} oboževalcev razočaranih",
+	fans_expo = "🏆 Sejem: +{n} oboževalcev",
+	fans_leaders = "👥 Oboževalci studia",
 	daily_reward_title = "Dnevna nagrada",
 	daily_reward_day = "Dan {day}",
 	daily_reward_claim = "Dan {day} — prevzemi",

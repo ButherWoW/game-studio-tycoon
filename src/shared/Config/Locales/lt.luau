@@ -880,6 +880,12 @@ return {
 	leaders_games = "Išleista žaidimų",
 	leaders_unavailable = "Lyderių lentelė nepasiekiama",
 	leaders_empty = "Kol kas tuščia",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Studijos gerbėjai: {count}. Žaidimų ir hitų lentynos pardavimai +{percent}%. Geri žaidimai ir parodos atveda gerbėjų, žaidimai žemiau 5 juos atbaido",
+	fans_release_gain = "👥 +{n} naujų gerbėjų",
+	fans_release_loss = "👥 −{n} gerbėjų nusivylė",
+	fans_expo = "🏆 Paroda: +{n} gerbėjų",
+	fans_leaders = "👥 Studijos gerbėjai",
 	daily_reward_title = "Dienos dovana",
 	daily_reward_day = "{day} diena",
 	daily_reward_claim = "{day} diena – pasiimti",

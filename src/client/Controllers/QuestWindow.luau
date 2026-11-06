@@ -252,11 +252,13 @@ local function renderDaily(frame: ScrollingFrame)
 	end
 end
 
-local function boardColumn(parent: Instance, title: string, entries: any, position: UDim2)
+local BOARD_HEIGHT = 40 + 10 * 30
+
+local function boardColumn(parent: Instance, title: string, entries: any, position: UDim2, width: UDim?)
 	local column = Instance.new("Frame")
 	column.BackgroundColor3 = Color3.fromRGB(44, 46, 66)
 	column.Position = position
-	column.Size = UDim2.new(0.5, -6, 0, 40 + 10 * 30)
+	column.Size = UDim2.new(width or UDim.new(0.5, -6), UDim.new(0, BOARD_HEIGHT))
 	Ui.corner(column, 10)
 	local inner = Instance.new("Frame")
 	inner.BackgroundTransparency = 1
@@ -270,7 +272,11 @@ local function boardColumn(parent: Instance, title: string, entries: any, positi
 	else
 		local me = Players.LocalPlayer.Name
 		for i, e in entries do
-			local line = string.format("%d. %s — %s", i, tostring(e.name), tostring(e.value))
+			-- Числа с разрядами (фанаты студии: «12 345»); оценки и игры — как раньше
+			local value = if type(e.value) == "number" and e.value >= 1000
+				then Texts.money(e.value):sub(2)
+				else tostring(e.value)
+			local line = string.format("%d. %s — %s", i, tostring(e.name), value)
 			local color = if e.name == me then Ui.colors.good else Ui.colors.text
 			Ui.label(inner, line, 24, Enum.Font.GothamMedium, color).LayoutOrder = i
 		end
@@ -289,9 +295,17 @@ local function renderLeaders(frame: ScrollingFrame)
 	end
 	local holder = Instance.new("Frame")
 	holder.BackgroundTransparency = 1
-	holder.Size = UDim2.new(1, -8, 0, 40 + 10 * 30)
+	holder.Size = UDim2.new(1, -8, 0, BOARD_HEIGHT * 2 + 12)
 	boardColumn(holder, ClientState.t("leaders_best"), board.best, UDim2.fromScale(0, 0))
 	boardColumn(holder, ClientState.t("leaders_games"), board.games, UDim2.new(0.5, 6, 0, 0))
+	-- Фанаты студии (FansService) — второй ряд во всю ширину
+	boardColumn(
+		holder,
+		ClientState.t("fans_leaders"),
+		board.fans,
+		UDim2.fromOffset(0, BOARD_HEIGHT + 12),
+		UDim.new(1, 0)
+	)
 	holder.Parent = frame
 end
 

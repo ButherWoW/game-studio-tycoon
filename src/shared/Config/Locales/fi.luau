@@ -880,6 +880,12 @@ return {
 	leaders_games = "Julkaistut pelit",
 	leaders_unavailable = "Tulostaulu ei ole saatavilla",
 	leaders_empty = "Ei vielä ketään",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Studion fanit: {count}. Pelien ja hittihyllyn myynti +{percent} %. Hyvät pelit ja messut tuovat faneja, alle 5:n pelit karkottavat heidät",
+	fans_release_gain = "👥 +{n} uutta fania",
+	fans_release_loss = "👥 −{n} fania pettyi",
+	fans_expo = "🏆 Messut: +{n} fania",
+	fans_leaders = "👥 Studion fanit",
 	daily_reward_title = "Päivän palkinto",
 	daily_reward_day = "Päivä {day}",
 	daily_reward_claim = "Päivä {day} – lunasta",

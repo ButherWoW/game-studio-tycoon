@@ -880,6 +880,12 @@ return {
 	leaders_games = "Jogos lançados",
 	leaders_unavailable = "Ranking indisponível",
 	leaders_empty = "Ninguém ainda",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Fãs do estúdio: {count}. Vendas de jogos e da prateleira de sucessos +{percent}%. Jogos bons e feiras trazem fãs, jogos abaixo de 5 os afastam",
+	fans_release_gain = "👥 +{n} novos fãs",
+	fans_release_loss = "👥 −{n} fãs decepcionados",
+	fans_expo = "🏆 Feira: +{n} fãs",
+	fans_leaders = "👥 Fãs do estúdio",
 	daily_reward_title = "Prêmio diário",
 	daily_reward_day = "Dia {day}",
 	daily_reward_claim = "Dia {day} — pegar",

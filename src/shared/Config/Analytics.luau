@@ -118,6 +118,10 @@ local Analytics = {
 		-- Стройка этапа (ConstructionService): поле — "этап_этап" (office_start, floor_finish,
 		-- skyscraper_cancel, office_buildSkip — значение: сколько секунд оставалось; buildSpeed5_fallback)
 		construction = "Construction",
+		-- Фанаты студии (FansService, Config/Fans): значение — на сколько изменилось (по модулю),
+		-- поле — "источник_знак": release_gain / release_loss, expo_place1_gain (победа), expo_place2_gain,
+		-- expo_place3_gain, expo_high_gain, rebirth_loss
+		fans = "Fans",
 	},
 
 	-- ===== Экономика (Analytics → Economy) =====

@@ -1,7 +1,8 @@
 --!strict
 -- Rebirth (шаг 4.4): с этапа «офис» за Config/Rebirth.cost(rebirths) игрок начинает заново.
 -- Сбрасываем деньги, апгрейды, открытые жанры/темы и runBestScore (по нему считаются награды
--- «N минут дохода»); сохраняем rebirths (+1), bestScore, gamesReleased.
+-- «N минут дохода»); сохраняем rebirths (+1), bestScore, gamesReleased. Фанаты студии —
+-- остаётся Config/Fans.rebirthKeep (FansService.onRebirth).
 -- Множитель дохода (1 + 0.5 × rebirths) применяет DevelopmentService.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -14,6 +15,7 @@ local Rebirth = require(ReplicatedStorage.Shared.Config.Rebirth)
 local RebirthPerks = require(ReplicatedStorage.Shared.Config.RebirthPerks)
 local RetentionRemotes = require(ReplicatedStorage.Shared.RetentionRemotes)
 local DataService = require(script.Parent.DataService)
+local FansService = require(script.Parent.FansService)
 local PlotService = require(script.Parent.PlotService) :: any
 
 local REQUEST_COOLDOWN = 2 -- секунд между запросами одного игрока
@@ -135,6 +137,8 @@ local function onRequestRebirth(player: Player)
 	-- Этап сбрасываем здесь: PlotService.rebuild делает это только при наличии участка,
 	-- а игрок в очереди на участок иначе сохранял бы офис/небоскрёб после Rebirth
 	profile.studioLevel = 1
+	-- Фанаты студии: остаётся часть (Config/Fans.rebirthKeep), бонус к продажам начинается не с нуля
+	FansService.onRebirth(player)
 	-- Стройка этажа (Config/Construction) сгорает вместе со студией. Без возврата денег: Rebirth и так
 	-- обнуляет деньги, возврат стал бы лишь цифрой перед сбросом. PlotService.rebuild снимает её сам,
 	-- здесь — для игрока без участка (в очереди)

@@ -9,6 +9,7 @@ Research, Offline, Rebirth, HitCartridges, AdCampaigns), поэтому посл
 --all — релизный проход (05.11): --extras + события дня, золотой час, налоги, DLC хитов
   (если окупается), см. ASSUMPTIONS ниже; --premium — то же с Roblox Premium (+10%);
 --rebirth2 — ещё и второй забег после 1-го Rebirth: звезду покупает жадно (перебор веток).
+--no-fans — без фанатов студии (Config/Fans) для сравнения «до/после».
 --drops — с графиком контента (Config/ContentDrops): игрок начинает в день запуска, события дня
   выпадают только вышедшие к этому дню (жанры/темы модель не выбирает — у каждого жанра набора
   запуска есть тема 1.2, допущение topic_fit не меняется).
@@ -23,7 +24,10 @@ Research, Offline, Rebirth, HitCartridges, AdCampaigns), поэтому посл
 - рекламу «Стримеры» покупает, когда она окупается вдвое; полка хитов заполнена лучшими;
 - день = 2 сессии по 45 мин (1.5 ч игры), между ними офлайн 5 ч и 17.5 ч;
 - в день: ежедневное задание (15 мин дохода) + в среднем ~9 мин наград за вход.
-Не моделируются: выставка, тренды/праздники, воровство хитов, кредиты, прокачка навыков.
+Фанаты студии (Config/Fans, базовая фича): прирост за релиз по распределению оценки, выставка —
+  ожидание по шансам места (expo_*), множитель продаж к релизам и полке хитов; модельный игрок
+  почти не выпускает игры ниже 5, поэтому потерь у него почти нет (в игре они есть).
+Не моделируются: выставка (приз), тренды/праздники, воровство хитов, кредиты, прокачка навыков.
 """
 
 import math
@@ -80,6 +84,11 @@ ASSUMPTIONS = {
     "critics_fit": 0.6,  # жанр критиков открыт и игрок переключился на него
     "taxes": True,  # налог по этапу (Config/Tax) с дохода релизов, платит вовремя (штраф дороже)
     "hit_updates": True,  # DLC хита покупает, только если буст окупает цену за свои 30 мин
+    # Фанаты студии (--no-fans — выключить): участвует в выставке раз в час активной игры
+    "fans": True,
+    "expo_win_chance": 0.15,  # победа (сервер ~8 игроков, участвуют 3–5)
+    "expo_place_chance": 0.3,  # 2-е или 3-е место (поровну)
+    "expo_high_chance": 0.3,  # без места, но оценка ≥ expoHighScore
     # --rebirth2: второй забег (исследования остаются, команда распущена, ворота по играм открыты)
     "max_days_run2": 60,
 }
@@ -275,7 +284,13 @@ def load():
     stocks = read("Stocks")
     hit_update = ("updateBoost", "updateBoostMinutes", "updateScore", "updatePriceMinutes", "updateMinPrice")
     stock_keys = ("minIncomePerMinute", "valuationMinutes", "dividendShare", "dividendMinIncome", "tradeFee")
+    fa = read("Fans")
+    fans = {k: num_list(fa, k) for k in ("gain", "lossShare", "lossMin", "stageGain")}
+    for k in ("adGainShare", "expoWin", "expoSecond", "expoThird", "expoHigh", "maxBonus", "halfFans", "floor",
+              "rebirthKeep"):
+        fans[k] = field(fa, k)
     return {
+        "fans": fans,
         "daily": daily,
         "tax": num_list(read("Tax"), "Tax.rates"),
         "premium": field(read("Premium"), "incomeBonus"),
@@ -355,6 +370,8 @@ class Sim:
         self.hit_updates = 0
         # Стройка (V29): (этап, id отметки, реальное время конца, апгрейд офиса или None)
         self.building = None
+        self.fans = 0.0  # фанаты студии (Config/Fans)
+        self.fans_lost = 0.0
 
     # --- справочники ---
     def visible(self, u):
@@ -462,7 +479,34 @@ class Sim:
             if ASSUMPTIONS["premium"]:
                 allm *= 1 + self.c["premium"]
         base = self.c["eco"]["revenueBase"] * self.level_mult() * self.rebirth_mult()
-        return base * power * research * reward * ad * extras * allm
+        return base * power * research * reward * ad * extras * allm * self.fan_mult()
+
+    def fan_mult(self):
+        """Formulas.fanMultiplier."""
+        if not ASSUMPTIONS["fans"]:
+            return 1.0
+        f = self.c["fans"]
+        return max(f["floor"], 1 + f["maxBonus"] * self.fans / (self.fans + f["halfFans"]))
+
+    def fan_stage(self):
+        st = self.c["fans"]["stageGain"]
+        return st[min(self.level, len(st)) - 1]
+
+    def fan_change(self, score):
+        """Formulas.fanChange (ожидание без округления)."""
+        f = self.c["fans"]
+        s = min(max(int(score), 1), 10)
+        if s <= len(f["lossShare"]):
+            return -min(max(self.fans * f["lossShare"][s - 1], f["lossMin"][s - 1] * self.fan_stage()), self.fans)
+        ad = self.ad_bonus if self.t < self.ad_until else 0.0
+        return f["gain"][s - 1] * self.fan_stage() * (1 + min(ad, 1) * f["adGainShare"])
+
+    def expo_fans(self):
+        """Ожидаемые фанаты за одну выставку (Formulas.expoFans × шансы места)."""
+        f, a = self.c["fans"], ASSUMPTIONS
+        place = a["expo_place_chance"] / 2
+        base = a["expo_win_chance"] * f["expoWin"] + place * (f["expoSecond"] + f["expoThird"])
+        return (base + a["expo_high_chance"] * f["expoHigh"]) * self.fan_stage()
 
     def rebirth_mult(self):
         return 1 + self.c["rebirth"]["bonus"] * self.rebirths
@@ -501,7 +545,7 @@ class Sim:
     def hit_income_per_min(self):
         h = self.c["hit"]
         mult = {7: 1, 8: 1.4, 9: 2, 10: 3}
-        return sum(h["baseIncome"] * mult[min(int(s), 10)] for s in self.hits)
+        return sum(h["baseIncome"] * mult[min(int(s), 10)] for s in self.hits) * self.fan_mult()
 
     def hit_slots(self):
         h = self.c["hit"]
@@ -698,6 +742,10 @@ class Sim:
             self.wall += dt
             self.games += 1
             self.ri += exp_score
+            if ASSUMPTIONS["fans"]:
+                delta = sum(p * self.fan_change(s) for s, p in dist.items())
+                delta += self.expo_fans() * minutes / 60  # выставка раз в час активной игры
+                self.fans = max(self.fans + delta, 0.0)
             # «Лучшая оценка» модели — порог по шуму, а не рекорд из тысяч игр; «Критики» её не двигают,
             # иначе одно окно навсегда поднимало бы офлайн и награды (в игре рекорд и так ~9–10)
             base_dist = self.score_dist(critics=False) if critics_on else dist
@@ -789,6 +837,7 @@ def run(prev=None, perk_levels=None):
         sim.research = {n["id"] for n in c["research"]}
         sim.games = prev.games
         sim.hits = list(prev.hits)
+        sim.fans = prev.fans * c["fans"]["rebirthKeep"]  # RebirthService: часть фанатов остаётся
         sim.t = sim.wall = 0.0
         for branch, level in (perk_levels or {}).items():
             if level > 0:
@@ -833,7 +882,7 @@ def run(prev=None, perk_levels=None):
                 if len(rows) < 2000 and int(sim.t) % 1800 < 60:
                     rows.append(
                         (day, sim.t / 3600, sim.level, sim.games, sim.cash, sim.active_rate(),
-                         sim.expenses_per_min(), sim.exp_s2() ** 0.5)
+                         sim.expenses_per_min(), sim.exp_s2() ** 0.5, sim.fans)
                     )
             sim.offline(gap)
     return sim, rows
@@ -864,12 +913,14 @@ def report(sim, rows, quiet=False, rebirth_label="Хватает на 1-й Rebir
         else:
             print(f"{label:<22}| {'не дошёл':>12} |      |      |")
     print(f"Офлайн-доход всего: ${sim.offline_total:,.0f}; актив: ${sim.active_income:,.0f}")
+    if ASSUMPTIONS["fans"]:
+        print(f"Фанаты студии: {sim.fans:,.0f} (продажи ×{sim.fan_mult():.3f})")
     if ASSUMPTIONS["research_timer"]:
         print(f"Лаборатория: таймеры узлов {sim.lab_wait / 3600:.1f} ч реального времени, изучено {len(sim.research)}")
     if not quiet:
-        print("\nдень | игра  | этап | игр  | деньги       | $/мин актив | расходы/мин | ~оценка")
+        print("\nдень | игра  | этап | игр  | деньги       | $/мин актив | расходы/мин | ~оценка | фанаты")
         for r in rows[::2]:
-            print(f"{r[0]:>4} | {r[1]:5.1f} | {r[2]:>4} | {r[3]:>4} | ${r[4]:>11,.0f} | {r[5]:>11,.0f} | {r[6]:>11,.0f} | {r[7]:.1f}")
+            print(f"{r[0]:>4} | {r[1]:5.1f} | {r[2]:>4} | {r[3]:>4} | ${r[4]:>11,.0f} | {r[5]:>11,.0f} | {r[6]:>11,.0f} | {r[7]:.1f}     | {r[8]:,.0f}")
 
 
 VARIANTS = {
@@ -941,6 +992,7 @@ if __name__ == "__main__":
     ASSUMPTIONS["research_timer"] = "--instant-research" not in sys.argv
     ASSUMPTIONS["premium"] = "--premium" in sys.argv
     ASSUMPTIONS["drops"] = "--drops" in sys.argv
+    ASSUMPTIONS["fans"] = "--no-fans" not in sys.argv
     ASSUMPTIONS["extras"] = "--extras" in sys.argv or ASSUMPTIONS["all"]
     s, r = run()
     report(s, r, quiet="--quiet" in sys.argv)

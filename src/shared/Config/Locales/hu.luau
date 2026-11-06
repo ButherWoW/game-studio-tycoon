@@ -880,6 +880,12 @@ return {
 	leaders_games = "Kiadott játékok",
 	leaders_unavailable = "A ranglista nem elérhető",
 	leaders_empty = "Még senki",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Stúdió rajongói: {count}. Játék- és slágerpolc-eladások +{percent}%. A jó játékok és kiállítások rajongókat hoznak, az 5 alatti játékok elriasztják őket",
+	fans_release_gain = "👥 +{n} új rajongó",
+	fans_release_loss = "👥 −{n} rajongó csalódott",
+	fans_expo = "🏆 Kiállítás: +{n} rajongó",
+	fans_leaders = "👥 Stúdió rajongói",
 	daily_reward_title = "Napi jutalom",
 	daily_reward_day = "{day}. nap",
 	daily_reward_claim = "{day}. nap — begyűjtés",

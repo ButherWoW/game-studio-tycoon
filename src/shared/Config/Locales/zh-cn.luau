@@ -880,6 +880,12 @@ return {
 	leaders_games = "已发行游戏",
 	leaders_unavailable = "排行榜暂不可用",
 	leaders_empty = "还没有人上榜",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 工作室粉丝：{count}。游戏和热门货架销量 +{percent}%。好游戏和展会带来粉丝，低于 5 分的游戏会吓跑他们",
+	fans_release_gain = "👥 +{n} 位新粉丝",
+	fans_release_loss = "👥 −{n} 位粉丝失望了",
+	fans_expo = "🏆 展会：+{n} 位粉丝",
+	fans_leaders = "👥 工作室粉丝",
 	daily_reward_title = "每日奖励",
 	daily_reward_day = "第 {day} 天",
 	daily_reward_claim = "第 {day} 天 — 领取",

@@ -880,6 +880,12 @@ return {
 	leaders_games = "Усього ігор",
 	leaders_unavailable = "Таблиця лідерів недоступна",
 	leaders_empty = "Поки порожньо",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Фанати студії: {count}. Продажі ігор і полиці хітів +{percent}%. Хороші ігри та виставки приводять фанатів, ігри нижче 5 — відлякують",
+	fans_release_gain = "👥 +{n} нових фанатів",
+	fans_release_loss = "👥 −{n} фанатів розчаровані",
+	fans_expo = "🏆 Виставка: +{n} фанатів",
+	fans_leaders = "👥 Фанати студії",
 	daily_reward_title = "Нагорода за вхід",
 	daily_reward_day = "День {day}",
 	daily_reward_claim = "День {day} — забрати",
