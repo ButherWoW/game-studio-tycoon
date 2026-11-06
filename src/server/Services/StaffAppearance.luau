@@ -57,6 +57,38 @@ local function template(name: string): Accessory?
 	return if item and item:IsA("Accessory") then item else nil
 end
 
+-- Защита от «рамки на лице» (владелец 07.11: у NPC плоская коричневая рамка на уровне глаз): деталь
+-- причёски или аксессуара головы, которая лежит перед лицом в зоне глаз и шире половины головы,
+-- закрывает лицо — делаем её невидимой. Экран-лицо робота (FaceScreen) и аксессуары не головы не трогаем.
+-- В лог пишем сотрудника и деталь, чтобы Астра/Dev 1 поправили модель
+local function hideFaceCovering(model: Model, accessory: Accessory, employeeId: string)
+	local head = model:FindFirstChild("Head")
+	if not head or not head:IsA("BasePart") then
+		return
+	end
+	local headSize = head.Size
+	for _, part in accessory:GetDescendants() do
+		if part:IsA("BasePart") and part.Name ~= "FaceScreen" and part.Transparency < 1 then
+			local center = head.CFrame:ToObjectSpace(part.CFrame).Position
+			local inFront = center.Z < -headSize.Z / 2 + 0.15
+			local eyeBand = math.abs(center.Y) < headSize.Y * 0.4
+			local wide = part.Size.X > headSize.X * 0.6 or part.Size.Y > headSize.Y * 0.6
+			if inFront and eyeBand and wide then
+				part.Transparency = 1
+				warn(
+					"[StaffAppearance] деталь "
+						.. part.Name
+						.. " аксессуара "
+						.. accessory.Name
+						.. " закрывает лицо "
+						.. employeeId
+						.. " — скрыта"
+				)
+			end
+		end
+	end
+end
+
 local function setFace(target: BasePart, imageId: number)
 	local decal = target:FindFirstChild("face")
 	if not decal or not decal:IsA("Decal") then
@@ -99,6 +131,9 @@ function StaffAppearance.apply(model: Model, employeeId: string, ownShirt: boole
 	end
 	local hairSource = template("hair_" .. employeeId)
 	local hair = if hairSource then StaffAppearance.addAccessory(model, humanoid, hairSource) else nil
+	if hair and not look.faceOnScreen then
+		hideFaceCovering(model, hair, employeeId)
+	end
 	if look.cape then
 		local cape = template(look.cape)
 		if cape then
