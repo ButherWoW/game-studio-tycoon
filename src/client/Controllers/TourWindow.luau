@@ -392,27 +392,27 @@ function TourWindow.open()
 	Ui.windowOpened(TourWindow.close) -- окно меню: закрывает другое открытое окно меню
 
 	local window = Ui.window(screen, "Window", Vector2.new(680, 580))
+	-- Кнопки справа от «×» (Ui.HEADER_*): на тач-экране «×» шире, сдвигаем их вместе
+	local headerRoom = Ui.HEADER_BUTTON + Ui.HEADER_RIGHT + 8
 	local title = Ui.label(window, ClientState.t("tour_title"), 40, Ui.titleFontFor(ClientState.lang))
 	title.Position = UDim2.fromOffset(16, 10)
-	title.Size = UDim2.new(1, -406, 0, 40)
+	title.Size = UDim2.new(1, -(headerRoom + 346), 0, 40)
 	local close = Ui.button(window, "×", Ui.colors.bad, TourWindow.close)
-	close.AnchorPoint = Vector2.new(1, 0)
-	close.Position = UDim2.new(1, -12, 0, 10)
-	close.Size = UDim2.fromOffset(40, 40)
+	Ui.headerClose(close)
 	-- Пригласить друга и обмен с игроками сервера (FriendsController, TradeWindow)
 	local trade = Ui.button(window, ClientState.t("trade_button"), Ui.colors.primary, function()
 		TourWindow.close()
 		TradeWindow.openPicker()
 	end)
 	trade.AnchorPoint = Vector2.new(1, 0)
-	trade.Position = UDim2.new(1, -60, 0, 10)
+	trade.Position = UDim2.new(1, -headerRoom, 0, 10)
 	trade.Size = UDim2.fromOffset(130, 40)
 	-- Обмен — со 2-го этажа (Config/Unlocks.trade; сервер тоже не даёт: TradeService)
 	trade.Visible = FeatureGate.isOpen("trade")
 	local invite =
 		Ui.button(window, ClientState.t("friends_invite"), Ui.colors.good, FriendsController.invite)
 	invite.AnchorPoint = Vector2.new(1, 0)
-	invite.Position = UDim2.new(1, -198, 0, 10)
+	invite.Position = UDim2.new(1, -(headerRoom + 138), 0, 10)
 	invite.Size = UDim2.fromOffset(196, 40)
 
 	local tabs = Instance.new("Frame")
