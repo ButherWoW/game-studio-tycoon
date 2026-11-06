@@ -23,6 +23,7 @@ local Skins = require(Shared.Config.Skins)
 local Posters = require(Shared.Config.Posters)
 local Mascots = require(Shared.Config.Mascots)
 local FriendRemotes = require(Shared.FriendRemotes)
+local PriceLevels = require(script.Parent.PriceLevels)
 local DataService = require(script.Parent.DataService)
 local FeatureUnlockService = require(script.Parent.FeatureUnlockService)
 local SkinService = require(script.Parent.SkinService)
@@ -119,7 +120,7 @@ local function cashLog(profile: DataService.Profile): { day: number, received: n
 		or received < 0
 		or received == math.huge
 	then
-		raw = { day = today, received = 0 };
+		raw = { day = today, received = 0 }
 		(profile :: any).tradeCash = raw
 	end
 	return raw
@@ -262,6 +263,14 @@ local function onRequest(player: Player, userId: any)
 	local theirs = blocker(target)
 	if theirs then
 		notice(player, { kind = if theirs == "tradeBusy" then "tradeBusy" else "tradeUnavailable" })
+		return
+	end
+	-- Региональные цены: меняться могут только игроки с одним уровнем цены (проверка ждёт Roblox)
+	if not PriceLevels.canTrade(player, target) then
+		notice(player, { kind = "tradeUnavailable" })
+		return
+	end
+	if not player.Parent or not target.Parent then
 		return
 	end
 	local refusedAt = declined[player] and declined[player][target.UserId]

@@ -18,6 +18,7 @@ local Images = require(ReplicatedStorage.Shared.Config.Images)
 local Posters = require(ReplicatedStorage.Shared.Config.Posters)
 local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
+local RobuxPrice = require(script.Parent.Parent.RobuxPrice)
 local Ui = require(script.Parent.Parent.Ui)
 local QuestWindow = require(script.Parent.QuestWindow)
 local ContentDropClient = require(script.Parent.Parent.ContentDropClient)
@@ -117,7 +118,9 @@ end
 
 local function buyButton(parent: Instance, text: string, productId: number, price: number): TextButton
 	local soon = productId == 0
-	local label = text .. " — " .. (if soon then t("shop_soon") else t("shop_robux", { price = price }))
+	local label = text
+		.. " — "
+		.. (if soon then t("shop_soon") else t("shop_robux", { price = RobuxPrice.of(productId, price) }))
 	return Ui.button(parent, label, if soon then Ui.colors.locked else PREMIUM_COLOR, function()
 		if not soon then
 			MarketplaceService:PromptProductPurchase(Players.LocalPlayer, productId)

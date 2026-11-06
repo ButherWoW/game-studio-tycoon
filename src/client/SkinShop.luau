@@ -15,6 +15,7 @@ local Images = require(Shared.Config.Images)
 local Texts = require(Shared.Config.Texts)
 local Social = require(Shared.Config.Social)
 local ClientState = require(script.Parent.ClientState)
+local RobuxPrice = require(script.Parent.RobuxPrice)
 local Ui = require(script.Parent.Ui)
 local GiftPicker = require(script.Parent.GiftPicker)
 local ContentDropClient = require(script.Parent.ContentDropClient)
@@ -110,7 +111,7 @@ local function actionButton(cell: Frame, skin: Skins.Skin)
 		local soon = skin.productId == 0
 		text = if soon
 			then ClientState.t("shop_soon")
-			else ClientState.t("shop_robux", { price = skin.robuxPrice or 0 })
+			else ClientState.t("shop_robux", { price = RobuxPrice.of(skin.productId, skin.robuxPrice) })
 		color = if soon then Ui.colors.locked else Ui.colors.good
 		onClick = function()
 			if not soon then

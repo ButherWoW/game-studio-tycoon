@@ -21,6 +21,7 @@ local Texts = require(Shared.Config.Texts)
 local offerRemotes: typeof(require(Shared.OfferRemotes))? = nil
 local ArtIcon = require(script.Parent.ArtIcon)
 local ClientState = require(script.Parent.ClientState)
+local RobuxPrice = require(script.Parent.RobuxPrice)
 local Ui = require(script.Parent.Ui)
 
 export type State = {
@@ -85,7 +86,9 @@ end
 
 -- Текст кнопки цены: «R$ 25» или «Скоро»
 function OfferClient.priceText(id: number, price: number): string
-	return if id ~= 0 then ClientState.t("shop_robux", { price = price }) else ClientState.t("shop_soon")
+	return if id ~= 0
+		then ClientState.t("shop_robux", { price = RobuxPrice.of(id, price) })
+		else ClientState.t("shop_soon")
 end
 
 -- ===== Аналитика =====
@@ -458,7 +461,10 @@ function OfferClient.releaseOffer(info: any): ((parent: Instance, order: number)
 			local b: TextButton
 			b = Ui.button(
 				parent,
-				ClientState.t("offer_double_release", { price = doubleProduct.robuxPrice }),
+				ClientState.t(
+					"offer_double_release",
+					{ price = RobuxPrice.of(doubleProduct.productId, doubleProduct.robuxPrice) }
+				),
 				Ui.colors.good,
 				function()
 					-- Купил — кнопку прячем (повторная покупка дала бы уже только пакет-замену)
@@ -511,7 +517,10 @@ function OfferClient.releaseOffer(info: any): ((parent: Instance, order: number)
 			line.Size = UDim2.new(0.6, -8, 1, 0)
 			local b = Ui.button(
 				frame,
-				ClientState.t("offer_x2_buy", { price = doubleCash.robuxPrice }),
+				ClientState.t(
+					"offer_x2_buy",
+					{ price = RobuxPrice.of(doubleCash.productId, doubleCash.robuxPrice) }
+				),
 				Ui.colors.good,
 				function()
 					OfferClient.buyPass("x2Reminder", doubleCash.gamePassId)
@@ -542,7 +551,10 @@ end
 
 function OfferClient.longDevText(): string
 	local product = productById("instantFinish")
-	return ClientState.t("offer_finish_now", { price = if product then product.robuxPrice else 0 })
+	return ClientState.t(
+		"offer_finish_now",
+		{ price = if product then RobuxPrice.of(product.productId, product.robuxPrice) else 0 }
+	)
 end
 
 -- Купить заряд и сразу потратить его на этот проект

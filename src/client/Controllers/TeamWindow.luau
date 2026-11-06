@@ -25,6 +25,7 @@ local Expenses = require(ReplicatedStorage.Shared.Config.Expenses)
 local Features = require(ReplicatedStorage.Shared.Config.Features)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local ClientState = require(script.Parent.Parent.ClientState)
+local RobuxPrice = require(script.Parent.Parent.RobuxPrice)
 local StudioState = require(script.Parent.Parent.StudioState)
 local Ui = require(script.Parent.Parent.Ui)
 local ArtIcon = require(script.Parent.Parent.ArtIcon)
@@ -526,7 +527,7 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 			then ClientState.t("train_skip_token", { n = trainingCredits })
 			elseif productId ~= 0 then ClientState.t(
 				"train_skip",
-				{ price = Training.products.skillSkip.robuxPrice }
+				{ price = RobuxPrice.of(productId, Training.products.skillSkip.robuxPrice) }
 			)
 			else ClientState.t("train_soon")
 		local canSkip = trainingCredits > 0 or productId ~= 0
@@ -809,7 +810,10 @@ local function buildTrainingPanel(parent: Instance, order: number)
 	local all = smallButton(
 		panel,
 		if ready
-			then ClientState.t("train_skip_all", { price = product.robuxPrice })
+			then ClientState.t(
+				"train_skip_all",
+				{ price = RobuxPrice.of(product.productId, product.robuxPrice) }
+			)
 			else ClientState.t("train_soon"),
 		if ready then Ui.colors.primary else Ui.colors.locked,
 		function()
@@ -865,13 +869,11 @@ local function buildRow(
 	-- Зарплата: у нанятого — с учётом вкачанных навыков, у кандидата — стартовая
 	local employeeSkills = info[employee.id] and info[employee.id].skills
 	details ..= " · " .. ClientState.t("team_salary", {
-		amount = Texts.money(
-			math.floor(
-				Expenses.salary(employee, if type(employeeSkills) == "table" then employeeSkills else nil)
-					-- Прибавка после события «переманивают» (CompanyEventService)
-					* (tonumber(raises[employee.id]) or 1)
-			)
-		),
+		amount = Texts.money(math.floor(
+			Expenses.salary(employee, if type(employeeSkills) == "table" then employeeSkills else nil)
+				-- Прибавка после события «переманивают» (CompanyEventService)
+				* (tonumber(raises[employee.id]) or 1)
+		)),
 	})
 	local deskId = staff[employee.id]
 	if deskId == "" then

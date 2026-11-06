@@ -22,6 +22,7 @@ local UnlockRules = require(Shared.UnlockRules)
 local Images = require(Shared.Config.Images)
 local ArtIcon = require(script.Parent.ArtIcon)
 local ClientState = require(script.Parent.ClientState)
+local RobuxPrice = require(script.Parent.RobuxPrice)
 local Ui = require(script.Parent.Ui)
 
 local ROW_COLOR = Color3.fromRGB(44, 46, 66)
@@ -383,7 +384,11 @@ local function speedPicker(parent: Instance, order: number, left: number)
 		local soon = item.productId <= 0
 		local caption = ClientState.t("cons_speed_" .. item.id)
 			.. " · "
-			.. (if soon then ClientState.t("shop_soon") else "R$" .. item.robuxPrice)
+			.. (
+				if soon
+					then ClientState.t("shop_soon")
+					else "R$" .. RobuxPrice.of(item.productId, item.robuxPrice)
+			)
 		local b = Ui.button(frame, caption, if soon then Ui.colors.locked else Ui.colors.good, function()
 			prompt(item.productId)
 		end)

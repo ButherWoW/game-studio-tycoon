@@ -17,6 +17,7 @@ local StudioLayout = require(Shared.StudioLayout)
 local BailiffRemotes = require(Shared.BailiffRemotes)
 local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
+local RobuxPrice = require(script.Parent.Parent.RobuxPrice)
 local Ui = require(script.Parent.Parent.Ui)
 local OfferClient = require(script.Parent.Parent.OfferClient)
 local LoanWindow = require(script.Parent.LoanWindow)
@@ -151,7 +152,10 @@ function BailiffBanner.start()
 		local pack = currentPack
 		pay.Visible = pack ~= nil and pack.product.productId ~= 0
 		if pack then
-			pay.Text = ClientState.t("bailiff_pack", { price = pack.product.robuxPrice })
+			pay.Text = ClientState.t(
+				"bailiff_pack",
+				{ price = RobuxPrice.of(pack.product.productId, pack.product.robuxPrice) }
+			)
 			if pay.Visible and not packShown then
 				packShown = true
 				OfferClient.track("strike", "shown")

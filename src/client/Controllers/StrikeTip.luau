@@ -8,6 +8,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local ClientState = require(script.Parent.Parent.ClientState)
+local RobuxPrice = require(script.Parent.Parent.RobuxPrice)
 local Ui = require(script.Parent.Parent.Ui)
 local PopupQueue = require(script.Parent.Parent.PopupQueue)
 local OfferClient = require(script.Parent.Parent.OfferClient)
@@ -75,7 +76,10 @@ local function show()
 		OfferClient.track("strike", "shown")
 		local pay = Ui.button(
 			body,
-			ClientState.t("offer_strike_pay", { price = product.robuxPrice }),
+			ClientState.t(
+				"offer_strike_pay",
+				{ price = RobuxPrice.of(product.productId, product.robuxPrice) }
+			),
 			Ui.colors.good,
 			function()
 				dismissed = true
