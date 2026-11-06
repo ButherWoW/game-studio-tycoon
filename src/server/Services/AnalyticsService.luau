@@ -84,6 +84,7 @@ local MINUTE = 60
 
 local Analytics = {}
 local states: { [Player]: PlayerState } = {}
+local watched: { [Player]: boolean } = {} -- onPlayerAdded отработал (опрос и слежение за посадкой)
 -- Идёт выдача по квитанции: поток ProcessReceipt → товар. Все addCash в этом потоке — IAP
 local receiptByThread: { [thread]: ProductInfo } = {}
 local productById: { [number]: ProductInfo }? = nil
@@ -374,6 +375,41 @@ local function poll(player: Player)
 	end
 end
 
+-- Состояние игрока из профиля. nil — профиля ещё нет или игрок вышел. Создаётся при входе
+-- (onPlayerAdded) или лениво — первой же квитанцией, пришедшей раньше инициализации
+local function ensureState(player: Player): PlayerState?
+	local existing = states[player]
+	if existing then
+		return existing
+	end
+	local profile = DataService.get(player)
+	if not profile or not player.Parent then
+		return nil
+	end
+	local ok, err = pcall(function()
+		dataOf(profile) -- legacy определяем сразу при входе, до любых действий
+		local steals, caught = thiefStats(profile)
+		states[player] = {
+			rebirths = profile.rebirths,
+			steals = steals,
+			caught = caught,
+			lang = (profile :: any).lang,
+			langLogged = false,
+			parkTouched = false,
+			satLaptop = false,
+			balance = profile.cash,
+			stage = profile.studioLevel,
+			economy = {},
+			economyOrder = {},
+		}
+	end)
+	if not ok then
+		warnOnce("player init failed", err)
+		return nil
+	end
+	return states[player]
+end
+
 -- ===== Экономика =====
 
 local function addToBucket(
@@ -383,8 +419,12 @@ local function addToBucket(
 	item: string?,
 	amount: number
 )
-	local state = states[player]
-	if not state or amount <= 0 or amount ~= amount or amount == math.huge then
+	if amount <= 0 or amount ~= amount or amount == math.huge then
+		return
+	end
+	-- Отложенная квитанция может прийти раньше onPlayerAdded: состояние создаём здесь
+	local state = ensureState(player)
+	if not state then
 		return
 	end
 	local key = flow.Name .. "|" .. tag.transactionType .. "|" .. tag.sku .. "|" .. (item or "")
@@ -856,7 +896,7 @@ function Analytics.endReceipt(player: Player, productId: number, granted: boolea
 	local thread = coroutine.running()
 	local info = receiptByThread[thread]
 	receiptByThread[thread] = nil
-	if granted and Config.enabled and states[player] then
+	if granted and Config.enabled and ensureState(player) then
 		info = info or productInfo(productId)
 		logCustom(player, Config.events.product, info.robux, info.key)
 	end
@@ -877,36 +917,19 @@ local function watchSeat(player: Player, character: Model)
 end
 
 local function onPlayerAdded(player: Player)
+	if watched[player] then
+		return
+	end
 	local deadline = os.clock() + PROFILE_WAIT_LIMIT
 	local profile = DataService.get(player)
 	while not profile and player.Parent and os.clock() < deadline do
 		task.wait(PROFILE_WAIT)
 		profile = DataService.get(player)
 	end
-	if not profile or not player.Parent or states[player] then
+	if not profile or not player.Parent or watched[player] or not ensureState(player) then
 		return
 	end
-	local ok, err = pcall(function()
-		dataOf(profile) -- legacy определяем сразу при входе, до любых действий
-		local steals, caught = thiefStats(profile)
-		states[player] = {
-			rebirths = profile.rebirths,
-			steals = steals,
-			caught = caught,
-			lang = (profile :: any).lang,
-			langLogged = false,
-			parkTouched = false,
-			satLaptop = false,
-			balance = profile.cash,
-			stage = profile.studioLevel,
-			economy = {},
-			economyOrder = {},
-		}
-	end)
-	if not ok then
-		warnOnce("player init failed", err)
-		return
-	end
+	watched[player] = true
 	poll(player)
 	player.CharacterAdded:Connect(function(character)
 		watchSeat(player, character)
@@ -917,7 +940,9 @@ local function onPlayerAdded(player: Player)
 end
 
 local function onPlayerRemoving(player: Player)
-	pcall(poll, player)
+	-- poll здесь не зовём: он пишет funnel в профиль параллельно с closeProfile (гонка), а
+	-- пропущенный шаг и так дошлётся при следующем входе
+	watched[player] = nil
 	finalFlush = true
 	pcall(flushEconomy, player)
 	finalFlush = false

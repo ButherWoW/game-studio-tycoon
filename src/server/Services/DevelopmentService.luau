@@ -1309,12 +1309,12 @@ function DevelopmentService.projectInfo(player: Player, projectId: number): any
 	return nil
 end
 
--- Игра в разработке в студии (не ноутбук): событиям компании есть что «уронить» или ускорить
 -- Есть хоть один проект, включая ноутбук в парке (шаг онбординга «First Game Started»)
 function DevelopmentService.hasAnyProject(player: Player): boolean
 	return next(projects[player] or {}) ~= nil
 end
 
+-- Игра в разработке в студии (не ноутбук): событиям компании есть что «уронить» или ускорить
 function DevelopmentService.hasActiveProject(player: Player): boolean
 	for _, project in projects[player] or {} do
 		if not project.pending and not project.laptop and project.elapsed < project.duration then
