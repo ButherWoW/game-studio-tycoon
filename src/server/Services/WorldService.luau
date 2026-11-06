@@ -10,6 +10,7 @@ local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local ModelFactory = require(script.Parent.ModelFactory)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
+local World = require(ReplicatedStorage.Shared.Config.World)
 
 -- Участок каждому игроку, но не больше 12: при MaxPlayers = 60 кольцо уходило на ~760 studs,
 -- за край земли (отчёт #2, п. 1). Лишние игроки ждут освободившийся участок (PlotService)
@@ -24,9 +25,9 @@ local PLOT_RING_RADIUS = math.max(102, PLOT_COUNT * 80 / (2 * math.pi))
 -- ровно кольцо участков + небольшой запас; Baseplate из Studio сжимается до этого размера, по краю
 -- стоят невидимые стены (ensureBoundaryWalls), чтобы никто не выпал с карты
 local GROUND_SIZE = 2 * (PLOT_RING_RADIUS + PLOT_SIZE * 0.75 + 20)
-local FOUNTAIN_SCALE = 1.7
-local WALL_HEIGHT = 300
-local WALL_THICKNESS = 8
+local WALL_HEIGHT = World.boundary.height
+local WALL_THICKNESS = World.boundary.thickness
+local FOUNTAIN_SCALE = World.fountainScale
 -- Тропинки от спавна к передним краям участков, чтобы было видно, куда идти
 local PATH_WIDTH = 6
 -- Начинаются за скамейками парка, чтобы не идти под ними (при 12 участках тропинки на углах скамеек)
@@ -121,6 +122,7 @@ local function ensureGround()
 			wall.CanCollide = true
 			wall.CanQuery = false
 			wall.CanTouch = false
+			wall.CastShadow = false
 			wall.Transparency = 1
 			wall.Size = spec[1]
 			wall.Position = Vector3.new(
@@ -689,8 +691,8 @@ end
 
 -- Спасение от падения (владелец 07.11): упал ниже FALL_Y (прыжок с 3-го этажа, баг лифта, дыра в карте) —
 -- сразу на свой участок или к спавну, без смерти и потери прогресса
-local FALL_Y = -30
-local FALL_CHECK = 1
+local FALL_Y = World.fallY
+local FALL_CHECK = World.fallCheckSeconds
 
 local function rescueFallen()
 	for _, player in game:GetService("Players"):GetPlayers() do
