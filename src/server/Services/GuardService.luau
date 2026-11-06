@@ -84,22 +84,150 @@ local function build(guard: Guard)
 				part.CanTouch = false
 			end
 		end
-		if head and head:IsA("BasePart") then
-			local cap = Instance.new("Part")
-			cap.Name = "GuardCap"
-			cap.Size = Vector3.new(1.35, 0.4, 1.35)
-			cap.Color = NAVY
-			cap.Material = Enum.Material.Fabric
-			cap.CanCollide = false
-			cap.CanQuery = false
-			cap.CanTouch = false
-			cap.Massless = true
-			cap.CFrame = head.CFrame * CFrame.new(0, 0.62, 0)
+		-- Образ охранника: фуражка с козырьком и кокардой, тёмные очки, светоотражающий жилет, ремень с
+		-- дубинкой, рация на плече и жетон. Детали приварены к частям R15 и едут вместе с моделью
+		local function attach(
+			partName: string,
+			name: string,
+			size: Vector3,
+			offset: CFrame,
+			color: Color3,
+			material: Enum.Material,
+			transparency: number?
+		)
+			local target = model:FindFirstChild(partName)
+			if not target or not target:IsA("BasePart") then
+				return
+			end
+			local piece = Instance.new("Part")
+			piece.Name = name
+			piece.Size = size
+			piece.Color = color
+			piece.Material = material
+			piece.Transparency = transparency or 0
+			piece.CanCollide = false
+			piece.CanQuery = false
+			piece.CanTouch = false
+			piece.Massless = true
+			piece.CFrame = target.CFrame * offset
 			local weld = Instance.new("WeldConstraint")
-			weld.Part0 = head
-			weld.Part1 = cap
-			weld.Parent = cap
-			cap.Parent = model
+			weld.Part0 = target
+			weld.Part1 = piece
+			weld.Parent = piece
+			piece.Parent = model
+		end
+		local black = Color3.fromRGB(22, 22, 26)
+		local gold = Color3.fromRGB(235, 190, 60)
+		local yellow = Color3.fromRGB(255, 214, 0)
+		-- Голова: фуражка, козырёк, кокарда, очки
+		attach(
+			"Head",
+			"GuardCap",
+			Vector3.new(1.35, 0.4, 1.35),
+			CFrame.new(0, 0.62, 0),
+			NAVY,
+			Enum.Material.Fabric
+		)
+		attach(
+			"Head",
+			"GuardCapBand",
+			Vector3.new(1.4, 0.14, 1.4),
+			CFrame.new(0, 0.45, 0),
+			black,
+			Enum.Material.SmoothPlastic
+		)
+		attach(
+			"Head",
+			"GuardVisor",
+			Vector3.new(1.1, 0.08, 0.55),
+			CFrame.new(0, 0.45, -0.85),
+			black,
+			Enum.Material.SmoothPlastic
+		)
+		attach(
+			"Head",
+			"GuardCapBadge",
+			Vector3.new(0.28, 0.28, 0.05),
+			CFrame.new(0, 0.66, -0.7),
+			gold,
+			Enum.Material.Metal
+		)
+		attach(
+			"Head",
+			"GuardGlasses",
+			Vector3.new(1.05, 0.22, 0.08),
+			CFrame.new(0, 0.08, -0.62),
+			black,
+			Enum.Material.SmoothPlastic,
+			0.15
+		)
+		-- Корпус: жилет со светоотражающими полосами, жетон, рация
+		attach(
+			"UpperTorso",
+			"GuardVestStripeTop",
+			Vector3.new(2.04, 0.16, 1.04),
+			CFrame.new(0, 0.35, 0),
+			yellow,
+			Enum.Material.SmoothPlastic
+		)
+		attach(
+			"UpperTorso",
+			"GuardVestStripeLow",
+			Vector3.new(2.04, 0.16, 1.04),
+			CFrame.new(0, -0.15, 0),
+			yellow,
+			Enum.Material.SmoothPlastic
+		)
+		attach(
+			"UpperTorso",
+			"GuardBadgeChest",
+			Vector3.new(0.3, 0.36, 0.06),
+			CFrame.new(0.55, 0.55, -0.53),
+			gold,
+			Enum.Material.Metal
+		)
+		attach(
+			"UpperTorso",
+			"GuardRadio",
+			Vector3.new(0.22, 0.42, 0.16),
+			CFrame.new(-0.8, 0.5, -0.5),
+			black,
+			Enum.Material.SmoothPlastic
+		)
+		attach(
+			"UpperTorso",
+			"GuardRadioAntenna",
+			Vector3.new(0.05, 0.35, 0.05),
+			CFrame.new(-0.8, 0.9, -0.5),
+			black,
+			Enum.Material.SmoothPlastic
+		)
+		-- Пояс и дубинка
+		attach(
+			"LowerTorso",
+			"GuardBelt",
+			Vector3.new(2.06, 0.22, 1.06),
+			CFrame.new(0, 0.05, 0),
+			black,
+			Enum.Material.SmoothPlastic
+		)
+		attach(
+			"LowerTorso",
+			"GuardBuckle",
+			Vector3.new(0.3, 0.22, 0.06),
+			CFrame.new(0, 0.05, -0.54),
+			gold,
+			Enum.Material.Metal
+		)
+		attach(
+			"LowerTorso",
+			"GuardBaton",
+			Vector3.new(0.14, 0.95, 0.14),
+			CFrame.new(1.08, -0.25, 0.1),
+			black,
+			Enum.Material.SmoothPlastic
+		)
+		if head and head:IsA("BasePart") then
 			local gui = Instance.new("BillboardGui")
 			gui.Name = "GuardBadge"
 			gui.Size = UDim2.fromScale(2, 1.2)
