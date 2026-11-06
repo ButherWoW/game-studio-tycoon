@@ -1,0 +1,181 @@
+{
+  "batch01_04": {
+    "assets": [
+      {
+        "file": "short_01_bench_hq.png",
+        "refs": [
+          "/Users/erland/Documents/ChatGPT/B-15/output/roblox-intro/intro_1.png"
+        ],
+        "prompt": "Use case: ads-marketing. Generate a finished vertical video COVER ILLUSTRATION, NOT a gameplay screenshot and not a video frame simulation. 1080x1920 portrait, opaque. Match the cheerful high-polish colorful blocky 3D game illustration style in hero reference. Consistent hero identity: chestnut sculpted block hair, black rectangular glasses, royal blue hoodie with plain unmarked chest, charcoal trousers and white shoes. No letters, words, numbers, digits, logos, code symbols, watermark, UI, badges or typography anywhere, including clothes, laptops, signs and coins. All critical subjects completely inside 8% safe margins. Uppermost20% (Y0..384) must be quiet low-detail background/sky with no important objects, no hero face, no building, no coins; reserved for later caption by editor. Fill lower80% with clear mobile-readable narrative. Rich sunny colors, appealing depth, expressive friendly face, glossy controlled highlights, crisp silhouettes. Scene: inspiring progression from park bench to garage to EXACTLY THREE-STOREY game-studio headquarters, using one coherent park landscape. Foreground lower third: same hero seated on wooden park bench using unbranded laptop. Midground left: modest open garage studio with desk and monitor. Background right BELOW upper20% quiet sky: a broad low-rise office headquarters with exactly three visibly stacked floors, ground + second + third, panoramic blue glass with violet/cyan accents and warm interior workstations. Not a skyscraper, no fourth floor, no extra towers. Clear curved park path connects bench, garage, and HQ. No arrows needed. Keep entire bench, hero, garage and HQ within safe side margins. Small trees and lamps support scene without clutter. Do not reproduce reference composition literally; this is a new portrait cover retaining hero identity.",
+        "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-b01bc918-29e7-4eee-a63e-878d34b881ff.png",
+        "edits": [
+          {
+            "prompt": "Edit this exact cover ONLY to fix8% framing. Scale the entire important scene composition (hero, bench/worktable, laptop, buildings ) about18% smaller and center it horizontally, preserving identities, pose and all scene features. All important objects fully inside X100..980 and Y400..1750 of1080x1920. Need at least170pixels clear ground below hero shoes and all bench/table feet. Buildings must be entirely within safe side margins. Restore surrounding area with seamless matching park grass/path and sky. Keep top20% completely quiet empty sky. Preserve exactly3storeys on HQ: ground + second + third, no added floor; preserve garage and bench-laptop progression. No text, no logos, no numbers, no symbols. Same polished blocky3D cover art.",
+            "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-launch-covers/covers/short_01_bench_hq.png",
+            "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-38abc295-b983-4258-bda3-ffb853af13ba.png"
+          }
+        ],
+        "method": "builtin ImageGen new cover using visual style/identity references; no gameplay claim",
+        "final_file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-launch-covers/covers/short_01_bench_hq.png",
+        "formatting": {
+          "method": "Proportionate RGB resize / aspect-preserving fit only; no manual drawing or text overlay",
+          "size": [
+            1080,
+            1920
+          ]
+        }
+      },
+      {
+        "file": "short_02_office_styles.png",
+        "refs": [
+          "/Users/erland/Documents/ChatGPT/B-15/output/roblox-intro/intro_1.png"
+        ],
+        "prompt": "Use case: ads-marketing. Generate a finished vertical video COVER ILLUSTRATION, NOT a gameplay screenshot and not a video frame simulation. 1080x1920 portrait, opaque. Match the cheerful high-polish colorful blocky 3D game illustration style in hero reference. Consistent hero identity: chestnut sculpted block hair, black rectangular glasses, royal blue hoodie with plain unmarked chest, charcoal trousers and white shoes. No letters, words, numbers, digits, logos, code symbols, watermark, UI, badges or typography anywhere, including clothes, laptops, signs and coins. All critical subjects completely inside 8% safe margins. Uppermost20% (Y0..384) must be quiet low-detail background/sky with no important objects, no hero face, no building, no coins; reserved for later caption by editor. Fill lower80% with clear mobile-readable narrative. Rich sunny colors, appealing depth, expressive friendly face, glossy controlled highlights, crisp silhouettes. Scene: same game-development office desk design shown in FOUR equal clear interior panels in a clean two-by-two grid occupying Y430..1650; each panel is one style of furniture, not labelled. Upper-left CLASSIC: warm wooden desk, blue upholstered chair, standard dark monitor and tower. Upper-right COZY: honey wood, sage soft chair, soft amber lamp, small plants. Lower-left MINIMAL: white desk and white/light-gray chair, restrained clean surfaces. Lower-right NEON: black-purple desk, violet chair, cyan/violet glowing edging and matching gaming computer. All panels have same desk/monitor/chair arrangement for comparison, screen shows only simple colored block game shapes, no characters or symbols. Same hero stands smiling in center-lower foreground without hiding desks. Top20% is an uninterrupted quiet pale blue/lavender office wall, no decor or text. No style names, labels or pill shapes. Readable four furniture vibes, bright polished V22 aesthetic.",
+        "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-7d246c16-2338-4355-b107-66b1c896c849.png",
+        "edits": [
+          {
+            "prompt": "Edit this exact cover to fix safe framing only. Preserve four panels (classic blue wood, cozy sage wood, minimal white, neon purple cyan), all furniture details and same blue-hoodie glasses hero identity, and blank lavender upper20%. Reduce the total composition below upper20% by about15% so every desk, chair, panel, hero hand and SHOES is fully within X90..990 and Y400..1760 of1080x1920 canvas. Hero feet must have at least160pixels of floor below them, not touch bottom edge. Four panels should have90pixels clear background at left and right. Fill outside with matching lavender wall and floor, no new objects or text, logos or symbols. Maintain polished bright blocky3D illustration.",
+            "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-launch-covers/covers/short_02_office_styles.png",
+            "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-3bec9106-fa7e-4808-bc16-659d662e480c.png"
+          }
+        ],
+        "method": "builtin ImageGen new cover using visual style/identity references; no gameplay claim",
+        "final_file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-launch-covers/covers/short_02_office_styles.png",
+        "formatting": {
+          "method": "Proportionate RGB resize / aspect-preserving fit only; no manual drawing or text overlay",
+          "size": [
+            1080,
+            1920
+          ]
+        }
+      },
+      {
+        "file": "short_03_mascots.png",
+        "refs": [
+          "/Users/erland/Documents/ChatGPT/B-15/output/roblox-intro/intro_1.png",
+          "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-mascots/batch-1/previews/Mascot_pixel_cat.png",
+          "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-mascots/batch-2/previews/Mascot_cloud_ghost.png",
+          "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-mascots/batch-3/previews/Mascot_neon_fox.png",
+          "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-mascots/batch-3/previews/Mascot_cosmic_whale.png"
+        ],
+        "prompt": "Use case: ads-marketing. Generate a finished vertical video COVER ILLUSTRATION, NOT a gameplay screenshot and not a video frame simulation. 1080x1920 portrait, opaque. Match the cheerful high-polish colorful blocky 3D game illustration style in hero reference. Consistent hero identity: chestnut sculpted block hair, black rectangular glasses, royal blue hoodie with plain unmarked chest, charcoal trousers and white shoes. No letters, words, numbers, digits, logos, code symbols, watermark, UI, badges or typography anywhere, including clothes, laptops, signs and coins. All critical subjects completely inside 8% safe margins. Uppermost20% (Y0..384) must be quiet low-detail background/sky with no important objects, no hero face, no building, no coins; reserved for later caption by editor. Fill lower80% with clear mobile-readable narrative. Rich sunny colors, appealing depth, expressive friendly face, glossy controlled highlights, crisp silhouettes. Scene: hero smiling and walking on a lush winding park path with EXACTLY FOUR DISTINCT companion mascots, following accepted model references closely, all fully visible and not overlapping faces. Image1 hero identity. Image2 pixel cat: cobalt-blue CUBOID chunky cat, square pink inner ears, big white round eyes, cyan rectangular muzzle, tiny black V smile, stepped blue tail. Image3 cloud ghost: white floating scalloped low-poly cloud body, multiple rounded cloud lobes, big eyes, little blue cheeks and V smile, floating cloud toes. Image4 neon fox: violet low-poly fox, very tall rectangular ears with CYAN inner panels, white muzzle, big eyes and bushy purple tail with glowing cyan tip. Image5 cosmic whale: dark navy plump floating whale, huge light-CYAN belly/muzzle, purple side flippers and forked tail, two small GOLD STAR ornaments above eyes. Preserve these shapes and colors; no generic replacement pets. Arrange cat and fox toward foreground either side, cloud ghost and whale hover at mid-height flanking hero; no duplicates. Bright park with green lawns, a few flowers and tree framing below top20%, quiet blue sky above. All four mascot bodies plus hero fully framed inside8%margins.",
+        "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-e6eab123-30bb-420c-bebf-2aa86e08c23b.png",
+        "edits": [
+          {
+            "prompt": "Edit exact supplied portrait cover ONLY to give all subjects safe8% side margins. Preserve identity of hero and all four mascots EXACTLY: blue cubic pixel cat, white cloud ghost with blue cheeks, purple/cyan fox, navy/cyan whale with purple fins and gold stars. Scale the four mascot group and hero as one coherent composition slightly smaller (~15%) around center, keeping all pets including cat tail and whale fins inside X100..980 on1080px-wide canvas. Nothing important should enter leftmost or rightmost90px. Hero and pets fully visible; leave≥160px ground below feet. Preserve bright blocky3D style park, path and lighting; fill outside with matching park background. Upper20% remains quiet blank blue sky. No text, digits, symbols, logos anywhere.",
+            "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-launch-covers/covers/short_03_mascots.png",
+            "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-3eacdae8-4733-4a5b-9a58-67de23fd27db.png"
+          }
+        ],
+        "method": "builtin ImageGen new cover using visual style/identity references; no gameplay claim",
+        "final_file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-launch-covers/covers/short_03_mascots.png",
+        "formatting": {
+          "method": "Proportionate RGB resize / aspect-preserving fit only; no manual drawing or text overlay",
+          "size": [
+            1080,
+            1920
+          ]
+        }
+      },
+      {
+        "file": "short_04_golden_hour.png",
+        "refs": [
+          "/Users/erland/Documents/ChatGPT/B-15/output/roblox-intro/intro_1.png"
+        ],
+        "prompt": "Use case: ads-marketing. Generate a finished vertical video COVER ILLUSTRATION, NOT a gameplay screenshot and not a video frame simulation. 1080x1920 portrait, opaque. Match the cheerful high-polish colorful blocky 3D game illustration style in hero reference. Consistent hero identity: chestnut sculpted block hair, black rectangular glasses, royal blue hoodie with plain unmarked chest, charcoal trousers and white shoes. No letters, words, numbers, digits, logos, code symbols, watermark, UI, badges or typography anywhere, including clothes, laptops, signs and coins. All critical subjects completely inside 8% safe margins. Uppermost20% (Y0..384) must be quiet low-detail background/sky with no important objects, no hero face, no building, no coins; reserved for later caption by editor. Fill lower80% with clear mobile-readable narrative. Rich sunny colors, appealing depth, expressive friendly face, glossy controlled highlights, crisp silhouettes. Scene: GOLDEN HOUR in a beautiful studio park: same hero excitedly holds an unbranded laptop at a small wooden park workbench, laptop displays simple bright block landscapes and game art with no writing. A graceful curved stream of plain gleaming GOLD COINS rises around workstation to convey game-development earnings; every coin is completely BLANK, no stamped letters digits symbols or logos. Warm sunset light, honey shafts between green trees, vivid orange sky fading smoothly to pale gold in top20% (quiet empty area). A welcoming low-rise game studio with glass windows and visible desk in distant park, small lamps and flowers. Hero and laptop are central-lower focal point, coins orbit below Y430, avoid upper safe caption area. No clocks, no time, no multiplier, no currency signs, no text. Communicate warm profitable game creation through visual objects only.",
+        "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-c7a4eae5-4a6c-47a5-9b9c-382deaebd2d3.png",
+        "edits": [
+          {
+            "prompt": "Edit this exact cover ONLY to fix8% framing. Scale the entire important scene composition (hero, bench/worktable, laptop, buildings and all coins) about18% smaller and center it horizontally, preserving identities, pose and all scene features. All important objects fully inside X100..980 and Y400..1750 of1080x1920. Need at least170pixels clear ground below hero shoes and all bench/table feet. Buildings must be entirely within safe side margins. Restore surrounding area with seamless matching park grass/path and sky. Keep top20% completely quiet empty sky. Preserve blank gold coins and warm golden sunset, laptop block game display. No text, no logos, no numbers, no symbols. Same polished blocky3D cover art.",
+            "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-launch-covers/covers/short_04_golden_hour.png",
+            "source": "/Users/erland/.codex/generated_images/01a1aeeb-ba0d-7e50-9ed0-9b28b5864337/exec-33a7a851-ac7b-4b9c-bf41-388169c2a9c8.png"
+          }
+        ],
+        "method": "builtin ImageGen new cover using visual style/identity references; no gameplay claim",
+        "final_file": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-launch-covers/covers/short_04_golden_hour.png",
+        "formatting": {
+          "method": "Proportionate RGB resize / aspect-preserving fit only; no manual drawing or text overlay",
+          "size": [
+            1080,
+            1920
+          ]
+        }
+      }
+    ],
+    "tool": "Built-in ImageGen",
+    "scope": "Static illustrated VIDEO COVERS only, not recorded gameplay or video deliverables"
+  },
+  "batch05_08": [
+    {
+      "n": 5,
+      "file": "short_05_safe.png",
+      "prompt": "Use case: ads-marketing. Create a portrait 9:16 marketing illustration cover, 1080x1920 composition. Reference 1 defines SAME recurring hero: cheerful blocky Roblox-like young developer, swept chestnut hair, black rectangular glasses, plain royal BLUE hoodie with white drawstrings, dark trousers, white sneakers. NO hoodie symbols or writing. Reference2 defines bright glossy V22 visual style ONLY, do NOT reproduce its headline, score or symbols. Reference3 is actual game prop design; integrate recognizably in scene. Scene: Mysterious navy-blue and slate-gray park safe with GOLD wheel and trim, cyan blank display and blank keypad as object reference. Safe big at lower right, hero crouches curious at left, finger hovering near BLANK keypad. Beautiful lush park winding paths lanterns flowers; soft magical cyan light at safe seam. Closed door, no contents or code shown. Composition: keep TOP20% (y0..384) calm open sky or simple softly shaded wall, absolutely no focal objects/confetti/heads there, reserved for later heading; main action between y450..1680. Every main character and prop entirely within8% safe margins (x86..994,y154..1766), full bodies no clipping. Rich polished toy-like3D, vibrant blue cyan green gold, warm soft lighting, readable phone thumbnail, expressive joyful faces. NO TEXT ANYWHERE: no letters, numbers, punctuation, currency signs, logos, watermarks, scoreboard, UI, code, readable signs or book writing. Keypad buttons, screens and plaques BLANK except pictorial shapes explicitly described. Opaque full-bleed scenic background. This is promotional artwork, not gameplay screenshot.",
+      "references": [
+        "/Users/erland/Documents/ChatGPT/B-15/output/roblox-intro/intro_1.png",
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_3.png",
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-v27/models-pack/previews/ParkSafe.png"
+      ],
+      "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-f5d76dfe-6233-45e7-bab1-9e1a4813e580.png",
+      "editChains": [
+        {
+          "prompt": "Edit only composition scale of hero+safe: make both 20% smaller together and move them inward toward canvas center so hero left edge is at x110 and safe right edge at x970 on1080wide portrait. Keep both wholly visible and at least8% from left/right/bottom edges. Preserve same character identity, safe design, park, cyan/gold colors, blank keypad and NO text. Top20% remains quiet blue sky. Do not add symbols letters numbers logos.",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-launch-covers/covers/short_05_safe.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-65672e6f-27ef-4ec0-b9a7-ef117ac7b228.png"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "file": "short_06_hit_theft.png",
+      "prompt": "Use case: ads-marketing. Create a portrait 9:16 marketing illustration cover, 1080x1920 composition. Reference 1 defines SAME recurring hero: cheerful blocky Roblox-like young developer, swept chestnut hair, black rectangular glasses, plain royal BLUE hoodie with white drawstrings, dark trousers, white sneakers. NO hoodie symbols or writing. Reference2 defines bright glossy V22 visual style ONLY, do NOT reproduce its headline, score or symbols.  Scene: Lighthearted slapstick chase between two friendly block characters in sunny game studio courtyard. Funny neighbor in pink jacket and blue beret runs in foreground clutching bright PINK game cartridge with tiny pictorial landscape and NO letters; hero in blue hoodie chasing behind laughing surprised, full bodies and clear poses, playful sweeping movement. No weapons, no realistic crime, no threatening faces. Composition: keep TOP20% (y0..384) calm open sky or simple softly shaded wall, absolutely no focal objects/confetti/heads there, reserved for later heading; main action between y450..1680. Every main character and prop entirely within8% safe margins (x86..994,y154..1766), full bodies no clipping. Rich polished toy-like3D, vibrant blue cyan green gold, warm soft lighting, readable phone thumbnail, expressive joyful faces. NO TEXT ANYWHERE: no letters, numbers, punctuation, currency signs, logos, watermarks, scoreboard, UI, code, readable signs or book writing. Keypad buttons, screens and plaques BLANK except pictorial shapes explicitly described. Opaque full-bleed scenic background. This is promotional artwork, not gameplay screenshot.",
+      "references": [
+        "/Users/erland/Documents/ChatGPT/B-15/output/roblox-intro/intro_1.png",
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_3.png"
+      ],
+      "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-696ebe36-8912-46b8-b97f-2204e30a9614.png",
+      "editChains": [
+        {
+          "prompt": "Edit composition only: reduce both running characters and cartridge by20% and arrange wholly inside central rectangle x110..970,y450..1710 on1080x1920 image. All main silhouettes8% away from sides and bottom, no clipping. Maintain exact identity, poses, props, colors and scene. Keep top20% quiet sky. Expand matching background around smaller scene. NO TEXT letters numbers logos currency signs. Preserve playful friendly chase, pink cartridge, no weapons.",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-launch-covers/covers/short_06_hit_theft.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-17799d9d-85ac-41f3-89a6-9063c7625729.png"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "file": "short_07_game_of_week.png",
+      "prompt": "Use case: ads-marketing. Create a portrait 9:16 marketing illustration cover, 1080x1920 composition. Reference 1 defines SAME recurring hero: cheerful blocky Roblox-like young developer, swept chestnut hair, black rectangular glasses, plain royal BLUE hoodie with white drawstrings, dark trousers, white sneakers. NO hoodie symbols or writing. Reference2 defines bright glossy V22 visual style ONLY, do NOT reproduce its headline, score or symbols. Reference3 is actual game prop design; integrate recognizably in scene. Scene: Game of the Week celebration in park Hall of Fame: hero smiling proudly on unnumbered circular pedestal, pink pictorial game cartridge prominently beside a GOLD arcade joystick/game-controller trophy modeled after object reference, gold ball-topped stick on blue-and-gold rectangular base. Small friendly fans clap below, soft sparse gold confetti below top fifth. No ranks, ratings, text or numbers. Composition: keep TOP20% (y0..384) calm open sky or simple softly shaded wall, absolutely no focal objects/confetti/heads there, reserved for later heading; main action between y450..1680. Every main character and prop entirely within8% safe margins (x86..994,y154..1766), full bodies no clipping. Rich polished toy-like3D, vibrant blue cyan green gold, warm soft lighting, readable phone thumbnail, expressive joyful faces. NO TEXT ANYWHERE: no letters, numbers, punctuation, currency signs, logos, watermarks, scoreboard, UI, code, readable signs or book writing. Keypad buttons, screens and plaques BLANK except pictorial shapes explicitly described. Opaque full-bleed scenic background. This is promotional artwork, not gameplay screenshot.",
+      "references": [
+        "/Users/erland/Documents/ChatGPT/B-15/output/roblox-intro/intro_1.png",
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_3.png",
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-v28/models-pack/previews/Trophy_GOTW.png"
+      ],
+      "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-239a37e2-758f-4c42-8976-af5e5f0dcf95.png",
+      "editChains": [
+        {
+          "prompt": "Edit composition only. Reduce entire podium+hero+trophy+pink cartridge group15% and center it. Move the3 foreground fans BACK, make them much smaller FULL BODY visible standing on grass wholly inside x110..970,y1400..1730 with clear feet and empty grass below. No people or important props touch edges,8% safe margin. Keep joyful faces, blue hooded brown-haired glasses hero, actual golden joystick trophy, blue-gold podium, pink game cartridge, no text/numbers/logos. Top20% sky remains calm and empty.",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-launch-covers/covers/short_07_game_of_week.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-7b2d2023-dceb-433c-b94c-f74e6b0afeb3.png"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "file": "short_08_stock_market.png",
+      "prompt": "Use case: ads-marketing. Create a portrait 9:16 marketing illustration cover, 1080x1920 composition. Reference 1 defines SAME recurring hero: cheerful blocky Roblox-like young developer, swept chestnut hair, black rectangular glasses, plain royal BLUE hoodie with white drawstrings, dark trousers, white sneakers. NO hoodie symbols or writing. Reference2 defines bright glossy V22 visual style ONLY, do NOT reproduce its headline, score or symbols. Reference3 is actual game prop design; integrate recognizably in scene. Scene: Game studio goes public celebration in panoramic upper-floor studio: same hero proudly gesturing to large stock candlestick visualization and big upward cyan arrow on screen. Chart only candle shapes, NO axis labels or letters. Gold coins with BLANK faces. In foreground own console matches object reference: two blue upright block towers with gold tops, cyan strips, blue controller on dark plinth with cyan rim. Bright optimistic polished game-studio success scene. Composition: keep TOP20% (y0..384) calm open sky or simple softly shaded wall, absolutely no focal objects/confetti/heads there, reserved for later heading; main action between y450..1680. Every main character and prop entirely within8% safe margins (x86..994,y154..1766), full bodies no clipping. Rich polished toy-like3D, vibrant blue cyan green gold, warm soft lighting, readable phone thumbnail, expressive joyful faces. NO TEXT ANYWHERE: no letters, numbers, punctuation, currency signs, logos, watermarks, scoreboard, UI, code, readable signs or book writing. Keypad buttons, screens and plaques BLANK except pictorial shapes explicitly described. Opaque full-bleed scenic background. This is promotional artwork, not gameplay screenshot.",
+      "references": [
+        "/Users/erland/Documents/ChatGPT/B-15/output/roblox-intro/intro_1.png",
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_3.png",
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-console-v23/previews/Console_Launch.png"
+      ],
+      "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-4fce88d9-17cd-43b0-8fcf-5d6b9a102090.png",
+      "editChains": [
+        {
+          "prompt": "Edit composition only: reduce hero, chart display, console pedestal and coins by20% and arrange wholly inside central rectangle x110..970,y450..1710 on1080x1920 image. All main silhouettes8% away from sides and bottom, no clipping. Maintain exact identity, poses, props, colors and scene. Keep top20% quiet sky. Expand matching background around smaller scene. NO TEXT letters numbers logos currency signs. Preserve blank candlestick chart, console exact blue twin towers gold tops cyan rim.",
+          "reference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-launch-covers/covers/short_08_stock_market.png",
+          "source": "/Users/erland/.codex/generated_images/01a1aeec-1fe3-7bd3-bb0f-1b232d0e2d4e/exec-09fe117b-287a-4207-b95f-1eb5496cc195.png"
+        }
+      ]
+    }
+  ]
+}
