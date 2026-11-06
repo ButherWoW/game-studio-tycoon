@@ -879,6 +879,12 @@ return {
 	leaders_games = "Çıkan oyunlar",
 	leaders_unavailable = "Liderlik tablosu kullanılamıyor",
 	leaders_empty = "Henüz kimse yok",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Stüdyo hayranları: {count}. Oyun ve hit rafı satışları +%{percent}. İyi oyunlar ve fuarlar hayran getirir, 5'in altındaki oyunlar onları kaçırır",
+	fans_release_gain = "👥 +{n} yeni hayran",
+	fans_release_loss = "👥 −{n} hayran hayal kırıklığına uğradı",
+	fans_expo = "🏆 Fuar: +{n} hayran",
+	fans_leaders = "👥 Stüdyo hayranları",
 	daily_reward_title = "Günlük ödül",
 	daily_reward_day = "{day}. gün",
 	daily_reward_claim = "{day}. gün — al",

@@ -880,6 +880,12 @@ return {
 	leaders_games = "Släppta spel",
 	leaders_unavailable = "Topplistan är inte tillgänglig",
 	leaders_empty = "Ingen än",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Studiofans: {count}. Försäljning av spel och hitshyllan +{percent} %. Bra spel och mässor ger fans, spel under 5 skrämmer bort dem",
+	fans_release_gain = "👥 +{n} nya fans",
+	fans_release_loss = "👥 −{n} fans besvikna",
+	fans_expo = "🏆 Mässa: +{n} fans",
+	fans_leaders = "👥 Studiofans",
 	daily_reward_title = "Daglig belöning",
 	daily_reward_day = "Dag {day}",
 	daily_reward_claim = "Dag {day} – hämta",

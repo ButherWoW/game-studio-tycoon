@@ -879,6 +879,12 @@ return {
 	leaders_games = "Објављене игре",
 	leaders_unavailable = "Табела није доступна",
 	leaders_empty = "Још никога",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Фанови студија: {count}. Продаја игара и полице хитова +{percent}%. Добре игре и сајмови доводе фанове, игре испод 5 их терају",
+	fans_release_gain = "👥 +{n} нових фанова",
+	fans_release_loss = "👥 −{n} фанова разочарано",
+	fans_expo = "🏆 Сајам: +{n} фанова",
+	fans_leaders = "👥 Фанови студија",
 	daily_reward_title = "Дневна награда",
 	daily_reward_day = "Дан {day}",
 	daily_reward_claim = "Дан {day} — преузми",

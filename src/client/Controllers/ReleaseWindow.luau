@@ -226,13 +226,19 @@ local function show(info: any)
 	money.LayoutOrder = 21
 	local loan = Ui.label(body, "", 24, nil, Ui.colors.bad)
 	loan.TextXAlignment = Enum.TextXAlignment.Center
-	loan.LayoutOrder = 22
+	-- Фанаты студии (FansService): «👥 +350 новых фанатов» / «👥 −1 200 фанатов разочарованы»
+	local fansDelta = math.floor(tonumber(info.fansDelta) or 0)
+	local fansLine = Ui.label(body, "", 24, nil, if fansDelta < 0 then Ui.colors.bad else Ui.colors.good)
+	fansLine.TextXAlignment = Enum.TextXAlignment.Center
+	fansLine.LayoutOrder = 22
+	fansLine.Visible = false
+	loan.LayoutOrder = 23
 	loan.Visible = false
 
 	local buttons = Instance.new("Frame")
 	buttons.BackgroundTransparency = 1
 	buttons.Size = UDim2.new(1, 0, 0, 48)
-	buttons.LayoutOrder = 23
+	buttons.LayoutOrder = 24
 	local buttonsLayout = Instance.new("UIListLayout")
 	buttonsLayout.FillDirection = Enum.FillDirection.Horizontal
 	buttonsLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -341,6 +347,12 @@ local function show(info: any)
 			moneyText ..= "\n" .. ClientState.t("release_best")
 		end
 		money.Text = moneyText
+		if fansDelta ~= 0 then
+			local n = Texts.money(math.abs(fansDelta)):sub(2)
+			fansLine.Text =
+				ClientState.t(if fansDelta > 0 then "fans_release_gain" else "fans_release_loss", { n = n })
+			fansLine.Visible = true
+		end
 		-- Часть дохода ушла банку (LoanService): показываем, сколько, чтобы сумма сходилась с HUD
 		if loanRepaid > 0 then
 			loan.Text = ClientState.t("release_loan_repaid", { money = Texts.money(loanRepaid) })
@@ -348,7 +360,7 @@ local function show(info: any)
 		end
 		buttons.Visible = true
 		if offer then
-			offer(body, 24)
+			offer(body, 25)
 		end
 		if arcade then
 			local play = Ui.button(
@@ -361,7 +373,7 @@ local function show(info: any)
 				end
 			)
 			play.Size = UDim2.new(1, 0, 0, 40)
-			play.LayoutOrder = 25
+			play.LayoutOrder = 26
 		end
 		revealed()
 	end)

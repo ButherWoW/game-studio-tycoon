@@ -1,5 +1,5 @@
 --!strict
--- HUD: верхняя строка (деньги + значки: игры, реклама, роялти, расходы, долг, забастовка,
+-- HUD: верхняя строка (деньги + значки: фанаты студии, игры, реклама, роялти, расходы, долг, забастовка,
 -- настроение, мощность команды; нажатие на значок — подсказка с полным текстом), прогресс
 -- разработки (строка на каждый проект, с кнопкой «⚡ Закончить»), тумблер «Авто-релиз» и кнопка
 -- «Создать игру». Плашки событий — в лотке справа (Ui.bannerStack, Config/Hud).
@@ -11,6 +11,7 @@ local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local PaidRemotes = require(ReplicatedStorage.Shared.PaidRemotes)
 local Hud = require(ReplicatedStorage.Shared.Config.Hud)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Formulas = require(ReplicatedStorage.Shared.Formulas)
 local StudioState = require(script.Parent.Parent.StudioState)
 local ClientState = require(script.Parent.Parent.ClientState)
 local DevState = require(script.Parent.Parent.DevState)
@@ -198,16 +199,18 @@ function HudController.start()
 		end)
 		return chip
 	end
-	local gamesChip = makeChip("Games", 1)
-	local strikeChip = makeChip("Strike", 2)
-	local expensesChip = makeChip("Expenses", 3)
-	local debtChip = makeChip("Debt", 4)
-	local adChip = makeChip("Ad", 5)
-	local royaltyChip = makeChip("Royalty", 6)
+	-- Фанаты студии (FansService, Config/Fans) — сразу за деньгами
+	local fansChip = makeChip("Fans", 1)
+	local gamesChip = makeChip("Games", 2)
+	local strikeChip = makeChip("Strike", 3)
+	local expensesChip = makeChip("Expenses", 4)
+	local debtChip = makeChip("Debt", 5)
+	local adChip = makeChip("Ad", 6)
+	local royaltyChip = makeChip("Royalty", 7)
 	-- Настроение команды (MoodService, атрибут TeamMood): только когда есть сотрудники
-	local moodChip = makeChip("Mood", 7)
+	local moodChip = makeChip("Mood", 8)
 	-- Мощность команды (StaffPower) — пока идёт разработка и есть сотрудники
-	local powerChip = makeChip("Power", 8)
+	local powerChip = makeChip("Power", 9)
 	local function setChip(chip: Chip, shown: boolean, text: string?, detail: string?, color: Color3?)
 		chip.button.Visible = shown
 		if not shown then
@@ -224,6 +227,9 @@ function HudController.start()
 			popover.Text = chip.detail
 		end
 	end
+
+	-- Изменение фанатов последних релизов, пока окно релиза не раскрыло оценку
+	local fansHidden = 0
 
 	local function progressTop(): number
 		return FIRST_PROGRESS_Y
@@ -384,6 +390,17 @@ function HudController.start()
 			else Texts.money(math.abs(shown)):sub(2)
 		cash.Text = (if shown < 0 then "-" else "") .. ClientState.t("hud_cash", { cash = cashText })
 		cash.TextColor3 = if shown < 0 then Ui.colors.bad else Ui.colors.money
+		-- Фанаты: «👥 12.3K», в подсказке — точное число и бонус к продажам (Formulas.fanMultiplier)
+		-- Изменение за релиз прячем до раскрытия оценки (как деньги): иначе значок спойлерит оценку
+		local fans = math.max(math.floor((tonumber(data.fans) or 0) - fansHidden), 0)
+		local fansBonus = math.floor((Formulas.fanMultiplier(fans) - 1) * 100 + 0.5)
+		setChip(
+			fansChip,
+			true,
+			"👥 " .. shortMoney(fans):sub(2),
+			ClientState.t("fans_hud", { count = Texts.money(fans):sub(2), percent = fansBonus }),
+			Ui.colors.good
+		)
 		local games = ClientState.t("hud_games", { count = data.gamesReleased })
 		setChip(gamesChip, true, "🎮 " .. tostring(data.gamesReleased), games)
 		local adOn = data.activeAd ~= nil and data.activeAd.expiresAt > os.time()
@@ -486,6 +503,15 @@ function HudController.start()
 		if type(released) == "table" and type(released.projectId) == "number" then
 			progressById[released.projectId] = nil
 			renderProgress()
+		end
+		local delta = if type(released) == "table" then math.floor(tonumber(released.fansDelta) or 0) else 0
+		if delta ~= 0 then
+			fansHidden += delta
+			refresh()
+			ClientState.afterReveal(function()
+				fansHidden -= delta
+				refresh()
+			end)
 		end
 	end)
 

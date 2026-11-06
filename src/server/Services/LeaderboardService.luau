@@ -1,5 +1,6 @@
 --!strict
--- Таблица лидеров (шаг 4.5): OrderedDataStore «лучшая оценка» и «всего игр».
+-- Таблица лидеров (шаг 4.5): OrderedDataStore «лучшая оценка», «всего игр» и «фанаты студии»
+-- (FansService, Config/Fans).
 -- Запись — не чаще раза в WRITE_INTERVAL на игрока и только если значение изменилось.
 -- Топ-10 читается раз в TOP_INTERVAL и рассылается всем. Все вызовы DataStore — в pcall:
 -- в Studio без доступа к API Services клиент получает available = false («недоступно»).
@@ -19,31 +20,33 @@ local REQUEST_COOLDOWN = 1
 local CLOSE_WAIT = 15 -- BindToClose: сколько ждём записи (DataService — 25 с, Roblox даёт ~30 с)
 
 type Entry = { name: string, value: number }
-type Board = { available: boolean, best: { Entry }, games: { Entry } }
-type Written = { best: number, games: number, at: number }
+type Board = { available: boolean, best: { Entry }, games: { Entry }, fans: { Entry } }
+type Written = { best: number, games: number, fans: number, at: number }
 
 local LeaderboardService = {}
 
 local bestStore: OrderedDataStore? = nil
 local gamesStore: OrderedDataStore? = nil
+local fansStore: OrderedDataStore? = nil
 do
 	local ok, err = pcall(function()
 		bestStore = DataStoreService:GetOrderedDataStore("Leaderboard_BestScore_v1")
 		gamesStore = DataStoreService:GetOrderedDataStore("Leaderboard_Games_v1")
+		fansStore = DataStoreService:GetOrderedDataStore("Leaderboard_Fans_v1")
 	end)
 	if not ok then
 		warn("[LeaderboardService] OrderedDataStore недоступен:", err)
 	end
 end
 
-local board: Board = { available = false, best = {}, games = {} }
+local board: Board = { available = false, best = {}, games = {}, fans = {} }
 local written: { [number]: Written } = {} -- по UserId: переживает выход игрока
 local pendingWrite: { [number]: boolean } = {}
 local deferred: { [number]: Written } = {} -- отложенные записи вышедших (at не используется)
 local names: { [number]: string } = {}
 local lastRequest: { [Player]: number } = {}
 
-local function write(userId: number, best: number, games: number)
+local function write(userId: number, best: number, games: number, fans: number, old: Written?)
 	local key = tostring(userId)
 	local okBest, errBest = pcall(function()
 		(bestStore :: OrderedDataStore):SetAsync(key, best)
@@ -51,19 +54,38 @@ local function write(userId: number, best: number, games: number)
 	local okGames, errGames = pcall(function()
 		(gamesStore :: OrderedDataStore):SetAsync(key, games)
 	end)
-	if not okBest or not okGames then
-		warn("[LeaderboardService] Запись не удалась:", errBest, errGames)
+	-- Фанаты меняются почти с каждым релизом: пишем только изменившееся значение
+	local okFans, errFans = true, nil
+	if fansStore and (not old or old.fans ~= fans) then
+		okFans, errFans = pcall(function()
+			(fansStore :: OrderedDataStore):SetAsync(key, fans)
+		end)
 	end
+	if not okBest or not okGames or not okFans then
+		warn("[LeaderboardService] Запись не удалась:", errBest, errGames, errFans)
+	end
+end
+
+local function fansOf(profile: any): number
+	local n = tonumber(profile.fans)
+	return if n and n == n then math.max(math.floor(n), 0) else 0
 end
 
 -- Записать, если значения изменились и с прошлой записи прошло WRITE_INTERVAL;
 -- иначе (при выходе игрока) — отложить до конца интервала. force — сразу (сервер закрывается)
-local function maybeWrite(userId: number, best: number, games: number, deferIfEarly: boolean, force: boolean?)
+local function maybeWrite(
+	userId: number,
+	best: number,
+	games: number,
+	fans: number,
+	deferIfEarly: boolean,
+	force: boolean?
+)
 	if not bestStore or not gamesStore or userId <= 0 then
 		return
 	end
 	local w = written[userId]
-	if w and w.best == best and w.games == games then
+	if w and w.best == best and w.games == games and w.fans == fans then
 		return
 	end
 	local now = os.clock()
@@ -71,7 +93,7 @@ local function maybeWrite(userId: number, best: number, games: number, deferIfEa
 	if wait > 0 and not force then
 		if deferIfEarly then
 			-- Последние значения: BindToClose запишет их сразу (task.delay умрёт вместе с сервером)
-			deferred[userId] = { best = best, games = games, at = 0 }
+			deferred[userId] = { best = best, games = games, fans = fans, at = 0 }
 			if not pendingWrite[userId] then
 				pendingWrite[userId] = true
 				task.delay(wait, function()
@@ -79,7 +101,7 @@ local function maybeWrite(userId: number, best: number, games: number, deferIfEa
 					local d = deferred[userId]
 					deferred[userId] = nil
 					if d then
-						maybeWrite(userId, d.best, d.games, false)
+						maybeWrite(userId, d.best, d.games, d.fans, false)
 					end
 				end)
 			end
@@ -88,8 +110,8 @@ local function maybeWrite(userId: number, best: number, games: number, deferIfEa
 	end
 	deferred[userId] = nil
 	-- Отмечаем до yield, чтобы параллельный вызов не записал второй раз
-	written[userId] = { best = best, games = games, at = now }
-	write(userId, best, games)
+	written[userId] = { best = best, games = games, fans = fans, at = now }
+	write(userId, best, games, fans, w)
 end
 
 local function nameOf(userId: number): string
@@ -129,14 +151,16 @@ end
 
 local function refreshTop()
 	if not bestStore or not gamesStore then
-		board = { available = false, best = {}, games = {} }
+		board = { available = false, best = {}, games = {}, fans = {} }
 	else
 		local best = readTop(bestStore)
 		local games = readTop(gamesStore)
+		-- Топ фанатов не обязателен: без него две старые колонки всё равно показываем
+		local fans = if fansStore then readTop(fansStore) else nil
 		if best and games then
-			board = { available = true, best = best, games = games }
+			board = { available = true, best = best, games = games, fans = fans or {} }
 		else
-			board = { available = false, best = {}, games = {} }
+			board = { available = false, best = {}, games = {}, fans = {} }
 		end
 	end
 	QuestRemotes.LeaderboardData:FireAllClients(board)
@@ -155,7 +179,7 @@ function LeaderboardService.start()
 		lastRequest[player] = nil
 		local profile = DataService.get(player)
 		if profile then
-			maybeWrite(player.UserId, profile.bestScore, profile.gamesReleased, true)
+			maybeWrite(player.UserId, profile.bestScore, profile.gamesReleased, fansOf(profile), true)
 		end
 	end)
 
@@ -165,7 +189,14 @@ function LeaderboardService.start()
 			for _, player in Players:GetPlayers() do
 				local profile = DataService.get(player)
 				if profile then
-					task.spawn(maybeWrite, player.UserId, profile.bestScore, profile.gamesReleased, false)
+					task.spawn(
+						maybeWrite,
+						player.UserId,
+						profile.bestScore,
+						profile.gamesReleased,
+						fansOf(profile),
+						false
+					)
 				end
 			end
 		end
@@ -185,14 +216,19 @@ function LeaderboardService.start()
 		for _, player in Players:GetPlayers() do
 			local profile = DataService.get(player)
 			if profile then
-				batch[player.UserId] = { best = profile.bestScore, games = profile.gamesReleased, at = 0 }
+				batch[player.UserId] = {
+					best = profile.bestScore,
+					games = profile.gamesReleased,
+					fans = fansOf(profile),
+					at = 0,
+				}
 			end
 		end
 		local running = 0
 		for userId, d in batch do
 			running += 1
 			task.spawn(function()
-				pcall(maybeWrite, userId, d.best, d.games, false, true)
+				pcall(maybeWrite, userId, d.best, d.games, d.fans, false, true)
 				running -= 1
 			end)
 		end

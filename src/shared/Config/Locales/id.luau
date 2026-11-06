@@ -880,6 +880,12 @@ return {
 	leaders_games = "Game dirilis",
 	leaders_unavailable = "Papan peringkat tidak tersedia",
 	leaders_empty = "Belum ada siapa pun",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Penggemar studio: {count}. Penjualan game dan rak hit +{percent}%. Game bagus dan pameran mendatangkan penggemar, game di bawah 5 membuat mereka pergi",
+	fans_release_gain = "👥 +{n} penggemar baru",
+	fans_release_loss = "👥 −{n} penggemar kecewa",
+	fans_expo = "🏆 Pameran: +{n} penggemar",
+	fans_leaders = "👥 Penggemar studio",
 	daily_reward_title = "Hadiah harian",
 	daily_reward_day = "Hari {day}",
 	daily_reward_claim = "Hari {day} — ambil",

@@ -880,6 +880,12 @@ return {
 	leaders_games = "रिलीज़ किए गेम",
 	leaders_unavailable = "लीडरबोर्ड उपलब्ध नहीं है",
 	leaders_empty = "अभी कोई नहीं",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 स्टूडियो के प्रशंसक: {count}। गेम और हिट शेल्फ़ की बिक्री +{percent}%। अच्छे गेम और एक्सपो प्रशंसक लाते हैं, 5 से कम वाले गेम उन्हें भगा देते हैं",
+	fans_release_gain = "👥 +{n} नए प्रशंसक",
+	fans_release_loss = "👥 −{n} प्रशंसक निराश",
+	fans_expo = "🏆 एक्सपो: +{n} प्रशंसक",
+	fans_leaders = "👥 स्टूडियो के प्रशंसक",
 	daily_reward_title = "डेली इनाम",
 	daily_reward_day = "दिन {day}",
 	daily_reward_claim = "दिन {day} — ले लो",

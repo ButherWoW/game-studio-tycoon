@@ -880,6 +880,12 @@ return {
 	leaders_games = "Παιχνίδια που βγήκαν",
 	leaders_unavailable = "Η κατάταξη δεν είναι διαθέσιμη",
 	leaders_empty = "Κανείς ακόμα",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Θαυμαστές στούντιο: {count}. Πωλήσεις παιχνιδιών και ραφιού επιτυχιών +{percent}%. Τα καλά παιχνίδια και οι εκθέσεις φέρνουν θαυμαστές, τα παιχνίδια κάτω από 5 τους διώχνουν",
+	fans_release_gain = "👥 +{n} νέοι θαυμαστές",
+	fans_release_loss = "👥 −{n} θαυμαστές απογοητεύτηκαν",
+	fans_expo = "🏆 Έκθεση: +{n} θαυμαστές",
+	fans_leaders = "👥 Θαυμαστές στούντιο",
 	daily_reward_title = "Ημερήσιο δώρο",
 	daily_reward_day = "Μέρα {day}",
 	daily_reward_claim = "Μέρα {day} — πάρ' το",

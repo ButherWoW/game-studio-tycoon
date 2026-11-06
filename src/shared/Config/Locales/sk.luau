@@ -880,6 +880,12 @@ return {
 	leaders_games = "Vydané hry",
 	leaders_unavailable = "Rebríček nie je dostupný",
 	leaders_empty = "Zatiaľ prázdno",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Fanúšikovia štúdia: {count}. Predaj hier a police hitov +{percent} %. Dobré hry a veľtrhy prinášajú fanúšikov, hry pod 5 ich odháňajú",
+	fans_release_gain = "👥 +{n} nových fanúšikov",
+	fans_release_loss = "👥 −{n} fanúšikov sklamaných",
+	fans_expo = "🏆 Veľtrh: +{n} fanúšikov",
+	fans_leaders = "👥 Fanúšikovia štúdia",
 	daily_reward_title = "Denná odmena",
 	daily_reward_day = "Deň {day}",
 	daily_reward_claim = "Deň {day} — vyzdvihnúť",

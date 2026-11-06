@@ -96,7 +96,7 @@
 
 ## 4. Кастомные события (Custom events)
 
-Лимит Roblox — 100 имён на игру. Сейчас **41**, все имена — только из `Config/Analytics.events` (сервисы передают ключ, не имя). Новые не плодить: этапы и виды — в поле CustomField01.
+Лимит Roblox — 100 имён на игру. Сейчас **42**, все имена — только из `Config/Analytics.events` (сервисы передают ключ, не имя). Новые не плодить: этапы и виды — в поле CustomField01.
 
 | Имя | Поле CustomField01 / значение |
 | --- | --- |
@@ -130,6 +130,7 @@
 | Comeback | `shown` / `claimed`, значение — дней отсутствия |
 | Research | `этап_вид_id` |
 | Construction | `этап_этап` (`office_start`, `floor_finish`, `office_buildSkip`) |
+| Fans | `источник_знак` (`release_gain`, `release_loss`, `expo_place1_gain`, `expo_place2_gain`, `expo_place3_gain`, `expo_high_gain`, `rebirth_loss`) / на сколько изменилось фанатов студии (по модулю) |
 
 ## 5. Что смотреть в первую неделю
 

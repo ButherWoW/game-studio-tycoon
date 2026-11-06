@@ -23,6 +23,7 @@ local Employees = require(Shared.Config.Employees)
 local GamePasses = require(Shared.Config.GamePasses)
 local Research = require(Shared.Config.Research)
 local DataService = require(script.Parent.DataService)
+local FansService = require(script.Parent.FansService)
 local DevEvents = require(Shared.Config.DevEvents)
 local Economy = require(Shared.Config.Economy)
 local HitCartridges = require(Shared.Config.HitCartridges)
@@ -753,9 +754,13 @@ local function release(player: Player, project: Project)
 	local companyMultiplier = tonumber(companyEvent("revenueMultiplier", 1, player)) or 1
 	-- Франшиза (хайп/усталость) и хит конкурента в жанре
 	local depth, franchiseDetails = depthMultiplier(player, project, score)
+	-- Фанаты студии (Config/Fans): ×1 при 0 фанатах, до +50% с убывающей отдачей. Считаем по фанатам
+	-- до этого релиза: плохая игра снижает продажи следующих
+	local fanMultiplier = FansService.multiplier(player)
 	revenue = math.floor(
 		revenue
 			* depth
+			* fanMultiplier
 			* cashMultiplier
 			* researchMultiplier
 			* laptopMultiplier
@@ -803,6 +808,8 @@ local function release(player: Player, project: Project)
 	DataService.holdLeaderstats(player, revenue, LEADERSTATS_REVEAL_SECONDS)
 	DataService.addCash(player, revenue)
 	project.paid = true
+	-- Фанаты за релиз (после дохода: этот релиз продан по старому числу фанатов)
+	local fansDelta = FansService.onGameReleased(player, score, adBonus)
 
 	hook("ResearchService", "onGameReleased", player, score)
 	-- Поправки «следующей игры» событий компании израсходованы
@@ -922,6 +929,9 @@ local function release(player: Player, project: Project)
 		revenue = revenue,
 		loanRepaid = loanRepaid,
 		adBonus = adBonus,
+		-- Фанаты студии: изменение за этот релиз и сколько стало (окно релиза: «👥 +350 новых фанатов»)
+		fansDelta = fansDelta,
+		fans = FansService.get(player),
 		isRecord = isRecord,
 		repeatPenalty = repeatPenalty,
 		quickBonus = project.quickBonus,

@@ -16,6 +16,7 @@ local ServerStorage = game:GetService("ServerStorage")
 local DailyEvents = require(ReplicatedStorage.Shared.Config.DailyEvents)
 local Gotw = require(ReplicatedStorage.Shared.Config.Gotw)
 local HitCartridges = require(ReplicatedStorage.Shared.Config.HitCartridges)
+local Formulas = require(ReplicatedStorage.Shared.Formulas)
 local RebirthPerks = require(ReplicatedStorage.Shared.Config.RebirthPerks)
 local Tours = require(ReplicatedStorage.Shared.Config.Tours)
 local HitRemotes = require(ReplicatedStorage.Shared.HitRemotes)
@@ -218,6 +219,7 @@ local function hitIncome(hit: Hit, now: number): number
 	return income
 end
 
+-- Доход полки в минуту: картриджи × множитель фанатов студии (Config/Fans, ×1 при 0 фанатах)
 local function incomeOf(profile: DataService.Profile): number
 	local total = 0
 	local now = os.time()
@@ -226,7 +228,7 @@ local function incomeOf(profile: DataService.Profile): number
 			total += hitIncome(hit, now)
 		end
 	end
-	return total
+	return math.floor(total * Formulas.fanMultiplier(tonumber(profile.fans) or 0))
 end
 
 -- Модуль другой фичи без жёсткой зависимости (ShopService тянет много сервисов)
