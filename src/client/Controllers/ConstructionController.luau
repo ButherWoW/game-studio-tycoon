@@ -235,13 +235,13 @@ local function startBanner()
 			local minutes = tonumber(event.minutes) or 0
 			local amount = tonumber(event.amount) or 0
 			local money = Texts.money(amount)
-			local text = ClientState.t("build_speed_done", { minutes = minutes })
+			local message = ClientState.t("build_speed_done", { minutes = minutes })
 			if amount > 0 and minutes > 0 then
-				text = ClientState.t("build_speed_partial", { minutes = minutes, amount = money })
+				message = ClientState.t("build_speed_partial", { minutes = minutes, amount = money })
 			elseif amount > 0 then
-				text = ClientState.t("build_speed_late", { amount = money })
+				message = ClientState.t("build_speed_late", { amount = money })
 			end
-			toast(text, Ui.colors.money)
+			toast(message, Ui.colors.money)
 		elseif event.kind == "fallback" then
 			toast(
 				ClientState.t("build_fallback", { amount = Texts.money(tonumber(event.amount) or 0) }),
