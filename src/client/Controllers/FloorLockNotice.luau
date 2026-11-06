@@ -59,7 +59,10 @@ local function lockedByInterior(offer: StudioState.Offer?): boolean
 end
 
 local function line(parent: Instance, text: string, done: boolean?, order: number)
-	local color = if done == true then Ui.colors.good elseif done == false then Ui.colors.text else Ui.colors.muted
+	local color = if done == true
+		then Ui.colors.good
+		elseif done == false then Ui.colors.text
+		else Ui.colors.muted
 	local label = Ui.label(parent, text, 28, Enum.Font.GothamMedium, color)
 	label.TextWrapped = true
 	label.TextXAlignment = Enum.TextXAlignment.Left
