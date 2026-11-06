@@ -21,7 +21,7 @@ Sounds.list = {
 	unlock = { id = 17208327798, volume = 0.6 }, -- открыли жанр или тему
 	buy = { id = 10066947742, volume = 0.6 }, -- купили апгрейд
 	cant_afford = { id = 17208353912, volume = 0.5 }, -- не хватает денег
-	dev_start = { id = 16480577565, volume = 0.6 }, -- старт разработки
+	dev_start = { id = 9048764475, volume = 0.5 }, -- старт разработки (APM «Magical Meetup — Hit2»; был Pinball 8Bit Riser — владелец: ужасный)
 	dev_tick = { id = 16480551554, volume = 0.15 }, -- раз в несколько секунд разработки (тихо)
 	critic_reveal = { id = 15675028888, volume = 0.5 }, -- открылась оценка критика
 	score_low = { id = 17208214688, volume = 0.6 }, -- итог 1–4
