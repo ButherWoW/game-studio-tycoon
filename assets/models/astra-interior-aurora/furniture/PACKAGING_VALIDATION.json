@@ -1,0 +1,17 @@
+{
+  "newFurnitureModels": 29,
+  "existingShellsUnchanged": true,
+  "previousCanonicalModelFiles": {
+    "GarageWalls_Aurora.rbxmx": "e04078d5b5aa84e564a5986455660f0de3383c65cb9fa6e6e2b4e92ef27c93d6",
+    "Floor_Aurora.rbxmx": "a5fff18f0486a5d0a947f4201fd8e7c2b0397769dee214278c7d408f3e527d6c",
+    "Skyscraper_Aurora.rbxm": "6aec0325157488e60c9e63021484bfe8593e0519759d4c10785c79fbfc1e24c1",
+    "GarageWalls_Aurora.rbxm": "d272962359e0ce94b59ca93c173668911df253c8767bbd3fce96d4d6e76c28e2",
+    "Skyscraper_Aurora.rbxmx": "2631270074a66f5698929c8bc07e921341f2f1278d96767f4252dbb156854f2c",
+    "Office_Aurora.rbxm": "868632c625046b6a595ade8904190ea248b24dbcffeb927f5b5d332527a1daf0",
+    "Office_Aurora.rbxmx": "a0e665f65ee9e188a602b510dbde701e0a8960dffff508f04284ebaaa81d3ef5",
+    "Floor_Aurora.rbxm": "bcc1d7e18c3742ce65ea099ce1e8dcd988d7a1c5ee1a9d20eeac228f9659f8b7"
+  },
+  "canonicalModelsPath": "../models",
+  "supportOnly": "baseline/source/previews; do notimport",
+  "runtimeTested": false
+}

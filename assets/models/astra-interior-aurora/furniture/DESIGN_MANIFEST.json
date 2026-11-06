@@ -1,0 +1,190 @@
+{
+  "theme": "Aurora",
+  "palette": {
+    "navy": "24364F",
+    "deep": "172B42",
+    "ice": "D1E2EB",
+    "metal": "A7BECE",
+    "fabric": "727EC0",
+    "seam": "A9BAF2",
+    "cyan": "7DE1EC",
+    "violet": "A998EF"
+  },
+  "models": {
+    "Desk1": {
+      "zone": "garage",
+      "appearancePartsChanged": 253,
+      "semanticOrNaturalPartsPreserved": 10,
+      "parts": 263
+    },
+    "Desk2": {
+      "zone": "garage",
+      "appearancePartsChanged": 250,
+      "semanticOrNaturalPartsPreserved": 9,
+      "parts": 259
+    },
+    "PC1": {
+      "zone": "garage",
+      "appearancePartsChanged": 124,
+      "semanticOrNaturalPartsPreserved": 109,
+      "parts": 233
+    },
+    "PCPro": {
+      "zone": "garage",
+      "appearancePartsChanged": 171,
+      "semanticOrNaturalPartsPreserved": 143,
+      "parts": 314
+    },
+    "Chair": {
+      "zone": "garage",
+      "appearancePartsChanged": 149,
+      "semanticOrNaturalPartsPreserved": 7,
+      "parts": 156
+    },
+    "Coffee": {
+      "zone": "garage",
+      "appearancePartsChanged": 113,
+      "semanticOrNaturalPartsPreserved": 32,
+      "parts": 145
+    },
+    "HitShelf": {
+      "zone": "garage",
+      "appearancePartsChanged": 7,
+      "semanticOrNaturalPartsPreserved": 1,
+      "parts": 8
+    },
+    "Posters": {
+      "zone": "garage",
+      "appearancePartsChanged": 3,
+      "semanticOrNaturalPartsPreserved": 42,
+      "parts": 45
+    },
+    "Plant": {
+      "zone": "decor",
+      "appearancePartsChanged": 23,
+      "semanticOrNaturalPartsPreserved": 8,
+      "parts": 31
+    },
+    "Rug": {
+      "zone": "decor",
+      "appearancePartsChanged": 69,
+      "semanticOrNaturalPartsPreserved": 1,
+      "parts": 70
+    },
+    "Sofa": {
+      "zone": "decor",
+      "appearancePartsChanged": 280,
+      "semanticOrNaturalPartsPreserved": 1,
+      "parts": 281
+    },
+    "CoffeeTable": {
+      "zone": "decor",
+      "appearancePartsChanged": 51,
+      "semanticOrNaturalPartsPreserved": 10,
+      "parts": 61
+    },
+    "PendantLamp": {
+      "zone": "decor",
+      "appearancePartsChanged": 9,
+      "semanticOrNaturalPartsPreserved": 1,
+      "parts": 10
+    },
+    "WallBench": {
+      "zone": "decor",
+      "appearancePartsChanged": 25,
+      "semanticOrNaturalPartsPreserved": 1,
+      "parts": 26
+    },
+    "BeanBags": {
+      "zone": "decor",
+      "appearancePartsChanged": 15,
+      "semanticOrNaturalPartsPreserved": 0,
+      "parts": 15
+    },
+    "Bookshelf": {
+      "zone": "decor",
+      "appearancePartsChanged": 36,
+      "semanticOrNaturalPartsPreserved": 21,
+      "parts": 57
+    },
+    "MiniFridge": {
+      "zone": "decor",
+      "appearancePartsChanged": 23,
+      "semanticOrNaturalPartsPreserved": 19,
+      "parts": 42
+    },
+    "NeonSign": {
+      "zone": "decor",
+      "appearancePartsChanged": 1,
+      "semanticOrNaturalPartsPreserved": 17,
+      "parts": 18
+    },
+    "Aquarium": {
+      "zone": "decor",
+      "appearancePartsChanged": 15,
+      "semanticOrNaturalPartsPreserved": 30,
+      "parts": 45
+    },
+    "ArcadeMachine": {
+      "zone": "decor",
+      "appearancePartsChanged": 19,
+      "semanticOrNaturalPartsPreserved": 15,
+      "parts": 34
+    },
+    "OfficeDesk": {
+      "zone": "office",
+      "appearancePartsChanged": 128,
+      "semanticOrNaturalPartsPreserved": 59,
+      "parts": 187
+    },
+    "Cooler": {
+      "zone": "office",
+      "appearancePartsChanged": 45,
+      "semanticOrNaturalPartsPreserved": 4,
+      "parts": 49
+    },
+    "MeetingRoom": {
+      "zone": "office",
+      "appearancePartsChanged": 70,
+      "semanticOrNaturalPartsPreserved": 12,
+      "parts": 82
+    },
+    "FloorDesk": {
+      "zone": "office",
+      "appearancePartsChanged": 133,
+      "semanticOrNaturalPartsPreserved": 59,
+      "parts": 192
+    },
+    "ServerRoom": {
+      "zone": "office",
+      "appearancePartsChanged": 135,
+      "semanticOrNaturalPartsPreserved": 37,
+      "parts": 172
+    },
+    "Lounge": {
+      "zone": "office",
+      "appearancePartsChanged": 121,
+      "semanticOrNaturalPartsPreserved": 37,
+      "parts": 158
+    },
+    "SkyDesk": {
+      "zone": "office",
+      "appearancePartsChanged": 30,
+      "semanticOrNaturalPartsPreserved": 40,
+      "parts": 70
+    },
+    "SoundStudio": {
+      "zone": "office",
+      "appearancePartsChanged": 72,
+      "semanticOrNaturalPartsPreserved": 19,
+      "parts": 91
+    },
+    "ArtWall": {
+      "zone": "office",
+      "appearancePartsChanged": 10,
+      "semanticOrNaturalPartsPreserved": 18,
+      "parts": 28
+    }
+  },
+  "geometryPolicy": "Appearance only; every native part, transform, class, functional name and pivot is unchanged from accepted classic XML."
+}

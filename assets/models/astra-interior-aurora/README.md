@@ -41,3 +41,8 @@ python3 source/validate_render.py
 Rojo is resolved from GST_ROJO, then PATH, with the original local path as fallback. No game code or classic assets are modified by rebuilding.
 
 Independent floor check: `python3 source/check_floor_coverage.py` checks all four templates without the renderer. FLOOR_COVERAGE_INDEPENDENT.json records full coverage, zero gaps and zero overlaps. Only import models/ into Studio; baseline/ is a source/QA reference. Furniture shown in previews is not replaced by this finish.
+
+
+## Мебель в тон отделке
+
+Добавлены29вариантов классической мебели. Финальные шаблоны находятся в models/, подробные проверки, исходники и превью — в [furniture/README.md](furniture/README.md). Прежние четыре оболочки сохранены без изменений. Код #222 выбирает эти варианты при стиле мебели «Классика» и соответствующей отделке; купленные Neon/Cozy/Minimal имеют приоритет. Новые товары/цены/права собственности этой пачкой не создаются.

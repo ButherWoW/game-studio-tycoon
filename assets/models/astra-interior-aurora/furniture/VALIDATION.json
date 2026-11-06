@@ -1,0 +1,840 @@
+{
+  "theme": "Aurora",
+  "models": {
+    "Desk1": {
+      "status": "PASS",
+      "partsClassic": 263,
+      "partsVariant": 263,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -3.8,
+          0.0,
+          -1.75
+        ],
+        [
+          3.8,
+          4.315,
+          3.5999999999999996
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 1,
+      "semanticContentPartsPreserved": 0,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 1,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "9c096f32b58e9951a162d3b96ac99da7e2fbeb5cc1e71f03ddd4d211a1865eba",
+      "variantSHA256": "e5b1dbe063fde786cb95c318ef1ebf482928583d165f3b8ea57669335d126cb0"
+    },
+    "Desk2": {
+      "status": "PASS",
+      "partsClassic": 259,
+      "partsVariant": 259,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -3.8,
+          0.0,
+          -1.75
+        ],
+        [
+          3.8,
+          4.315,
+          1.75
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 0,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 1,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "52bedf6c300aa6d0a0a29e1e5634a4f4fb42340e4be1250071514fac12cf78ae",
+      "variantSHA256": "09cb13b8f68ddc435143bcb0cca31aa11c67dbe1861d599b516d9e7d1f38b458"
+    },
+    "PC1": {
+      "status": "PASS",
+      "partsClassic": 233,
+      "partsVariant": 233,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -3.006,
+          0.0,
+          -1.166654893264561
+        ],
+        [
+          2.525,
+          2.45,
+          2.06
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 108,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "e69eca5c2f7cd2cb8d2cb908dd25e2f00ee63918578e1852aa617c254ed0bf48",
+      "variantSHA256": "05d11e42f8d8e44ae705f91398ba27959c0056282a8973fb0198f474ac7ede9e"
+    },
+    "PCPro": {
+      "status": "PASS",
+      "partsClassic": 314,
+      "partsVariant": 314,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -3.006,
+          0.0,
+          -1.166654893264561
+        ],
+        [
+          2.525,
+          2.275,
+          2.06
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 142,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "cd0ca25962483b66aed2447c1f6f5b0ee76d5540ab22e286b8da628db8e2bd0f",
+      "variantSHA256": "3e7f66e4b753796f32a62e6d193cab8c81232b7ff129e5bcb7176f951ff17a46"
+    },
+    "Chair": {
+      "status": "PASS",
+      "partsClassic": 156,
+      "partsVariant": 156,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -1.2228125469,
+          -0.03,
+          -1.075927616
+        ],
+        [
+          1.2228125469,
+          3.92,
+          1.25
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 1,
+      "semanticContentPartsPreserved": 5,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "03a15666a34bd7cf44cb924a98318d75e41bbd74433605fb71f98e071c758b72",
+      "variantSHA256": "979993cb9cfcd338dcbeb52d7ef91279d533cbfa638f9b24b1d262c6b8451021"
+    },
+    "Coffee": {
+      "status": "PASS",
+      "partsClassic": 145,
+      "partsVariant": 145,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -3.45,
+          0.0,
+          -1.35
+        ],
+        [
+          3.45,
+          5.55,
+          1.42
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 3,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "0aafefa6bcc26b7e54a5edc70cd42a33ea3d2450c45fa253a60e591a43dc35d4",
+      "variantSHA256": "9b9277fa86e4bc0c4d0aca91b47f01c95f217facc768bce399f7da4d6da17dc5"
+    },
+    "HitShelf": {
+      "status": "PASS",
+      "partsClassic": 8,
+      "partsVariant": 8,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -5.75,
+          0.0,
+          -0.85
+        ],
+        [
+          5.75,
+          5.9,
+          0.85
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 0,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 1,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "12de79c8cbaf14a65a8ed95a4f7f42441ef4f116c67eacbbc3017805ec2f1c8b",
+      "variantSHA256": "311693fb434830d3efc14f14b283569a07108317250f687537908ca498c5c97c"
+    },
+    "Posters": {
+      "status": "PASS",
+      "partsClassic": 45,
+      "partsVariant": 45,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -6.3,
+          0.10000000000000009,
+          -0.1
+        ],
+        [
+          6.3,
+          4.9,
+          0.2525
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 41,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "443246ef0cdbc2aab96ce3012969cac1c6fce5e331099b9e32014621b879deda",
+      "variantSHA256": "73104789cac1d7e9b19cc202eaade36e507c3cf90f7d7045b3db0f05a30b5be5"
+    },
+    "Plant": {
+      "status": "PASS",
+      "partsClassic": 31,
+      "partsVariant": 31,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -1.19625,
+          0.0,
+          -0.86625
+        ],
+        [
+          1.2705000000000002,
+          4.2405,
+          1.2457500000000001
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 0,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "b1407cbc2de4bf7b383ea26a8942b8e600caff5b3ee855a81ed25e39a24b1104",
+      "variantSHA256": "df9c71f28eccaf4e5a2464458ffa9290d00733a92c21f1542211f8d2e7aee439"
+    },
+    "Rug": {
+      "status": "PASS",
+      "partsClassic": 70,
+      "partsVariant": 70,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -10.500000000000002,
+          0.0,
+          -11.5
+        ],
+        [
+          10.500000000000002,
+          0.129,
+          11.5
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 0,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "884e345d7688ef395ef25322c7953c96d7036f711e504d1d7e04a0f89a17c90c",
+      "variantSHA256": "956f13d479887167726dd5da17edc943a4c9c974132eebfeb3947f0a096c300e"
+    },
+    "Sofa": {
+      "status": "PASS",
+      "partsClassic": 281,
+      "partsVariant": 281,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -4.415,
+          0.0,
+          -1.6
+        ],
+        [
+          4.415,
+          3.0700000000000003,
+          1.6
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 0,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "3ec3eb8f60fb9f81f4ce864890be29c2cd498dd697b04ad1c56f4ba6ce7a830c",
+      "variantSHA256": "75d3e30d69fff04c0ed9af1f42848007cc3cc6c4b08d4b0ebc633872888673c6"
+    },
+    "CoffeeTable": {
+      "status": "PASS",
+      "partsClassic": 61,
+      "partsVariant": 61,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -2.9,
+          0.0,
+          -1.25
+        ],
+        [
+          2.9,
+          3.1891999999999996,
+          1.25
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 2,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "e0a7450d7922cca34fbbf6a2ac6be7ba13c63ae9ee9886a21114a6aee4aac3ea",
+      "variantSHA256": "d585170d502d45fcf8533414af29cf97468b4d77933b36ed0be9a8c8e9d1e877"
+    },
+    "PendantLamp": {
+      "status": "PASS",
+      "partsClassic": 10,
+      "partsVariant": 10,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -1.175,
+          -2.98,
+          -1.175
+        ],
+        [
+          1.175,
+          0.07000000000000002,
+          1.175
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 0,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [
+        {
+          "class": "PointLight",
+          "property": "Shadows",
+          "before": "true",
+          "after": "false"
+        }
+      ],
+      "lightsPreserved": 1,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "67f6fc31726c86466a91dd8cefde869f2574ac2a0b022886ecda969d53c9bcf6",
+      "variantSHA256": "62d994f1b63d450025b3822b342073186da0418edd662266d0796daa693eab13"
+    },
+    "WallBench": {
+      "status": "PASS",
+      "partsClassic": 26,
+      "partsVariant": 26,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -2.9,
+          0.0,
+          -0.85
+        ],
+        [
+          2.9,
+          1.725,
+          0.85
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 0,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "111f32930f732e4c95892bab165e11cfadf3fab73932b768661b54044b6d3a94",
+      "variantSHA256": "b23a1110d4323dd8e44ee1d49934f679f2dad05122a83585eb723431307e1941"
+    },
+    "BeanBags": {
+      "status": "PASS",
+      "partsClassic": 15,
+      "partsVariant": 15,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -3.9,
+          0.0,
+          -1.325
+        ],
+        [
+          3.9,
+          2.41,
+          1.325
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 3,
+      "semanticContentPartsPreserved": 0,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "5cf03f2f1a1d97997dd6f427af8dd5d0ebe68145f03959cd66b69b2cb06572ff",
+      "variantSHA256": "56962e7bc3494fd0de4536809f74452751e472b86b1a0ec36975407ec89a1d3c"
+    },
+    "Bookshelf": {
+      "status": "PASS",
+      "partsClassic": 57,
+      "partsVariant": 57,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -2.9,
+          0.0,
+          -0.72
+        ],
+        [
+          2.9,
+          5.0,
+          0.72
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 21,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "e14d5debb9b3bc0b149ece8d84b5399345d0184cfcd037d268f4c820c300cf14",
+      "variantSHA256": "53fec9f134ef399f007035f3bb09b1ad9229551fa1915c232a8f9ba1c1e05b96"
+    },
+    "MiniFridge": {
+      "status": "PASS",
+      "partsClassic": 42,
+      "partsVariant": 42,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -1.2000000000000002,
+          0.0,
+          -1.23
+        ],
+        [
+          1.2000000000000002,
+          4.0,
+          1.23
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 19,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 1,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "7dfbd35d3864c573dd8ce8621c81c8099e36c36b999a7149967fb6dd1318e7da",
+      "variantSHA256": "6899785d1ee10736d70b0b83e175ca37670c4c954fc9da70ca79a49816da6629"
+    },
+    "NeonSign": {
+      "status": "PASS",
+      "partsClassic": 18,
+      "partsVariant": 18,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -2.85,
+          -1.15,
+          -0.08
+        ],
+        [
+          2.85,
+          1.15,
+          0.18
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 17,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 1,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "08850ba6397bcae9dea7d191913b58fc567c0e283040dcb60c1c95d75cad2669",
+      "variantSHA256": "539607c3e6413971f297fe9d202c09e6f2e49dc5390d0f829bafed8e6137f488"
+    },
+    "Aquarium": {
+      "status": "PASS",
+      "partsClassic": 45,
+      "partsVariant": 45,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -2.95,
+          0.0,
+          -0.99125
+        ],
+        [
+          2.95,
+          4.96,
+          0.99125
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 13,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 1,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "781eb578de589c191eb86811a8272c2d97801d472c364d2780b3168e332bd7b8",
+      "variantSHA256": "11bfc6e7e7055e9dd8017210c4b5beeef1de71965fda4be3ca2766cde17cb8b5"
+    },
+    "ArcadeMachine": {
+      "status": "PASS",
+      "partsClassic": 34,
+      "partsVariant": 34,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -1.4300000000000002,
+          0.0,
+          -1.25
+        ],
+        [
+          1.4300000000000002,
+          6.0,
+          1.25
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 14,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 1,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "23f86f1f0d0dd52424d1e060ff3a601545be09d1a92b98fa3ac7fc977a1600a4",
+      "variantSHA256": "9b2d09389538cfb32599c961c11965b6a228070f494105280f76677d25732d58"
+    },
+    "OfficeDesk": {
+      "status": "PASS",
+      "partsClassic": 187,
+      "partsVariant": 187,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -3.0000000000000004,
+          0.0,
+          -1.9000000000000001
+        ],
+        [
+          3.0000000000000004,
+          4.8,
+          1.9300000000000002
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 23,
+      "semanticContentPartsPreserved": 47,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "c6a49b54f74f130011bd333486e04107211502d19778c8216b9fc176d23098b5",
+      "variantSHA256": "79247145f00f30971655546b900be9dcfead7b5a570ac16c6fd37593e46ec687"
+    },
+    "Cooler": {
+      "status": "PASS",
+      "partsClassic": 49,
+      "partsVariant": 49,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -0.87,
+          0.0,
+          -0.845
+        ],
+        [
+          1.05,
+          3.65,
+          1.0150000000000001
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 2,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "796c91f204c5341729fe6b6b5f3bee2be31589e7b8f192fe49b01cc43f3abc0c",
+      "variantSHA256": "86ec9f61e209518b7fe95832fffb5f405c8819b284d2576ff88baf6f81e2956d"
+    },
+    "MeetingRoom": {
+      "status": "PASS",
+      "partsClassic": 82,
+      "partsVariant": 82,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -7.0,
+          0.0,
+          -4.98
+        ],
+        [
+          7.0,
+          7.0,
+          4.98
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 6,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "9554101bc64c25a4a9c1bc2caa272581dad9529cedf9c15e9e638beee7a5c09f",
+      "variantSHA256": "28c07087635cd9560ec92cd3110d75fe2394ebd99421b3de3a84c2a236a6e091"
+    },
+    "FloorDesk": {
+      "status": "PASS",
+      "partsClassic": 192,
+      "partsVariant": 192,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -2.50000005,
+          0.0,
+          -1.9000000000000001
+        ],
+        [
+          2.50000005,
+          4.8,
+          1.9300000000000002
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 23,
+      "semanticContentPartsPreserved": 47,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "7ffc870664e409878c76221522bb9d7ab6ab91037f4bd97c49b1eaf5a5f4e8eb",
+      "variantSHA256": "51da48859f6d8d739b09a2118d1004d5ddb10993918868944deebe556d3bf8ba"
+    },
+    "ServerRoom": {
+      "status": "PASS",
+      "partsClassic": 172,
+      "partsVariant": 172,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -5.0,
+          0.0,
+          -2.0
+        ],
+        [
+          5.0,
+          7.8,
+          2.0
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 36,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "92f953dd1bfc4d4b6cd2c7d1ac72e784f1b23ace2a7107c5cef3c499c54fa143",
+      "variantSHA256": "a812af4ef4b7bbc74f5eeb0242ba75e8162608e27a3fe3926d908c6f759155c3"
+    },
+    "Lounge": {
+      "status": "PASS",
+      "partsClassic": 158,
+      "partsVariant": 158,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -4.0,
+          0.0,
+          -4.7
+        ],
+        [
+          4.0,
+          4.37,
+          4.175
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 12,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "9fee41aefac125b8124fb395d20fbaf22155127f36bcb488217932b82eb01975",
+      "variantSHA256": "71f1283a06b0071d35bdf27b348e316b686c29ac4fd6a7351838d13a4bf293ce"
+    },
+    "SkyDesk": {
+      "status": "PASS",
+      "partsClassic": 70,
+      "partsVariant": 70,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -2.0,
+          0.0,
+          -1.7875
+        ],
+        [
+          2.0,
+          4.7749999999999995,
+          1.7874999999999999
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 1,
+      "semanticContentPartsPreserved": 37,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "daa1ac8f13e1e6c0540a00e33dc5aa510decb5d54b092796278cc789853d3e2d",
+      "variantSHA256": "a4dae437263fae75efafa0841be2f94736b094b7bb8d42dc8c26628db69b50f3"
+    },
+    "SoundStudio": {
+      "status": "PASS",
+      "partsClassic": 91,
+      "partsVariant": 91,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -5.4,
+          -2.7755575615628914e-17,
+          -4.3
+        ],
+        [
+          5.4,
+          7.2,
+          4.3
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 18,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 1,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "7984069f4a85d82bfbef70f659d1f55475091e873b9ce0a3a1e8d0eacbb161a8",
+      "variantSHA256": "18207c533c3a8c061aeee948dd7d194f9bc68578fc8c256ed13ec8d422313be3"
+    },
+    "ArtWall": {
+      "status": "PASS",
+      "partsClassic": 28,
+      "partsVariant": 28,
+      "partBudgetRatio": 1,
+      "bounds": [
+        [
+          -6.75,
+          0.0,
+          -0.45
+        ],
+        [
+          6.75,
+          7.8,
+          0.45
+        ]
+      ],
+      "maxDimensionDelta": 0,
+      "functionalPartsUnchanged": 0,
+      "semanticContentPartsPreserved": 18,
+      "allNonAppearancePropertiesUnchangedExceptDocumentedShadowPolicy": true,
+      "lightShadowCorrections": [],
+      "lightsPreserved": 0,
+      "newIntersectionPairs": 0,
+      "classicInternalIntersections": "Unchanged; existing classic joints/rounded primitive intersections not claimed absent.",
+      "sourceSHA256": "620c974dffff61168c03e39163c434407b1fffc768b29421944908c2e237fecb",
+      "variantSHA256": "050de9b32f5ade614bd226b5b0973f571286af09f792a91a562bb2ac7b497ce0"
+    }
+  },
+  "runtimeTested": false,
+  "method": "Exact final XML node/property comparison against accepted classic snapshots; all geometry unchanged, therefore no new intersection pairs or placement changes.",
+  "status": "PASS",
+  "expected": 29,
+  "ready": 29,
+  "classicOriginExceptions": {
+    "Chair": -0.03,
+    "Posters": 0.10000000000000009,
+    "PendantLamp": -2.98,
+    "NeonSign": -1.15
+  },
+  "originPolicy": "Exact accepted classic pivots/CFrames preserved, including original hanging/wall origins.",
+  "visualReview": "Author inspected all29 previews and contact sheet;PASS;notStudioTest",
+  "totalParts": 3142,
+  "totalFunctionalParts": 52,
+  "totalSemanticParts": 608
+}
