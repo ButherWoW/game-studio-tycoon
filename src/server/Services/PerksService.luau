@@ -19,7 +19,8 @@ local ResearchService = require(script.Parent.ResearchService)
 local DevelopmentService = require(script.Parent.DevelopmentService)
 
 type PerksData = {
-	autoRelease: boolean, -- тумблер в HUD; по умолчанию включён
+	autoRelease: boolean, -- тумблер в HUD; по умолчанию ВЫКЛЮЧЕН (с 06.11 игрок включает сам)
+	autoReleaseOptIn: boolean?, -- true: решение по тумблеру уже принято, миграцию «выкл» не повторяем
 	royalties: { number }, -- доход последних игр, старые в начале
 }
 
@@ -37,11 +38,14 @@ local function getData(player: Player): PerksData?
 	end
 	local p = profile :: any
 	if type(p.perks) ~= "table" then
-		p.perks = { autoRelease = true, royalties = {} }
+		p.perks = { autoRelease = false, autoReleaseOptIn = true, royalties = {} }
 	end
 	local data = p.perks :: PerksData
-	if type(data.autoRelease) ~= "boolean" then
-		data.autoRelease = true
+	-- 06.11 (владелец): «Авто-релиз» бесконечно выпускал «Игра 2», «Игра 3»… сам, пока игрок сидит за ПК.
+	-- Теперь по умолчанию выключен; старым сохранениям один раз ставим «выкл» (потом выбор игрока не трогаем)
+	if type(data.autoRelease) ~= "boolean" or data.autoReleaseOptIn ~= true then
+		data.autoRelease = false
+		data.autoReleaseOptIn = true
 	end
 	if type(data.royalties) ~= "table" then
 		data.royalties = {}
@@ -111,6 +115,7 @@ local function onSetAutoRelease(player: Player, enabled: any)
 		return
 	end
 	data.autoRelease = enabled
+	data.autoReleaseOptIn = true
 	DevelopmentService.pushState(player)
 end
 
