@@ -42,8 +42,8 @@ Guides.list = {
 	{ id = "critics", icon = "⭐", when = { stage = 1, games = 2 } },
 	{ id = "trends", icon = "🔥", when = { feature = "trends", games = 4 } },
 	{ id = "payday", icon = "💸", when = { stage = 1, games = 6 } },
-	{ id = "dailyEvents", icon = "⏰", when = { feature = "dailyEvents", games = 8 } },
-	{ id = "move", icon = "🏢", when = { stage = 1, games = 10 } },
+	{ id = "dailyEvents", icon = "📅", when = { feature = "dailyEvents", games = 8 } },
+	{ id = "move", icon = "🚚", when = { stage = 1, games = 10 } },
 
 	-- Кнопки меню гаража
 	{ id = "team", icon = "👥", menuSlot = 2 },
@@ -51,7 +51,7 @@ Guides.list = {
 	{ id = "shop", icon = "🛒", menuSlot = 4 },
 	{ id = "camera", icon = "🎥", menuSlot = 10 },
 	{ id = "research", icon = "🔬", menuSlot = 1 },
-	{ id = "hits", icon = "📊", menuSlot = 7 },
+	{ id = "hits", icon = "📀", menuSlot = 7 },
 	{ id = "bank", icon = "🏦", menuSlot = 11 },
 	{ id = "tax", icon = "🧾", menuSlot = 18 },
 
@@ -61,16 +61,16 @@ Guides.list = {
 	{ id = "tours", icon = "🏘", menuSlot = 15 },
 	{ id = "season", icon = "🎫", menuSlot = 16 },
 	{ id = "thieves", icon = "😈", menuSlot = 8 },
-	{ id = "expo", icon = "🎪", when = { feature = "expo" } },
+	{ id = "expo", icon = "🏆", when = { feature = "expo" } },
 	{ id = "coop", icon = "🤝", when = { feature = "coop", games = 30 } },
-	{ id = "events", icon = "🎲", when = { stage = 2, games = 40 } },
+	{ id = "events", icon = "📰", when = { stage = 2, games = 40 } },
 	{ id = "safe", icon = "🔐", when = { feature = "safe", stage = 2 } },
 
 	-- 2-й этаж и дальше
-	{ id = "rivals", icon = "📈", menuSlot = 17 },
-	{ id = "stocks", icon = "💹", menuSlot = 19 },
+	{ id = "rivals", icon = "📊", menuSlot = 17 },
+	{ id = "stocks", icon = "📈", menuSlot = 19 },
 	{ id = "rebirth", icon = "♻️", menuSlot = 5 },
-	{ id = "gotw", icon = "🥇", when = { feature = "gotw" } },
+	{ id = "gotw", icon = "🏆", when = { feature = "gotw" } },
 	{ id = "trade", icon = "🔁", when = { feature = "trade" } },
 	{ id = "console", icon = "🎮", when = { stage = 3, games = 120 } },
 	{ id = "bailiffs", icon = "⚖️" }, -- только в справочнике и по событию (долг), см. GuideController

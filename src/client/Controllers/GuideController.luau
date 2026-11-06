@@ -99,7 +99,12 @@ local function available(guide: Guides.Guide): boolean
 	end
 	if guide.menuSlot then
 		local feature = Unlocks.menuFeature(guide.menuSlot)
-		return feature == nil or FeatureGate.isOpen(feature)
+		if feature then
+			return FeatureGate.isOpen(feature)
+		end
+		-- Кнопка без ворот (банк): в справочнике — со своей студии
+		local current = stage()
+		return current ~= nil and current >= Unlocks.GARAGE
 	end
 	return conditionMet(guide)
 end
