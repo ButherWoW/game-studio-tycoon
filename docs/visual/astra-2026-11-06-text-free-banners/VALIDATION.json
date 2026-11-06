@@ -1,0 +1,76 @@
+{
+  "files": [
+    {
+      "file": "season_banner.png",
+      "size": [
+        1600,
+        400
+      ],
+      "alphaRange": [
+        255,
+        255
+      ],
+      "sha256": "575b2eb4ff26d1a84612d41b999e7bcc90b67a3a81d6604370576419218073ce",
+      "textVisualReview": "PASS: no words, letters, numbers or discount/multiplier glyphs",
+      "compositionVisualReview": "PASS: original scene and props retained; text region restored"
+    },
+    {
+      "file": "gamejam_banner.png",
+      "size": [
+        1600,
+        400
+      ],
+      "alphaRange": [
+        255,
+        255
+      ],
+      "sha256": "f6d06bb6e7c2a925318351c1740faebc3c7d0d393644d65ee9e74b51d1a8cd92",
+      "textVisualReview": "PASS: no words, letters, numbers or discount/multiplier glyphs",
+      "compositionVisualReview": "PASS: original scene and props retained; text region restored"
+    },
+    {
+      "file": "hackathon_banner.png",
+      "size": [
+        1600,
+        300
+      ],
+      "alphaRange": [
+        255,
+        255
+      ],
+      "sha256": "0f7088f652dafaeac31456e4e462b86a4e59f9869695d79bf92134cb2ccca48a",
+      "textVisualReview": "PASS: no words, letters, numbers or discount/multiplier glyphs",
+      "compositionVisualReview": "PASS: original scene and props retained; text region restored"
+    },
+    {
+      "file": "starter_pack_banner.png",
+      "size": [
+        1024,
+        512
+      ],
+      "alphaRange": [
+        255,
+        255
+      ],
+      "sha256": "2fdb91cc823521a79a1a0451c26058a7ba3245d38845a77e2cbb96bce141cf6b",
+      "textVisualReview": "PASS: no words, letters, numbers or discount/multiplier glyphs",
+      "compositionVisualReview": "PASS: original scene and props retained; text region restored"
+    },
+    {
+      "file": "deal_badge.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "7021a4b97e6fa587c099bcf8a667f1bcdf5d70ce62a2e9297994021fd3023a2f",
+      "textVisualReview": "PASS: no words, letters, numbers or discount/multiplier glyphs",
+      "compositionVisualReview": "PASS: original scene and props retained; text region restored"
+    }
+  ],
+  "method": "Built-in ImageGen source edits; proportional resize only. All five finals viewed individually at full resolution. Visual review, not OCR or pixel identity.",
+  "studioTested": false
+}
