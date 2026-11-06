@@ -43,7 +43,7 @@ local BOB_SPEED = 4
 -- или над ним (отчёт #2, п. 4: закрывала ползунки и кнопки). Места нет (телефон 844×390) —
 -- узкая карточка сбоку от окна, всегда поверх: раньше плашка уходила за окно и «Пропустить»
 -- нельзя было нажать (аудит P2-15)
-local PLATE_HEIGHT = 56
+local PLATE_HEIGHT = 76 -- две строки подсказки: в одну длинный текст сжимался до ~6 px (отчёт v64)
 local PLATE_WIDTH = 640
 local PLATE_BOTTOM = 92
 local PLATE_GAP = 8
@@ -253,7 +253,13 @@ local function run()
 
 	local hint = Ui.label(plate, "", 40, Ui.titleFont)
 	hint.Position = UDim2.fromOffset(14, 8)
-	hint.Size = UDim2.new(1, -150, 0, 40)
+	hint.Size = UDim2.new(1, -150, 1, -16)
+	hint.TextWrapped = true
+	-- Не мельче читаемого и не крупнее заголовка: TextScaled сам подберёт размер в 1–2 строки
+	local hintSize = Instance.new("UITextSizeConstraint")
+	hintSize.MinTextSize = 14
+	hintSize.MaxTextSize = 26
+	hintSize.Parent = hint
 
 	local finished = false
 	local function finish(completed: boolean)
@@ -318,8 +324,8 @@ local function run()
 		else
 			limit.MaxSize = Vector2.new(PLATE_WIDTH, PLATE_HEIGHT)
 			hint.Position = UDim2.fromOffset(14, 8)
-			hint.Size = UDim2.new(1, -150, 0, 40)
-			hint.TextWrapped = false
+			hint.Size = UDim2.new(1, -150, 1, -16)
+			hint.TextWrapped = true
 			action.AnchorPoint = Vector2.new(1, 0.5)
 			action.Position = UDim2.new(1, -8, 0.5, 0)
 			action.Size = UDim2.fromOffset(120, 40)
