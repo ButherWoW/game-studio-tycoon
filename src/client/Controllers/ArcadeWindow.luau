@@ -14,6 +14,8 @@ local UserInputService = game:GetService("UserInputService")
 
 local Arcade = require(ReplicatedStorage.Shared.Config.Arcade)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
@@ -205,6 +207,7 @@ local function buildWhack(field: Frame, schedule: { Arcade.Spawn }, add: (n: num
 		Ui.corner(hole, 65)
 		local target = glyph(hole, "🎯", UDim2.fromScale(0.5, 0.5), UDim2.fromScale(0.8, 0.8))
 		target.Visible = false
+		ArtIcon.replace(target, Images.arcade.target)
 		glyph(field, keys[lane], UDim2.new((lane - 0.5) / 3, 0, 1, -24), UDim2.fromOffset(40, 30)).TextColor3 =
 			Ui.colors.muted
 		tapZone(field, position, UDim2.fromOffset(150, 150), function()
@@ -245,12 +248,14 @@ local function buildLanes(field: Frame, schedule: { Arcade.Spawn }, add: (n: num
 		box(field, Color3.fromRGB(60, 62, 86), UDim2.fromScale(index / 3, 0.5), UDim2.new(0, 4, 1, 0), 1)
 	end
 	local car = glyph(field, "🏎", UDim2.fromScale(0.5, carY), UDim2.fromOffset(64, 64), 4)
+	ArtIcon.replace(car, Images.arcade.car)
 	local obstacles: { TextLabel } = {}
 	local resolved: { [number]: boolean } = {}
 	for _, spawn in schedule do
 		local item =
 			glyph(field, "🚧", UDim2.fromScale((spawn.lane - 0.5) / 3, -0.2), UDim2.fromOffset(56, 56))
 		item.Visible = false
+		ArtIcon.replace(item, Images.arcade.barrier)
 		table.insert(obstacles, item)
 	end
 	local function move(delta: number)
@@ -399,7 +404,11 @@ local function buildJump(field: Frame, schedule: { Arcade.Spawn }, add: (n: numb
 	local runner =
 		box(field, GAME_COLOR.jump, UDim2.fromScale(runnerX, groundY - 0.07), UDim2.fromOffset(40, 40), 4)
 	Ui.corner(runner, 8)
-	glyph(runner, "••", UDim2.fromScale(0.62, 0.38), UDim2.fromScale(0.6, 0.4), 5)
+	local eyes = glyph(runner, "••", UDim2.fromScale(0.62, 0.38), UDim2.fromScale(0.6, 0.4), 5)
+	if ArtIcon.fill(runner, Images.arcade.runner) then
+		runner.BackgroundTransparency = 1
+		eyes.Visible = false
+	end
 	local pits: { Frame } = {}
 	local resolved: { [number]: boolean } = {}
 	for _ = 1, #schedule do
@@ -460,8 +469,12 @@ local function buildCatch(field: Frame, schedule: { Arcade.Spawn }, add: (n: num
 	for _, spawn in schedule do
 		local coin = box(field, Ui.colors.money, UDim2.fromScale(spawn.x, -0.2), UDim2.fromOffset(30, 30), 3)
 		Ui.corner(coin, 15)
-		glyph(coin, "$", UDim2.fromScale(0.5, 0.5), UDim2.fromScale(0.7, 0.7), 4).TextColor3 =
-			Color3.fromRGB(120, 80, 0)
+		local sign = glyph(coin, "$", UDim2.fromScale(0.5, 0.5), UDim2.fromScale(0.7, 0.7), 4)
+		sign.TextColor3 = Color3.fromRGB(120, 80, 0)
+		if ArtIcon.fill(coin, Images.arcade.coin) then
+			coin.BackgroundTransparency = 1
+			sign.Visible = false
+		end
 		table.insert(coins, coin)
 	end
 	-- Палец/мышь: корзина едет к указателю над полем

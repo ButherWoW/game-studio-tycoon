@@ -10,6 +10,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Stocks = require(ReplicatedStorage.Shared.Config.Stocks)
 local StockRemotes = require(ReplicatedStorage.Shared.StockRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local DepthToast = require(script.Parent.Parent.DepthToast)
 local Ui = require(script.Parent.Parent.Ui)
@@ -383,6 +385,7 @@ local function renderIpo(right: Frame)
 	local title =
 		Ui.label(layoutFrame, ClientState.t("stock_ipo_title"), 32, Ui.titleFontFor(ClientState.lang))
 	title.LayoutOrder = 1
+	ArtIcon.prefix(title, "🔔", Images.windows.ipo, 32)
 	if not ipo then
 		return
 	end
@@ -513,6 +516,7 @@ function StockWindow.open()
 	local title = Ui.label(window, ClientState.t("stock_title"), 40, Ui.titleFontFor(ClientState.lang))
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -260, 0, 40)
+	ArtIcon.prefix(title, "📈", Images.windows.stock, 40)
 	local close = Ui.button(window, ClientState.t("create_close"), Ui.colors.bad, StockWindow.close)
 	close.AnchorPoint = Vector2.new(1, 0)
 	close.Position = UDim2.new(1, -12, 0, 10)
@@ -564,7 +568,7 @@ function StockWindow.start()
 		else
 			StockWindow.open()
 		end
-	end)
+	end, "menu_stock")
 	local function updateMenu()
 		local level = if ClientState.data then tonumber(ClientState.data.studioLevel) or 1 else 1
 		menu.Visible = level >= MENU_MIN_LEVEL

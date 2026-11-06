@@ -126,6 +126,10 @@ Images.social = {
 -- Кнопки меню V18: ключи, которые уже передают Ui.menuButton окна «Студии» и «Сезон»
 Images.menu.menu_tours = 0 -- menu_studios.png, 🏘 (слот 15)
 Images.menu.menu_season = 0 -- menu_season.png, 🎫 (слот 16), и вкладка «Сезон»
+-- Кнопки меню V31: окна без своей иконки (как V3: 256×256, прозрачный фон, без текста)
+Images.menu.menu_stock = 0 -- menu_stock.png, 📈 «Биржа»
+Images.menu.menu_tax = 0 -- menu_tax.png, 🧾 «Налоговая»
+Images.menu.menu_rivals = 0 -- menu_rivals.png, 📊 «Конкуренты»
 
 -- События компании (docs/VISUAL.md, V19; Config/CompanyEvents). 0 — иконки ещё нет: на карточке
 -- события эмодзи. Dev 1: из docs/visual/astra-2026-11-05-events/events-1/V19 и events-2/V19
@@ -348,6 +352,30 @@ Images.consoleStages = {
 Images.builder = {
 	shirt = 0, -- builder_shirt.png 585×559
 	pants = 0, -- builder_pants.png 585×559
+} :: { [string]: number }
+
+-- Туториал (V31). 0 — стрелка-символ ⬇ как раньше
+Images.tutorial = {
+	arrow = 0, -- tut_arrow.png (256×256): жёлтая стрелка вниз над кнопкой (экран и 3D над участком)
+} :: { [string]: number }
+
+-- Спрайты мини-аркады (V31; ArcadeWindow). 0 — эмодзи и цветные плашки как раньше
+Images.arcade = {
+	target = 0, -- arcade_target.png (256×256): мишень-жук в тире, вместо 🎯
+	car = 0, -- arcade_car.png (256×256): гоночная машинка сверху, носом вверх, вместо 🏎
+	barrier = 0, -- arcade_barrier.png (256×256): дорожный барьер, вместо 🚧
+	runner = 0, -- arcade_runner.png (256×256): бегущий кубик-герой «Забега», вместо плашки с ••
+	coin = 0, -- arcade_coin.png (128×128): монета «Поймай монеты», вместо жёлтого круга с $
+} :: { [string]: number }
+
+-- Иконки заголовков окон (V31). 0 — эмодзи в начале заголовка как раньше
+Images.windows = {
+	stock = 0, -- win_stock.png (256×256): «📈 Биржа»
+	ipo = 0, -- win_ipo.png (256×256): «🔔 Выйти на биржу (IPO)»
+	tax = 0, -- win_tax.png (256×256): «🧾 Налоговая»
+	rivals = 0, -- win_rivals.png (256×256): «📊 Топ-10 индустрии»
+	offline = 0, -- win_offline.png (256×256): «Пока тебя не было» (луна над студией с монетами)
+	comeback = 0, -- win_comeback.png (256×256): «С возвращением!» (подарок с бантом)
 } :: { [string]: number }
 
 return Images

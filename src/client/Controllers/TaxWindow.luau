@@ -9,10 +9,14 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Tax = require(ReplicatedStorage.Shared.Config.Tax)
 local TaxRemotes = require(ReplicatedStorage.Shared.TaxRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local DepthToast = require(script.Parent.Parent.DepthToast)
 local PopupQueue = require(script.Parent.Parent.PopupQueue)
 local Ui = require(script.Parent.Parent.Ui)
+
+local HEADER_ART = 64 -- V31: картинка Астры над заголовком (Images.windows), если есть ID
 
 local MENU_SLOT = 18
 
@@ -60,7 +64,11 @@ local function show()
 	gui = screen
 	Ui.windowOpened()
 
-	local window = Ui.window(screen, "Window", Vector2.new(480, 360))
+	local window = Ui.window(
+		screen,
+		"Window",
+		Vector2.new(480, 360 + ArtIcon.headerHeight(Images.windows.tax, HEADER_ART, 10))
+	)
 	local body = Instance.new("Frame")
 	body.BackgroundTransparency = 1
 	body.Position = UDim2.fromOffset(16, 12)
@@ -72,6 +80,8 @@ local function show()
 	local title = Ui.label(body, ClientState.t("tax_title"), 36, Ui.titleFontFor(ClientState.lang))
 	title.TextXAlignment = Enum.TextXAlignment.Center
 	title.LayoutOrder = 1
+	title.Text = ArtIcon.strip(title.Text, "🧾", Images.windows.tax)
+	ArtIcon.header(body, Images.windows.tax, HEADER_ART, 0)
 
 	local rate = math.floor(attr("TaxRate") * 100 + 0.5)
 	local text, amount, color
@@ -158,7 +168,7 @@ function TaxWindow.open()
 end
 
 function TaxWindow.start()
-	local menu = Ui.menuButton(MENU_SLOT, "🧾", show)
+	local menu = Ui.menuButton(MENU_SLOT, "🧾", show, "menu_tax")
 	local lastBill = 0
 	local warned = false
 	local function check()
