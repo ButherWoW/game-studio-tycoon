@@ -51,6 +51,38 @@ StaffLooks.byId = {
 	legend = look("E8C49E", "443850"),
 } :: { [string]: Look }
 
+-- Image ID лиц и одежды (V13, загружены Dev 1 06.11)
+StaffLooks.byId.mila.face, StaffLooks.byId.mila.shirt, StaffLooks.byId.mila.pants =
+	132323873910661, 132633402299313, 78346802338011
+StaffLooks.byId.tim.face, StaffLooks.byId.tim.shirt, StaffLooks.byId.tim.pants =
+	91031593890530, 94248376494277, 101455452413399
+StaffLooks.byId.zoe.face, StaffLooks.byId.zoe.shirt, StaffLooks.byId.zoe.pants =
+	112224809568764, 97051888217917, 129095626162283
+StaffLooks.byId.ilya.face, StaffLooks.byId.ilya.shirt, StaffLooks.byId.ilya.pants =
+	80573277780075, 85149668979741, 140684891513683
+StaffLooks.byId.oleg.face, StaffLooks.byId.oleg.shirt, StaffLooks.byId.oleg.pants =
+	121317331896987, 104719580980220, 77190510061804
+StaffLooks.byId.sara.face, StaffLooks.byId.sara.shirt, StaffLooks.byId.sara.pants =
+	104864586667489, 90512242968894, 108272049662406
+StaffLooks.byId.max.face, StaffLooks.byId.max.shirt, StaffLooks.byId.max.pants =
+	123632732024185, 125559798006422, 96711101646703
+StaffLooks.byId.nika.face, StaffLooks.byId.nika.shirt, StaffLooks.byId.nika.pants =
+	80696387437699, 123969862279338, 113961659184783
+StaffLooks.byId.den.face, StaffLooks.byId.den.shirt, StaffLooks.byId.den.pants =
+	79167752755572, 120117322889394, 76985160558976
+StaffLooks.byId.aya.face, StaffLooks.byId.aya.shirt, StaffLooks.byId.aya.pants =
+	130521214437494, 110674321472018, 125599594467487
+StaffLooks.byId.leo.face, StaffLooks.byId.leo.shirt, StaffLooks.byId.leo.pants =
+	93370706720803, 84559512279113, 91215558423731
+StaffLooks.byId.vera.face, StaffLooks.byId.vera.shirt, StaffLooks.byId.vera.pants =
+	108623917545675, 75657070862267, 107960215362246
+StaffLooks.byId.robo.face, StaffLooks.byId.robo.shirt, StaffLooks.byId.robo.pants =
+	118349399845343, 118611477543627, 92505975754264
+StaffLooks.byId.ghost.face, StaffLooks.byId.ghost.shirt, StaffLooks.byId.ghost.pants =
+	125564446341466, 103950221433346, 99553323866951
+StaffLooks.byId.legend.face, StaffLooks.byId.legend.shirt, StaffLooks.byId.legend.pants =
+	112707931792127, 110553906742255, 83722810976397
+
 StaffLooks.byId.robo.faceOnScreen = true
 StaffLooks.byId.ghost.transparency = 0.35
 StaffLooks.byId.legend.cape = "look_legend_cape"
