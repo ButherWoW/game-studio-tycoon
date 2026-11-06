@@ -752,3 +752,33 @@ Dev 1 уже создаёт товары в Roblox, а геймпасс без �
 
 Сдавай в `docs/visual/<папка>/V31/` (имена файлов как в таблицах), с README и превью, как раньше.
 Dev 1 загружает и ставит ID в `Config/Images` (те же ключи, имена в комментариях).
+
+### V32. Превью страницы игры на 5 языках — 25 PNG
+
+Roblox показывает на странице игры свои превью для каждого языка (Creator Hub → Localization → картинки
+по языку). Сейчас все 5 превью V22 (`docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_1…5.png`) с
+английским заголовком — английская версия остаётся как есть. Нужны те же 5 картинок ещё на 5 языках, где
+больше всего игроков Roblox: **испанский, португальский (Бразилия), русский, немецкий, французский**.
+
+Правила:
+- **Сцена та же**, что в V22 (редактирование исходника, не новая генерация): меняется только заголовок.
+  Шрифт, обводка, цвет и место заголовка — как в английской версии. Длинный заголовок — в 2 строки,
+  поля 6% по краям, все буквы целиком, без ошибок (проверь каждую букву, особенно Ã, Ç, É, Ä, Ü, Ё, Й).
+- `10/10` на превью 3 — оставить (цифры понятны всем).
+- Превью 5: подписи стилей CLASSIC / COZY / NEON / MINIMAL **убрать во всех языках** (и в английском
+  тоже сдать версию `thumb_v2_5_en.png` без подписей) — стили и так видны по мебели.
+- Других надписей (вывески, экраны, кружки) не добавлять.
+
+Заголовки — **ровно эти** (заглавными):
+
+| Превью | EN (есть) | es | pt-BR | ru | de | fr |
+|---|---|---|---|---|---|---|
+| 1 гараж → HQ | FROM GARAGE TO HQ | DEL GARAJE A LA SEDE | DA GARAGEM À SEDE | ИЗ ГАРАЖА В ОФИС | VON DER GARAGE ZUM HQ | DU GARAGE AU QG |
+| 2 команда | BUILD YOUR TEAM | ARMA TU EQUIPO | MONTE SUA EQUIPE | СОБЕРИ КОМАНДУ | BAU DEIN TEAM AUF | FORME TON ÉQUIPE |
+| 3 хит | MAKE A HIT | CREA UN ÉXITO | CRIE UM SUCESSO | СДЕЛАЙ ХИТ | LANDE EINEN HIT | CRÉE UN TUBE |
+| 4 маскот | MEET YOUR MASCOT | CONOCE A TU MASCOTA | CONHEÇA SEU MASCOTE | ЗНАКОМЬСЯ: ТВОЙ ТАЛИСМАН | TRIFF DEIN MASKOTTCHEN | RENCONTRE TA MASCOTTE |
+| 5 стили | CHOOSE YOUR STYLE | ELIGE TU ESTILO | ESCOLHA SEU ESTILO | ВЫБЕРИ СВОЙ СТИЛЬ | WÄHLE DEINEN STIL | CHOISIS TON STYLE |
+
+Файлы: `thumb_v2_<1..5>_<es|pt|ru|de|fr>.png` + `thumb_v2_5_en.png`, 1920×1080, сдавай в
+`docs/visual/<папка>/V32/` с README, contact sheet по языкам и VALIDATION (размер, заголовок посимвольно).
+Иконку игры `icon_v3` не трогаем (на ней нет текста). Dev 1 загружает в Creator Hub по языкам.
