@@ -1,0 +1,38 @@
+[
+  {
+    "skin": "pixel_artist",
+    "partsIncludingHandle": 9,
+    "attachment": "HatAttachment",
+    "visiblePairChecks": 28,
+    "intersections": 0,
+    "rigidWelds": 8,
+    "runtimeTested": false
+  },
+  {
+    "skin": "retro_gamer",
+    "partsIncludingHandle": 10,
+    "attachment": "HatAttachment",
+    "visiblePairChecks": 36,
+    "intersections": 0,
+    "rigidWelds": 9,
+    "runtimeTested": false
+  },
+  {
+    "skin": "speedrunner",
+    "partsIncludingHandle": 27,
+    "attachment": "HatAttachment",
+    "visiblePairChecks": 325,
+    "intersections": 0,
+    "rigidWelds": 26,
+    "runtimeTested": false
+  },
+  {
+    "skin": "bug_hunter",
+    "partsIncludingHandle": 28,
+    "attachment": "HatAttachment",
+    "visiblePairChecks": 351,
+    "intersections": 0,
+    "rigidWelds": 27,
+    "runtimeTested": false
+  }
+]
