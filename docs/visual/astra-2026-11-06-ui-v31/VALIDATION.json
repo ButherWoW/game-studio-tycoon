@@ -1,0 +1,336 @@
+{
+  "expected": 15,
+  "ready": 15,
+  "runtimeTested": false,
+  "assets": [
+    {
+      "file": "tut_arrow.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        40,
+        15,
+        215,
+        242
+      ],
+      "sha256": "87c2322817e2fd1b86f7fe6a29b37e28cf520fc75f4644584431c7f44a1b6799",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "menu_stock.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        35,
+        23,
+        225,
+        236
+      ],
+      "sha256": "a36a598d4a511e42e1b8bc4eaebfcdb08d5fac401ee4a100f8b8c504ff379513",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "menu_tax.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        31,
+        20,
+        228,
+        243
+      ],
+      "sha256": "9ff444fc655d5b8c7b338a1a1181db174dadda59d09e533ce534d4486d63c3ac",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "menu_rivals.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        29,
+        21,
+        223,
+        239
+      ],
+      "sha256": "7fe5caa03fd2c1533bc7c632868aa0a36796d89995ebd268dd689ee671291c49",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "arcade_target.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        13,
+        13,
+        243,
+        246
+      ],
+      "sha256": "ea3882ee9717a2d206f2d491e75ff5e2abd493cbc3ce26df7538a2dbd39e1f95",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "arcade_car.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        44,
+        14,
+        211,
+        242
+      ],
+      "sha256": "5524d0e46d21229f367d7b2cfc16521f0ee787332792620651a2b9ff6ef98e66",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "arcade_barrier.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        19,
+        54,
+        237,
+        211
+      ],
+      "sha256": "b703cf9cee747815c3b1ef93891156ff0b0bad1d91eaca619f48e9dab16b3833",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "arcade_runner.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        9,
+        33,
+        247,
+        223
+      ],
+      "sha256": "18f88d67ad124a834e6ce8f39f15d8758c9e1261f3f838c5c9befca39af609c6",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "arcade_coin.png",
+      "size": [
+        128,
+        128
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        13,
+        12,
+        113,
+        119
+      ],
+      "sha256": "13ddf6eeb83529f32b142568a1e93d95bbbf6ce014fe0823f61c83dff206f570",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "win_stock.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        33,
+        12,
+        219,
+        245
+      ],
+      "sha256": "ec4d386feee94003745867cc7c951b9e711fc4860c5f8c55ce36f53d96351ae7",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "win_ipo.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        40,
+        14,
+        214,
+        242
+      ],
+      "sha256": "ef511d1602970a82e2fa01f90e2206860a0f52c5d4d484d0a945a46a1b9f1430",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "win_tax.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        36,
+        9,
+        217,
+        250
+      ],
+      "sha256": "d287c88ecc666d33b8b1ca34bea6881490225fbf77f48bfbe6217f256212c7b3",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "win_rivals.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        7,
+        18,
+        249,
+        247
+      ],
+      "sha256": "d1de8c3649f57ededeccf811a258328f4a56a805e7c1e9829a729a4f7fccf1ee",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "win_offline.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 1,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        25,
+        16,
+        219,
+        252
+      ],
+      "sha256": "001ed63d31564a62e4f7affa0445d12553fa6fb86b53bb388d9c4ca24c4ab7f9",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    },
+    {
+      "file": "win_comeback.png",
+      "size": [
+        256,
+        256
+      ],
+      "alphaRange": [
+        0,
+        255
+      ],
+      "cornerAlphaMax": 0,
+      "cornersEffectivelyTransparent": true,
+      "meaningfulAlphaBBox": [
+        27,
+        16,
+        229,
+        249
+      ],
+      "sha256": "31a6d1e4257edb5bcbd5408f6d6c20f2c3b6a1f4d5d53015237a89909b81cfd3",
+      "visualReview": "PASS:128px light/dark and40px dark; no text/digits/brands; car topviewnoseup,runnerfacesright"
+    }
+  ],
+  "tutorialArrow": {
+    "tipX": 127.0,
+    "canvasCenterX": 127.5,
+    "centerErrorPixels": 0.5,
+    "direction": "down",
+    "shadow": "none",
+    "review": "PASS"
+  },
+  "alphaNote": "win_offline has at most1/255 alpha at onecorner; visually transparent, meaningful silhouette clear. Gift whitehalo removed via ImageGen edit.",
+  "sourceChecks": {
+    "stylua": "PASS",
+    "selene": "PASS",
+    "rojoBuild": "PASS"
+  }
+}
