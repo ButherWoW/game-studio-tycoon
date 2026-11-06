@@ -1956,4 +1956,10 @@ return {
 	intro_next = "Dalje",
 	intro_skip = "Preskoči",
 	intro_start = "Započni",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ Gradnja ubrzana za {minutes} min, neiskorišteni dio isplaćen je kao prihod: {amount}",
+	build_speed_late = "💵 Gradnja je gotovo gotova — ubrzanje je isplaćeno kao prihod: {amount}",
+	move_prompt_action = "🏗️ Započni gradnju",
+	move_prompt_object = "{price} · {minutes} min, bez povrata",
+	move_hint = "Potvrdi radnjom · gradnja traje {minutes} min",
 }
