@@ -1929,4 +1929,10 @@ return {
 	intro_next = "आगे",
 	intro_skip = "छोड़ो",
 	intro_start = "शुरू करो",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ निर्माण {minutes} मिनट तेज़ हुआ, बिना इस्तेमाल हुआ हिस्सा कमाई के रूप में मिला: {amount}",
+	build_speed_late = "💵 निर्माण लगभग पूरा हो चुका है — तेज़ करने की रकम कमाई के रूप में मिली: {amount}",
+	move_prompt_action = "🏗️ निर्माण शुरू करो",
+	move_prompt_object = "{price} · {minutes} मिनट, पैसे वापस नहीं",
+	move_hint = "क्रिया से पक्का करो · निर्माण में {minutes} मिनट लगेंगे",
 }
