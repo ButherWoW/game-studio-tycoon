@@ -1920,4 +1920,14 @@ return {
 	guide_floor2_3 = "Progresul îl vezi în fereastra 🛋️ Studio; la liftul 🛗 apasă pe etajul 🔒 și îți arătăm ce lipsește",
 	platform_notice_phone = "📱 Platforma „Telefoane” e deblocată! Alege-o în fereastra „Joc nou”",
 	build_prompt = "⚡ Accelerează construcția",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Pereți transparenți",
+	setting_wallfade_hint = "Pereții dintre cameră și personajul tău devin transparenți",
+	intro_1 = "Ai 17 ani. Ai jucat jocuri toată viața, iar acum vrei să le faci tu. Fără bani, fără birou. Ai doar un laptop vechi și un vis.",
+	intro_2 = "Începe cu puțin: așază-te cu laptopul pe o bancă din parc și fă-ți primul joc. Alege un gen și o temă, apoi împarte efortul între gameplay, grafică, sunet și poveste.",
+	intro_3 = "Criticii dau note de la 1 la 10. Un joc grozav aduce bani și fani, unul slab îi alungă. Cumpără un garaj, angajează o echipă, mută-te într-un birou.",
+	intro_4 = "Scopul tău: de la o bancă din parc până la un zgârie-nori, ca să construiești cel mai faimos studio din lume. Gata? Studioul tău are nevoie de un nume!",
+	intro_next = "Înainte",
+	intro_skip = "Sari peste",
+	intro_start = "Start",
 }
