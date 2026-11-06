@@ -18,6 +18,7 @@ local Platforms = require(Shared.Config.Platforms)
 local Features = require(Shared.Config.Features)
 local Employees = require(Shared.Config.Employees)
 local Texts = require(Shared.Config.Texts)
+local UnlockRules = require(Shared.UnlockRules)
 local Images = require(Shared.Config.Images)
 local ArtIcon = require(script.Parent.ArtIcon)
 local ClientState = require(script.Parent.ClientState)
@@ -166,7 +167,17 @@ function ConsoleClient.buildPicker(
 			if selected then Ui.colors.good elseif open then Ui.colors.primary else Ui.colors.locked,
 			function()
 				if not open then
-					showHint("🔒 " .. ClientState.t("platform_lock_" .. id))
+					-- Платформа с условием (телефоны) — причина из UnlockRules, иначе готовый текст
+					local reason: string? = nil
+					if def and def.requires then
+						local item: any = { requires = def.requires }
+						reason = UnlockRules.firstReason(ClientState.lang, item, ClientState.data)
+					end
+					showHint(
+						if reason
+							then ClientState.t("platform_" .. id) .. " · " .. reason
+							else "🔒 " .. ClientState.t("platform_lock_" .. id)
+					)
 					return
 				end
 				if ConsoleClient.selectedPlatform ~= id then
