@@ -1,0 +1,17 @@
+{
+  "newFurnitureModels": 29,
+  "existingShellsUnchanged": true,
+  "previousCanonicalModelFiles": {
+    "GarageWalls_Sakura.rbxmx": "8c1fe2312f44cbadba809450509054fc4f92bc486e3de405cab3f191488a8f5c",
+    "Floor_Sakura.rbxmx": "3013c8f62c8ee08bd028f85e40fd34f629a6efe4462048e2dd8aaad693e7002d",
+    "Skyscraper_Sakura.rbxmx": "17e80c2d94352078d0b94c15173a1aa5c06371f0a85b9f20193032c9b3f2c6e2",
+    "Floor_Sakura.rbxm": "7ef61484088c9f38465cb87dc360102a74c530e16caf602b3953efa805aab4f7",
+    "Office_Sakura.rbxmx": "835bfe2785c29523a4acaa01ea52ea8b298a443093ee5b6d0a434a85029cbbc5",
+    "Skyscraper_Sakura.rbxm": "9b50bd7a1333f5052bd56682836ec9568e21fa9722e4e1e3e96c7b89534e298b",
+    "GarageWalls_Sakura.rbxm": "75ffc96727640581b10e4f787cfcf16979bdf68d442a9427af13e16d385e725d",
+    "Office_Sakura.rbxm": "3f2c0d0fb79af73c3c42d1f9afb18f86e3f62619170402ebf832aec7b54a51dd"
+  },
+  "canonicalModelsPath": "../models",
+  "supportOnly": "baseline/source/previews; do notimport",
+  "runtimeTested": false
+}

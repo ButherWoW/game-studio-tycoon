@@ -1,0 +1,161 @@
+{
+  "theme": "Sakura",
+  "palette": {
+    "wood": "E7CFAB",
+    "cream": "F8EBDD",
+    "pink": "D993AE",
+    "rose": "BF7294",
+    "brass": "CBA96E",
+    "dark": "55414A",
+    "metal": "DCCBB6",
+    "light": "FFD8B4"
+  },
+  "models": {
+    "Desk1": {
+      "zone": "garage",
+      "recoloredParts": 256,
+      "parts": 263
+    },
+    "Desk2": {
+      "zone": "garage",
+      "recoloredParts": 252,
+      "parts": 259
+    },
+    "PC1": {
+      "zone": "garage",
+      "recoloredParts": 124,
+      "parts": 233
+    },
+    "PCPro": {
+      "zone": "garage",
+      "recoloredParts": 171,
+      "parts": 314
+    },
+    "Chair": {
+      "zone": "garage",
+      "recoloredParts": 149,
+      "parts": 156
+    },
+    "Coffee": {
+      "zone": "garage",
+      "recoloredParts": 141,
+      "parts": 145
+    },
+    "HitShelf": {
+      "zone": "garage",
+      "recoloredParts": 7,
+      "parts": 8
+    },
+    "Posters": {
+      "zone": "garage",
+      "recoloredParts": 3,
+      "parts": 45
+    },
+    "Plant": {
+      "zone": "decor",
+      "recoloredParts": 24,
+      "parts": 31
+    },
+    "Rug": {
+      "zone": "decor",
+      "recoloredParts": 69,
+      "parts": 70
+    },
+    "Sofa": {
+      "zone": "decor",
+      "recoloredParts": 280,
+      "parts": 281
+    },
+    "CoffeeTable": {
+      "zone": "decor",
+      "recoloredParts": 52,
+      "parts": 61
+    },
+    "PendantLamp": {
+      "zone": "decor",
+      "recoloredParts": 9,
+      "parts": 10
+    },
+    "WallBench": {
+      "zone": "decor",
+      "recoloredParts": 25,
+      "parts": 26
+    },
+    "BeanBags": {
+      "zone": "decor",
+      "recoloredParts": 15,
+      "parts": 15
+    },
+    "Bookshelf": {
+      "zone": "decor",
+      "recoloredParts": 36,
+      "parts": 57
+    },
+    "MiniFridge": {
+      "zone": "decor",
+      "recoloredParts": 22,
+      "parts": 42
+    },
+    "NeonSign": {
+      "zone": "decor",
+      "recoloredParts": 1,
+      "parts": 18
+    },
+    "Aquarium": {
+      "zone": "decor",
+      "recoloredParts": 15,
+      "parts": 45
+    },
+    "ArcadeMachine": {
+      "zone": "decor",
+      "recoloredParts": 20,
+      "parts": 34
+    },
+    "OfficeDesk": {
+      "zone": "office",
+      "recoloredParts": 132,
+      "parts": 187
+    },
+    "Cooler": {
+      "zone": "office",
+      "recoloredParts": 45,
+      "parts": 49
+    },
+    "MeetingRoom": {
+      "zone": "office",
+      "recoloredParts": 65,
+      "parts": 82
+    },
+    "FloorDesk": {
+      "zone": "office",
+      "recoloredParts": 137,
+      "parts": 192
+    },
+    "ServerRoom": {
+      "zone": "office",
+      "recoloredParts": 130,
+      "parts": 172
+    },
+    "Lounge": {
+      "zone": "office",
+      "recoloredParts": 145,
+      "parts": 158
+    },
+    "SkyDesk": {
+      "zone": "office",
+      "recoloredParts": 32,
+      "parts": 70
+    },
+    "SoundStudio": {
+      "zone": "office",
+      "recoloredParts": 68,
+      "parts": 91
+    },
+    "ArtWall": {
+      "zone": "office",
+      "recoloredParts": 10,
+      "parts": 28
+    }
+  },
+  "geometryPolicy": "appearance-only; zero added parts"
+}
