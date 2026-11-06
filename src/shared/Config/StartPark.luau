@@ -74,6 +74,10 @@ local StartPark = {
 	landscapeBoard = { position = Vector3.new(0, 0, 17), yaw = 180 },
 	landscapePawnshop = { position = Vector3.new(-9.148114, 0, -43.038494), yaw = 12 },
 	landscapeFountain = { position = Vector3.new(43.466662, 0, 11.646857), yaw = 0 },
+	-- Площадка появления игрока (модель Астры assets/models/astra-v33 в ServerStorage.Upgrades): центр —
+	-- X/Z SpawnLocation, низ на уровне земли. Невидимый SpawnLocation вписывается в её габарит и верх,
+	-- коллизию он не даёт (опора — сама модель). Нет модели или это заглушка Generated — старый SpawnLocation
+	spawnPadName = "SpawnPad",
 	cartridgeRadius = 42, -- только начальная раскладка точек (WorldService), дальше — случайно
 
 	-- Рекламные щиты (BillboardService, Config/Billboards): угол/радиус от спавна, лицом к спавну.
