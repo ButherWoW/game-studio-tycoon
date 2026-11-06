@@ -259,8 +259,10 @@ local function refreshPet(player: Player)
 	model:SetAttribute("OwnerUserId", player.UserId)
 	model:SetAttribute("MascotId", mascot.id)
 	local offset = model:GetPivot():ToObjectSpace(body.CFrame)
-	-- Прячем под карту до первого тика (персонаж мог ещё не появиться)
-	body.CFrame = CFrame.new(0, -500, 0) * offset
+	-- Прячем под карту до первого тика (персонаж мог ещё не появиться). Двигаем всю модель:
+	-- WeldConstraint включаются при входе в workspace и запоминают ТЕКУЩЕЕ смещение — если сдвинуть
+	-- только Body, остальные детали остаются у шаблона (в 500 studs), видно один кубик туловища
+	model:PivotTo(CFrame.new(0, -500, 0))
 	model.Parent = folder()
 	pets[player] = { model = model, body = body, offset = offset, id = mascot.id, hop = false }
 end
