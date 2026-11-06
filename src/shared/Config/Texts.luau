@@ -1625,6 +1625,158 @@ Texts.ru = {
 	stock_err_max = "Больше {shares} акций одной компании не купить",
 	stock_err_portfolio = "В портфеле не больше {count} компаний",
 	hud_debt = "🏦 долг {amount}",
+	-- Обучение по ходу игры (Config/Guides, GuideController)
+	guide_ok = "Понятно",
+	guide_book_title = "Справочник",
+	guide_book_empty = "Пока пусто — открывай новые системы, и они появятся здесь",
+	guide_book_hint = "Здесь всё, что ты уже открыл. Нажми на карточку, чтобы перечитать",
+	guide_new_badge = "Новое",
+	guide_more = "Подробнее в 📖",
+
+	guide_research_title = "Исследования",
+	guide_research_1 = "Каждая выпущенная игра даёт очки исследований (ОИ): выше оценка — больше ОИ",
+	guide_research_2 = "Трать ОИ в ветках «Жанры», «Технологии» и «Студия»: новые жанры, скорость, доход",
+	guide_research_3 = "Исследование идёт по таймеру, даже когда тебя нет в игре. Одно за раз",
+
+	guide_team_title = "Команда",
+	guide_team_1 = "Нанимай сотрудников за свободные столы — каждый ускоряет игры и поднимает оценку",
+	guide_team_2 = "Раз в несколько минут команде платят зарплату. Нет денег — забастовка, работа стоит",
+	guide_team_3 = "Качай навыки кнопкой «+1»: сотрудник учится по таймеру и потом работает лучше",
+
+	guide_quests_title = "Задания",
+	guide_quests_1 = "Выполняй задания и жми «Забрать» — получишь деньги, ОИ, кофе и другие награды",
+	guide_quests_2 = "«Ежедневные» задания обновляются каждый день — заходи, чтобы не пропустить",
+	guide_quests_3 = "Во вкладке «Лидеры» видно, у кого лучшая оценка и больше всего игр",
+
+	guide_shop_title = "Магазин",
+	guide_shop_1 = "«Реклама» на время поднимает доход твоих игр — часть можно купить за деньги",
+	guide_shop_2 = "Постеры, скины и маскоты украшают студию, а маскот ещё даёт маленький бонус",
+	guide_shop_3 = "Есть промокод? Жми «🎟 Коды» в магазине и активируй его",
+
+	guide_rebirth_title = "Перерождение",
+	guide_rebirth_1 = "Перерождение — начать заново с гаража ради бонуса к доходу навсегда",
+	guide_rebirth_2 = "Сбросятся деньги, апгрейды и купленные жанры. Исследования и рекорд останутся",
+	guide_rebirth_3 = "За каждое перерождение — звезда ⭐: трать звёзды на вечные перки студии",
+
+	guide_hits_title = "Хиты",
+	guide_hits_1 = "Игры с высокой оценкой становятся картриджами-хитами на полке в студии",
+	guide_hits_2 = "Хиты приносят деньги каждую минуту, даже пока ты делаешь новую игру",
+	guide_hits_3 = "Чужие хиты можно украсть — и твои тоже! Догони вора или закрой студию 🔒",
+
+	guide_thieves_title = "Главные воры",
+	guide_thieves_1 = "Здесь таблица самых ловких воров хитов: на сервере и за всё время",
+	guide_thieves_2 = "😈 — сколько хитов украл игрок, 🛡️ — сколько воров он поймал",
+	guide_thieves_3 = "Лучший вор носит корону 👑 «Главный вор». Береги свою полку!",
+
+	guide_camera_title = "Вид студии",
+	guide_camera_1 = "Кнопка 🎥 показывает твою студию сверху, как в настоящем тайкуне",
+	guide_camera_2 = "Колёсико мыши или щипок пальцами — приблизить и отдалить",
+	guide_camera_3 = "Вид включается сам, когда садишься за ПК. Это можно выключить",
+
+	guide_bank_title = "Банк",
+	guide_bank_1 = "Деньги почти кончились? Банк даст кредит, чтобы студия не встала",
+	guide_bank_2 = "Вернуть нужно чуть больше, чем взял: часть дохода каждой игры уходит банку",
+	guide_bank_3 = "Можно погасить и самому кнопкой «Погасить». Кредит — только один за раз",
+
+	guide_studio_title = "Студия",
+	guide_studio_1 = "«Интерьер» — мебель и техника, как кнопки на полу, а ещё переезды",
+	guide_studio_2 = "«Декор» поднимает настроение команды: работают быстрее, оценки выше",
+	guide_studio_3 = "«Стиль» и «Отделка» меняют вид мебели, пола и стен — только для красоты",
+
+	guide_achievements_title = "Достижения",
+	guide_achievements_1 = "Достижения — особые цели: выпускай игры, лови воров, собирай лайки",
+	guide_achievements_2 = "За каждое — награда, а за некоторые ещё медаль: бронза, серебро или золото",
+	guide_achievements_3 = "Некоторые скрыты под «???» — попробуй догадаться, как их открыть",
+
+	guide_tours_title = "Студии игроков",
+	guide_tours_1 = "Здесь все студии сервера: жми «Посетить», чтобы заглянуть в гости",
+	guide_tours_2 = "Понравилось? Ставь 👍 — одной студии можно один лайк в день",
+	guide_tours_3 = "«Рейтинги» — лучшие по лайкам, стоимости и хитам. Топ недели награждают",
+
+	guide_season_title = "Сезон",
+	guide_season_1 = "Сезон длится несколько недель: копи опыт и открывай уровни с наградами",
+	guide_season_2 = "Опыт дают релизы, хиты, быстрые события и ежедневные задания",
+	guide_season_3 = "«Гейм-джем»: каждую неделю новая тема — сделай по ней игру и попади в топ мира",
+
+	guide_rivals_title = "Топ индустрии",
+	guide_rivals_1 = "Твоя студия соревнуется с компаниями-конкурентами за место в топ-10",
+	guide_rivals_2 = "Обогнал студию впервые — получаешь награду. Цель — стать студией №1!",
+	guide_rivals_3 = "Конкурент выпустил хит? Его жанр на время приносит меньше — выбери другой",
+
+	guide_tax_title = "Налоговая",
+	guide_tax_1 = "В офисе студия платит налог с дохода — счёт время от времени приходит сам",
+	guide_tax_2 = "На оплату есть несколько минут: жми «Заплатить» в окне 🧾",
+	guide_tax_3 = "Не заплатишь — штраф и налоговая проверка: доход на время упадёт",
+
+	guide_stocks_title = "Биржа",
+	guide_stocks_1 = "На «Рынке» покупай акции студий других игроков — их цена растёт и падает",
+	guide_stocks_2 = "Акции платят дивиденды каждую минуту, даже когда владелец не в игре",
+	guide_stocks_3 = "Сильная студия может выйти на IPO: другие купят её акции, а доход вырастет",
+
+	guide_critics_title = "Оценки критиков",
+	guide_critics_1 = "Подбирай жанр и тему, которые дружат: «Отличное сочетание!» — хороший знак",
+	guide_critics_2 = "Распредели фокус под жанр: каждому важно своё — геймплей, графика, звук, сюжет",
+	guide_critics_3 = "Не повторяйся — критики снижают оценку. А в большой студии от тебя ждут большего",
+
+	guide_trends_title = "Тренды",
+	guide_trends_1 = "Время от времени в моду входит пара «жанр + тема» — смотри плашку 🔥",
+	guide_trends_2 = "Игра по тренду получает от критиков бонус к оценке",
+	guide_trends_3 = "Тренд скоро сменится — успей выпустить игру, пока он держится",
+
+	guide_dailyEvents_title = "События дня",
+	guide_dailyEvents_1 = "Каждый час ненадолго включается событие дня: кофе-раш, охота на баги и другие",
+	guide_dailyEvents_2 = "Раз в день — «Золотой час» 🌟: доход у всех игроков вырастает",
+	guide_dailyEvents_3 = "Нажми на значок события — увидишь расписание: что и когда будет",
+
+	guide_payday_title = "Зарплата и аренда",
+	guide_payday_1 = "Раз в несколько минут команда получает зарплату, а за офис идёт аренда",
+	guide_payday_2 = "Сколько уходит в минуту — видно по значку 💸 вверху экрана",
+	guide_payday_3 = "Если денег не хватает, придёт предупреждение. Не успел — команда бастует",
+
+	guide_move_title = "Переезд",
+	guide_move_1 = "Золотая кнопка на полу — переезд в офис или на новый этаж",
+	guide_move_2 = "Откроется, когда куплен весь интерьер, все столы заняты и выпущено нужное число игр",
+	guide_move_3 = "После оплаты идёт стройка. Пока строят, студия работает как обычно",
+
+	guide_expo_title = "Выставка",
+	guide_expo_1 = "Раз в час на сервере проходит выставка игр",
+	guide_expo_2 = "Побеждает игра с самой высокой оценкой, выпущенная за этот час",
+	guide_expo_3 = "Победитель получает приз — выпусти свою лучшую игру перед итогами!",
+
+	guide_safe_title = "Сейф",
+	guide_safe_1 = "В парке у фонтана стоит сейф с денежным призом",
+	guide_safe_2 = "Подойди, нажми «Ввести код» и набери 6 цифр",
+	guide_safe_3 = "Код знают только создатели игры — следи за новостями. Подбором не открыть",
+
+	guide_trade_title = "Обмен",
+	guide_trade_1 = "Меняйся с игроками сервера: кнопка «🔁 Обмен» в окне 🏘 «Студии»",
+	guide_trade_2 = "Можно менять скины, постеры и маскотов за $ и деньги. Покупки за Robux — нельзя",
+	guide_trade_3 = "Обмен пройдёт, только когда оба нажмут «Подтвердить». Проверь, что отдаёшь!",
+
+	guide_gotw_title = "Игра недели",
+	guide_gotw_1 = "Твоя лучшая игра недели попадает в общий топ всех серверов: окно 📊",
+	guide_gotw_2 = "Сначала смотрят на оценку, потом на доход. Итоги — в понедельник",
+	guide_gotw_3 = "Топ-10 получают деньги, титул над головой и статуэтку на полку хитов",
+
+	guide_coop_title = "Совместная разработка",
+	guide_coop_1 = "Делай игру с другим игроком: сядь за ПК и нажми «🤝 Позвать в проект»",
+	guide_coop_2 = "Гость помогает со своего ПК — игра делается быстрее",
+	guide_coop_3 = "Доход делится: большая часть тебе, часть — гостю. Тебя тоже могут позвать",
+
+	guide_console_title = "Своя консоль",
+	guide_console_1 = "На 3-м этаже можно создать свою консоль: 🛋️ «Студия» → 🎮 «Консоль»",
+	guide_console_2 = "Каждый этап: оборудование, сотрудник с нужным навыком и оплата, потом таймер",
+	guide_console_3 = "Выпусти консоль и делай игры для неё: хорошие игры растят долю рынка и роялти",
+
+	guide_events_title = "События компании",
+	guide_events_1 = "Иногда в студии что-то случается: хорошие новости или неприятности",
+	guide_events_2 = "В некоторых событиях решать тебе — выбери вариант на карточке",
+	guide_events_3 = "Страховка в 🛋️ «Студия» → «Интерьер» смягчает плохие события",
+
+	guide_bailiffs_title = "Долг и приставы",
+	guide_bailiffs_1 = "Деньги ушли в минус — это долг: команда бастует, а офис начинает разваливаться",
+	guide_bailiffs_2 = "Долг слишком большой — придут приставы и дёшево продадут твой декор и мебель",
+	guide_bailiffs_3 = "Спасайся: возьми кредит 🏦, уволь кого-то или выпускай игры — доход гасит долг",
 } :: { [string]: string }
 
 Texts.en = {
@@ -3198,6 +3350,158 @@ Texts.en = {
 	stock_err_max = "You can't own more than {shares} shares of one company",
 	stock_err_portfolio = "Your portfolio holds at most {count} companies",
 	hud_debt = "🏦 debt {amount}",
+	-- Обучение по ходу игры (Config/Guides, GuideController)
+	guide_ok = "Got it",
+	guide_book_title = "Guidebook",
+	guide_book_empty = "Nothing here yet — unlock new features and they'll show up here",
+	guide_book_hint = "Everything you've unlocked so far. Tap a card to read it again",
+	guide_new_badge = "New",
+	guide_more = "More in 📖",
+
+	guide_research_title = "Research",
+	guide_research_1 = "Every game you release gives Research Points (RP): higher score, more RP",
+	guide_research_2 = "Spend RP in the Genres, Tech and Studio branches: new genres, speed, income",
+	guide_research_3 = "Research runs on a timer, even while you're offline. One at a time",
+
+	guide_team_title = "Team",
+	guide_team_1 = "Hire staff for free desks — each one speeds up development and boosts scores",
+	guide_team_2 = "Your team gets paid every few minutes. No money — they go on strike",
+	guide_team_3 = "Level up skills with “+1”: staff train on a timer and then work better",
+
+	guide_quests_title = "Quests",
+	guide_quests_1 = "Complete quests and hit “Claim” for cash, RP, coffee and more",
+	guide_quests_2 = "Daily quests refresh every day — drop by so you don't miss them",
+	guide_quests_3 = "The Leaders tab shows who has the best score and the most games",
+
+	guide_shop_title = "Shop",
+	guide_shop_1 = "Ads boost your games' income for a while — some cost in-game cash",
+	guide_shop_2 = "Posters, skins and mascots decorate your studio; mascots also give a small bonus",
+	guide_shop_3 = "Got a promo code? Tap “🎟 Codes” in the shop to redeem it",
+
+	guide_rebirth_title = "Rebirth",
+	guide_rebirth_1 = "Rebirth means starting over from the garage for a permanent income bonus",
+	guide_rebirth_2 = "You lose cash, upgrades and bought genres. Research and your record stay",
+	guide_rebirth_3 = "Each Rebirth gives a star ⭐ — spend stars on permanent studio perks",
+
+	guide_hits_title = "Hits",
+	guide_hits_1 = "High-scoring games become hit cartridges on the shelf in your studio",
+	guide_hits_2 = "Hits earn cash every minute, even while you're making a new game",
+	guide_hits_3 = "Others' hits can be stolen — and so can yours! Catch the thief or lock up 🔒",
+
+	guide_thieves_title = "Top Thieves",
+	guide_thieves_1 = "The sneakiest hit thieves: on this server and of all time",
+	guide_thieves_2 = "😈 is how many hits a player stole, 🛡️ is how many thieves they caught",
+	guide_thieves_3 = "The best thief wears the 👑 “Top Thief” crown. Guard your shelf!",
+
+	guide_camera_title = "Studio View",
+	guide_camera_1 = "The 🎥 button shows your studio from above, like a real tycoon",
+	guide_camera_2 = "Use the mouse wheel or pinch to zoom in and out",
+	guide_camera_3 = "It turns on by itself when you sit at your PC. You can switch that off",
+
+	guide_bank_title = "Bank",
+	guide_bank_1 = "Running low on money? The bank gives you a loan so your studio keeps going",
+	guide_bank_2 = "You repay a bit more than you took: part of each game's income goes to the bank",
+	guide_bank_3 = "You can also pay it off yourself with “Repay”. Only one loan at a time",
+
+	guide_studio_title = "Studio",
+	guide_studio_1 = "Interior: furniture and gear, same as the floor buttons, plus moving up",
+	guide_studio_2 = "Decor lifts your team's mood: they work faster and scores go up",
+	guide_studio_3 = "Style and Finish change how furniture, floors and walls look — just for fun",
+
+	guide_achievements_title = "Achievements",
+	guide_achievements_1 = "Achievements are special goals: release games, catch thieves, earn likes",
+	guide_achievements_2 = "Each one gives a reward, and some also a bronze, silver or gold medal",
+	guide_achievements_3 = "Some are hidden as “???” — try to guess how to unlock them",
+
+	guide_tours_title = "Player Studios",
+	guide_tours_1 = "All studios on the server: tap “Visit” to drop by",
+	guide_tours_2 = "Like what you see? Give it a 👍 — one like per studio per day",
+	guide_tours_3 = "Ratings: the best by likes, value and hits. The weekly top gets rewards",
+
+	guide_season_title = "Season",
+	guide_season_1 = "A season lasts a few weeks: earn XP and unlock reward tiers",
+	guide_season_2 = "XP comes from releases, hits, quick events and daily quests",
+	guide_season_3 = "Game Jam: a new theme every week — make a game for it and hit the world top",
+
+	guide_rivals_title = "Industry Top",
+	guide_rivals_1 = "Your studio competes with rival companies for a spot in the top 10",
+	guide_rivals_2 = "Pass a studio for the first time and get a reward. Aim for No. 1!",
+	guide_rivals_3 = "A rival released a hit? Its genre earns less for a while — try another one",
+
+	guide_tax_title = "Tax Office",
+	guide_tax_1 = "Once you have an office, you pay tax on income — bills arrive on their own",
+	guide_tax_2 = "You have a few minutes to pay: tap “Pay” in the 🧾 window",
+	guide_tax_3 = "Skip it and you get a fine and an audit: your income drops for a while",
+
+	guide_stocks_title = "Stock Exchange",
+	guide_stocks_1 = "On the Market, buy shares in other players' studios — prices go up and down",
+	guide_stocks_2 = "Shares pay dividends every minute, even when the owner is offline",
+	guide_stocks_3 = "A strong studio can go public (IPO): others buy its shares, your income grows",
+
+	guide_critics_title = "Critic Scores",
+	guide_critics_1 = "Pick a genre and topic that fit: “Great combo!” is a good sign",
+	guide_critics_2 = "Set your focus for the genre: each cares about gameplay, graphics, sound or story",
+	guide_critics_3 = "Don't repeat yourself — critics take points off. Bigger studios face higher hopes",
+
+	guide_trends_title = "Trends",
+	guide_trends_1 = "Every so often a “genre + topic” pair is in fashion — watch for the 🔥 banner",
+	guide_trends_2 = "A game that follows the trend gets a score bonus from critics",
+	guide_trends_3 = "Trends change soon — release your game while it lasts",
+
+	guide_dailyEvents_title = "Daily Events",
+	guide_dailyEvents_1 = "Every hour a short daily event kicks in: Coffee Rush, Bug Hunt and more",
+	guide_dailyEvents_2 = "Once a day it's Golden Hour 🌟: everyone's income goes up",
+	guide_dailyEvents_3 = "Tap the event icon to see the schedule: what's coming and when",
+
+	guide_payday_title = "Salary & Rent",
+	guide_payday_1 = "Every few minutes your team gets paid, and the office costs rent",
+	guide_payday_2 = "The 💸 icon at the top shows how much you spend per minute",
+	guide_payday_3 = "Short on cash? You'll get a warning. Miss it and your team goes on strike",
+
+	guide_move_title = "Moving Up",
+	guide_move_1 = "The golden floor button moves you to an office or a new floor",
+	guide_move_2 = "Opens when the interior is complete, every desk is filled and enough games are out",
+	guide_move_3 = "After you pay, construction begins. Your studio keeps working meanwhile",
+
+	guide_expo_title = "Game Expo",
+	guide_expo_1 = "Every hour the server holds a game expo",
+	guide_expo_2 = "The highest-scoring game released that hour wins",
+	guide_expo_3 = "The winner gets a prize — release your best game before the results!",
+
+	guide_safe_title = "Safe",
+	guide_safe_1 = "There's a safe with a cash prize by the fountain in the park",
+	guide_safe_2 = "Walk up, tap “Enter code” and type 6 digits",
+	guide_safe_3 = "Only the game's creators know the code — watch for news. No guessing it",
+
+	guide_trade_title = "Trading",
+	guide_trade_1 = "Trade with players on the server: the “🔁 Trade” button in the 🏘 Studios window",
+	guide_trade_2 = "Trade $ skins, posters, mascots and cash. Things bought with Robux can't be traded",
+	guide_trade_3 = "A trade goes through only when both tap “Confirm”. Check what you're giving!",
+
+	guide_gotw_title = "Game of the Week",
+	guide_gotw_1 = "Your best game of the week enters a top list across all servers: window 📊",
+	guide_gotw_2 = "Score counts first, then income. Results come on Monday",
+	guide_gotw_3 = "The top 10 get cash, a title over their head and a statue for the hit shelf",
+
+	guide_coop_title = "Co-op Development",
+	guide_coop_1 = "Make a game with another player: sit at your PC and tap “🤝 Invite to project”",
+	guide_coop_2 = "Your guest helps from their own PC — the game gets done faster",
+	guide_coop_3 = "Income is shared: most goes to you, some to your guest. Others can invite you too",
+
+	guide_console_title = "Your Own Console",
+	guide_console_1 = "On the 3rd floor you can build your own console: 🛋️ Studio → 🎮 Console",
+	guide_console_2 = "Each step needs equipment, a staffer with the right skill and cash, then a timer",
+	guide_console_3 = "Launch it and make games for it: good games grow your market share and royalties",
+
+	guide_events_title = "Company Events",
+	guide_events_1 = "Sometimes things happen at your studio: good news or trouble",
+	guide_events_2 = "In some events you decide — pick an option on the card",
+	guide_events_3 = "Insurance in 🛋️ Studio → Interior softens bad events",
+
+	guide_bailiffs_title = "Debt & Bailiffs",
+	guide_bailiffs_1 = "Below zero means debt: your team strikes and the office starts falling apart",
+	guide_bailiffs_2 = "Too much debt and bailiffs come to sell your decor and furniture cheap",
+	guide_bailiffs_3 = "Fix it: take a loan 🏦, let someone go or release games — income pays off debt",
 } :: { [string]: string }
 
 -- Подставить {key} из vars; неизвестные ключи остаются как есть
