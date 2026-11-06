@@ -44,6 +44,8 @@ Guides.list = {
 	{ id = "payday", icon = "💸", when = { stage = 1, games = 6 } },
 	{ id = "dailyEvents", icon = "📅", when = { feature = "dailyEvents", games = 8 } },
 	{ id = "move", icon = "🚚", when = { stage = 1, games = 10 } },
+	-- Сразу после покупки офиса: где и как открыть 2-й этаж (отчёт v71, №3)
+	{ id = "floor2", icon = "🛗", when = { stage = 2 } },
 
 	-- Кнопки меню гаража
 	{ id = "team", icon = "👥", menuSlot = 2 },
