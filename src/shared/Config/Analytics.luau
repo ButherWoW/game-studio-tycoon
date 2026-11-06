@@ -122,6 +122,9 @@ local Analytics = {
 		-- поле — "источник_знак": release_gain / release_loss, expo_place1_gain (победа), expo_place2_gain,
 		-- expo_place3_gain, expo_high_gain, rebirth_loss
 		fans = "Fans",
+		-- Админ-панель владельца (AdminService, Config/Admin): поле — действие (cash_give, cash_take,
+		-- points_give, stage, finish_dev, contentDay, event_golden, reset, kick, ban, announce…), значение — 1
+		admin = "AdminAction",
 	},
 
 	-- ===== Экономика (Analytics → Economy) =====
@@ -193,8 +196,8 @@ local Analytics = {
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },
-	-- Не экономика (отладочные деньги в Studio)
-	ignore = { DebugService = true } :: { [string]: boolean },
+	-- Не экономика (отладочные деньги в Studio, выдача из админ-панели владельца)
+	ignore = { DebugService = true, AdminService = true } :: { [string]: boolean },
 
 	-- Траты: ключ — "Сервис.функция" или "Сервис" (кто вызвал trySpend / charge). Покупки в
 	-- PlotService (гараж, апгрейд, стройка, переезд) и найм различаем по изменению профиля — см.
