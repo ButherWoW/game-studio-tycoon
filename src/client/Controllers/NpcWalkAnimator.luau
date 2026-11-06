@@ -63,10 +63,11 @@ local function setAngle(joint: Motor6D?, angle: number)
 	end
 end
 
+-- У сидящих (applySitting) в той же таблице лежит флаг posed = true — пропускаем всё, что не Motor6D
 local function relax(joints: Joints)
 	for _, joint in joints :: any do
-		if joint then
-			(joint :: Motor6D).Transform = CFrame.identity
+		if typeof(joint) == "Instance" and joint:IsA("Motor6D") then
+			joint.Transform = CFrame.identity
 		end
 	end
 end
