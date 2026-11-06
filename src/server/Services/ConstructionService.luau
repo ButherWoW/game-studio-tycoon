@@ -941,9 +941,15 @@ local function clearSite(player: Player)
 	site.folder:Destroy()
 end
 
-local function updateSign(site: Site, construction: { stage: number, startedAt: number, endsAt: number })
+local function updateSign(
+	player: Player,
+	site: Site,
+	construction: { stage: number, startedAt: number, endsAt: number }
+)
 	local screen = site.screen
 	if screen then
+		-- Чей участок: у своей таблички клиент показывает кнопку «Ускорить» (ConstructionController)
+		screen:SetAttribute("BuildOwner", player.UserId)
 		screen:SetAttribute("BuildStage", construction.stage)
 		screen:SetAttribute("BuildStart", construction.startedAt)
 		screen:SetAttribute("BuildEnd", construction.endsAt)
@@ -976,7 +982,7 @@ local function buildSite(
 	buildPiles(folder, plot)
 	buildDust(folder, plot)
 	site.screen = buildSign(folder, plot, construction.stage)
-	updateSign(site, construction)
+	updateSign(player, site, construction)
 	folder.Parent = plot
 	sites[player] = site
 	task.spawn(spawnBuilders, player, site)
@@ -998,7 +1004,7 @@ local function sync(player: Player)
 	end
 	local site = sites[player]
 	if site and site.stage == construction.stage and site.plot == plot and site.folder.Parent == plot then
-		updateSign(site, construction)
+		updateSign(player, site, construction)
 		return
 	end
 	buildSite(player, plot, construction)
