@@ -773,8 +773,7 @@ function ArcadeWindow.open(info: any)
 	hint.Size = UDim2.new(1, -32, 0, 22)
 	hint.TextXAlignment = Enum.TextXAlignment.Center
 	local closeButton = Ui.button(window, "×", Ui.colors.locked, close)
-	closeButton.Size = UDim2.fromOffset(40, 40)
-	closeButton.Position = UDim2.new(1, -52, 0, 10)
+	Ui.headerClose(closeButton)
 
 	local field = Instance.new("Frame")
 	field.BackgroundColor3 = FIELD_COLOR
