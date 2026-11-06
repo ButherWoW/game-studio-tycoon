@@ -166,6 +166,20 @@ local function chairSimple(model: Model, at: Vector3, color: Color3, facing: num
 	end
 end
 
+-- Кресло сотрудника у стола (кодовая запасная мебель): сидушка «SeatCushion» (по имени её находит
+-- StaffService), спинка сзади (+Z), сотрудник смотрит на стол (−Z). Не Seat: игрок тут не сидит
+local STAFF_CHAIR_Z = 2.4
+local function staffChair(m: Model, color: Color3)
+	local at = Vector3.new(0, 0, STAFF_CHAIR_Z)
+	local cushion = part(m, Vector3.new(1.6, 0.3, 1.4), at + Vector3.new(0, 1.5, 0), color)
+	cushion.Name = "SeatCushion"
+	part(m, Vector3.new(1.6, 1.6, 0.25), at + Vector3.new(0, 2.45, 0.7), color)
+	part(m, Vector3.new(0.3, 1.3, 0.3), at + Vector3.new(0, 0.65, 0), rgb(60, 60, 65), {
+		material = Enum.Material.Metal,
+	})
+	part(m, Vector3.new(1.6, 0.15, 1.6), at + Vector3.new(0, 0.08, 0), rgb(60, 60, 65))
+end
+
 local builders: { [string]: (Model) -> () } = {}
 
 -- ===== Мебель апгрейдов =====
@@ -212,6 +226,7 @@ builders.Desk2 = function(m)
 	end
 	part(m, Vector3.new(1.6, 2.2, 2.4), Vector3.new(1.8, 1.1, 0), rgb(200, 200, 205))
 	part(m, Vector3.new(1.2, 0.15, 0.1), Vector3.new(1.8, 1.8, 1.2), rgb(90, 95, 105))
+	staffChair(m, rgb(70, 110, 190))
 end
 
 -- Старый «толстый» монитор и клавиатура; стоит на столе (основание = столешница)
@@ -430,6 +445,7 @@ builders.OfficeDesk = function(m)
 	part(m, Vector3.new(1.6, 2.2, 2.4), Vector3.new(-1.6, 1.1, 0), rgb(150, 110, 70))
 	monitor(m, Vector3.new(0, 3, -0.8), 2.4, rgb(35, 35, 40), rgb(90, 170, 255))
 	part(m, Vector3.new(2, 0.12, 0.6), Vector3.new(0, 3.06, 0.6), rgb(35, 35, 40))
+	staffChair(m, rgb(70, 110, 190))
 end
 
 -- Кулер с водой и стаканчиками; лицом к +Z
@@ -473,6 +489,7 @@ builders.FloorDesk = function(m)
 		monitor(m, Vector3.new(x, 3, -0.8), 2, rgb(30, 30, 35), rgb(70, 140, 255))
 	end
 	part(m, Vector3.new(2.2, 0.12, 0.6), Vector3.new(0, 3.08, 0.6), rgb(30, 30, 35))
+	staffChair(m, rgb(70, 110, 190))
 	-- Перегородка сзади
 	part(m, Vector3.new(6, 2, 0.2), Vector3.new(0, 3.9, -1.6), rgb(60, 80, 130), {
 		material = Enum.Material.Fabric,
@@ -547,6 +564,7 @@ builders.SkyDesk = function(m)
 	part(m, Vector3.new(2.3, 0.02, 0.5), Vector3.new(0, 3.15, 0.6), rgb(0, 220, 255), {
 		material = Enum.Material.Neon,
 	})
+	staffChair(m, rgb(40, 40, 55))
 end
 
 -- Студия звукозаписи: стеклянная будка с микрофоном и пульт перед ней; 12×8
