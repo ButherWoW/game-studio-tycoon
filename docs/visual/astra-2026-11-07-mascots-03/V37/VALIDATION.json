@@ -1,0 +1,40 @@
+[
+  {
+    "id": "cloud_ghost",
+    "parts": 94,
+    "dimensionsXYZ": [
+      3.01,
+      3.15,
+      1.22
+    ],
+    "pairs": 4371,
+    "overlaps": [],
+    "PrimaryPart": "Body",
+    "pivotXYZ": [
+      0,
+      0,
+      0
+    ],
+    "allAnchored": true,
+    "runtimeTested": false
+  },
+  {
+    "id": "controller_bunny",
+    "parts": 42,
+    "dimensionsXYZ": [
+      2.56,
+      3.70109828,
+      1.4100000000000001
+    ],
+    "pairs": 861,
+    "overlaps": [],
+    "PrimaryPart": "Body",
+    "pivotXYZ": [
+      0,
+      0,
+      0
+    ],
+    "allAnchored": true,
+    "runtimeTested": false
+  }
+]
