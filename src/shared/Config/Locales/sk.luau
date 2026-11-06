@@ -1757,4 +1757,156 @@ return {
 	stock_err_max = "Nemôžeš mať viac ako {shares} akcií jednej firmy",
 	stock_err_portfolio = "Do portfólia sa zmestí najviac {count} firiem",
 	hud_debt = "🏦 dlh {amount}",
+	-- Обучение по ходу игры (Config/Guides, GuideController)
+	guide_ok = "Jasné",
+	guide_book_title = "Príručka",
+	guide_book_empty = "Zatiaľ tu nič nie je — odomykaj nové funkcie a objavia sa tu",
+	guide_book_hint = "Všetko, čo si zatiaľ odomkol. Ťukni na kartu a prečítaj si ju znova",
+	guide_new_badge = "Nové",
+	guide_more = "Viac v 📖",
+
+	guide_research_title = "Výskum",
+	guide_research_1 = "Každá vydaná hra dáva výskumné body (VB): lepšie hodnotenie, viac VB",
+	guide_research_2 = "Míňaj VB vo vetvách „Žánre“, „Technológie“ a „Štúdio“: žánre, tempo, príjem",
+	guide_research_3 = "Výskum ide na časovač, aj keď si offline. Vždy len jeden",
+
+	guide_team_title = "Tím",
+	guide_team_1 = "Najímaj ľudí na voľné stoly — každý zrýchli vývoj a zvýši hodnotenie",
+	guide_team_2 = "Tím dostáva výplatu každých pár minút. Bez peňazí začne štrajkovať",
+	guide_team_3 = "Zlepšuj zručnosti tlačidlom „+1“: ľudia sa školia na časovač a potom pracujú lepšie",
+
+	guide_quests_title = "Úlohy",
+	guide_quests_1 = "Plň úlohy a ťukni na „Vyzdvihnúť“ pre peniaze, VB, kávu a ďalšie",
+	guide_quests_2 = "Denné úlohy sa obnovujú každý deň — zastav sa, nech o nič neprídeš",
+	guide_quests_3 = "Záložka „Rebríček“ ukazuje, kto má najlepšie hodnotenie a najviac hier",
+
+	guide_shop_title = "Obchod",
+	guide_shop_1 = "Reklama na chvíľu zvýši príjem tvojich hier — niektoré stoja herné peniaze",
+	guide_shop_2 = "Plagáty, skiny a maskoti zdobia štúdio; maskoti dávajú aj malý bonus",
+	guide_shop_3 = "Máš promo kód? Ťukni v obchode na „🎟 Kódy“ a uplatni ho",
+
+	guide_rebirth_title = "Znovuzrodenie",
+	guide_rebirth_1 = "Znovuzrodenie je štart od garáže odznova za trvalý bonus k príjmu",
+	guide_rebirth_2 = "Prídeš o peniaze, vylepšenia a kúpené žánre. Výskum a rekord ostanú",
+	guide_rebirth_3 = "Každé Znovuzrodenie dá hviezdu ⭐ — míňaj ich na trvalé výhody štúdia",
+
+	guide_hits_title = "Hity",
+	guide_hits_1 = "Hry s vysokým hodnotením sa stanú hitovými kazetami na polici v štúdiu",
+	guide_hits_2 = "Hity zarábajú peniaze každú minútu, aj keď robíš novú hru",
+	guide_hits_3 = "Cudzie hity sa dajú ukradnúť — aj tvoje! Chyť zlodeja alebo zamkni 🔒",
+
+	guide_thieves_title = "Top zlodeji",
+	guide_thieves_1 = "Najprefíkanejší zlodeji hitov: na tomto serveri aj za celý čas",
+	guide_thieves_2 = "😈 je počet ukradnutých hitov hráča, 🛡️ počet chytených zlodejov",
+	guide_thieves_3 = "Najlepší zlodej nosí korunu 👑 „Najväčší zlodej“. Stráž svoju policu!",
+
+	guide_camera_title = "Pohľad na štúdio",
+	guide_camera_1 = "Tlačidlo 🎥 ukáže štúdio zhora, ako v skutočnom tycoone",
+	guide_camera_2 = "Kolieskom myši alebo štipnutím prstov približuješ a odďaľuješ",
+	guide_camera_3 = "Zapne sa samo, keď si sadneš k PC. Môžeš to vypnúť",
+
+	guide_bank_title = "Banka",
+	guide_bank_1 = "Dochádzajú peniaze? Banka ti požičia, aby štúdio išlo ďalej",
+	guide_bank_2 = "Vrátiš trochu viac, než si vzal: časť príjmu z každej hry ide banke",
+	guide_bank_3 = "Môžeš ho splatiť aj sám tlačidlom „Splatiť“. Vždy len jedna pôžička",
+
+	guide_studio_title = "Štúdio",
+	guide_studio_1 = "Interiér: nábytok a vybavenie, ako tlačidlá poschodí, a tiež postup vyššie",
+	guide_studio_2 = "Dekorácie zlepšujú náladu tímu: pracuje rýchlejšie a hodnotenia rastú",
+	guide_studio_3 = "Štýl a dokončenie (podlahy, steny) menia vzhľad nábytku — len pre radosť",
+
+	guide_achievements_title = "Úspechy",
+	guide_achievements_1 = "Úspechy sú zvláštne ciele: vydávaj hry, chytaj zlodejov, zbieraj lajky",
+	guide_achievements_2 = "Každý dáva odmenu a niektoré aj bronzovú, striebornú alebo zlatú medailu",
+	guide_achievements_3 = "Niektoré sú skryté ako „???“ — skús uhádnuť, ako ich odomknúť",
+
+	guide_tours_title = "Štúdiá hráčov",
+	guide_tours_1 = "Všetky štúdiá na serveri: ťukni na „Navštíviť“ a zastav sa na návšteve",
+	guide_tours_2 = "Páči sa ti? Daj 👍 — jeden lajk na štúdio za deň",
+	guide_tours_3 = "Rebríčky: najlepší podľa lajkov, hodnoty a hitov. Týždenný top dostane odmeny",
+
+	guide_season_title = "Sezóna",
+	guide_season_1 = "Sezóna trvá pár týždňov: získavaj XP a odomykaj odmenové úrovne",
+	guide_season_2 = "XP dávajú vydania, hity, rýchle udalosti a denné úlohy",
+	guide_season_3 = "Game Jam: každý týždeň nová téma — urob hru a vyskoč do svetového topu",
+
+	guide_rivals_title = "Top odvetvia",
+	guide_rivals_1 = "Tvoje štúdio súperí s firmami o miesto v top 10",
+	guide_rivals_2 = "Predbehni štúdio prvýkrát a dostaneš odmenu. Mier na 1. miesto!",
+	guide_rivals_3 = "Rival vydal hit? Jeho žáner chvíľu zarába menej — skús iný",
+
+	guide_tax_title = "Daňový úrad",
+	guide_tax_1 = "Keď máš kanceláriu, platíš daň z príjmu — účty chodia samy",
+	guide_tax_2 = "Na zaplatenie máš pár minút: ťukni na „Zaplatiť“ v okne 🧾",
+	guide_tax_3 = "Ak to zmeškáš, príde pokuta a kontrola: príjem na chvíľu klesne",
+
+	guide_stocks_title = "Burza",
+	guide_stocks_1 = "Na „Trhu“ kupuj akcie štúdií iných hráčov — ceny stúpajú a klesajú",
+	guide_stocks_2 = "Akcie vyplácajú dividendy každú minútu, aj keď je majiteľ offline",
+	guide_stocks_3 = "Silné štúdio môže na burzu (IPO): ostatní kupujú akcie a tvoj príjem rastie",
+
+	guide_critics_title = "Hodnotenie kritikov",
+	guide_critics_1 = "Vyber žáner a tému, ktoré k sebe sedia: „Skvelá kombinácia!“ je dobré znamenie",
+	guide_critics_2 = "Nastav dôraz pre žáner: každý dbá na hrateľnosť, grafiku, zvuk alebo príbeh",
+	guide_critics_3 = "Neopakuj sa — kritici strhávajú body. Od väčších štúdií čakajú viac",
+
+	guide_trends_title = "Trendy",
+	guide_trends_1 = "Raz za čas je v móde dvojica „žáner + téma“ — hľadaj banner 🔥",
+	guide_trends_2 = "Hra podľa trendu dostane od kritikov bonus k hodnoteniu",
+	guide_trends_3 = "Trendy sa čoskoro menia — vydaj hru, kým trvá",
+
+	guide_dailyEvents_title = "Denné udalosti",
+	guide_dailyEvents_1 = "Každú hodinu začne krátka udalosť: Kávové šialenstvo, Lov na chrobáky a ďalšie",
+	guide_dailyEvents_2 = "Raz denne je Zlatá hodina 🌟: príjem všetkých rastie",
+	guide_dailyEvents_3 = "Ťukni na ikonu udalosti a uvidíš rozvrh: čo príde a kedy",
+
+	guide_payday_title = "Platy a nájom",
+	guide_payday_1 = "Každých pár minút tím dostane výplatu a kancelária stojí nájom",
+	guide_payday_2 = "Ikona 💸 hore ukazuje, koľko minieš za minútu",
+	guide_payday_3 = "Málo peňazí? Dostaneš varovanie. Ak ho prepásneš, tím štrajkuje",
+
+	guide_move_title = "Postup vyššie",
+	guide_move_1 = "Zlaté tlačidlo poschodia ťa presunie do kancelárie alebo na nové poschodie",
+	guide_move_2 = "Otvorí sa, keď je interiér hotový, všetky stoly obsadené a vydaných dosť hier",
+	guide_move_3 = "Po zaplatení začne stavba. Štúdio medzitým pracuje ďalej",
+
+	guide_expo_title = "Herný veľtrh",
+	guide_expo_1 = "Každú hodinu server usporiada herný veľtrh",
+	guide_expo_2 = "Vyhrá hra s najvyšším hodnotením vydaná v tej hodine",
+	guide_expo_3 = "Víťaz dostane cenu — vydaj najlepšiu hru pred vyhlásením!",
+
+	guide_safe_title = "Trezor",
+	guide_safe_1 = "Pri fontáne v parku stojí trezor s peňažnou cenou",
+	guide_safe_2 = "Poď bližšie, ťukni na „Zadať kód“ a zadaj 6 číslic",
+	guide_safe_3 = "Kód poznajú len tvorcovia hry — sleduj novinky. Hádaním ho nezískaš",
+
+	guide_trade_title = "Výmena",
+	guide_trade_1 = "Vymieňaj sa s hráčmi na serveri: tlačidlo „🔁 Výmena“ v okne 🏘 Štúdiá",
+	guide_trade_2 = "Vymieňaj $ skiny, plagáty, maskotov a peniaze. Veci kúpené za Robuxy sa vymeniť nedajú",
+	guide_trade_3 = "Výmena prebehne, len keď obaja ťuknú na „Potvrdiť“. Skontroluj, čo dávaš!",
+
+	guide_gotw_title = "Hra týždňa",
+	guide_gotw_1 = "Tvoja najlepšia hra týždňa sa dostane do topu všetkých serverov: okno 📊",
+	guide_gotw_2 = "Najprv sa počíta hodnotenie, potom príjem. Výsledky prídu v pondelok",
+	guide_gotw_3 = "Top 10 dostane peniaze, titul nad hlavou a sochu na policu hitov",
+
+	guide_coop_title = "Spoločný vývoj",
+	guide_coop_1 = "Urob hru s iným hráčom: sadni k PC a ťukni na „🤝 Pozvať do projektu“",
+	guide_coop_2 = "Tvoj hosť pomáha z vlastného PC — hra bude hotová skôr",
+	guide_coop_3 = "Príjem sa delí: väčšina tebe, trochu hosťovi. Pozvať môžu aj teba",
+
+	guide_console_title = "Vlastná konzola",
+	guide_console_1 = "Na 3. poschodí môžeš postaviť vlastnú konzolu: 🛋️ Štúdio → 🎮 Konzola",
+	guide_console_2 = "Každý krok chce vybavenie, zamestnanca so správnou zručnosťou a peniaze, potom časovač",
+	guide_console_3 = "Spusti ju a rob na ňu hry: dobré hry zvyšujú trhový podiel a licenčné poplatky",
+
+	guide_events_title = "Firemné udalosti",
+	guide_events_1 = "Občas sa v štúdiu niečo stane: dobré správy, alebo problémy",
+	guide_events_2 = "V niektorých udalostiach rozhoduješ ty — vyber možnosť na karte",
+	guide_events_3 = "Poistenie v 🛋️ Štúdio → Interiér zmierňuje zlé udalosti",
+
+	guide_bailiffs_title = "Dlhy a exekútori",
+	guide_bailiffs_1 = "Pod nulou je dlh: tím štrajkuje a kancelária chátra",
+	guide_bailiffs_2 = "Veľa dlhov a exekútori lacno predajú tvoje dekorácie a nábytok",
+	guide_bailiffs_3 = "Náprava: vezmi pôžičku 🏦, niekoho prepusť alebo vydávaj hry — príjem spláca dlh",
 }

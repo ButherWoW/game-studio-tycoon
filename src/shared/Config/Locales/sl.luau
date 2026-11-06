@@ -1755,4 +1755,156 @@ return {
 	stock_err_max = "Ne moreš imeti več kot {shares} delnic enega podjetja",
 	stock_err_portfolio = "V portfelju je lahko največ {count} podjetij",
 	hud_debt = "🏦 dolg {amount}",
+	-- Обучение по ходу игры (Config/Guides, GuideController)
+	guide_ok = "Razumem",
+	guide_book_title = "Priročnik",
+	guide_book_empty = "Tu še ni nič — odkleni nove funkcije in prikazale se bodo tukaj",
+	guide_book_hint = "Vse, kar si doslej odklenil. Tapni kartico, da jo prebereš znova",
+	guide_new_badge = "Novo",
+	guide_more = "Več v 📖",
+
+	guide_research_title = "Raziskave",
+	guide_research_1 = "Vsaka izdana igra prinese raziskovalne točke (RT): boljša ocena, več RT",
+	guide_research_2 = "Porabljaj RT v vejah „Žanri“, „Tehnologija“ in „Studio“: žanri, hitrost, dohodek",
+	guide_research_3 = "Raziskava teče na časovniku, tudi ko nisi povezan. Vedno samo ena",
+
+	guide_team_title = "Ekipa",
+	guide_team_1 = "Zaposli ljudi za proste mize — vsak pospeši razvoj in dvigne ocene",
+	guide_team_2 = "Ekipa dobi plačo vsakih nekaj minut. Brez denarja začne stavkati",
+	guide_team_3 = "Izboljšuj spretnosti z „+1“: ljudje se učijo na časovniku in nato delajo bolje",
+
+	guide_quests_title = "Naloge",
+	guide_quests_1 = "Opravljaj naloge in tapni „Prevzemi“ za denar, RT, kavo in drugo",
+	guide_quests_2 = "Dnevne naloge se obnovijo vsak dan — zaglej, da jih ne zamudiš",
+	guide_quests_3 = "Zavihek „Lestvica“ kaže, kdo ima najboljšo oceno in največ iger",
+
+	guide_shop_title = "Trgovina",
+	guide_shop_1 = "Oglasi za nekaj časa dvignejo dohodek tvojih iger — nekateri stanejo igralni denar",
+	guide_shop_2 = "Plakati, skini in maskote krasijo studio; maskote dajo tudi majhen bonus",
+	guide_shop_3 = "Imaš promocijsko kodo? Tapni „🎟 Kode“ v trgovini in jo vnesi",
+
+	guide_rebirth_title = "Ponovno rojstvo",
+	guide_rebirth_1 = "Ponovno rojstvo je nov začetek iz garaže za stalen bonus k dohodku",
+	guide_rebirth_2 = "Izgubiš denar, nadgradnje in kupljene žanre. Raziskave in rekord ostanejo",
+	guide_rebirth_3 = "Vsako Ponovno rojstvo da zvezdico ⭐ — porabi jih za stalne prednosti studia",
+
+	guide_hits_title = "Uspešnice",
+	guide_hits_1 = "Igre z visoko oceno postanejo kartuše-uspešnice na polici v studiu",
+	guide_hits_2 = "Uspešnice prinašajo denar vsako minuto, tudi ko delaš novo igro",
+	guide_hits_3 = "Tuje uspešnice se dajo ukrasti — tvoje tudi! Ujemi tatu ali zakleni 🔒",
+
+	guide_thieves_title = "Največji tatovi",
+	guide_thieves_1 = "Najzvitejši tatovi uspešnic: na tem strežniku in vseh časov",
+	guide_thieves_2 = "😈 je število ukradenih uspešnic igralca, 🛡️ število ujetih tatov",
+	guide_thieves_3 = "Najboljši tat nosi krono 👑 „Največji tat“. Pazi na svojo polico!",
+
+	guide_camera_title = "Pogled na studio",
+	guide_camera_1 = "Gumb 🎥 pokaže studio od zgoraj, kot v pravem tajkunu",
+	guide_camera_2 = "S kolescem miške ali s ščipanjem prstov približaš in oddaljiš",
+	guide_camera_3 = "Vklopi se sam, ko sedeš za računalnik. To lahko izklopiš",
+
+	guide_bank_title = "Banka",
+	guide_bank_1 = "Zmanjkuje denarja? Banka ti da posojilo, da studio dela naprej",
+	guide_bank_2 = "Vrneš malo več, kot si vzel: del dohodka vsake igre gre banki",
+	guide_bank_3 = "Lahko ga poplačaš tudi sam z „Plačaj“. Samo eno posojilo naenkrat",
+
+	guide_studio_title = "Studio",
+	guide_studio_1 = "Notranjost: pohištvo in oprema, kot gumbi nadstropij, ter napredovanje više",
+	guide_studio_2 = "Dekor dvigne razpoloženje ekipe: dela hitreje in ocene rastejo",
+	guide_studio_3 = "„Slog“ in „Oprema“ spremenita videz pohištva, tal in sten — samo za zabavo",
+
+	guide_achievements_title = "Dosežki",
+	guide_achievements_1 = "Dosežki so posebni cilji: izdajaj igre, lovi tatove, zbiraj všečke",
+	guide_achievements_2 = "Vsak da nagrado, nekateri pa tudi bronasto, srebrno ali zlato medaljo",
+	guide_achievements_3 = "Nekateri so skriti kot „???“ — poskusi uganiti, kako jih odkleniti",
+
+	guide_tours_title = "Studii igralcev",
+	guide_tours_1 = "Vsi studii na strežniku: tapni „Obišči“ in pokukaj na obisk",
+	guide_tours_2 = "Všeč ti je? Daj 👍 — en všeček na studio na dan",
+	guide_tours_3 = "Lestvice: najboljši po všečkih, vrednosti in uspešnicah. Tedenski vrh dobi nagrade",
+
+	guide_season_title = "Sezona",
+	guide_season_1 = "Sezona traja nekaj tednov: zbiraj XP in odklepaj stopnje nagrad",
+	guide_season_2 = "XP dobiš za izdaje, uspešnice, hitre dogodke in dnevne naloge",
+	guide_season_3 = "Game Jam: vsak teden nova tema — naredi igro in se zavihti v svetovni vrh",
+
+	guide_rivals_title = "Vrh industrije",
+	guide_rivals_1 = "Tvoj studio tekmuje z rivalskimi podjetji za mesto v top 10",
+	guide_rivals_2 = "Prvič prehiti studio in dobiš nagrado. Ciljaj na 1. mesto!",
+	guide_rivals_3 = "Rival je izdal uspešnico? Njegov žanr nekaj časa služi manj — poskusi drugega",
+
+	guide_tax_title = "Davčni urad",
+	guide_tax_1 = "Ko imaš pisarno, plačuješ davek na dohodek — računi prihajajo sami",
+	guide_tax_2 = "Za plačilo imaš nekaj minut: tapni „Plačaj“ v oknu 🧾",
+	guide_tax_3 = "Če zamudiš, sledita kazen in revizija: dohodek za nekaj časa pade",
+
+	guide_stocks_title = "Borza",
+	guide_stocks_1 = "Na „Trgu“ kupuj delnice studiev drugih igralcev — cene rastejo in padajo",
+	guide_stocks_2 = "Delnice izplačujejo dividende vsako minuto, tudi ko je lastnik brez povezave",
+	guide_stocks_3 = "Močan studio gre lahko na borzo (IPO): drugi kupujejo delnice, tvoj dohodek raste",
+
+	guide_critics_title = "Ocene kritikov",
+	guide_critics_1 = "Izberi žanr in temo, ki si pristajata: „Odlična kombinacija!“ je dober znak",
+	guide_critics_2 = "Določi poudarek za žanr: vsak išče igranje, grafiko, zvok ali zgodbo",
+	guide_critics_3 = "Ne ponavljaj se — kritiki odštevajo točke. Od večjih studiev pričakujejo več",
+
+	guide_trends_title = "Trendi",
+	guide_trends_1 = "Občasno je v modi par „žanr + tema“ — išči pasico 🔥",
+	guide_trends_2 = "Igra po trendu dobi od kritikov bonus k oceni",
+	guide_trends_3 = "Trendi se kmalu spremenijo — izdaj igro, dokler traja",
+
+	guide_dailyEvents_title = "Dnevni dogodki",
+	guide_dailyEvents_1 = "Vsako uro se začne kratek dogodek: Kavna mrzlica, Lov na hrošče in drugi",
+	guide_dailyEvents_2 = "Enkrat na dan je Zlata ura 🌟: dohodek vseh naraste",
+	guide_dailyEvents_3 = "Tapni ikono dogodka za urnik: kaj prihaja in kdaj",
+
+	guide_payday_title = "Plače in najemnina",
+	guide_payday_1 = "Vsakih nekaj minut ekipa dobi plačo, pisarna pa stane najemnino",
+	guide_payday_2 = "Ikona 💸 zgoraj kaže, koliko porabiš na minuto",
+	guide_payday_3 = "Malo denarja? Dobiš opozorilo. Če ga zamudiš, ekipa stavka",
+
+	guide_move_title = "Napredovanje",
+	guide_move_1 = "Zlati gumb nadstropja te prestavi v pisarno ali v novo nadstropje",
+	guide_move_2 = "Odpre se, ko je notranjost dokončana, vse mize zasedene in izdanih dovolj iger",
+	guide_move_3 = "Po plačilu se začne gradnja. Studio medtem dela naprej",
+
+	guide_expo_title = "Sejem iger",
+	guide_expo_1 = "Vsako uro strežnik pripravi sejem iger",
+	guide_expo_2 = "Zmaga igra z najvišjo oceno, izdana v tisti uri",
+	guide_expo_3 = "Zmagovalec dobi nagrado — izdaj svojo najboljšo igro pred razglasitvijo!",
+
+	guide_safe_title = "Sef",
+	guide_safe_1 = "Ob vodnjaku v parku stoji sef z denarno nagrado",
+	guide_safe_2 = "Stopi bliže, tapni „Vnesi kodo“ in vtipkaj 6 številk",
+	guide_safe_3 = "Kodo poznajo samo ustvarjalci igre — spremljaj novice. Ugibanje ne pomaga",
+
+	guide_trade_title = "Menjava",
+	guide_trade_1 = "Menjaj z igralci na strežniku: gumb „🔁 Menjava“ v oknu 🏘 Studii",
+	guide_trade_2 = "Menjaj $ skine, plakate, maskote in denar. Stvari, kupljenih z Robuxi, ne moreš menjati",
+	guide_trade_3 = "Menjava steče šele, ko oba tapneta „Potrdi“. Preveri, kaj daješ!",
+
+	guide_gotw_title = "Igra tedna",
+	guide_gotw_1 = "Tvoja najboljša igra tedna pride na lestvico vseh strežnikov: okno 📊",
+	guide_gotw_2 = "Najprej šteje ocena, nato dohodek. Rezultati pridejo v ponedeljek",
+	guide_gotw_3 = "Top 10 dobi denar, naziv nad glavo in kip za polico uspešnic",
+
+	guide_coop_title = "Skupni razvoj",
+	guide_coop_1 = "Naredi igro z drugim igralcem: sedi za računalnik in tapni „🤝 Povabi v projekt“",
+	guide_coop_2 = "Gost pomaga s svojega računalnika — igra bo hitreje gotova",
+	guide_coop_3 = "Dohodek se deli: večina tebi, nekaj gostu. Tudi tebe lahko povabijo",
+
+	guide_console_title = "Lastna konzola",
+	guide_console_1 = "V 3. nadstropju lahko zgradiš lastno konzolo: 🛋️ Studio → 🎮 Konzola",
+	guide_console_2 = "Vsak korak zahteva opremo, zaposlenega s pravo spretnostjo in denar, nato časovnik",
+	guide_console_3 = "Zaženi jo in delaj igre zanjo: dobre igre večajo tržni delež in licenčnine",
+
+	guide_events_title = "Dogodki podjetja",
+	guide_events_1 = "Včasih se v studiu kaj zgodi: dobre novice ali težave",
+	guide_events_2 = "Pri nekaterih dogodkih odločaš ti — izberi možnost na kartici",
+	guide_events_3 = "Zavarovanje v 🛋️ Studio → Notranjost omili slabe dogodke",
+
+	guide_bailiffs_title = "Dolgovi in izvršitelji",
+	guide_bailiffs_1 = "Pod ničlo je dolg: ekipa stavka, pisarna pa propada",
+	guide_bailiffs_2 = "Preveč dolgov in izvršitelji ceneno prodajo tvoj dekor in pohištvo",
+	guide_bailiffs_3 = "Rešitev: vzemi posojilo 🏦, odpusti koga ali izdajaj igre — dohodek odplača dolg",
 }

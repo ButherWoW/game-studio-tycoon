@@ -1757,4 +1757,156 @@ return {
 	stock_err_max = "Non puoi avere più di {shares} azioni della stessa azienda",
 	stock_err_portfolio = "Il portafoglio contiene al massimo {count} aziende",
 	hud_debt = "🏦 debito {amount}",
+	-- Обучение по ходу игры (Config/Guides, GuideController)
+	guide_ok = "Capito",
+	guide_book_title = "Guida",
+	guide_book_empty = "Qui non c'è ancora niente: sblocca nuove funzioni e compariranno qui",
+	guide_book_hint = "Tutto ciò che hai sbloccato finora. Tocca una scheda per rileggerla",
+	guide_new_badge = "Nuovo",
+	guide_more = "Altro in 📖",
+
+	guide_research_title = "Ricerca",
+	guide_research_1 = "Ogni gioco pubblicato dà punti ricerca (PR): voto più alto, più PR",
+	guide_research_2 = "Spendi i PR nei rami «Generi», «Tecnologia» e «Studio»: nuovi generi, velocità, guadagni",
+	guide_research_3 = "La ricerca va a timer, anche offline. Una alla volta",
+
+	guide_team_title = "Squadra",
+	guide_team_1 = "Assumi personale per le scrivanie libere: sviluppo più veloce e voti più alti",
+	guide_team_2 = "La squadra viene pagata ogni pochi minuti. Senza soldi, scioperano",
+	guide_team_3 = "Migliora le abilità con «+1»: il personale si allena a timer e poi lavora meglio",
+
+	guide_quests_title = "Missioni",
+	guide_quests_1 = "Completa le missioni e tocca «Riscuoti» per soldi, PR, caffè e altro",
+	guide_quests_2 = "Le missioni giornaliere si rinnovano ogni giorno: passa a trovarle",
+	guide_quests_3 = "La scheda «Classifica» mostra chi ha il voto migliore e più giochi",
+
+	guide_shop_title = "Negozio",
+	guide_shop_1 = "Le pubblicità fanno rendere di più i tuoi giochi per un po': alcune costano soldi di gioco",
+	guide_shop_2 = "Poster, skin e mascotte decorano lo studio; le mascotte danno anche un piccolo bonus",
+	guide_shop_3 = "Hai un codice promo? Tocca «🎟 Codici» nel negozio per riscattarlo",
+
+	guide_rebirth_title = "Rinascita",
+	guide_rebirth_1 = "La Rinascita è ripartire dal garage per un bonus permanente ai guadagni",
+	guide_rebirth_2 = "Perdi soldi, potenziamenti e generi comprati. Ricerca e record restano",
+	guide_rebirth_3 = "Ogni Rinascita dà una stella ⭐: spendile in vantaggi permanenti per lo studio",
+
+	guide_hits_title = "Successi",
+	guide_hits_1 = "I giochi con voto alto diventano cartucce di successo sullo scaffale dello studio",
+	guide_hits_2 = "I successi fruttano soldi ogni minuto, anche mentre crei un nuovo gioco",
+	guide_hits_3 = "I successi altrui si possono rubare, e anche i tuoi! Prendi il ladro o chiudi 🔒",
+
+	guide_thieves_title = "Top ladri",
+	guide_thieves_1 = "I ladri di successi più furbi: su questo server e di sempre",
+	guide_thieves_2 = "😈 sono i successi rubati da un giocatore, 🛡️ i ladri che ha preso",
+	guide_thieves_3 = "Il miglior ladro porta la corona 👑 «Re dei ladri». Difendi il tuo scaffale!",
+
+	guide_camera_title = "Vista studio",
+	guide_camera_1 = "Il pulsante 🎥 mostra il tuo studio dall'alto, come in un vero tycoon",
+	guide_camera_2 = "Usa la rotellina del mouse o il pizzico per ingrandire e ridurre",
+	guide_camera_3 = "Si attiva da sola quando ti siedi al PC. Puoi disattivarla",
+
+	guide_bank_title = "Banca",
+	guide_bank_1 = "Pochi soldi? La banca ti fa un prestito per far andare avanti lo studio",
+	guide_bank_2 = "Restituisci un po' più di quanto prendi: parte dei guadagni di ogni gioco va alla banca",
+	guide_bank_3 = "Puoi anche estinguerlo da solo con «Paga». Un solo prestito alla volta",
+
+	guide_studio_title = "Studio",
+	guide_studio_1 = "Interni: mobili e attrezzatura, come i pulsanti del piano, più il passaggio di livello",
+	guide_studio_2 = "Gli arredi alzano l'umore della squadra: lavora più veloce e i voti salgono",
+	guide_studio_3 = "«Stile» e «Finiture» cambiano l'aspetto di mobili, pavimenti e pareti, solo per gioco",
+
+	guide_achievements_title = "Obiettivi",
+	guide_achievements_1 = "Gli obiettivi sono traguardi speciali: pubblica giochi, cattura ladri, ricevi like",
+	guide_achievements_2 = "Ognuno dà un premio, e alcuni anche una medaglia di bronzo, argento od oro",
+	guide_achievements_3 = "Alcuni sono nascosti come «???»: prova a indovinare come sbloccarli",
+
+	guide_tours_title = "Studi dei giocatori",
+	guide_tours_1 = "Tutti gli studi del server: tocca «Visita» per fare un salto",
+	guide_tours_2 = "Ti piace? Metti un 👍: un like per studio al giorno",
+	guide_tours_3 = "Classifiche: i migliori per like, valore e successi. La top settimanale vince premi",
+
+	guide_season_title = "Stagione",
+	guide_season_1 = "Una stagione dura alcune settimane: ottieni XP e sblocca livelli di premi",
+	guide_season_2 = "Gli XP arrivano da uscite, successi, eventi rapidi e missioni giornaliere",
+	guide_season_3 = "Game Jam: un nuovo tema ogni settimana, fai un gioco e entra nella top mondiale",
+
+	guide_rivals_title = "Top del settore",
+	guide_rivals_1 = "Il tuo studio sfida aziende rivali per un posto nella top 10",
+	guide_rivals_2 = "Supera uno studio per la prima volta e ricevi un premio. Punta al n. 1!",
+	guide_rivals_3 = "Un rivale ha fatto un successo? Il suo genere rende meno per un po': prova un altro",
+
+	guide_tax_title = "Ufficio delle tasse",
+	guide_tax_1 = "Quando hai un ufficio, paghi le tasse sui guadagni: le bollette arrivano da sole",
+	guide_tax_2 = "Hai pochi minuti per pagare: tocca «Paga» nella finestra 🧾",
+	guide_tax_3 = "Se lasci perdere, arrivano multa e controllo: i guadagni calano per un po'",
+
+	guide_stocks_title = "Borsa",
+	guide_stocks_1 = "Sul «Mercato» compra azioni degli studi di altri giocatori: i prezzi salgono e scendono",
+	guide_stocks_2 = "Le azioni pagano dividendi ogni minuto, anche se il proprietario è offline",
+	guide_stocks_3 = "Uno studio forte può quotarsi (IPO): altri comprano le sue azioni e i guadagni crescono",
+
+	guide_critics_title = "Voti della critica",
+	guide_critics_1 = "Scegli genere e tema che stanno bene insieme: «Ottima combo!» è un buon segno",
+	guide_critics_2 = "Imposta il focus del genere: ognuno punta su gameplay, grafica, audio o storia",
+	guide_critics_3 = "Non ripeterti: i critici tolgono punti. Dagli studi grandi ci si aspetta di più",
+
+	guide_trends_title = "Tendenze",
+	guide_trends_1 = "Ogni tanto una coppia «genere + tema» va di moda: cerca il banner 🔥",
+	guide_trends_2 = "Un gioco in linea con la tendenza riceve un bonus al voto dalla critica",
+	guide_trends_3 = "Le tendenze cambiano presto: pubblica il gioco finché dura",
+
+	guide_dailyEvents_title = "Eventi giornalieri",
+	guide_dailyEvents_1 = "Ogni ora parte un breve evento: Corsa al caffè, Caccia ai bug e altri",
+	guide_dailyEvents_2 = "Una volta al giorno c'è l'Ora d'oro 🌟: i guadagni di tutti aumentano",
+	guide_dailyEvents_3 = "Tocca l'icona dell'evento per vedere il programma: cosa arriva e quando",
+
+	guide_payday_title = "Stipendi e affitto",
+	guide_payday_1 = "Ogni pochi minuti la squadra viene pagata e l'ufficio costa l'affitto",
+	guide_payday_2 = "L'icona 💸 in alto mostra quanto spendi al minuto",
+	guide_payday_3 = "Pochi soldi? Riceverai un avviso. Se lo perdi, la squadra sciopera",
+
+	guide_move_title = "Fare il salto",
+	guide_move_1 = "Il pulsante dorato del piano ti porta in un ufficio o a un nuovo piano",
+	guide_move_2 = "Si apre con gli interni completi, tutte le scrivanie occupate e abbastanza giochi usciti",
+	guide_move_3 = "Dopo il pagamento iniziano i lavori. Intanto lo studio continua a lavorare",
+
+	guide_expo_title = "Fiera dei giochi",
+	guide_expo_1 = "Ogni ora il server organizza una fiera dei giochi",
+	guide_expo_2 = "Vince il gioco con il voto più alto uscito in quell'ora",
+	guide_expo_3 = "Il vincitore riceve un premio: pubblica il tuo gioco migliore prima dei risultati!",
+
+	guide_safe_title = "Cassaforte",
+	guide_safe_1 = "Vicino alla fontana del parco c'è una cassaforte con un premio in soldi",
+	guide_safe_2 = "Avvicinati, tocca «Inserisci codice» e digita 6 cifre",
+	guide_safe_3 = "Solo i creatori del gioco conoscono il codice: segui le novità. Non si indovina",
+
+	guide_trade_title = "Scambi",
+	guide_trade_1 = "Scambia con i giocatori del server: pulsante «🔁 Scambia» nella finestra 🏘 Studi",
+	guide_trade_2 = "Scambia skin $, poster, mascotte e soldi. Ciò che compri con i Robux non si scambia",
+	guide_trade_3 = "Lo scambio avviene solo se entrambi toccano «Conferma». Controlla cosa dai!",
+
+	guide_gotw_title = "Gioco della settimana",
+	guide_gotw_1 = "Il tuo miglior gioco della settimana entra in una top di tutti i server: finestra 📊",
+	guide_gotw_2 = "Conta prima il voto, poi i guadagni. I risultati arrivano il lunedì",
+	guide_gotw_3 = "La top 10 riceve soldi, un titolo sopra la testa e una statua per lo scaffale",
+
+	guide_coop_title = "Sviluppo in coop",
+	guide_coop_1 = "Crea un gioco con un altro giocatore: siediti al PC e tocca «🤝 Invita al progetto»",
+	guide_coop_2 = "Il tuo ospite aiuta dal suo PC: il gioco si completa più in fretta",
+	guide_coop_3 = "I guadagni si dividono: la maggior parte a te, un po' all'ospite. Possono invitare anche te",
+
+	guide_console_title = "La tua console",
+	guide_console_1 = "Al 3º piano puoi costruire la tua console: 🛋️ Studio → 🎮 Console",
+	guide_console_2 = "Ogni passo richiede attrezzatura, un dipendente con l'abilità giusta e soldi, poi un timer",
+	guide_console_3 = "Lanciala e fai giochi per lei: i bei giochi aumentano quota di mercato e royalty",
+
+	guide_events_title = "Eventi aziendali",
+	guide_events_1 = "A volte nel tuo studio succede qualcosa: buone notizie o guai",
+	guide_events_2 = "In alcuni eventi decidi tu: scegli un'opzione sulla scheda",
+	guide_events_3 = "L'assicurazione in 🛋️ Studio → Interni attenua gli eventi negativi",
+
+	guide_bailiffs_title = "Debiti e pignoramenti",
+	guide_bailiffs_1 = "Sotto zero c'è debito: la squadra sciopera e l'ufficio va in rovina",
+	guide_bailiffs_2 = "Troppi debiti e arriva l'ufficiale giudiziario: vende arredi e mobili a poco",
+	guide_bailiffs_3 = "Soluzione: prendi un prestito 🏦, licenzia qualcuno o pubblica giochi: i guadagni ripagano",
 }

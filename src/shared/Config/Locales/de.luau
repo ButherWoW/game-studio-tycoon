@@ -1757,4 +1757,156 @@ return {
 	stock_err_max = "Du kannst höchstens {shares} Aktien einer Firma besitzen",
 	stock_err_portfolio = "In dein Depot passen höchstens {count} Firmen",
 	hud_debt = "🏦 Schulden {amount}",
+	-- Обучение по ходу игры (Config/Guides, GuideController)
+	guide_ok = "Verstanden",
+	guide_book_title = "Handbuch",
+	guide_book_empty = "Hier ist noch nichts — schalte neue Funktionen frei, dann erscheinen sie hier",
+	guide_book_hint = "Alles, was du bisher freigeschaltet hast. Tippe auf eine Karte, um sie nochmal zu lesen",
+	guide_new_badge = "Neu",
+	guide_more = "Mehr in 📖",
+
+	guide_research_title = "Forschung",
+	guide_research_1 = "Für jedes veröffentlichte Spiel gibt es Forschungspunkte (FP): bessere Wertung, mehr FP",
+	guide_research_2 = "Gib FP in den Zweigen „Genres“, „Technik“ und „Studio“ aus: neue Genres, Tempo, Einkommen",
+	guide_research_3 = "Forschung läuft per Timer, auch wenn du offline bist. Immer nur eine auf einmal",
+
+	guide_team_title = "Team",
+	guide_team_1 = "Stelle Leute für freie Tische ein — jeder beschleunigt die Entwicklung und die Wertung",
+	guide_team_2 = "Dein Team bekommt alle paar Minuten Gehalt. Ohne Geld streiken die Leute",
+	guide_team_3 = "Verbessere Fähigkeiten mit „+1“: Mitarbeiter trainieren per Timer und arbeiten dann besser",
+
+	guide_quests_title = "Aufgaben",
+	guide_quests_1 = "Erfülle Aufgaben und tippe auf „Abholen“ für Geld, FP, Kaffee und mehr",
+	guide_quests_2 = "Tägliche Aufgaben erneuern sich jeden Tag — schau vorbei, damit dir nichts entgeht",
+	guide_quests_3 = "Im Tab „Bestenliste“ siehst du, wer die beste Wertung und die meisten Spiele hat",
+
+	guide_shop_title = "Shop",
+	guide_shop_1 = "Werbung steigert eine Weile das Einkommen deiner Spiele — manche kosten Spielgeld",
+	guide_shop_2 = "Poster, Skins und Maskottchen schmücken dein Studio; Maskottchen geben auch einen kleinen Bonus",
+	guide_shop_3 = "Hast du einen Promo-Code? Tippe im Shop auf „🎟 Codes“, um ihn einzulösen",
+
+	guide_rebirth_title = "Rebirth",
+	guide_rebirth_1 = "Rebirth heißt: Neustart in der Garage für einen dauerhaften Einkommensbonus",
+	guide_rebirth_2 = "Du verlierst Geld, Upgrades und gekaufte Genres. Forschung und dein Rekord bleiben",
+	guide_rebirth_3 = "Jeder Rebirth gibt einen Stern ⭐ — tausche Sterne gegen dauerhafte Studio-Boni",
+
+	guide_hits_title = "Hits",
+	guide_hits_1 = "Spiele mit hoher Wertung werden zu Hit-Modulen im Regal deines Studios",
+	guide_hits_2 = "Hits bringen jede Minute Geld, auch während du ein neues Spiel entwickelst",
+	guide_hits_3 = "Fremde Hits kann man stehlen — und deine auch! Fang den Dieb oder schließ ab 🔒",
+
+	guide_thieves_title = "Top-Diebe",
+	guide_thieves_1 = "Die gerissensten Hit-Diebe: auf diesem Server und aller Zeiten",
+	guide_thieves_2 = "😈 zeigt, wie viele Hits ein Spieler gestohlen hat, 🛡️ wie viele Diebe er gefasst hat",
+	guide_thieves_3 = "Der beste Dieb trägt die 👑 „Meisterdieb“-Krone. Pass auf dein Regal auf!",
+
+	guide_camera_title = "Studioansicht",
+	guide_camera_1 = "Der 🎥-Knopf zeigt dein Studio von oben, wie in einem echten Tycoon",
+	guide_camera_2 = "Zoome mit dem Mausrad oder per Fingergeste rein und raus",
+	guide_camera_3 = "Sie schaltet sich von selbst ein, wenn du dich an den PC setzt. Du kannst das abstellen",
+
+	guide_bank_title = "Bank",
+	guide_bank_1 = "Wenig Geld? Die Bank gibt dir einen Kredit, damit dein Studio weiterläuft",
+	guide_bank_2 = "Du zahlst etwas mehr zurück, als du bekamst: ein Teil jedes Spieleinkommens geht an die Bank",
+	guide_bank_3 = "Du kannst auch selbst mit „Zahlen“ tilgen. Nur ein Kredit auf einmal",
+
+	guide_studio_title = "Studio",
+	guide_studio_1 = "Einrichtung: Möbel und Technik, wie die Stockwerk-Knöpfe, plus der Aufstieg",
+	guide_studio_2 = "Deko hebt die Stimmung im Team: Es arbeitet schneller und die Wertungen steigen",
+	guide_studio_3 = "„Stil“ und „Ausbau“ ändern das Aussehen von Möbeln, Böden und Wänden — nur zum Spaß",
+
+	guide_achievements_title = "Erfolge",
+	guide_achievements_1 = "Erfolge sind besondere Ziele: Spiele veröffentlichen, Diebe fangen, Likes sammeln",
+	guide_achievements_2 = "Jeder gibt eine Belohnung, manche auch eine Bronze-, Silber- oder Goldmedaille",
+	guide_achievements_3 = "Manche sind als „???“ versteckt — versuche zu erraten, wie man sie freischaltet",
+
+	guide_tours_title = "Spielerstudios",
+	guide_tours_1 = "Alle Studios auf dem Server: Tippe auf „Besuchen“, um vorbeizuschauen",
+	guide_tours_2 = "Gefällt dir ein Studio? Gib ein 👍 — ein Like pro Studio und Tag",
+	guide_tours_3 = "Ranglisten: die Besten nach Likes, Wert und Hits. Die Wochenbesten bekommen Belohnungen",
+
+	guide_season_title = "Saison",
+	guide_season_1 = "Eine Saison dauert ein paar Wochen: Sammle EP und schalte Belohnungsstufen frei",
+	guide_season_2 = "EP gibt es für Releases, Hits, Kurz-Events und tägliche Aufgaben",
+	guide_season_3 = "Game Jam: jede Woche ein neues Thema — mach ein Spiel dazu und komm in die Weltspitze",
+
+	guide_rivals_title = "Branchen-Top",
+	guide_rivals_1 = "Dein Studio tritt gegen Konkurrenzfirmen um einen Platz in den Top 10 an",
+	guide_rivals_2 = "Überhole ein Studio zum ersten Mal und kassiere eine Belohnung. Ziel: Platz 1!",
+	guide_rivals_3 = "Ein Rivale hat einen Hit gelandet? Sein Genre bringt kurz weniger ein — probier ein anderes",
+
+	guide_tax_title = "Finanzamt",
+	guide_tax_1 = "Sobald du ein Büro hast, zahlst du Steuern aufs Einkommen — die Rechnungen kommen von selbst",
+	guide_tax_2 = "Du hast ein paar Minuten Zeit: Tippe im 🧾-Fenster auf „Zahlen“",
+	guide_tax_3 = "Verpasst du es, gibt es Strafe und Prüfung: Dein Einkommen sinkt eine Weile",
+
+	guide_stocks_title = "Börse",
+	guide_stocks_1 = "Kaufe am „Markt“ Aktien von Studios anderer Spieler — die Preise gehen rauf und runter",
+	guide_stocks_2 = "Aktien zahlen jede Minute Dividende, auch wenn der Besitzer offline ist",
+	guide_stocks_3 = "Ein starkes Studio kann an die Börse (IPO): Andere kaufen Aktien, dein Einkommen wächst",
+
+	guide_critics_title = "Kritikerwertungen",
+	guide_critics_1 = "Wähle Genre und Thema, die zusammenpassen: „Tolle Kombi!“ ist ein gutes Zeichen",
+	guide_critics_2 = "Lege den Fokus fürs Genre fest: Jedes legt Wert auf Gameplay, Grafik, Sound oder Story",
+	guide_critics_3 = "Wiederhole dich nicht — Kritiker ziehen Punkte ab. Größere Studios müssen mehr liefern",
+
+	guide_trends_title = "Trends",
+	guide_trends_1 = "Ab und zu ist ein Paar aus „Genre + Thema“ in Mode — achte auf das 🔥-Banner",
+	guide_trends_2 = "Ein Spiel im Trend bekommt von den Kritikern einen Wertungsbonus",
+	guide_trends_3 = "Trends ändern sich bald — veröffentliche dein Spiel, solange er läuft",
+
+	guide_dailyEvents_title = "Tagesevents",
+	guide_dailyEvents_1 = "Jede Stunde startet ein kurzes Tagesevent: Kaffee-Rausch, Bug-Jagd und mehr",
+	guide_dailyEvents_2 = "Einmal am Tag ist Goldene Stunde 🌟: Das Einkommen aller steigt",
+	guide_dailyEvents_3 = "Tippe auf das Event-Symbol, um den Plan zu sehen: was kommt und wann",
+
+	guide_payday_title = "Gehalt & Miete",
+	guide_payday_1 = "Alle paar Minuten bekommt dein Team Gehalt und das Büro kostet Miete",
+	guide_payday_2 = "Das 💸-Symbol oben zeigt, wie viel du pro Minute ausgibst",
+	guide_payday_3 = "Wenig Geld? Du bekommst eine Warnung. Verpasst du sie, streikt dein Team",
+
+	guide_move_title = "Aufstieg",
+	guide_move_1 = "Der goldene Etagen-Knopf bringt dich in ein Büro oder auf ein neues Stockwerk",
+	guide_move_2 = "Offen, wenn die Einrichtung komplett ist, alle Tische besetzt sind und genug Spiele draußen",
+	guide_move_3 = "Nach der Zahlung beginnt der Bau. Dein Studio arbeitet in der Zeit weiter",
+
+	guide_expo_title = "Spielemesse",
+	guide_expo_1 = "Jede Stunde veranstaltet der Server eine Spielemesse",
+	guide_expo_2 = "Es gewinnt das Spiel mit der höchsten Wertung, das in dieser Stunde erschien",
+	guide_expo_3 = "Der Sieger bekommt einen Preis — veröffentliche dein bestes Spiel vor der Auswertung!",
+
+	guide_safe_title = "Tresor",
+	guide_safe_1 = "Am Brunnen im Park steht ein Tresor mit einem Geldpreis",
+	guide_safe_2 = "Geh hin, tippe auf „Code eingeben“ und tippe 6 Ziffern ein",
+	guide_safe_3 = "Nur die Macher des Spiels kennen den Code — achte auf Neuigkeiten. Raten klappt nicht",
+
+	guide_trade_title = "Tausch",
+	guide_trade_1 = "Tausche mit Spielern auf dem Server: der Knopf „🔁 Tauschen“ im Fenster 🏘 Studios",
+	guide_trade_2 = "Tausche $-Skins, Poster, Maskottchen und Geld. Mit Robux Gekauftes ist nicht tauschbar",
+	guide_trade_3 = "Ein Tausch klappt nur, wenn beide auf „Bestätigen“ tippen. Prüfe, was du hergibst!",
+
+	guide_gotw_title = "Spiel der Woche",
+	guide_gotw_1 = "Dein bestes Spiel der Woche kommt in eine Topliste über alle Server: Fenster 📊",
+	guide_gotw_2 = "Erst zählt die Wertung, dann das Einkommen. Ergebnisse gibt es am Montag",
+	guide_gotw_3 = "Die Top 10 bekommen Geld, einen Titel über dem Kopf und eine Statue fürs Hit-Regal",
+
+	guide_coop_title = "Gemeinsam entwickeln",
+	guide_coop_1 = "Mach ein Spiel mit einem Mitspieler: Setz dich an den PC, tippe „🤝 Zum Projekt einladen“",
+	guide_coop_2 = "Dein Gast hilft von seinem eigenen PC — das Spiel wird schneller fertig",
+	guide_coop_3 = "Das Einkommen wird geteilt: das meiste du, etwas dein Gast. Man kann auch dich einladen",
+
+	guide_console_title = "Eigene Konsole",
+	guide_console_1 = "Im 3. Stock kannst du eine eigene Konsole bauen: 🛋️ Studio → 🎮 Konsole",
+	guide_console_2 = "Jeder Schritt braucht Ausrüstung, Mitarbeiter mit passendem Skill und Geld, dann einen Timer",
+	guide_console_3 = "Starte sie und mach Spiele dafür: Gute Spiele steigern deinen Marktanteil und die Tantiemen",
+
+	guide_events_title = "Firmenereignisse",
+	guide_events_1 = "Manchmal passiert etwas in deinem Studio: gute Nachrichten oder Ärger",
+	guide_events_2 = "Bei manchen Ereignissen entscheidest du — wähle eine Option auf der Karte",
+	guide_events_3 = "Eine Versicherung unter 🛋️ Studio → Einrichtung mildert schlechte Ereignisse",
+
+	guide_bailiffs_title = "Schulden & Pfändung",
+	guide_bailiffs_1 = "Unter null heißt Schulden: Dein Team streikt und das Büro verfällt",
+	guide_bailiffs_2 = "Bei zu vielen Schulden kommen Gerichtsvollzieher und verkaufen Deko und Möbel billig",
+	guide_bailiffs_3 = "Lösung: Kredit 🏦 nehmen, jemanden entlassen oder Spiele rausbringen — Einkommen tilgt Schulden",
 }

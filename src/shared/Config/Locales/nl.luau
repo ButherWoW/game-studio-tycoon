@@ -1757,4 +1757,156 @@ return {
 	stock_err_max = "Je kunt niet meer dan {shares} aandelen van één bedrijf hebben",
 	stock_err_portfolio = "Je portefeuille bevat maximaal {count} bedrijven",
 	hud_debt = "🏦 schuld {amount}",
+	-- Обучение по ходу игры (Config/Guides, GuideController)
+	guide_ok = "Begrepen",
+	guide_book_title = "Handboek",
+	guide_book_empty = "Hier is nog niets — ontgrendel nieuwe functies en ze verschijnen hier",
+	guide_book_hint = "Alles wat je tot nu toe hebt ontgrendeld. Tik op een kaart om hem opnieuw te lezen",
+	guide_new_badge = "Nieuw",
+	guide_more = "Meer in 📖",
+
+	guide_research_title = "Onderzoek",
+	guide_research_1 = "Elke game die je uitbrengt geeft onderzoekspunten (OP): hoger cijfer, meer OP",
+	guide_research_2 = "Geef OP uit in de takken “Genres”, “Technologie” en “Studio”: genres, tempo, inkomen",
+	guide_research_3 = "Onderzoek loopt op een timer, ook als je offline bent. Telkens maar één",
+
+	guide_team_title = "Team",
+	guide_team_1 = "Neem mensen aan voor vrije bureaus — ze versnellen de ontwikkeling en verhogen je cijfers",
+	guide_team_2 = "Je team krijgt om de paar minuten loon. Zonder geld gaan ze staken",
+	guide_team_3 = "Verbeter vaardigheden met “+1”: personeel traint op een timer en werkt daarna beter",
+
+	guide_quests_title = "Opdrachten",
+	guide_quests_1 = "Voltooi opdrachten en tik op “Ophalen” voor geld, OP, koffie en meer",
+	guide_quests_2 = "Dagelijkse opdrachten verversen elke dag — kom langs zodat je niets mist",
+	guide_quests_3 = "Op het tabblad “Ranglijst” zie je wie het beste cijfer en de meeste games heeft",
+
+	guide_shop_title = "Winkel",
+	guide_shop_1 = "Reclame verhoogt een tijdje het inkomen van je games — sommige kosten speelgeld",
+	guide_shop_2 = "Posters, skins en mascottes versieren je studio; mascottes geven ook een kleine bonus",
+	guide_shop_3 = "Heb je een promocode? Tik in de winkel op “🎟 Codes” om hem in te wisselen",
+
+	guide_rebirth_title = "Rebirth",
+	guide_rebirth_1 = "Rebirth is opnieuw beginnen in de garage voor een blijvende inkomensbonus",
+	guide_rebirth_2 = "Je verliest geld, upgrades en gekochte genres. Onderzoek en je record blijven",
+	guide_rebirth_3 = "Elke Rebirth geeft een ster ⭐ — besteed sterren aan blijvende studiovoordelen",
+
+	guide_hits_title = "Hits",
+	guide_hits_1 = "Games met een hoog cijfer worden hitcartridges op de plank in je studio",
+	guide_hits_2 = "Hits leveren elke minuut geld op, ook terwijl je een nieuwe game maakt",
+	guide_hits_3 = "Hits van anderen kunnen gestolen worden — die van jou ook! Vang de dief of sluit af 🔒",
+
+	guide_thieves_title = "Topdieven",
+	guide_thieves_1 = "De sluwste hitdieven: op deze server en aller tijden",
+	guide_thieves_2 = "😈 is hoeveel hits een speler stal, 🛡️ hoeveel dieven hij ving",
+	guide_thieves_3 = "De beste dief draagt de 👑 “Meesterdief”-kroon. Bewaak je plank!",
+
+	guide_camera_title = "Studioweergave",
+	guide_camera_1 = "De 🎥-knop toont je studio van boven, zoals in een echte tycoon",
+	guide_camera_2 = "Zoom in en uit met het muiswiel of door te knijpen",
+	guide_camera_3 = "Hij gaat vanzelf aan als je achter je pc gaat zitten. Je kunt dat uitzetten",
+
+	guide_bank_title = "Bank",
+	guide_bank_1 = "Weinig geld? De bank geeft je een lening zodat je studio door kan",
+	guide_bank_2 = "Je betaalt iets meer terug dan je leende: een deel van elke game-inkomst gaat naar de bank",
+	guide_bank_3 = "Je kunt ook zelf aflossen met “betalen”. Maar één lening tegelijk",
+
+	guide_studio_title = "Studio",
+	guide_studio_1 = "Interieur: meubels en spullen, net als de verdiepingsknoppen, plus doorgroeien",
+	guide_studio_2 = "Decoratie verbetert de sfeer in je team: ze werken sneller en cijfers stijgen",
+	guide_studio_3 = "“Stijl” en “Afwerking” veranderen hoe meubels, vloeren en muren eruitzien — gewoon leuk",
+
+	guide_achievements_title = "Prestaties",
+	guide_achievements_1 = "Prestaties zijn speciale doelen: games uitbrengen, dieven vangen, likes verdienen",
+	guide_achievements_2 = "Elke geeft een beloning, en sommige ook een brons-, zilver- of gouden medaille",
+	guide_achievements_3 = "Sommige zijn verborgen als “???” — probeer te raden hoe je ze ontgrendelt",
+
+	guide_tours_title = "Spelersstudio's",
+	guide_tours_1 = "Alle studio's op de server: tik op “Bezoeken” om langs te gaan",
+	guide_tours_2 = "Vind je het mooi? Geef een 👍 — één like per studio per dag",
+	guide_tours_3 = "Ranglijsten: de beste op likes, waarde en hits. De weektop krijgt beloningen",
+
+	guide_season_title = "Seizoen",
+	guide_season_1 = "Een seizoen duurt een paar weken: verdien XP en ontgrendel beloningsniveaus",
+	guide_season_2 = "XP komt van releases, hits, snelle events en dagelijkse opdrachten",
+	guide_season_3 = "Game Jam: elke week een nieuw thema — maak er een game voor en haal de wereldtop",
+
+	guide_rivals_title = "Top van de branche",
+	guide_rivals_1 = "Je studio strijdt met rivalen om een plek in de top 10",
+	guide_rivals_2 = "Pas een studio voor het eerst voorbij en krijg een beloning. Ga voor nr. 1!",
+	guide_rivals_3 = "Heeft een rivaal een hit? Zijn genre levert even minder op — probeer een ander",
+
+	guide_tax_title = "Belastingdienst",
+	guide_tax_1 = "Heb je een kantoor, dan betaal je belasting over je inkomen — rekeningen komen vanzelf",
+	guide_tax_2 = "Je hebt een paar minuten: tik op “betalen” in het 🧾-venster",
+	guide_tax_3 = "Sla je het over, dan volgen boete en controle: je inkomen daalt een tijdje",
+
+	guide_stocks_title = "Beurs",
+	guide_stocks_1 = "Koop op de “Markt” aandelen van studio's van anderen — de prijzen gaan op en neer",
+	guide_stocks_2 = "Aandelen betalen elke minuut dividend, ook als de eigenaar offline is",
+	guide_stocks_3 = "Een sterke studio kan naar de beurs (IPO): anderen kopen aandelen, je inkomen groeit",
+
+	guide_critics_title = "Recensiecijfers",
+	guide_critics_1 = "Kies een genre en thema die bij elkaar passen: “Top combo!” is een goed teken",
+	guide_critics_2 = "Stel de focus van het genre in: elk let op gameplay, graphics, geluid of verhaal",
+	guide_critics_3 = "Herhaal jezelf niet — recensenten trekken punten af. Van grotere studio's verwacht men meer",
+
+	guide_trends_title = "Trends",
+	guide_trends_1 = "Soms is een combinatie “genre + thema” in de mode — let op de 🔥-banner",
+	guide_trends_2 = "Een game die de trend volgt, krijgt van recensenten een cijferbonus",
+	guide_trends_3 = "Trends veranderen snel — breng je game uit zolang het kan",
+
+	guide_dailyEvents_title = "Dagelijkse events",
+	guide_dailyEvents_1 = "Elk uur start een kort event: Koffiekoorts, Bugjacht en meer",
+	guide_dailyEvents_2 = "Eén keer per dag is er het Gouden uur 🌟: ieders inkomen stijgt",
+	guide_dailyEvents_3 = "Tik op het event-icoon voor het schema: wat er komt en wanneer",
+
+	guide_payday_title = "Loon & huur",
+	guide_payday_1 = "Om de paar minuten krijgt je team loon en kost het kantoor huur",
+	guide_payday_2 = "Het 💸-icoon bovenaan toont hoeveel je per minuut uitgeeft",
+	guide_payday_3 = "Weinig geld? Dan krijg je een waarschuwing. Mis je die, dan staakt je team",
+
+	guide_move_title = "Doorgroeien",
+	guide_move_1 = "De gouden verdiepingsknop brengt je naar een kantoor of een nieuwe verdieping",
+	guide_move_2 = "Opent als het interieur af is, elk bureau bezet is en er genoeg games uit zijn",
+	guide_move_3 = "Na het betalen begint de bouw. Je studio blijft ondertussen werken",
+
+	guide_expo_title = "Game-expo",
+	guide_expo_1 = "Elk uur houdt de server een game-expo",
+	guide_expo_2 = "De game met het hoogste cijfer die dat uur uitkwam, wint",
+	guide_expo_3 = "De winnaar krijgt een prijs — breng je beste game uit vóór de uitslag!",
+
+	guide_safe_title = "Kluis",
+	guide_safe_1 = "Bij de fontein in het park staat een kluis met een geldprijs",
+	guide_safe_2 = "Loop erheen, tik op “Code invoeren” en typ 6 cijfers",
+	guide_safe_3 = "Alleen de makers van het spel kennen de code — let op het nieuws. Raden werkt niet",
+
+	guide_trade_title = "Ruilen",
+	guide_trade_1 = "Ruil met spelers op de server: de knop “🔁 Ruilen” in het 🏘 Studio's-venster",
+	guide_trade_2 = "Ruil $-skins, posters, mascottes en geld. Dingen gekocht met Robux kun je niet ruilen",
+	guide_trade_3 = "Een ruil gaat pas door als beiden op “Bevestigen” tikken. Check wat je weggeeft!",
+
+	guide_gotw_title = "Game van de week",
+	guide_gotw_1 = "Je beste game van de week komt in een toplijst van alle servers: venster 📊",
+	guide_gotw_2 = "Eerst telt het cijfer, dan het inkomen. De uitslag komt op maandag",
+	guide_gotw_3 = "De top 10 krijgt geld, een titel boven het hoofd en een standbeeld voor de hitplank",
+
+	guide_coop_title = "Samen ontwikkelen",
+	guide_coop_1 = "Maak een game met een andere speler: zit achter je pc en tik “🤝 Uitnodigen voor project”",
+	guide_coop_2 = "Je gast helpt vanaf zijn eigen pc — de game is sneller klaar",
+	guide_coop_3 = "Inkomen wordt gedeeld: het meeste voor jou, wat voor je gast. Jij kunt ook uitgenodigd worden",
+
+	guide_console_title = "Je eigen console",
+	guide_console_1 = "Op de 3e verdieping kun je je eigen console bouwen: 🛋️ Studio → 🎮 Console",
+	guide_console_2 = "Elke stap vraagt apparatuur, iemand met de juiste vaardigheid en geld, daarna een timer",
+	guide_console_3 = "Lanceer hem en maak er games voor: goede games vergroten je marktaandeel en royalty's",
+
+	guide_events_title = "Bedrijfsevents",
+	guide_events_1 = "Soms gebeurt er iets in je studio: goed nieuws of ellende",
+	guide_events_2 = "Bij sommige events beslis jij — kies een optie op de kaart",
+	guide_events_3 = "Verzekering onder 🛋️ Studio → Interieur dempt slechte events",
+
+	guide_bailiffs_title = "Schulden & deurwaarders",
+	guide_bailiffs_1 = "Onder nul betekent schuld: je team staakt en het kantoor raakt in verval",
+	guide_bailiffs_2 = "Te veel schuld en deurwaarders verkopen je decoratie en meubels voor een prikkie",
+	guide_bailiffs_3 = "Oplossing: neem een lening 🏦, ontsla iemand of breng games uit — inkomen lost schuld af",
 }
