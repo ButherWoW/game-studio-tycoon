@@ -25,6 +25,7 @@ local BOOK_ORDER = 12
 local CARD_WIDTH = 480
 local LINE_HEIGHT = 58
 local QUEUE_KEY = "guide"
+local BAILIFF_KEY = "guide_bailiffs" -- свой ключ: авто-карточка не должна вытеснить приставов из очереди
 
 local player = Players.LocalPlayer
 local GuideController = {}
@@ -36,6 +37,7 @@ local book: ScreenGui? = nil
 local shownThisSession: { [string]: boolean } = {}
 local lastShownAt = -math.huge -- os.clock() последней карточки (любой)
 local startedAt = os.clock()
+local bailiffsQueued = false -- карточка приставов уже стоит в очереди окон
 
 -- Что сервер помнит как прочитанное (nil — ещё не прислал: ничего не показываем сами)
 local function readSeen(): { [string]: boolean }?
@@ -125,10 +127,20 @@ end
 
 -- Карточка поверх всего. markSeen — первое знакомство (сервер запоминает по «Понятно»)
 local function showCard(guide: Guides.Guide, markSeen: boolean)
+	-- Открытую карточку заменяет другая (из 📖): первое знакомство считаем состоявшимся, иначе она
+	-- в справочнике «прочитана», а сервер не помнит и в новой сессии выскочит снова. Смена языка
+	-- перерисовывает ту же карточку — её не считаем
+	local replaced = cardGuide
+	if replaced and cardMarks and replaced.id ~= guide.id then
+		GuideRemotes.GuideSeen:FireServer(replaced.id)
+	end
 	closeCard()
 	shownThisSession[guide.id] = true
 	lastShownAt = os.clock()
 	PopupQueue.remove(QUEUE_KEY)
+	if guide.id == "bailiffs" then
+		PopupQueue.remove(BAILIFF_KEY)
+	end
 
 	local screen = Instance.new("ScreenGui")
 	screen.Name = "GuideCard"
@@ -268,15 +280,38 @@ local function nextAuto(): Guides.Guide?
 end
 
 local function pushAuto(guide: Guides.Guide)
-	PopupQueue.push(QUEUE_KEY, function()
+	local isBailiffs = guide.id == "bailiffs"
+	PopupQueue.push(if isBailiffs then BAILIFF_KEY else QUEUE_KEY, function()
 		-- Пока ждали очередь, могли прочитать в справочнике или показать другую
 		if not quiet() and not isSeen(guide.id) then
 			showCard(guide, true)
 		end
+		-- Не показали (карточка уже открыта) — tick поставит приставов снова
+		if isBailiffs then
+			bailiffsQueued = false
+		end
 	end)
 end
 
+-- Приставы приходят редко и пугают: объясняем в момент прихода, без паузы между карточками.
+-- Проверяем в tick, а не по сигналу: атрибут мог встать раньше, чем подключён слушатель или
+-- пришёл GuidesSeen, и тогда сигнала уже не будет
+local function checkBailiffs()
+	local bailiffs = Guides.get("bailiffs")
+	if
+		bailiffs
+		and not bailiffsQueued
+		and readSeen() ~= nil
+		and player:GetAttribute("BailiffsActive") == true
+		and not isSeen("bailiffs")
+	then
+		bailiffsQueued = true
+		pushAuto(bailiffs)
+	end
+end
+
 local function tick()
+	checkBailiffs()
 	if quiet() or not gapPassed() then
 		return
 	end
@@ -316,14 +351,6 @@ function GuideController.start()
 		end
 	end, "menu_guides")
 	Ui.menuClicked:Connect(onMenu)
-
-	-- Приставы приходят редко и пугают: объясняем в момент прихода, без паузы между карточками
-	player:GetAttributeChangedSignal("BailiffsActive"):Connect(function()
-		local bailiffs = Guides.get("bailiffs")
-		if bailiffs and player:GetAttribute("BailiffsActive") == true and not isSeen("bailiffs") then
-			pushAuto(bailiffs)
-		end
-	end)
 
 	ClientState.langChanged:Connect(function()
 		local guide = cardGuide
