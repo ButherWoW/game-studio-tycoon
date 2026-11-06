@@ -1919,4 +1919,14 @@ return {
 	guide_floor2_3 = "Edasijõudmist näed aknast 🛋️ Stuudio; liftil 🛗 vajuta 🔒 korrusele ja me näitame, mis puudu on",
 	platform_notice_phone = "📱 Telefonide platvorm on avatud! Vali see aknas „Uus mäng”",
 	build_prompt = "⚡ Kiirenda ehitust",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Läbipaistvad seinad",
+	setting_wallfade_hint = "Kaamera ja sinu tegelase vahel olevad seinad muutuvad läbipaistvaks",
+	intro_1 = "Sa oled 17-aastane. Oled terve elu mänge mänginud ja nüüd tahad neid ise teha. Raha pole, kontorit pole. On ainult vana sülearvuti ja unistus.",
+	intro_2 = "Alusta väikselt: istu sülearvutiga pargipingile ja tee oma esimene mäng. Vali žanr ja teema ning jaga jõud mängitavuse, graafika, heli ja loo vahel.",
+	intro_3 = "Kriitikud annavad hindeid 1 kuni 10. Hea mäng toob raha ja fänne, halb ajab nad minema. Osta garaaž, palka meeskond, kolli kontorisse.",
+	intro_4 = "Sinu eesmärk: pargipingilt pilvelõhkujani ja maailma kuulsaima stuudioni. Valmis? Sinu stuudio vajab nime!",
+	intro_next = "Edasi",
+	intro_skip = "Jäta vahele",
+	intro_start = "Alusta",
 }
