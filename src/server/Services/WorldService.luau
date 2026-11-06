@@ -733,6 +733,9 @@ local function rescueFallen()
 end
 
 function WorldService.start()
+	local Lighting = game:GetService("Lighting")
+	Lighting.ExposureCompensation = math.min(Lighting.ExposureCompensation, World.lighting.exposure)
+	Lighting.Brightness = math.min(Lighting.Brightness, World.lighting.maxBrightness)
 	task.spawn(function()
 		while true do
 			task.wait(FALL_CHECK)

@@ -9,6 +9,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TextService = game:GetService("TextService")
 
+local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
 local StartRemotes = require(ReplicatedStorage.Shared.StartRemotes)
 local DataService = require(script.Parent.DataService)
@@ -618,7 +619,15 @@ local function applyStudioSigns(player: Player)
 	signBoard.Size = Vector3.new(SIGN_SIZE.X, SIGN_SIZE.Y, 0.4)
 	signBoard.Color = Color3.fromRGB(28, 26, 40)
 	signBoard.Material = Enum.Material.SmoothPlastic
-	signBoard.CFrame = plot.CFrame * SIGN_OFFSET
+	-- В гараже вывеска над воротами (17); в офисе (три этажа) — над крышей здания, а не внутри него
+	-- (владелец 07.11: VIP-рамка лежала на полу этажа)
+	local signY = SIGN_OFFSET.Position.Y
+	local wallTop = SIGN_WALL_TOP
+	if profile.studioLevel >= 2 then
+		wallTop = plot.Size.Y / 2 + StudioLayout.floorY(StudioLayout.FLOOR_COUNT) + StudioLayout.FLOOR_HEIGHT
+		signY = wallTop + SIGN_SIZE.Y / 2 + 3.5
+	end
+	signBoard.CFrame = plot.CFrame * CFrame.new(0, signY, SIGN_OFFSET.Position.Z)
 	signBoard.Parent = model
 	for _, y in { SIGN_SIZE.Y / 2 + 0.1, -SIGN_SIZE.Y / 2 - 0.1 } do
 		local strip = Instance.new("Part")
@@ -633,7 +642,7 @@ local function applyStudioSigns(player: Player)
 		strip.Parent = model
 	end
 	-- Стойки от верха стены до низа доски
-	local postHeight = SIGN_OFFSET.Position.Y - SIGN_SIZE.Y / 2 - SIGN_WALL_TOP
+	local postHeight = signY - SIGN_SIZE.Y / 2 - wallTop
 	for _, x in { -SIGN_SIZE.X / 2 + 1.5, SIGN_SIZE.X / 2 - 1.5 } do
 		local post = Instance.new("Part")
 		post.Anchored = true

@@ -307,10 +307,17 @@ local function buildPlot(plot: BasePart, profile: DataService.Profile)
 	if not finish or finish.suffix == "" then
 		for _, shellName in { "Floor", "Skyscraper" } do
 			local shell = plot:FindFirstChild(shellName)
-			local floorPart = shell and shell:FindFirstChild("Floor")
-			if floorPart and floorPart:IsA("BasePart") then
-				floorPart.Material = Enum.Material.WoodPlanks
-				floorPart.Color = Color3.fromRGB(176, 128, 86)
+			-- Пол — тонкая широкая деталь «Floor» (в модели может лежать глубже первого уровня)
+			for _, item in if shell then shell:GetDescendants() else {} do
+				if
+					item:IsA("BasePart")
+					and item.Name == "Floor"
+					and item.Size.Y <= 0.6
+					and item.Size.X >= 20
+				then
+					item.Material = Enum.Material.WoodPlanks
+					item.Color = Color3.fromRGB(176, 128, 86)
+				end
 			end
 		end
 	end
