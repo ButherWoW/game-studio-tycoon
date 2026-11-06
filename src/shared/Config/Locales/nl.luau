@@ -1948,4 +1948,14 @@ return {
 	guide_floor2_3 = "Je voortgang zie je in het venster “🛋️ Studio”; tik bij de lift 🛗 op de 🔒-verdieping en we laten zien wat er nog ontbreekt",
 	platform_notice_phone = "📱 Platform “Telefoons” ontgrendeld! Kies het in het venster “Nieuwe game”",
 	build_prompt = "⚡ Bouw versnellen",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Doorzichtige muren",
+	setting_wallfade_hint = "Muren tussen de camera en je personage worden doorzichtig",
+	intro_1 = "Je bent 17. Je hebt je hele leven games gespeeld — en nu wil je ze zelf maken. Geen geld, geen kantoor. Alleen een oude laptop en een droom.",
+	intro_2 = "Begin klein: ga met je laptop op een bankje in het park zitten en maak je eerste game. Kies een genre en een thema en verdeel je energie over gameplay, graphics, geluid en verhaal.",
+	intro_3 = "Critici geven er een cijfer van 1 tot 10 voor. Een geweldige game levert geld en fans op, een slechte jaagt ze weg. Koop een garage, huur een team in, verhuis naar een kantoor.",
+	intro_4 = "Jouw doel: van een parkbankje naar een wolkenkrabber en de beroemdste studio ter wereld worden. Klaar? Je studio heeft een naam nodig!",
+	intro_next = "Volgende",
+	intro_skip = "Overslaan",
+	intro_start = "Starten",
 }
