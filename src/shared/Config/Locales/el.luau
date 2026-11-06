@@ -1305,6 +1305,7 @@ return {
 	error_name_bad = "Ο τίτλος έχει κακές λέξεις — σκέψου άλλον",
 	move_celebrate = "🎉 Νέο στούντιο: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	build_banner_garage = "🏗️ Κατασκευή γκαράζ — {time}",
 	build_banner_office = "🏗️ Κατασκευή γραφείου — {time}",
 	build_banner_floor = "🏗️ Κατασκευή: {floor} — {time}",
 	build_speed = "⚡ Επιτάχυνση",
@@ -1315,6 +1316,7 @@ return {
 	build_soon = "Σύντομα",
 	build_close = "Κλείσιμο",
 	build_button = "🏗️ Χτίζεται…",
+	build_done_garage = "🏠 Το γκαράζ χτίστηκε!",
 	build_done_office = "🏢 Το γραφείο χτίστηκε!",
 	build_done_floor = "🏢 {floor}: χτίστηκε!",
 	build_speed_done = "⚡ Η κατασκευή επιταχύνθηκε κατά {minutes} λεπ.",

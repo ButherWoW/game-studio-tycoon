@@ -107,7 +107,7 @@ export type Profile = {
 	lastGame: { name: string, genreId: string, score: number }?,
 	-- Стройка следующего этапа (PlotService, Config/Construction): stage — studioLevel после стройки,
 	-- времена — os.time(); cost — сколько заплачено (для истории/аналитики, возврата нет)
-	construction: { stage: number, startedAt: number, endsAt: number, cost: number }?,
+	construction: { stage: number, startedAt: number, endsAt: number, cost: number, garage: boolean? }?,
 	-- Постепенное открытие систем (FeatureUnlockService, Config/Unlocks): какие системы игрок уже
 	-- видел открытыми (больше не прячутся) и разметил ли сервер старое сохранение (init)
 	features: { seen: { [string]: boolean }, init: boolean },
@@ -407,10 +407,14 @@ local function validLastGame(raw: any): { name: string, genreId: string, score: 
 	return { name = raw.name, genreId = raw.genreId, score = math.clamp(raw.score, 0, 10) }
 end
 
--- Стройка из сохранения: числа конечные, этап 2..4. Соответствие текущему этапу проверяет PlotService
-local function validConstruction(
-	raw: any
-): { stage: number, startedAt: number, endsAt: number, cost: number }?
+-- Стройка из сохранения: числа конечные, этап 2..4 (или 1 с garage = true — стройка гаража). Соответствие текущему этапу проверяет PlotService
+local function validConstruction(raw: any): {
+	stage: number,
+	startedAt: number,
+	endsAt: number,
+	cost: number,
+	garage: boolean?,
+}?
 	if
 		type(raw) ~= "table"
 		or not isFiniteAmount(raw.stage)
@@ -420,10 +424,18 @@ local function validConstruction(
 		return nil
 	end
 	local stage = math.floor(raw.stage)
-	if stage < 2 or stage > 4 then
+	-- Этап 1 — только стройка самого гаража (garage = true, куплен в парке)
+	local garage = stage == 1 and raw.garage == true
+	if (stage < 2 and not garage) or stage > 4 then
 		return nil
 	end
-	return { stage = stage, startedAt = raw.startedAt, endsAt = raw.endsAt, cost = savedNumber(raw.cost) }
+	return {
+		stage = stage,
+		startedAt = raw.startedAt,
+		endsAt = raw.endsAt,
+		cost = savedNumber(raw.cost),
+		garage = if garage then true else nil,
+	}
 end
 
 -- Доход релиза прячется из таблицы лидеров, пока в окне релиза не открылась оценка (отчёт #2, п. 6)

@@ -1305,6 +1305,7 @@ return {
 	error_name_bad = "नाम में गंदे शब्द हैं — कोई और सोचो",
 	move_celebrate = "🎉 नया स्टूडियो: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	build_banner_garage = "🏗️ गैराज का निर्माण — {time}",
 	build_banner_office = "🏗️ ऑफ़िस का निर्माण — {time}",
 	build_banner_floor = "🏗️ निर्माण: {floor} — {time}",
 	build_speed = "⚡ तेज़ करो",
@@ -1315,6 +1316,7 @@ return {
 	build_soon = "जल्द",
 	build_close = "बंद करो",
 	build_button = "🏗️ बन रहा है…",
+	build_done_garage = "🏠 गैराज बन गया!",
 	build_done_office = "🏢 ऑफ़िस बन गया!",
 	build_done_floor = "🏢 {floor} बन गई!",
 	build_speed_done = "⚡ निर्माण {minutes} मिनट तेज़ हुआ",

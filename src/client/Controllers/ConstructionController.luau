@@ -192,7 +192,13 @@ local function startBanner()
 		end
 		local vars = { time = Construction.clock(c.endsAt - now()), floor = floorName(c.stage) }
 		text.Font = Ui.titleFontFor(ClientState.lang)
-		text.Text = ClientState.t(if c.stage == 2 then "build_banner_office" else "build_banner_floor", vars)
+		text.Text = ClientState.t(
+			if c.stage == 1
+				then "build_banner_garage"
+				elseif c.stage == 2 then "build_banner_office"
+				else "build_banner_floor",
+			vars
+		)
 		speed.Text = ClientState.t("build_speed")
 	end
 	ClientState.changed:Connect(refresh)
@@ -228,13 +234,17 @@ local function startBanner()
 			local stage = event.stage
 			closePicker()
 			toast(
-				if stage == 2
-					then ClientState.t("build_done_office")
+				if stage == 1
+					then ClientState.t("build_done_garage")
+					elseif stage == 2 then ClientState.t("build_done_office")
 					else ClientState.t("build_done_floor", { floor = floorName(stage) }),
 				Ui.colors.good
 			)
 			SoundController.play("construction_done")
-			task.delay(CELEBRATE_DELAY, MoveCelebration.celebrate, stage)
+			-- Праздник переезда — для офиса и этажей; гараж — просто тост (и GarageBought)
+			if stage > 1 then
+				task.delay(CELEBRATE_DELAY, MoveCelebration.celebrate, stage)
+			end
 		elseif event.kind == "speed" and event.skip ~= true then
 			local minutes = tonumber(event.minutes) or 0
 			local amount = tonumber(event.amount) or 0

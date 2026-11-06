@@ -209,6 +209,10 @@ end
 -- Стройка, которая ведёт на следующий этап; другая (мусор, этап уже сменился) — не считается
 local function activeConstruction(profile: DataService.Profile)
 	local construction = profile.construction
+	-- Стройка самого гаража (куплен в парке): этап 1, пока гаража ещё нет
+	if construction and (construction :: any).garage == true then
+		return if construction.stage == 1 and not profileOwnsGarage(profile) then construction else nil
+	end
 	if construction and construction.stage == profile.studioLevel + 1 then
 		return construction
 	end
@@ -514,8 +518,10 @@ refreshButtons = function(player: Player)
 	newFolder.Name = "Buttons"
 
 	-- Без гаража на участке одна кнопка — покупка гаража: крупная, золотая, у самого входа
+	-- Гараж уже куплен и строится — кнопки покупки нет (ниже встанет серая «🏗️ Строится…»)
 	local list = if profileOwnsGarage(profile)
 		then availableUpgrades(profile)
+		elseif activeConstruction(profile) then {}
 		else {
 			{
 				id = GARAGE_ID,
@@ -596,22 +602,18 @@ refreshButtons = function(player: Player)
 	buttons[player] = playerButtons
 end
 
--- Купить гараж: помещение этапа 1 и бесплатный стол сразу
+-- Купить гараж: деньги списываются, начинается стройка (Config/Construction.durations[1], строители
+-- на участке, как у этажей); помещение этапа 1 и бесплатный стол появляются, когда она закончится
+-- (PlotService.finishConstruction). До этого студия — парк с общими ноутбуками
 local function buyGarage(player: Player)
 	local profile = DataService.get(player)
-	if not profile or not getPlot(player) or profileOwnsGarage(profile) then
+	if not profile or not getPlot(player) or profileOwnsGarage(profile) or activeConstruction(profile) then
 		return
 	end
 	if not DataService.trySpend(player, StartPark.garagePrice) then
 		return
 	end
-	(profile :: any).ownsGarage = true
-	profile.upgrades.desk1 = true
-	player:SetAttribute("OwnsGarage", true)
-	PlotService.rebuild(player)
-	StartRemotes.GarageBought:FireClient(player)
-	-- Крупная покупка — сохраняем сразу, не ждём автосейва
-	task.spawn(DataService.save, player)
+	startConstruction(player, profile, 1, StartPark.garagePrice)
 end
 
 tryBuy = function(player: Player, upgradeId: string)
@@ -849,12 +851,16 @@ end
 -- Начать стройку этапа stage (деньги уже списаны)
 startConstruction = function(player: Player, profile: DataService.Profile, stage: number, cost: number)
 	local now = os.time()
-	profile.construction = {
+	local record: any = {
 		stage = stage,
 		startedAt = now,
 		endsAt = now + Construction.duration(stage),
 		cost = cost,
 	}
+	if stage == 1 then
+		record.garage = true -- стройка самого гаража, а не переезд на этап
+	end
+	profile.construction = record
 	refreshButtons(player)
 	DataService.replicate(player)
 	constructionChanged:Fire(player, "start", stage)
@@ -874,6 +880,17 @@ function PlotService.finishConstruction(player: Player): boolean
 		return false
 	end
 	profile.construction = nil
+	if (construction :: any).garage == true then
+		-- Гараж достроен: помещение этапа 1 и бесплатный стол (раньше появлялись сразу при покупке)
+		(profile :: any).ownsGarage = true
+		profile.upgrades.desk1 = true
+		player:SetAttribute("OwnsGarage", true)
+		PlotService.rebuild(player)
+		StartRemotes.GarageBought:FireClient(player)
+		constructionChanged:Fire(player, "finish", construction.stage)
+		task.spawn(DataService.save, player)
+		return true
+	end
 	local stage = Stages[construction.stage]
 	if stage.requiresUpgrade and stage.cost <= 0 then
 		profile.upgrades[stage.requiresUpgrade] = true

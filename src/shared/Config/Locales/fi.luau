@@ -1305,6 +1305,7 @@ return {
 	error_name_bad = "Nimessä on rumia sanoja — keksi toinen",
 	move_celebrate = "🎉 Uusi studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	build_banner_garage = "🏗️ Autotallin rakennus — {time}",
 	build_banner_office = "🏗️ Toimiston rakennus — {time}",
 	build_banner_floor = "🏗️ Rakennus: {floor} — {time}",
 	build_speed = "⚡ Nopeuta",
@@ -1315,6 +1316,7 @@ return {
 	build_soon = "Pian",
 	build_close = "Sulje",
 	build_button = "🏗️ Rakenteilla…",
+	build_done_garage = "🏠 Autotalli on valmis!",
 	build_done_office = "🏢 Toimisto valmis!",
 	build_done_floor = "🏢 {floor} valmis!",
 	build_speed_done = "⚡ Rakennusta nopeutettiin {minutes} min",

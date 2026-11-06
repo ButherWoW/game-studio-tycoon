@@ -1305,6 +1305,7 @@ return {
 	error_name_bad = "Pealkirjas on inetuid sõnu — mõtle teine",
 	move_celebrate = "🎉 Uus stuudio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	build_banner_garage = "🏗️ Garaaži ehitus — {time}",
 	build_banner_office = "🏗️ Kontori ehitus — {time}",
 	build_banner_floor = "🏗️ Ehitus: {floor} — {time}",
 	build_speed = "⚡ Kiirenda",
@@ -1315,6 +1316,7 @@ return {
 	build_soon = "Varsti",
 	build_close = "Sulge",
 	build_button = "🏗️ Ehitatakse…",
+	build_done_garage = "🏠 Garaaž on valmis!",
 	build_done_office = "🏢 Kontor on valmis!",
 	build_done_floor = "🏢 {floor} on valmis!",
 	build_speed_done = "⚡ Ehitust kiirendati {minutes} min",

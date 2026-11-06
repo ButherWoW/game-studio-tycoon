@@ -1304,6 +1304,7 @@ return {
 	error_name_bad = "Başlıkta kötü kelimeler var — başka bir tane bul",
 	move_celebrate = "🎉 Yeni stüdyo: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	build_banner_garage = "🏗️ Garaj inşa ediliyor — {time}",
 	build_banner_office = "🏗️ Ofis inşaatı — {time}",
 	build_banner_floor = "🏗️ İnşaat: {floor} — {time}",
 	build_speed = "⚡ Hızlandır",
@@ -1314,6 +1315,7 @@ return {
 	build_soon = "Yakında",
 	build_close = "Kapat",
 	build_button = "🏗️ İnşa ediliyor…",
+	build_done_garage = "🏠 Garaj tamamlandı!",
 	build_done_office = "🏢 Ofis tamamlandı!",
 	build_done_floor = "🏢 {floor} tamamlandı!",
 	build_speed_done = "⚡ İnşaat {minutes} dk hızlandı",

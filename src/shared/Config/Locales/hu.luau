@@ -1306,6 +1306,7 @@ return {
 	error_name_bad = "A címben csúnya szavak vannak — találj ki másikat",
 	move_celebrate = "🎉 Új stúdió: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	build_banner_garage = "🏗️ A garázs építése — {time}",
 	build_banner_office = "🏗️ Az iroda építése — {time}",
 	build_banner_floor = "🏗️ Építés: {floor} — {time}",
 	build_speed = "⚡ Gyorsítás",
@@ -1316,6 +1317,7 @@ return {
 	build_soon = "Hamarosan",
 	build_close = "Bezárás",
 	build_button = "🏗️ Épül…",
+	build_done_garage = "🏠 Kész a garázs!",
 	build_done_office = "🏢 Felépült az iroda!",
 	build_done_floor = "🏢 Felépült: {floor}!",
 	build_speed_done = "⚡ Az építés {minutes} perccel gyorsult",
