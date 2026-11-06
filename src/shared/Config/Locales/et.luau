@@ -1929,4 +1929,10 @@ return {
 	intro_next = "Edasi",
 	intro_skip = "Jäta vahele",
 	intro_start = "Alusta",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ Ehitus kiirenes {minutes} min võrra, kasutamata osa maksti välja tuluna: {amount}",
+	build_speed_late = "💵 Ehitus on peaaegu valmis — kiirendus maksti välja tuluna: {amount}",
+	move_prompt_action = "🏗️ Alusta ehitust",
+	move_prompt_object = "{price} · {minutes} min, raha ei tagastata",
+	move_hint = "Kinnita tegevusega · ehitus kestab {minutes} min",
 }
