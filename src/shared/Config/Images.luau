@@ -17,7 +17,7 @@ Images.menu = {
 	menu_holiday = 108939585178579, -- menu_holiday.png, 🎉
 	menu_camera = 113053777664719, -- menu_camera.png, 🎥
 	menu_bank = 82427982778270, -- menu_bank.png, 🏦
-	menu_guides = 76780771341867, -- menu_guides.png, 📖 «Справочник» (обучение; ID — Dev 1 после арта Астры)
+	menu_guides = 74628597275889, -- menu_guides.png, 📖 «Справочник» (обучение; ID — Dev 1 после арта Астры)
 	menu_achievements = 97631283620169, -- menu_achievements.png, 🏆 (V10)
 	menu_studio = 127200595653936, -- menu_studio.png, 🛋️ (окно «Студия»: декор и настроение)
 	home = 112336651662592, -- home.png, 🏠
@@ -200,9 +200,9 @@ Images.contracts = {
 -- 0 — картинки нет: карточка в цветах набора со значком. Dev 1: загрузить ShopCard_512.png
 -- каждого набора как Image и вставить ID
 Images.interiorFinishes = {
-	obsidianGold = 0, -- astra-interior-obsidian-gold/ShopCard_512.png
-	sakura = 0, -- astra-interior-sakura/ShopCard_512.png
-	aurora = 0, -- astra-interior-aurora/ShopCard_512.png
+	obsidianGold = 135336106935467, -- astra-interior-obsidian-gold/ShopCard_512.png
+	sakura = 76742621718509, -- astra-interior-sakura/ShopCard_512.png
+	aurora = 87922014730382, -- astra-interior-aurora/ShopCard_512.png
 } :: { [string]: number }
 
 -- Сейф в парке (7.16, SafeService / SafeWindow). 0 — картинки нет: эмодзи 🔐 и простой фон окна
