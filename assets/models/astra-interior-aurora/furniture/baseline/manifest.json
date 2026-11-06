@@ -1,0 +1,75 @@
+{
+  "zones": {
+    "garage": [
+      "Desk1",
+      "Desk2",
+      "PC1",
+      "PCPro",
+      "Chair",
+      "Coffee",
+      "HitShelf",
+      "Posters"
+    ],
+    "decor": [
+      "Plant",
+      "Rug",
+      "Sofa",
+      "CoffeeTable",
+      "PendantLamp",
+      "WallBench",
+      "BeanBags",
+      "Bookshelf",
+      "MiniFridge",
+      "NeonSign",
+      "Aquarium",
+      "ArcadeMachine"
+    ],
+    "office": [
+      "OfficeDesk",
+      "Cooler",
+      "MeetingRoom",
+      "FloorDesk",
+      "ServerRoom",
+      "Lounge",
+      "SkyDesk",
+      "SoundStudio",
+      "ArtWall"
+    ]
+  },
+  "sources": {
+    "Desk1": "assets/models/astra-garage/models/Desk1.rbxmx",
+    "Desk2": "assets/models/astra-garage/models/Desk2.rbxmx",
+    "PC1": "assets/models/astra-garage/models/PC1.rbxmx",
+    "PCPro": "assets/models/astra-garage/models/PCPro.rbxmx",
+    "Chair": "assets/models/astra-garage/models/Chair.rbxmx",
+    "Coffee": "assets/models/astra-garage/models/Coffee.rbxmx",
+    "HitShelf": "assets/models/astra-garage/models/HitShelf.rbxmx",
+    "Posters": "assets/models/astra-garage/models/Posters.rbxmx",
+    "Plant": "assets/models/astra-garage/models/Plant.rbxmx",
+    "Rug": "assets/models/astra-garage/models/Rug.rbxmx",
+    "Sofa": "assets/models/astra-garage/models/Sofa.rbxmx",
+    "CoffeeTable": "assets/models/astra-garage/models/CoffeeTable.rbxmx",
+    "PendantLamp": "assets/models/astra-garage/models/PendantLamp.rbxmx",
+    "WallBench": "assets/models/astra-garage/models/WallBench.rbxmx",
+    "BeanBags": "assets/models/astra-decor-v9/models/BeanBags.rbxmx",
+    "Bookshelf": "assets/models/astra-decor-v9/models/Bookshelf.rbxmx",
+    "MiniFridge": "assets/models/astra-decor-v9/models/MiniFridge.rbxmx",
+    "NeonSign": "assets/models/astra-decor-v9/models/NeonSign.rbxmx",
+    "Aquarium": "assets/models/astra-decor-v9/models/Aquarium.rbxmx",
+    "ArcadeMachine": "assets/models/astra-decor-v9/models/ArcadeMachine.rbxmx",
+    "OfficeDesk": "assets/models/astra-office/models/OfficeDesk.rbxmx",
+    "Cooler": "assets/models/astra-office/models/Cooler.rbxmx",
+    "MeetingRoom": "assets/models/astra-office/models/MeetingRoom.rbxmx",
+    "FloorDesk": "assets/models/astra-floor/models/FloorDesk.rbxmx",
+    "ServerRoom": "assets/models/astra-floor/models/ServerRoom.rbxmx",
+    "Lounge": "assets/models/astra-floor/models/Lounge.rbxmx",
+    "SkyDesk": "assets/models/astra-sky/models/SkyDesk.rbxmx",
+    "SoundStudio": "assets/models/astra-sky/models/SoundStudio.rbxmx",
+    "ArtWall": "assets/models/astra-sky/models/ArtWall.rbxmx"
+  },
+  "sourceCommits": {
+    "garage": "fe8c7a7300ae885931254c375bb6a652a4151a37",
+    "decor": "fe8c7a7300ae885931254c375bb6a652a4151a37",
+    "office": "fe8c7a7300ae885931254c375bb6a652a4151a37"
+  }
+}
