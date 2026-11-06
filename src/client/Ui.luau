@@ -561,8 +561,9 @@ end
 -- Боковое меню слева посередине (слева сверху чат, справа сверху список игроков).
 -- Слоты, чтобы фичи не спорили за место: 1 исследования, 2 сотрудники, 3 задания,
 -- 4 магазин, 5 rebirth, 6 язык. order внутри слота не нужен — один слот, одна кнопка.
-local MENU_BUTTON = 52
-local MENU_GAP = 8
+-- 07.11 (владелец): меню компактнее — кнопки 52 → 44, зазор 8 → 5, на телефоне ячейка 46 → 40
+local MENU_BUTTON = 44
+local MENU_GAP = 5
 -- Сверху HUD и плашки, снизу кнопка «Создать игру»: столько по высоте меню не занимает
 local MENU_RESERVED = 200
 local MENU_LEFT = 12
@@ -574,8 +575,8 @@ local MENU_LEFT = 12
 -- и если всё равно не влезает — колонка целиком уменьшается
 local MENU_TOUCH_TOP = 8
 local MENU_TOUCH_BOTTOM = 120
-local MENU_TOUCH_CELL = 46
-local MENU_TOUCH_GAP = 4
+local MENU_TOUCH_CELL = 40
+local MENU_TOUCH_GAP = 3
 local MENU_HUD_GAP = 8 -- зазор от меню до плашек HUD
 local MENU_TOUCH_MIN_SCALE = 0.7
 

@@ -151,7 +151,9 @@ local function buildGlass(model: Model, plot: BasePart, floor: number)
 		Color3.fromRGB(170, 210, 240)
 	)
 	glass.Material = Enum.Material.Glass
-	glass.Transparency = 0.6
+	-- Стекла убраны с глаз (владелец 07.11), но остаются стеной без вида: иначе из проёма верхнего
+	-- этажа можно выпасть на улицу
+	glass.Transparency = 1
 end
 
 -- Закрытый этаж: тёмная обёртка со всех сторон и сверху (внутрь не попасть) и табличка на фасаде

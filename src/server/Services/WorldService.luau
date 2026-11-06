@@ -20,7 +20,13 @@ local PLOT_THICKNESS = 1
 -- Не ближе 102: иначе при 6–7 участках они налезают на парк Астры (Ø140, assets/models/astra-park)
 local PLOT_RING_RADIUS = math.max(102, PLOT_COUNT * 80 / (2 * math.pi))
 -- Земля с запасом за дальним краем участков (полудиагональ участка ≈ 0.71 · PLOT_SIZE)
-local GROUND_SIZE = math.max(512, 2 * (PLOT_RING_RADIUS + PLOT_SIZE) + 40)
+-- 07.11 (владелец): карта меньше. Раньше минимум 512 (при 12 игроках ~465 от колец участков), теперь
+-- ровно кольцо участков + небольшой запас; Baseplate из Studio сжимается до этого размера, по краю
+-- стоят невидимые стены (ensureBoundaryWalls), чтобы никто не выпал с карты
+local GROUND_SIZE = 2 * (PLOT_RING_RADIUS + PLOT_SIZE * 0.75 + 20)
+local FOUNTAIN_SCALE = 1.7
+local WALL_HEIGHT = 300
+local WALL_THICKNESS = 8
 -- Тропинки от спавна к передним краям участков, чтобы было видно, куда идти
 local PATH_WIDTH = 6
 -- Начинаются за скамейками парка, чтобы не идти под ними (при 12 участках тропинки на углах скамеек)
@@ -75,15 +81,56 @@ local function ensureGround()
 			workspace
 		)
 		base.Locked = true
-	elseif existing:IsA("BasePart") and (existing.Size.X < GROUND_SIZE or existing.Size.Z < GROUND_SIZE) then
-		-- Baseplate из Studio меньше кольца участков: расширяем, иначе участки висят над пустотой
+	elseif existing:IsA("BasePart") then
+		-- Baseplate из Studio приводим к размеру карты: меньше — расширяем (иначе участки висят над
+		-- пустотой), больше — сжимаем (карту уменьшили, лишняя земля ни к чему). Центр и высота те же
 		local cf = existing.CFrame
-		existing.Size = Vector3.new(
-			math.max(existing.Size.X, GROUND_SIZE),
-			existing.Size.Y,
-			math.max(existing.Size.Z, GROUND_SIZE)
-		)
+		existing.Size = Vector3.new(GROUND_SIZE, existing.Size.Y, GROUND_SIZE)
 		existing.CFrame = cf
+	end
+	local ground = workspace:FindFirstChild("Baseplate")
+	if ground and ground:IsA("BasePart") and not workspace:FindFirstChild("MapBoundary") then
+		-- Невидимые стены по краю земли: четыре плиты, прозрачные, но с коллизией
+		local boundary = Instance.new("Folder")
+		boundary.Name = "MapBoundary"
+		local half = ground.Size.X / 2
+		local top = ground.Position.Y + ground.Size.Y / 2
+		for _, spec in
+			{
+				{
+					Vector3.new(ground.Size.X + 2 * WALL_THICKNESS, WALL_HEIGHT, WALL_THICKNESS),
+					Vector3.new(0, 0, half + WALL_THICKNESS / 2),
+				},
+				{
+					Vector3.new(ground.Size.X + 2 * WALL_THICKNESS, WALL_HEIGHT, WALL_THICKNESS),
+					Vector3.new(0, 0, -half - WALL_THICKNESS / 2),
+				},
+				{
+					Vector3.new(WALL_THICKNESS, WALL_HEIGHT, ground.Size.Z),
+					Vector3.new(half + WALL_THICKNESS / 2, 0, 0),
+				},
+				{
+					Vector3.new(WALL_THICKNESS, WALL_HEIGHT, ground.Size.Z),
+					Vector3.new(-half - WALL_THICKNESS / 2, 0, 0),
+				},
+			}
+		do
+			local wall = Instance.new("Part")
+			wall.Name = "Wall"
+			wall.Anchored = true
+			wall.CanCollide = true
+			wall.CanQuery = false
+			wall.CanTouch = false
+			wall.Transparency = 1
+			wall.Size = spec[1]
+			wall.Position = Vector3.new(
+				ground.Position.X + spec[2].X,
+				top + WALL_HEIGHT / 2,
+				ground.Position.Z + spec[2].Z
+			)
+			wall.Parent = boundary
+		end
+		boundary.Parent = workspace
 	end
 	if not workspace:FindFirstChildWhichIsA("SpawnLocation", true) then
 		local spawn = Instance.new("SpawnLocation")
@@ -370,6 +417,8 @@ local function ensureStartPark()
 		if fountain and fountain:IsA("Model") then
 			local copy = fountain:Clone()
 			copy.Name = "Fountain"
+			-- Фонтан крупнее (владелец 07.11): масштаб вокруг центра основания, место в парке под него есть
+			copy:ScaleTo(FOUNTAIN_SCALE)
 			placeAt(copy, StartPark.landscapeFountain)
 		end
 	end

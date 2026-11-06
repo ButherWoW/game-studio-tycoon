@@ -125,8 +125,45 @@ local function supersededOnPlot(plot: BasePart, modelName: string): boolean
 	return placed ~= nil and placed:GetAttribute("Generated") ~= true
 end
 
+-- Переговорка должна быть закрытой (владелец 07.11): у модели Астры стены — стёкла с прозрачностью
+-- 0.65 в рамах и нет потолка, комната просматривается насквозь и сверху. Делаем стены глухими
+-- (дверной проём между EntryGlass остаётся) и кладём потолок по габариту комнаты
+local MEETING_WALLS = { SideGlass = true, RearGlass = true, EntryGlass = true }
+local MEETING_WALL_COLOR = Color3.fromRGB(228, 236, 246)
+
+local function closeMeetingRoom(plot: BasePart, modelName: string)
+	local room = plot:FindFirstChild(modelName)
+	if not room or not room:IsA("Model") or room:GetAttribute("RoomClosed") then
+		return
+	end
+	room:SetAttribute("RoomClosed", true)
+	for _, item in room:GetDescendants() do
+		if item:IsA("BasePart") and MEETING_WALLS[item.Name] then
+			item.Material = Enum.Material.SmoothPlastic
+			item.Color = MEETING_WALL_COLOR
+			item.Transparency = 0
+			item.CanCollide = true
+		end
+	end
+	local boxCFrame, boxSize = room:GetBoundingBox()
+	local roof = Instance.new("Part")
+	roof.Name = "MeetingRoof"
+	roof.Anchored = true
+	roof.CanCollide = true
+	roof.CanQuery = false
+	roof.CanTouch = false
+	roof.Material = Enum.Material.SmoothPlastic
+	roof.Color = MEETING_WALL_COLOR
+	roof.Size = Vector3.new(boxSize.X, 0.3, boxSize.Z)
+	roof.CFrame = boxCFrame * CFrame.new(0, boxSize.Y / 2 + 0.15, 0)
+	roof.Parent = room
+end
+
 local function placeUpgrade(plot: BasePart, upgrade: Upgrades.Upgrade)
 	placeModel(plot, upgrade.model, upgrade.position, upgrade.rotation)
+	if upgrade.model == "MeetingRoom" then
+		closeMeetingRoom(plot, upgrade.model)
+	end
 	-- Купили импортированные стены гаража (GarageWalls или GarageWalls_<отделка>) — это полная оболочка:
 	-- старый Garage убираем, как это делает buildPlot (supersededOnPlot). Заглушка Generated — только декор,
 	-- базовый Garage остаётся
@@ -274,6 +311,18 @@ local function buildPlot(plot: BasePart, profile: DataService.Profile)
 			if floorPart and floorPart:IsA("BasePart") then
 				floorPart.Material = Enum.Material.WoodPlanks
 				floorPart.Color = Color3.fromRGB(176, 128, 86)
+			end
+		end
+	end
+	-- Стёкла в окнах оболочек офиса убираем с глаз (владелец 07.11): деталь невидимая, но с коллизией,
+	-- чтобы из проёмов не выпасть
+	for _, shellName in { "Office", "Floor", "Skyscraper" } do
+		local shell = plot:FindFirstChild(shellName)
+		if shell then
+			for _, item in shell:GetDescendants() do
+				if item:IsA("BasePart") and item.Material == Enum.Material.Glass then
+					item.Transparency = 1
+				end
 			end
 		end
 	end
