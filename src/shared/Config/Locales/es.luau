@@ -1948,4 +1948,14 @@ return {
 	guide_floor2_3 = "Tu progreso se ve en la ventana «🛋️ Estudio»; junto al ascensor 🛗 pulsa la planta 🔒 y te mostraremos qué falta",
 	platform_notice_phone = "📱 ¡Plataforma «Móviles» desbloqueada! Elígela en la ventana «Nuevo juego»",
 	build_prompt = "⚡ Acelerar la obra",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Paredes transparentes",
+	setting_wallfade_hint = "Las paredes entre la cámara y tu personaje se vuelven transparentes",
+	intro_1 = "Tienes 17 años. Has jugado videojuegos toda tu vida, y ahora quieres crearlos. Sin dinero, sin oficina. Solo un portátil viejo y un sueño.",
+	intro_2 = "Empieza poco a poco: siéntate con el portátil en un banco del parque y crea tu primer juego. Elige un género y una temática, y reparte tu esfuerzo entre jugabilidad, gráficos, sonido e historia.",
+	intro_3 = "Los críticos lo puntúan del 1 al 10. Un gran juego trae dinero y fans; uno malo los ahuyenta. Compra un garaje, contrata un equipo, múdate a una oficina.",
+	intro_4 = "Tu meta: pasar de un banco del parque a un rascacielos y crear el estudio más famoso del mundo. ¿Listo? ¡Tu estudio necesita un nombre!",
+	intro_next = "Siguiente",
+	intro_skip = "Omitir",
+	intro_start = "Empezar",
 }
