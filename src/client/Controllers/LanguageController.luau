@@ -72,7 +72,7 @@ local function percentText(value: number): string
 end
 
 -- Строка: подпись слева, контрол справа
-local function row(body: ScrollingFrame, order: number, textKey: string): Frame
+local function row(body: ScrollingFrame, order: number, textKey: string, hintKey: string?): Frame
 	local frame = Instance.new("Frame")
 	frame.BackgroundColor3 = Ui.colors.stroke
 	frame.BackgroundTransparency = 0.6
@@ -83,6 +83,15 @@ local function row(body: ScrollingFrame, order: number, textKey: string): Frame
 	label.AnchorPoint = Vector2.new(0, 0.5)
 	label.Position = UDim2.new(0, 12, 0.5, 0)
 	label.Size = UDim2.new(1, -(CONTROL_WIDTH + 28), 0, 30)
+	if hintKey then
+		-- Пояснение мелким шрифтом под подписью
+		label.Position = UDim2.new(0, 12, 0, 4)
+		label.AnchorPoint = Vector2.new(0, 0)
+		label.Size = UDim2.new(1, -(CONTROL_WIDTH + 28), 0, 28)
+		local hint = Ui.label(frame, ClientState.t(hintKey), 18, nil, Ui.colors.muted)
+		hint.Position = UDim2.new(0, 12, 0, 34)
+		hint.Size = UDim2.new(1, -(CONTROL_WIDTH + 28), 0, 18)
+	end
 	frame.Parent = body
 	return frame
 end
@@ -136,7 +145,7 @@ local function renderSettings(window: Frame)
 	local body = scrollBody(window)
 	Ui.list(body, 8)
 	for i, item in Settings.list do
-		local frame = row(body, i, item.text)
+		local frame = row(body, i, item.text, item.hint)
 		if item.kind == "volume" then
 			volumeControl(frame, item.key)
 		else

@@ -1,7 +1,7 @@
 --!strict
 -- Настройки игрока на клиенте (Config/Settings): текущие значения, сигнал changed и сохранение
 -- на сервере. Флаги эффектов дублируются атрибутами LocalPlayer — контроллеры проверяют их
--- без require этого модуля: "LowGraphics", "HideTitles", "HideMascots".
+-- без require этого модуля: "LowGraphics", "HideTitles", "HideMascots", "WallFade".
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -15,6 +15,7 @@ local ATTRIBUTES: { [string]: string } = {
 	lowGraphics = "LowGraphics",
 	hideTitles = "HideTitles",
 	hideMascots = "HideMascots",
+	wallFade = "WallFade",
 }
 
 ClientSettings.values = table.clone(Settings.defaults) :: Settings.Values
