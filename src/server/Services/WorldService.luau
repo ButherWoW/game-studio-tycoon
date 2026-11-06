@@ -687,7 +687,45 @@ local function untouchUpgradeModels()
 	end
 end
 
+-- Спасение от падения (владелец 07.11): упал ниже FALL_Y (прыжок с 3-го этажа, баг лифта, дыра в карте) —
+-- сразу на свой участок или к спавну, без смерти и потери прогресса
+local FALL_Y = -30
+local FALL_CHECK = 1
+
+local function rescueFallen()
+	for _, player in game:GetService("Players"):GetPlayers() do
+		local character = player.Character
+		local root = character and character:FindFirstChild("HumanoidRootPart")
+		if root and root:IsA("BasePart") and root.Position.Y < FALL_Y then
+			local plots = workspace:FindFirstChild("Plots")
+			local plot = plots and plots:FindFirstChild(tostring(player:GetAttribute("PlotName")))
+			local target: CFrame
+			if plot and plot:IsA("BasePart") then
+				target = plot.CFrame * CFrame.new(0, plot.Size.Y / 2 + 6, plot.Size.Z / 2 + 10)
+			else
+				local spawn = workspace:FindFirstChildWhichIsA("SpawnLocation", true)
+				target = CFrame.new(
+					if spawn and spawn:IsA("BasePart")
+						then spawn.Position + Vector3.new(0, 6, 0)
+						else Vector3.new(0, 10, 0)
+				)
+			end
+			root.AssemblyLinearVelocity = Vector3.zero
+			root.CFrame = target
+		end
+	end
+end
+
 function WorldService.start()
+	task.spawn(function()
+		while true do
+			task.wait(FALL_CHECK)
+			local ok, err = pcall(rescueFallen)
+			if not ok then
+				warn("[WorldService] rescueFallen failed:", err)
+			end
+		end
+	end)
 	ensureGround()
 	ensurePlots()
 	ensureSpawnPad()

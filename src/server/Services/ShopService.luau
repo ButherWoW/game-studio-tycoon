@@ -35,10 +35,27 @@ local ShopService = {}
 local owned: { [Player]: { [string]: boolean } } = {}
 local lastRequest: { [Player]: number } = {}
 
+-- Геймпасс закрыт в конфиге (GamePasses.disabled)
+function ShopService.isDisabled(passId: string): boolean
+	for _, pass in GamePasses.list do
+		if pass.id == passId and pass.disabled then
+			return true
+		end
+	end
+	return false
+end
+
 local function pushState(player: Player)
 	local profile = DataService.get(player)
+	-- Закрытые геймпассы (GamePasses.disabled) клиенту «купленными» не показываем
+	local shown: { [string]: boolean } = {}
+	for id, value in owned[player] or {} do
+		if value then
+			shown[id] = not ShopService.isDisabled(id)
+		end
+	end
 	ShopRemotes.ShopState:FireClient(player, {
-		passes = owned[player] or {},
+		passes = shown,
 		boosts = if profile then profile.boosts else nil,
 		-- Для подписи «сейчас ≈ $…» у пакетов дохода; считает сервер
 		incomePerMinute = if profile then ShopService.incomePerMinute(player, profile) else nil,
@@ -61,6 +78,10 @@ function ShopService.addCoffee(player: Player, seconds: number)
 end
 
 function ShopService.ownsPass(player: Player, passId: GamePasses.PassId): boolean
+	-- Закрытые геймпассы (GamePasses.disabled) не действуют, даже если куплены
+	if ShopService.isDisabled(passId) then
+		return false
+	end
 	local passes = owned[player]
 	return passes ~= nil and passes[passId] == true
 end

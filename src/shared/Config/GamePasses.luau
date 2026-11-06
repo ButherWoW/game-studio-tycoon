@@ -11,6 +11,9 @@ export type PassId = "doubleCash" | "autoRelease" | "fastDev" | "extraSlot" | "v
 
 export type GamePass = {
 	id: PassId,
+	-- Геймпасс временно закрыт (07.11, владелец): в магазине «Скоро», сервер считает его не купленным,
+	-- тумблеров и автозапуска нет. Купленное не теряется: уберём флаг — всё заработает
+	disabled: boolean?,
 	name: string,
 	nameEn: string,
 	description: string,
@@ -33,6 +36,7 @@ local list: { GamePass } = {
 	},
 	{
 		id = "autoRelease",
+		disabled = true,
 		name = "Авто-релиз",
 		nameEn = "Auto Release",
 		description = "Новая игра стартует сама после релиза",
