@@ -1187,6 +1187,9 @@ end
 -- Поза «сидя» для R15: корень закреплён, остальные детали держатся на суставах; бёдра вперёд на 90°,
 -- колени обратно вниз (отчёт владельца: сотрудники стояли перед мониторами)
 local SIT_ROOT_ABOVE_SEAT = 1.6
+-- Воображаемая сидушка без кресла: чуть дальше края стола (глубина 3) и на высоте сидушек Астры (≈1.6)
+local VIRTUAL_SEAT_DISTANCE = 2.4
+local VIRTUAL_SEAT_HEIGHT = 1.6
 local function bendLegs(model: Model, sign: number)
 	for _, part in model:GetDescendants() do
 		if part:IsA("Motor6D") then
@@ -1264,9 +1267,12 @@ local function seatNpc(model: Model, plot: BasePart, desk: Upgrades.Upgrade, use
 		return
 	end
 
-	local seat = deskPoint + rotation:VectorToWorldSpace(Vector3.new(0, 0, SEAT_DISTANCE))
+	-- Кресла нет (импортированный стол без сидушки, свой Chair не найден): сидим «по позиции» — поза
+	-- сидя у края стола на воображаемой сидушке, а не стоя. PcSeat игрока не занимаем
+	local seat = deskPoint + rotation:VectorToWorldSpace(Vector3.new(0, 0, VIRTUAL_SEAT_DISTANCE))
 	for _, shift in SEAT_SIDE_SHIFTS do
-		local candidate = deskPoint + rotation:VectorToWorldSpace(Vector3.new(shift, 0, SEAT_DISTANCE))
+		local candidate = deskPoint
+			+ rotation:VectorToWorldSpace(Vector3.new(shift, 0, VIRTUAL_SEAT_DISTANCE))
 		local free = true
 		for _, other in used do
 			if (other - candidate).Magnitude < SEAT_MIN_GAP then
@@ -1281,10 +1287,12 @@ local function seatNpc(model: Model, plot: BasePart, desk: Upgrades.Upgrade, use
 	end
 	table.insert(used, seat)
 
-	-- Pivot R15 — HumanoidRootPart: поднимаем на высоту бёдер над полом (height выше).
-	-- Смотрит на стол: стол «лицом» к +Z, значит NPC смотрит в -Z стола
-	local facing = seat - rotation:VectorToWorldSpace(Vector3.new(0, 0, 1))
-	local placement = CFrame.lookAt(seat, facing) + Vector3.new(0, height, 0)
+	-- Pivot R15 — HumanoidRootPart. Смотрит на стол: стол «лицом» к +Z, значит NPC смотрит в -Z стола
+	poseSitting(model)
+	local spot = seat + Vector3.new(0, VIRTUAL_SEAT_HEIGHT + SIT_ROOT_ABOVE_SEAT, 0)
+	local facing = spot - rotation:VectorToWorldSpace(Vector3.new(0, 0, 1))
+	local placement = CFrame.lookAt(spot, facing)
+	model:SetAttribute("Chair", true)
 	model:SetAttribute("SeatLocal", placement)
 	model:PivotTo(plot.CFrame * placement)
 end
