@@ -1,0 +1,23 @@
+{
+  "parts": 91,
+  "dimensionsXYZ": [
+    9.8,
+    8.27,
+    7.800000000000001
+  ],
+  "baseY": 0.0,
+  "pivotXYZ": [
+    0,
+    0,
+    0
+  ],
+  "front": "+Z",
+  "pairs": 4095,
+  "overlaps": [],
+  "lights": 1,
+  "lightShadows": false,
+  "scripts": 0,
+  "externalMeshTexture": 0,
+  "runtimeTested": false,
+  "binaryRoundtrip": "PASS"
+}
