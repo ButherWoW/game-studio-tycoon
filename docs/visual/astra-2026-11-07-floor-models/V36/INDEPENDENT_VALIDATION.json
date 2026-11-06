@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Lounge",
+    "parts": 45,
+    "dimensionsXYZ": [
+      11.2,
+      3.21,
+      9.379999999999999
+    ],
+    "worldBoxXZ": [
+      -3.5999999999999996,
+      6.3100000000000005,
+      7.6,
+      15.690000000000001
+    ],
+    "pairs": 990,
+    "overlaps": [],
+    "layoutConflicts": [],
+    "deskApronsChecked": 7,
+    "binaryRoundtrip": "PASS",
+    "pivot": "PASS",
+    "allAnchored": true,
+    "lights": 0,
+    "scripts": 0,
+    "runtimeTested": false
+  },
+  {
+    "name": "ArtWall",
+    "parts": 34,
+    "dimensionsXYZ": [
+      13.6,
+      8.299999999999999,
+      1.0
+    ],
+    "worldBoxXZ": [
+      8.2,
+      15.5,
+      21.8,
+      16.5
+    ],
+    "pairs": 561,
+    "overlaps": [],
+    "layoutConflicts": [],
+    "deskApronsChecked": 11,
+    "binaryRoundtrip": "PASS",
+    "pivot": "PASS",
+    "allAnchored": true,
+    "lights": 0,
+    "scripts": 0,
+    "runtimeTested": false
+  }
+]

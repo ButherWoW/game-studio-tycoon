@@ -1,0 +1,40 @@
+[
+  {
+    "name": "Lounge",
+    "parts": 45,
+    "bounds": [
+      [
+        -5.6,
+        0.0,
+        -4.6899999999999995
+      ],
+      [
+        5.6,
+        3.21,
+        4.69
+      ]
+    ],
+    "pairs": 990,
+    "overlaps": [],
+    "runtimeTested": false
+  },
+  {
+    "name": "ArtWall",
+    "parts": 34,
+    "bounds": [
+      [
+        -6.8,
+        0.0,
+        -0.5
+      ],
+      [
+        6.8,
+        8.299999999999999,
+        0.5
+      ]
+    ],
+    "pairs": 561,
+    "overlaps": [],
+    "runtimeTested": false
+  }
+]
