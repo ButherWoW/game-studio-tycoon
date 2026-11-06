@@ -1306,6 +1306,7 @@ return {
 	error_name_bad = "Er staan scheldwoorden in de titel — verzin een andere",
 	move_celebrate = "🎉 Nieuwe studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	build_banner_garage = "🏗️ Garage wordt gebouwd — {time}",
 	build_banner_office = "🏗️ Bouw van het kantoor — {time}",
 	build_banner_floor = "🏗️ Bouw: {floor} — {time}",
 	build_speed = "⚡ Versnellen",
@@ -1316,6 +1317,7 @@ return {
 	build_soon = "Binnenkort",
 	build_close = "Sluiten",
 	build_button = "🏗️ Wordt gebouwd…",
+	build_done_garage = "🏠 Garage gebouwd!",
 	build_done_office = "🏢 Kantoor gebouwd!",
 	build_done_floor = "🏢 {floor} gebouwd!",
 	build_speed_done = "⚡ Bouw {minutes} min versneld",

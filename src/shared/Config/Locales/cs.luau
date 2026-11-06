@@ -1306,6 +1306,7 @@ return {
 	error_name_bad = "Název obsahuje sprostá slova — vymysli jiný",
 	move_celebrate = "🎉 Nové studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	build_banner_garage = "🏗️ Stavba garáže — {time}",
 	build_banner_office = "🏗️ Stavba kanceláře — {time}",
 	build_banner_floor = "🏗️ Stavba: {floor} — {time}",
 	build_speed = "⚡ Urychlit",
@@ -1316,6 +1317,7 @@ return {
 	build_soon = "Brzy",
 	build_close = "Zavřít",
 	build_button = "🏗️ Staví se…",
+	build_done_garage = "🏠 Garáž je postavená!",
 	build_done_office = "🏢 Kancelář je postavená!",
 	build_done_floor = "🏢 {floor} je postavené!",
 	build_speed_done = "⚡ Stavba urychlena o {minutes} min",

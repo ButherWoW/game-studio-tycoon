@@ -1305,6 +1305,7 @@ return {
 	error_name_bad = "名字里有不文明的词——换一个吧",
 	move_celebrate = "🎉 新工作室：{stage}！",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	build_banner_garage = "🏗️ 正在建造车库 — {time}",
 	build_banner_office = "🏗️ 正在建造办公室 — {time}",
 	build_banner_floor = "🏗️ 正在建造：{floor} — {time}",
 	build_speed = "⚡ 加速",
@@ -1315,6 +1316,7 @@ return {
 	build_soon = "即将推出",
 	build_close = "关闭",
 	build_button = "🏗️ 施工中…",
+	build_done_garage = "🏠 车库建好了！",
 	build_done_office = "🏢 办公室建好了！",
 	build_done_floor = "🏢 {floor}建好了！",
 	build_speed_done = "⚡ 施工加速了 {minutes} 分钟",

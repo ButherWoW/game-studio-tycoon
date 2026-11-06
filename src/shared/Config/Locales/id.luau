@@ -1305,6 +1305,7 @@ return {
 	error_name_bad = "Judulnya ada kata kasar — cari yang lain",
 	move_celebrate = "🎉 Studio baru: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	build_banner_garage = "🏗️ Membangun garasi — {time}",
 	build_banner_office = "🏗️ Pembangunan kantor — {time}",
 	build_banner_floor = "🏗️ Pembangunan: {floor} — {time}",
 	build_speed = "⚡ Percepat",
@@ -1315,6 +1316,7 @@ return {
 	build_soon = "Segera",
 	build_close = "Tutup",
 	build_button = "🏗️ Sedang dibangun…",
+	build_done_garage = "🏠 Garasi selesai dibangun!",
 	build_done_office = "🏢 Kantor selesai dibangun!",
 	build_done_floor = "🏢 {floor} selesai dibangun!",
 	build_speed_done = "⚡ Pembangunan dipercepat {minutes} mnt",

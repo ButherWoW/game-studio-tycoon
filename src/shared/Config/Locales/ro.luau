@@ -1306,6 +1306,7 @@ return {
 	error_name_bad = "Titlul are cuvinte urâte — inventează altul",
 	move_celebrate = "🎉 Studio nou: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	build_banner_garage = "🏗️ Construcția garajului — {time}",
 	build_banner_office = "🏗️ Construcția biroului — {time}",
 	build_banner_floor = "🏗️ Construcție: {floor} — {time}",
 	build_speed = "⚡ Accelerează",
@@ -1316,6 +1317,7 @@ return {
 	build_soon = "În curând",
 	build_close = "Închide",
 	build_button = "🏗️ Se construiește…",
+	build_done_garage = "🏠 Garajul e construit!",
 	build_done_office = "🏢 Biroul e gata!",
 	build_done_floor = "🏢 {floor} e gata!",
 	build_speed_done = "⚡ Construcția a fost accelerată cu {minutes} min",

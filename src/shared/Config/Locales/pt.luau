@@ -1306,6 +1306,7 @@ return {
 	error_name_bad = "O título tem palavrões — invente outro",
 	move_celebrate = "🎉 Novo estúdio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	build_banner_garage = "🏗️ Construindo a garagem — {time}",
 	build_banner_office = "🏗️ Obra do escritório — {time}",
 	build_banner_floor = "🏗️ Obra: {floor} — {time}",
 	build_speed = "⚡ Acelerar",
@@ -1316,6 +1317,7 @@ return {
 	build_soon = "Em breve",
 	build_close = "Fechar",
 	build_button = "🏗️ Em obras…",
+	build_done_garage = "🏠 Garagem construída!",
 	build_done_office = "🏢 Escritório construído!",
 	build_done_floor = "🏢 {floor} construído!",
 	build_speed_done = "⚡ Obra acelerada em {minutes} min",

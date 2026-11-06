@@ -1305,6 +1305,7 @@ return {
 	error_name_bad = "Pavadinime yra keiksmažodžių — sugalvok kitą",
 	move_celebrate = "🎉 Nauja studija: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	build_banner_garage = "🏗️ Garažo statyba — {time}",
 	build_banner_office = "🏗️ Biuro statyba — {time}",
 	build_banner_floor = "🏗️ Statyba: {floor} — {time}",
 	build_speed = "⚡ Pagreitinti",
@@ -1315,6 +1316,7 @@ return {
 	build_soon = "Greitai",
 	build_close = "Uždaryti",
 	build_button = "🏗️ Statoma…",
+	build_done_garage = "🏠 Garažas pastatytas!",
 	build_done_office = "🏢 Biuras pastatytas!",
 	build_done_floor = "🏢 {floor} pastatytas!",
 	build_speed_done = "⚡ Statyba pagreitinta {minutes} min.",
