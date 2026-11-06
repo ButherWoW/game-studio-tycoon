@@ -1113,7 +1113,11 @@ end
 local function seatTopIn(root: Instance): Vector3?
 	local minX, maxX, minZ, maxZ, top = math.huge, -math.huge, math.huge, -math.huge, -math.huge
 	for _, part in root:GetDescendants() do
-		if part:IsA("BasePart") and part.Name ~= "PcSeat" and string.find(string.lower(part.Name), "seat") then
+		if
+			part:IsA("BasePart")
+			and part.Name ~= "PcSeat"
+			and string.find(string.lower(part.Name), "seat")
+		then
 			local p = part.Position
 			minX, maxX = math.min(minX, p.X), math.max(maxX, p.X)
 			minZ, maxZ = math.min(minZ, p.Z), math.max(maxZ, p.Z)
@@ -1267,7 +1271,8 @@ local function seatNpc(model: Model, plot: BasePart, desk: Upgrades.Upgrade, use
 	-- сидя у края стола на воображаемой сидушке, а не стоя. PcSeat игрока не занимаем
 	local seat = deskPoint + rotation:VectorToWorldSpace(Vector3.new(0, 0, VIRTUAL_SEAT_DISTANCE))
 	for _, shift in SEAT_SIDE_SHIFTS do
-		local candidate = deskPoint + rotation:VectorToWorldSpace(Vector3.new(shift, 0, VIRTUAL_SEAT_DISTANCE))
+		local candidate = deskPoint
+			+ rotation:VectorToWorldSpace(Vector3.new(shift, 0, VIRTUAL_SEAT_DISTANCE))
 		local free = true
 		for _, other in used do
 			if (other - candidate).Magnitude < SEAT_MIN_GAP then
