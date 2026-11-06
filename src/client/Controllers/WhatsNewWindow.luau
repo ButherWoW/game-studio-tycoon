@@ -14,6 +14,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local ContentDrops = require(ReplicatedStorage.Shared.Config.ContentDrops)
 local Features = require(ReplicatedStorage.Shared.Config.Features)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
 local ContentDropRemotes = require(ReplicatedStorage.Shared.ContentDropRemotes)
 local ClientState = require(script.Parent.Parent.ClientState)
 local ContentDropClient = require(script.Parent.Parent.ContentDropClient)
@@ -25,6 +26,9 @@ local MAX_LINES = 8 -- больше не влезает на телефон: о�
 local MAX_LINES_WITH_UPDATE = 4 -- вместе с обновлением систем предметов волны меньше
 local LINE_HEIGHT = 24
 local DESC_HEIGHT = 40
+-- Баннер обновления (Images.updateBanners, 4:1) — только у самого свежего обновления, чтобы окно
+-- не росло на телефоне
+local BANNER_SIZE = Vector2.new(384, 96)
 
 local WhatsNewWindow = {}
 local gui: ScreenGui? = nil
@@ -54,6 +58,11 @@ end
 -- Название обновления на языке игрока: «🏆 Соревнование»
 local function updateTitle(update: Features.Update): string
 	return update.icon .. " " .. ClientState.t("upd_" .. update.id)
+end
+
+-- Баннер обновления: Image ID или 0 (нет картинки)
+local function bannerId(update: Features.Update?): number
+	return if update then Images.updateBanners[update.id] or 0 else 0
 end
 
 local function newUpdates(): { Features.Update }
@@ -108,6 +117,7 @@ local function show()
 		+ lines * (LINE_HEIGHT + 6)
 		+ (if hasNext then 30 else 0)
 		+ #updates * (36 + DESC_HEIGHT + 12)
+		+ (if bannerId(updates[#updates]) > 0 then BANNER_SIZE.Y + 6 else 0)
 		+ (if drop and #updates > 0 then 42 else 0)
 	local window = Ui.window(screen, "Window", Vector2.new(480, height))
 	local body = Instance.new("Frame")
@@ -127,7 +137,18 @@ local function show()
 	centered(Ui.label(body, ClientState.t(headKey), 24, Enum.Font.GothamBold, Ui.colors.muted), nextOrder())
 
 	-- Обновления систем по средам: название и что вошло
-	for _, update in updates do
+	for index, update in updates do
+		local banner = if index == #updates then bannerId(update) else 0
+		if banner > 0 then
+			local image = Instance.new("ImageLabel")
+			image.Name = "UpdateBanner"
+			image.BackgroundTransparency = 1
+			image.Size = UDim2.fromOffset(BANNER_SIZE.X, BANNER_SIZE.Y)
+			image.ScaleType = Enum.ScaleType.Fit
+			image.Image = "rbxassetid://" .. banner
+			image.LayoutOrder = nextOrder()
+			image.Parent = body
+		end
 		centered(
 			Ui.label(body, updateTitle(update), 36, Ui.titleFontFor(ClientState.lang), Ui.colors.money),
 			nextOrder()
