@@ -35,6 +35,7 @@ local ConsoleRemotes = require(Shared.ConsoleRemotes)
 local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService)
 local StudioLayout = require(Shared.StudioLayout)
+local UnlockRules = require(Shared.UnlockRules)
 local Features = require(Shared.Config.Features)
 local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
@@ -197,7 +198,8 @@ local function platformOpen(profile: DataService.Profile, platform: Platforms.Pl
 	if platform.needsConsole then
 		return released() and Features.isReleased("platforms") and launched(data(profile))
 	end
-	return profile.studioLevel >= platform.minStudioLevel
+	local ok = UnlockRules.check({ requires = platform.requires } :: any, profile)
+	return ok
 end
 
 -- Доход студии в минуту (ShopService.incomePerMinute), без модуля — 0
@@ -538,6 +540,8 @@ function ConsoleService.onGameReleased(player: Player, info: any)
 	local score = num(info.score, 0)
 	logEvent(player, "platform", score, platform)
 	if not released() then
+		-- Консоли ещё нет, но число игр выросло: строка платформ (телефоны) могла открыться
+		ConsoleService.pushState(player)
 		return
 	end
 	checkTimer(player, d)

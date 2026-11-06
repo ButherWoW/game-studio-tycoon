@@ -3,6 +3,8 @@
 --   • плашка в общем стеке «🏗️ Стройка офиса — 7:42» с кнопкой «⚡ Ускорить» → окошко ускорений
 --     за Robux (−5 мин, −30 мин — только если осталось больше 5 мин, «Достроить сейчас»; товара ещё
 --     нет — «Скоро»);
+--   • у своей таблички площадки — ProximityPrompt «⚡ Ускорить стройку» (то же окошко): значок плашки
+--     в лотке справа легко не заметить;
 --   • тосты «🏢 Офис построен!» (дальше обычный праздник MoveCelebration), «ускорено», «уже готово»;
 --   • таблички площадок (деталь Screen с атрибутами BuildStage / BuildStart / BuildEnd): заголовок
 --     на языке игрока, полоса прогресса и сколько осталось — на всех участках, не только своём;
@@ -271,6 +273,34 @@ local function track(item: Instance)
 	end
 end
 
+-- Кнопка у своей таблички: «Ускорить стройку» на E / касанием, открывает то же окошко ускорений
+local function ensurePrompt(screen: BasePart, stage: number)
+	local prompt = screen:FindFirstChild("BuildSpeedPrompt")
+	if screen:GetAttribute("BuildOwner") ~= player.UserId then
+		if prompt then
+			prompt:Destroy()
+		end
+		return
+	end
+	if not prompt then
+		local created = Instance.new("ProximityPrompt")
+		created.Name = "BuildSpeedPrompt"
+		created.HoldDuration = 0
+		created.MaxActivationDistance = 16
+		created.RequiresLineOfSight = false
+		created.Triggered:Connect(function(who)
+			if who == player then
+				openPicker()
+			end
+		end)
+		created.Parent = screen
+		prompt = created
+	end
+	local p = prompt :: ProximityPrompt
+	p.ActionText = ClientState.t("build_prompt")
+	p.ObjectText = stageTitle(stage)
+end
+
 local function updateSign(screen: BasePart)
 	local stage = tonumber(screen:GetAttribute("BuildStage"))
 	local startedAt = tonumber(screen:GetAttribute("BuildStart"))
@@ -285,6 +315,7 @@ local function updateSign(screen: BasePart)
 	local fill = bar and bar:FindFirstChild("Fill")
 	local left = endsAt - now()
 	local total = math.max(endsAt - startedAt, 1)
+	ensurePrompt(screen, stage)
 	if title and title:IsA("TextLabel") then
 		title.Text = "🏗️ " .. ClientState.t("build_sign_title", { stage = stageTitle(stage) })
 	end
