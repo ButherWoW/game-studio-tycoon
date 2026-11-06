@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 +{value} meeleolu",
 	poster_stat_review = "⭐ +{value} hindele",
 	poster_stat_revenue = "💰 +{value}% tulule",
-	mood_part_posters = "Plakatid",
+	mood_part_poster_art = "Plakatid",
 	mascot_pixel_cat = "Pikslikass",
 	mascot_bug_beetle = "Vigamardikas",
 	mascot_coffee_cup = "Elav kohvitass",

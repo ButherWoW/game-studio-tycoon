@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 +{value} d’ambiance",
 	poster_stat_review = "⭐ +{value} à la note",
 	poster_stat_revenue = "💰 +{value}% de revenus",
-	mood_part_posters = "Affiches",
+	mood_part_poster_art = "Affiches",
 	mascot_pixel_cat = "Chaton pixel",
 	mascot_bug_beetle = "Scarabée bug",
 	mascot_coffee_cup = "Tasse de café vivante",

@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 +{value} de ánimo",
 	poster_stat_review = "⭐ +{value} a la nota",
 	poster_stat_revenue = "💰 +{value}% de ingresos",
-	mood_part_posters = "Pósteres",
+	mood_part_poster_art = "Pósteres",
 	mascot_pixel_cat = "Gatito píxel",
 	mascot_bug_beetle = "Escarabajo bug",
 	mascot_coffee_cup = "Taza de café viva",

@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 +{value} tunnelmaa",
 	poster_stat_review = "⭐ +{value} arvosanaan",
 	poster_stat_revenue = "💰 +{value}% tuloihin",
-	mood_part_posters = "Julisteet",
+	mood_part_poster_art = "Julisteet",
 	mascot_pixel_cat = "Pikselikissa",
 	mascot_bug_beetle = "Bugikuoriainen",
 	mascot_coffee_cup = "Elävä kahvikuppi",

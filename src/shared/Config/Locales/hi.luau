@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 +{value} मूड",
 	poster_stat_review = "⭐ +{value} स्कोर में",
 	poster_stat_revenue = "💰 +{value}% आय",
-	mood_part_posters = "पोस्टर",
+	mood_part_poster_art = "पोस्टर",
 	mascot_pixel_cat = "पिक्सेल बिल्ली",
 	mascot_bug_beetle = "बग भृंग",
 	mascot_coffee_cup = "ज़िंदा कॉफ़ी कप",

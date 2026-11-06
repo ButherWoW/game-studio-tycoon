@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 +{value} dispoziție",
 	poster_stat_review = "⭐ +{value} la notă",
 	poster_stat_revenue = "💰 +{value}% la venit",
-	mood_part_posters = "Postere",
+	mood_part_poster_art = "Postere",
 	mascot_pixel_cat = "Pisicuță pixel",
 	mascot_bug_beetle = "Gândac bug",
 	mascot_coffee_cup = "Ceașcă de cafea vie",

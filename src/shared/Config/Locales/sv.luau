@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 +{value} stämning",
 	poster_stat_review = "⭐ +{value} till betyget",
 	poster_stat_revenue = "💰 +{value}% inkomst",
-	mood_part_posters = "Affischer",
+	mood_part_poster_art = "Affischer",
 	mascot_pixel_cat = "Pixelkatt",
 	mascot_bug_beetle = "Buggbagge",
 	mascot_coffee_cup = "Levande kaffekopp",

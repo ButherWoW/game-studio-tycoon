@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 +{value} razpoloženja",
 	poster_stat_review = "⭐ +{value} k oceni",
 	poster_stat_revenue = "💰 +{value}% prihodka",
-	mood_part_posters = "Plakati",
+	mood_part_poster_art = "Plakati",
 	mascot_pixel_cat = "Pikselna mačka",
 	mascot_bug_beetle = "Hrošček-napaka",
 	mascot_coffee_cup = "Živa skodelica kave",

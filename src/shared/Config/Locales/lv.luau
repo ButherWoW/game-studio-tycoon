@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 +{value} garastāvokļa",
 	poster_stat_review = "⭐ +{value} pie vērtējuma",
 	poster_stat_revenue = "💰 +{value}% ienākumiem",
-	mood_part_posters = "Plakāti",
+	mood_part_poster_art = "Plakāti",
 	mascot_pixel_cat = "Pikseļu kaķītis",
 	mascot_bug_beetle = "Kļūdu vabolīte",
 	mascot_coffee_cup = "Dzīva kafijas krūze",

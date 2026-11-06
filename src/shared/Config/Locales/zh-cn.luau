@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 心情 +{value}",
 	poster_stat_review = "⭐ 评分 +{value}",
 	poster_stat_revenue = "💰 收入 +{value}%",
-	mood_part_posters = "海报",
+	mood_part_poster_art = "海报",
 	mascot_pixel_cat = "像素猫咪",
 	mascot_bug_beetle = "眼镜虫虫",
 	mascot_coffee_cup = "活力咖啡杯",

@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 +{value} moral",
 	poster_stat_review = "⭐ +{value} puana",
 	poster_stat_revenue = "💰 +{value}% gelire",
-	mood_part_posters = "Posterler",
+	mood_part_poster_art = "Posterler",
 	mascot_pixel_cat = "Piksel kedi",
 	mascot_bug_beetle = "Böcek-bug",
 	mascot_coffee_cup = "Canlı kahve fincanı",

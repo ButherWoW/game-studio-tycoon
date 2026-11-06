@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 +{value} nálady",
 	poster_stat_review = "⭐ +{value} k hodnocení",
 	poster_stat_revenue = "💰 +{value}% k příjmu",
-	mood_part_posters = "Plakáty",
+	mood_part_poster_art = "Plakáty",
 	mascot_pixel_cat = "Pixelová kočka",
 	mascot_bug_beetle = "Brouk-bug",
 	mascot_coffee_cup = "Živý hrnek kávy",

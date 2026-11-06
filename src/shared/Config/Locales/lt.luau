@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 +{value} nuotaikos",
 	poster_stat_review = "⭐ +{value} prie įvertinimo",
 	poster_stat_revenue = "💰 +{value}% pajamų",
-	mood_part_posters = "Plakatai",
+	mood_part_poster_art = "Plakatai",
 	mascot_pixel_cat = "Pikselių katinėlis",
 	mascot_bug_beetle = "Vabalas-klaida",
 	mascot_coffee_cup = "Gyvas kavos puodelis",

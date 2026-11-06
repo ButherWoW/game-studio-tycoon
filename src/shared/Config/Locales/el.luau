@@ -579,7 +579,7 @@ return {
 	poster_stat_mood = "😊 +{value} διάθεση",
 	poster_stat_review = "⭐ +{value} στη βαθμολογία",
 	poster_stat_revenue = "💰 +{value}% έσοδα",
-	mood_part_posters = "Αφίσες",
+	mood_part_poster_art = "Αφίσες",
 	mascot_pixel_cat = "Πίξελ γατάκι",
 	mascot_bug_beetle = "Σκαθάρι-μπαγκ",
 	mascot_coffee_cup = "Ζωντανή κούπα καφέ",

@@ -162,7 +162,7 @@ local function compute(profile: DataService.Profile, player: Player?): ({ Part }
 			return (require(posterModule) :: any).bonusFor(profile, "mood")
 		end)
 		if okPoster and type(posterMood) == "number" and posterMood > 0 then
-			table.insert(parts, { key = "mood_part_posters", value = math.floor(posterMood) })
+			table.insert(parts, { key = "mood_part_poster_art", value = math.floor(posterMood) })
 		end
 	end
 	-- Надетый маскот «настроение» (MascotService, ленивый require)
