@@ -1,11 +1,13 @@
 --!strict
 -- График контента (live-ops): не всё открыто в день запуска — жанры, темы, скины, маскоты, постеры,
--- декор, стили мебели, отделка и события дня выходят волнами по дням от launchDate, чтобы игроки
--- возвращались. Таблица по датам — docs/LAUNCH.md, «График контента».
+-- декор, стили мебели, отделка и события дня выходят волнами по средам после launchDate, чтобы игроки
+-- возвращались: волна n — в n-ю среду, в тот же день, что и n-е обновление систем (Config/Features).
+-- Таблица по датам — docs/LAUNCH.md, «График контента».
 --
 -- ▶ ВЛАДЕЛЕЦ: дату запуска меняйте здесь, в launchDate ("ГГГГ-ММ-ДД", полночь UTC). День 0 — сам
 --   запуск; до него всё ведёт себя как день 0 (можно тестировать заранее). Сдвинуть волну —
---   поменять её day. Предмета нет ни в одной волне — он открыт с запуска.
+--   поменять её week (номер среды). Предмета нет ни в одной волне — он открыт с запуска.
+--   Среда 1 — первая среда строго после запуска (запуск в среду — среда 1 через 7 дней).
 --
 -- Правила (проверяет сервер, клиент только показывает «Скоро: через N дн.»):
 --   • невыпущенное не продаётся ни за $, ни за Robux (кнопки нет), не выдаётся сезоном и «Сделкой дня»
@@ -25,7 +27,8 @@ export type Kind = "genre" | "topic" | "skin" | "mascot" | "poster" | "decor" | 
 
 export type Drop = {
 	id: string, -- тексты drop_<id> (заголовок) и drop_<id>_desc (подзаголовок)
-	day: number, -- дней от launchDate
+	week: number, -- номер среды после запуска (0 — сам запуск), см. ContentDrops.wednesdayDay
+	day: number?, -- дней от launchDate: считается из week при загрузке (не задавать руками)
 	icon: string,
 	genres: { string }?,
 	topics: { string }?,
@@ -64,7 +67,7 @@ local ContentDrops = {
 	drops = {
 		{
 			id = "launch",
-			day = 0,
+			week = 0,
 			icon = "🎉",
 			genres = { "action", "adventure", "casual", "rpg", "simulation", "puzzle", "racing", "strategy" },
 			topics = {
@@ -113,7 +116,7 @@ local ContentDrops = {
 		},
 		{
 			id = "robots",
-			day = 7,
+			week = 1,
 			icon = "🤖",
 			topics = { "robots" },
 			skins = { "cyber_dev" },
@@ -124,7 +127,7 @@ local ContentDrops = {
 		},
 		{
 			id = "sports",
-			day = 14,
+			week = 2,
 			icon = "⚽",
 			genres = { "sports" },
 			topics = { "football" },
@@ -135,7 +138,7 @@ local ContentDrops = {
 		},
 		{
 			id = "ninja",
-			day = 21,
+			week = 3,
 			icon = "🥷",
 			topics = { "ninja" },
 			skins = { "bug_hunter" },
@@ -145,7 +148,7 @@ local ContentDrops = {
 		},
 		{
 			id = "horror",
-			day = 28,
+			week = 4,
 			icon = "👻",
 			genres = { "horror" },
 			topics = { "ghosts" },
@@ -154,7 +157,7 @@ local ContentDrops = {
 		},
 		{
 			id = "pirates",
-			day = 35,
+			week = 5,
 			icon = "🏴‍☠️",
 			topics = { "pirates" },
 			skins = { "wizard_dev" },
@@ -165,7 +168,7 @@ local ContentDrops = {
 		},
 		{
 			id = "heroes",
-			day = 42,
+			week = 6,
 			icon = "🦸",
 			topics = { "superheroes" },
 			skins = { "space_dev" },
@@ -176,7 +179,7 @@ local ContentDrops = {
 		},
 		{
 			id = "golden",
-			day = 56,
+			week = 7,
 			icon = "🏆",
 			mascots = { "golden_trophy" },
 			posters = { "goldenController" },
@@ -196,20 +199,38 @@ end
 
 ContentDrops.launchAt = parseDate(ContentDrops.launchDate)
 
+-- Сколько дней от запуска до среды номер week (0 — сам запуск). Среда 1 — первая среда строго
+-- после launchDate; запуск в среду — среда 1 через 7 дней. Общая для волн и Config/Features
+local WEDNESDAY = 4 -- os.date wday: 1 — воскресенье
+local launchWeekday = (os.date("!*t", ContentDrops.launchAt) :: any).wday :: number
+local firstWednesday = (WEDNESDAY - launchWeekday) % 7
+if firstWednesday == 0 then
+	firstWednesday = 7
+end
+function ContentDrops.wednesdayDay(week: number): number
+	if week <= 0 then
+		return 0
+	end
+	return firstWednesday + 7 * (math.floor(week) - 1)
+end
+for _, drop in ContentDrops.drops do
+	drop.day = ContentDrops.wednesdayDay(drop.week)
+end
+
 -- День выхода каждого предмета: kind -> id -> day (не в списке — 0)
 local releaseDays: { [string]: { [string]: number } } = {}
 for _, entry in FIELDS do
 	releaseDays[entry.kind] = {}
 end
 table.sort(ContentDrops.drops, function(a, b)
-	return a.day < b.day
+	return a.week < b.week
 end)
 for _, drop in ContentDrops.drops do
 	for _, entry in FIELDS do
 		local ids = (drop :: any)[entry.field] :: { string }?
 		if ids then
 			for _, id in ids do
-				releaseDays[entry.kind][id] = drop.day
+				releaseDays[entry.kind][id] = drop.day :: number
 			end
 		end
 	end
@@ -256,7 +277,7 @@ function ContentDrops.currentIndex(now: number?): number
 	local day = ContentDrops.dayIndex(now)
 	local index = 1
 	for i, drop in ContentDrops.drops do
-		if drop.day <= day then
+		if (drop.day :: number) <= day then
 			index = i
 		end
 	end
@@ -267,8 +288,9 @@ end
 function ContentDrops.nextDrop(now: number?): (Drop?, number)
 	local day = ContentDrops.dayIndex(now)
 	for _, drop in ContentDrops.drops do
-		if drop.day > day then
-			return drop, drop.day - day
+		local dropDay = drop.day :: number
+		if dropDay > day then
+			return drop, dropDay - day
 		end
 	end
 	return nil, 0

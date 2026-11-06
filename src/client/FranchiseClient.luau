@@ -10,6 +10,7 @@ local Shared = ReplicatedStorage.Shared
 -- без таймаута (аудит P2-20). До загрузки запросы откладываются, кнопки ничего не шлют
 local depthRemotes: typeof(require(Shared.DepthRemotes))? = nil
 local Franchises = require(Shared.Config.Franchises)
+local Features = require(Shared.Config.Features)
 local Genres = require(Shared.Config.Genres)
 local Images = require(Shared.Config.Images)
 local ArtIcon = require(script.Parent.ArtIcon)
@@ -148,6 +149,10 @@ end
 -- Блок в прокрутке окна (LayoutOrder = order). onPick(франшиза или nil) — окно подставляет жанр,
 -- тему и название-продолжение. Пусто (нет франшиз и кандидатов) — блока нет
 function FranchiseClient.build(parent: Instance, order: number, onPick: (any) -> ())
+	-- Франшизы выходят обновлением «Издатели» (Config/Features)
+	if not Features.isReleased("franchises") then
+		return
+	end
 	local all = list()
 	local hits = candidates()
 	if #all == 0 and #hits == 0 then

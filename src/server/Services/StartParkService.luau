@@ -250,6 +250,12 @@ local function addObstacle(target: Instance)
 	end
 end
 
+-- Модель, появившаяся в парке после старта (щиты и Зал славы выходят обновлением по средам,
+-- BillboardService / HallOfFameService): картриджи больше не падают внутрь неё
+function StartParkService.addObstacle(target: Instance)
+	addObstacle(target)
+end
+
 -- Скамейки, доска, ломбард и прочие модели парка, фонтан и спавн
 local function collectObstacles(folder: Instance, spots: Instance?)
 	obstacles = {}

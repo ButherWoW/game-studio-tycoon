@@ -25,7 +25,9 @@ local StaffRemotes = require(ReplicatedStorage.Shared.StaffRemotes)
 local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
 local StartRemotes = require(ReplicatedStorage.Shared.StartRemotes)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
+local Features = require(ReplicatedStorage.Shared.Config.Features)
 local DataService = require(script.Parent.DataService)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 local OfficeFloors = require(script.Parent.OfficeFloors)
 local StyleModels = require(script.Parent.StyleModels)
 
@@ -48,6 +50,8 @@ local COLOR_MOVE = Color3.fromRGB(255, 201, 60)
 local GARAGE_ID = "garage"
 -- Серая кнопка на месте переезда, пока идёт стройка (PlotLabels переводит Buy_building)
 local BUILDING_ID = "building"
+-- Серая кнопка «🔒 Скоро» на месте переезда на этаж, который ещё не вышел (Config/Features.stages)
+local SOON_PREFIX = "soon_"
 -- Точка появления владельца гаража: снаружи перед воротами (передний край участка +Z), лицом внутрь
 local HOME_OUTSIDE = 4 -- studs за передним краем участка
 local HOME_HEIGHT = 3.5 -- над верхом участка: HumanoidRootPart стоящего персонажа
@@ -159,6 +163,10 @@ end
 
 -- Можно ли переехать на этап stage (без проверки денег и того, что это следующий этап)
 local function stageRequirementsMet(profile: DataService.Profile, stage: Stages.Stage): boolean
+	-- 3-й этаж выходит обновлением по средам (Config/Features): до выхода переезда нет
+	if not Features.stageReleased(stage.level) then
+		return false
+	end
 	if stage.requiresUpgrade and not profile.upgrades[stage.requiresUpgrade] then
 		return false
 	end
@@ -493,12 +501,35 @@ refreshButtons = function(player: Player)
 		byFloor[topFloor] = byFloor[topFloor] or {}
 		table.insert(byFloor[topFloor], placeholder)
 	end
+	-- Интерьер и команда готовы, а следующий этаж ещё не вышел: серая «🔒 Скоро» (подпись и
+	-- дни — PlotLabels на языке игрока). Тоже не апгрейд: tryBuy её пропустит
+	local nextStage = Stages[profile.studioLevel + 1]
+	if
+		not building
+		and profileOwnsGarage(profile)
+		and nextStage
+		and nextStage.cost > 0
+		and not Features.stageReleased(nextStage.level)
+		and readyToMove(profile)
+	then
+		local soon = {
+			id = SOON_PREFIX .. nextStage.id,
+			name = "🔒 " .. nextStage.name .. ": скоро",
+			cost = 0,
+			model = "",
+			move = true,
+		} :: Upgrades.Upgrade
+		building = soon
+		byFloor[topFloor] = byFloor[topFloor] or {}
+		table.insert(byFloor[topFloor], soon)
+	end
 	local playerButtons = {}
 	for floor, floorList in byFloor do
 		for i, upgrade in floorList do
 			local button = createButton(player, plot, upgrade, i, #floorList, floor)
 			button.Parent = newFolder
 			if upgrade == building then
+				button.Color = COLOR_EXPENSIVE
 				local gui = button:FindFirstChildWhichIsA("BillboardGui")
 				local label = gui and gui:FindFirstChildWhichIsA("TextLabel")
 				if label then
@@ -868,7 +899,11 @@ function PlotService.studioOffers(player: Player): { Offer }
 			move = true,
 			stage = nextStage.level,
 		}
-		if nextStage.requiresUpgrade and not profile.upgrades[nextStage.requiresUpgrade] then
+		if not Features.stageReleased(nextStage.level) then
+			-- Этаж выходит обновлением по средам (Config/Features)
+			offer.lock, offer.lockVars =
+				"upd_soon", { days = Features.daysUntil(Features.stages[nextStage.level]) }
+		elseif nextStage.requiresUpgrade and not profile.upgrades[nextStage.requiresUpgrade] then
 			offer.lock, offer.lockVars = "studio_lock_requires", { id = nextStage.requiresUpgrade }
 		elseif profile.gamesReleased < nextStage.gamesRequired then
 			offer.lock, offer.lockVars =
@@ -927,6 +962,16 @@ function PlotService.start()
 	end)
 	Remotes.BuyUpgrade.OnServerEvent:Connect(onBuyUpgrade)
 	StartRemotes.GoHome.OnServerEvent:Connect(onGoHome)
+	-- Этаж вышел, пока сервер работает (Config/Features.stages): «🔒 Скоро» -> кнопка переезда
+	for _, id in Features.stages do
+		FeatureReleaseService.whenReleased(id, "PlotService", function()
+			for player in buttons do
+				if player.Parent then
+					refreshButtons(player)
+				end
+			end
+		end)
+	end
 	StaffRemotes.MoveStudio.OnServerEvent:Connect(onMoveStudio)
 
 	-- Один общий цикл: зелёная кнопка — денег хватает, серая — нет

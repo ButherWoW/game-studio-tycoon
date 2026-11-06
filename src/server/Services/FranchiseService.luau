@@ -14,6 +14,7 @@ local Genres = require(Shared.Config.Genres)
 local Topics = require(Shared.Config.Topics)
 local DepthRemotes = require(Shared.DepthRemotes)
 local DataService = require(script.Parent.DataService)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 export type Franchise = {
 	id: number,
@@ -300,7 +301,7 @@ local function onRequest(player: Player)
 	FranchiseService.pushState(player)
 end
 
-function FranchiseService.start()
+local function startNow()
 	DepthRemotes.FranchiseRequest.OnServerEvent:Connect(onRequest)
 	DepthRemotes.FranchiseCreate.OnServerEvent:Connect(onCreate)
 	DataService.onProfileLoaded(function(player)
@@ -310,6 +311,16 @@ function FranchiseService.start()
 		lastRequest[player] = nil
 		lastCandidateToast[player] = nil
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «franchises» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function FranchiseService.start()
+	FeatureReleaseService.mute("franchises", {
+		DepthRemotes.FranchiseRequest,
+		DepthRemotes.FranchiseCreate,
+	})
+	FeatureReleaseService.whenReleased("franchises", "FranchiseService", startNow)
 end
 
 return FranchiseService

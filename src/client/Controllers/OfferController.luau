@@ -13,6 +13,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Shared = ReplicatedStorage.Shared
 local Offers = require(Shared.Config.Offers)
 local Texts = require(Shared.Config.Texts)
+local Features = require(Shared.Config.Features)
 local StudioLayout = require(Shared.StudioLayout)
 local ClientState = require(script.Parent.Parent.ClientState)
 local OfferClient = require(script.Parent.Parent.OfferClient)
@@ -41,6 +42,10 @@ local function onPromptShown(prompt: ProximityPrompt)
 	local stage = floor and StudioLayout.floorStage(floor)
 	local data = ClientState.data
 	if not stage or not data then
+		return
+	end
+	-- Этаж ещё не вышел (обновление по средам, Config/Features): деньги не помогут
+	if not Features.stageReleased(stage.level) then
 		return
 	end
 	-- Не хватает выпущенных игр — деньги не помогут, не предлагаем

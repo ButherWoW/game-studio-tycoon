@@ -14,6 +14,7 @@ local WordFilter = require(ReplicatedStorage.Shared.WordFilter)
 local UnlockRules = require(ReplicatedStorage.Shared.UnlockRules)
 local Research = require(ReplicatedStorage.Shared.Config.Research)
 local GameJam = require(ReplicatedStorage.Shared.Config.GameJam)
+local Features = require(ReplicatedStorage.Shared.Config.Features)
 local ClientState = require(script.Parent.Parent.ClientState)
 local DevState = require(script.Parent.Parent.DevState)
 local FranchiseClient = require(script.Parent.Parent.FranchiseClient)
@@ -623,7 +624,8 @@ render = function()
 	-- Тема гейм-джема недели (Config/GameJam): игра по ней попадёт в топ джема
 	local jamGenre, jamTopic = GameJam.theme(GameJam.weekIndex())
 	local genre, topic = Genres[jamGenre], Topics[jamTopic]
-	if genre and topic then
+	-- Гейм-джем выходит обновлением «Аркада» (Config/Features)
+	if genre and topic and Features.isReleased("gameJam") then
 		local jamText = ClientState.t(
 			"create_jam_theme",
 			{ theme = ClientState.localName(genre) .. " + " .. ClientState.localName(topic) }

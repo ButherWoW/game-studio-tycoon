@@ -9,6 +9,7 @@ local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
+local Features = require(ReplicatedStorage.Shared.Config.Features)
 local ClientState = require(script.Parent.Parent.ClientState)
 
 local PlotLabels = {}
@@ -26,6 +27,20 @@ local function labelFor(buttonName: string): string?
 	-- Серая кнопка на месте переезда, пока идёт стройка (PlotService, V29)
 	if id == "building" then
 		return ClientState.t("build_button")
+	end
+	-- Серая «🔒 Скоро» на месте переезда на этаж, который выходит обновлением по средам
+	local soonId = id:match("^soon_(.+)$")
+	if soonId then
+		for _, stage in Stages do
+			if stage.id == soonId then
+				local days = Features.daysUntil(Features.stages[stage.level] or "")
+				return "🔒 "
+					.. ClientState.localName(stage)
+					.. "\n"
+					.. ClientState.t("upd_soon", { days = days })
+			end
+		end
+		return nil
 	end
 	local stageId = id:match("^stage_(.+)$")
 	if stageId then

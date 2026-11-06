@@ -13,6 +13,7 @@ local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 
 local Arcade = require(ReplicatedStorage.Shared.Config.Arcade)
+local Features = require(ReplicatedStorage.Shared.Config.Features)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local Images = require(ReplicatedStorage.Shared.Config.Images)
 local ArtIcon = require(script.Parent.Parent.ArtIcon)
@@ -734,7 +735,9 @@ end
 
 -- Можно ли предложить плейтест для этого релиза (кнопка в ReleaseWindow)
 function ArcadeWindow.available(info: any): boolean
+	-- Мини-аркада выходит обновлением «Аркада» (Config/Features)
 	return remotes ~= nil
+		and Features.isReleased("arcade")
 		and Arcade.enabled
 		and type(info) == "table"
 		and type(info.projectId) == "number"

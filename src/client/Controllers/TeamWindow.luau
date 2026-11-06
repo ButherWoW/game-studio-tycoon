@@ -22,6 +22,7 @@ local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local Images = require(ReplicatedStorage.Shared.Config.Images)
 local Expenses = require(ReplicatedStorage.Shared.Config.Expenses)
+local Features = require(ReplicatedStorage.Shared.Config.Features)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local ClientState = require(script.Parent.Parent.ClientState)
 local StudioState = require(script.Parent.Parent.StudioState)
@@ -142,6 +143,12 @@ local function buildStagePanel(parent: Instance, data: any, order: number)
 
 	local parts = {}
 	local ready = true
+	-- Этаж выходит обновлением по средам (Config/Features.stages)
+	if not Features.stageReleased(nextStage.level) then
+		local days = Features.daysUntil(Features.stages[nextStage.level])
+		table.insert(parts, "🔒 " .. ClientState.t("upd_soon", { days = days }))
+		ready = false
+	end
 	if nextStage.requiresUpgrade then
 		table.insert(
 			parts,
@@ -549,84 +556,87 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 		button.Size = UDim2.new(0.42, 0, 0, 32)
 	end
 
-	-- Наставничество: учит / учится / кого можно взять в ученики
-	local mentorTitle = Ui.label(frame, ClientState.t("mentor_title"), 24, Ui.titleFont)
-	mentorTitle.LayoutOrder = nextOrder()
-	-- Сова-наставник Астры (Images.misc.mentorIcon, V28) вместо 🎓
-	ArtIcon.prefix(mentorTitle, "🎓", Images.misc.mentorIcon, 24)
-	local mentorHint = Ui.label(
-		frame,
-		ClientState.t("mentor_hint", { slow = math.floor((1 - Mentoring.mentorSpeed) * 100 + 0.5) }),
-		40,
-		nil,
-		Ui.colors.muted
-	)
-	mentorHint.TextScaled = false
-	mentorHint.TextSize = SMALL_TEXT
-	mentorHint.TextWrapped = true
-	mentorHint.LayoutOrder = nextOrder()
-	local myMentor = mentorOf(employee.id)
-	local myMentee = mentoring[employee.id]
-	if myMentor or myMentee then
-		local text = if myMentee
-			then ClientState.t("mentor_teaching", { name = employeeName(myMentee) })
-			else ClientState.t("mentor_learning", { name = employeeName(myMentor :: string) })
-		local line = detailLine(frame, text, nextOrder())
-		local stop = smallButton(line, ClientState.t("mentor_stop"), Ui.colors.bad, function()
-			StaffRemotes.SetMentor:FireServer(myMentee and employee.id or myMentor, "")
-		end)
-		stop.AnchorPoint = Vector2.new(1, 0)
-		stop.Position = UDim2.new(1, 0, 0, 0)
-		stop.Size = UDim2.new(0.42, 0, 0, 32)
-	elseif not Mentoring.canMentor(level) then
-		Ui.label(
+	-- Наставничество выходит обновлением «Издатели» (Config/Features)
+	if Features.isReleased("mentoring") then
+		-- Наставничество: учит / учится / кого можно взять в ученики
+		local mentorTitle = Ui.label(frame, ClientState.t("mentor_title"), 24, Ui.titleFont)
+		mentorTitle.LayoutOrder = nextOrder()
+		-- Сова-наставник Астры (Images.misc.mentorIcon, V28) вместо 🎓
+		ArtIcon.prefix(mentorTitle, "🎓", Images.misc.mentorIcon, 24)
+		local mentorHint = Ui.label(
 			frame,
-			ClientState.t("mentor_locked", { level = Mentoring.minMentorLevel }),
-			22,
+			ClientState.t("mentor_hint", { slow = math.floor((1 - Mentoring.mentorSpeed) * 100 + 0.5) }),
+			40,
 			nil,
 			Ui.colors.muted
-		).LayoutOrder =
-			nextOrder()
-	else
-		-- Младшие без наставника, которые сами никого не учат
-		local juniors: { string } = {}
-		for otherId in staff do
-			local otherInfo = info[otherId]
-			if
-				otherId ~= employee.id
-				and type(otherInfo) == "table"
-				and type(otherInfo.skills) == "table"
-				and Mentoring.isJunior(employeeLevel(otherInfo), level)
-				and mentoring[otherId] == nil
-				and mentorOf(otherId) == nil
-			then
-				table.insert(juniors, otherId)
-			end
-		end
-		table.sort(juniors)
-		if #juniors == 0 then
-			Ui.label(frame, ClientState.t("mentor_none", { level = level }), 22, nil, Ui.colors.muted).LayoutOrder =
-				nextOrder()
-		end
-		for _, juniorId in juniors do
-			local line = detailLine(
+		)
+		mentorHint.TextScaled = false
+		mentorHint.TextSize = SMALL_TEXT
+		mentorHint.TextWrapped = true
+		mentorHint.LayoutOrder = nextOrder()
+		local myMentor = mentorOf(employee.id)
+		local myMentee = mentoring[employee.id]
+		if myMentor or myMentee then
+			local text = if myMentee
+				then ClientState.t("mentor_teaching", { name = employeeName(myMentee) })
+				else ClientState.t("mentor_learning", { name = employeeName(myMentor :: string) })
+			local line = detailLine(frame, text, nextOrder())
+			local stop = smallButton(line, ClientState.t("mentor_stop"), Ui.colors.bad, function()
+				StaffRemotes.SetMentor:FireServer(myMentee and employee.id or myMentor, "")
+			end)
+			stop.AnchorPoint = Vector2.new(1, 0)
+			stop.Position = UDim2.new(1, 0, 0, 0)
+			stop.Size = UDim2.new(0.42, 0, 0, 32)
+		elseif not Mentoring.canMentor(level) then
+			Ui.label(
 				frame,
-				employeeName(juniorId)
-					.. " · "
-					.. ClientState.t("team_skills", { level = employeeLevel(info[juniorId]) }),
+				ClientState.t("mentor_locked", { level = Mentoring.minMentorLevel }),
+				22,
+				nil,
+				Ui.colors.muted
+			).LayoutOrder =
 				nextOrder()
-			)
-			local pick = smallButton(
-				line,
-				ClientState.t("mentor_pick", { name = employeeName(juniorId) }),
-				Ui.colors.primary,
-				function()
-					StaffRemotes.SetMentor:FireServer(employee.id, juniorId)
+		else
+			-- Младшие без наставника, которые сами никого не учат
+			local juniors: { string } = {}
+			for otherId in staff do
+				local otherInfo = info[otherId]
+				if
+					otherId ~= employee.id
+					and type(otherInfo) == "table"
+					and type(otherInfo.skills) == "table"
+					and Mentoring.isJunior(employeeLevel(otherInfo), level)
+					and mentoring[otherId] == nil
+					and mentorOf(otherId) == nil
+				then
+					table.insert(juniors, otherId)
 				end
-			)
-			pick.AnchorPoint = Vector2.new(1, 0)
-			pick.Position = UDim2.new(1, 0, 0, 0)
-			pick.Size = UDim2.new(0.42, 0, 0, 32)
+			end
+			table.sort(juniors)
+			if #juniors == 0 then
+				Ui.label(frame, ClientState.t("mentor_none", { level = level }), 22, nil, Ui.colors.muted).LayoutOrder =
+					nextOrder()
+			end
+			for _, juniorId in juniors do
+				local line = detailLine(
+					frame,
+					employeeName(juniorId)
+						.. " · "
+						.. ClientState.t("team_skills", { level = employeeLevel(info[juniorId]) }),
+					nextOrder()
+				)
+				local pick = smallButton(
+					line,
+					ClientState.t("mentor_pick", { name = employeeName(juniorId) }),
+					Ui.colors.primary,
+					function()
+						StaffRemotes.SetMentor:FireServer(employee.id, juniorId)
+					end
+				)
+				pick.AnchorPoint = Vector2.new(1, 0)
+				pick.Position = UDim2.new(1, 0, 0, 0)
+				pick.Size = UDim2.new(0.42, 0, 0, 32)
+			end
 		end
 	end
 

@@ -29,6 +29,7 @@ local CompanyEvents = require(Shared.Config.CompanyEvents)
 local Ui = require(script.Parent.Parent.Ui)
 local ConsoleClient = require(script.Parent.Parent.ConsoleClient)
 local ContentDropClient = require(script.Parent.Parent.ContentDropClient)
+local Features = require(ReplicatedStorage.Shared.Config.Features)
 
 type Tab = "interior" | "decor" | "mood" | "console" | "style" | "finish"
 type StyleState = { owned: { [string]: boolean }, selected: string }
@@ -541,8 +542,18 @@ render = function()
 	tabs.Parent = window
 	local compact = isCompact()
 	-- Выбранная вкладка в компактном режиме — в 3 доли ширины, остальные — по одной
-	local shares = if compact then #TABS + 2 else #TABS
+	-- Вкладка «🎮 Консоль» — с обновлением «Своя консоль» (Config/Features)
+	local visibleTabs: { Tab } = {}
 	for _, id in TABS do
+		if id ~= "console" or Features.isReleased("console") then
+			table.insert(visibleTabs, id)
+		end
+	end
+	if not table.find(visibleTabs, tab) then
+		tab = "decor"
+	end
+	local shares = if compact then #visibleTabs + 2 else #visibleTabs
+	for _, id in visibleTabs do
 		local b = Ui.button(
 			tabs,
 			tabText(id, compact),
