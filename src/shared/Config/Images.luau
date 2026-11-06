@@ -17,7 +17,7 @@ Images.menu = {
 	menu_holiday = 108939585178579, -- menu_holiday.png, 🎉
 	menu_camera = 113053777664719, -- menu_camera.png, 🎥
 	menu_bank = 82427982778270, -- menu_bank.png, 🏦
-	menu_guides = 0, -- menu_guides.png, 📖 «Справочник» (обучение; ID — Dev 1 после арта Астры)
+	menu_guides = 122633794555292, -- menu_guides.png, 📖 «Справочник» (обучение; ID — Dev 1 после арта Астры)
 	menu_achievements = 97631283620169, -- menu_achievements.png, 🏆 (V10)
 	menu_studio = 127200595653936, -- menu_studio.png, 🛋️ (окно «Студия»: декор и настроение)
 	home = 112336651662592, -- home.png, 🏠
@@ -383,10 +383,10 @@ Images.windows = {
 -- 0 — картинки ещё нет: экран на цветном фоне с крупным эмодзи. Dev 1: после арта Астры (#26)
 -- вписать Image ID (не Decal ID!) напротив экрана
 Images.intro = {
-	intro1 = 0, -- intro1.png: ноутбук на скамейке в парке (🛋️)
-	intro2 = 0, -- intro2.png: выбор жанра на экране (🎮)
-	intro3 = 0, -- intro3.png: оценка критиков, монеты и фанаты (⭐)
-	intro4 = 0, -- intro4.png: путь гараж → офис → небоскрёб (🏢)
+	intro1 = 126421344790424, -- intro1.png: ноутбук на скамейке в парке (🛋️)
+	intro2 = 99143335450588, -- intro2.png: выбор жанра на экране (🎮)
+	intro3 = 91747492777377, -- intro3.png: оценка критиков, монеты и фанаты (⭐)
+	intro4 = 112777956402925, -- intro4.png: путь гараж → офис → небоскрёб (🏢)
 } :: { [string]: number }
 
 return Images
