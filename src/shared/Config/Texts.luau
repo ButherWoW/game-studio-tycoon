@@ -2181,7 +2181,7 @@ Texts.en = {
 	floorlock_money = "{mark} Money: {have} of {need}",
 	floorlock_games = "{mark} Games released: {have} of {need}",
 	floorlock_ready = "{mark} All of this floor's interior bought and every desk taken",
-	floorlock_where = "When everything is ready, the golden \"Move\" button appears on this floor",
+	floorlock_where = 'When everything is ready, the golden "Move" button appears on this floor',
 	floorlock_build = "Build: {price}",
 	floorlock_open = "🛋️ Open Studio",
 	hud_mood = "😊 Team mood: {value}%",
@@ -3532,7 +3532,7 @@ Texts.en = {
 	guide_move_3 = "After you pay, construction begins. Your studio keeps working meanwhile",
 	guide_floor2_title = "How to open the 2nd floor",
 	guide_floor2_1 = "Buy this floor's whole interior, seat an employee at every desk and release enough games",
-	guide_floor2_2 = "Then the golden \"Move\" button appears on the floor; the price and games are on the 🔒 sign outside",
+	guide_floor2_2 = 'Then the golden "Move" button appears on the floor; the price and games are on the 🔒 sign outside',
 	guide_floor2_3 = "Progress is in the 🛋️ Studio window; at the 🛗 lift press the 🔒 floor to see what is missing",
 
 	guide_expo_title = "Game Expo",
