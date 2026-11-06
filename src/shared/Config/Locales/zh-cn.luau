@@ -1929,4 +1929,10 @@ return {
 	intro_next = "下一步",
 	intro_skip = "跳过",
 	intro_start = "开始",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ 施工加速了 {minutes} 分钟，未用完的部分已作为收入发放：{amount}",
+	build_speed_late = "💵 施工快完成了——加速费用已作为收入发放：{amount}",
+	move_prompt_action = "🏗️ 开始施工",
+	move_prompt_object = "{price} · {minutes} 分钟，不退款",
+	move_hint = "用操作确认 · 施工需要 {minutes} 分钟",
 }
