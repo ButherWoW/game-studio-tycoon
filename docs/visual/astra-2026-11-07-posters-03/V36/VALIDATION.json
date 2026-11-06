@@ -1,0 +1,77 @@
+[
+  {
+    "file": "poster_neonCity.png",
+    "sourceSize": [
+      1086,
+      1448
+    ],
+    "size": [
+      768,
+      1024
+    ],
+    "mode": "RGB",
+    "format": "PNG",
+    "opaque": true,
+    "sha256": "eca5da75ee48ba3a7be28e2d40774452715f30bf59d59aa645112eb2f3e8dc6e"
+  },
+  {
+    "file": "poster_crystalKingdom.png",
+    "sourceSize": [
+      1086,
+      1448
+    ],
+    "size": [
+      768,
+      1024
+    ],
+    "mode": "RGB",
+    "format": "PNG",
+    "opaque": true,
+    "sha256": "392245c45c204ddae6585383d3b7e42f2d41a267e06cd5d535270c594e8e659c"
+  },
+  {
+    "file": "poster_mechTitan.png",
+    "sourceSize": [
+      1086,
+      1448
+    ],
+    "size": [
+      768,
+      1024
+    ],
+    "mode": "RGB",
+    "format": "PNG",
+    "opaque": true,
+    "sha256": "8e1f96c3377818374ba2ee782299df942c394ec923e5ad5588581e6066bcb4c9"
+  },
+  {
+    "file": "poster_galaxyLegends.png",
+    "sourceSize": [
+      1086,
+      1448
+    ],
+    "size": [
+      768,
+      1024
+    ],
+    "mode": "RGB",
+    "format": "PNG",
+    "opaque": true,
+    "sha256": "840c5018aee981bb840811e2c2c75c996fef15bdd782cd45c6f3ed1aae8ad4bf"
+  },
+  {
+    "file": "poster_goldenController.png",
+    "sourceSize": [
+      1086,
+      1448
+    ],
+    "size": [
+      768,
+      1024
+    ],
+    "mode": "RGB",
+    "format": "PNG",
+    "opaque": true,
+    "sha256": "161f993ab691fcb3ddacab9b6777fbb2d0cd7335c5021eb51df44f9852de5b26"
+  }
+]
