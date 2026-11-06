@@ -1929,4 +1929,10 @@ return {
 	intro_next = "Seuraava",
 	intro_skip = "Ohita",
 	intro_start = "Aloita",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ Rakennus nopeutui {minutes} min, käyttämätön osa maksettiin tulona: {amount}",
+	build_speed_late = "💵 Rakennus on melkein valmis — nopeutus maksettiin tulona: {amount}",
+	move_prompt_action = "🏗️ Aloita rakennus",
+	move_prompt_object = "{price} · {minutes} min, ei hyvitystä",
+	move_hint = "Vahvista toiminnolla · rakennus kestää {minutes} min",
 }

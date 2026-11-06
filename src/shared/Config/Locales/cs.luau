@@ -1958,4 +1958,10 @@ return {
 	intro_next = "Dál",
 	intro_skip = "Přeskočit",
 	intro_start = "Začít",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ Stavba urychlena o {minutes} min, nevyužitá část byla vyplacena jako příjem: {amount}",
+	build_speed_late = "💵 Stavba je skoro hotová — urychlení bylo vyplaceno jako příjem: {amount}",
+	move_prompt_action = "🏗️ Zahájit stavbu",
+	move_prompt_object = "{price} · {minutes} min, bez vrácení peněz",
+	move_hint = "Potvrď akcí · stavba trvá {minutes} min",
 }

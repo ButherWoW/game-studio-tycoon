@@ -1930,4 +1930,10 @@ return {
 	intro_next = "Tovább",
 	intro_skip = "Kihagyás",
 	intro_start = "Indítás",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ Az építés {minutes} perccel gyorsabb lett, a ki nem használt részt bevételként kifizettük: {amount}",
+	build_speed_late = "💵 Az építés majdnem kész — a gyorsítást bevételként kifizettük: {amount}",
+	move_prompt_action = "🏗️ Építés indítása",
+	move_prompt_object = "{price} · {minutes} perc, nincs visszatérítés",
+	move_hint = "Erősítsd meg a művelettel · az építés {minutes} perc",
 }

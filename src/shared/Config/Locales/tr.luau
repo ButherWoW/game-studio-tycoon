@@ -1928,4 +1928,10 @@ return {
 	intro_next = "İleri",
 	intro_skip = "Atla",
 	intro_start = "Başla",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ İnşaat {minutes} dk hızlandı, kullanılmayan kısım gelir olarak ödendi: {amount}",
+	build_speed_late = "💵 İnşaat neredeyse bitti — hızlandırma gelir olarak ödendi: {amount}",
+	move_prompt_action = "🏗️ İnşaatı başlat",
+	move_prompt_object = "{price} · {minutes} dk, iade yok",
+	move_hint = "Eylemle onayla · inşaat {minutes} dk sürer",
 }

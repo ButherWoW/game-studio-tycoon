@@ -1929,4 +1929,10 @@ return {
 	intro_next = "Lanjut",
 	intro_skip = "Lewati",
 	intro_start = "Mulai",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ Pembangunan dipercepat {minutes} menit, bagian yang tidak terpakai dibayarkan sebagai pendapatan: {amount}",
+	build_speed_late = "💵 Pembangunan hampir selesai — percepatan dibayarkan sebagai pendapatan: {amount}",
+	move_prompt_action = "🏗️ Mulai pembangunan",
+	move_prompt_object = "{price} · {minutes} menit, tanpa pengembalian",
+	move_hint = "Konfirmasi dengan aksi · pembangunan {minutes} menit",
 }

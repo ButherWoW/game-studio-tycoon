@@ -1930,4 +1930,10 @@ return {
 	intro_next = "Nästa",
 	intro_skip = "Hoppa över",
 	intro_start = "Starta",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ Bygget snabbades på med {minutes} min, den oanvända delen betalades ut som inkomst: {amount}",
+	build_speed_late = "💵 Bygget är nästan klart — påskyndningen betalades ut som inkomst: {amount}",
+	move_prompt_action = "🏗️ Starta bygget",
+	move_prompt_object = "{price} · {minutes} min, ingen återbetalning",
+	move_hint = "Bekräfta med åtgärden · bygget tar {minutes} min",
 }

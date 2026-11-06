@@ -1930,4 +1930,10 @@ return {
 	intro_next = "Înainte",
 	intro_skip = "Sari peste",
 	intro_start = "Start",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ Construcția a fost accelerată cu {minutes} min, partea nefolosită a fost plătită ca venit: {amount}",
+	build_speed_late = "💵 Construcția e aproape gata — accelerarea a fost plătită ca venit: {amount}",
+	move_prompt_action = "🏗️ Începe construcția",
+	move_prompt_object = "{price} · {minutes} min, fără returnare",
+	move_hint = "Confirmă cu acțiunea · construcție de {minutes} min",
 }

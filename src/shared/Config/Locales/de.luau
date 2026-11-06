@@ -1958,4 +1958,10 @@ return {
 	intro_next = "Weiter",
 	intro_skip = "Überspringen",
 	intro_start = "Los geht’s",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ Bau um {minutes} Min. beschleunigt, der ungenutzte Teil wurde als Einkommen ausgezahlt: {amount}",
+	build_speed_late = "💵 Der Bau ist fast fertig — die Beschleunigung wurde als Einkommen ausgezahlt: {amount}",
+	move_prompt_action = "🏗️ Bau starten",
+	move_prompt_object = "{price} · {minutes} Min., keine Rückerstattung",
+	move_hint = "Bestätige mit der Aktion · Bau dauert {minutes} Min.",
 }

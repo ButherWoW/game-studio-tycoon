@@ -1929,4 +1929,10 @@ return {
 	intro_next = "Tālāk",
 	intro_skip = "Izlaist",
 	intro_start = "Sākt",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ Būvniecība paātrināta par {minutes} min, neizmantotā daļa izmaksāta kā ienākumi: {amount}",
+	build_speed_late = "💵 Būvniecība gandrīz pabeigta — paātrinājums izmaksāts kā ienākumi: {amount}",
+	move_prompt_action = "🏗️ Sākt būvniecību",
+	move_prompt_object = "{price} · {minutes} min, bez atmaksas",
+	move_hint = "Apstiprini ar darbību · būvniecība ilgst {minutes} min",
 }

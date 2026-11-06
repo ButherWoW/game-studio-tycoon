@@ -1958,4 +1958,10 @@ return {
 	intro_next = "Далі",
 	intro_skip = "Пропустити",
 	intro_start = "Почати",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ Будівництво прискорено на {minutes} хв, невикористану частину зараховано як дохід: {amount}",
+	build_speed_late = "💵 Будівництво майже завершено — прискорення зараховано як дохід: {amount}",
+	move_prompt_action = "🏗️ Почати будівництво",
+	move_prompt_object = "{price} · {minutes} хв, без повернення",
+	move_hint = "Підтверди дією · будівництво {minutes} хв",
 }

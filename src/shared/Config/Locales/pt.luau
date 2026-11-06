@@ -1958,4 +1958,10 @@ return {
 	intro_next = "Avançar",
 	intro_skip = "Pular",
 	intro_start = "Começar",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ Obra acelerada em {minutes} min, a parte não usada foi paga como renda: {amount}",
+	build_speed_late = "💵 A obra está quase pronta — a aceleração foi paga como renda: {amount}",
+	move_prompt_action = "🏗️ Começar a obra",
+	move_prompt_object = "{price} · {minutes} min, sem reembolso",
+	move_hint = "Confirma com a ação · obra de {minutes} min",
 }

@@ -1929,4 +1929,10 @@ return {
 	intro_next = "Toliau",
 	intro_skip = "Praleisti",
 	intro_start = "Pradėti",
+	-- 2-й этаж, платформы, стройка (06.11)
+	build_speed_partial = "⚡ Statyba pagreitinta {minutes} min., nepanaudota dalis išmokėta kaip pajamos: {amount}",
+	build_speed_late = "💵 Statyba beveik baigta — pagreitinimas išmokėtas kaip pajamos: {amount}",
+	move_prompt_action = "🏗️ Pradėti statybą",
+	move_prompt_object = "{price} · {minutes} min., pinigai negrąžinami",
+	move_hint = "Patvirtink veiksmu · statyba trunka {minutes} min.",
 }
