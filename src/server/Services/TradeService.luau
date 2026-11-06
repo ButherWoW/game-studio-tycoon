@@ -120,7 +120,7 @@ local function cashLog(profile: DataService.Profile): { day: number, received: n
 		or received < 0
 		or received == math.huge
 	then
-		raw = { day = today, received = 0 }
+		raw = { day = today, received = 0 };
 		(profile :: any).tradeCash = raw
 	end
 	return raw

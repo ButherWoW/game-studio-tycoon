@@ -869,11 +869,13 @@ local function buildRow(
 	-- Зарплата: у нанятого — с учётом вкачанных навыков, у кандидата — стартовая
 	local employeeSkills = info[employee.id] and info[employee.id].skills
 	details ..= " · " .. ClientState.t("team_salary", {
-		amount = Texts.money(math.floor(
-			Expenses.salary(employee, if type(employeeSkills) == "table" then employeeSkills else nil)
-				-- Прибавка после события «переманивают» (CompanyEventService)
-				* (tonumber(raises[employee.id]) or 1)
-		)),
+		amount = Texts.money(
+			math.floor(
+				Expenses.salary(employee, if type(employeeSkills) == "table" then employeeSkills else nil)
+					-- Прибавка после события «переманивают» (CompanyEventService)
+					* (tonumber(raises[employee.id]) or 1)
+			)
+		),
 	})
 	local deskId = staff[employee.id]
 	if deskId == "" then
