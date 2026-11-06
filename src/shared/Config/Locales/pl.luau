@@ -1948,4 +1948,14 @@ return {
 	guide_floor2_3 = "Postęp zobaczysz w oknie „🛋️ Studio”; przy windzie 🛗 kliknij piętro 🔒, a pokażemy, czego brakuje",
 	platform_notice_phone = "📱 Platforma „Telefony” odblokowana! Wybierz ją w oknie „Nowa gra”",
 	build_prompt = "⚡ Przyspiesz budowę",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Przezroczyste ściany",
+	setting_wallfade_hint = "Ściany między kamerą a twoją postacią stają się przezroczyste",
+	intro_1 = "Masz 17 lat. Całe życie grałeś w gry — a teraz chcesz je tworzyć. Nie masz pieniędzy ani biura. Masz tylko stary laptop i marzenie.",
+	intro_2 = "Zacznij od małych kroków: usiądź z laptopem na ławce w parku i zrób swoją pierwszą grę. Wybierz gatunek i motyw, a siły rozdziel między rozgrywkę, grafikę, dźwięk i fabułę.",
+	intro_3 = "Krytycy ocenią ją w skali od 1 do 10. Świetna gra przyniesie pieniądze i fanów, kiepska ich odstraszy. Kup garaż, zatrudnij zespół, przeprowadź się do biura.",
+	intro_4 = "Twój cel: przejść drogę od ławki w parku do wieżowca i stworzyć najsłynniejsze studio na świecie. Gotowy? Twoje studio potrzebuje nazwy!",
+	intro_next = "Dalej",
+	intro_skip = "Pomiń",
+	intro_start = "Zaczynamy",
 }
