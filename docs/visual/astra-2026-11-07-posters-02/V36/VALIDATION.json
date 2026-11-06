@@ -1,0 +1,62 @@
+[
+  {
+    "file": "poster_ninjaCat.png",
+    "size": [
+      768,
+      1024
+    ],
+    "sourceSize": [
+      1086,
+      1448
+    ],
+    "mode": "RGB",
+    "format": "PNG",
+    "opaque": true,
+    "sha256": "a5d59405a365f5615863a356a1891cf3360653c45aafd22799df1208e2c8ac40"
+  },
+  {
+    "file": "poster_ghostManor.png",
+    "size": [
+      768,
+      1024
+    ],
+    "sourceSize": [
+      1086,
+      1448
+    ],
+    "mode": "RGB",
+    "format": "PNG",
+    "opaque": true,
+    "sha256": "549970f69be264b76fc459b105e6ab35ac848b2292910d570bc5df1904d7ba8c"
+  },
+  {
+    "file": "poster_robotArena.png",
+    "size": [
+      768,
+      1024
+    ],
+    "sourceSize": [
+      1086,
+      1448
+    ],
+    "mode": "RGB",
+    "format": "PNG",
+    "opaque": true,
+    "sha256": "b59429a8659ea0c85bd095a8a89bc39de4958adf81bc18c22a876798036d4409"
+  },
+  {
+    "file": "poster_dragonValley.png",
+    "size": [
+      768,
+      1024
+    ],
+    "sourceSize": [
+      1086,
+      1448
+    ],
+    "mode": "RGB",
+    "format": "PNG",
+    "opaque": true,
+    "sha256": "d832a4037489aff0ac55e6d19e5a5a4e73840286d4c129c9cb562eae888b4041"
+  }
+]
