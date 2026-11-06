@@ -389,4 +389,17 @@ Images.intro = {
 	intro4 = 112777956402925, -- intro4.png: путь гараж → офис → небоскрёб (🏢)
 } :: { [string]: number }
 
+-- Баннеры обновлений по средам для окна «Что нового» (Astra, docs/visual/astra-2026-11-06-update-banners/
+-- banners/upd_<id>.png, 1600×400, без текста). Ключ — id из Config/Features.updates. 0 — картинки нет:
+-- окно как раньше. Dev 1: загрузить семь PNG как Image и вставить ID
+Images.updateBanners = {
+	competition = 0, -- upd_competition.png
+	thirdFloor = 0, -- upd_thirdFloor.png
+	together = 0, -- upd_together.png
+	publishers = 0, -- upd_publishers.png
+	ownConsole = 0, -- upd_ownConsole.png
+	market = 0, -- upd_market.png
+	arcade = 0, -- upd_arcade.png
+} :: { [string]: number }
+
 return Images
