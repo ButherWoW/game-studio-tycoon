@@ -22,6 +22,7 @@ local StudioLayout = require(Shared.StudioLayout)
 local Upgrades = require(Shared.Config.Upgrades)
 local DataService = require(script.Parent.DataService)
 local StockNoise = require(script.Parent.StockNoise)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 local STORE_NAME = "StockMarket_v1"
 local BOARD_NAME = "StockMarketCap_v1"
@@ -734,7 +735,8 @@ local function onSell(player: Player, id: any, amount: any)
 end
 
 local function onIpo(player: Player)
-	if throttled(player) then
+	-- IPO — своя строка в Config/Features (по умолчанию в ту же среду, что и биржа)
+	if not FeatureReleaseService.isReleased("ipo") or throttled(player) then
 		return
 	end
 	withLock(player, function()
@@ -797,7 +799,7 @@ end
 
 local function payDividends(player: Player, minutes: number)
 	local profile = DataService.get(player)
-	if not profile then
+	if not profile or not FeatureReleaseService.isReleased("dividends") then
 		return
 	end
 	local data = dataOf(profile)
@@ -935,7 +937,7 @@ if game:GetService("RunService"):IsStudio() then
 	end
 end
 
-function StockService.start()
+local function startNow()
 	StockRemotes.StockRequest.OnServerEvent:Connect(function(player, selected)
 		if throttled(player) then
 			return
@@ -981,6 +983,18 @@ function StockService.start()
 			end
 		end
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «stocks» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function StockService.start()
+	FeatureReleaseService.mute("stocks", {
+		StockRemotes.StockRequest,
+		StockRemotes.StockBuy,
+		StockRemotes.StockSell,
+		StockRemotes.StockIpo,
+	})
+	FeatureReleaseService.whenReleased("stocks", "StockService", startNow)
 end
 
 return StockService

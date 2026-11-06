@@ -10,6 +10,7 @@ local TweenService = game:GetService("TweenService")
 local Hud = require(ReplicatedStorage.Shared.Config.Hud)
 local Images = require(ReplicatedStorage.Shared.Config.Images)
 local Unlocks = require(ReplicatedStorage.Shared.Config.Unlocks)
+local Features = require(ReplicatedStorage.Shared.Config.Features)
 
 local Ui = {}
 
@@ -662,6 +663,11 @@ local newFeatures: { [string]: boolean } = {}
 -- закрывается воротами так же, как со склада
 local bannerHosts: { [Instance]: boolean } = {}
 
+-- Ворота есть у систем онбординга (Config/Unlocks) и у систем обновлений по средам (Config/Features)
+local function gatedFeature(featureId: string): boolean
+	return Unlocks.features[featureId] ~= nil or Features.isScheduled(featureId)
+end
+
 local function locker(home: Instance): Frame
 	local parent: Instance = home:FindFirstAncestorWhichIsA("LayerCollector") or home
 	local existing = lockers[parent]
@@ -697,7 +703,7 @@ end
 
 -- Прятать object (уже с родителем), пока система featureId закрыта. nil / система без ворот — ничего
 function Ui.gate(object: GuiObject, featureId: string?)
-	if not featureId or not Unlocks.features[featureId] or not object.Parent then
+	if not featureId or not gatedFeature(featureId) or not object.Parent then
 		return
 	end
 	local list = gated[featureId]
@@ -723,7 +729,7 @@ end
 
 -- Открыта ли система для интерфейса (система без ворот — всегда)
 function Ui.gateIsOpen(featureId: string): boolean
-	return not Unlocks.features[featureId] or gateOpen[featureId] == true
+	return not gatedFeature(featureId) or gateOpen[featureId] == true
 end
 
 function Ui.setGateOpen(featureId: string, open: boolean)

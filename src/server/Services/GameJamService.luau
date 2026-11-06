@@ -15,6 +15,7 @@ local GameJam = require(ReplicatedStorage.Shared.Config.GameJam)
 local LiveOpsRemotes = require(ReplicatedStorage.Shared.LiveOpsRemotes)
 local DataService = require(script.Parent.DataService)
 local RewardService = require(script.Parent.RewardService)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 type JamData = {
 	week: number, -- неделя последней заявки (-1 — не участвовал)
@@ -384,7 +385,7 @@ function GameJamService.currentTheme(): (string, string, string)
 	return genreId, topicId, GameJam.weekId(week)
 end
 
-function GameJamService.start()
+local function startNow()
 	LiveOpsRemotes.RequestSeason.OnServerEvent:Connect(function(player)
 		local now = os.clock()
 		if now - (lastRequest[player] or 0) < REQUEST_COOLDOWN then
@@ -424,6 +425,12 @@ function GameJamService.start()
 	game:BindToClose(function()
 		pcall(flush, true)
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «gameJam» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function GameJamService.start()
+	FeatureReleaseService.whenReleased("gameJam", "GameJamService", startNow)
 end
 
 return GameJamService

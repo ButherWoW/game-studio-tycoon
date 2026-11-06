@@ -20,6 +20,7 @@ local Gotw = require(Shared.Config.Gotw)
 local StartPark = require(Shared.Config.StartPark)
 local DataService = require(script.Parent.DataService)
 local BroadcastText = require(script.Parent.BroadcastText)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 type Winner = { userId: number, points: number, studio: string, player: string }
 type Slot = {
@@ -516,12 +517,13 @@ local function writeCard(player: Player, profile: DataService.Profile)
 	end
 end
 
-function HallOfFameService.start()
+local function startNow()
 	-- Сразу в start: StartParkService (стартует позже по алфавиту) учтёт помост как препятствие
 	local ok, err = pcall(build)
 	if not ok then
 		warn("[HallOfFameService] build failed:", err)
 	end
+	FeatureReleaseService.parkObstacles({ "HallOfFame" })
 	DataService.onProfileLoaded(function(player: Player, profile: DataService.Profile)
 		-- Не сразу: название студии могли ввести в первые секунды
 		task.delay(30, function()
@@ -544,6 +546,12 @@ function HallOfFameService.start()
 			task.wait(Gotw.hallRefreshSeconds)
 		end
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «hallOfFame» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function HallOfFameService.start()
+	FeatureReleaseService.whenReleased("hallOfFame", "HallOfFameService", startNow)
 end
 
 return HallOfFameService

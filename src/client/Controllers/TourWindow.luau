@@ -425,7 +425,14 @@ function TourWindow.open()
 	tabsLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	tabsLayout.Parent = tabs
 	tabs.Parent = window
-	for i, name in { "studios", "ratings", "holdings" } do
+	-- Холдинги выходят обновлением «Вместе» (Config/Features): до выхода вкладки нет
+	local tabNames = { "studios", "ratings" }
+	if FeatureGate.isOpen("holdings") then
+		table.insert(tabNames, "holdings")
+	elseif tab == "holdings" then
+		tab = "studios"
+	end
+	for i, name in tabNames do
 		local button = Ui.button(tabs, ClientState.t("tour_tab_" .. name), Ui.colors.locked, function()
 			tab = name :: any
 			if name == "holdings" then
@@ -434,7 +441,7 @@ function TourWindow.open()
 			TourWindow.render()
 		end)
 		button.LayoutOrder = i
-		button.Size = UDim2.new(1 / 3, -6, 1, 0)
+		button.Size = UDim2.new(1 / #tabNames, -6, 1, 0)
 		if name == "studios" then
 			ArtIcon.prefix(button, "🏘", Images.menu.menu_tours or 0, 28)
 		elseif name == "ratings" then

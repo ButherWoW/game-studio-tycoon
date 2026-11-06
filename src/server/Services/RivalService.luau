@@ -16,6 +16,7 @@ local Genres = require(Shared.Config.Genres)
 local Debug = require(Shared.Config.Debug)
 local DepthRemotes = require(Shared.DepthRemotes)
 local DataService = require(script.Parent.DataService)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 type Data = { minutes: number, passed: { [string]: boolean } }
 
@@ -200,7 +201,7 @@ local function onRequest(player: Player)
 	RivalService.pushState(player)
 end
 
-function RivalService.start()
+local function startNow()
 	DepthRemotes.RivalRequest.OnServerEvent:Connect(onRequest)
 	Players.PlayerRemoving:Connect(function(player)
 		lastRequest[player] = nil
@@ -241,6 +242,15 @@ function RivalService.start()
 			task.wait(rng:NextNumber(Rivals.hitIntervalMin, Rivals.hitIntervalMax))
 		end
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «rivals» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function RivalService.start()
+	FeatureReleaseService.mute("rivals", {
+		DepthRemotes.RivalRequest,
+	})
+	FeatureReleaseService.whenReleased("rivals", "RivalService", startNow)
 end
 
 return RivalService

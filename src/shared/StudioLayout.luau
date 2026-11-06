@@ -5,6 +5,7 @@
 local Upgrades = require(script.Parent.Config.Upgrades)
 local Stages = require(script.Parent.Config.Stages)
 local Texts = require(script.Parent.Config.Texts)
+local Features = require(script.Parent.Config.Features)
 
 local StudioLayout = {}
 
@@ -79,6 +80,14 @@ end
 
 function StudioLayout.floorSign(lang: string, floor: number): string
 	local stage = StudioLayout.floorStage(floor)
+	-- Этаж выходит обновлением по средам (Config/Features.stages): «🔒 Скоро: в среду…»
+	if stage and not Features.stageReleased(stage.level) then
+		local days = Features.daysUntil(Features.stages[stage.level])
+		return "🔒 "
+			.. StudioLayout.floorName(lang, floor)
+			.. "\n"
+			.. Texts.format(lang, "upd_soon", { days = days })
+	end
 	return Texts.format(lang, "floor_sign", {
 		floor = StudioLayout.floorName(lang, floor),
 		price = Texts.money(if stage then stage.cost else 0),

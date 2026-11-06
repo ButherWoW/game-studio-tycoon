@@ -10,6 +10,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local LiveOpsRemotes = require(ReplicatedStorage.Shared.LiveOpsRemotes)
 local Season = require(ReplicatedStorage.Shared.Config.Season)
 local GameJam = require(ReplicatedStorage.Shared.Config.GameJam)
+local Features = require(ReplicatedStorage.Shared.Config.Features)
 local Genres = require(ReplicatedStorage.Shared.Config.Genres)
 local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
@@ -543,13 +544,18 @@ function SeasonWindow.open(startTab: Tab?)
 	tabsLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	tabsLayout.Parent = tabs
 	tabs.Parent = window
-	for i, name in { "season", "jam" } do
+	-- Гейм-джем выходит обновлением «Аркада» (Config/Features): до него только сезон
+	local tabNames = if Features.isReleased("gameJam") then { "season", "jam" } else { "season" }
+	if not table.find(tabNames, tab) then
+		tab = "season"
+	end
+	for i, name in tabNames do
 		local button = Ui.button(tabs, t("season_tab_" .. name), Ui.colors.locked, function()
 			tab = name :: any
 			render()
 		end)
 		button.LayoutOrder = i
-		button.Size = UDim2.new(0.5, -4, 1, 0)
+		button.Size = UDim2.new(1 / #tabNames, -4, 1, 0)
 		if name == "season" then
 			ArtIcon.prefix(button, "🎫", Images.menu.menu_season or 0, 28)
 		else

@@ -19,6 +19,7 @@ local Debug = require(Shared.Config.Debug)
 local ConsoleRemotes = require(Shared.ConsoleRemotes)
 local DataService = require(script.Parent.DataService)
 local StaffService = require(script.Parent.StaffService)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 type Data = { employeeId: string?, hype: number, earned: number, scores: { number } }
 
@@ -405,7 +406,7 @@ local function onAssign(player: Player, employeeId: any)
 	pushState(player)
 end
 
-function StreamerService.start()
+local function startNow()
 	ConsoleRemotes.StreamerAssign.OnServerEvent:Connect(onAssign)
 	Players.PlayerRemoving:Connect(function(player)
 		lastAssign[player] = nil
@@ -432,6 +433,15 @@ function StreamerService.start()
 			end
 		end
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «streamer» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function StreamerService.start()
+	FeatureReleaseService.mute("streamer", {
+		ConsoleRemotes.StreamerAssign,
+	})
+	FeatureReleaseService.whenReleased("streamer", "StreamerService", startNow)
 end
 
 return StreamerService

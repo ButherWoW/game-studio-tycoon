@@ -27,10 +27,16 @@ local FansService = require(script.Parent.FansService)
 local DevEvents = require(Shared.Config.DevEvents)
 local Economy = require(Shared.Config.Economy)
 local HitCartridges = require(Shared.Config.HitCartridges)
+local Features = require(Shared.Config.Features)
 
 -- Фичи из других веток (тренды, магазин, исследования, задания) подключаются, если модуль есть.
 -- Так порядок мёрджа PR не важен; без модуля множитель 1 и бонус 0.
+-- Система ещё не вышла (Config/Features, обновления по средам) — как будто модуля нет: её хуки
+-- не зовутся, доход/оценка/очки без неё, данные профиля лежат до выхода
 local function optional(name: string): any
+	if not Features.serviceReleased(name) then
+		return nil
+	end
 	local module = script.Parent:FindFirstChild(name)
 	return if module and module:IsA("ModuleScript") then require(module) :: any else nil
 end

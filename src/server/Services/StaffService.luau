@@ -49,6 +49,7 @@ local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Employees = require(ReplicatedStorage.Shared.Config.Employees)
 local Skills = require(ReplicatedStorage.Shared.Config.Skills)
 local Mentoring = require(ReplicatedStorage.Shared.Config.Mentoring)
+local Features = require(ReplicatedStorage.Shared.Config.Features)
 local Training = require(ReplicatedStorage.Shared.Config.Training)
 local StaffAppearance = require(script.Parent.StaffAppearance)
 local Expenses = require(ReplicatedStorage.Shared.Config.Expenses)
@@ -251,6 +252,11 @@ end
 -- (Config/Mentoring): оба наняты, наставник достаточно опытен, ученик младше, без цепочек и дублей.
 -- Ученик догнал наставника или кого-то уволили — пара снимается здесь же
 local function getMentoring(profile: DataService.Profile, info: { [string]: Info }): { [string]: string }
+	-- Наставничество выходит обновлением «Издатели» (Config/Features): до выхода пар нет,
+	-- сохранённые пары лежат нетронутыми
+	if not Features.isReleased("mentoring") then
+		return {}
+	end
 	local raw = (profile :: any).mentoring
 	if type(raw) ~= "table" then
 		raw = {};
@@ -465,8 +471,13 @@ local function active(profile: DataService.Profile): { [string]: string }
 	end
 	local result = seated(profile)
 	-- Стример (StreamerService) сидит за столом, но не разрабатывает: ни очков, ни перков, ни оценки
+	-- (до выхода стримера, Config/Features, назначенный сидит и работает как обычно)
 	local streamer = (profile :: any).streamer
-	if type(streamer) == "table" and type(streamer.employeeId) == "string" then
+	if
+		type(streamer) == "table"
+		and type(streamer.employeeId) == "string"
+		and Features.isReleased("streamer")
+	then
 		result[streamer.employeeId] = nil
 	end
 	return result
@@ -1791,6 +1802,9 @@ end
 
 -- Наставничество: mentorId берёт ученика menteeId; menteeId = "" — закончить. Всё проверяет сервер
 local function onSetMentor(player: Player, mentorId: any, menteeId: any)
+	if not Features.isReleased("mentoring") then
+		return
+	end
 	if type(mentorId) ~= "string" or type(menteeId) ~= "string" or throttled(player) then
 		return
 	end

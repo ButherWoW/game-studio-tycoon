@@ -29,6 +29,7 @@ local SkinService = require(script.Parent.SkinService)
 local PosterService = require(script.Parent.PosterService)
 local MascotService = require(script.Parent.MascotService)
 local RewardService = require(script.Parent.RewardService)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 local DAY_SECONDS = 86400
 local STATE_REQUEST_COOLDOWN = 1
@@ -552,7 +553,7 @@ function TradeService.isTrading(player: Player): boolean
 	return trades[player] ~= nil
 end
 
-function TradeService.start()
+local function startNow()
 	FriendRemotes.TradeRequest.OnServerEvent:Connect(onRequest)
 	FriendRemotes.TradeRespond.OnServerEvent:Connect(onRespond)
 	FriendRemotes.TradeOffer.OnServerEvent:Connect(onOffer)
@@ -588,6 +589,20 @@ function TradeService.start()
 			end
 		end
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «trade» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function TradeService.start()
+	FeatureReleaseService.mute("trade", {
+		FriendRemotes.TradeRequest,
+		FriendRemotes.TradeRespond,
+		FriendRemotes.TradeOffer,
+		FriendRemotes.TradeConfirm,
+		FriendRemotes.TradeCancel,
+		FriendRemotes.TradeStateRequest,
+	})
+	FeatureReleaseService.whenReleased("trade", "TradeService", startNow)
 end
 
 return TradeService

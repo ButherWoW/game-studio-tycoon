@@ -12,7 +12,11 @@ Research, Offline, Rebirth, HitCartridges, AdCampaigns), поэтому посл
 --no-fans — без фанатов студии (Config/Fans) для сравнения «до/после».
 --drops — с графиком контента (Config/ContentDrops): игрок начинает в день запуска, события дня
   выпадают только вышедшие к этому дню (жанры/темы модель не выбирает — у каждого жанра набора
-  запуска есть тема 1.2, допущение topic_fit не меняется).
+  запуска есть тема 1.2, допущение topic_fit не меняется). С --drops и системы из обновлений по
+  средам (Config/Features) включаются в свой день: франшизы/контракты, стример, налоги, 3-й этаж.
+--base — только системы дня запуска (Config/Features, week 0): без франшиз, контрактов, стримера,
+  налогов и 3-го этажа (телефоны — с запуска); Rebirth — после интерьера 2-го этажа. Печатает
+  сравнение 1-го Rebirth с полным графиком (--all --drops).
 
 Это приближение, а не повтор кода сервера. Допущения (см. ASSUMPTIONS ниже):
 - парк до гаража ~5 мин; дальше игрок сразу покупает всё, на что хватает денег,
@@ -68,6 +72,7 @@ ASSUMPTIONS = {
     # 1-го Rebirth), отделка/стили/декор и «Флеш-распродажа» (косметика), наставничество (навыки
     # модель не покупает), «Охота за талантами», пицца, парад маскотов, картриджепад (копейки).
     "all": False,
+    "base": False,  # --base: только системы запуска (Config/Features week 0), см. выше
     "drops": False,  # --drops: события дня по графику контента (Config/ContentDrops), старт в день запуска
     "premium": False,  # Roblox Premium: +10% к релизам (Config/Premium) и +10% офлайн (Social.premium)
     "golden_days_share": 0.5,  # в золотой час (19:00 UTC) играет в половину дней: 2-я сессия с него
@@ -102,17 +107,54 @@ def read(name: str) -> str:
     return (CFG / f"{name}.luau").read_text(encoding="utf-8")
 
 
+def wednesday_day(week: int) -> int:
+    """ContentDrops.wednesdayDay: дней от launchDate до среды номер week (среда 1 — первая строго
+    после запуска; запуск в среду — через 7 дней)."""
+    if week <= 0:
+        return 0
+    import datetime
+
+    m = re.search(r'launchDate = "(\d+)-(\d+)-(\d+)"', read("ContentDrops"))
+    launch = datetime.date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+    first = (2 - launch.weekday()) % 7 or 7  # weekday(): 0 — понедельник, 2 — среда
+    return first + 7 * (week - 1)
+
+
 def drop_days(field_name: str) -> dict:
     """Config/ContentDrops: id -> день выхода для поля волны (не в списке — 0)."""
     text = read("ContentDrops")
     days = {}
     for block in re.split(r"\n\t\t\{\n", text)[1:]:
-        day = re.search(r"\bday = (\d+)", block)
+        week = re.search(r"\bweek = (\d+)", block)
         ids = re.search(rf"\b{field_name} = \{{([^}}]*)\}}", block)
-        if day and ids:
+        if week and ids:
             for item in re.findall(r'"(\w+)"', ids.group(1)):
-                days[item] = int(day.group(1))
+                days[item] = wednesday_day(int(week.group(1)))
     return days
+
+
+def feature_days() -> dict:
+    """Config/Features: id системы -> день выхода (дней от запуска)."""
+    days = {}
+    for week, ids in re.findall(r"week = (\d+),\s*icon = \"[^\"]*\",\s*features = \{([^}]*)\}", read("Features")):
+        for item in re.findall(r'"(\w+)"', ids):
+            days[item] = wednesday_day(int(week))
+    return days
+
+
+FEATURE_DAYS: dict = {}
+
+
+def feature_on(fid: str, wall: float) -> bool:
+    """Вышла ли система к моменту wall (сек от старта; старт — день запуска при --drops)."""
+    day = FEATURE_DAYS.get(fid, 0)
+    if day <= 0:
+        return True
+    if ASSUMPTIONS["base"]:
+        return False
+    if ASSUMPTIONS["drops"]:
+        return wall >= day * 24 * 3600
+    return True
 
 
 def field(text: str, name: str) -> float:
@@ -471,7 +513,12 @@ class Sim:
         ad = 1 + (self.ad_bonus if self.t < self.ad_until else 0)
         extras = 1.0
         if ASSUMPTIONS["extras"] and self.level >= 2:
-            extras = ASSUMPTIONS["franchise_avg"] * ASSUMPTIONS["platform_avg"] * ASSUMPTIONS["streamer_avg"]
+            # Телефоны — с запуска; франшизы и стример — по графику обновлений (Config/Features)
+            extras = ASSUMPTIONS["platform_avg"]
+            if feature_on("franchises", self.wall):
+                extras *= ASSUMPTIONS["franchise_avg"]
+            if feature_on("streamer", self.wall):
+                extras *= ASSUMPTIONS["streamer_avg"]
         allm = 1.0
         if ASSUMPTIONS["all"]:
             if self.t < self.golden_until:
@@ -523,7 +570,7 @@ class Sim:
 
     def contract_income_per_min(self):
         # Контракт: аванс + бонус в «минутах дохода» ShopService.incomePerMinute (база × 1.6 релиза/мин)
-        if not (ASSUMPTIONS["extras"] and self.level >= 2):
+        if not (ASSUMPTIONS["extras"] and self.level >= 2 and feature_on("contracts", self.wall)):
             return 0.0
         c = self.c["contracts"]
         base = self.c["eco"]["revenueBase"] * max(self.best, 5) ** 2 * self.level_mult() * c["releasesPerMinute"]
@@ -687,7 +734,12 @@ class Sim:
                 continue
             # переезд на этаж
             nxt = self.c["stages"][self.level] if self.level < len(self.c["stages"]) else None
-            if nxt and nxt["cost"] > 0 and not self.building and self.ready_to_move() and self.games >= nxt["games"]:
+            # 3-й этаж (этап 4) — обновлением по средам (Config/Features.stages)
+            floor_ok = self.level + 1 < 4 or feature_on("floor3", self.wall)
+            if (
+                nxt and nxt["cost"] > 0 and floor_ok and not self.building and self.ready_to_move()
+                and self.games >= nxt["games"]
+            ):
                 if self.cash - nxt["cost"] >= self.reserve():
                     self.cash -= nxt["cost"]
                     self.start_building(self.level + 1, nxt["id"])
@@ -762,7 +814,7 @@ class Sim:
             if ASSUMPTIONS["all"]:
                 if self.t - dt < self.golden_until:
                     self.golden_extra += rev * (1 - 1 / self.c["daily"]["golden_mult"])
-                if ASSUMPTIONS["taxes"]:  # налог с дохода релизов по ставке этапа (Config/Tax)
+                if ASSUMPTIONS["taxes"] and feature_on("tax", self.wall):  # налог с дохода релизов по ставке этапа (Config/Tax)
                     tax = rev * self.c["tax"][min(self.level, len(self.c["tax"])) - 1]
                     cost += tax
                     self.tax_paid += tax
@@ -877,7 +929,12 @@ def run(prev=None, perk_levels=None):
                     event_no += 1
                     event_at = None
                 sim.play(min(60.0, session_end - sim.t))
-                if "rebirth" not in sim.marks and "top_interior" in sim.marks and sim.cash >= goal:
+                # Сервер требует для Rebirth только офис и деньги (Config/Rebirth); модель копит после
+                # интерьера верхнего доступного этажа (без 3-го этажа — 2-го)
+                interior_done = "top_interior" in sim.marks or (
+                    not feature_on("floor3", sim.wall) and "floor_interior" in sim.marks
+                )
+                if "rebirth" not in sim.marks and interior_done and sim.cash >= goal:
                     sim.mark("rebirth")
                 if len(rows) < 2000 and int(sim.t) % 1800 < 60:
                     rows.append(
@@ -994,8 +1051,24 @@ if __name__ == "__main__":
     ASSUMPTIONS["drops"] = "--drops" in sys.argv
     ASSUMPTIONS["fans"] = "--no-fans" not in sys.argv
     ASSUMPTIONS["extras"] = "--extras" in sys.argv or ASSUMPTIONS["all"]
+    ASSUMPTIONS["base"] = "--base" in sys.argv
+    FEATURE_DAYS.update(feature_days())
     s, r = run()
     report(s, r, quiet="--quiet" in sys.argv)
+    if ASSUMPTIONS["base"]:
+        # Сравнение: та же модель с полным графиком обновлений по средам (--all --drops)
+        saved = {k: ASSUMPTIONS[k] for k in ("base", "all", "drops", "extras")}
+        ASSUMPTIONS.update(base=False, all=True, drops=True, extras=True)
+        full, _ = run()
+        ASSUMPTIONS.update(saved)
+
+        def at(sim, key):
+            return fmt_t(sim.marks[key][0]) + f" (день {int(sim.marks[key][1] // 86400) + 1})" if key in sim.marks else "не дошёл"
+
+        print("\n== База (только системы запуска) против полного графика (--all --drops)")
+        print(f"Интерьер 2-го этажа: база {at(s, 'floor_interior')}, полный {at(full, 'floor_interior')}")
+        print(f"1-й Rebirth:         база {at(s, 'rebirth')}, полный {at(full, 'rebirth')}")
+        print("Дни выхода систем:", ", ".join(f"{k} {v}" for k, v in sorted(FEATURE_DAYS.items(), key=lambda kv: kv[1])))
     if ASSUMPTIONS["all"]:
         report_all(s)
         sanity(load())

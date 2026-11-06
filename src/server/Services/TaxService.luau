@@ -13,6 +13,7 @@ local Tax = require(ReplicatedStorage.Shared.Config.Tax)
 local TaxRemotes = require(ReplicatedStorage.Shared.TaxRemotes)
 local DataService = require(script.Parent.DataService)
 local PlotService = require(script.Parent.PlotService)
+local FeatureReleaseService = require(script.Parent.FeatureReleaseService)
 
 local TICK = 1
 local REQUEST_COOLDOWN = 1
@@ -165,7 +166,7 @@ function TaxService.revenueMultiplier(player: Player): number
 	return if dataOf(profile).auditUntil > os.time() then Tax.auditRevenueMultiplier else 1
 end
 
-function TaxService.start()
+local function startNow()
 	TaxRemotes.PayTax.OnServerEvent:Connect(onPay)
 	Players.PlayerRemoving:Connect(function(player)
 		lastRequest[player] = nil
@@ -181,6 +182,15 @@ function TaxService.start()
 			end
 		end
 	end)
+end
+
+-- Обновления по средам (Config/Features): до выхода системы «tax» сервис спит — remotes
+-- заглушены, циклы и обработчики не запущены; вышла (в т. ч. пока сервер работает) — startNow()
+function TaxService.start()
+	FeatureReleaseService.mute("tax", {
+		TaxRemotes.PayTax,
+	})
+	FeatureReleaseService.whenReleased("tax", "TaxService", startNow)
 end
 
 return TaxService
