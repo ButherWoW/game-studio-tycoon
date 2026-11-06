@@ -7,6 +7,7 @@
 -- стол не даёт очков (StaffService.setBreak). Пересборка NPC (StaffService) зовёт reset.
 -- Увольнение (StaffService.onFire → leave): NPC встаёт, в руках коробка, идёт к выходу и тает.
 
+local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
@@ -24,8 +25,12 @@ local SPOT_FRONT = 3.5 -- место отдыха перед предметом
 local PLOT_MARGIN = 4 -- к краю участка ближе не подходим
 local WANDER_MIN, WANDER_MAX = 4, 10 -- без мест отдыха: прогулка вдоль прохода
 local CHAT_DISTANCE = 2.6
-local BOB_HEIGHT = 0.18
-local BOB_RATE = 12
+-- Лёгкое покачивание корпуса на шаге (раньше 0.18 — NPC «прыгали»). Ноги и руки двигает клиент
+-- (Controllers/NpcWalkAnimator) по атрибутам Walking и WalkSpeed; тут только лёгкий подъём
+local BOB_HEIGHT = 0.06
+local BOB_PER_SPEED = 0.9 -- рад/с на 1 stud/с скорости: два шага за период
+local TURN_RATE = 9 -- как быстро NPC разворачивается к направлению ходьбы (1/с)
+local WALK_TAG = "NpcWalker"
 local LEAVE_TIME = 2.2 -- секунд на дорогу уволенного (быстрее обычного шага, если далеко)
 local FADE_TIME = 0.6
 -- Сколько NPC одновременно идут по всему серверу (Heartbeat двигает каждого PivotTo, это
@@ -42,6 +47,7 @@ type Walker = {
 	index: number,
 	pos: Vector3,
 	dir: Vector3,
+	face: Vector3, -- куда повёрнут модель сейчас (плавно догоняет dir)
 	height: number,
 	speed: number,
 	clock: number,
@@ -114,8 +120,17 @@ local function setBubble(record: Break, text: string?)
 	end
 end
 
+-- Идёт ли NPC: клиент по этому качает суставы (тег и атрибуты реплицируются)
+local function setWalking(model: Model, speed: number?)
+	model:SetAttribute("WalkSpeed", speed or 0)
+	model:SetAttribute("Walking", speed ~= nil)
+	if speed ~= nil then
+		CollectionService:AddTag(model, WALK_TAG)
+	end
+end
+
 local function placeStanding(walker: Walker, bob: number)
-	local cf = CFrame.lookAt(walker.pos, walker.pos + walker.dir) + Vector3.new(0, walker.height + bob, 0)
+	local cf = CFrame.lookAt(walker.pos, walker.pos + walker.face) + Vector3.new(0, walker.height + bob, 0)
 	walker.model:PivotTo(walker.plot.CFrame * cf)
 end
 
@@ -142,12 +157,15 @@ local function walk(
 		dir = if Vector3.new(look.X, 0, look.Z).Magnitude > 0.01
 			then Vector3.new(look.X, 0, look.Z).Unit
 			else Vector3.new(0, 0, 1),
+		face = Vector3.new(0, 0, 1),
 		height = tonumber(model:GetAttribute("StandHeight")) or 3,
 		speed = speed,
 		clock = 0,
 		leaving = isLeaving,
 		onDone = onDone,
 	}
+	walker.face = walker.dir
+	setWalking(model, speed)
 	table.insert(walkers, walker)
 	return walker
 end
@@ -160,6 +178,7 @@ local function stopWalker(walker: Walker?)
 	if index then
 		table.remove(walkers, index)
 	end
+	setWalking(walker.model, nil)
 end
 
 local function step(dt: number)
@@ -180,6 +199,7 @@ local function step(dt: number)
 			walker.index += 1
 			if walker.index > #walker.path then
 				table.remove(walkers, i)
+				setWalking(walker.model, nil)
 				placeStanding(walker, 0)
 				task.defer(walker.onDone)
 				continue
@@ -189,7 +209,13 @@ local function step(dt: number)
 			walker.pos += walker.dir * move
 		end
 		walker.clock += dt
-		placeStanding(walker, math.abs(math.sin(walker.clock * BOB_RATE)) * BOB_HEIGHT)
+		-- Плавный разворот: не щёлкает на углах пути
+		local blend = math.min(dt * TURN_RATE, 1)
+		local mixed = walker.face:Lerp(walker.dir, blend)
+		if mixed.Magnitude > 0.01 then
+			walker.face = mixed.Unit
+		end
+		placeStanding(walker, math.abs(math.sin(walker.clock * walker.speed * BOB_PER_SPEED)) * BOB_HEIGHT)
 	end
 end
 
@@ -529,6 +555,7 @@ function StaffLife.stopWalking(model: Model)
 			table.remove(walkers, i)
 		end
 	end
+	setWalking(model, nil)
 end
 
 function StaffLife.start()
