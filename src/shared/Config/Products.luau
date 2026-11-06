@@ -54,7 +54,7 @@ local list: { Product } = {
 		descriptionEn = "×2 development speed for 10 minutes",
 		icon = "☕",
 		productId = Universe.pick({ test = 3728447993, main = 3728498309 }),
-		robuxPrice = 29,
+		robuxPrice = 19,
 	},
 	{
 		id = "income10",
@@ -65,7 +65,7 @@ local list: { Product } = {
 		descriptionEn = "Cash your studio would earn in 10 minutes",
 		icon = "💵",
 		productId = Universe.pick({ test = 3728447996, main = 3728498324 }),
-		robuxPrice = 49,
+		robuxPrice = 39,
 		incomeMinutes = 10,
 	},
 	{
@@ -77,7 +77,7 @@ local list: { Product } = {
 		descriptionEn = "Cash your studio would earn in 30 minutes",
 		icon = "💰",
 		productId = Universe.pick({ test = 3728447999, main = 3728498349 }),
-		robuxPrice = 129,
+		robuxPrice = 99,
 		incomeMinutes = 30,
 	},
 	{
@@ -89,7 +89,7 @@ local list: { Product } = {
 		descriptionEn = "Cash your studio would earn in 90 minutes",
 		icon = "🏦",
 		productId = Universe.pick({ test = 3728448002, main = 3728498365 }),
-		robuxPrice = 299,
+		robuxPrice = 249,
 		incomeMinutes = 90,
 	},
 }
@@ -102,7 +102,7 @@ local offers = {
 	-- ×2 к доходу только что вышедшей игры (окно релиза). Поздно/повторно — пакет income10
 	doubleRelease = { productId = Universe.pick({ test = 3728448015, main = 3728498380 }), robuxPrice = 25 } :: OfferProduct,
 	-- Стартовый набор: $ за 30 мин дохода (мин. $5 000), 2 скина, 3 кофе, значок. Раз на аккаунт
-	starterPack = { productId = Universe.pick({ test = 3728448017, main = 3728498901 }), robuxPrice = 79 } :: OfferProduct,
+	starterPack = { productId = Universe.pick({ test = 3728448017, main = 3728498901 }), robuxPrice = 49 } :: OfferProduct,
 }
 
 -- «Сделка дня» (−30%): цену продукта в Dashboard менять нельзя, поэтому у каждого товара пула
@@ -110,10 +110,10 @@ local offers = {
 local deals: { [string]: OfferProduct } = {
 	instantFinish = { productId = Universe.pick({ test = 3728448020, main = 3728498397 }), robuxPrice = 10 },
 	patch = { productId = Universe.pick({ test = 3728448022, main = 3728498414 }), robuxPrice = 17 },
-	coffee = { productId = Universe.pick({ test = 3728448025, main = 3728498434 }), robuxPrice = 20 },
-	income10 = { productId = Universe.pick({ test = 3728448031, main = 3728498444 }), robuxPrice = 34 },
-	income30 = { productId = Universe.pick({ test = 3728448038, main = 3728498458 }), robuxPrice = 90 },
-	income90 = { productId = Universe.pick({ test = 3728448040, main = 3728498477 }), robuxPrice = 209 },
+	coffee = { productId = Universe.pick({ test = 3728448025, main = 3728498434 }), robuxPrice = 13 },
+	income10 = { productId = Universe.pick({ test = 3728448031, main = 3728498444 }), robuxPrice = 27 },
+	income30 = { productId = Universe.pick({ test = 3728448038, main = 3728498458 }), robuxPrice = 69 },
+	income90 = { productId = Universe.pick({ test = 3728448040, main = 3728498477 }), robuxPrice = 174 },
 	poster_neonCity = { productId = Universe.pick({ test = 3728448052, main = 3728498495 }), robuxPrice = 34 },
 	poster_crystalKingdom = {
 		productId = Universe.pick({ test = 3728448055, main = 3728498515 }),
