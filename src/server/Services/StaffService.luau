@@ -1190,18 +1190,6 @@ local SIT_ROOT_ABOVE_SEAT = 1.6
 -- Воображаемая сидушка без кресла: чуть дальше края стола (глубина 3) и на высоте сидушек Астры (≈1.6)
 local VIRTUAL_SEAT_DISTANCE = 2.4
 local VIRTUAL_SEAT_HEIGHT = 1.6
-local function bendLegs(model: Model, sign: number)
-	for _, part in model:GetDescendants() do
-		if part:IsA("Motor6D") then
-			if part.Name == "LeftHip" or part.Name == "RightHip" then
-				part.C0 = part.C0 * CFrame.Angles(math.rad(90 * sign), 0, 0)
-			elseif part.Name == "LeftKnee" or part.Name == "RightKnee" then
-				part.C0 = part.C0 * CFrame.Angles(math.rad(-90 * sign), 0, 0)
-			end
-		end
-	end
-end
-
 local function poseSitting(model: Model)
 	if model:GetAttribute("Sitting") == true then
 		return
@@ -1213,15 +1201,17 @@ local function poseSitting(model: Model)
 			part.CanCollide = false
 		end
 	end
-	bendLegs(model, 1)
+	-- Ноги сгибает КЛИЕНТ (Controllers/NpcWalkAnimator по тегу NpcSitter и атрибуту Sitting, через
+	-- Motor6D.Transform): изменение C0 на сервере у владельца не отображалось, NPC стояли столбом
+	CollectionService:AddTag(model, "NpcSitter")
 	model:SetAttribute("Sitting", true)
 end
 
 -- Встать (StaffLife: перерыв, увольнение): ноги обратно, корень — на высоту стоящего
 function StaffService.poseStanding(model: Model)
 	if model:GetAttribute("Sitting") == true then
-		bendLegs(model, -1)
 		model:SetAttribute("Sitting", false)
+		CollectionService:RemoveTag(model, "NpcSitter")
 	end
 end
 
