@@ -23,6 +23,8 @@ local player = Players.LocalPlayer
 local STEP_DESK, STEP_OPEN, STEP_PICK, STEP_START, STEP_WAIT, STEP_RELEASE, STEP_DONE = 1, 2, 3, 4, 5, 6, 7
 -- «Инди в парке»: шаги до покупки гаража
 local STEP_LAPTOP, STEP_FIRST_GAME, STEP_SAVE, STEP_BUY_GARAGE = 8, 9, 10, 11
+-- Гараж куплен и строится (150 с): ждём, а не возвращаем к ноутбуку (отчёт Dev 1 №2)
+local STEP_BUILDING = 12
 -- Делать сейчас нечего (игра в разработке, всё нужное куплено): плашку прячем
 local STEP_IDLE = 0
 local STEP_TEXT = {
@@ -37,6 +39,7 @@ local STEP_TEXT = {
 	"tutorial_first_game",
 	"tutorial_save",
 	"tutorial_buy_garage",
+	"tutorial_garage_building",
 }
 local ARROW = "⬇"
 local ARROW_SIZE = 48
@@ -180,6 +183,15 @@ local function currentStep(playerGui: Instance): number
 			return STEP_RELEASE
 		end
 		local data = ClientState.data
+		-- Гараж уже куплен и строится (construction.garage): подсказка «Жди стройку» вместо ноутбука
+		local building = if data then (data :: any).construction else nil
+		if
+			type(building) == "table"
+			and building.garage == true
+			and (tonumber(building.endsAt) or 0) > os.time()
+		then
+			return STEP_BUILDING
+		end
 		-- К гаражу ведём, только когда на него хватает денег И первые игры выпущены на ноутбуке
 		-- (отчёт v71, №4: гид тащил к дому, который не по карману). Пока игр мало — снова ноутбук
 		local gamesDone = if data then tonumber(data.gamesReleased) or 0 else 0

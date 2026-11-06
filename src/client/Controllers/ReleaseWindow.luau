@@ -30,6 +30,8 @@ local gui: ScreenGui? = nil
 local revealToken: number? = nil
 local rng = Random.new()
 
+local BUTTONS_HEIGHT = 60 -- высота полосы закреплённых кнопок внизу окна
+
 local function band(score: number): string
 	if score <= 3 then
 		return "low"
@@ -127,7 +129,9 @@ local function show(info: any)
 	body.BackgroundTransparency = 1
 	body.BorderSizePixel = 0
 	body.Position = UDim2.fromOffset(16, 12)
-	body.Size = UDim2.new(1, -32, 1, -24)
+	-- Снизу 60 px под кнопки «Ещё игру / Реклама / Закрыть»: они закреплены вне прокрутки
+	-- (отчёт Dev 1: на низком экране кнопки были видны только после прокрутки)
+	body.Size = UDim2.new(1, -32, 1, -24 - BUTTONS_HEIGHT)
 	body.CanvasSize = UDim2.new()
 	body.AutomaticCanvasSize = Enum.AutomaticSize.Y
 	body.ScrollBarThickness = 6
@@ -241,15 +245,16 @@ local function show(info: any)
 
 	local buttons = Instance.new("Frame")
 	buttons.BackgroundTransparency = 1
-	buttons.Size = UDim2.new(1, 0, 0, 48)
-	buttons.LayoutOrder = 24
+	buttons.AnchorPoint = Vector2.new(0, 1)
+	buttons.Position = UDim2.new(0, 16, 1, -12)
+	buttons.Size = UDim2.new(1, -32, 0, 48)
 	local buttonsLayout = Instance.new("UIListLayout")
 	buttonsLayout.FillDirection = Enum.FillDirection.Horizontal
 	buttonsLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	buttonsLayout.Padding = UDim.new(0, 8)
 	buttonsLayout.Parent = buttons
 	buttons.Visible = false
-	buttons.Parent = body
+	buttons.Parent = window
 
 	Ui.button(buttons, ClientState.t("release_again"), Ui.colors.primary, function()
 		close()

@@ -1299,6 +1299,7 @@ return {
 	tutorial_first_game = "🎮 Sukurk pirmą žaidimą: žanras, tema, jėgos — ir pirmyn",
 	tutorial_save = "💰 Sutaupyk garažui ({price}): pinigų duoda ir užsakymai iš lentos, ir kasetės",
 	tutorial_buy_garage = "🏠 Nusipirk garažą: užlipk ant lentelės savo sklype",
+	tutorial_garage_building = "🏗️ Garažas statomas. Palauk kelias minutes arba paspartink statybą prie lentelės",
 	hit_err_pair = "Iš šio žaidėjo jau vogei — palauk {minutes} min",
 	hit_err_steal_back = "Šį hitą iš tavęs neseniai pavogė — iškart atgal nepasiimsi",
 	park_jobs_garage = "Papildomi darbai — tiems, kas taupo garažui. Tu jau turi studiją!",

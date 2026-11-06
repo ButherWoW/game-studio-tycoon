@@ -1300,6 +1300,7 @@ return {
 	tutorial_first_game = "🎮 Gör ditt första spel: genre, tema, fokus — och kör",
 	tutorial_save = "💰 Spara till garaget ({price}): uppdrag på tavlan och kassetter ger också pengar",
 	tutorial_buy_garage = "🏠 Köp garaget: ställ dig på skylten på din tomt",
+	tutorial_garage_building = "🏗️ Garaget byggs. Vänta ett par minuter eller skynda på bygget vid skylten",
 	hit_err_pair = "Du har redan stulit från den här spelaren — vänta {minutes} min",
 	hit_err_steal_back = "Den här hiten stals från dig nyss — du kan inte ta tillbaka den direkt",
 	park_jobs_garage = "Extrajobb är för den som sparar till ett garage. Du har redan en studio!",

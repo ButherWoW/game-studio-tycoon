@@ -1299,6 +1299,7 @@ return {
 	tutorial_first_game = "🎮 Tee oma esimene mäng: žanr, teema, fookus — ja alusta",
 	tutorial_save = "💰 Kogu raha garaaži jaoks ({price}): tahvli tellimused ja kassetid toovad ka raha",
 	tutorial_buy_garage = "🏠 Osta garaaž: astu oma krundil sildile",
+	tutorial_garage_building = "🏗️ Garaaži ehitatakse. Oota paar minutit või kiirenda ehitust sildi juures",
 	hit_err_pair = "Sa oled sellelt mängijalt juba varastanud — oota {minutes} min",
 	hit_err_steal_back = "See hitt varastati sinult hiljuti — kohe tagasi võtta ei saa",
 	park_jobs_garage = "Otsatööd on neile, kes koguvad garaaži jaoks. Sul on juba stuudio!",

@@ -1299,6 +1299,7 @@ return {
 	tutorial_first_game = "🎮 做出你的第一款游戏：类型、题材、重点 — 然后开工",
 	tutorial_save = "💰 攒钱买车库（{price}）：委托板上的委托和卡带也能赚钱",
 	tutorial_buy_garage = "🏠 买下车库：踩上你地块上的牌子",
+	tutorial_garage_building = "🏗️ 车库正在建造。请等几分钟，或在牌子处加速建造",
 	hit_err_pair = "你已经偷过这位玩家了——等 {minutes} 分钟",
 	hit_err_steal_back = "这首热门作品刚被人从你这偷走——暂时不能抢回来",
 	park_jobs_garage = "兼职是给攒钱买车库的人的。你已经有工作室啦！",

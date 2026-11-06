@@ -232,6 +232,13 @@ local function buildGrid(
 			onCardClick(kind, item, unlocked, reason)
 		end)
 		card.LayoutOrder = i
+		-- Единый размер шрифта у всех карточек (отчёт Dev 1 №4: «Экшен» крупно, «Приключения» мелко,
+		-- потому что TextScaled подгонял каждую под свою длину слова): фиксируем 16, длинное переносится
+		card.TextWrapped = true
+		local fixedSize = Instance.new("UITextSizeConstraint")
+		fixedSize.MinTextSize = 16
+		fixedSize.MaxTextSize = 16
+		fixedSize.Parent = card
 		-- Туториал (шаг «выбери жанр и тему») ставит стрелку на открытую карточку
 		if unlocked then
 			card:SetAttribute("TutorialPick", kind)

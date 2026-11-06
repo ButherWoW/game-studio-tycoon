@@ -1300,6 +1300,7 @@ return {
 	tutorial_first_game = "🎮 Mach dein erstes Spiel: Genre, Thema, Fokus – und los",
 	tutorial_save = "💰 Spar auf die Garage ({price}): Aufträge vom Brett und Cartridges bringen auch Geld",
 	tutorial_buy_garage = "🏠 Kauf die Garage: Stell dich auf das Schild auf deinem Grundstück",
+	tutorial_garage_building = "🏗️ Die Garage wird gebaut. Warte ein paar Minuten oder beschleunige den Bau am Schild",
 	hit_err_pair = "Diesen Spieler hast du schon beklaut — warte {minutes} Min.",
 	hit_err_steal_back = "Dieser Hit wurde dir gerade erst geklaut — zurückholen geht nicht sofort",
 	park_jobs_garage = "Nebenjobs sind für alle, die auf eine Garage sparen. Du hast schon ein Studio!",
