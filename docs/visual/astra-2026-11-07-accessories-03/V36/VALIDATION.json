@@ -1,0 +1,38 @@
+[
+  {
+    "skin": "neon_streamer",
+    "partsIncludingHandle": 30,
+    "attachment": "HatAttachment",
+    "visiblePairChecks": 406,
+    "intersections": 0,
+    "rigidWelds": 29,
+    "runtimeTested": false
+  },
+  {
+    "skin": "cyber_dev",
+    "partsIncludingHandle": 16,
+    "attachment": "HatAttachment",
+    "visiblePairChecks": 105,
+    "intersections": 0,
+    "rigidWelds": 15,
+    "runtimeTested": false
+  },
+  {
+    "skin": "space_dev",
+    "partsIncludingHandle": 13,
+    "attachment": "HatAttachment",
+    "visiblePairChecks": 66,
+    "intersections": 0,
+    "rigidWelds": 12,
+    "runtimeTested": false
+  },
+  {
+    "skin": "wizard_dev",
+    "partsIncludingHandle": 12,
+    "attachment": "HatAttachment",
+    "visiblePairChecks": 55,
+    "intersections": 0,
+    "rigidWelds": 11,
+    "runtimeTested": false
+  }
+]
