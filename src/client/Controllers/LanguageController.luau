@@ -15,6 +15,7 @@ local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
 local ROW_HEIGHT = 56
+local ROW_HEIGHT_HINT = 76 -- строка с пояснением в две строки
 local CONTROL_WIDTH = 220
 
 type Tab = "lang" | "settings"
@@ -76,21 +77,26 @@ local function row(body: ScrollingFrame, order: number, textKey: string, hintKey
 	local frame = Instance.new("Frame")
 	frame.BackgroundColor3 = Ui.colors.stroke
 	frame.BackgroundTransparency = 0.6
-	frame.Size = UDim2.new(1, -8, 0, ROW_HEIGHT)
+	frame.Size = UDim2.new(1, -8, 0, if hintKey then ROW_HEIGHT_HINT else ROW_HEIGHT)
 	frame.LayoutOrder = order
 	Ui.corner(frame, 10)
 	local label = Ui.label(frame, ClientState.t(textKey), 30)
 	label.AnchorPoint = Vector2.new(0, 0.5)
 	label.Position = UDim2.new(0, 12, 0.5, 0)
 	label.Size = UDim2.new(1, -(CONTROL_WIDTH + 28), 0, 30)
+	label.TextWrapped = true
+	Ui.minText(label, 14)
 	if hintKey then
 		-- Пояснение мелким шрифтом под подписью
 		label.Position = UDim2.new(0, 12, 0, 4)
 		label.AnchorPoint = Vector2.new(0, 0)
 		label.Size = UDim2.new(1, -(CONTROL_WIDTH + 28), 0, 28)
-		local hint = Ui.label(frame, ClientState.t(hintKey), 18, nil, Ui.colors.muted)
+		-- Длинные переводы (DE/FI) переносятся на вторую строку, а не ужимаются до 7 px
+		local hint = Ui.label(frame, ClientState.t(hintKey), 36, nil, Ui.colors.muted)
 		hint.Position = UDim2.new(0, 12, 0, 34)
-		hint.Size = UDim2.new(1, -(CONTROL_WIDTH + 28), 0, 18)
+		hint.Size = UDim2.new(1, -(CONTROL_WIDTH + 28), 0, 36)
+		hint.TextWrapped = true
+		Ui.minText(hint, 12)
 	end
 	frame.Parent = body
 	return frame
@@ -185,8 +191,7 @@ local function render()
 	local close = Ui.button(window, ClientState.t("create_close"), Ui.colors.locked, function()
 		LanguageController.close()
 	end)
-	close.Size = UDim2.fromOffset(40, 40)
-	close.Position = UDim2.new(1, -52, 0, 8)
+	Ui.headerClose(close)
 
 	local tabs = Instance.new("Frame")
 	tabs.BackgroundTransparency = 1
