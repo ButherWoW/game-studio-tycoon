@@ -1,0 +1,59 @@
+[
+  {
+    "id": "cosmic_whale",
+    "parts": 70,
+    "dimensionsXYZ": [
+      4.455102436340121,
+      3.0002763086101676,
+      3.19410624198
+    ],
+    "pairs": 2415,
+    "overlaps": [],
+    "PrimaryPart": "Body",
+    "pivotXYZ": [
+      0,
+      0,
+      0
+    ],
+    "allAnchored": true,
+    "runtimeTested": false
+  },
+  {
+    "id": "dragon_byte",
+    "parts": 77,
+    "dimensionsXYZ": [
+      3.4000000000006003,
+      3.2406393159921905,
+      2.04640205677
+    ],
+    "pairs": 2926,
+    "overlaps": [],
+    "PrimaryPart": "Body",
+    "pivotXYZ": [
+      0,
+      0,
+      0
+    ],
+    "allAnchored": true,
+    "runtimeTested": false
+  },
+  {
+    "id": "golden_trophy",
+    "parts": 90,
+    "dimensionsXYZ": [
+      3.844331763910028,
+      3.0839999999999996,
+      2.682
+    ],
+    "pairs": 4005,
+    "overlaps": [],
+    "PrimaryPart": "Body",
+    "pivotXYZ": [
+      0,
+      0,
+      0
+    ],
+    "allAnchored": true,
+    "runtimeTested": false
+  }
+]
