@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "parts": 91,
+  "pairs": 4095,
+  "overlaps": [],
+  "Counter": "present",
+  "PrimaryPartPivot": "origin identity",
+  "allAnchored": true,
+  "pointLights": 1,
+  "shadowless": true,
+  "runtimeTested": false
+}
