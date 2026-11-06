@@ -336,9 +336,7 @@ function AchievementWindow.open()
 	count.Size = UDim2.new(0.5, -64, 0, 26)
 	countLabel = count
 	local close = Ui.button(window, "×", Ui.colors.bad, AchievementWindow.close)
-	close.AnchorPoint = Vector2.new(1, 0)
-	close.Position = UDim2.new(1, -12, 0, 10)
-	close.Size = UDim2.fromOffset(40, 40)
+	Ui.headerClose(close)
 
 	-- 7 вкладок (6 категорий + «Титулы») в два ряда по 4: в один ряд на телефоне нечитаемо мелко
 	local tabs = Instance.new("Frame")
