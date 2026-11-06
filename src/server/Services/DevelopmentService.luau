@@ -159,6 +159,15 @@ local function mascotBonus(player: Player, kind: string): number
 	return if ok and type(value) == "number" and value == value then math.clamp(value, 0, 1) else 0
 end
 
+-- Бонус от повешенных постеров (PosterService, Config/Posters.stat)
+local function posterBonus(player: Player, kind: string): number
+	local PosterService = optional("PosterService")
+	local ok, value = pcall(function()
+		return if PosterService then PosterService.bonus(player, kind) else 0
+	end)
+	return if ok and type(value) == "number" and value == value then math.max(value, 0) else 0
+end
+
 local function reviewBonus(player: Player): number
 	local vip = if ownsPass(player, "vipOffice") then GamePasses.effects.vipReviewBonus else 0
 	-- «Мастер Пиксель» +1 и перк «Перфекционист» +0.2
@@ -171,6 +180,7 @@ local function reviewBonus(player: Player): number
 		+ staffBonus
 		+ moodReviewBonus(player)
 		+ mascotBonus(player, "review")
+		+ posterBonus(player, "review")
 end
 
 -- Всё, что сдвигает оценку до округления: бонусы студии минус ожидания критиков этапа
@@ -783,7 +793,7 @@ local function release(player: Player, project: Project)
 			* companyMultiplier
 	)
 	-- Маскот «доход»: +N% к доходу релиза
-	revenue = math.floor(revenue * (1 + mascotBonus(player, "revenue")))
+	revenue = math.floor(revenue * (1 + mascotBonus(player, "revenue") + posterBonus(player, "revenue")))
 	-- Платформа (жанр × доля рынка своей консоли) и хайп стримера (тратится этим релизом)
 	local platformMultiplier =
 		hookNumber("ConsoleService", "revenueMultiplier", 1, player, project.platform, project.genreId)

@@ -269,6 +269,28 @@ function PosterService.grantPoster(player: Player, profile: DataService.Profile,
 	return true
 end
 
+-- Характеристика повешенных постеров (Posters.totals) для kind: mood | review | revenue.
+-- Считаются только места, которые висят на текущем этапе студии; без профиля — 0
+function PosterService.bonusFor(profile: DataService.Profile?, kind: string): number
+	if not profile then
+		return 0
+	end
+	local hung: { string } = {}
+	local posters = data(profile)
+	for _, slot in visibleSlots(profile) do
+		local id = posters.equipped[slot.id]
+		if id then
+			table.insert(hung, id)
+		end
+	end
+	local totals = Posters.totals(hung)
+	return (totals :: any)[kind] or 0
+end
+
+function PosterService.bonus(player: Player, kind: string): number
+	return PosterService.bonusFor(DataService.get(player), kind)
+end
+
 function PosterService.owns(player: Player, posterId: string): boolean
 	local profile = DataService.get(player)
 	return profile ~= nil and data(profile).owned[posterId] == true
@@ -359,6 +381,11 @@ local function onEquip(player: Player, slotId: any, posterId: any)
 	end
 	place(player)
 	pushState(player)
+	-- Постеры дают настроение (Config/Posters.stat): пересчитать разбор настроения команды
+	local moodModule = script.Parent:FindFirstChild("MoodService")
+	if moodModule and moodModule:IsA("ModuleScript") then
+		pcall((require(moodModule) :: any).refresh, player)
+	end
 end
 
 local function onStateRequest(player: Player)
