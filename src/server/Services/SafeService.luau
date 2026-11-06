@@ -12,7 +12,6 @@
 -- Сервис стартует до StartParkService (по алфавиту): сейф попадает в препятствия для картриджей.
 
 local DataStoreService = game:GetService("DataStoreService")
-local GroupService = game:GetService("GroupService")
 local HttpService = game:GetService("HttpService")
 local MessagingService = game:GetService("MessagingService")
 local Players = game:GetService("Players")
@@ -26,6 +25,7 @@ local StartPark = require(Shared.Config.StartPark)
 local Texts = require(Shared.Config.Texts)
 local SafeRemotes = require(Shared.SafeRemotes)
 local DataService = require(script.Parent.DataService)
+local OwnerAccess = require(script.Parent.OwnerAccess)
 local RewardService = require(script.Parent.RewardService)
 
 local MODEL_NAME = "ParkSafe"
@@ -51,7 +51,6 @@ local store: DataStore? = nil
 local model: Model? = nil
 local keypad: BasePart? = nil
 local signLabel: TextLabel? = nil
-local owners: { [number]: boolean } = {}
 local busy: { [Player]: boolean } = {}
 local lastCommand: { [Player]: number } = {}
 
@@ -439,29 +438,7 @@ end
 -- ===== Команды владельца =====
 
 local function isOwner(player: Player): boolean
-	return owners[player.UserId] == true
-end
-
-local function resolveOwners()
-	for _, id in Safe.ownerUserIds do
-		owners[id] = true
-	end
-	if game.CreatorType == Enum.CreatorType.User then
-		if game.CreatorId > 0 then
-			owners[game.CreatorId] = true
-		end
-	elseif game.CreatorId > 0 then
-		local ok, info = pcall(function()
-			return GroupService:GetGroupInfoAsync(game.CreatorId)
-		end)
-		local owner = ok and type(info) == "table" and (info :: any).Owner
-		local ownerId = type(owner) == "table" and tonumber(owner.Id)
-		if ownerId then
-			owners[ownerId] = true
-		elseif not ok then
-			warn("[SafeService] GetGroupInfoAsync failed:", info)
-		end
-	end
+	return OwnerAccess.isOwner(player)
 end
 
 local function adminReply(player: Player, text: string)
@@ -693,11 +670,9 @@ local function onAdmin(player: Player, payload: any)
 	onCommand(player, table.concat(parts, " "))
 end
 
--- Атрибут SafeAdmin: клиент показывает кнопку 🔐 панели только владельцам (решает сервер)
+-- Атрибут SafeAdmin: клиент показывает кнопку 🔐 панели только владельцам (решает сервер, OwnerAccess)
 local function markOwner(player: Player)
-	if isOwner(player) then
-		player:SetAttribute("SafeAdmin", true)
-	end
+	player:SetAttribute("SafeAdmin", true)
 end
 
 local function setupCommand()
@@ -1006,7 +981,7 @@ function SafeService.start()
 	ensureModel()
 	SafeRemotes.SafeTry.OnServerEvent:Connect(onTry)
 	SafeRemotes.SafeAdmin.OnServerEvent:Connect(onAdmin)
-	Players.PlayerAdded:Connect(markOwner)
+	OwnerAccess.onOwner(markOwner)
 	Players.PlayerRemoving:Connect(function(player)
 		busy[player] = nil
 		lastCommand[player] = nil
@@ -1022,10 +997,6 @@ function SafeService.start()
 		warn("[SafeService] DataStore unavailable:", result)
 	end
 	task.spawn(function()
-		resolveOwners()
-		for _, player in Players:GetPlayers() do
-			markOwner(player)
-		end
 		local ok, err = pcall(function()
 			MessagingService:SubscribeAsync(Safe.topic, onMessage)
 		end)
