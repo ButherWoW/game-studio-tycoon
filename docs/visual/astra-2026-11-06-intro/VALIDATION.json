@@ -1,0 +1,46 @@
+{
+  "files": [
+    {
+      "file": "intro_1.png",
+      "size": [
+        1600,
+        900
+      ],
+      "opaque": true,
+      "sha256": "34115f3f94daf8eccae03b8ef01a50252f4160dd8eb086f60078270f16ceb5bc",
+      "visualReview": "PASS: park bench, old laptop, plain blue hoodie, no letters/digits"
+    },
+    {
+      "file": "intro_2.png",
+      "size": [
+        1600,
+        900
+      ],
+      "opaque": true,
+      "sha256": "4a20cc6d1c1d94f6db8c9ebf347c4351a91faf93662b36f9f32b761a13689f49",
+      "visualReview": "PASS: four genre/theme pictorial tiles, blank keys, no labels"
+    },
+    {
+      "file": "intro_3.png",
+      "size": [
+        1600,
+        900
+      ],
+      "opaque": true,
+      "sha256": "c6e7c62dd6147ed2c9ba024d4b581da648fa1c6ff0ab3f409579ebf3d23579f2",
+      "visualReview": "PASS: one rating digit9, no other text/numbers; coins/fans/cartridge visible"
+    },
+    {
+      "file": "intro_4.png",
+      "size": [
+        1600,
+        900
+      ],
+      "opaque": true,
+      "sha256": "339a66b41c2fc0745e70d93f1b03baf2ce9c6bd8efd68accebc362bb509306ca",
+      "visualReview": "PASS: garage\u2192office\u2192exactly3storeysHQ, no headline or sign text"
+    }
+  ],
+  "runtimeTested": false,
+  "method": "Dimensions/opacity/hashes automated; all4images individually viewed, full contact sheet reviewed; not OCR"
+}
