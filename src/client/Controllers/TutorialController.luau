@@ -525,11 +525,39 @@ local function run()
 	end)
 end
 
+-- Вступление для новичка (IntroController, атрибут IntroActive) идёт раньше туториала: ждём,
+-- пока сервер его решит (nil — ещё не ответил, не дольше INTRO_WAIT_SECONDS) и пока оно на экране
+local INTRO_WAIT_SECONDS = 15
+local introWaiting = false
+
+local function introBlocks(startedAt: number): boolean
+	local intro = player:GetAttribute("IntroActive")
+	if intro == nil then
+		return os.clock() - startedAt < INTRO_WAIT_SECONDS
+	end
+	return intro == true
+end
+
+local function waitForIntro()
+	local startedAt = os.clock()
+	while player:GetAttribute("TutorialActive") == true and introBlocks(startedAt) do
+		task.wait(0.25)
+	end
+end
+
 function TutorialController.start()
 	local function check()
-		if player:GetAttribute("TutorialActive") == true then
-			run()
+		if player:GetAttribute("TutorialActive") ~= true or introWaiting then
+			return
 		end
+		introWaiting = true
+		task.spawn(function()
+			waitForIntro()
+			introWaiting = false
+			if player:GetAttribute("TutorialActive") == true then
+				run()
+			end
+		end)
 	end
 	player:GetAttributeChangedSignal("TutorialActive"):Connect(check)
 	check()
