@@ -13,6 +13,7 @@ local Products = require(Shared.Config.Products)
 local Posters = require(Shared.Config.Posters)
 local Skins = require(Shared.Config.Skins)
 local ClientState = require(script.Parent.ClientState)
+local RobuxPrice = require(script.Parent.RobuxPrice)
 local OfferClient = require(script.Parent.OfferClient)
 local Ui = require(script.Parent.Ui)
 
@@ -32,19 +33,21 @@ local function describe(item: Offers.DealItem): (string, string, number)
 		if poster then
 			return ClientState.localText("poster_" .. poster.id, poster.name, poster.nameEn),
 				"🖼",
-				poster.robuxPrice or 0
+				RobuxPrice.of(poster.productId, poster.robuxPrice)
 		end
 	elseif item.kind == "skin" then
 		local skin = Skins.get(item.itemId)
 		if skin then
 			return ClientState.localText("skin_" .. skin.id, skin.name, skin.nameEn),
 				skin.emoji,
-				skin.robuxPrice or 0
+				RobuxPrice.of(skin.productId, skin.robuxPrice)
 		end
 	else
 		for _, product in Products.list do
 			if product.id == item.itemId then
-				return OfferClient.productName(product), product.icon, product.robuxPrice
+				return OfferClient.productName(product),
+					product.icon,
+					RobuxPrice.of(product.productId, product.robuxPrice)
 			end
 		end
 	end
@@ -123,7 +126,7 @@ local function buildDeal(body: Instance)
 		elseif deal.productId == 0 then ClientState.t("shop_soon")
 		else (if oldPrice > 0 then `<s>{oldPrice}</s> ` else "") .. ClientState.t(
 			"shop_robux",
-			{ price = deal.robuxPrice }
+			{ price = RobuxPrice.of(deal.productId, deal.robuxPrice) }
 		)
 	local b = Ui.button(f, text, if owned then Ui.colors.locked else Ui.colors.good, function()
 		if not owned then

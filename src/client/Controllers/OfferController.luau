@@ -16,6 +16,7 @@ local Texts = require(Shared.Config.Texts)
 local Features = require(Shared.Config.Features)
 local StudioLayout = require(Shared.StudioLayout)
 local ClientState = require(script.Parent.Parent.ClientState)
+local RobuxPrice = require(script.Parent.Parent.RobuxPrice)
 local OfferClient = require(script.Parent.Parent.OfferClient)
 
 local CHECK_SECONDS = 5
@@ -100,7 +101,10 @@ local function checkStrike()
 				amount = Texts.money(pack.amount),
 			}),
 		},
-		buyText = ClientState.t("offer_strike_pay", { price = product.robuxPrice }),
+		buyText = ClientState.t(
+			"offer_strike_pay",
+			{ price = RobuxPrice.of(product.productId, product.robuxPrice) }
+		),
 		onBuy = function()
 			OfferClient.buyProduct("strike", product.productId)
 		end,

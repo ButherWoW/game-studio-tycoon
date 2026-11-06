@@ -23,6 +23,7 @@ local Stages = require(Shared.Config.Stages)
 local Texts = require(Shared.Config.Texts)
 local StudioLayout = require(Shared.StudioLayout)
 local ClientState = require(script.Parent.Parent.ClientState)
+local RobuxPrice = require(script.Parent.Parent.RobuxPrice)
 local StudioState = require(script.Parent.Parent.StudioState)
 local CompanyEventState = require(script.Parent.Parent.CompanyEventState)
 local CompanyEvents = require(Shared.Config.CompanyEvents)
@@ -333,7 +334,10 @@ local function styleButton(frame: Frame, style: FurnitureStyles.Style)
 			frame,
 			if soon
 				then ClientState.t("shop_soon")
-				else ClientState.t("shop_robux", { price = style.robuxPrice or 0 }),
+				else ClientState.t(
+					"shop_robux",
+					{ price = RobuxPrice.of(style.productId, style.robuxPrice) }
+				),
 			if soon then Ui.colors.locked else Ui.colors.good,
 			function()
 				if not soon then
@@ -432,7 +436,10 @@ local function finishButton(frame: Frame, finish: InteriorFinishes.Finish)
 			frame,
 			if soon
 				then ClientState.t("shop_soon")
-				else ClientState.t("shop_robux", { price = finish.robuxPrice or 0 }),
+				else ClientState.t(
+					"shop_robux",
+					{ price = RobuxPrice.of(finish.productId, finish.robuxPrice) }
+				),
 			if soon then Ui.colors.locked else Ui.colors.good,
 			function()
 				if not soon then

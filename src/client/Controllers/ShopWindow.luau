@@ -20,6 +20,7 @@ local Premium = require(Shared.Config.Premium)
 local DailyEvents = require(Shared.Config.DailyEvents)
 local Texts = require(Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
+local RobuxPrice = require(script.Parent.Parent.RobuxPrice)
 local Ui = require(script.Parent.Parent.Ui)
 local PosterShop = require(script.Parent.Parent.PosterShop)
 local SkinShop = require(script.Parent.Parent.SkinShop)
@@ -54,7 +55,8 @@ local function robuxButton(
 	id: number,
 	price: number,
 	owned: boolean,
-	prompt: () -> ()
+	prompt: () -> (),
+	isPass: boolean?
 ): TextButton
 	local text, color
 	if owned then
@@ -62,7 +64,8 @@ local function robuxButton(
 	elseif id == 0 then
 		text, color = ClientState.t("shop_soon"), Ui.colors.locked
 	else
-		text, color = ClientState.t("shop_robux", { price = price }), Ui.colors.good
+		text, color =
+			ClientState.t("shop_robux", { price = RobuxPrice.of(id, price, isPass) }), Ui.colors.good
 	end
 	local b = Ui.button(parent, text, color, function()
 		if not owned and id ~= 0 then
@@ -185,7 +188,7 @@ local function buildPasses(body: Instance)
 			row(body, i, pass.icon, name, description, if pass.id == "vipOffice" then Images.vip else nil)
 		robuxButton(frame, pass.gamePassId, pass.robuxPrice, state.passes[pass.id] == true, function()
 			MarketplaceService:PromptGamePassPurchase(Players.LocalPlayer, pass.gamePassId)
-		end)
+		end, true)
 	end
 end
 

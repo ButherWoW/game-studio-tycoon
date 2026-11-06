@@ -23,6 +23,7 @@ local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local ConstructionRemotes = require(ReplicatedStorage.Shared.ConstructionRemotes)
 local ClientState = require(script.Parent.Parent.ClientState)
+local RobuxPrice = require(script.Parent.Parent.RobuxPrice)
 local Ui = require(script.Parent.Parent.Ui)
 local MoveCelebration = require(script.Parent.MoveCelebration)
 local SoundController = require(script.Parent.SoundController)
@@ -127,7 +128,10 @@ local function openPicker()
 		local soon = speedup.productId == 0
 		local price = if soon
 			then ClientState.t("build_soon")
-			else ClientState.t("build_price", { price = speedup.robuxPrice })
+			else ClientState.t(
+				"build_price",
+				{ price = RobuxPrice.of(speedup.productId, speedup.robuxPrice) }
+			)
 		local button = Ui.button(
 			frame,
 			name .. " · " .. price,

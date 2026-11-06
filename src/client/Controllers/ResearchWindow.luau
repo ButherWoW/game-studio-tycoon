@@ -16,6 +16,7 @@ local Topics = require(ReplicatedStorage.Shared.Config.Topics)
 local Products = require(ReplicatedStorage.Shared.Config.Products)
 local UnlockRules = require(ReplicatedStorage.Shared.UnlockRules)
 local ClientState = require(script.Parent.Parent.ClientState)
+local RobuxPrice = require(script.Parent.Parent.RobuxPrice)
 local Ui = require(script.Parent.Parent.Ui)
 local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local Images = require(ReplicatedStorage.Shared.Config.Images)
@@ -424,7 +425,10 @@ local function buildPicker(window: Frame, current: Research.Active)
 			box,
 			if soon
 				then ClientState.t("shop_soon")
-				else ClientState.t("shop_robux", { price = product.robuxPrice }),
+				else ClientState.t(
+					"shop_robux",
+					{ price = RobuxPrice.of(product.productId, product.robuxPrice) }
+				),
 			if soon then Ui.colors.locked else Ui.colors.good,
 			function()
 				promptProduct(product.productId)

@@ -15,6 +15,7 @@ local Social = require(Shared.Config.Social)
 local ContentDrops = require(Shared.Config.ContentDrops)
 local SocialRemotes = require(Shared.SocialRemotes)
 local DataService = require(script.Parent.DataService)
+local PriceLevels = require(script.Parent.PriceLevels)
 local SkinService = require(script.Parent.SkinService)
 local PosterService = require(script.Parent.PosterService)
 local MascotService = require(script.Parent.MascotService)
@@ -93,6 +94,15 @@ local function onSelect(player: Player, giftId: any, userId: any)
 			player,
 			{ kind = "giftOwned", name = target.DisplayName, itemKind = base.itemKind, itemId = base.itemId }
 		)
+		return
+	end
+	-- Региональные цены: дарить можно игроку с таким же или более низким уровнем цены (проверка
+	-- ждёт ответа Roblox, после неё игроки могли выйти)
+	if not PriceLevels.canGift(player, target) then
+		notice(player, { kind = "giftUnavailable" })
+		return
+	end
+	if not player.Parent or not target.Parent then
 		return
 	end
 	pending[player] =
