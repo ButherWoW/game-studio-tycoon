@@ -9,6 +9,7 @@ local TweenService = game:GetService("TweenService")
 
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local ClientState = require(script.Parent.Parent.ClientState)
+local DevState = require(script.Parent.Parent.DevState)
 local Ui = require(script.Parent.Parent.Ui)
 
 local RESULT_SECONDS = 2.5
@@ -19,6 +20,7 @@ local DISPLAY_ORDER = 27
 
 local DevEventPopup = {}
 local gui: ScreenGui? = nil
+local choiceId = 0 -- номер показанного выбора: старый таймер не закроет новое окно
 
 local function clear()
 	local root = gui
@@ -59,6 +61,8 @@ local function show(info: any)
 		return
 	end
 	clear()
+	choiceId += 1
+	local shownId = choiceId
 	local id: string = info.id
 	local frame = panel(150)
 	local title =
@@ -94,6 +98,12 @@ local function show(info: any)
 	TweenService
 		:Create(bar, TweenInfo.new(seconds, Enum.EasingStyle.Linear), { Size = UDim2.new(0, 0, 0, 6) })
 		:Play()
+	-- Сервер сам ответит за игрока; это — страховка, если ответ не дошёл
+	task.delay(seconds + 3, function()
+		if choiceId == shownId and frame.Parent then
+			clear()
+		end
+	end)
 end
 
 local function showResult(info: any)
@@ -127,6 +137,17 @@ function DevEventPopup.start()
 	gui = screen
 	Remotes.DevEvent.OnClientEvent:Connect(show)
 	Remotes.DevEventResult.OnClientEvent:Connect(showResult)
+	-- Пауза (встал из-за ПК) или проектов не осталось: выбор не должен висеть
+	Remotes.DevelopmentProgress.OnClientEvent:Connect(function(data: any)
+		if type(data) == "table" and data.paused == true then
+			clear()
+		end
+	end)
+	DevState.changed:Connect(function()
+		if #DevState.projects == 0 then
+			clear()
+		end
+	end)
 	Remotes.GameReleased.OnClientEvent:Connect(function(info: any)
 		-- Вторая игра ещё в разработке: её событие не прячем (событие вышедшей игры
 		-- сервер закрыл раньше — пришёл DevEventResult)

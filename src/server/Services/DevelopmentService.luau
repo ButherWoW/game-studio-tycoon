@@ -1266,6 +1266,11 @@ local function tickProject(player: Player, project: Project, atPc: boolean)
 	end
 	-- Встал из-за компьютера (или событие компании «отключили свет») — разработка на паузе
 	if not atPc or companyEvent("isPaused", false, player) == true then
+		-- Пауза: висящие быстрое событие и выбор закрываем (иначе окно торчит, пока игрок не вернётся)
+		QuickEventService.pause(player)
+		if project.event then
+			resolveEvent(player, project, "b")
+		end
 		Remotes.DevelopmentProgress:FireClient(player, {
 			id = project.id,
 			progress = math.min(project.elapsed / project.duration, 1),
@@ -1417,6 +1422,8 @@ function DevelopmentService.start()
 						warn("[DevelopmentService] Tick failed for", player.Name, err)
 						-- Сломанный проект убираем, чтобы ошибка не повторялась каждые полсекунды
 						if removeProject(player, project) then
+							-- План быстрых событий сломанной игры тоже закрываем
+							pcall(QuickEventService.finish, player, project.id)
 							pcall(DevelopmentService.pushState, player)
 						end
 					end
