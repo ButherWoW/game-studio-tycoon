@@ -1,0 +1,77 @@
+{
+  "count": 7,
+  "files": [
+    {
+      "file": "banners/upd_competition.png",
+      "size": [
+        1600,
+        400
+      ],
+      "opaque": true,
+      "sha256": "e702e975719e9459cdd082bd4f52b8a2f11371aaa914a6886055cee1f82e0860",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    },
+    {
+      "file": "banners/upd_thirdFloor.png",
+      "size": [
+        1600,
+        400
+      ],
+      "opaque": true,
+      "sha256": "2b5e4c9780eaaa12709c47b5f716fa454a7e860d174dcbe6af397a1fdadf08b0",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    },
+    {
+      "file": "banners/upd_together.png",
+      "size": [
+        1600,
+        400
+      ],
+      "opaque": true,
+      "sha256": "1a4a75a0788091072b1cb02283746df87fb0c6f88b619d16cbe0a5e1f252a282",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    },
+    {
+      "file": "banners/upd_publishers.png",
+      "size": [
+        1600,
+        400
+      ],
+      "opaque": true,
+      "sha256": "5c1f22ad4a03a4ca6690b7d601fb1d5396ec9d88ce1e463b1ad6b077683c1931",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    },
+    {
+      "file": "banners/upd_ownConsole.png",
+      "size": [
+        1600,
+        400
+      ],
+      "opaque": true,
+      "sha256": "255ab92a6ba761e64fb8553ea4078d06994ae40519b06f47744cacdcab84c56c",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    },
+    {
+      "file": "banners/upd_market.png",
+      "size": [
+        1600,
+        400
+      ],
+      "opaque": true,
+      "sha256": "00b093ebb135758d4b24a9351ec138521f6693641cd60521a4f9e8eb8c56ae6e",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    },
+    {
+      "file": "banners/upd_arcade.png",
+      "size": [
+        1600,
+        400
+      ],
+      "opaque": true,
+      "sha256": "f1d31abbbb2e080ec5a7d1808389ff5bba4abb6b3d9919982f96fba45799e1ae",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    }
+  ],
+  "method": "Dimensions/RGB/hash automated; subjects, safe composition and absence of lettering manually reviewed, not OCR. Static illustrations, not game recording.",
+  "runtimeTested": false
+}
