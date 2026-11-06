@@ -91,6 +91,9 @@ local productById: { [number]: ProductInfo }? = nil
 local isStudio = RunService:IsStudio()
 local budgetWindow = os.clock()
 local budgetUsed = 0
+-- Последняя сводка игрока при выходе / закрытии сервера уходит мимо нашего бюджета: иначе при
+-- массовом выходе остаток экономики терялся молча (аудит Fable, P2-2). Лимит Roblox вдвое выше нашего
+local finalFlush = false
 local warned: { [string]: boolean } = {}
 
 local stepById: { [string]: number } = {}
@@ -131,7 +134,7 @@ local function emit(describe: string, send: () -> ()): boolean
 	if not Config.enabled then
 		return true
 	end
-	if not takeBudget() then
+	if not finalFlush and not takeBudget() then
 		return false
 	end
 	if Config.debugPrint and (isStudio or Config.debugPrintLive) then
@@ -463,8 +466,45 @@ local function frame(level: number): (string?, string?)
 end
 
 -- Категория по "Сервис.функция" → "Сервис.внешняя функция" → "Сервис"
-local function lookup(map: { [string]: Config.EconomyTag }, module: string, fn: string?, outerFn: string?)
-	return (fn and map[module .. "." .. fn]) or (outerFn and map[module .. "." .. outerFn]) or map[module]
+-- Имена функций модуля module выше по стеку (уровни from..from+7 считая вызывающую обёртку за 1).
+-- Нужны, когда деньги тратятся внутри безымянного колбэка (withLock(player, function() … end)):
+-- сам колбэк имени не даёт, а ключ источника — «StockService.onIpo» (аудит Fable, P2-1).
+-- Зовётся напрямую из обёртки: уровни считаются как у frame
+local function sameModuleCallers(module: string?, from: number): { string }
+	local names: { string } = {}
+	if not module then
+		return names
+	end
+	for level = from, from + 7 do
+		local source, name = debug.info(level + 1, "sn")
+		if type(source) ~= "string" then
+			break
+		end
+		if source:match("([%w_]+)$") == module and type(name) == "string" and name ~= "" then
+			table.insert(names, name)
+		end
+	end
+	return names
+end
+
+local function lookup(
+	map: { [string]: Config.EconomyTag },
+	module: string,
+	fn: string?,
+	outerFn: string?,
+	callers: { string }?
+)
+	local tag = (fn and map[module .. "." .. fn]) or (outerFn and map[module .. "." .. outerFn])
+	if tag then
+		return tag
+	end
+	for _, name in callers or {} do
+		local byCaller = map[module .. "." .. name]
+		if byCaller then
+			return byCaller
+		end
+	end
+	return map[module]
 end
 
 local function otherTag(module: string?): Config.EconomyTag
@@ -480,7 +520,8 @@ local function onSource(
 	fn: string?,
 	outer: string?,
 	outerFn: string?,
-	receipt: ProductInfo?
+	receipt: ProductInfo?,
+	callers: { string }?
 )
 	if receipt then
 		-- Деньги за Robux: пакет дохода, «двойной релиз», запасная выдача ускорений и подарков
@@ -493,6 +534,7 @@ local function onSource(
 	end
 	if Config.passthrough[module] and outer then
 		module, fn = outer, outerFn
+		callers = nil -- имена были от посредника, не от модуля, куда перешли
 	end
 	local state = states[player]
 	if module == "StartParkService" and state then
@@ -501,7 +543,7 @@ local function onSource(
 	if module == "ExpoService" then
 		logCustom(player, Config.events.expoWin, 1)
 	end
-	local tag = lookup(Config.sources, module :: string, fn) or otherTag(module)
+	local tag = lookup(Config.sources, module :: string, fn, nil, callers) or otherTag(module)
 	addToBucket(player, Enum.AnalyticsEconomyFlowType.Source, tag, nil, amount)
 end
 
@@ -610,14 +652,14 @@ local function classifySpend(
 	amount: number,
 	module: string?,
 	fn: string?,
-	outerFn: string?,
+	callers: { string }?,
 	before: SpendSnapshot
 )
 	local profile = DataService.get(player)
 	if not profile then
 		return
 	end
-	local tag: Config.EconomyTag? = if module then lookup(Config.sinks, module, fn, outerFn) else nil
+	local tag: Config.EconomyTag? = if module then lookup(Config.sinks, module, fn, nil, callers) else nil
 	local item: string? = nil
 	if tag and module then
 		item = spendItem(profile, module, fn, before)
@@ -653,8 +695,9 @@ local function wrapDataService()
 		if not outer then
 			outer, outerFn = frame(5)
 		end
+		local callers = sameModuleCallers(module, 3)
 		local receipt = receiptByThread[coroutine.running()]
-		local ok, err = pcall(onSource, player, amount, module, fn, outer, outerFn, receipt)
+		local ok, err = pcall(onSource, player, amount, module, fn, outer, outerFn, receipt, callers)
 		if not ok then
 			warnOnce("addCash hook failed", err)
 		end
@@ -666,12 +709,15 @@ local function wrapDataService()
 			-- Ближайший Luau-модуль выше по стеку: вызов через pcall даёт кадр «[C]» без имени
 			-- (так покупка декора писалась как Other/unknown — отчёт #4, P2-3)
 			local module, fn = frame(2)
+			local found = 2
 			for level = 3, 6 do
 				if module then
 					break
 				end
 				module, fn = frame(level)
+				found = level
 			end
+			local callers = sameModuleCallers(module, found + 1)
 			local ok, err = pcall(function()
 				local profile = DataService.get(player)
 				if not profile then
@@ -685,7 +731,7 @@ local function wrapDataService()
 				-- Код покупки меняет профиль сразу после trySpend, без yield: смотрим после него
 				task.defer(function()
 					local okClassify, errClassify =
-						pcall(classifySpend, player, amount, module, fn, nil, before)
+						pcall(classifySpend, player, amount, module, fn, callers, before)
 					if not okClassify then
 						warnOnce("spend classify failed", errClassify)
 					end
@@ -707,7 +753,8 @@ local function wrapDataService()
 			if Config.enabled and type(charged) == "number" and charged > 0 then
 				local module, fn = frame(2)
 				local _, outerFn = frame(3)
-				local tag = if module then lookup(Config.sinks, module, fn, outerFn) else nil
+				local callers = sameModuleCallers(module, 3)
+				local tag = if module then lookup(Config.sinks, module, fn, outerFn, callers) else nil
 				pcall(
 					addToBucket,
 					player,
@@ -871,7 +918,9 @@ end
 
 local function onPlayerRemoving(player: Player)
 	pcall(poll, player)
+	finalFlush = true
 	pcall(flushEconomy, player)
+	finalFlush = false
 	states[player] = nil
 end
 
@@ -1021,6 +1070,15 @@ function Analytics.start()
 				task.spawn(poll, player)
 			end
 		end
+	end)
+
+	-- Сервер закрывается: остаток экономики всех игроков, пока их состояние ещё есть
+	game:BindToClose(function()
+		finalFlush = true
+		for player in states do
+			pcall(flushEconomy, player)
+		end
+		finalFlush = false
 	end)
 
 	task.spawn(function()

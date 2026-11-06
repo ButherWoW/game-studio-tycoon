@@ -53,6 +53,8 @@ local PLATE_ORDER = 30 -- над HUD и обычными окнами
 local SIDE_MAX_WIDTH = 240
 local SIDE_MIN_WIDTH = 150
 local SIDE_HEIGHT = 140
+local WIDE_MIN_TEXT = 14 -- широкая плашка: не мельче читаемого (отчёт v64)
+local SIDE_MIN_TEXT = 10 -- карточка сбоку: места мало, текст ужимается сильнее
 local TUTORIAL_WINDOWS = { "CreateGameWindow", "ReleaseWindow" }
 -- Всплывающие события разработки (выбор a/b, быстрое нажатие): пока на экране — плашку прячем
 local EVENT_POPUPS = { "DevEventPopup", "QuickEventPopup" }
@@ -259,7 +261,7 @@ local function run()
 	hint.TextWrapped = true
 	-- Не мельче читаемого и не крупнее заголовка: TextScaled сам подберёт размер в 1–2 строки
 	local hintSize = Instance.new("UITextSizeConstraint")
-	hintSize.MinTextSize = 14
+	hintSize.MinTextSize = WIDE_MIN_TEXT
 	hintSize.MaxTextSize = 26
 	hintSize.Parent = hint
 
@@ -322,6 +324,9 @@ local function run()
 			hint.Position = UDim2.fromOffset(10, 8)
 			hint.Size = UDim2.new(1, -20, 1, -68)
 			hint.TextWrapped = true
+			-- Карточка сбоку тесная (текст ~64 px высотой): с минимумом 14 px длинные подсказки
+			-- вылезали на «Пропустить» (аудит Fable, P2-3); здесь мельче можно, в широкой — нельзя
+			hintSize.MinTextSize = SIDE_MIN_TEXT
 			action.AnchorPoint = Vector2.new(0.5, 1)
 			action.Position = UDim2.new(0.5, 0, 1, -8)
 			action.Size = UDim2.new(1, -16, 0, 44)
@@ -330,6 +335,7 @@ local function run()
 			hint.Position = UDim2.fromOffset(14, 8)
 			hint.Size = UDim2.new(1, -150, 1, -16)
 			hint.TextWrapped = true
+			hintSize.MinTextSize = WIDE_MIN_TEXT
 			action.AnchorPoint = Vector2.new(1, 0.5)
 			action.Position = UDim2.new(1, -8, 0.5, 0)
 			action.Size = UDim2.fromOffset(120, 40)
