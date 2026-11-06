@@ -788,9 +788,19 @@ end
 
 -- Лифт: только свой участок, только открытый этаж, только стоя у пульта
 onLift = function(player: Player, prompt: ProximityPrompt, floor: number)
-	local plot = getPlot(player)
-	local profile = DataService.get(player)
-	if not plot or not profile or not prompt:IsDescendantOf(plot) or inChase(player) then
+	-- Лифт общий (владелец 07.11: «разреши другим игрокам ходить по этажам»): ездит любой, кто стоит
+	-- у пульта, по этажам участка, где пульт; этаж должен быть открыт ХОЗЯИНОМ студии
+	local plot: BasePart? = nil
+	local host: Player? = nil
+	for candidate, owner in owners do
+		if prompt:IsDescendantOf(candidate) then
+			plot = candidate
+			host = owner
+			break
+		end
+	end
+	local profile = if host then DataService.get(host) else nil
+	if not plot or not profile or inChase(player) then
 		return
 	end
 	if floor < 1 or floor > StudioLayout.floorsUnlocked(profile.studioLevel) or profile.studioLevel < 2 then

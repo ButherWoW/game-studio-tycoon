@@ -21,6 +21,9 @@ export type Data = { owned: { [string]: boolean }, selected: string }
 
 local StyleModels = {}
 
+-- Какие недостающие модели уже упомянуты в логе (раз на имя)
+local missingWarned: { [string]: boolean } = {}
+
 -- Поле профиля в порядке: старые сохранения без него, мусор, удалённые из Config стили.
 -- Бесплатные (классика) открыты всегда; выбранный — только из открытых
 function StyleModels.data(profile: DataService.Profile): Data
@@ -128,6 +131,31 @@ function StyleModels.find(folder: Instance?, name: string, profile: DataService.
 		if not styled and suffix == "" then
 			local finish = StyleModels.finish(profile)
 			styled = if finish then variant(folder, name, finish.suffix) else nil
+		end
+	end
+	if not styled then
+		-- Диагностика (владелец 07.11: «стиль не меняется на всех этажах / мебель не меняется на уютный»):
+		-- выбран стиль или отделка, а модели <Имя><суффикс> нет в ServerStorage.Upgrades (не импортирована
+		-- или заглушка Generated) — тихо ставилась классика. Пишем один раз на имя, чтобы было видно,
+		-- какие модели не хватает
+		local wanted = if InteriorFinishes.SHELLS[name]
+			then (StyleModels.finish(profile) or { suffix = "" }).suffix
+			else StyleModels.suffix(profile)
+		if wanted == "" and not InteriorFinishes.SHELLS[name] then
+			local finish = StyleModels.finish(profile)
+			wanted = if finish then finish.suffix else ""
+		end
+		if wanted ~= "" then
+			local key = (InteriorFinishes.SHELLS[name] or name) .. wanted
+			if not missingWarned[key] then
+				missingWarned[key] = true
+				warn(
+					"[StyleModels] нет модели "
+						.. key
+						.. " в ServerStorage.Upgrades — ставится классическая "
+						.. name
+				)
+			end
 		end
 	end
 	return styled or folder:FindFirstChild(name)

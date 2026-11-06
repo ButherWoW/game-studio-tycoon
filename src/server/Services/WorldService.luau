@@ -465,10 +465,24 @@ local DIMMED_MODELS: { [string]: LightLimit } = {
 	Floor_ObsidianGold = FLOOR_LIGHT,
 }
 
+-- Уютный стиль мебели слишком яркий (владелец 07.11): свет моделей *_Cozy в два раза темнее
+local COZY_SUFFIX = "_Cozy"
+local COZY_LIGHT_SCALE = 0.5
+
 local function dimImportedLights()
 	local folder = ServerStorage:FindFirstChild("Upgrades")
 	if not folder then
 		return
+	end
+	for _, model in folder:GetChildren() do
+		if model.Name:sub(-#COZY_SUFFIX) == COZY_SUFFIX and not model:GetAttribute("LightsDimmed") then
+			model:SetAttribute("LightsDimmed", true)
+			for _, d in model:GetDescendants() do
+				if d:IsA("Light") then
+					d.Brightness *= COZY_LIGHT_SCALE
+				end
+			end
+		end
 	end
 	for name, limit in DIMMED_MODELS do
 		local model = folder:FindFirstChild(name)
