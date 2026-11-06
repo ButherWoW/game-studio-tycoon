@@ -18,7 +18,10 @@
 --   • уже купленное никогда не забираем; оплаченный чек Robux выдаём всегда (деньги списаны).
 -- Праздники (Config/Holidays) идут по календарю — здесь их нет.
 -- Studio: Config/Debug.contentDayOffset — какой день после запуска изображать (только Studio).
+-- Админ-панель (AdminService, «Тестовый сервер»): атрибут ReplicatedStorage AdminContentDay — то же
+-- самое, но только в Studio или на закрытом сервере игры (ReserveServer), см. adminDayAllowed.
 
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
 local Debug = require(script.Parent.Debug)
@@ -242,7 +245,17 @@ end
 
 -- Какой сегодня день после запуска (0 — день запуска и всё до него).
 -- В Studio — Config/Debug.contentDayOffset, если задан
+-- Где действует AdminContentDay: Studio или закрытый сервер, созданный игрой (ReserveServer:
+-- PrivateServerId есть, владельца VIP-сервера нет). На обычных и VIP-серверах атрибут не читаем
+function ContentDrops.adminDayAllowed(): boolean
+	return RunService:IsStudio() or (game.PrivateServerId ~= "" and game.PrivateServerOwnerId == 0)
+end
+
 function ContentDrops.dayIndex(now: number?): number
+	local admin = ReplicatedStorage:GetAttribute("AdminContentDay")
+	if type(admin) == "number" and admin == admin and admin >= 0 and ContentDrops.adminDayAllowed() then
+		return math.min(math.floor(admin), 100_000)
+	end
 	local forced = Debug.contentDayOffset
 	if forced and RunService:IsStudio() then
 		return math.max(math.floor(forced), 0)
