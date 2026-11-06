@@ -100,6 +100,19 @@ local function grantConstruction(player: Player, profile: DataService.Profile, p
 	return (require(module) :: any).grantProduct(player, profile, productId) == true
 end
 
+-- Аналитика выдачи (AnalyticsService.beginReceipt/endReceipt): деньги, выданные внутри квитанции, —
+-- IAP с ключом товара; после выдачи — ProductPurchased. Лениво и через pcall: аналитика не мешает выдаче
+local function analytics(method: string, ...: any)
+	local module = script.Parent:FindFirstChild("AnalyticsService")
+	if module and module:IsA("ModuleScript") then
+		local ok, service = pcall(require, module)
+		local fn = ok and type(service) == "table" and (service :: any)[method]
+		if type(fn) == "function" then
+			pcall(fn, ...)
+		end
+	end
+end
+
 local function processReceipt(receipt): Enum.ProductPurchaseDecision
 	local player = Players:GetPlayerByUserId(receipt.PlayerId)
 	local profile = player and DataService.get(player)
@@ -118,6 +131,7 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 	-- ускорения стройки — ConstructionService, остальное — ShopService
 	-- Ошибка посреди выдачи: часть эффекта уже в профиле. Квитанцию всё равно записываем —
 	-- лучше недодать, чем выдать второй раз на повторе чека
+	analytics("beginReceipt", receipt.ProductId)
 	local ok, handled = pcall(function(): boolean
 		local campaign = findByProduct(receipt.ProductId)
 		if campaign then
@@ -142,6 +156,8 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 			or grantConstruction(player, profile, receipt.ProductId)
 			or ConsoleService.grantProduct(player, profile, receipt.ProductId)
 	end)
+	-- Единая точка учёта всех Developer Products: выдано (или выдано частично при ошибке) — пишем
+	analytics("endReceipt", player, receipt.ProductId, if ok then handled == true else true)
 	if not ok then
 		warn("[Monetization] Grant failed:", receipt.ProductId, receipt.PurchaseId, handled)
 	elseif not handled then
