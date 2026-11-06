@@ -1,0 +1,38 @@
+[
+  {
+    "skin": "hoodie_coder",
+    "partsIncludingHandle": 26,
+    "attachment": "HatAttachment",
+    "visiblePairChecks": 300,
+    "intersections": 0,
+    "rigidWelds": 25,
+    "runtimeTested": false
+  },
+  {
+    "skin": "sound_nerd",
+    "partsIncludingHandle": 36,
+    "attachment": "HatAttachment",
+    "visiblePairChecks": 595,
+    "intersections": 0,
+    "rigidWelds": 35,
+    "runtimeTested": false
+  },
+  {
+    "skin": "writer",
+    "partsIncludingHandle": 18,
+    "attachment": "HatAttachment",
+    "visiblePairChecks": 136,
+    "intersections": 0,
+    "rigidWelds": 17,
+    "runtimeTested": false
+  },
+  {
+    "skin": "intern",
+    "partsIncludingHandle": 20,
+    "attachment": "BodyBackAttachment",
+    "visiblePairChecks": 171,
+    "intersections": 0,
+    "rigidWelds": 19,
+    "runtimeTested": false
+  }
+]
