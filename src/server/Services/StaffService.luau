@@ -1113,7 +1113,11 @@ end
 local function seatTopIn(root: Instance): Vector3?
 	local minX, maxX, minZ, maxZ, top = math.huge, -math.huge, math.huge, -math.huge, -math.huge
 	for _, part in root:GetDescendants() do
-		if part:IsA("BasePart") and part.Name ~= "PcSeat" and string.find(string.lower(part.Name), "seat") then
+		if
+			part:IsA("BasePart")
+			and part.Name ~= "PcSeat"
+			and string.find(string.lower(part.Name), "seat")
+		then
 			local p = part.Position
 			minX, maxX = math.min(minX, p.X), math.max(maxX, p.X)
 			minZ, maxZ = math.min(minZ, p.Z), math.max(maxZ, p.Z)
