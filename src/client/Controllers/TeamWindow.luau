@@ -769,6 +769,7 @@ local function buildDetails(parent: Instance, employee: Employees.Employee, data
 			b.AnchorPoint = Vector2.new(1, 0)
 			b.Position = UDim2.new(1, if i == 1 then -48 else 0, 0, 0)
 			b.Size = UDim2.fromOffset(44, SMALL_HEIGHT)
+		end
 	end
 
 	-- Скин (открытые в магазине стили, один и тот же — на сколько угодно сотрудников)
