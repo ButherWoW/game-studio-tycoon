@@ -1,0 +1,246 @@
+[
+  {
+    "model": "GarageWalls",
+    "panels": [
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      }
+    ],
+    "retainedLight": {
+      "count": 1,
+      "Shadows": false,
+      "Range": 60,
+      "Brightness": 1
+    },
+    "geometryChanged": false,
+    "pivotChanged": false
+  },
+  {
+    "model": "GarageWalls_Aurora",
+    "panels": [
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      }
+    ],
+    "retainedLight": {
+      "count": 1,
+      "Shadows": false,
+      "Range": 60,
+      "Brightness": 1
+    },
+    "geometryChanged": false,
+    "pivotChanged": false
+  },
+  {
+    "model": "GarageWalls_ObsidianGold",
+    "panels": [
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      }
+    ],
+    "retainedLight": {
+      "count": 1,
+      "Shadows": false,
+      "Range": 60,
+      "Brightness": 1
+    },
+    "geometryChanged": false,
+    "pivotChanged": false
+  },
+  {
+    "model": "GarageWalls_Sakura",
+    "panels": [
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "WindowGlass",
+        "oldTransparency": 0.62
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      },
+      {
+        "name": "DoorWindow",
+        "oldTransparency": 0.15
+      }
+    ],
+    "retainedLight": {
+      "count": 1,
+      "Shadows": false,
+      "Range": 60,
+      "Brightness": 1
+    },
+    "geometryChanged": false,
+    "pivotChanged": false
+  }
+]

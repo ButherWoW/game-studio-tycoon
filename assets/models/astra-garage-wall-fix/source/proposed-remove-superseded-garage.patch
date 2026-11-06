@@ -1,0 +1,20 @@
+--- a/src/server/Services/PlotService.luau
++++ b/src/server/Services/PlotService.luau
+@@ -114,6 +114,17 @@
+ 
+ local function placeUpgrade(plot: BasePart, upgrade: Upgrades.Upgrade)
+ 	placeModel(plot, upgrade.model, upgrade.position, upgrade.rotation)
++	-- Импортированные GarageWalls — полная оболочка: при покупке убрать старый Garage.
++	-- Generated-заглушка содержит только декор, для неё базовые стены всё ещё нужны.
++	if upgrade.model == "GarageWalls" then
++		local walls = plot:FindFirstChild("GarageWalls")
++		if walls and walls:GetAttribute("Generated") ~= true then
++			local oldGarage = plot:FindFirstChild("Garage")
++			if oldGarage then
++				oldGarage:Destroy()
++			end
++		end
++	end
+ 	-- Купили кресло — табурет у первого стола больше не нужен: место игрока теперь в кресле
+ 	if upgrade.id == "chair" then
+ 		local desk = plot:FindFirstChild("Desk1")
