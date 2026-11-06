@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "名字里有不文明的词——换一个吧",
 	move_celebrate = "🎉 新工作室：{stage}！",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 每日订单",
+	order_reset = "{time}后刷新",
+	order_done = "📋 订单完成: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ 正在建造车库 — {time}",
 	build_banner_office = "🏗️ 正在建造办公室 — {time}",
 	build_banner_floor = "🏗️ 正在建造：{floor} — {time}",

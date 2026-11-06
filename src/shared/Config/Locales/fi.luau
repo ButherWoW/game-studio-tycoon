@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "Nimessä on rumia sanoja — keksi toinen",
 	move_celebrate = "🎉 Uusi studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Päivän tilaukset",
+	order_reset = "Uudet {time} päästä",
+	order_done = "📋 Tilaus suoritettu: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ Autotallin rakennus — {time}",
 	build_banner_office = "🏗️ Toimiston rakennus — {time}",
 	build_banner_floor = "🏗️ Rakennus: {floor} — {time}",

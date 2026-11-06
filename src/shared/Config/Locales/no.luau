@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "Tittelen har stygge ord — finn på en annen",
 	move_celebrate = "🎉 Nytt studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Dagens bestillinger",
+	order_reset = "Nye om {time}",
+	order_done = "📋 Bestilling fullført: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ Bygger garasjen — {time}",
 	build_banner_office = "🏗️ Kontoret bygges — {time}",
 	build_banner_floor = "🏗️ Bygging: {floor} — {time}",

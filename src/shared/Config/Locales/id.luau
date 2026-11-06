@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "Judulnya ada kata kasar — cari yang lain",
 	move_celebrate = "🎉 Studio baru: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Pesanan harian",
+	order_reset = "Baru dalam {time}",
+	order_done = "📋 Pesanan selesai: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ Membangun garasi — {time}",
 	build_banner_office = "🏗️ Pembangunan kantor — {time}",
 	build_banner_floor = "🏗️ Pembangunan: {floor} — {time}",

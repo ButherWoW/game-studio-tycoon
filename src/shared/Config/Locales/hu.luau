@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "A címben csúnya szavak vannak — találj ki másikat",
 	move_celebrate = "🎉 Új stúdió: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Napi megrendelések",
+	order_reset = "Újak {time} múlva",
+	order_done = "📋 Megrendelés teljesítve: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ A garázs építése — {time}",
 	build_banner_office = "🏗️ Az iroda építése — {time}",
 	build_banner_floor = "🏗️ Építés: {floor} — {time}",

@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "Ce titre contient des gros mots — trouve-en un autre",
 	move_celebrate = "🎉 Nouveau studio : {stage} !",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Commandes du jour",
+	order_reset = "Nouvelles dans {time}",
+	order_done = "📋 Commande terminée: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ Construction du garage — {time}",
 	build_banner_office = "🏗️ Chantier du bureau — {time}",
 	build_banner_floor = "🏗️ Chantier : {floor} — {time}",

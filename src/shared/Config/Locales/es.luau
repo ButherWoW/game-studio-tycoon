@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "El título tiene palabrotas: piensa otro",
 	move_celebrate = "🎉 ¡Nuevo estudio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Encargos del día",
+	order_reset = "Nuevos en {time}",
+	order_done = "📋 Encargo completado: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ Construyendo el garaje — {time}",
 	build_banner_office = "🏗️ Obra de la oficina — {time}",
 	build_banner_floor = "🏗️ Obra: {floor} — {time}",

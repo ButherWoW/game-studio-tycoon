@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "Der Titel enthält Schimpfwörter – denk dir einen anderen aus",
 	move_celebrate = "🎉 Neues Studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Tagesaufträge",
+	order_reset = "Neue in {time}",
+	order_done = "📋 Auftrag erfüllt: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ Bau der Garage — {time}",
 	build_banner_office = "🏗️ Bau des Büros — {time}",
 	build_banner_floor = "🏗️ Bau: {floor} — {time}",

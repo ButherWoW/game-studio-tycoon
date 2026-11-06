@@ -1209,6 +1209,9 @@ Texts.ru = {
 	error_name_bad = "Название с плохими словами — придумай другое",
 	move_celebrate = "🎉 Новая студия: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Заказы дня",
+	order_reset = "Новые через {time}",
+	order_done = "📋 Заказ выполнен: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ Стройка гаража — {time}",
 	build_banner_office = "🏗️ Стройка офиса — {time}",
 	build_banner_floor = "🏗️ Стройка: {floor} — {time}",
@@ -2963,6 +2966,9 @@ Texts.en = {
 	error_name_bad = "That title has bad words — try another one",
 	move_celebrate = "🎉 New studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Daily orders",
+	order_reset = "New in {time}",
+	order_done = "📋 Order completed: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ Building the garage — {time}",
 	build_banner_office = "🏗️ Building the office — {time}",
 	build_banner_floor = "🏗️ Building: {floor} — {time}",
