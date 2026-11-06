@@ -49,6 +49,13 @@ local lastInput: { [Player]: number } = {}
 local lastEventAt: { [Player]: number } = {} -- os.clock() старта последнего события (любого)
 local nextId = 0
 local rng = Random.new()
+-- Мешок игр игрока: true — в игре будут быстрые события (QuickEvents.gamesWithEvents из bagSize)
+local bags: { [Player]: { boolean } } = {}
+
+-- Хук скорости разработки: ставит DevelopmentService (он требует этот модуль, наоборот нельзя).
+-- (игрок, id проекта, результат, множитель оставшегося времени) -> на сколько процентов изменилось
+-- время (−20 = быстрее на 20%); 0 — ничего не изменилось
+QuickEventService.onSpeed = nil :: ((Player, number, Grade, number) -> number)?
 
 local DIRECTIONS: { [string]: boolean } = {}
 for _, direction in QuickEvents.directions do
@@ -261,9 +268,19 @@ local function resolve(player: Player, event: Active)
 		plan.count += 1
 		total = clampedTotal(plan)
 	end
+	-- Скорость разработки: оставшееся время игры × множитель результата (DevelopmentService)
+	local speed = 0
+	local hook = QuickEventService.onSpeed
+	local factor = QuickEvents.timeFactor[grade]
+	if hook and factor and factor ~= 1 then
+		local okHook, percent = pcall(hook, player, event.projectId, grade, factor)
+		if okHook and type(percent) == "number" then
+			speed = percent
+		end
+	end
 	QuickRemotes.QuickEventResult:FireClient(
 		player,
-		{ id = event.id, grade = grade, delta = delta, total = total }
+		{ id = event.id, grade = grade, delta = delta, total = total, speed = speed }
 	)
 	logAnalytics(player, event.kind, grade)
 	noteAchievement(player, grade)
@@ -363,7 +380,31 @@ end
 -- Разложить события новой игры по её длительности. skip — авто-релиз (игрок может быть AFK).
 -- Сколько событий — QuickEvents.countFor, но не больше, чем помещается с шагом minGap
 -- в окне [windowFrom, min(windowTo, до релиза roomSeconds)]
-function QuickEventService.plan(player: Player, projectId: number, duration: number, skip: boolean)
+-- Есть ли события в этой игре: из мешка по QuickEvents.gamesWithEvents из bagSize (force — всегда)
+local function takeFromBag(player: Player): boolean
+	local bag = bags[player]
+	if not bag or #bag == 0 then
+		bag = {}
+		for index = 1, QuickEvents.bagSize do
+			table.insert(bag, index <= QuickEvents.gamesWithEvents)
+		end
+		for index = #bag, 2, -1 do
+			local other = rng:NextInteger(1, index)
+			bag[index], bag[other] = bag[other], bag[index]
+		end
+		bags[player] = bag
+	end
+	return table.remove(bag) :: boolean
+end
+
+-- force — игра с событием обязательно (первая игра игрока), мешок не расходуется
+function QuickEventService.plan(
+	player: Player,
+	projectId: number,
+	duration: number,
+	skip: boolean,
+	force: boolean?
+)
 	local list = plans[player]
 	if not list then
 		list = {}
@@ -372,6 +413,9 @@ function QuickEventService.plan(player: Player, projectId: number, duration: num
 	local plan: Plan = { times = {}, done = 0, total = 0, count = 0, elapsed = 0 }
 	list[projectId] = plan
 	if skip then
+		return
+	end
+	if not force and not takeFromBag(player) then
 		return
 	end
 	local gap = QuickEvents.minGap
@@ -562,6 +606,7 @@ function QuickEventService.start()
 	QuickRemotes.QuickEventInput.OnServerEvent:Connect(onInput)
 	Players.PlayerRemoving:Connect(function(player)
 		plans[player] = nil
+		bags[player] = nil
 		active[player] = nil
 		lastKind[player] = nil
 		ignoredStreak[player] = nil

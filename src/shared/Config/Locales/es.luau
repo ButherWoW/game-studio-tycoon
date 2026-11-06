@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 ¡Carga!",
 	qte_hold_hint = "Mantén y suelta en la zona verde",
 	qte_ready = "Prepárate…",
+	qte_speed_hint = "Date prisa: el juego saldrá antes",
 	qte_press = "¡PULSA!",
 	qte_hold_button = "MANTÉN",
 	qte_perfect = "¡Perfecto!",

@@ -1076,6 +1076,7 @@ return {
 	qte_hold_title = "🔋 Şarj et!",
 	qte_hold_hint = "Basılı tut ve yeşil bölgede bırak",
 	qte_ready = "Hazırlan…",
+	qte_speed_hint = "Acele et — oyun daha hızlı çıkar",
 	qte_press = "BAS!",
 	qte_hold_button = "BASILI TUT",
 	qte_perfect = "Mükemmel!",

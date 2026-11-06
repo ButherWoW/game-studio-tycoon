@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Laddning!",
 	qte_hold_hint = "Håll in och släpp i den gröna zonen",
 	qte_ready = "Gör dig redo…",
+	qte_speed_hint = "Skynda — spelet släpps snabbare",
 	qte_press = "TRYCK!",
 	qte_hold_button = "HÅLL",
 	qte_perfect = "Perfekt!",

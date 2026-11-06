@@ -1076,6 +1076,7 @@ return {
 	qte_hold_title = "🔋 Polnjenje!",
 	qte_hold_hint = "Drži in spusti v zelenem območju",
 	qte_ready = "Pripravi se…",
+	qte_speed_hint = "Pohiti — igra izide hitreje",
 	qte_press = "PRITISNI!",
 	qte_hold_button = "DRŽI",
 	qte_perfect = "Odlično!",

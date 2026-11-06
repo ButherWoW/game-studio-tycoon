@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Recharge !",
 	qte_hold_hint = "Maintiens et relâche dans la zone verte",
 	qte_ready = "Prépare-toi…",
+	qte_speed_hint = "Dépêche-toi : le jeu sortira plus vite",
 	qte_press = "APPUIE !",
 	qte_hold_button = "MAINTIENS",
 	qte_perfect = "Parfait !",

@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Töltés!",
 	qte_hold_hint = "Tartsd nyomva, és engedd el a zöld zónában",
 	qte_ready = "Készülj…",
+	qte_speed_hint = "Siess — gyorsabban kijön a játék",
 	qte_press = "NYOMD!",
 	qte_hold_button = "TARTSD",
 	qte_perfect = "Tökéletes!",

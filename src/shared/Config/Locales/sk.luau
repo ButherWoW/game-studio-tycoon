@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Nabíjanie!",
 	qte_hold_hint = "Drž a pusti v zelenej zóne",
 	qte_ready = "Priprav sa…",
+	qte_speed_hint = "Ponáhľaj sa — hra vyjde skôr",
 	qte_press = "STLAČ!",
 	qte_hold_button = "DRŽ",
 	qte_perfect = "Skvelé!",

@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Uzlāde!",
 	qte_hold_hint = "Turi un atlaid zaļajā zonā",
 	qte_ready = "Sagatavojies…",
+	qte_speed_hint = "Pasteidzies — spēle iznāks ātrāk",
 	qte_press = "SPIED!",
 	qte_hold_button = "TURI",
 	qte_perfect = "Lieliski!",

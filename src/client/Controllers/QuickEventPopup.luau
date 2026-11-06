@@ -458,7 +458,14 @@ local function show(event: any)
 	inputs = 0
 	local frame = panel(PANEL_SIZE.Y)
 	textLabel(frame, ClientState.t("qte_" .. event.kind .. "_title"), 10, 40)
-	local hint = textLabel(frame, ClientState.t("qte_ready"), 52, 26, Ui.colors.muted)
+	-- Пока «приготовься» — подсказка про скорость (владелец 06.11); комбо сначала показывает стрелки
+	local hint = textLabel(
+		frame,
+		ClientState.t(if event.kind == "sequence" then "qte_ready" else "qte_speed_hint"),
+		52,
+		26,
+		Ui.colors.muted
+	)
 	local hintKey = if event.kind == "sequence" then "qte_sequence_hint" else "qte_" .. event.kind .. "_hint"
 	everyFrame(function(t: number)
 		-- Пока «приготовься»/показ стрелок — подсказка, потом — что делать
@@ -490,9 +497,15 @@ local function showResult(info: any)
 	end
 	local frame = panel(56)
 	local delta = tonumber(info.delta) or 0
+	-- Скорость игры: ⏩ −20% (быстрее) или ⏪ +12% (медленнее)
+	local speed = tonumber(info.speed) or 0
+	local speedText = if speed < 0
+		then "  ⏩ −" .. tostring(math.abs(speed)) .. "%"
+		elseif speed > 0 then "  ⏪ +" .. tostring(speed) .. "%"
+		else ""
 	local label = textLabel(
 		frame,
-		ClientState.t("qte_" .. grade) .. "  " .. QuickEventPopup.formatDelta(delta),
+		ClientState.t("qte_" .. grade) .. "  " .. QuickEventPopup.formatDelta(delta) .. speedText,
 		8,
 		40,
 		GRADE_COLOR[grade]

@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 蓄力！",
 	qte_hold_hint = "按住，在绿色区域松开",
 	qte_ready = "准备…",
+	qte_speed_hint = "抓紧——游戏会更快发布",
 	qte_press = "按！",
 	qte_hold_button = "按住",
 	qte_perfect = "完美！",

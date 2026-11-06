@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Opladen!",
 	qte_hold_hint = "Houd vast en laat los in de groene zone",
 	qte_ready = "Maak je klaar…",
+	qte_speed_hint = "Schiet op — de game verschijnt sneller",
 	qte_press = "DRUK!",
 	qte_hold_button = "HOUD VAST",
 	qte_perfect = "Perfect!",

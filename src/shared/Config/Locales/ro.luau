@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Încărcare!",
 	qte_hold_hint = "Ține apăsat și eliberează în zona verde",
 	qte_ready = "Pregătește-te…",
+	qte_speed_hint = "Grăbește-te — jocul iese mai repede",
 	qte_press = "APASĂ!",
 	qte_hold_button = "ȚINE",
 	qte_perfect = "Perfect!",

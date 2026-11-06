@@ -1077,6 +1077,7 @@ return {
 	qte_hold_title = "🔋 Laadimine!",
 	qte_hold_hint = "Hoia ja lase lahti rohelises alas",
 	qte_ready = "Valmistu…",
+	qte_speed_hint = "Kiirusta — mäng ilmub kiiremini",
 	qte_press = "VAJUTA!",
 	qte_hold_button = "HOIA",
 	qte_perfect = "Suurepärane!",
