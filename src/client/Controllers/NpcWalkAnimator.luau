@@ -9,6 +9,7 @@ local CollectionService = game:GetService("CollectionService")
 local RunService = game:GetService("RunService")
 
 local TAG = "NpcWalker"
+local SIT_TAG = "NpcSitter"
 local VIEW_DISTANCE = 120
 local STEP_PER_SPEED = 1.15 -- рад/с фазы шага на 1 stud/с скорости: при скорости 7 ~ 2 шага в секунду
 local HIP_SWING = 0.62
@@ -34,6 +35,8 @@ type Tracked = { joints: Joints, phase: number, walking: boolean }
 local NpcWalkAnimator = {}
 
 local tracked: { [Model]: Tracked } = {}
+-- Сидящие за столом (StaffService.poseSitting: тег NpcSitter, атрибут Sitting): ноги согнуты, руки к столу
+local sitters: { [Model]: any } = {}
 
 local function motor(model: Model, name: string): Motor6D?
 	local found = model:FindFirstChild(name, true)
@@ -74,7 +77,51 @@ local function track(item: Instance)
 	end
 end
 
+local function trackSitter(item: Instance)
+	if item:IsA("Model") and sitters[item] == nil then
+		sitters[item] = collect(item) :: any
+	end
+end
+
+local function applySitting(model: Model, joints: any)
+	if not joints.leftHip then
+		local fresh = collect(model)
+		for key, value in fresh do
+			joints[key] = value
+		end
+	end
+	local sitting = model:GetAttribute("Sitting") == true
+	if sitting then
+		-- Бёдра вперёд на 90°, колени вниз, плечи вперёд к клавиатуре, локти согнуты
+		setAngle(joints.leftHip, math.rad(90))
+		setAngle(joints.rightHip, math.rad(90))
+		setAngle(joints.leftKnee, math.rad(-90))
+		setAngle(joints.rightKnee, math.rad(-90))
+		setAngle(joints.leftShoulder, math.rad(50))
+		setAngle(joints.rightShoulder, math.rad(50))
+		setAngle(joints.leftElbow, math.rad(55))
+		setAngle(joints.rightElbow, math.rad(55))
+		joints.posed = true
+	elseif joints.posed then
+		relax(joints)
+		joints.posed = false
+	end
+end
+
 function NpcWalkAnimator.start()
+	for _, model in CollectionService:GetTagged(SIT_TAG) do
+		trackSitter(model)
+	end
+	CollectionService:GetInstanceAddedSignal(SIT_TAG):Connect(trackSitter)
+	CollectionService:GetInstanceRemovedSignal(SIT_TAG):Connect(function(item)
+		if item:IsA("Model") then
+			local joints = sitters[item]
+			if joints and joints.posed then
+				relax(joints)
+			end
+			sitters[item] = nil
+		end
+	end)
 	for _, model in CollectionService:GetTagged(TAG) do
 		track(model)
 	end
@@ -90,6 +137,13 @@ function NpcWalkAnimator.start()
 			return
 		end
 		local origin = camera.CFrame.Position
+		for model, joints in sitters do
+			if not model.Parent then
+				sitters[model] = nil
+			elseif (model:GetPivot().Position - origin).Magnitude <= VIEW_DISTANCE then
+				applySitting(model, joints)
+			end
+		end
 		for model, state in tracked do
 			if not model.Parent then
 				tracked[model] = nil
