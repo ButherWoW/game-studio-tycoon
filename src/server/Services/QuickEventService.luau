@@ -348,6 +348,16 @@ local function startEvent(player: Player, projectId: number)
 	})
 end
 
+-- Закрыть текущее событие без оценки и штрафа (клиент уберёт окно)
+local function closeActive(player: Player)
+	local event = active[player]
+	if not event then
+		return
+	end
+	active[player] = nil
+	QuickRemotes.QuickEventResult:FireClient(player, { id = event.id, grade = "cancel" })
+end
+
 -- ===== Для DevelopmentService =====
 
 -- Разложить события новой игры по её длительности. skip — авто-релиз (игрок может быть AFK).
@@ -388,10 +398,16 @@ function QuickEventService.tick(
 	duration: number,
 	choiceActive: boolean
 ): boolean
-	if active[player] then
-		return true
-	end
 	local plan = plans[player] and plans[player][projectId]
+	if active[player] then
+		-- Событие чужого (уже закрытого) проекта не держим: разработки нет — событий нет
+		local event = active[player]
+		if event.projectId ~= projectId and not (plans[player] and plans[player][event.projectId]) then
+			closeActive(player)
+		else
+			return true
+		end
+	end
 	if plan then
 		plan.elapsed = elapsed
 	end
@@ -457,6 +473,12 @@ function QuickEventService.finish(player: Player, projectId: number): number?
 	return if plan and plan.count > 0 then clampedTotal(plan) else nil
 end
 
+-- Игрок встал из-за ПК (или свет отключили): разработка на паузе — висящее событие закрываем
+-- без штрафа; план остаётся, события продолжатся, когда игрок сядет обратно
+function QuickEventService.pause(player: Player)
+	closeActive(player)
+end
+
 -- Rebirth и выход: всё сбросить
 function QuickEventService.cancel(player: Player)
 	local event = active[player]
@@ -477,6 +499,11 @@ end
 local function onInput(player: Player, id: any, action: any, clientTime: any)
 	local event = active[player]
 	if not event or type(id) ~= "number" or event.id ~= id or type(action) ~= "string" then
+		return
+	end
+	-- Нажатия засчитываем только пока идёт разработка этой игры (есть её план)
+	if not (plans[player] and plans[player][event.projectId]) then
+		closeActive(player)
 		return
 	end
 	-- Ограничение частоты: не чаще minInputGap и не больше maxInputs на событие
@@ -548,7 +575,10 @@ function QuickEventService.start()
 			task.wait(EXPIRY_CHECK)
 			local now = serverNow()
 			for player, event in active do
-				if now > event.expiresAt + QuickEvents.latencyTolerance then
+				if not (plans[player] and plans[player][event.projectId]) then
+					-- Игра вышла/отменена, а событие осталось — закрываем без оценки
+					closeActive(player)
+				elseif now > event.expiresAt + QuickEvents.latencyTolerance then
 					local ok, err = pcall(resolve, player, event)
 					if not ok then
 						active[player] = nil
