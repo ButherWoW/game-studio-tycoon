@@ -880,6 +880,12 @@ return {
 	leaders_games = "Издадени игри",
 	leaders_unavailable = "Класацията не е достъпна",
 	leaders_empty = "Още няма никой",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Фенове на студиото: {count}. Продажби на игри и рафта с хитове +{percent}%. Добрите игри и изложенията носят фенове, игрите под 5 ги прогонват",
+	fans_release_gain = "👥 +{n} нови фенове",
+	fans_release_loss = "👥 −{n} фенове разочаровани",
+	fans_expo = "🏆 Изложение: +{n} фенове",
+	fans_leaders = "👥 Фенове на студиото",
 	daily_reward_title = "Дневна награда",
 	daily_reward_day = "Ден {day}",
 	daily_reward_claim = "Ден {day} — вземи",

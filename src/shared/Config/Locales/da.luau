@@ -880,6 +880,12 @@ return {
 	leaders_games = "Udgivne spil",
 	leaders_unavailable = "Toplisten er ikke tilgængelig",
 	leaders_empty = "Ingen endnu",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Studiets fans: {count}. Salg af spil og hitreolen +{percent} %. Gode spil og messer giver fans, spil under 5 skræmmer dem væk",
+	fans_release_gain = "👥 +{n} nye fans",
+	fans_release_loss = "👥 −{n} fans skuffede",
+	fans_expo = "🏆 Messe: +{n} fans",
+	fans_leaders = "👥 Studiets fans",
 	daily_reward_title = "Daglig belønning",
 	daily_reward_day = "Dag {day}",
 	daily_reward_claim = "Dag {day} – hent",

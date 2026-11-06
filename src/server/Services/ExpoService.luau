@@ -14,6 +14,7 @@ local RunService = game:GetService("RunService")
 local Expo = require(ReplicatedStorage.Shared.Config.Expo)
 local ExpoRemotes = require(ReplicatedStorage.Shared.ExpoRemotes)
 local DataService = require(script.Parent.DataService)
+local FansService = require(script.Parent.FansService)
 
 type Entry = {
 	userId: number,
@@ -237,11 +238,34 @@ local function claimRoundLater(userId: number, roundId: number)
 	)
 end
 
+-- Фанаты студии за 2-е/3-е место и высокую оценку без места (Config/Fans). Победитель получает
+-- фанатов вместе с призом. Только онлайн: игрок онлайн лишь на одном сервере, второй раз за раунд
+-- фанатов с другого сервера не получит
+local function awardFans(entries: { Entry }, winner: Entry)
+	table.sort(entries, function(a, b)
+		return better(a, b)
+	end)
+	for index, entry in entries do
+		if entry.userId ~= winner.userId then
+			local player = Players:GetPlayerByUserId(entry.userId)
+			if player then
+				local place = if index <= 3 then index else nil
+				local ok, err = pcall(FansService.onExpo, player, place, entry.score)
+				if not ok then
+					warn("[ExpoService] fans failed:", err)
+				end
+			end
+		end
+	end
+end
+
 local function finishRound(roundId: number, minParticipants: number)
 	local winner = leader
 	local participants = 0
-	for _ in best do
+	local entries: { Entry } = {}
+	for _, entry in best do
 		participants += 1
+		table.insert(entries, entry)
 	end
 	table.clear(best)
 	leader = nil
@@ -254,6 +278,7 @@ local function finishRound(roundId: number, minParticipants: number)
 		ExpoRemotes.ExpoResult:FireAllClients({ prize = Expo.prize, tooFew = true, need = minParticipants })
 		return
 	end
+	awardFans(entries, winner)
 	local online = Players:GetPlayerByUserId(winner.userId)
 	if online and DataService.get(online) then
 		local result = claimRound(winner.userId, roundId, false)
@@ -281,6 +306,7 @@ local function finishRound(roundId: number, minParticipants: number)
 		else
 			payPrize(online, Expo.prize)
 			noteWins(online, 1)
+			pcall(FansService.onExpo, online, 1, winner.score)
 			task.spawn(DataService.save, online)
 		end
 	else

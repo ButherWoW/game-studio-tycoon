@@ -880,6 +880,12 @@ return {
 	leaders_games = "Jocuri lansate",
 	leaders_unavailable = "Clasamentul nu e disponibil",
 	leaders_empty = "Încă nimeni",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Fanii studioului: {count}. Vânzări de jocuri și raftul de hituri +{percent}%. Jocurile bune și expozițiile aduc fani, jocurile sub 5 îi alungă",
+	fans_release_gain = "👥 +{n} fani noi",
+	fans_release_loss = "👥 −{n} fani dezamăgiți",
+	fans_expo = "🏆 Expoziție: +{n} fani",
+	fans_leaders = "👥 Fanii studioului",
 	daily_reward_title = "Premiul zilnic",
 	daily_reward_day = "Ziua {day}",
 	daily_reward_claim = "Ziua {day} — ia premiul",

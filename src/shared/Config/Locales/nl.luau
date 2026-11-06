@@ -880,6 +880,12 @@ return {
 	leaders_games = "Games uitgebracht",
 	leaders_unavailable = "Ranglijst niet beschikbaar",
 	leaders_empty = "Nog niemand",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Studiofans: {count}. Verkoop van games en hitplank +{percent}%. Goede games en beurzen trekken fans, games onder de 5 jagen ze weg",
+	fans_release_gain = "👥 +{n} nieuwe fans",
+	fans_release_loss = "👥 −{n} fans teleurgesteld",
+	fans_expo = "🏆 Beurs: +{n} fans",
+	fans_leaders = "👥 Studiofans",
 	daily_reward_title = "Dagelijkse beloning",
 	daily_reward_day = "Dag {day}",
 	daily_reward_claim = "Dag {day} – ophalen",

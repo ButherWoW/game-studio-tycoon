@@ -880,6 +880,12 @@ return {
 	leaders_games = "Izdotās spēles",
 	leaders_unavailable = "Līderu tabula nav pieejama",
 	leaders_empty = "Vēl neviena",
+	-- Фанаты студии (FansService, Config/Fans)
+	fans_hud = "👥 Studijas fani: {count}. Spēļu un hitu plaukta pārdošana +{percent}%. Labas spēles un izstādes piesaista fanus, spēles zem 5 tos aizbiedē",
+	fans_release_gain = "👥 +{n} jauni fani",
+	fans_release_loss = "👥 −{n} fani vīlušies",
+	fans_expo = "🏆 Izstāde: +{n} fani",
+	fans_leaders = "👥 Studijas fani",
 	daily_reward_title = "Dienas balva",
 	daily_reward_day = "{day}. diena",
 	daily_reward_claim = "{day}. diena – saņemt",
