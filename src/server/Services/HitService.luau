@@ -591,7 +591,12 @@ local function caught(carry: Carry)
 	local thiefProfile = DataService.get(carry.thief)
 	local victimProfile = DataService.get(carry.victim)
 	cleanup(carry)
-	if not thiefProfile or not victimProfile then
+	if
+		not thiefProfile
+		or not victimProfile
+		or DataService.isClosing(carry.thief)
+		or DataService.isClosing(carry.victim)
+	then
 		return
 	end
 	local penalty = math.max(HitCartridges.penaltyMin, HitCartridges.penaltyMinutes * incomeOf(thiefProfile))
@@ -620,7 +625,12 @@ end
 local function deliver(carry: Carry)
 	local thiefProfile = DataService.get(carry.thief)
 	local victimProfile = DataService.get(carry.victim)
-	if not thiefProfile or not victimProfile then
+	if
+		not thiefProfile
+		or not victimProfile
+		or DataService.isClosing(carry.thief)
+		or DataService.isClosing(carry.victim)
+	then
 		cancelCarry(carry)
 		return
 	end
@@ -666,7 +676,15 @@ local function deliver(carry: Carry)
 end
 
 tryStartSteal = function(thief: Player, owner: Player, hitId: string, source: BasePart)
-	if thief == owner or leaving[thief] or leaving[owner] or not owner.Parent or carries[thief] then
+	if
+		thief == owner
+		or leaving[thief]
+		or leaving[owner]
+		or not owner.Parent
+		or carries[thief]
+		or DataService.isClosing(thief)
+		or DataService.isClosing(owner)
+	then
 		return
 	end
 	local thiefProfile = DataService.get(thief)
@@ -788,7 +806,18 @@ end
 -- Одна проверка уносимого картриджа: вернуть, поймали, донёс или несёт дальше
 local function checkCarry(carry: Carry)
 	local thief, victim = carry.thief, carry.victim
-	if leaving[victim] or not victim.Parent or not DataService.get(victim) then
+	if
+		leaving[victim]
+		or not victim.Parent
+		or not DataService.get(victim)
+		or DataService.isClosing(victim)
+		or DataService.isClosing(thief)
+	then
+		cancelCarry(carry)
+		return
+	end
+	-- Клиент вора мог поднять WalkSpeed выше выданного carrySpeed: кража отменяется
+	if carry.humanoid.WalkSpeed > HitCartridges.carrySpeed + HitCartridges.walkSpeedTolerance then
 		cancelCarry(carry)
 		return
 	end
@@ -815,9 +844,9 @@ local function checkCarry(carry: Carry)
 		cancelCarry(carry)
 		return
 	end
-	-- Скорость по горизонтали между проверками: спидхак и телепорт возвращают картридж
+	-- Средняя скорость по горизонтали за окно speedWindow: спидхак и телепорт возвращают картридж
 	local dt = now - carry.lastCheck
-	if dt >= 0.25 then
+	if dt >= HitCartridges.speedWindow then
 		local moved = Vector3.new(position.X - carry.lastPosition.X, 0, position.Z - carry.lastPosition.Z)
 		if moved.Magnitude / dt > HitCartridges.maxCarrySpeed then
 			cancelCarry(carry)
@@ -849,7 +878,7 @@ local function checkCarry(carry: Carry)
 		local target = shelf.model:GetPivot().Position
 		local offset = Vector3.new(target.X - position.X, 0, target.Z - position.Z)
 		if offset.Magnitude <= HitCartridges.deliverDistance and math.abs(target.Y - position.Y) < 8 then
-			-- Скорость проверяется раз в 0.25 с, а доставка — каждый тик: телепорт к полке между
+			-- Скорость проверяется раз в speedWindow, а доставка — каждый тик: телепорт к полке между
 			-- проверками не должен засчитаться. Путь от последней точки проверки — не быстрее бега
 			local sinceCheck = now - carry.lastCheck
 			local moved = Vector3.new(position.X - carry.lastPosition.X, 0, position.Z - carry.lastPosition.Z)
@@ -1032,6 +1061,18 @@ function HitService.start()
 		sendState(player)
 	end)
 	Players.PlayerRemoving:Connect(onPlayerRemoving)
+	-- Сервер закрывается: профили уже пишутся, перенос картриджа между ними раздвоил бы его
+	game:BindToClose(function()
+		local list: { Carry } = {}
+		for _, carry in carries do
+			table.insert(list, carry)
+		end
+		for _, carry in list do
+			if carries[carry.thief] == carry then
+				pcall(cancelCarry, carry)
+			end
+		end
+	end)
 
 	-- Один общий цикл: проверки уносимых картриджей
 	task.spawn(function()

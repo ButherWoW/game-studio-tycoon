@@ -339,6 +339,18 @@ function DataService.get(player: Player): Profile?
 	return profiles[player]
 end
 
+-- Сервер закрывается или профиль игрока уже пишется в последний раз: переносить между профилями
+-- (кража, обмен, биржа) нельзя — одна запись уйдёт в DataStore, другая нет, и предмет раздвоится
+local serverClosing = false
+
+function DataService.isClosing(player: Player): boolean
+	if serverClosing then
+		return true
+	end
+	local state = states[player]
+	return state ~= nil and state.closed
+end
+
 -- Сколько секунд игрока не было до этого входа (по lastLogout сохранения). Снимок при загрузке:
 -- любое сохранение (автосейв, награда при входе в onProfileLoaded) переписывает lastLogout текущим
 -- временем, и OfflineService / ComebackService, прочитав его позже, видели бы «уход» 0 секунд
@@ -796,6 +808,7 @@ function DataService.start()
 	end)
 
 	game:BindToClose(function()
+		serverClosing = true
 		for player in profiles do
 			task.spawn(closeProfile, player)
 		end
