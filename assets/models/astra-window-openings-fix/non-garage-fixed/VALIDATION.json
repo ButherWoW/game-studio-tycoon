@@ -1,0 +1,235 @@
+{
+  "status": "PASS",
+  "models": [
+    {
+      "model": "Floor",
+      "glassPanels": 6,
+      "removedDecorParts": 0,
+      "allOtherPropertiesIdentical": true,
+      "removedPointLights": 3,
+      "retainedPointLight": {
+        "Shadows": false,
+        "Range": 60,
+        "Brightness": 1,
+        "colorAndParentUnchanged": true
+      },
+      "danglingRemovedReferences": 0,
+      "binaryRoundtrip": "PASS",
+      "sha256": {
+        "Floor.rbxmx": "56eb7fd181b359121bc38be5f76a7c26a35d2f74cc62ed67a6b8e9111f2817bd",
+        "Floor.rbxm": "7efdd2655194a0a755334f33440e0e80908f8ff8314507da508da7f7d6ce5008"
+      }
+    },
+    {
+      "model": "Floor_Aurora",
+      "glassPanels": 6,
+      "removedDecorParts": 0,
+      "allOtherPropertiesIdentical": true,
+      "removedPointLights": 3,
+      "retainedPointLight": {
+        "Shadows": false,
+        "Range": 60,
+        "Brightness": 1,
+        "colorAndParentUnchanged": true
+      },
+      "danglingRemovedReferences": 0,
+      "binaryRoundtrip": "PASS",
+      "sha256": {
+        "Floor_Aurora.rbxmx": "577e2e899c183801ad3f49f9bfdc79e72b6906586a8faa9440be144c61279653",
+        "Floor_Aurora.rbxm": "c562f017822517772e0bc1e7f6d0778afca77a2ee18b8eefbc2ac11b62a34182"
+      }
+    },
+    {
+      "model": "Floor_ObsidianGold",
+      "glassPanels": 6,
+      "removedDecorParts": 0,
+      "allOtherPropertiesIdentical": true,
+      "removedPointLights": 3,
+      "retainedPointLight": {
+        "Shadows": false,
+        "Range": 60,
+        "Brightness": 1,
+        "colorAndParentUnchanged": true
+      },
+      "danglingRemovedReferences": 0,
+      "binaryRoundtrip": "PASS",
+      "sha256": {
+        "Floor_ObsidianGold.rbxmx": "4427eb2d4a436c4192dc7f3839d13afa32726d1a50ed5cbc53a6a805af8b8d20",
+        "Floor_ObsidianGold.rbxm": "f64bfea3715159df5c42459e2b23183600fcd2cfd8cf863d702ef3c9f2db1fb1"
+      }
+    },
+    {
+      "model": "Floor_Sakura",
+      "glassPanels": 6,
+      "removedDecorParts": 0,
+      "allOtherPropertiesIdentical": true,
+      "removedPointLights": 3,
+      "retainedPointLight": {
+        "Shadows": false,
+        "Range": 60,
+        "Brightness": 1,
+        "colorAndParentUnchanged": true
+      },
+      "danglingRemovedReferences": 0,
+      "binaryRoundtrip": "PASS",
+      "sha256": {
+        "Floor_Sakura.rbxmx": "654098ecbbf32d32b7c2cca91c65431e23a71c367d320fffa4156cfe2d85bac6",
+        "Floor_Sakura.rbxm": "83b35356d0e27d165f7fcbbde9057a5c17d45a56a33188e95c6a659da84b9f8b"
+      }
+    },
+    {
+      "model": "Office",
+      "glassPanels": 4,
+      "removedDecorParts": 4,
+      "allOtherPropertiesIdentical": true,
+      "removedPointLights": 3,
+      "retainedPointLight": {
+        "Shadows": false,
+        "Range": 60,
+        "Brightness": 1,
+        "colorAndParentUnchanged": true
+      },
+      "danglingRemovedReferences": 0,
+      "binaryRoundtrip": "PASS",
+      "sha256": {
+        "Office.rbxmx": "fb1dba106f2aebfc6f315339bd3567b7c3e387cce66ad6df9251d94febb8a94b",
+        "Office.rbxm": "fdf584c4a1d88f400ee7385a2dd5f639bf8e999fca9eef4980f71415cc04a1ae"
+      }
+    },
+    {
+      "model": "Office_Aurora",
+      "glassPanels": 6,
+      "removedDecorParts": 4,
+      "allOtherPropertiesIdentical": true,
+      "removedPointLights": 3,
+      "retainedPointLight": {
+        "Shadows": false,
+        "Range": 60,
+        "Brightness": 1,
+        "colorAndParentUnchanged": true
+      },
+      "danglingRemovedReferences": 0,
+      "binaryRoundtrip": "PASS",
+      "sha256": {
+        "Office_Aurora.rbxmx": "42d100ddc5bdf010af9bb79e68fe1187abc2ce642bb30820de7bf9dc0cec3104",
+        "Office_Aurora.rbxm": "bade7a7d2db5fe13d729afc08f89664424b6176b0ce449a17983beaaeca78deb"
+      }
+    },
+    {
+      "model": "Office_ObsidianGold",
+      "glassPanels": 6,
+      "removedDecorParts": 4,
+      "allOtherPropertiesIdentical": true,
+      "removedPointLights": 3,
+      "retainedPointLight": {
+        "Shadows": false,
+        "Range": 60,
+        "Brightness": 1,
+        "colorAndParentUnchanged": true
+      },
+      "danglingRemovedReferences": 0,
+      "binaryRoundtrip": "PASS",
+      "sha256": {
+        "Office_ObsidianGold.rbxmx": "cc346be488c93313a5f475aff77f2b0ad9642ffe7cc053a64d8a08b37e7fc2d3",
+        "Office_ObsidianGold.rbxm": "c0be56ce3cdb1d22602f0e91cb8936c79d9c6116fce33d03f641236e799cd08f"
+      }
+    },
+    {
+      "model": "Office_Sakura",
+      "glassPanels": 6,
+      "removedDecorParts": 4,
+      "allOtherPropertiesIdentical": true,
+      "removedPointLights": 3,
+      "retainedPointLight": {
+        "Shadows": false,
+        "Range": 60,
+        "Brightness": 1,
+        "colorAndParentUnchanged": true
+      },
+      "danglingRemovedReferences": 0,
+      "binaryRoundtrip": "PASS",
+      "sha256": {
+        "Office_Sakura.rbxmx": "c16d74e20e0f9571612a531c0f1c6c750e88bd09d6f575ed2691fab4160d68ec",
+        "Office_Sakura.rbxm": "e57c8e1bb0ccb134e85b60131cbf86d0835e5244a5f7837403c54dd98eab39a7"
+      }
+    },
+    {
+      "model": "Skyscraper",
+      "glassPanels": 5,
+      "removedDecorParts": 0,
+      "allOtherPropertiesIdentical": true,
+      "removedPointLights": 3,
+      "retainedPointLight": {
+        "Shadows": false,
+        "Range": 60,
+        "Brightness": 1,
+        "colorAndParentUnchanged": true
+      },
+      "danglingRemovedReferences": 0,
+      "binaryRoundtrip": "PASS",
+      "sha256": {
+        "Skyscraper.rbxmx": "4bcafe7eab59d2dd30419d2bfb08d4fe215836e029306b1ffcbcc011d721a442",
+        "Skyscraper.rbxm": "3ea11bd5f62f5a44a7231ddce762dee3e38c9d3bcb811a66863d7fa4d8fa32e3"
+      }
+    },
+    {
+      "model": "Skyscraper_Aurora",
+      "glassPanels": 5,
+      "removedDecorParts": 5,
+      "allOtherPropertiesIdentical": true,
+      "removedPointLights": 3,
+      "retainedPointLight": {
+        "Shadows": false,
+        "Range": 60,
+        "Brightness": 1,
+        "colorAndParentUnchanged": true
+      },
+      "danglingRemovedReferences": 0,
+      "binaryRoundtrip": "PASS",
+      "sha256": {
+        "Skyscraper_Aurora.rbxmx": "6da104fb829b9ed0b1001fa622dcf09b9cd01d3ba767378a30e1f5c944847d14",
+        "Skyscraper_Aurora.rbxm": "fecc7d2c1e62d305e886055a9a5012f010e9e5d03423e6a243d93c6efc6359b1"
+      }
+    },
+    {
+      "model": "Skyscraper_ObsidianGold",
+      "glassPanels": 5,
+      "removedDecorParts": 6,
+      "allOtherPropertiesIdentical": true,
+      "removedPointLights": 3,
+      "retainedPointLight": {
+        "Shadows": false,
+        "Range": 60,
+        "Brightness": 1,
+        "colorAndParentUnchanged": true
+      },
+      "danglingRemovedReferences": 0,
+      "binaryRoundtrip": "PASS",
+      "sha256": {
+        "Skyscraper_ObsidianGold.rbxmx": "3fabdb0812c79f66981f606333ae981b2fe915e31b415a56e4c0a392413e637c",
+        "Skyscraper_ObsidianGold.rbxm": "a65514f8b32c30cff5a44b5d2e6aecd2f4a132c2128d6f1f8151dafc7f39375b"
+      }
+    },
+    {
+      "model": "Skyscraper_Sakura",
+      "glassPanels": 5,
+      "removedDecorParts": 22,
+      "allOtherPropertiesIdentical": true,
+      "removedPointLights": 3,
+      "retainedPointLight": {
+        "Shadows": false,
+        "Range": 60,
+        "Brightness": 1,
+        "colorAndParentUnchanged": true
+      },
+      "danglingRemovedReferences": 0,
+      "binaryRoundtrip": "PASS",
+      "sha256": {
+        "Skyscraper_Sakura.rbxmx": "bc76ba75cf896cdc8c800db674f32e0dc20b99740313fb0abe468987207d67af",
+        "Skyscraper_Sakura.rbxm": "19a563c40a59cf33388030eaec60625103d96dc709bb4457eb6945b77b1dbab0"
+      }
+    }
+  ],
+  "geometry": "Only 49 specified blocking decor Parts deleted. All surviving geometry, seats and pivots unchanged. Only the first PointLight retained, with Shadows=false/Range60/Brightness1; three PointLights removed. No new geometry/intersections introduced; old decorative joints not assessed.",
+  "runtimeTested": false
+}

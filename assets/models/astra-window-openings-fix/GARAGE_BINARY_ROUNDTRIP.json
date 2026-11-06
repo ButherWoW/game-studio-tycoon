@@ -1,0 +1,22 @@
+[
+  {
+    "model": "GarageWalls_ObsidianGold",
+    "parts": 622,
+    "binaryRoundtrip": "PASS"
+  },
+  {
+    "model": "GarageWalls_Aurora",
+    "parts": 620,
+    "binaryRoundtrip": "PASS"
+  },
+  {
+    "model": "GarageWalls",
+    "parts": 465,
+    "binaryRoundtrip": "PASS"
+  },
+  {
+    "model": "GarageWalls_Sakura",
+    "parts": 637,
+    "binaryRoundtrip": "PASS"
+  }
+]

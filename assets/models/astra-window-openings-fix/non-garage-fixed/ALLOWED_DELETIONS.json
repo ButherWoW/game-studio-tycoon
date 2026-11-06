@@ -1,0 +1,462 @@
+{
+  "Floor_Sakura": [],
+  "Floor_Aurora": [],
+  "Skyscraper_Sakura": [
+    {
+      "referent": "221",
+      "name": "ShojiPaper",
+      "p": [
+        -6.0,
+        10.0,
+        -29.44
+      ]
+    },
+    {
+      "referent": "222",
+      "name": "ShojiStile",
+      "p": [
+        -7.75,
+        10.0,
+        -29.44
+      ]
+    },
+    {
+      "referent": "223",
+      "name": "ShojiStile",
+      "p": [
+        -4.25,
+        10.0,
+        -29.44
+      ]
+    },
+    {
+      "referent": "224",
+      "name": "ShojiRail",
+      "p": [
+        -6.0,
+        8.65,
+        -29.44
+      ]
+    },
+    {
+      "referent": "225",
+      "name": "ShojiRail",
+      "p": [
+        -6.0,
+        11.35,
+        -29.44
+      ]
+    },
+    {
+      "referent": "226",
+      "name": "SakuraPetal",
+      "p": [
+        -5.72,
+        10.0,
+        -29.385
+      ]
+    },
+    {
+      "referent": "227",
+      "name": "SakuraPetal",
+      "p": [
+        -5.913475,
+        10.266296,
+        -29.385
+      ]
+    },
+    {
+      "referent": "228",
+      "name": "SakuraPetal",
+      "p": [
+        -6.226525,
+        10.16458,
+        -29.385
+      ]
+    },
+    {
+      "referent": "229",
+      "name": "SakuraPetal",
+      "p": [
+        -6.226525,
+        9.83542,
+        -29.385
+      ]
+    },
+    {
+      "referent": "230",
+      "name": "SakuraPetal",
+      "p": [
+        -5.913475,
+        9.733705,
+        -29.385
+      ]
+    },
+    {
+      "referent": "231",
+      "name": "SakuraHeart",
+      "p": [
+        -6.0,
+        10.0,
+        -29.385
+      ]
+    },
+    {
+      "referent": "232",
+      "name": "ShojiPaper",
+      "p": [
+        6.0,
+        10.0,
+        -29.44
+      ]
+    },
+    {
+      "referent": "233",
+      "name": "ShojiStile",
+      "p": [
+        4.25,
+        10.0,
+        -29.44
+      ]
+    },
+    {
+      "referent": "234",
+      "name": "ShojiStile",
+      "p": [
+        7.75,
+        10.0,
+        -29.44
+      ]
+    },
+    {
+      "referent": "235",
+      "name": "ShojiRail",
+      "p": [
+        6.0,
+        8.65,
+        -29.44
+      ]
+    },
+    {
+      "referent": "236",
+      "name": "ShojiRail",
+      "p": [
+        6.0,
+        11.35,
+        -29.44
+      ]
+    },
+    {
+      "referent": "237",
+      "name": "SakuraPetal",
+      "p": [
+        6.28,
+        10.0,
+        -29.385
+      ]
+    },
+    {
+      "referent": "238",
+      "name": "SakuraPetal",
+      "p": [
+        6.086525,
+        10.266296,
+        -29.385
+      ]
+    },
+    {
+      "referent": "239",
+      "name": "SakuraPetal",
+      "p": [
+        5.773475,
+        10.16458,
+        -29.385
+      ]
+    },
+    {
+      "referent": "240",
+      "name": "SakuraPetal",
+      "p": [
+        5.773475,
+        9.83542,
+        -29.385
+      ]
+    },
+    {
+      "referent": "241",
+      "name": "SakuraPetal",
+      "p": [
+        6.086525,
+        9.733705,
+        -29.385
+      ]
+    },
+    {
+      "referent": "242",
+      "name": "SakuraHeart",
+      "p": [
+        6.0,
+        10.0,
+        -29.385
+      ]
+    }
+  ],
+  "Skyscraper_Aurora": [
+    {
+      "referent": "221",
+      "name": "AuroraRibbon",
+      "p": [
+        -7.2,
+        10.0,
+        -29.44
+      ]
+    },
+    {
+      "referent": "222",
+      "name": "AuroraRibbon",
+      "p": [
+        -3.6,
+        10.445604,
+        -29.44
+      ]
+    },
+    {
+      "referent": "223",
+      "name": "AuroraRibbon",
+      "p": [
+        0.0,
+        10.404248,
+        -29.44
+      ]
+    },
+    {
+      "referent": "224",
+      "name": "AuroraRibbon",
+      "p": [
+        3.6,
+        9.921127,
+        -29.44
+      ]
+    },
+    {
+      "referent": "225",
+      "name": "AuroraRibbon",
+      "p": [
+        7.2,
+        9.524199,
+        -29.44
+      ]
+    }
+  ],
+  "Floor": [],
+  "Office": [
+    {
+      "referent": "167",
+      "name": "NicheArtFrame",
+      "p": [
+        16.0,
+        5.0,
+        -29.42
+      ]
+    },
+    {
+      "referent": "168",
+      "name": "NicheArt",
+      "p": [
+        16.0,
+        5.0,
+        -29.32
+      ]
+    },
+    {
+      "referent": "169",
+      "name": "NicheArtFrame",
+      "p": [
+        20.0,
+        5.0,
+        -29.42
+      ]
+    },
+    {
+      "referent": "170",
+      "name": "NicheArt",
+      "p": [
+        20.0,
+        5.0,
+        -29.32
+      ]
+    }
+  ],
+  "Office_Sakura": [
+    {
+      "referent": "74",
+      "name": "NicheArtFrame",
+      "p": [
+        16.0,
+        5.0,
+        -29.42
+      ]
+    },
+    {
+      "referent": "75",
+      "name": "NicheArt",
+      "p": [
+        16.0,
+        5.0,
+        -29.32
+      ]
+    },
+    {
+      "referent": "76",
+      "name": "NicheArtFrame",
+      "p": [
+        20.0,
+        5.0,
+        -29.42
+      ]
+    },
+    {
+      "referent": "77",
+      "name": "NicheArt",
+      "p": [
+        20.0,
+        5.0,
+        -29.32
+      ]
+    }
+  ],
+  "Office_ObsidianGold": [
+    {
+      "referent": "74",
+      "name": "NicheArtFrame",
+      "p": [
+        16.0,
+        5.0,
+        -29.42
+      ]
+    },
+    {
+      "referent": "75",
+      "name": "NicheArt",
+      "p": [
+        16.0,
+        5.0,
+        -29.32
+      ]
+    },
+    {
+      "referent": "76",
+      "name": "NicheArtFrame",
+      "p": [
+        20.0,
+        5.0,
+        -29.42
+      ]
+    },
+    {
+      "referent": "77",
+      "name": "NicheArt",
+      "p": [
+        20.0,
+        5.0,
+        -29.32
+      ]
+    }
+  ],
+  "Office_Aurora": [
+    {
+      "referent": "74",
+      "name": "NicheArtFrame",
+      "p": [
+        16.0,
+        5.0,
+        -29.42
+      ]
+    },
+    {
+      "referent": "75",
+      "name": "NicheArt",
+      "p": [
+        16.0,
+        5.0,
+        -29.32
+      ]
+    },
+    {
+      "referent": "76",
+      "name": "NicheArtFrame",
+      "p": [
+        20.0,
+        5.0,
+        -29.42
+      ]
+    },
+    {
+      "referent": "77",
+      "name": "NicheArt",
+      "p": [
+        20.0,
+        5.0,
+        -29.32
+      ]
+    }
+  ],
+  "Skyscraper": [],
+  "Skyscraper_ObsidianGold": [
+    {
+      "referent": "221",
+      "name": "ArtDecoPilaster",
+      "p": [
+        -8.2,
+        9.85,
+        -29.44
+      ]
+    },
+    {
+      "referent": "222",
+      "name": "ArtDecoPilaster",
+      "p": [
+        -7.8,
+        9.85,
+        -29.44
+      ]
+    },
+    {
+      "referent": "223",
+      "name": "ArtDecoPilaster",
+      "p": [
+        7.8,
+        9.85,
+        -29.44
+      ]
+    },
+    {
+      "referent": "224",
+      "name": "ArtDecoPilaster",
+      "p": [
+        8.2,
+        9.85,
+        -29.44
+      ]
+    },
+    {
+      "referent": "226",
+      "name": "ArtDecoFrieze",
+      "p": [
+        0.0,
+        11.76,
+        -29.44
+      ]
+    },
+    {
+      "referent": "227",
+      "name": "ArtDecoFrieze",
+      "p": [
+        0.0,
+        11.52,
+        -29.44
+      ]
+    }
+  ],
+  "Floor_ObsidianGold": []
+}

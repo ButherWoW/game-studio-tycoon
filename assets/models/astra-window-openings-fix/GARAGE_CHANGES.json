@@ -1,0 +1,2094 @@
+[
+  {
+    "model": "GarageWalls",
+    "glassCount": 12,
+    "cuts": [
+      [
+        [
+          -23.475,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -21.025,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          -20.375,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -17.924999999999997,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          -17.275000000000002,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -14.825000000000001,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          -14.174999999999999,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -11.725,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          11.725,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          14.174999999999999,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          14.825000000000001,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          17.275000000000002,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          17.924999999999997,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          20.375,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          21.025,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          23.475,
+          8.51,
+          -28.45
+        ]
+      ]
+    ],
+    "modified": [
+      {
+        "originalReferent": "125",
+        "name": "RearWall",
+        "newReferents": [
+          "125",
+          "125_WindowCut1",
+          "125_WindowCut2",
+          "125_WindowCut3",
+          "125_WindowCut4",
+          "125_WindowCut5",
+          "125_WindowCut6",
+          "125_WindowCut7",
+          "125_WindowCut8",
+          "125_WindowCut9",
+          "125_WindowCut10",
+          "125_WindowCut11",
+          "125_WindowCut12",
+          "125_WindowCut13",
+          "125_WindowCut14",
+          "125_WindowCut15",
+          "125_WindowCut16",
+          "125_WindowCut17",
+          "125_WindowCut18",
+          "125_WindowCut19",
+          "125_WindowCut20",
+          "125_WindowCut21",
+          "125_WindowCut22",
+          "125_WindowCut23",
+          "125_WindowCut24"
+        ],
+        "originalBounds": [
+          [
+            -30.0,
+            0.0,
+            -30.0
+          ],
+          [
+            30.0,
+            13.0,
+            -29.0
+          ]
+        ]
+      },
+      {
+        "originalReferent": "137",
+        "name": "DoorDarkRecess",
+        "newReferents": [
+          "137",
+          "137_WindowCut1",
+          "137_WindowCut2",
+          "137_WindowCut3",
+          "137_WindowCut4",
+          "137_WindowCut5",
+          "137_WindowCut6",
+          "137_WindowCut7",
+          "137_WindowCut8",
+          "137_WindowCut9",
+          "137_WindowCut10",
+          "137_WindowCut11",
+          "137_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            -24.75,
+            0.0,
+            -28.955000000000002
+          ],
+          [
+            -10.450000000000001,
+            10.3,
+            -28.825
+          ]
+        ]
+      },
+      {
+        "originalReferent": "153",
+        "name": "DoorPanel",
+        "newReferents": [
+          "153",
+          "153_WindowCut1",
+          "153_WindowCut2",
+          "153_WindowCut3",
+          "153_WindowCut4",
+          "153_WindowCut5",
+          "153_WindowCut6",
+          "153_WindowCut7",
+          "153_WindowCut8",
+          "153_WindowCut9",
+          "153_WindowCut10",
+          "153_WindowCut11",
+          "153_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            -24.425,
+            7.414999999999999,
+            -28.805
+          ],
+          [
+            -10.775000000000002,
+            8.785,
+            -28.655
+          ]
+        ]
+      },
+      {
+        "originalReferent": "154",
+        "name": "DoorHinge",
+        "newReferents": [
+          "154"
+        ],
+        "originalBounds": [
+          [
+            -23.59,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            -23.41,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "155",
+        "name": "DoorHinge",
+        "newReferents": [
+          "155"
+        ],
+        "originalBounds": [
+          [
+            -11.79,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            -11.61,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "159",
+        "name": "WindowGasket",
+        "newReferents": [
+          "159",
+          "159_WindowCut1",
+          "159_WindowCut2",
+          "159_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -23.625,
+            7.65,
+            -28.645
+          ],
+          [
+            -20.875,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "161",
+        "name": "WindowGasket",
+        "newReferents": [
+          "161",
+          "161_WindowCut1",
+          "161_WindowCut2",
+          "161_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -20.525,
+            7.65,
+            -28.645
+          ],
+          [
+            -17.775,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "163",
+        "name": "WindowGasket",
+        "newReferents": [
+          "163",
+          "163_WindowCut1",
+          "163_WindowCut2",
+          "163_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -17.425,
+            7.65,
+            -28.645
+          ],
+          [
+            -14.675,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "165",
+        "name": "WindowGasket",
+        "newReferents": [
+          "165",
+          "165_WindowCut1",
+          "165_WindowCut2",
+          "165_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -14.325,
+            7.65,
+            -28.645
+          ],
+          [
+            -11.575,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "192",
+        "name": "DoorDarkRecess",
+        "newReferents": [
+          "192",
+          "192_WindowCut1",
+          "192_WindowCut2",
+          "192_WindowCut3",
+          "192_WindowCut4",
+          "192_WindowCut5",
+          "192_WindowCut6",
+          "192_WindowCut7",
+          "192_WindowCut8",
+          "192_WindowCut9",
+          "192_WindowCut10",
+          "192_WindowCut11",
+          "192_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            10.450000000000001,
+            0.0,
+            -28.955000000000002
+          ],
+          [
+            24.75,
+            10.3,
+            -28.825
+          ]
+        ]
+      },
+      {
+        "originalReferent": "208",
+        "name": "DoorPanel",
+        "newReferents": [
+          "208",
+          "208_WindowCut1",
+          "208_WindowCut2",
+          "208_WindowCut3",
+          "208_WindowCut4",
+          "208_WindowCut5",
+          "208_WindowCut6",
+          "208_WindowCut7",
+          "208_WindowCut8",
+          "208_WindowCut9",
+          "208_WindowCut10",
+          "208_WindowCut11",
+          "208_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            10.775000000000002,
+            7.414999999999999,
+            -28.805
+          ],
+          [
+            24.425,
+            8.785,
+            -28.655
+          ]
+        ]
+      },
+      {
+        "originalReferent": "209",
+        "name": "DoorHinge",
+        "newReferents": [
+          "209"
+        ],
+        "originalBounds": [
+          [
+            11.61,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            11.79,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "210",
+        "name": "DoorHinge",
+        "newReferents": [
+          "210"
+        ],
+        "originalBounds": [
+          [
+            23.41,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            23.59,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "214",
+        "name": "WindowGasket",
+        "newReferents": [
+          "214",
+          "214_WindowCut1",
+          "214_WindowCut2",
+          "214_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            11.575,
+            7.65,
+            -28.645
+          ],
+          [
+            14.325,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "216",
+        "name": "WindowGasket",
+        "newReferents": [
+          "216",
+          "216_WindowCut1",
+          "216_WindowCut2",
+          "216_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            14.675,
+            7.65,
+            -28.645
+          ],
+          [
+            17.425,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "218",
+        "name": "WindowGasket",
+        "newReferents": [
+          "218",
+          "218_WindowCut1",
+          "218_WindowCut2",
+          "218_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            17.775,
+            7.65,
+            -28.645
+          ],
+          [
+            20.525,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "220",
+        "name": "WindowGasket",
+        "newReferents": [
+          "220",
+          "220_WindowCut1",
+          "220_WindowCut2",
+          "220_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            20.875,
+            7.65,
+            -28.645
+          ],
+          [
+            23.625,
+            8.63,
+            -28.575
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "model": "GarageWalls_Aurora",
+    "glassCount": 12,
+    "cuts": [
+      [
+        [
+          -23.475,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -21.025,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          -20.375,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -17.924999999999997,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          -17.275000000000002,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -14.825000000000001,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          -14.174999999999999,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -11.725,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          11.725,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          14.174999999999999,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          14.825000000000001,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          17.275000000000002,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          17.924999999999997,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          20.375,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          21.025,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          23.475,
+          8.51,
+          -28.45
+        ]
+      ]
+    ],
+    "modified": [
+      {
+        "originalReferent": "106",
+        "name": "RearWall",
+        "newReferents": [
+          "106",
+          "106_WindowCut1",
+          "106_WindowCut2",
+          "106_WindowCut3",
+          "106_WindowCut4",
+          "106_WindowCut5",
+          "106_WindowCut6",
+          "106_WindowCut7",
+          "106_WindowCut8",
+          "106_WindowCut9",
+          "106_WindowCut10",
+          "106_WindowCut11",
+          "106_WindowCut12",
+          "106_WindowCut13",
+          "106_WindowCut14",
+          "106_WindowCut15",
+          "106_WindowCut16",
+          "106_WindowCut17",
+          "106_WindowCut18",
+          "106_WindowCut19",
+          "106_WindowCut20",
+          "106_WindowCut21",
+          "106_WindowCut22",
+          "106_WindowCut23",
+          "106_WindowCut24"
+        ],
+        "originalBounds": [
+          [
+            -30.0,
+            0.0,
+            -30.0
+          ],
+          [
+            30.0,
+            13.0,
+            -29.0
+          ]
+        ]
+      },
+      {
+        "originalReferent": "118",
+        "name": "DoorDarkRecess",
+        "newReferents": [
+          "118",
+          "118_WindowCut1",
+          "118_WindowCut2",
+          "118_WindowCut3",
+          "118_WindowCut4",
+          "118_WindowCut5",
+          "118_WindowCut6",
+          "118_WindowCut7",
+          "118_WindowCut8",
+          "118_WindowCut9",
+          "118_WindowCut10",
+          "118_WindowCut11",
+          "118_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            -24.75,
+            0.0,
+            -28.955000000000002
+          ],
+          [
+            -10.450000000000001,
+            10.3,
+            -28.825
+          ]
+        ]
+      },
+      {
+        "originalReferent": "134",
+        "name": "DoorPanel",
+        "newReferents": [
+          "134",
+          "134_WindowCut1",
+          "134_WindowCut2",
+          "134_WindowCut3",
+          "134_WindowCut4",
+          "134_WindowCut5",
+          "134_WindowCut6",
+          "134_WindowCut7",
+          "134_WindowCut8",
+          "134_WindowCut9",
+          "134_WindowCut10",
+          "134_WindowCut11",
+          "134_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            -24.425,
+            7.414999999999999,
+            -28.805
+          ],
+          [
+            -10.775000000000002,
+            8.785,
+            -28.655
+          ]
+        ]
+      },
+      {
+        "originalReferent": "135",
+        "name": "DoorHinge",
+        "newReferents": [
+          "135"
+        ],
+        "originalBounds": [
+          [
+            -23.59,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            -23.41,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "136",
+        "name": "DoorHinge",
+        "newReferents": [
+          "136"
+        ],
+        "originalBounds": [
+          [
+            -11.79,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            -11.61,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "140",
+        "name": "WindowGasket",
+        "newReferents": [
+          "140",
+          "140_WindowCut1",
+          "140_WindowCut2",
+          "140_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -23.625,
+            7.65,
+            -28.645
+          ],
+          [
+            -20.875,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "142",
+        "name": "WindowGasket",
+        "newReferents": [
+          "142",
+          "142_WindowCut1",
+          "142_WindowCut2",
+          "142_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -20.525,
+            7.65,
+            -28.645
+          ],
+          [
+            -17.775,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "144",
+        "name": "WindowGasket",
+        "newReferents": [
+          "144",
+          "144_WindowCut1",
+          "144_WindowCut2",
+          "144_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -17.425,
+            7.65,
+            -28.645
+          ],
+          [
+            -14.675,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "146",
+        "name": "WindowGasket",
+        "newReferents": [
+          "146",
+          "146_WindowCut1",
+          "146_WindowCut2",
+          "146_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -14.325,
+            7.65,
+            -28.645
+          ],
+          [
+            -11.575,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "173",
+        "name": "DoorDarkRecess",
+        "newReferents": [
+          "173",
+          "173_WindowCut1",
+          "173_WindowCut2",
+          "173_WindowCut3",
+          "173_WindowCut4",
+          "173_WindowCut5",
+          "173_WindowCut6",
+          "173_WindowCut7",
+          "173_WindowCut8",
+          "173_WindowCut9",
+          "173_WindowCut10",
+          "173_WindowCut11",
+          "173_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            10.450000000000001,
+            0.0,
+            -28.955000000000002
+          ],
+          [
+            24.75,
+            10.3,
+            -28.825
+          ]
+        ]
+      },
+      {
+        "originalReferent": "189",
+        "name": "DoorPanel",
+        "newReferents": [
+          "189",
+          "189_WindowCut1",
+          "189_WindowCut2",
+          "189_WindowCut3",
+          "189_WindowCut4",
+          "189_WindowCut5",
+          "189_WindowCut6",
+          "189_WindowCut7",
+          "189_WindowCut8",
+          "189_WindowCut9",
+          "189_WindowCut10",
+          "189_WindowCut11",
+          "189_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            10.775000000000002,
+            7.414999999999999,
+            -28.805
+          ],
+          [
+            24.425,
+            8.785,
+            -28.655
+          ]
+        ]
+      },
+      {
+        "originalReferent": "190",
+        "name": "DoorHinge",
+        "newReferents": [
+          "190"
+        ],
+        "originalBounds": [
+          [
+            11.61,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            11.79,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "191",
+        "name": "DoorHinge",
+        "newReferents": [
+          "191"
+        ],
+        "originalBounds": [
+          [
+            23.41,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            23.59,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "195",
+        "name": "WindowGasket",
+        "newReferents": [
+          "195",
+          "195_WindowCut1",
+          "195_WindowCut2",
+          "195_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            11.575,
+            7.65,
+            -28.645
+          ],
+          [
+            14.325,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "197",
+        "name": "WindowGasket",
+        "newReferents": [
+          "197",
+          "197_WindowCut1",
+          "197_WindowCut2",
+          "197_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            14.675,
+            7.65,
+            -28.645
+          ],
+          [
+            17.425,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "199",
+        "name": "WindowGasket",
+        "newReferents": [
+          "199",
+          "199_WindowCut1",
+          "199_WindowCut2",
+          "199_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            17.775,
+            7.65,
+            -28.645
+          ],
+          [
+            20.525,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "201",
+        "name": "WindowGasket",
+        "newReferents": [
+          "201",
+          "201_WindowCut1",
+          "201_WindowCut2",
+          "201_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            20.875,
+            7.65,
+            -28.645
+          ],
+          [
+            23.625,
+            8.63,
+            -28.575
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "model": "GarageWalls_ObsidianGold",
+    "glassCount": 12,
+    "cuts": [
+      [
+        [
+          -23.475,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -21.025,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          -20.375,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -17.924999999999997,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          -17.275000000000002,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -14.825000000000001,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          -14.174999999999999,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -11.725,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          11.725,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          14.174999999999999,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          14.825000000000001,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          17.275000000000002,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          17.924999999999997,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          20.375,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          21.025,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          23.475,
+          8.51,
+          -28.45
+        ]
+      ]
+    ],
+    "modified": [
+      {
+        "originalReferent": "106",
+        "name": "RearWall",
+        "newReferents": [
+          "106",
+          "106_WindowCut1",
+          "106_WindowCut2",
+          "106_WindowCut3",
+          "106_WindowCut4",
+          "106_WindowCut5",
+          "106_WindowCut6",
+          "106_WindowCut7",
+          "106_WindowCut8",
+          "106_WindowCut9",
+          "106_WindowCut10",
+          "106_WindowCut11",
+          "106_WindowCut12",
+          "106_WindowCut13",
+          "106_WindowCut14",
+          "106_WindowCut15",
+          "106_WindowCut16",
+          "106_WindowCut17",
+          "106_WindowCut18",
+          "106_WindowCut19",
+          "106_WindowCut20",
+          "106_WindowCut21",
+          "106_WindowCut22",
+          "106_WindowCut23",
+          "106_WindowCut24"
+        ],
+        "originalBounds": [
+          [
+            -30.0,
+            0.0,
+            -30.0
+          ],
+          [
+            30.0,
+            13.0,
+            -29.0
+          ]
+        ]
+      },
+      {
+        "originalReferent": "118",
+        "name": "DoorDarkRecess",
+        "newReferents": [
+          "118",
+          "118_WindowCut1",
+          "118_WindowCut2",
+          "118_WindowCut3",
+          "118_WindowCut4",
+          "118_WindowCut5",
+          "118_WindowCut6",
+          "118_WindowCut7",
+          "118_WindowCut8",
+          "118_WindowCut9",
+          "118_WindowCut10",
+          "118_WindowCut11",
+          "118_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            -24.75,
+            0.0,
+            -28.955000000000002
+          ],
+          [
+            -10.450000000000001,
+            10.3,
+            -28.825
+          ]
+        ]
+      },
+      {
+        "originalReferent": "134",
+        "name": "DoorPanel",
+        "newReferents": [
+          "134",
+          "134_WindowCut1",
+          "134_WindowCut2",
+          "134_WindowCut3",
+          "134_WindowCut4",
+          "134_WindowCut5",
+          "134_WindowCut6",
+          "134_WindowCut7",
+          "134_WindowCut8",
+          "134_WindowCut9",
+          "134_WindowCut10",
+          "134_WindowCut11",
+          "134_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            -24.425,
+            7.414999999999999,
+            -28.805
+          ],
+          [
+            -10.775000000000002,
+            8.785,
+            -28.655
+          ]
+        ]
+      },
+      {
+        "originalReferent": "135",
+        "name": "DoorHinge",
+        "newReferents": [
+          "135"
+        ],
+        "originalBounds": [
+          [
+            -23.59,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            -23.41,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "136",
+        "name": "DoorHinge",
+        "newReferents": [
+          "136"
+        ],
+        "originalBounds": [
+          [
+            -11.79,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            -11.61,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "140",
+        "name": "WindowGasket",
+        "newReferents": [
+          "140",
+          "140_WindowCut1",
+          "140_WindowCut2",
+          "140_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -23.625,
+            7.65,
+            -28.645
+          ],
+          [
+            -20.875,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "142",
+        "name": "WindowGasket",
+        "newReferents": [
+          "142",
+          "142_WindowCut1",
+          "142_WindowCut2",
+          "142_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -20.525,
+            7.65,
+            -28.645
+          ],
+          [
+            -17.775,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "144",
+        "name": "WindowGasket",
+        "newReferents": [
+          "144",
+          "144_WindowCut1",
+          "144_WindowCut2",
+          "144_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -17.425,
+            7.65,
+            -28.645
+          ],
+          [
+            -14.675,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "146",
+        "name": "WindowGasket",
+        "newReferents": [
+          "146",
+          "146_WindowCut1",
+          "146_WindowCut2",
+          "146_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -14.325,
+            7.65,
+            -28.645
+          ],
+          [
+            -11.575,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "173",
+        "name": "DoorDarkRecess",
+        "newReferents": [
+          "173",
+          "173_WindowCut1",
+          "173_WindowCut2",
+          "173_WindowCut3",
+          "173_WindowCut4",
+          "173_WindowCut5",
+          "173_WindowCut6",
+          "173_WindowCut7",
+          "173_WindowCut8",
+          "173_WindowCut9",
+          "173_WindowCut10",
+          "173_WindowCut11",
+          "173_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            10.450000000000001,
+            0.0,
+            -28.955000000000002
+          ],
+          [
+            24.75,
+            10.3,
+            -28.825
+          ]
+        ]
+      },
+      {
+        "originalReferent": "189",
+        "name": "DoorPanel",
+        "newReferents": [
+          "189",
+          "189_WindowCut1",
+          "189_WindowCut2",
+          "189_WindowCut3",
+          "189_WindowCut4",
+          "189_WindowCut5",
+          "189_WindowCut6",
+          "189_WindowCut7",
+          "189_WindowCut8",
+          "189_WindowCut9",
+          "189_WindowCut10",
+          "189_WindowCut11",
+          "189_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            10.775000000000002,
+            7.414999999999999,
+            -28.805
+          ],
+          [
+            24.425,
+            8.785,
+            -28.655
+          ]
+        ]
+      },
+      {
+        "originalReferent": "190",
+        "name": "DoorHinge",
+        "newReferents": [
+          "190"
+        ],
+        "originalBounds": [
+          [
+            11.61,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            11.79,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "191",
+        "name": "DoorHinge",
+        "newReferents": [
+          "191"
+        ],
+        "originalBounds": [
+          [
+            23.41,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            23.59,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "195",
+        "name": "WindowGasket",
+        "newReferents": [
+          "195",
+          "195_WindowCut1",
+          "195_WindowCut2",
+          "195_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            11.575,
+            7.65,
+            -28.645
+          ],
+          [
+            14.325,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "197",
+        "name": "WindowGasket",
+        "newReferents": [
+          "197",
+          "197_WindowCut1",
+          "197_WindowCut2",
+          "197_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            14.675,
+            7.65,
+            -28.645
+          ],
+          [
+            17.425,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "199",
+        "name": "WindowGasket",
+        "newReferents": [
+          "199",
+          "199_WindowCut1",
+          "199_WindowCut2",
+          "199_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            17.775,
+            7.65,
+            -28.645
+          ],
+          [
+            20.525,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "201",
+        "name": "WindowGasket",
+        "newReferents": [
+          "201",
+          "201_WindowCut1",
+          "201_WindowCut2",
+          "201_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            20.875,
+            7.65,
+            -28.645
+          ],
+          [
+            23.625,
+            8.63,
+            -28.575
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "model": "GarageWalls_Sakura",
+    "glassCount": 12,
+    "cuts": [
+      [
+        [
+          -23.475,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -21.025,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          -20.375,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -17.924999999999997,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          -17.275000000000002,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -14.825000000000001,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          -14.174999999999999,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          -11.725,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          11.725,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          14.174999999999999,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          14.825000000000001,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          17.275000000000002,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          17.924999999999997,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          20.375,
+          8.51,
+          -28.45
+        ]
+      ],
+      [
+        [
+          21.025,
+          7.7700000000000005,
+          -30.1
+        ],
+        [
+          23.475,
+          8.51,
+          -28.45
+        ]
+      ]
+    ],
+    "modified": [
+      {
+        "originalReferent": "106",
+        "name": "RearWall",
+        "newReferents": [
+          "106",
+          "106_WindowCut1",
+          "106_WindowCut2",
+          "106_WindowCut3",
+          "106_WindowCut4",
+          "106_WindowCut5",
+          "106_WindowCut6",
+          "106_WindowCut7",
+          "106_WindowCut8",
+          "106_WindowCut9",
+          "106_WindowCut10",
+          "106_WindowCut11",
+          "106_WindowCut12",
+          "106_WindowCut13",
+          "106_WindowCut14",
+          "106_WindowCut15",
+          "106_WindowCut16",
+          "106_WindowCut17",
+          "106_WindowCut18",
+          "106_WindowCut19",
+          "106_WindowCut20",
+          "106_WindowCut21",
+          "106_WindowCut22",
+          "106_WindowCut23",
+          "106_WindowCut24"
+        ],
+        "originalBounds": [
+          [
+            -30.0,
+            0.0,
+            -30.0
+          ],
+          [
+            30.0,
+            13.0,
+            -29.0
+          ]
+        ]
+      },
+      {
+        "originalReferent": "118",
+        "name": "DoorDarkRecess",
+        "newReferents": [
+          "118",
+          "118_WindowCut1",
+          "118_WindowCut2",
+          "118_WindowCut3",
+          "118_WindowCut4",
+          "118_WindowCut5",
+          "118_WindowCut6",
+          "118_WindowCut7",
+          "118_WindowCut8",
+          "118_WindowCut9",
+          "118_WindowCut10",
+          "118_WindowCut11",
+          "118_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            -24.75,
+            0.0,
+            -28.955000000000002
+          ],
+          [
+            -10.450000000000001,
+            10.3,
+            -28.825
+          ]
+        ]
+      },
+      {
+        "originalReferent": "134",
+        "name": "DoorPanel",
+        "newReferents": [
+          "134",
+          "134_WindowCut1",
+          "134_WindowCut2",
+          "134_WindowCut3",
+          "134_WindowCut4",
+          "134_WindowCut5",
+          "134_WindowCut6",
+          "134_WindowCut7",
+          "134_WindowCut8",
+          "134_WindowCut9",
+          "134_WindowCut10",
+          "134_WindowCut11",
+          "134_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            -24.425,
+            7.414999999999999,
+            -28.805
+          ],
+          [
+            -10.775000000000002,
+            8.785,
+            -28.655
+          ]
+        ]
+      },
+      {
+        "originalReferent": "135",
+        "name": "DoorHinge",
+        "newReferents": [
+          "135"
+        ],
+        "originalBounds": [
+          [
+            -23.59,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            -23.41,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "136",
+        "name": "DoorHinge",
+        "newReferents": [
+          "136"
+        ],
+        "originalBounds": [
+          [
+            -11.79,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            -11.61,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "140",
+        "name": "WindowGasket",
+        "newReferents": [
+          "140",
+          "140_WindowCut1",
+          "140_WindowCut2",
+          "140_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -23.625,
+            7.65,
+            -28.645
+          ],
+          [
+            -20.875,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "142",
+        "name": "WindowGasket",
+        "newReferents": [
+          "142",
+          "142_WindowCut1",
+          "142_WindowCut2",
+          "142_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -20.525,
+            7.65,
+            -28.645
+          ],
+          [
+            -17.775,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "144",
+        "name": "WindowGasket",
+        "newReferents": [
+          "144",
+          "144_WindowCut1",
+          "144_WindowCut2",
+          "144_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -17.425,
+            7.65,
+            -28.645
+          ],
+          [
+            -14.675,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "146",
+        "name": "WindowGasket",
+        "newReferents": [
+          "146",
+          "146_WindowCut1",
+          "146_WindowCut2",
+          "146_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            -14.325,
+            7.65,
+            -28.645
+          ],
+          [
+            -11.575,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "173",
+        "name": "DoorDarkRecess",
+        "newReferents": [
+          "173",
+          "173_WindowCut1",
+          "173_WindowCut2",
+          "173_WindowCut3",
+          "173_WindowCut4",
+          "173_WindowCut5",
+          "173_WindowCut6",
+          "173_WindowCut7",
+          "173_WindowCut8",
+          "173_WindowCut9",
+          "173_WindowCut10",
+          "173_WindowCut11",
+          "173_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            10.450000000000001,
+            0.0,
+            -28.955000000000002
+          ],
+          [
+            24.75,
+            10.3,
+            -28.825
+          ]
+        ]
+      },
+      {
+        "originalReferent": "189",
+        "name": "DoorPanel",
+        "newReferents": [
+          "189",
+          "189_WindowCut1",
+          "189_WindowCut2",
+          "189_WindowCut3",
+          "189_WindowCut4",
+          "189_WindowCut5",
+          "189_WindowCut6",
+          "189_WindowCut7",
+          "189_WindowCut8",
+          "189_WindowCut9",
+          "189_WindowCut10",
+          "189_WindowCut11",
+          "189_WindowCut12"
+        ],
+        "originalBounds": [
+          [
+            10.775000000000002,
+            7.414999999999999,
+            -28.805
+          ],
+          [
+            24.425,
+            8.785,
+            -28.655
+          ]
+        ]
+      },
+      {
+        "originalReferent": "190",
+        "name": "DoorHinge",
+        "newReferents": [
+          "190"
+        ],
+        "originalBounds": [
+          [
+            11.61,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            11.79,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "191",
+        "name": "DoorHinge",
+        "newReferents": [
+          "191"
+        ],
+        "originalBounds": [
+          [
+            23.41,
+            7.9399999999999995,
+            -28.635
+          ],
+          [
+            23.59,
+            8.26,
+            -28.544999999999998
+          ]
+        ]
+      },
+      {
+        "originalReferent": "195",
+        "name": "WindowGasket",
+        "newReferents": [
+          "195",
+          "195_WindowCut1",
+          "195_WindowCut2",
+          "195_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            11.575,
+            7.65,
+            -28.645
+          ],
+          [
+            14.325,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "197",
+        "name": "WindowGasket",
+        "newReferents": [
+          "197",
+          "197_WindowCut1",
+          "197_WindowCut2",
+          "197_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            14.675,
+            7.65,
+            -28.645
+          ],
+          [
+            17.425,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "199",
+        "name": "WindowGasket",
+        "newReferents": [
+          "199",
+          "199_WindowCut1",
+          "199_WindowCut2",
+          "199_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            17.775,
+            7.65,
+            -28.645
+          ],
+          [
+            20.525,
+            8.63,
+            -28.575
+          ]
+        ]
+      },
+      {
+        "originalReferent": "201",
+        "name": "WindowGasket",
+        "newReferents": [
+          "201",
+          "201_WindowCut1",
+          "201_WindowCut2",
+          "201_WindowCut3"
+        ],
+        "originalBounds": [
+          [
+            20.875,
+            7.65,
+            -28.645
+          ],
+          [
+            23.625,
+            8.63,
+            -28.575
+          ]
+        ]
+      }
+    ]
+  }
+]
