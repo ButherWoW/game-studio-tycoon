@@ -1,0 +1,183 @@
+{
+  "assets": [
+    {
+      "id": "competition",
+      "file": "upd_competition.png",
+      "prompt": "Use case: illustration-story. Asset upd_competition.png, in-game what's-new banner. Create a NEW illustration, ultra-wide4:1 composition, final1600x400 opaque, edge-to-edge. Reference image1 ONLY style: polished friendly chunky Roblox/block-toy scene, navy outlines, bright blue/gold color, warm glossy shading; discard ALL its text. Remaining references are exact subject designs. Scene: Celebratory game-studio industry competition in a landscaped park: left a big golden ARCADE JOYSTICK trophy on blue/gold base, faithful to subject reference (gold ball on upright stick, two square gold buttons, navy plinth). Three original colorful game cartridges and a blank billboard screen behind. Right: cheerful diverse blocky game developer rivals congratulate each other beside three low Hall-of-Fame pedestals with NO ranks/digits, some confetti. Empty softly lit park path/blue backdrop across center for overlay. NO trophy cups replacing the joystick. Important focal objects inside8%outer margins; never crop trophy, characters heads or building tops. Left/right storytelling clusters and center30% relatively quiet for UI overlay. No words, letters, numbers, logos, watermarks, fake text, price/currency signs or multipliers anywhere, including clothes, computer screens and game cartridges. Monitors have only abstract colorful graphical tiles, keyboards blank. Wide4:1 composition is crucial: do NOT stack a normal16:9 scene then crop away objects.",
+      "references": [
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_2.png",
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-v28/models-pack/previews/Trophy_GOTW.png"
+      ],
+      "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-c2e7f3f5-7c1a-4b9c-a6ab-53228859b335.png",
+      "editPrompt": "Use case: precise-object-edit. Attached in-game banner needs SAFE FRAMING correction only. Preserve scene, subjects, colors and original artwork style, NO new text. Retain all scene objects. Scale down and reposition LEFT and RIGHT artwork clusters so ALL important objects including trophy tip, whole building roof and feet, heads, hands, desk and both trading cartridges lie within x=10%..90% and y=24%..76% OF THE GENERATED CANVAS. Extend natural matching sky/office background above and below. Output widest supported landscape, about3:1; later final center crop4:1 must retain EVERY important object. Top24% and bottom24% must contain ONLY background, never heads/roof/cards. Center30% horizontally remains calm overlay space. Entire joystick trophy and base, all three game cartridges, complete heads/hands and Hall-of-Fame pedestals fit inside central safe height. No text/letters/numbers/logos anywhere.",
+      "previousSource": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-45fbdd85-d52a-4a23-8b22-149391729531.png",
+      "editReference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-update-banners/banners/upd_competition.png"
+    },
+    {
+      "id": "thirdFloor",
+      "file": "upd_thirdFloor.png",
+      "prompt": "Use case: illustration-story. Asset upd_thirdFloor.png, in-game what's-new banner. Create a NEW illustration, ultra-wide4:1 composition, final1600x400 opaque, edge-to-edge. Reference image1 ONLY style: polished friendly chunky Roblox/block-toy scene, navy outlines, bright blue/gold color, warm glossy shading; discard ALL its text. Remaining references are exact subject designs. Scene: New THIRD FLOOR of our game studio HQ: a compact three-storey glass building on LEFT, exactly three horizontal storeys, the highest storey glows gently violet/cyan while lower two dimmer. On RIGHT, close-up vignettes of actual top-floor glass SkyDesk with wide monitor, purple chair and cyan edge, plus SoundStudio with glass booth, microphone, dark acoustic panels and mixing desk. Warm dusk sky, panoramic windows. Center remains an open calm violet-blue sky band for UI heading. No tall skyscraper beyond three storeys, no giant extra architecture. Important focal objects inside8%outer margins; never crop trophy, characters heads or building tops. Left/right storytelling clusters and center30% relatively quiet for UI overlay. No words, letters, numbers, logos, watermarks, fake text, price/currency signs or multipliers anywhere, including clothes, computer screens and game cartridges. Monitors have only abstract colorful graphical tiles, keyboards blank. Wide4:1 composition is crucial: do NOT stack a normal16:9 scene then crop away objects.",
+      "references": [
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_2.png",
+        "/Users/erland/Documents/ChatGPT/B-15/output/roblox-intro/intro_4.png",
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-sky/previews/SkyDesk.png",
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/assets/models/astra-sky/previews/SoundStudio.png"
+      ],
+      "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-24156f35-4743-42ce-843a-17eedff96530.png",
+      "editPrompt": "Use case: precise-object-edit. Attached in-game banner needs SAFE FRAMING correction only. Preserve scene, subjects, colors and original artwork style, NO new text. Retain all scene objects. Scale down and reposition LEFT and RIGHT artwork clusters so ALL important objects including trophy tip, whole building roof and feet, heads, hands, desk and both trading cartridges lie within x=10%..90% and y=24%..76% OF THE GENERATED CANVAS. Extend natural matching sky/office background above and below. Output widest supported landscape, about3:1; later final center crop4:1 must retain EVERY important object. Top24% and bottom24% must contain ONLY background, never heads/roof/cards. Center30% horizontally remains calm overlay space. Full THREE-STOREY building roof/base in frame; show entire SoundStudio and SkyDesk and whole two character upper bodies without clipping. No text/letters/numbers/logos anywhere.",
+      "previousSource": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-b21dff00-2813-4d5a-b189-5d0ef4654c62.png",
+      "editReference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-update-banners/banners/upd_thirdFloor.png"
+    },
+    {
+      "id": "together",
+      "file": "upd_together.png",
+      "prompt": "Use case: illustration-story. Asset upd_together.png, in-game what's-new banner. Create a NEW illustration, ultra-wide4:1 composition, final1600x400 opaque, edge-to-edge. Reference image1 ONLY style: polished friendly chunky Roblox/block-toy scene, navy outlines, bright blue/gold color, warm glossy shading; discard ALL its text. Remaining references are exact subject designs. Scene: Cooperative game development, studio holdings and fair item exchange: on LEFT two friendly blocky young game developers (brown-haired glasses boy in plain blue hoodie and smiling girl in green) shake hands beside a laptop at a wooden studio table. On RIGHT two small original colorful game cartridges trade places along a pair of simple curved arrows, with a few friendly teammates and miniature connected glass studios behind. No money exchange, gambling or real-world brands. Calm uncluttered blue/purple office-window backdrop through CENTER for localized UI heading. Important focal objects inside8%outer margins; never crop trophy, characters heads or building tops. Left/right storytelling clusters and center30% relatively quiet for UI overlay. No words, letters, numbers, logos, watermarks, fake text, price/currency signs or multipliers anywhere, including clothes, computer screens and game cartridges. Monitors have only abstract colorful graphical tiles, keyboards blank. Wide4:1 composition is crucial: do NOT stack a normal16:9 scene then crop away objects.",
+      "references": [
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_2.png"
+      ],
+      "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-b5f1f572-b0dd-4cee-9ed5-e9f103125c9a.png",
+      "editPrompt": "Use case: precise-object-edit. Attached in-game banner needs SAFE FRAMING correction only. Preserve scene, subjects, colors and original artwork style, NO new text. Retain all scene objects. Scale down and reposition LEFT and RIGHT artwork clusters so ALL important objects including trophy tip, whole building roof and feet, heads, hands, desk and both trading cartridges lie within x=10%..90% and y=24%..76% OF THE GENERATED CANVAS. Extend natural matching sky/office background above and below. Output widest supported landscape, about3:1; later final center crop4:1 must retain EVERY important object. Top24% and bottom24% must contain ONLY background, never heads/roof/cards. Center30% horizontally remains calm overlay space. Both trading cartridges and both curved arrows fully inside safe central height, all celebrants heads/hands inside it. No text/letters/numbers/logos anywhere.",
+      "previousSource": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-f36eebf4-28ae-45de-9af3-fd218581e30d.png",
+      "editReference": "/Users/erland/Documents/ChatGPT/B-15/output/roblox-update-banners/banners/upd_together.png"
+    },
+    {
+      "file": "upd_publishers.png",
+      "subject": "Publishing contracts, franchises and employee mentoring. LEFT: friendly blocky publisher in navy jacket and brown-haired black-glasses blue-hoodie developer shake hands above a completely BLANK ivory contract sheet and pen; beside them three colorful original game cartridges with picture-only covers suggesting sequels. RIGHT: kindly older mentor gestures advice toward junior developer at laptop; a small glowing lightbulb suggests learning.",
+      "references": [
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_3.png"
+      ],
+      "prompt": "Use case: ads-marketing. NEW illustration for Roblox game Game Studio Tycoon update banner. Final asset1600x400, ultra-wide4:1 composition. Generate wide panoramic artwork with every important subject fully contained in central horizontal4:1 strip, generous above/below padding if canvas is taller; final center crop must not cut heads or props. Match accepted V22 reference STYLE ONLY: polished cheerful chunky block-toy Roblox characters, crisp dark-navy outlines, glossy soft shading, blue/cyan/gold accent palette, coherent beautiful lighting. Reference lettering must NOT be copied. Compose two balanced story clusters at left and right edges, center40% calm softly lit studio background with low contrast, open negative space for runtime localized UI heading. No placeholder rectangle, no banner stripe, no embedded UI text. Absolutely NO words, letters, digits, mathematical symbols, multipliers, currency signs, brand logos or watermarks anywhere; clothing plain, papers entirely blank, screens pictures only, game cartridges picture-only. No real-world brands. Opaque full-bleed landscape. Publishing contracts, franchises and employee mentoring. LEFT: friendly blocky publisher in navy jacket and brown-haired black-glasses blue-hoodie developer shake hands above a completely BLANK ivory contract sheet and pen; beside them three colorful original game cartridges with picture-only covers suggesting sequels. RIGHT: kindly older mentor gestures advice toward junior developer at laptop; a small glowing lightbulb suggests learning.",
+      "source": "/Users/erland/.codex/generated_images/01a1aeec-e323-7c73-8938-7d6832f5608d/exec-89e18c86-8697-4f38-aa54-c3a0c71e9810.png",
+      "edit_chain": [
+        {
+          "input": "/Users/erland/.codex/generated_images/01a1aeec-e323-7c73-8938-7d6832f5608d/exec-1a91a452-c78b-49f3-bfe8-f5faf5926c58.png",
+          "prompt": "Precise composition/framing edit of this existing illustration, preserve its visual style, characters, subject identities and all feature storytelling. CRITICAL final asset is cropped to4:1 from your3:1 canvas. SHRINK and reposition ALL important foreground subjects and props so their COMPLETE silhouettes fit strictly within central55% of canvas height (vertical22.5% through77.5%) and horizontal4% through96%. Leave top22.5% and bottom22.5% ONLY quiet background environment, no heads, no hands, no documents, no console parts, no star/arcade top, no coins or key props there. Do not frame with bars or panel borders; continuous background. Preserve balanced left/right clusters and empty calm central40% width for UI heading. Entire contract, pen, all cartridge corners, complete heads and mentor lightbulb visible inside safe strip. No words letters digits math signs currency signs logos watermarks anywhere. Blank papers. This is a framing correction, not a new design.",
+          "output": "/Users/erland/.codex/generated_images/01a1aeec-e323-7c73-8938-7d6832f5608d/exec-89e18c86-8697-4f38-aa54-c3a0c71e9810.png"
+        }
+      ],
+      "tool": "builtin image_gen",
+      "final_transform": {
+        "method": "center crop to4:1 then proportional Lanczos resize",
+        "sourceSize": [
+          2172,
+          724
+        ],
+        "cropBox": [
+          0,
+          90.5,
+          2172,
+          633.5
+        ],
+        "outputSize": [
+          1600,
+          400
+        ]
+      }
+    },
+    {
+      "file": "upd_ownConsole.png",
+      "subject": "Own-console development chain and streamer. LEFT prominent original Console_Launch product matching reference silhouette: two cobalt-blue rectangular towers of unequal height, flat gold top plates, cyan horizontal light strips, three dark vent slots, short lower blue bridge with cyan top between towers; in front angular blue U-shaped controller with white Dpad, cyan center rectangle and two gold buttons. Display pedestal. RIGHT friendly blue-hoodie developer with a blank microchip and open prototype electronics, beside cheerful streamer wearing headphones speaking into microphone, monitor shows a simple colorful game picture only. Console must retain original reference geometry language, no recognizable real brand.",
+      "references": [
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_3.png",
+        "/Users/erland/Documents/ChatGPT/B-15/output/roblox-console-v23/previews/Console_Product_Closeup.png",
+        "/Users/erland/Documents/ChatGPT/B-15/output/roblox-console-v23/previews/Console_Launch.png"
+      ],
+      "prompt": "Use case: ads-marketing. NEW illustration for Roblox game Game Studio Tycoon update banner. Final asset1600x400, ultra-wide4:1 composition. Generate wide panoramic artwork with every important subject fully contained in central horizontal4:1 strip, generous above/below padding if canvas is taller; final center crop must not cut heads or props. Match accepted V22 reference STYLE ONLY: polished cheerful chunky block-toy Roblox characters, crisp dark-navy outlines, glossy soft shading, blue/cyan/gold accent palette, coherent beautiful lighting. Reference lettering must NOT be copied. Compose two balanced story clusters at left and right edges, center40% calm softly lit studio background with low contrast, open negative space for runtime localized UI heading. No placeholder rectangle, no banner stripe, no embedded UI text. Absolutely NO words, letters, digits, mathematical symbols, multipliers, currency signs, brand logos or watermarks anywhere; clothing plain, papers entirely blank, screens pictures only, game cartridges picture-only. No real-world brands. Opaque full-bleed landscape. Own-console development chain and streamer. LEFT prominent original Console_Launch product matching reference silhouette: two cobalt-blue rectangular towers of unequal height, flat gold top plates, cyan horizontal light strips, three dark vent slots, short lower blue bridge with cyan top between towers; in front angular blue U-shaped controller with white Dpad, cyan center rectangle and two gold buttons. Display pedestal. RIGHT friendly blue-hoodie developer with a blank microchip and open prototype electronics, beside cheerful streamer wearing headphones speaking into microphone, monitor shows a simple colorful game picture only. Console must retain original reference geometry language, no recognizable real brand.",
+      "source": "/Users/erland/.codex/generated_images/01a1aeec-e323-7c73-8938-7d6832f5608d/exec-85c530d0-fae6-495b-aa95-2c224aeefdcc.png",
+      "edit_chain": [
+        {
+          "input": "/Users/erland/.codex/generated_images/01a1aeec-e323-7c73-8938-7d6832f5608d/exec-bcb8a885-ae78-4637-9133-e2018577d4a8.png",
+          "prompt": "Precise composition/framing edit of this existing illustration, preserve its visual style, characters, subject identities and all feature storytelling. CRITICAL final asset is cropped to4:1 from your3:1 canvas. SHRINK and reposition ALL important foreground subjects and props so their COMPLETE silhouettes fit strictly within central55% of canvas height (vertical22.5% through77.5%) and horizontal4% through96%. Leave top22.5% and bottom22.5% ONLY quiet background environment, no heads, no hands, no documents, no console parts, no star/arcade top, no coins or key props there. Do not frame with bars or panel borders; continuous background. Preserve balanced left/right clusters and empty calm central40% width for UI heading. Entire contract, pen, all cartridge corners, complete heads and mentor lightbulb visible inside safe strip. No words letters digits math signs currency signs logos watermarks anywhere. Blank papers. This is a framing correction, not a new design. For THIS console illustration keep entire twin-tower console, controller, all people and their hands, the whole open circuit-board prototype, blank chip and streamer microphone safely inside that strip. Preserve actual product design.",
+          "output": "/Users/erland/.codex/generated_images/01a1aeec-e323-7c73-8938-7d6832f5608d/exec-85c530d0-fae6-495b-aa95-2c224aeefdcc.png"
+        }
+      ],
+      "tool": "builtin image_gen",
+      "final_transform": {
+        "method": "center crop to4:1 then proportional Lanczos resize",
+        "sourceSize": [
+          2172,
+          724
+        ],
+        "cropBox": [
+          0,
+          90.5,
+          2172,
+          633.5
+        ],
+        "outputSize": [
+          1600,
+          400
+        ]
+      }
+    },
+    {
+      "file": "upd_market.png",
+      "subject": "Stock market, IPO, dividends and taxes for game studios. LEFT cheerful blocky studio founder in blue hoodie ringing a polished gold market-opening bell next to monitor with green/red candlestick chart, chart has NO axes labels, ticks or digits. RIGHT piles of plain gold coins, small dividend stream splitting toward picture-only company cards, friendly blocky accountant holds entirely blank receipt paper. Elegant blue/cyan/gold studio-finance environment, playful rather than photorealistic.",
+      "references": [
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_3.png"
+      ],
+      "prompt": "Use case: ads-marketing. NEW illustration for Roblox game Game Studio Tycoon update banner. Final asset1600x400, ultra-wide4:1 composition. Generate wide panoramic artwork with every important subject fully contained in central horizontal4:1 strip, generous above/below padding if canvas is taller; final center crop must not cut heads or props. Match accepted V22 reference STYLE ONLY: polished cheerful chunky block-toy Roblox characters, crisp dark-navy outlines, glossy soft shading, blue/cyan/gold accent palette, coherent beautiful lighting. Reference lettering must NOT be copied. Compose two balanced story clusters at left and right edges, center40% calm softly lit studio background with low contrast, open negative space for runtime localized UI heading. No placeholder rectangle, no banner stripe, no embedded UI text. Absolutely NO words, letters, digits, mathematical symbols, multipliers, currency signs, brand logos or watermarks anywhere; clothing plain, papers entirely blank, screens pictures only, game cartridges picture-only. No real-world brands. Opaque full-bleed landscape. Stock market, IPO, dividends and taxes for game studios. LEFT cheerful blocky studio founder in blue hoodie ringing a polished gold market-opening bell next to monitor with green/red candlestick chart, chart has NO axes labels, ticks or digits. RIGHT piles of plain gold coins, small dividend stream splitting toward picture-only company cards, friendly blocky accountant holds entirely blank receipt paper. Elegant blue/cyan/gold studio-finance environment, playful rather than photorealistic.",
+      "source": "/Users/erland/.codex/generated_images/01a1aeec-e323-7c73-8938-7d6832f5608d/exec-fa49a4a7-4a0e-4d07-9e89-3bca9520ec0d.png",
+      "edit_chain": [
+        {
+          "input": "/Users/erland/.codex/generated_images/01a1aeec-e323-7c73-8938-7d6832f5608d/exec-8b79f006-a52f-4243-b801-16b85128754f.png",
+          "prompt": "Precise framing correction. Preserve this market illustration style and identities, no new objects. Final1600x400 requires centered4:1 crop from3:1 source. SHRINK and reposition the COMPLETE foreground story clusters into central55% vertical safe strip: y22.5%..77.5%, x4%..96%. Top22.5% and bottom22.5% are only calm studio background. Entire bell including arched support, all characters and hands, entire candlestick monitor, coins, company picture cards, accountant blank receipt and calculator must all fit inside safe strip. Keep central40% width quiet for runtimeUI heading. No text/letters/digits/logos/currency signs/watermarks, papers blank, charts unlabeled. No letterbox strips. Continuous full-bleed studio background.",
+          "output": "/Users/erland/.codex/generated_images/01a1aeec-e323-7c73-8938-7d6832f5608d/exec-fa49a4a7-4a0e-4d07-9e89-3bca9520ec0d.png"
+        }
+      ],
+      "tool": "builtin image_gen",
+      "final_transform": {
+        "method": "center crop to4:1 then proportional Lanczos resize",
+        "sourceSize": [
+          2172,
+          724
+        ],
+        "cropBox": [
+          0,
+          90.5,
+          2172,
+          633.5
+        ],
+        "outputSize": [
+          1600,
+          400
+        ]
+      }
+    },
+    {
+      "file": "upd_arcade.png",
+      "subject": "ONE combined arcade + game jam + hackathon feature banner. Nighttime violet/cyan neon game studio. LEFT an original blue/gold arcade cabinet with joystick and colored unlabeled buttons, screen displays a tiny colorful platform game, excited friendly blocky player. RIGHT collaborative team of three friendly blocky developers with laptops, pizza slices on a plate, a glowing hourglass and mugs. Hero brown swept hair black rectangular glasses plain blue hoodie. Energetic teamwork at night; no separate gamejam/hackathon panel and absolutely no title or event lettering.",
+      "references": [
+        "/private/tmp/game-studio-tycoon-visual-upload-20261104/docs/visual/astra-2026-11-05-marketing/V22/thumb_v2_3.png"
+      ],
+      "prompt": "Use case: ads-marketing. NEW illustration for Roblox game Game Studio Tycoon update banner. Final asset1600x400, ultra-wide4:1 composition. Generate wide panoramic artwork with every important subject fully contained in central horizontal4:1 strip, generous above/below padding if canvas is taller; final center crop must not cut heads or props. Match accepted V22 reference STYLE ONLY: polished cheerful chunky block-toy Roblox characters, crisp dark-navy outlines, glossy soft shading, blue/cyan/gold accent palette, coherent beautiful lighting. Reference lettering must NOT be copied. Compose two balanced story clusters at left and right edges, center40% calm softly lit studio background with low contrast, open negative space for runtime localized UI heading. No placeholder rectangle, no banner stripe, no embedded UI text. Absolutely NO words, letters, digits, mathematical symbols, multipliers, currency signs, brand logos or watermarks anywhere; clothing plain, papers entirely blank, screens pictures only, game cartridges picture-only. No real-world brands. Opaque full-bleed landscape. ONE combined arcade + game jam + hackathon feature banner. Nighttime violet/cyan neon game studio. LEFT an original blue/gold arcade cabinet with joystick and colored unlabeled buttons, screen displays a tiny colorful platform game, excited friendly blocky player. RIGHT collaborative team of three friendly blocky developers with laptops, pizza slices on a plate, a glowing hourglass and mugs. Hero brown swept hair black rectangular glasses plain blue hoodie. Energetic teamwork at night; no separate gamejam/hackathon panel and absolutely no title or event lettering.",
+      "source": "/Users/erland/.codex/generated_images/01a1aeec-e323-7c73-8938-7d6832f5608d/exec-dfdace34-969f-4b77-a23c-dc6b7e9ec1ce.png",
+      "edit_chain": [
+        {
+          "input": "/Users/erland/.codex/generated_images/01a1aeec-e323-7c73-8938-7d6832f5608d/exec-137c42c8-366f-4272-a1c5-73626eecf3b3.png",
+          "prompt": "Precise framing correction, preserve existing night-neon arcade+gameJam+hackathon illustration and identities, no new objects. Final1600x400 requires centered4:1 crop from3:1 source. SHRINK and reposition COMPLETE foreground story clusters into central55% vertical safe strip: y22.5%..77.5%, x4%..96%. Top22.5% and bottom22.5% ONLY quiet studio background. Entire arcade cabinet including top star and base/controls, all characters and hands/heads, entire laptops, pizza plate, hourglass and mugs must fit fully within safe strip. Keep central40% width quiet for runtimeUI heading. No text/letters/digits/multipliers/logos/watermarks anywhere, screens simple game pictures without score or HUD. Do not add letterbox bars. Continuous full-bleed night studio environment.",
+          "output": "/Users/erland/.codex/generated_images/01a1aeec-e323-7c73-8938-7d6832f5608d/exec-dfdace34-969f-4b77-a23c-dc6b7e9ec1ce.png"
+        }
+      ],
+      "tool": "builtin image_gen",
+      "final_transform": {
+        "method": "center crop to4:1 then proportional Lanczos resize",
+        "sourceSize": [
+          2172,
+          724
+        ],
+        "cropBox": [
+          0,
+          90.5,
+          2172,
+          633.5
+        ],
+        "outputSize": [
+          1600,
+          400
+        ]
+      }
+    }
+  ],
+  "processing": "RGB + proportional center ImageOps.fit1600x400. Generated widest-supported3:1 images received framing edits to fit final4:1 crop. Edit chains preserve original/generated sources and exact prompts."
+}
