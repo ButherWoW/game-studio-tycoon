@@ -1,11 +1,13 @@
 --!strict
 -- Аналитика для запуска (задача 6.4): D1/D7 и «где отваливаются».
 --   • Онбординг-воронка (LogOnboardingFunnelStepEvent): шаги из Config/Analytics.onboarding,
---     определяются опросом профиля/атрибутов, отправляются один раз за жизнь игрока
---     (отметки в (profile :: any).analytics.onboarding).
---   • Экономика (LogEconomyEvent): DataService.addCash/trySpend обёрнуты здесь же; источник
---     узнаём по вызвавшему сервису (debug.info), трату — по тому, что изменилось в профиле.
---     Копим по игроку и шлём сводкой раз в economyFlushSeconds.
+--     определяются опросом профиля/атрибутов, отправляются строго по порядку и один раз за жизнь
+--     игрока (номер последнего шага — (profile :: any).analytics.funnel).
+--   • Экономика (LogEconomyEvent): DataService.addCash/trySpend/charge обёрнуты здесь же; источник
+--     и трату узнаём по вызвавшему сервису и функции (debug.info, Config/Analytics.sources/sinks),
+--     покупки в PlotService и найм — по тому, что изменилось в профиле. Всё, что выдано внутри
+--     ProcessReceipt, — IAP с ключом товара (beginReceipt/endReceipt из MonetizationService).
+--     Копим по игроку и шлём сводкой раз в economyFlushSeconds. Описание — docs/ANALYTICS.md.
 --   • Редкие кастомные события (LogCustomEvent): Rebirth, кражи, выставка, покупки, язык.
 -- Чужие сервисы не правим. Любая ошибка аналитики глотается (pcall) и не роняет игру.
 
@@ -18,8 +20,6 @@ local RunService = game:GetService("RunService")
 local Shared = ReplicatedStorage.Shared
 local Config = require(Shared.Config.Analytics)
 local GamePasses = require(Shared.Config.GamePasses)
-local Products = require(Shared.Config.Products)
-local AdCampaigns = require(Shared.Config.AdCampaigns)
 local Upgrades = require(Shared.Config.Upgrades)
 local Stages = require(Shared.Config.Stages)
 local DataService = require(script.Parent.DataService)
@@ -28,7 +28,7 @@ local PlotService = require(script.Parent.PlotService)
 type Profile = DataService.Profile
 
 type AnalyticsData = {
-	onboarding: { [string]: boolean },
+	funnel: number, -- номер последнего отправленного шага воронки (0 — ни одного)
 	-- Профиль был до аналитики (уже играл): онбординг не шлём, иначе воронку зальют старички
 	legacy: boolean,
 }
@@ -37,17 +37,21 @@ type Bucket = {
 	flow: Enum.AnalyticsEconomyFlowType,
 	transactionType: string,
 	sku: string,
+	item: string?, -- CustomField02: id предмета
 	amount: number,
 }
+
+-- Товар за Robux: ключ из Config и цена (для ProductPurchased)
+type ProductInfo = { key: string, robux: number }
 
 type PlayerState = {
 	rebirths: number,
 	steals: number,
 	caught: number,
-	lastReceipt: string?, -- последняя квитанция в profile.receiptLog
 	lang: any, -- язык на начало сессии
 	langLogged: boolean,
 	parkTouched: boolean, -- получил деньги с доски заказов/ломбарда (шаг онбординга)
+	satLaptop: boolean, -- садился за общий ноутбук в парке
 	balance: number, -- последний известный баланс: при выходе профиля может уже не быть
 	stage: number,
 	economy: { [string]: Bucket },
@@ -64,6 +68,10 @@ type SpendSnapshot = {
 	skins: { [string]: boolean },
 	mascots: { [string]: boolean },
 	furniture: { [string]: boolean },
+	posters: { [string]: boolean },
+	equipment: { [string]: boolean },
+	consoleStage: number,
+	construction: boolean,
 	studioLevel: number,
 	ownsGarage: boolean,
 	ad: any,
@@ -76,7 +84,9 @@ local MINUTE = 60
 
 local Analytics = {}
 local states: { [Player]: PlayerState } = {}
-local lastProductId: { [number]: number } = {} -- UserId → последний купленный productId (для подписи)
+-- Идёт выдача по квитанции: поток ProcessReceipt → товар. Все addCash в этом потоке — IAP
+local receiptByThread: { [thread]: ProductInfo } = {}
+local productById: { [number]: ProductInfo }? = nil
 
 local isStudio = RunService:IsStudio()
 local budgetWindow = os.clock()
@@ -171,12 +181,13 @@ local function dataOf(profile: Profile): AnalyticsData
 	local p = profile :: any
 	local raw = p.analytics
 	if type(raw) ~= "table" then
-		raw = { onboarding = {}, legacy = isLegacy(profile) }
+		raw = { funnel = 0, legacy = isLegacy(profile) }
 		p.analytics = raw
 	end
-	if type(raw.onboarding) ~= "table" then
-		raw.onboarding = {}
-	end
+	-- Старый формат (до 06.11: отметки по id шагов в raw.onboarding) — только тестовые профили,
+	-- шаги с тех пор поменялись: начинаем воронку заново
+	raw.onboarding = nil
+	raw.funnel = math.clamp(math.floor(num(raw.funnel)), 0, #Config.onboarding)
 	raw.legacy = raw.legacy == true
 	return raw :: AnalyticsData
 end
@@ -187,26 +198,6 @@ local function thiefStats(profile: Profile): (number, number)
 		return 0, 0
 	end
 	return num(raw.steals), num(raw.caught)
-end
-
-local function lastReceipt(profile: Profile): string?
-	local log = profile.receiptLog
-	return if type(log) == "table" then log[#log] else nil
-end
-
--- Сколько квитанций добавилось после known. receiptLog обрезается до 50 записей,
--- поэтому длину не сравниваем, ищем прошлую последнюю
-local function newReceipts(profile: Profile, known: string?): number
-	local log = profile.receiptLog
-	if type(log) ~= "table" or #log == 0 or log[#log] == known then
-		return 0
-	end
-	for index = #log, 1, -1 do
-		if log[index] == known then
-			return #log - index
-		end
-	end
-	return 1
 end
 
 local function keySet(map: any): { [string]: boolean }
@@ -247,23 +238,40 @@ local function hasAny(map: any, except: string?): boolean
 	return false
 end
 
+local function optionalService(name: string): any
+	local module = script.Parent:FindFirstChild(name)
+	return if module and module:IsA("ModuleScript") then require(module) :: any else nil
+end
+
+-- Детектор: достигнут ли шаг сейчас. Шаги ниже последнего достигнутого считаются пройденными
+-- (checkOnboarding), поэтому детектору не нужно помнить прошлое
 local detectors: { [string]: (Player, Profile, PlayerState) -> boolean } = {
 	joined = function()
 		return true
 	end,
-	-- Только ноутбук в парке (общий PcSeat с атрибутом Public), не кресло в своей студии (отчёт #4, P2-6)
-	laptop = function(player)
+	-- Ноутбук в парке (общий PcSeat с атрибутом Public, не кресло в своей студии — отчёт #4, P2-6),
+	-- заказ с доски или картридж/ломбард
+	park = function(player, profile, state)
 		local character = player.Character
 		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
 		local seat = humanoid and humanoid.SeatPart
-		return seat ~= nil and seat:GetAttribute("Public") == true and PlotService.isAtPc(player)
+		if seat ~= nil and seat:GetAttribute("Public") == true and PlotService.isAtPc(player) then
+			state.satLaptop = true
+		end
+		local p = profile :: any
+		return state.satLaptop or state.parkTouched or num(p.cartridges) > 0 or hasAny(p.jobReadyAt)
+	end,
+	firstGameStarted = function(player, profile)
+		if profile.gamesReleased >= 1 then
+			return true
+		end
+		local development = optionalService("DevelopmentService")
+		return development ~= nil
+			and type(development.hasAnyProject) == "function"
+			and development.hasAnyProject(player) == true
 	end,
 	firstRelease = function(_, profile)
 		return profile.gamesReleased >= 1
-	end,
-	firstParkJob = function(_, profile, state)
-		local p = profile :: any
-		return state.parkTouched or num(p.cartridges) > 0 or hasAny(p.jobReadyAt)
 	end,
 	garage = function(_, profile)
 		return (profile :: any).ownsGarage == true
@@ -272,42 +280,54 @@ local detectors: { [string]: (Player, Profile, PlayerState) -> boolean } = {
 		local name = (profile :: any).studioName
 		return type(name) == "string" and #name > 0
 	end,
-	firstUpgrade = function(_, profile)
-		-- desk1 даётся бесплатно с гаражом — это не апгрейд
-		return hasAny(profile.upgrades, "desk1")
-	end,
-	firstEmployee = function(_, profile)
+	firstHire = function(_, profile)
 		return hasAny((profile :: any).staff)
+	end,
+	officeStarted = function(_, profile)
+		local construction = profile.construction
+		return profile.studioLevel >= 2 or (type(construction) == "table" and num(construction.stage) >= 2)
 	end,
 	office = function(_, profile)
 		return profile.studioLevel >= 2
+	end,
+	floor2 = function(_, profile)
+		return profile.studioLevel >= 3
+	end,
+	floor3 = function(_, profile)
+		return profile.studioLevel >= 4
+	end,
+	rebirth = function(_, profile)
+		return profile.rebirths >= 1
 	end,
 }
 
 local function checkOnboarding(player: Player, profile: Profile, state: PlayerState)
 	local data = dataOf(profile)
-	if data.legacy then
+	if data.legacy or data.funnel >= #Config.onboarding then
 		return
 	end
-	-- Шаги могут случиться не по порядку (заказ раньше первой игры) — шлём, как только достигнут:
-	-- дашборд Roblox считает пропущенные ранние шаги пройденными
-	for index, step in Config.onboarding do
-		if data.onboarding[step.id] then
-			continue
-		end
-		local detector = detectors[step.id]
+	-- Самый дальний достигнутый шаг. Шаги могут случиться не по порядку (найм раньше названия,
+	-- Rebirth сбросил этап): всё, что до него, считаем пройденным и шлём по порядку 1, 2, 3…
+	local reached = data.funnel
+	for index = #Config.onboarding, data.funnel + 1, -1 do
+		local detector = detectors[Config.onboarding[index].id]
 		if detector and detector(player, profile, state) then
-			local sent = emit(
-				string.format("onboarding %d %s player=%d", index, step.name, player.UserId),
-				function()
-					AnalyticsService:LogOnboardingFunnelStepEvent(player, index, step.name)
-				end
-			)
-			if not sent then
-				return -- бюджет кончился: дошлём на следующем опросе
-			end
-			data.onboarding[step.id] = true
+			reached = index
+			break
 		end
+	end
+	for index = data.funnel + 1, reached do
+		local step = Config.onboarding[index]
+		local sent = emit(
+			string.format("onboarding %d %s player=%d", index, step.name, player.UserId),
+			function()
+				AnalyticsService:LogOnboardingFunnelStepEvent(player, index, step.name)
+			end
+		)
+		if not sent then
+			return -- бюджет кончился: дошлём на следующем опросе
+		end
+		data.funnel = index
 	end
 end
 
@@ -326,33 +346,6 @@ local function checkCustom(player: Player, profile: Profile, state: PlayerState)
 	if caught > state.caught then
 		logCustom(player, Config.events.thiefCaught, caught - state.caught)
 		state.caught = caught
-	end
-	-- Новые квитанции Developer Products (их пишет MonetizationService до PurchaseGranted)
-	local delta = newReceipts(profile, state.lastReceipt)
-	if delta > 0 then
-		state.lastReceipt = lastReceipt(profile)
-		local productId = lastProductId[player.UserId]
-		lastProductId[player.UserId] = nil
-		local label = "unknown"
-		if productId then
-			label = tostring(productId)
-			for _, product in Products.list do
-				if product.productId == productId then
-					label = product.id
-				end
-			end
-			for _, product in Products.research do
-				if product.productId == productId then
-					label = product.id
-				end
-			end
-			for _, campaign in AdCampaigns do
-				if campaign.productId == productId then
-					label = "ad_" .. campaign.id
-				end
-			end
-		end
-		logCustom(player, Config.events.product, delta, label)
 	end
 	local lang = (profile :: any).lang
 	if not state.langLogged and lang ~= state.lang and type(lang) == "string" then
@@ -383,20 +376,26 @@ end
 local function addToBucket(
 	player: Player,
 	flow: Enum.AnalyticsEconomyFlowType,
-	transactionType: string,
-	sku: string,
+	tag: Config.EconomyTag,
+	item: string?,
 	amount: number
 )
 	local state = states[player]
 	if not state or amount <= 0 or amount ~= amount or amount == math.huge then
 		return
 	end
-	local key = flow.Name .. "|" .. transactionType .. "|" .. sku
+	local key = flow.Name .. "|" .. tag.transactionType .. "|" .. tag.sku .. "|" .. (item or "")
 	local bucket = state.economy[key]
 	if bucket then
 		bucket.amount += amount
 	else
-		state.economy[key] = { flow = flow, transactionType = transactionType, sku = sku, amount = amount }
+		state.economy[key] = {
+			flow = flow,
+			transactionType = tag.transactionType,
+			sku = tag.sku,
+			item = item,
+			amount = amount,
+		}
 		table.insert(state.economyOrder, key)
 	end
 end
@@ -414,13 +413,18 @@ local function flushEconomy(player: Player)
 		local bucket = state.economy[key]
 		if bucket then
 			local amount = math.floor(bucket.amount)
+			local custom: { [string]: string } = { CustomField01 = "stage" .. stage }
+			if bucket.item then
+				custom.CustomField02 = bucket.item
+			end
 			local sent = amount <= 0
 				or emit(
 					string.format(
-						"economy %s %s/%s %d balance=%d player=%d",
+						"economy %s %s/%s %s %d balance=%d player=%d",
 						bucket.flow.Name,
 						bucket.transactionType,
 						bucket.sku,
+						bucket.item or "-",
 						amount,
 						math.floor(balance),
 						player.UserId
@@ -434,7 +438,7 @@ local function flushEconomy(player: Player)
 							math.max(math.floor(balance), 0),
 							bucket.transactionType,
 							bucket.sku,
-							fields("stage" .. stage) :: any
+							custom :: any
 						)
 					end
 				)
@@ -447,7 +451,8 @@ local function flushEconomy(player: Player)
 	end
 end
 
--- Имя модуля и функции на уровне level стека того, кто вызвал frame (1 — он сам, 2 — его вызвавший)
+-- Имя модуля и функции на уровне level стека того, кто вызвал frame (1 — он сам, 2 — его вызвавший).
+-- Кадр C-функции (pcall, task) даёт nil, nil
 local function frame(level: number): (string?, string?)
 	local source, name = debug.info(level + 1, "sn")
 	if type(source) ~= "string" then
@@ -457,14 +462,37 @@ local function frame(level: number): (string?, string?)
 	return module, if type(name) == "string" and name ~= "" then name else nil
 end
 
--- Вызывается из обёртки addCash: module/fn — кто позвал DataService.addCash, outer — модуль уровнем выше
-local function onSource(player: Player, amount: number, module: string?, fn: string?, outer: string?)
+-- Категория по "Сервис.функция" → "Сервис.внешняя функция" → "Сервис"
+local function lookup(map: { [string]: Config.EconomyTag }, module: string, fn: string?, outerFn: string?)
+	return (fn and map[module .. "." .. fn]) or (outerFn and map[module .. "." .. outerFn]) or map[module]
+end
+
+local function otherTag(module: string?): Config.EconomyTag
+	return { transactionType = Config.otherTransactionType, sku = "other" .. (module or "Unknown") }
+end
+
+-- Вызывается из обёртки addCash: module/fn — кто позвал DataService.addCash, outer/outerFn — ближайший
+-- Luau-кадр выше (для посредника RewardService); receipt — идёт выдача по квитанции в этом потоке
+local function onSource(
+	player: Player,
+	amount: number,
+	module: string?,
+	fn: string?,
+	outer: string?,
+	outerFn: string?,
+	receipt: ProductInfo?
+)
+	if receipt then
+		-- Деньги за Robux: пакет дохода, «двойной релиз», запасная выдача ускорений и подарков
+		local tag = { transactionType = "IAP", sku = receipt.key }
+		addToBucket(player, Enum.AnalyticsEconomyFlowType.Source, tag, nil, amount)
+		return
+	end
 	if not module or Config.ignore[module] then
 		return
 	end
 	if Config.passthrough[module] and outer then
-		module = outer
-		fn = nil
+		module, fn = outer, outerFn
 	end
 	local state = states[player]
 	if module == "StartParkService" and state then
@@ -473,15 +501,14 @@ local function onSource(player: Player, amount: number, module: string?, fn: str
 	if module == "ExpoService" then
 		logCustom(player, Config.events.expoWin, 1)
 	end
-	local tag = (fn and Config.sources[module .. "." .. fn]) or Config.sources[module :: string]
-	local transactionType = if tag then tag.transactionType else "Other"
-	local sku = if tag then tag.sku else module :: string
-	addToBucket(player, Enum.AnalyticsEconomyFlowType.Source, transactionType, sku, amount)
+	local tag = lookup(Config.sources, module :: string, fn) or otherTag(module)
+	addToBucket(player, Enum.AnalyticsEconomyFlowType.Source, tag, nil, amount)
 end
 
 local function snapshot(profile: Profile): SpendSnapshot
 	local p = profile :: any
 	local ad = profile.activeAd
+	local console = if type(p.console) == "table" then p.console else {}
 	return {
 		upgrades = keySet(profile.upgrades),
 		genres = keySet(profile.unlockedGenres),
@@ -491,6 +518,10 @@ local function snapshot(profile: Profile): SpendSnapshot
 		skins = keySet(if type(p.skins) == "table" then p.skins.owned else nil),
 		mascots = keySet(if type(p.mascots) == "table" then p.mascots.owned else nil),
 		furniture = keySet(if type(p.furniture) == "table" then p.furniture.owned else nil),
+		posters = keySet(if type(p.posters) == "table" then p.posters.owned else nil),
+		equipment = keySet(console.equipment),
+		consoleStage = num(console.stage),
+		construction = profile.construction ~= nil,
 		studioLevel = profile.studioLevel,
 		ownsGarage = p.ownsGarage == true,
 		ad = ad,
@@ -498,63 +529,102 @@ local function snapshot(profile: Profile): SpendSnapshot
 	}
 end
 
--- Классифицировать трату по изменениям профиля (вызывается отложенно, после кода покупки)
-local function classifySpend(player: Player, amount: number, module: string?, before: SpendSnapshot)
+local function stageId(level: number): string
+	local stage = Stages[level]
+	return if stage then stage.id else "stage" .. level
+end
+
+local function ownedOf(p: any, field: string): any
+	local store = p[field]
+	return if type(store) == "table" then store.owned else nil
+end
+
+-- Покупки без своей строки в Config/Analytics.sinks (PlotService, найм, реклама) — по изменению профиля
+local function spendByDiff(profile: Profile, before: SpendSnapshot): (Config.EconomyTag?, string?)
+	local p = profile :: any
+	local sinks = Config.sinks
+	local construction = profile.construction
+	if p.ownsGarage == true and not before.ownsGarage then
+		return sinks.garage, nil
+	elseif construction and not before.construction then
+		return sinks.construction, stageId(construction.stage)
+	elseif profile.studioLevel > before.studioLevel then
+		return sinks.move, stageId(profile.studioLevel)
+	end
+	local upgradeId = newKey(before.upgrades, profile.upgrades)
+	if upgradeId then
+		local upgrade = upgradeById[upgradeId]
+		return if upgrade and upgrade.move then sinks.move else sinks.upgrade, upgradeId
+	end
+	local employeeId = newKey(before.staff, p.staff)
+	if employeeId then
+		return sinks.hire, employeeId
+	end
+	local genreId = newKey(before.genres, profile.unlockedGenres)
+	local topicId = newKey(before.topics, profile.unlockedTopics)
+	if genreId or topicId then
+		return sinks.ResearchService, if genreId then "genre_" .. genreId else "topic_" .. (topicId :: string)
+	end
+	local ad = profile.activeAd
+	if ad and (ad ~= before.ad or ad.expiresAt ~= before.adExpires) then
+		return sinks.ad, "ad_" .. math.floor(ad.bonus * 100)
+	end
+	return nil, nil
+end
+
+-- id предмета (CustomField02) для трат со строкой в sinks
+local function spendItem(profile: Profile, module: string, fn: string?, before: SpendSnapshot): string?
+	local p = profile :: any
+	if module == "DecorService" then
+		-- Ключ покупки — id@этаж: этаж отрезаем, чтобы id было не больше, чем предметов
+		local key = newKey(before.decor, ownedOf(p, "decor"))
+		return if key then key:match("^[^@]+") else nil
+	elseif module == "SkinService" then
+		return newKey(before.skins, ownedOf(p, "skins"))
+	elseif module == "MascotService" then
+		return newKey(before.mascots, ownedOf(p, "mascots"))
+	elseif module == "FurnitureStyleService" then
+		return newKey(before.furniture, ownedOf(p, "furniture"))
+	elseif module == "PosterService" then
+		return newKey(before.posters, ownedOf(p, "posters"))
+	elseif module == "ResearchService" then
+		-- Открытие идёт таймером: в профиле его ещё нет, берём из лаборатории
+		local active = if type(p.research) == "table" then p.research.active else nil
+		return if type(active) == "table" then tostring(active.kind) .. "_" .. tostring(active.id) else nil
+	elseif module == "ConsoleService" then
+		local console = if type(p.console) == "table" then p.console else {}
+		if fn == "onEquip" then
+			return newKey(before.equipment, console.equipment)
+		end
+		return "stage" .. (before.consoleStage + 1) -- этап начат: d.stage — число завершённых
+	elseif module == "MonetizationService" then
+		local ad = profile.activeAd
+		return if ad then "ad_" .. math.floor(ad.bonus * 100) else nil
+	end
+	return nil
+end
+
+-- Классифицировать трату (вызывается отложенно, после кода покупки)
+local function classifySpend(
+	player: Player,
+	amount: number,
+	module: string?,
+	fn: string?,
+	outerFn: string?,
+	before: SpendSnapshot
+)
 	local profile = DataService.get(player)
 	if not profile then
 		return
 	end
-	local p = profile :: any
-	local sinks = Config.sinks
-	local kind, sku = sinks.other, module or "unknown"
-	if module == "HitService" then
-		kind, sku = sinks.penalty, "caught"
-	elseif module == "ExpensesService" then
-		kind, sku = sinks.staff, "expenses"
-	elseif module == "CompanyEventService" then
-		kind, sku = sinks.companyEvent, "event"
-	elseif module == "DecorService" then
-		local decor = if type(p.decor) == "table" then p.decor.owned else nil
-		kind, sku = sinks.decor, newKey(before.decor, decor) or "decor"
-	elseif module == "SkinService" then
-		local skins = if type(p.skins) == "table" then p.skins.owned else nil
-		kind, sku = sinks.skin, newKey(before.skins, skins) or "skin"
-	elseif module == "MascotService" then
-		local mascots = if type(p.mascots) == "table" then p.mascots.owned else nil
-		kind, sku = sinks.mascot, newKey(before.mascots, mascots) or "mascot"
-	elseif module == "FurnitureStyleService" then
-		local furniture = if type(p.furniture) == "table" then p.furniture.owned else nil
-		kind, sku = sinks.furnitureStyle, newKey(before.furniture, furniture) or "style"
-	elseif module == "ResearchService" then
-		-- Открытие жанра/темы за $ идёт таймером: жанра в профиле ещё нет, берём из лаборатории
-		local active = if type(p.research) == "table" then p.research.active else nil
-		kind, sku =
-			sinks.content, if type(active) == "table" then active.kind .. "_" .. active.id else "research"
-	elseif p.ownsGarage == true and not before.ownsGarage then
-		kind, sku = sinks.move, "garage"
-	elseif profile.studioLevel > before.studioLevel then
-		local stage = Stages[profile.studioLevel]
-		kind, sku = sinks.move, if stage then stage.id else "stage" .. profile.studioLevel
+	local tag: Config.EconomyTag? = if module then lookup(Config.sinks, module, fn, outerFn) else nil
+	local item: string? = nil
+	if tag and module then
+		item = spendItem(profile, module, fn, before)
 	else
-		local upgradeId = newKey(before.upgrades, profile.upgrades)
-		local employeeId = newKey(before.staff, p.staff)
-		local genreId = newKey(before.genres, profile.unlockedGenres)
-		local topicId = newKey(before.topics, profile.unlockedTopics)
-		local ad = profile.activeAd
-		if upgradeId then
-			local upgrade = upgradeById[upgradeId]
-			kind, sku = if upgrade and upgrade.move then sinks.move else sinks.upgrade, upgradeId
-		elseif employeeId then
-			kind, sku = sinks.staff, employeeId
-		elseif genreId then
-			kind, sku = sinks.content, "genre_" .. genreId
-		elseif topicId then
-			kind, sku = sinks.content, "topic_" .. topicId
-		elseif ad and (ad ~= before.ad or ad.expiresAt ~= before.adExpires) then
-			kind, sku = sinks.ad, "ad_" .. math.floor(ad.bonus * 100)
-		end
+		tag, item = spendByDiff(profile, before)
 	end
-	addToBucket(player, Enum.AnalyticsEconomyFlowType.Sink, kind, sku, amount)
+	addToBucket(player, Enum.AnalyticsEconomyFlowType.Sink, tag or otherTag(module), item, amount)
 end
 
 local function wrapDataService()
@@ -571,12 +641,20 @@ local function wrapDataService()
 		if not Config.enabled or type(amount) ~= "number" or amount <= 0 then
 			return
 		end
-		-- Стек: 1 — эта обёртка, 2 — кто позвал addCash, 3 — кто позвал его (для посредников).
-		-- frame зовём напрямую, не из pcall: pcall добавил бы уровень в стек.
+		-- Стек: 1 — эта обёртка, 2 — кто позвал addCash, 3+ — кто позвал его (для посредников).
+		-- frame зовём напрямую, не из pcall и не из функции: иначе уровни стека сдвинутся.
 		-- debug.info на несуществующем уровне не бросает ошибку, а возвращает пусто
 		local module, fn = frame(2)
-		local outer = frame(3)
-		local ok, err = pcall(onSource, player, amount, module, fn, outer)
+		-- Ближайший Luau-кадр выше: pcall(RewardService.grant, …) даёт между ними кадр «[C]»
+		local outer, outerFn = frame(3)
+		if not outer then
+			outer, outerFn = frame(4)
+		end
+		if not outer then
+			outer, outerFn = frame(5)
+		end
+		local receipt = receiptByThread[coroutine.running()]
+		local ok, err = pcall(onSource, player, amount, module, fn, outer, outerFn, receipt)
 		if not ok then
 			warnOnce("addCash hook failed", err)
 		end
@@ -587,12 +665,12 @@ local function wrapDataService()
 		if result and Config.enabled and type(amount) == "number" and amount > 0 then
 			-- Ближайший Luau-модуль выше по стеку: вызов через pcall даёт кадр «[C]» без имени
 			-- (так покупка декора писалась как Other/unknown — отчёт #4, P2-3)
-			local module = frame(2)
+			local module, fn = frame(2)
 			for level = 3, 6 do
 				if module then
 					break
 				end
-				module = frame(level)
+				module, fn = frame(level)
 			end
 			local ok, err = pcall(function()
 				local profile = DataService.get(player)
@@ -606,7 +684,8 @@ local function wrapDataService()
 				local before = snapshot(profile)
 				-- Код покупки меняет профиль сразу после trySpend, без yield: смотрим после него
 				task.defer(function()
-					local okClassify, errClassify = pcall(classifySpend, player, amount, module, before)
+					local okClassify, errClassify =
+						pcall(classifySpend, player, amount, module, fn, nil, before)
 					if not okClassify then
 						warnOnce("spend classify failed", errClassify)
 					end
@@ -619,24 +698,120 @@ local function wrapDataService()
 		return result
 	end
 
-	-- Расходы в минус (ExpensesService → DataService.charge, Config/Bailiffs): та же категория, что
-	-- расходы через trySpend раньше
+	-- Обязательные расходы в минус (DataService.charge, Config/Bailiffs): зарплата и аренда
+	-- (ExpensesService), штраф налоговой (TaxService)
 	local originalCharge = service.charge
 	if type(originalCharge) == "function" then
 		service.charge = function(player: Player, amount: number, limit: number): number
 			local charged = originalCharge(player, amount, limit)
 			if Config.enabled and type(charged) == "number" and charged > 0 then
+				local module, fn = frame(2)
+				local _, outerFn = frame(3)
+				local tag = if module then lookup(Config.sinks, module, fn, outerFn) else nil
 				pcall(
 					addToBucket,
 					player,
 					Enum.AnalyticsEconomyFlowType.Sink,
-					Config.sinks.staff,
-					"expenses",
+					tag or otherTag(module),
+					nil,
 					charged
 				)
 			end
 			return charged
 		end
+	end
+end
+
+-- ===== Квитанции Developer Products (MonetizationService) =====
+
+-- Ключ товара из Config: обходим конфиги с productId. Префикс — чтобы id из разных конфигов не
+-- совпали (скин и постер с одинаковым id). Первый найденный выигрывает: Products раньше остальных
+local PRODUCT_CONFIGS: { { name: string, prefix: string } } = {
+	{ name = "Products", prefix = "" },
+	{ name = "AdCampaigns", prefix = "ad_" },
+	{ name = "Social", prefix = "" }, -- подарки: id уже gift_<предмет>
+	{ name = "Season", prefix = "" },
+	{ name = "Console", prefix = "" },
+	{ name = "Construction", prefix = "" },
+	{ name = "Training", prefix = "" },
+	{ name = "Skins", prefix = "skin_" },
+	{ name = "Posters", prefix = "poster_" },
+	{ name = "Mascots", prefix = "mascot_" },
+	{ name = "FurnitureStyles", prefix = "style_" },
+	{ name = "InteriorFinishes", prefix = "finish_" },
+}
+
+local function collectProducts(
+	map: { [number]: ProductInfo },
+	node: any,
+	key: string,
+	prefix: string,
+	depth: number
+)
+	if type(node) ~= "table" or depth > 5 then
+		return
+	end
+	local productId = node.productId
+	if type(productId) == "number" and productId > 0 then
+		if not map[productId] then
+			local id = if type(node.id) == "string" then node.id else key
+			local robux = node.robuxPrice
+			map[productId] = { key = prefix .. id, robux = if type(robux) == "number" then robux else 0 }
+		end
+		return
+	end
+	for childKey, child in node do
+		if type(child) == "table" then
+			-- Сделки дня (Products.deals) — те же товары со своими productId: deal_<ключ>
+			local childPrefix = if childKey == "deals" then prefix .. "deal_" else prefix
+			collectProducts(
+				map,
+				child,
+				if type(childKey) == "string" then childKey else key,
+				childPrefix,
+				depth + 1
+			)
+		end
+	end
+end
+
+local function productInfo(productId: number): ProductInfo
+	local map = productById
+	if not map then
+		local built: { [number]: ProductInfo } = {}
+		for _, entry in PRODUCT_CONFIGS do
+			local module = Shared.Config:FindFirstChild(entry.name)
+			if module and module:IsA("ModuleScript") then
+				local ok, config = pcall(require, module)
+				if ok then
+					collectProducts(built, config, entry.name, entry.prefix, 0)
+				end
+			end
+		end
+		productById = built
+		map = built
+	end
+	return (map :: { [number]: ProductInfo })[productId] or { key = "product" .. productId, robux = 0 }
+end
+
+-- Начало выдачи по квитанции: все DataService.addCash в этом потоке до endReceipt — IAP с ключом товара
+function Analytics.beginReceipt(productId: number)
+	if Config.enabled then
+		local ok, info = pcall(productInfo, productId)
+		if ok then
+			receiptByThread[coroutine.running()] = info
+		end
+	end
+end
+
+-- Конец выдачи. granted — товар выдан (новая квитанция, не повтор): ProductPurchased с ключом и ценой
+function Analytics.endReceipt(player: Player, productId: number, granted: boolean)
+	local thread = coroutine.running()
+	local info = receiptByThread[thread]
+	receiptByThread[thread] = nil
+	if granted and Config.enabled and states[player] then
+		info = info or productInfo(productId)
+		logCustom(player, Config.events.product, info.robux, info.key)
 	end
 end
 
@@ -671,10 +846,10 @@ local function onPlayerAdded(player: Player)
 			rebirths = profile.rebirths,
 			steals = steals,
 			caught = caught,
-			lastReceipt = lastReceipt(profile),
 			lang = (profile :: any).lang,
 			langLogged = false,
 			parkTouched = false,
+			satLaptop = false,
 			balance = profile.cash,
 			stage = profile.studioLevel,
 			economy = {},
@@ -698,7 +873,6 @@ local function onPlayerRemoving(player: Player)
 	pcall(poll, player)
 	pcall(flushEconomy, player)
 	states[player] = nil
-	lastProductId[player.UserId] = nil
 end
 
 local function onGamePassPurchased(player: Player, gamePassId: number, wasPurchased: boolean)
@@ -840,18 +1014,6 @@ function Analytics.start()
 	MarketplaceService.PromptGamePassPurchaseFinished:Connect(function(player, gamePassId, wasPurchased)
 		pcall(onGamePassPurchased, player, gamePassId, wasPurchased)
 	end)
-	-- Только чтобы подписать ProductPurchased: сам факт покупки берём из квитанций в профиле.
-	-- Событие устаревшее — если его не станет, подпись будет "unknown", игра не пострадает
-	pcall(function()
-		MarketplaceService.PromptProductPurchaseFinished:Connect(
-			function(userId: number, productId: number, isPurchased: boolean)
-				if isPurchased then
-					lastProductId[userId] = productId
-				end
-			end
-		)
-	end)
-
 	task.spawn(function()
 		while true do
 			task.wait(Config.pollSeconds)

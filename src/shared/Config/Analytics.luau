@@ -5,7 +5,7 @@
 -- Имена шагов и событий меняем осторожно: дашборд склеивает данные по именам.
 
 export type OnboardingStep = {
-	id: string, -- ключ в (profile :: any).analytics.onboarding и в детекторе AnalyticsService
+	id: string, -- ключ детектора в AnalyticsService
 	name: string, -- имя шага в Creator Dashboard → Analytics → Funnels → Onboarding
 }
 
@@ -32,17 +32,24 @@ local Analytics = {
 
 	currency = "Cash",
 
-	-- Порядок = номер шага (1…9). Шаги логируются один раз за жизнь игрока
+	-- Порядок = номер шага (1…12) в Funnels → Onboarding. Шаги строго по порядку и один раз за жизнь
+	-- игрока: в профиле хранится номер последнего отправленного шага ((profile :: any).analytics.funnel).
+	-- Достигнут шаг N — значит, пройдены и все до него (пропущенные дошлём перед ним тем же опросом).
+	-- Название студии вводится только после покупки гаража, найм возможен уже в гараже (Мила) —
+	-- поэтому они стоят после «Garage Bought» и до офиса. Меняем имена/порядок только до запуска
 	onboarding = {
 		{ id = "joined", name = "Joined" },
-		{ id = "laptop", name = "Sat At Laptop" },
+		{ id = "park", name = "Laptop Or Park Job" }, -- сел за ноутбук в парке, заказ с доски или ломбард
+		{ id = "firstGameStarted", name = "First Game Started" },
 		{ id = "firstRelease", name = "First Game Released" },
-		{ id = "firstParkJob", name = "First Job Or Cartridge" },
 		{ id = "garage", name = "Garage Bought" },
 		{ id = "studioNamed", name = "Studio Named" },
-		{ id = "firstUpgrade", name = "First Upgrade" },
-		{ id = "firstEmployee", name = "First Employee" },
-		{ id = "office", name = "Office" },
+		{ id = "firstHire", name = "First Hire" },
+		{ id = "officeStarted", name = "Office Construction Started" },
+		{ id = "office", name = "Office Reached" },
+		{ id = "floor2", name = "Floor 2 Reached" },
+		{ id = "floor3", name = "Floor 3 Reached" },
+		{ id = "rebirth", name = "First Rebirth" },
 	} :: { OnboardingStep },
 
 	-- Кастомные события (Analytics → Custom events). Всего до 100 имён на игру — новые не плодить
@@ -52,6 +59,8 @@ local Analytics = {
 		thiefCaught = "ThiefCaught", -- вора поймали (событие на вора)
 		expoWin = "ExpoWin",
 		gamePass = "GamePassPurchased",
+		-- Developer Product выдан (MonetizationService.processReceipt): поле — ключ товара
+		-- (income30, ad_tv, deal_coffee, gift_<id>…), значение — цена в Robux из Config (0 — цена не указана)
 		product = "ProductPurchased",
 		languageChanged = "LanguageChanged", -- не чаще раза за сессию
 		quickEvent = "QuickEvent", -- быстрое событие разработки; поле — "вид_результат" (timing_perfect)
@@ -111,64 +120,119 @@ local Analytics = {
 		construction = "Construction",
 	},
 
-	-- Источники денег: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция".
-	-- RewardService — посредник: категорию берём по тому, кто вызвал его (задания или ежедневка)
+	-- ===== Экономика (Analytics → Economy) =====
+	-- transactionType — только стандартные имена Enum.AnalyticsEconomyTransactionType (по ним дашборд
+	-- строит разрезы): IAP, Shop, Gameplay, TimedReward, Onboarding, ContextualPurchase.
+	-- sku (itemSKU) — система в camelCase, без id предметов: id идёт в CustomField02 (их сотни).
+	-- Исключение — IAP: sku = ключ товара из Config (income30, researchSkip, ad_tv, deal_coffee…), чтобы видеть
+	-- выдачу по каждому товару. Возвраты — sku с префиксом refund.
+	-- CustomField01 — этап студии (stage1…stage4), CustomField02 — предмет (если есть).
+
+	-- Источники: ключ — сервис, вызвавший DataService.addCash, или "Сервис.функция" (точнее).
+	-- Посредник RewardService: ключ ищем по тому, кто вызвал его (тоже "Сервис.функция" или "Сервис").
+	-- Всё, что выдано внутри ProcessReceipt (MonetizationService), — IAP с ключом товара, без таблицы
 	sources = {
-		DevelopmentService = { transactionType = "GameRelease", sku = "release" },
-		HitService = { transactionType = "HitIncome", sku = "shelf" },
-		["HitService.caught"] = { transactionType = "ThiefCatch", sku = "penalty" },
-		ExpoService = { transactionType = "Expo", sku = "prize" },
-		QuestService = { transactionType = "Quest", sku = "quest" },
-		AchievementService = { transactionType = "Achievement", sku = "achievement" },
-		DailyRewardService = { transactionType = "TimedReward", sku = "daily" },
+		DevelopmentService = { transactionType = "Gameplay", sku = "gameRelease" },
+		HitService = { transactionType = "Gameplay", sku = "hitShelf" }, -- полка хитов
+		["HitService.caught"] = { transactionType = "Gameplay", sku = "thiefPenalty" }, -- жертве от вора
+		ExpoService = { transactionType = "Gameplay", sku = "expo" },
+		QuestService = { transactionType = "Gameplay", sku = "quest" },
+		AchievementService = { transactionType = "Gameplay", sku = "achievement" },
+		["StartParkService.onJobFinish"] = { transactionType = "Gameplay", sku = "parkJob" },
+		["StartParkService.onPawn"] = { transactionType = "Gameplay", sku = "pawnshop" },
+		BailiffService = { transactionType = "Gameplay", sku = "bailiffSale" }, -- продажа предмета за долг
+		CompanyEventService = { transactionType = "Gameplay", sku = "companyEvent" },
+		SeasonService = { transactionType = "Gameplay", sku = "season" },
+		GameJamService = { transactionType = "Gameplay", sku = "gameJam" },
+		["ContractService.onRespond"] = { transactionType = "Gameplay", sku = "contractAdvance" },
+		["ContractService.finish"] = { transactionType = "Gameplay", sku = "contractBonus" },
+		ContractService = { transactionType = "Gameplay", sku = "contractBonus" },
+		RivalService = { transactionType = "Gameplay", sku = "rivalPassed" },
+		CoopService = { transactionType = "Gameplay", sku = "coopShare" }, -- доля гостя совместной игры
+		HoldingService = { transactionType = "Gameplay", sku = "holdingGoal" }, -- цели недели холдинга
+		["HoldingService.onCreate"] = { transactionType = "Gameplay", sku = "refundHolding" },
+		ConsoleService = { transactionType = "Gameplay", sku = "consoleRoyalty" },
+		StreamerService = { transactionType = "Gameplay", sku = "streamer" },
+		ArcadeService = { transactionType = "Gameplay", sku = "arcade" },
+		["StockService.sell"] = { transactionType = "Gameplay", sku = "stockSell" },
+		["StockService.dividends"] = { transactionType = "Gameplay", sku = "dividend" },
+		["StockService.onIpo"] = { transactionType = "Gameplay", sku = "refundIpo" },
+		StockService = { transactionType = "Gameplay", sku = "stockSell" },
+		SafeService = { transactionType = "Gameplay", sku = "safe" }, -- приз сейфа в парке
+		GotwService = { transactionType = "Gameplay", sku = "gotw" }, -- «Игра недели»
+		TourService = { transactionType = "Gameplay", sku = "tours" },
+		HolidayService = { transactionType = "Gameplay", sku = "holiday" },
+		PerksService = { transactionType = "Gameplay", sku = "publishingRoyalty" }, -- «Издательство»
+		LoanService = { transactionType = "Gameplay", sku = "loan" }, -- взятый кредит
+		-- События дня (DailyEventService через RewardService)
+		["DailyEventService.onCatch"] = { transactionType = "Gameplay", sku = "dailyBugCatch" },
+		["DailyEventService.finishBugHunt"] = { transactionType = "Gameplay", sku = "dailyBugHunt" },
+		["DailyEventService.onInvestor"] = { transactionType = "Gameplay", sku = "dailyInvestor" },
+		["DailyEventService.finishBlitz"] = { transactionType = "Gameplay", sku = "dailyBlitz" },
+		DailyEventService = { transactionType = "Gameplay", sku = "dailyEvent" },
+		-- Возвраты
+		ResearchService = { transactionType = "Gameplay", sku = "refundResearch" }, -- отмена открытия за $
+		StaffService = { transactionType = "Gameplay", sku = "refundFire" }, -- увольнение с возвратом
+		-- По таймеру и «за вход»
+		DailyRewardService = { transactionType = "TimedReward", sku = "dailyReward" },
 		OfflineService = { transactionType = "TimedReward", sku = "offline" },
-		["StartParkService.onJobFinish"] = { transactionType = "ParkJob", sku = "job" },
-		["StartParkService.onPawn"] = { transactionType = "Pawnshop", sku = "cartridges" },
+		ComebackService = { transactionType = "TimedReward", sku = "comeback" },
+		SocialService = { transactionType = "TimedReward", sku = "groupReward" },
+		CodeService = { transactionType = "TimedReward", sku = "promoCode" },
+		ReferralService = { transactionType = "TimedReward", sku = "referral" },
+		TutorialService = { transactionType = "Onboarding", sku = "tutorial" },
+		-- Выдачи за Robux вне ProcessReceipt не бывают; на всякий случай — IAP без ключа товара
 		ShopService = { transactionType = "IAP", sku = "incomePack" },
 		OfferService = { transactionType = "IAP", sku = "offer" },
-		TutorialService = { transactionType = "Onboarding", sku = "tutorial" },
-		SocialService = { transactionType = "TimedReward", sku = "group" },
-		BailiffService = { transactionType = "Seizure", sku = "bailiffs" }, -- продажа предмета за долг
-		CodeService = { transactionType = "TimedReward", sku = "code" },
-		CompanyEventService = { transactionType = "CompanyEvent", sku = "event" },
-		SeasonService = { transactionType = "Season", sku = "season" },
-		GameJamService = { transactionType = "GameJam", sku = "jam" },
-		ContractService = { transactionType = "Contract", sku = "contract" },
-		RivalService = { transactionType = "Reward", sku = "rivalPassed" },
-		CoopService = { transactionType = "Coop", sku = "coopShare" }, -- доля гостя совместной игры
-		HoldingService = { transactionType = "Reward", sku = "holdingGoal" }, -- цели недели холдинга
-		ConsoleService = { transactionType = "Console", sku = "royalty" },
-		StreamerService = { transactionType = "Streamer", sku = "donations" },
-		ArcadeService = { transactionType = "Reward", sku = "arcade" },
-		ReferralService = { transactionType = "TimedReward", sku = "referral" },
-		["StockService.sell"] = { transactionType = "Stock", sku = "sell" }, -- продажа акций
-		["StockService.dividends"] = { transactionType = "Stock", sku = "dividend" },
-		SafeService = { transactionType = "Reward", sku = "safe" }, -- приз сейфа в парке
-		ComebackService = { transactionType = "TimedReward", sku = "comeback" },
-		-- Отмена открытия жанра/темы за $ в лаборатории: возврат цены
-		ResearchService = { transactionType = "Refund", sku = "researchCancel" },
+		GiftService = { transactionType = "IAP", sku = "giftFallback" },
+		ConstructionService = { transactionType = "IAP", sku = "buildSpeedFallback" },
 	} :: { [string]: EconomyTag },
 	-- Посредники: смотреть на уровень выше по стеку
 	passthrough = { RewardService = true } :: { [string]: boolean },
 	-- Не экономика (отладочные деньги в Studio)
 	ignore = { DebugService = true } :: { [string]: boolean },
 
-	-- Траты определяются по тому, что изменилось в профиле сразу после списания
-	-- (новый апгрейд, жанр, сотрудник, этап, реклама); категории:
+	-- Траты: ключ — "Сервис.функция" или "Сервис" (кто вызвал trySpend / charge). Покупки в
+	-- PlotService (гараж, апгрейд, стройка, переезд) и найм различаем по изменению профиля — см.
+	-- classifySpend в AnalyticsService; CustomField02 — id предмета
 	sinks = {
-		upgrade = "Upgrade",
-		move = "Move", -- гараж, офис, этаж, небоскрёб
-		content = "Content", -- жанры и темы
-		staff = "Staff",
-		ad = "Ad",
-		penalty = "ThiefPenalty", -- штраф пойманного вора
-		decor = "Decor", -- декор студии (DecorService), sku — ключ покупки id@этаж
-		skin = "Skin", -- скины сотрудников за $ (SkinService), sku — id скина
-		mascot = "Mascot", -- маскоты за $ (MascotService), sku — id маскота
-		furnitureStyle = "FurnitureStyle", -- стили мебели за $ (FurnitureStyleService), sku — id стиля
-		companyEvent = "CompanyEvent", -- потери от событий компании, страховка и починка
-		other = "Other",
-	},
+		-- Магазин: постоянные покупки
+		garage = { transactionType = "Shop", sku = "garage" },
+		upgrade = { transactionType = "Shop", sku = "upgrade" },
+		move = { transactionType = "Shop", sku = "move" }, -- переезд без стройки
+		construction = { transactionType = "Shop", sku = "construction" }, -- оплата стройки офиса/этажа
+		hire = { transactionType = "Shop", sku = "hire" },
+		ad = { transactionType = "Shop", sku = "adCampaign" }, -- реклама за $
+		DecorService = { transactionType = "Shop", sku = "decor" },
+		SkinService = { transactionType = "Shop", sku = "skin" },
+		MascotService = { transactionType = "Shop", sku = "mascot" },
+		FurnitureStyleService = { transactionType = "Shop", sku = "furnitureStyle" },
+		PosterService = { transactionType = "Shop", sku = "poster" },
+		["ConsoleService.onEquip"] = { transactionType = "Shop", sku = "consoleEquipment" },
+		["CompanyEventService.onBuyInsurance"] = { transactionType = "Shop", sku = "insurance" },
+		MonetizationService = { transactionType = "Shop", sku = "adCampaign" },
+		-- Покупки «по ходу дела»
+		ResearchService = { transactionType = "ContextualPurchase", sku = "research" },
+		["StaffService.onUpgradeSkill"] = { transactionType = "ContextualPurchase", sku = "training" },
+		["StaffService.onSetPerk"] = { transactionType = "ContextualPurchase", sku = "staffPerk" },
+		["ConsoleService.onStage"] = { transactionType = "ContextualPurchase", sku = "consoleStage" },
+		["HitService.onRequestUpdate"] = { transactionType = "ContextualPurchase", sku = "hitUpdate" },
+		["CompanyEventService.onRepair"] = { transactionType = "ContextualPurchase", sku = "repair" },
+		-- Обязательные расходы и игровые потери
+		["ExpensesService.paySalary"] = { transactionType = "Gameplay", sku = "salary" },
+		ExpensesService = { transactionType = "Gameplay", sku = "rent" },
+		["TaxService.onPay"] = { transactionType = "Gameplay", sku = "tax" },
+		TaxService = { transactionType = "Gameplay", sku = "taxFine" },
+		CompanyEventService = { transactionType = "Gameplay", sku = "companyEventLoss" },
+		HitService = { transactionType = "Gameplay", sku = "thiefPenalty" }, -- штраф пойманного вора
+		["StockService.buy"] = { transactionType = "Gameplay", sku = "stockBuy" },
+		["StockService.onIpo"] = { transactionType = "Gameplay", sku = "ipo" },
+		StockService = { transactionType = "Gameplay", sku = "stockBuy" },
+		HoldingService = { transactionType = "Gameplay", sku = "holdingCreate" },
+		LoanService = { transactionType = "Gameplay", sku = "loanRepay" },
+	} :: { [string]: EconomyTag },
+	-- Не нашли категорию: Gameplay / other<Сервис> (видно в дашборде — сразу дописать сюда)
+	otherTransactionType = "Gameplay",
 }
 
 return Analytics
