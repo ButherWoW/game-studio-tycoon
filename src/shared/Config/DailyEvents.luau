@@ -10,6 +10,9 @@
 -- График контента (Config/ContentDrops): событие, которое ещё не вышло к часу слота, не выпадает
 -- (выбор среди вышедших; решает время слота — на всех серверах одинаково). Критики — только по
 -- вышедшим жанрам.
+-- Админ-панель (AdminService) может запустить событие или золотой час на одном сервере: атрибуты
+-- ReplicatedStorage AdminEventId / AdminEventStartsAt / AdminEventEndsAt и AdminGoldenStartsAt /
+-- AdminGoldenEndsAt (ставит только сервер) — пока окно идёт, оно вместо расписания (adminSlot).
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
@@ -225,6 +228,25 @@ local function pick(roll: number, list: { Event }, weight: number): EventId
 	return list[#list].id
 end
 
+-- Параметры события: жанр критиков (из вышедших к at), жанр и тема блиц-джема
+local function slotParams(id: EventId, rng: Random, at: number): (string?, string?)
+	local genreId: string?, topicId: string? = nil, nil
+	local genres: { string } = {}
+	for _, gid in GENRE_IDS do
+		if ContentDrops.isReleased("genre", gid, at) then
+			table.insert(genres, gid)
+		end
+	end
+	if id == "critics" and #genres > 0 then
+		genreId = genres[rng:NextInteger(1, #genres)]
+	elseif id == "blitzJam" then
+		local cfg = DailyEvents.blitzJam
+		genreId = cfg.genres[rng:NextInteger(1, #cfg.genres)]
+		topicId = cfg.topics[rng:NextInteger(1, #cfg.topics)]
+	end
+	return genreId, topicId
+end
+
 -- Событие и параметры часа index (начинается в at). Random с числом-зерном одинаков на всех
 -- серверах; подряд одно и то же событие не повторяем (берём следующее по списку)
 local function slotContent(index: number, at: number): (EventId, string?, string?)
@@ -242,21 +264,36 @@ local function slotContent(index: number, at: number): (EventId, string?, string
 			end
 		end
 	end
-	local genreId: string?, topicId: string? = nil, nil
-	local genres: { string } = {}
-	for _, gid in GENRE_IDS do
-		if ContentDrops.isReleased("genre", gid, at) then
-			table.insert(genres, gid)
-		end
+	return id, slotParams(id, rng, at)
+end
+
+-- Окно события из админ-панели (атрибуты AdminEvent*), если оно идёт в момент t. Номер слота —
+-- минута старта: не совпадает с номерами часов расписания (лимиты выплат slotPaid — свои)
+local function adminSlot(t: number): Slot?
+	local id = ReplicatedStorage:GetAttribute("AdminEventId")
+	local startsAt = ReplicatedStorage:GetAttribute("AdminEventStartsAt")
+	local endsAt = ReplicatedStorage:GetAttribute("AdminEventEndsAt")
+	if
+		type(id) ~= "string"
+		or not byId[id]
+		or type(startsAt) ~= "number"
+		or type(endsAt) ~= "number"
+		or t < startsAt
+		or t >= endsAt
+	then
+		return nil
 	end
-	if id == "critics" and #genres > 0 then
-		genreId = genres[rng:NextInteger(1, #genres)]
-	elseif id == "blitzJam" then
-		local cfg = DailyEvents.blitzJam
-		genreId = cfg.genres[rng:NextInteger(1, #cfg.genres)]
-		topicId = cfg.topics[rng:NextInteger(1, #cfg.topics)]
-	end
-	return id, genreId, topicId
+	local index = startsAt // 60
+	local genreId, topicId = slotParams(id :: EventId, Random.new(index * 7919 + 17), startsAt)
+	return {
+		index = index,
+		id = id :: EventId,
+		startsAt = startsAt,
+		endsAt = endsAt,
+		announceSeconds = 0,
+		genreId = genreId,
+		topicId = topicId,
+	}
 end
 
 local function timings(): (number, number, number, number)
@@ -291,6 +328,10 @@ end
 -- Слот, который идёт сейчас, или ближайший следующий
 function DailyEvents.slot(now: number?): Slot
 	local t = now or os.time()
+	local admin = adminSlot(t)
+	if admin then
+		return admin
+	end
 	local interval, offset, duration = timings()
 	if forced() and not short() then
 		-- Без короткого цикла принудительное событие идёт всё время: окно от границы часа на 2 часа
@@ -320,8 +361,13 @@ function DailyEvents.upcoming(count: number, now: number?): { Slot }
 	if forced() and not short() then
 		return list
 	end
-	for i = 1, count - 1 do
-		table.insert(list, DailyEvents.slotAt(first.index + i))
+	-- Событие из админ-панели: после него — расписание с ближайшего слота после его конца
+	local nextIndex = first.index + 1
+	if adminSlot(now or os.time()) then
+		nextIndex = DailyEvents.slot(first.endsAt).index
+	end
+	for i = 0, count - 2 do
+		table.insert(list, DailyEvents.slotAt(nextIndex + i))
 	end
 	return list
 end
@@ -330,6 +376,11 @@ end
 function DailyEvents.goldenWindow(now: number?): Window
 	local t = now or os.time()
 	local cfg = DailyEvents.golden
+	local adminStart = ReplicatedStorage:GetAttribute("AdminGoldenStartsAt")
+	local adminEnd = ReplicatedStorage:GetAttribute("AdminGoldenEndsAt")
+	if type(adminStart) == "number" and type(adminEnd) == "number" and t >= adminStart and t < adminEnd then
+		return { startsAt = adminStart, endsAt = adminEnd, announceSeconds = 0 }
+	end
 	if studio() and Debug.dailyGoldenForce then
 		local startsAt = t // 3600 * 3600
 		return { startsAt = startsAt, endsAt = startsAt + 7200, announceSeconds = 0 }
