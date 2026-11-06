@@ -143,7 +143,10 @@ local function confirmGate(ctx: Ctx, action: string, key: string, text: string):
 	return {
 		ok = true,
 		confirm = token,
-		text = text .. " Нажми «Подтвердить» в течение " .. Admin.confirmSeconds .. " с.",
+		text = text
+			.. " Нажми «Подтвердить» в течение "
+			.. Admin.confirmSeconds
+			.. " с.",
 	}
 end
 
@@ -289,14 +292,23 @@ end
 
 handlers.contentDay = function(ctx: Ctx): Reply
 	if not ContentDrops.adminDayAllowed() then
-		return reply(false, "Только на тестовом сервере (кнопка «Тестовый сервер») или в Studio")
+		return reply(
+			false,
+			"Только на тестовом сервере (кнопка «Тестовый сервер») или в Studio"
+		)
 	elseif not onlyOwnersHere() then
-		return reply(false, "На сервере есть игроки — день контента менять нельзя")
+		return reply(
+			false,
+			"На сервере есть игроки — день контента менять нельзя"
+		)
 	end
 	if ctx.args.clear == true then
 		ReplicatedStorage:SetAttribute("AdminContentDay", nil)
 		logAction(ctx.player, "contentDay", "clear")
-		return reply(true, "День контента — по календарю. Уже запущенные системы работают до перезахода")
+		return reply(
+			true,
+			"День контента — по календарю. Уже запущенные системы работают до перезахода"
+		)
 	end
 	local day = int(ctx.args.day, 0, Admin.maxContentDay)
 	if not day then
@@ -304,12 +316,20 @@ handlers.contentDay = function(ctx: Ctx): Reply
 	end
 	ReplicatedStorage:SetAttribute("AdminContentDay", day)
 	logAction(ctx.player, "contentDay", tostring(day))
-	return reply(true, "День " .. day .. ": волны сразу, обновления по средам — в течение минуты")
+	return reply(
+		true,
+		"День "
+			.. day
+			.. ": волны сразу, обновления по средам — в течение минуты"
+	)
 end
 
 handlers.testServer = function(ctx: Ctx): Reply
 	if RunService:IsStudio() then
-		return reply(false, "В Studio телепорт не работает — день контента меняется прямо здесь")
+		return reply(
+			false,
+			"В Studio телепорт не работает — день контента меняется прямо здесь"
+		)
 	end
 	local ok, code = pcall(function()
 		return TeleportService:ReserveServer(game.PlaceId)
@@ -343,7 +363,10 @@ handlers.event = function(ctx: Ctx): Reply
 		clearAttributes(EVENT_ATTRIBUTES)
 		clearAttributes(GOLDEN_ATTRIBUTES)
 		logAction(ctx.player, "event_stop", "")
-		return reply(true, "События из панели остановлены — дальше по расписанию")
+		return reply(
+			true,
+			"События из панели остановлены — дальше по расписанию"
+		)
 	end
 	if type(id) ~= "string" or (id ~= "golden" and not DailyEvents.get(id)) then
 		return reply(false, "Нет такого события")
@@ -357,7 +380,9 @@ handlers.event = function(ctx: Ctx): Reply
 			ctx,
 			"event",
 			id .. "|" .. minutes,
-			"Событие получат все игроки сервера (" .. #Players:GetPlayers() .. ")."
+			"Событие получат все игроки сервера ("
+				.. #Players:GetPlayers()
+				.. ")."
 		)
 		if gate then
 			return gate
@@ -373,7 +398,10 @@ handlers.event = function(ctx: Ctx): Reply
 		ReplicatedStorage:SetAttribute("AdminEventEndsAt", now + minutes * 60)
 	end
 	logAction(ctx.player, "event_" .. id, minutes .. " min")
-	return reply(true, "Запущено на " .. minutes .. " мин (начнётся за секунду)")
+	return reply(
+		true,
+		"Запущено на " .. minutes .. " мин (начнётся за секунду)"
+	)
 end
 
 -- ===== Модерация =====
@@ -475,7 +503,10 @@ handlers.kick = function(ctx: Ctx): Reply
 	end
 	local reason = reasonOf(ctx)
 	logAction(ctx.player, "kick", who(target) .. (if reason ~= "" then " — " .. reason else ""))
-	target:Kick("Ты отключён администратором." .. (if reason ~= "" then " Причина: " .. reason else ""))
+	target:Kick(
+		"Ты отключён администратором."
+			.. (if reason ~= "" then " Причина: " .. reason else "")
+	)
 	return reply(true, target.Name .. " кикнут")
 end
 
@@ -555,7 +586,9 @@ handlers.reset = function(ctx: Ctx): Reply
 		ctx,
 		"reset",
 		tostring(target.UserId),
-		"Сбросить ВЕСЬ прогресс " .. target.Name .. " (деньги, студия, заряды за Robux)? Игрока отключит."
+		"Сбросить ВЕСЬ прогресс "
+			.. target.Name
+			.. " (деньги, студия, заряды за Robux)? Игрока отключит."
 	)
 	if gate then
 		return gate
@@ -564,7 +597,9 @@ handlers.reset = function(ctx: Ctx): Reply
 		return reply(false, "Профиль не загружен")
 	end
 	logAction(ctx.player, "reset", who(target))
-	target:Kick("Прогресс сброшен администратором. Зайди снова — начнёшь с начала.")
+	target:Kick(
+		"Прогресс сброшен администратором. Зайди снова — начнёшь с начала."
+	)
 	return reply(true, "Профиль " .. target.Name .. " сброшен")
 end
 
