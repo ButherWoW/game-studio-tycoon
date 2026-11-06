@@ -1,12 +1,14 @@
 --!strict
 -- Путеводная нить новичка (отчёт #3, P1-1): пока у игрока нет гаража, от персонажа тянется
 -- луч к табличке «Гараж продаётся» на его участке, над табличкой — 🏠.
--- Появляется, когда на гараж хватает денег (раньше — только мешает делать игры в парке).
+-- Появляется, когда на гараж хватает денег и выпущены первые Economy.firstGames игр
+-- (раньше — только мешает делать игры в парке).
 -- Всё локальное (видит только сам игрок); пропадает, когда OwnsGarage = true.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local Economy = require(ReplicatedStorage.Shared.Config.Economy)
 local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
 local ClientState = require(script.Parent.Parent.ClientState)
 
@@ -120,7 +122,11 @@ function GarageGuide.start()
 
 	local function update()
 		local cash = if ClientState.data then ClientState.data.cash else 0
-		local wanted = player:GetAttribute("OwnsGarage") ~= true and cash >= StartPark.garagePrice
+		local games = if ClientState.data then tonumber(ClientState.data.gamesReleased) or 0 else 0
+		-- Сначала первые игры на ноутбуке (отчёт v71, №4), и только потом луч к гаражу
+		local wanted = player:GetAttribute("OwnsGarage") ~= true
+			and games >= Economy.firstGames
+			and cash >= StartPark.garagePrice
 		local button = if wanted then garageButton() else nil
 		local root = rootPart()
 		if not button or not root then
