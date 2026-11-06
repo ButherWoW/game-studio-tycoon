@@ -436,6 +436,20 @@ local function dimImportedLights()
 	end
 end
 
+-- Трава с настоящей текстурой (материал Grass) по всему парку: земля вокруг и газон парка Астры
+-- (MeadowGround #6BBF59, был гладкий пластик). Узнаём газон по цвету и имени
+local function grassify(part: BasePart)
+	part.Material = Enum.Material.Grass
+end
+
+local function isMeadow(part: BasePart): boolean
+	if part.Name == "MeadowGround" then
+		return true
+	end
+	local c = part.Color
+	return math.abs(c.R * 255 - 107) < 12 and math.abs(c.G * 255 - 191) < 12 and math.abs(c.B * 255 - 89) < 12
+end
+
 -- Парк Астры вокруг спавна: модель — рядом со StartPark (не внутри: StartParkService посчитал бы
 -- весь парк одним препятствием), невидимые прокси деревьев/пруда — внутрь StartPark, чтобы
 -- картриджи не появлялись в стволах и в пруду. Pivot парка — центр основания, прокси сдвигаем
@@ -451,6 +465,11 @@ local function ensureLandscape()
 		else Vector3.zero
 	local park = template:Clone()
 	park:PivotTo(CFrame.new(center))
+	for _, item in park:GetDescendants() do
+		if item:IsA("BasePart") and isMeadow(item) then
+			grassify(item)
+		end
+	end
 	park.Parent = workspace
 	local startPark = workspace:FindFirstChild("StartPark")
 	local proxies = landscapeTemplate(LANDSCAPE_OBSTACLES)
@@ -494,8 +513,7 @@ local OUTER_PROPS = {
 	{ name = "RockSmall", weight = 2, scale = { 0.8, 1.3 } },
 	{ name = "RockMedium", weight = 1.5, scale = { 0.8, 1.2 } },
 	{ name = "RockLarge", weight = 0.7, scale = { 0.9, 1.1 } },
-	{ name = "Hedge", weight = 1.5, scale = { 1, 1 } },
-	{ name = "FenceSection", weight = 0.8, scale = { 1, 1 } },
+	-- Заборы и изгороди убраны (владелец 06.11: стояли ни к чему, смысла не имеют)
 	{ name = "StreetBench", weight = 0.8, scale = { 1, 1 } },
 }
 local OUTER_FILL = 0.55 -- доля клеток с предметом
@@ -545,7 +563,7 @@ local function ensureOuterLandscape()
 	local base = workspace:FindFirstChild("Baseplate")
 	if base and base:IsA("BasePart") then
 		base.Color = OUTER_GROUND_COLOR
-		base.Material = Enum.Material.SmoothPlastic
+		grassify(base)
 	end
 	local templates = {}
 	local total = 0
