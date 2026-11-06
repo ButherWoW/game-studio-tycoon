@@ -40,6 +40,19 @@ Images.posters = {
 	mechTitan = 140307562859835, -- poster_mechTitan.png, премиум
 	galaxyLegends = 87137781625902, -- poster_galaxyLegends.png, премиум
 	goldenController = 139514087995847, -- poster_goldenController.png, премиум
+	pixelHero2 = 0, -- Dev 1: poster_pixelHero.png из V36 (вторая серия)
+	puzzleBlocks2 = 0, -- Dev 1: poster_puzzleBlocks.png из V36 (вторая серия)
+	turboRacer2 = 0, -- Dev 1: poster_turboRacer.png из V36 (вторая серия)
+	starBlaster2 = 0, -- Dev 1: poster_starBlaster.png из V36 (вторая серия)
+	ninjaCat2 = 0, -- Dev 1: poster_ninjaCat.png из V36 (вторая серия)
+	ghostManor2 = 0, -- Dev 1: poster_ghostManor.png из V36 (вторая серия)
+	robotArena2 = 0, -- Dev 1: poster_robotArena.png из V36 (вторая серия)
+	dragonValley2 = 0, -- Dev 1: poster_dragonValley.png из V36 (вторая серия)
+	neonCity2 = 0, -- Dev 1: poster_neonCity.png из V36 (вторая серия)
+	crystalKingdom2 = 0, -- Dev 1: poster_crystalKingdom.png из V36 (вторая серия)
+	mechTitan2 = 0, -- Dev 1: poster_mechTitan.png из V36 (вторая серия)
+	galaxyLegends2 = 0, -- Dev 1: poster_galaxyLegends.png из V36 (вторая серия)
+	goldenController2 = 0, -- Dev 1: poster_goldenController.png из V36 (вторая серия)
 } :: { [string]: number }
 
 -- Медали достижений (V10, Астра #88): окно 🏆 вместо 🥉🥈🥇

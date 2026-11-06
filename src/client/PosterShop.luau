@@ -25,7 +25,7 @@ type State = {
 	slots: { string },
 }
 
-local CELL = Vector2.new(152, 268)
+local CELL = Vector2.new(152, 292)
 local PREVIEW = Vector2.new(120, 160) -- 3:4, как картинка 768×1024
 local BUTTON_HEIGHT = 40
 
@@ -160,6 +160,22 @@ local function cellFor(parent: Instance, poster: Posters.Poster, order: number)
 	name.Size = UDim2.new(1, -12, 0, 40)
 	name.TextWrapped = true
 	name.TextXAlignment = Enum.TextXAlignment.Center
+	-- Характеристика постера (Config/Posters.stat): «⭐ +0.05 к оценке», «💰 +1% к доходу», «😊 +2 настроения»
+	local stat = poster.stat
+	local value = if stat.kind == "revenue"
+		then tostring(math.floor(stat.value * 100 + 0.5))
+		elseif stat.kind == "review" then string.format("%.2f", stat.value)
+		else tostring(math.floor(stat.value))
+	local statLabel = Ui.label(
+		cell,
+		ClientState.t("poster_stat_" .. stat.kind, { value = value }),
+		20,
+		Enum.Font.GothamMedium,
+		Ui.colors.money
+	)
+	statLabel.Position = UDim2.fromOffset(6, PREVIEW.Y + 56)
+	statLabel.Size = UDim2.new(1, -12, 0, 22)
+	statLabel.TextXAlignment = Enum.TextXAlignment.Center
 	actionButton(cell, poster)
 	-- Премиум-постер можно подарить другому игроку на сервере
 	local gift = if poster.premium then Social.giftFor("poster", poster.id) else nil

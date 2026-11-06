@@ -155,6 +155,16 @@ local function compute(profile: DataService.Profile, player: Player?): ({ Part }
 	if aftermath > 0 and (profile :: any).staffStrike ~= true then
 		table.insert(parts, { key = "mood_part_aftermath", value = -aftermath })
 	end
+	-- Повешенные постеры (PosterService, Config/Posters.stat): очки настроения
+	local posterModule = script.Parent:FindFirstChild("PosterService")
+	if posterModule and posterModule:IsA("ModuleScript") then
+		local okPoster, posterMood = pcall(function()
+			return (require(posterModule) :: any).bonusFor(profile, "mood")
+		end)
+		if okPoster and type(posterMood) == "number" and posterMood > 0 then
+			table.insert(parts, { key = "mood_part_posters", value = math.floor(posterMood) })
+		end
+	end
 	-- Надетый маскот «настроение» (MascotService, ленивый require)
 	local mascotModule = script.Parent:FindFirstChild("MascotService")
 	if mascotModule and mascotModule:IsA("ModuleScript") then

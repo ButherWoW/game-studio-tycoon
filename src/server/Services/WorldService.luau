@@ -507,6 +507,45 @@ local function grassify(part: BasePart)
 	part.Material = Enum.Material.Grass
 end
 
+-- Террейн Grass по всей земле карты: настоящая текстура травы и 3D-травинки. true — удалось; тогда плоскую
+-- плиту и газон парка Астры скрываем (прозрачные, коллизия остаётся), иначе остаётся материал Grass на деталях
+local function ensureGrassTerrain(): boolean
+	local config = World.grass
+	if not config.terrain then
+		return false
+	end
+	if workspace:GetAttribute("GrassTerrain") == true then
+		return true
+	end
+	local base = workspace:FindFirstChild("Baseplate")
+	if not base or not base:IsA("BasePart") then
+		return false
+	end
+	local terrain = workspace.Terrain
+	local top = base.Position.Y + base.Size.Y / 2
+	local ok = pcall(function()
+		terrain:FillBlock(
+			CFrame.new(base.Position.X, top - config.depth / 2, base.Position.Z),
+			Vector3.new(base.Size.X, config.depth, base.Size.Z),
+			Enum.Material.Grass
+		)
+		terrain:SetMaterialColor(Enum.Material.Grass, config.color)
+	end)
+	if not ok then
+		warn(
+			"[WorldService] террейн-трава не построилась, остаётся материал Grass на плите"
+		)
+		return false
+	end
+	pcall(function()
+		terrain.Decoration = config.decoration
+	end)
+	base.Transparency = 1
+	base.CastShadow = false
+	workspace:SetAttribute("GrassTerrain", true)
+	return true
+end
+
 local function isMeadow(part: BasePart): boolean
 	if part.Name == "MeadowGround" then
 		return true
@@ -530,9 +569,16 @@ local function ensureLandscape()
 		else Vector3.zero
 	local park = template:Clone()
 	park:PivotTo(CFrame.new(center))
+	local terrainGrass = workspace:GetAttribute("GrassTerrain") == true
 	for _, item in park:GetDescendants() do
 		if item:IsA("BasePart") and isMeadow(item) then
-			grassify(item)
+			if terrainGrass then
+				-- Газон парка скрываем: под ним настоящий террейн-газон (коллизия детали остаётся)
+				item.Transparency = 1
+				item.CastShadow = false
+			else
+				grassify(item)
+			end
 		end
 	end
 	park.Parent = workspace
@@ -628,7 +674,9 @@ local function ensureOuterLandscape()
 	local base = workspace:FindFirstChild("Baseplate")
 	if base and base:IsA("BasePart") then
 		base.Color = OUTER_GROUND_COLOR
-		grassify(base)
+		if workspace:GetAttribute("GrassTerrain") ~= true then
+			grassify(base)
+		end
 	end
 	local templates = {}
 	local total = 0
@@ -746,6 +794,7 @@ function WorldService.start()
 		end
 	end)
 	ensureGround()
+	ensureGrassTerrain()
 	ensurePlots()
 	ensureSpawnPad()
 	ensurePaths()
