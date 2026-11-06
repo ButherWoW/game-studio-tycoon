@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Mascot_bug_beetle",
+    "parts": 38,
+    "dimensionsXYZ": [
+      2.4731729999999996,
+      2.955,
+      2.54
+    ],
+    "pairs": 703,
+    "overlaps": [],
+    "BodyPrimaryPart": true,
+    "pivotY0": true,
+    "allAnchored": true,
+    "binaryRoundtrip": "PASS",
+    "runtimeTested": false
+  },
+  {
+    "name": "Mascot_floppy_dog",
+    "parts": 39,
+    "dimensionsXYZ": [
+      2.84,
+      3.27,
+      1.645
+    ],
+    "pairs": 741,
+    "overlaps": [],
+    "BodyPrimaryPart": true,
+    "pivotY0": true,
+    "allAnchored": true,
+    "binaryRoundtrip": "PASS",
+    "runtimeTested": false
+  }
+]
