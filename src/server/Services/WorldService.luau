@@ -144,6 +144,44 @@ local function hasLandscape(): boolean
 	return park ~= nil and park:IsA("Model")
 end
 
+-- Площадка появления (модель SpawnPad из ServerStorage.Upgrades): ставится центром в X/Z SpawnLocation,
+-- низом на землю. Сам SpawnLocation остаётся невидимым (Duration = 0), вписывается в габарит площадки
+-- и теряет коллизию: опора — модель, второй ступеньки над рисунком нет. Нет модели, она пустая или
+-- это заглушка Generated — SpawnLocation остаётся как был (8×1×8, видимый)
+local function ensureSpawnPad()
+	local spawn = workspace:FindFirstChildWhichIsA("SpawnLocation", true)
+	local template = landscapeTemplate(StartPark.spawnPadName)
+	if
+		not spawn
+		or workspace:FindFirstChild(StartPark.spawnPadName)
+		or not template
+		or not template:IsA("Model")
+		or template:GetAttribute("Generated") == true
+		or not template:FindFirstChildWhichIsA("BasePart", true)
+	then
+		return
+	end
+	local ground = workspace:FindFirstChild("Baseplate")
+	local groundY = if ground and ground:IsA("BasePart") then ground.Position.Y + ground.Size.Y / 2 else 0
+	local rotation = spawn.CFrame.Rotation
+	local pad = template:Clone()
+	pad.Name = StartPark.spawnPadName
+	pad:PivotTo(CFrame.new(spawn.Position.X, groundY, spawn.Position.Z) * rotation)
+	-- Низ модели строго на земле, даже если pivot импортирован не в основании
+	local box, size = pad:GetBoundingBox()
+	pad:PivotTo(pad:GetPivot() + Vector3.new(0, groundY - (box.Position.Y - size.Y / 2), 0))
+	box, size = pad:GetBoundingBox()
+	pad.Parent = workspace
+
+	spawn.Size = size
+	spawn.CFrame = CFrame.new(box.Position) * rotation
+	spawn.Transparency = 1
+	spawn.CanCollide = false
+	spawn.CanQuery = false
+	spawn.CanTouch = false
+	spawn.Duration = 0
+end
+
 local function ensurePaths()
 	if workspace:FindFirstChild("PlotPaths") then
 		return
@@ -577,6 +615,7 @@ end
 function WorldService.start()
 	ensureGround()
 	ensurePlots()
+	ensureSpawnPad()
 	ensurePaths()
 	ensureUpgradeModels()
 	ensureStartPark()
