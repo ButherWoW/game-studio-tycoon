@@ -1,0 +1,45 @@
+{
+  "model": "SpawnPad",
+  "parts": 37,
+  "partBudget": 40,
+  "dimensionsXYZ": [
+    8.0,
+    0.32,
+    8.0
+  ],
+  "baseY": 0.0,
+  "topY": 0.32,
+  "primaryPart": "Base",
+  "pivotXYZ": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "classes": [
+    "Model",
+    "Part"
+  ],
+  "pointLights": 0,
+  "nativeNeonFrame": true,
+  "anchored": true,
+  "walkableCanCollide": true,
+  "positiveVolumeIntersections": [],
+  "pairChecks": 666,
+  "topCoverage": {
+    "area": 64.00000000000004,
+    "expectedArea": 64,
+    "testedSubdivisionCells": 90,
+    "cellCoverageExactlyOne": true,
+    "gapsGreaterThanTolerance": 0,
+    "toleranceStuds": 1e-05,
+    "entireTopCoplanar": true,
+    "unobstructedCenterAtLeast6x6": true
+  },
+  "shaftHeightOrOtherVerticalObstacles": false,
+  "sha256": {
+    "SpawnPad.rbxm": "03e92905c4c235ec6954894a2027860450048ebc20a56a7f3dd255cb8e31bec6",
+    "SpawnPad.rbxmx": "3b719a4208f1231892228a141e75827d0afc1718094ac3c8fa9c6f020159d17e"
+  },
+  "status": "PASS",
+  "runtimeTested": false
+}
