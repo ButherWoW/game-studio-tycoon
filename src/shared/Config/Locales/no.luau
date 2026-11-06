@@ -1919,4 +1919,14 @@ return {
 	guide_floor2_3 = "Du ser hvordan det går i vinduet 🛋️ Studio; ved heisen 🛗 trykker du på den 🔒 etasjen, så viser vi hva som mangler",
 	platform_notice_phone = "📱 Plattformen Mobiler er låst opp! Velg den i vinduet «Nytt spill»",
 	build_prompt = "⚡ Skynd på byggingen",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Gjennomsiktige vegger",
+	setting_wallfade_hint = "Vegger mellom kameraet og karakteren din blir gjennomsiktige",
+	intro_1 = "Du er 17 år. Du har spilt spill hele livet, og nå vil du lage dem selv. Ingen penger, ingen kontor. Bare en gammel bærbar og en drøm.",
+	intro_2 = "Start smått: sett deg med den bærbare på en benk i parken og lag ditt første spill. Velg sjanger og tema, og fordel innsatsen mellom gameplay, grafikk, lyd og historie.",
+	intro_3 = "Kritikerne gir poeng fra 1 til 10. Et kjempebra spill gir penger og fans, et dårlig skremmer dem bort. Kjøp en garasje, ansett et team, flytt inn på et kontor.",
+	intro_4 = "Målet ditt: kom deg fra en parkbenk til en skyskraper og bygg verdens mest kjente studio. Klar? Studioet ditt trenger et navn!",
+	intro_next = "Neste",
+	intro_skip = "Hopp over",
+	intro_start = "Start",
 }
