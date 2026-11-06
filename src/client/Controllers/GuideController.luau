@@ -196,12 +196,14 @@ local function openBook()
 	Ui.windowOpened(closeBook) -- окно меню: закрывает другое открытое окно меню
 
 	local window = Ui.window(screen, "Window", Vector2.new(520, 560))
-	local head = Ui.label(window, "📖 " .. ClientState.t("guide_book_title"), 40, Ui.titleFontFor(ClientState.lang))
+	local head =
+		Ui.label(window, "📖 " .. ClientState.t("guide_book_title"), 40, Ui.titleFontFor(ClientState.lang))
 	head.Position = UDim2.fromOffset(18, 10)
 	head.Size = UDim2.new(1, -90, 0, 40)
 	local x = Ui.button(window, "✕", Ui.colors.bad, closeBook)
 	Ui.headerClose(x)
-	local hint = Ui.label(window, ClientState.t("guide_book_hint"), 22, Enum.Font.GothamMedium, Ui.colors.muted)
+	local hint =
+		Ui.label(window, ClientState.t("guide_book_hint"), 22, Enum.Font.GothamMedium, Ui.colors.muted)
 	hint.Position = UDim2.fromOffset(18, 56)
 	hint.Size = UDim2.new(1, -36, 0, 22)
 
@@ -235,7 +237,8 @@ local function openBook()
 		pad.Parent = row
 	end
 	if count == 0 then
-		local empty = Ui.label(scroll, ClientState.t("guide_book_empty"), 30, Enum.Font.GothamMedium, Ui.colors.muted)
+		local empty =
+			Ui.label(scroll, ClientState.t("guide_book_empty"), 30, Enum.Font.GothamMedium, Ui.colors.muted)
 		empty.TextXAlignment = Enum.TextXAlignment.Center
 	end
 end
@@ -288,7 +291,12 @@ local function onMenu(slot: number)
 		return
 	end
 	local guide = Guides.forSlot(slot)
-	if not guide or isSeen(guide.id) or readSeen() == nil or player:GetAttribute("TutorialActive") == true then
+	if
+		not guide
+		or isSeen(guide.id)
+		or readSeen() == nil
+		or player:GetAttribute("TutorialActive") == true
+	then
 		return
 	end
 	-- После окна системы (оно открывается в этом же нажатии), чтобы карточка легла сверху
