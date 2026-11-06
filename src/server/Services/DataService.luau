@@ -113,6 +113,9 @@ export type Profile = {
 	features: { seen: { [string]: boolean }, init: boolean },
 	-- Обучение по ходу игры (GuideService, Config/Guides): прочитанные карточки «Как это работает»
 	guides: { seen: { [string]: boolean }, init: boolean },
+	-- Вступление для новичка (IntroService, 4 экрана): true — игрок его прошёл или пропустил.
+	-- Старые сохранения: у кого уже есть выпущенные игры, сервер ставит true сам
+	introSeen: boolean,
 	processedReceipts: { [string]: boolean },
 	receiptLog: { string }, -- порядок квитанций, чтобы удалять самые старые
 	lastLogout: number,
@@ -223,6 +226,7 @@ local function defaultProfile(): Profile
 		gotw = defaultGotw(),
 		features = { seen = {}, init = false },
 		guides = { seen = {}, init = false },
+		introSeen = false,
 		lastGame = nil,
 		construction = nil,
 		processedReceipts = {},
