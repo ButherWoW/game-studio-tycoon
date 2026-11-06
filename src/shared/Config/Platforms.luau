@@ -1,14 +1,17 @@
 --!strict
 -- Платформы игры (волна 2): игрок выбирает в окне «Создать игру». ПК — по умолчанию,
--- «Телефоны» — с офиса, «Своя консоль» — после запуска консоли (Config/Console, ConsoleService).
+-- «Телефоны» — после 3 выпущенных игр (requires, shared/UnlockRules: уже в гараже),
+-- «Своя консоль» — после запуска консоли (Config/Console, ConsoleService).
 -- revenue — множитель дохода по жанру (нет жанра — default), scoreBonus — прибавка к оценке
 -- до округления (у своей консоли — выше шанс хита). Проверяет и применяет сервер.
+
+local Genres = require(script.Parent.Genres)
 
 export type Platform = {
 	id: string, -- "pc" | "phone" | "console"
 	icon: string,
-	-- Условие открытия: studioLevel не ниже (Config/Stages) или запущенная своя консоль
-	minStudioLevel: number,
+	-- Условие открытия (UnlockRules, как у жанров) или запущенная своя консоль
+	requires: Genres.Requires?,
 	needsConsole: boolean?,
 	default: number, -- множитель дохода для жанров, которых нет в revenue
 	revenue: { [string]: number },
@@ -23,7 +26,6 @@ Platforms.list = {
 	pc = {
 		id = "pc",
 		icon = "🖥️",
-		minStudioLevel = 1,
 		default = 1,
 		revenue = {},
 		scoreBonus = 0,
@@ -32,7 +34,7 @@ Platforms.list = {
 	phone = {
 		id = "phone",
 		icon = "📱",
-		minStudioLevel = 2,
+		requires = { gamesReleased = 3 },
 		default = 1,
 		revenue = { casual = 1.2, puzzle = 1.2, sports = 1.1, strategy = 0.8, rpg = 0.85, simulation = 0.9 },
 		scoreBonus = 0,
@@ -42,7 +44,6 @@ Platforms.list = {
 	console = {
 		id = "console",
 		icon = "🎮",
-		minStudioLevel = 4,
 		needsConsole = true,
 		default = 1.05,
 		revenue = { action = 1.25, racing = 1.25, sports = 1.15, horror = 1.1, puzzle = 0.9 },
