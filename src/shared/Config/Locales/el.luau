@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "Ο τίτλος έχει κακές λέξεις — σκέψου άλλον",
 	move_celebrate = "🎉 Νέο στούντιο: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Ο φύλακας σε κυνηγά! Τρέξε στο ράφι σου",
+	hit_guard_slipped = "🛡 Ο φύλακας σε έπιασε, αλλά ξέφυγες! Τρέξε!",
+	hit_guard_lost = "🛡 Ο φύλακας έχασε τον κλέφτη",
 	order_title = "📋 Παραγγελίες ημέρας",
 	order_reset = "Νέες σε {time}",
 	order_done = "📋 Η παραγγελία ολοκληρώθηκε: {genre} ★{score}+ — {money}",

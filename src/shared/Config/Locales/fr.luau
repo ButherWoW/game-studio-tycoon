@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "Ce titre contient des gros mots — trouve-en un autre",
 	move_celebrate = "🎉 Nouveau studio : {stage} !",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Le garde te poursuit ! Cours vers ton étagère",
+	hit_guard_slipped = "🛡 Le garde t’a attrapé, mais tu t’es libéré ! Cours !",
+	hit_guard_lost = "🛡 Le garde a perdu le voleur",
 	order_title = "📋 Commandes du jour",
 	order_reset = "Nouvelles dans {time}",
 	order_done = "📋 Commande terminée: {genre} ★{score}+ — {money}",

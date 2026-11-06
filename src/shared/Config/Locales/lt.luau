@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "Pavadinime yra keiksmažodžių — sugalvok kitą",
 	move_celebrate = "🎉 Nauja studija: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Apsaugininkas vejasi! Bėk prie savo lentynos",
+	hit_guard_slipped = "🛡 Apsaugininkas sugavo, bet ištrūkai! Bėk!",
+	hit_guard_lost = "🛡 Apsaugininkas pamestas vagis",
 	order_title = "📋 Dienos užsakymai",
 	order_reset = "Nauji po {time}",
 	order_done = "📋 Užsakymas įvykdytas: {genre} ★{score}+ — {money}",

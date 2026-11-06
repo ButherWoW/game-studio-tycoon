@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "Titlen har grimme ord — find på en anden",
 	move_celebrate = "🎉 Nyt studie: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Vagten jagter dig! Løb til din hylde",
+	hit_guard_slipped = "🛡 Vagten greb dig, men du slap fri! Løb!",
+	hit_guard_lost = "🛡 Vagten mistede tyven",
 	order_title = "📋 Dagens ordrer",
 	order_reset = "Nye om {time}",
 	order_done = "📋 Ordre gennemført: {genre} ★{score}+ — {money}",

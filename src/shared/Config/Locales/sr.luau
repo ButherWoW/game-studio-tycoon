@@ -1305,6 +1305,9 @@ return {
 	error_name_bad = "У наслову су ружне речи — смисли други",
 	move_celebrate = "🎉 Нови студио: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Čuvar te juri! Trči do svoje police",
+	hit_guard_slipped = "🛡 Čuvar te je uhvatio, ali si se oslobodio! Trči!",
+	hit_guard_lost = "🛡 Čuvar je izgubio lopova",
 	order_title = "📋 Dnevne narudžbine",
 	order_reset = "Nove za {time}",
 	order_done = "📋 Narudžbina ispunjena: {genre} ★{score}+ — {money}",

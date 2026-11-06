@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "Nimessä on rumia sanoja — keksi toinen",
 	move_celebrate = "🎉 Uusi studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Vartija jahtaa sinua! Juokse hyllyllesi",
+	hit_guard_slipped = "🛡 Vartija sai sinut kiinni, mutta pääsit irti! Juokse!",
+	hit_guard_lost = "🛡 Vartija menetti varkaan",
 	order_title = "📋 Päivän tilaukset",
 	order_reset = "Uudet {time} päästä",
 	order_done = "📋 Tilaus suoritettu: {genre} ★{score}+ — {money}",

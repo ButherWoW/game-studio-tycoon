@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "Er staan scheldwoorden in de titel — verzin een andere",
 	move_celebrate = "🎉 Nieuwe studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 De bewaker zit je achterna! Ren naar je plank",
+	hit_guard_slipped = "🛡 De bewaker greep je, maar je rukte je los! Ren!",
+	hit_guard_lost = "🛡 De bewaker raakte de dief kwijt",
 	order_title = "📋 Dagopdrachten",
 	order_reset = "Nieuwe over {time}",
 	order_done = "📋 Opdracht voltooid: {genre} ★{score}+ — {money}",

@@ -1305,6 +1305,9 @@ return {
 	error_name_bad = "Başlıkta kötü kelimeler var — başka bir tane bul",
 	move_celebrate = "🎉 Yeni stüdyo: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Güvenlik seni kovalıyor! Rafına koş",
+	hit_guard_slipped = "🛡 Güvenlik seni yakaladı ama kurtuldun! Koş!",
+	hit_guard_lost = "🛡 Güvenlik hırsızı kaçırdı",
 	order_title = "📋 Günün siparişleri",
 	order_reset = "Yeni siparişler {time} sonra",
 	order_done = "📋 Sipariş tamamlandı: {genre} ★{score}+ — {money}",

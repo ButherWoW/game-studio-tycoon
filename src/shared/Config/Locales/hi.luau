@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "नाम में गंदे शब्द हैं — कोई और सोचो",
 	move_celebrate = "🎉 नया स्टूडियो: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 गार्ड तुम्हारा पीछा कर रहा है! अपनी शेल्फ़ की ओर भागो",
+	hit_guard_slipped = "🛡 गार्ड ने पकड़ा, पर तुम छूट गए! भागो!",
+	hit_guard_lost = "🛡 गार्ड चोर को खो बैठा",
 	order_title = "📋 आज के ऑर्डर",
 	order_reset = "नए {time} में",
 	order_done = "📋 ऑर्डर पूरा हुआ: {genre} ★{score}+ — {money}",

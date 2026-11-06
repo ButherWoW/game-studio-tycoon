@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "В заглавието има лоши думи — измисли друго",
 	move_celebrate = "🎉 Ново студио: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Охранител те гони! Бягай към рафта си",
+	hit_guard_slipped = "🛡 Охранителят те хвана, но се измъкна! Бягай!",
+	hit_guard_lost = "🛡 Охранителят изпусна крадеца",
 	order_title = "📋 Поръчки за деня",
 	order_reset = "Нови след {time}",
 	order_done = "📋 Поръчката е изпълнена: {genre} ★{score}+ — {money}",

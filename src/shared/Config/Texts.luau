@@ -1209,6 +1209,9 @@ Texts.ru = {
 	error_name_bad = "Название с плохими словами — придумай другое",
 	move_celebrate = "🎉 Новая студия: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Охранник бросился в погоню! Беги к своей полке",
+	hit_guard_slipped = "🛡 Охранник схватил тебя, но ты вырвался! Беги!",
+	hit_guard_lost = "🛡 Охранник упустил вора",
 	order_title = "📋 Заказы дня",
 	order_reset = "Новые через {time}",
 	order_done = "📋 Заказ выполнен: {genre} ★{score}+ — {money}",
@@ -2966,6 +2969,9 @@ Texts.en = {
 	error_name_bad = "That title has bad words — try another one",
 	move_celebrate = "🎉 New studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 The guard is after you! Run to your shelf",
+	hit_guard_slipped = "🛡 The guard grabbed you, but you broke free! Run!",
+	hit_guard_lost = "🛡 The guard lost the thief",
 	order_title = "📋 Daily orders",
 	order_reset = "New in {time}",
 	order_done = "📋 Order completed: {genre} ★{score}+ — {money}",

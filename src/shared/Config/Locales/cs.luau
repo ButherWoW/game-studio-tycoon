@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "Název obsahuje sprostá slova — vymysli jiný",
 	move_celebrate = "🎉 Nové studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Hlídač tě honí! Utíkej ke své polici",
+	hit_guard_slipped = "🛡 Hlídač tě chytil, ale vytrhl ses! Utíkej!",
+	hit_guard_lost = "🛡 Hlídač zloděje ztratil",
 	order_title = "📋 Zakázky dne",
 	order_reset = "Nové za {time}",
 	order_done = "📋 Zakázka splněna: {genre} ★{score}+ — {money}",

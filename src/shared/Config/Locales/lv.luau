@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "Nosaukumā ir rupji vārdi — izdomā citu",
 	move_celebrate = "🎉 Jauna studija: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Apsargs dzenas pakaļ! Skrien pie savas plaukta",
+	hit_guard_slipped = "🛡 Apsargs tevi satvēra, bet tu izrāvies! Skrien!",
+	hit_guard_lost = "🛡 Apsargs pazaudēja zagli",
 	order_title = "📋 Dienas pasūtījumi",
 	order_reset = "Jauni pēc {time}",
 	order_done = "📋 Pasūtījums izpildīts: {genre} ★{score}+ — {money}",

@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "Der Titel enthält Schimpfwörter – denk dir einen anderen aus",
 	move_celebrate = "🎉 Neues Studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	hit_guard_chase = "🛡 Der Wachmann jagt dich! Lauf zu deinem Regal",
+	hit_guard_slipped = "🛡 Der Wachmann hat dich gepackt, aber du hast dich losgerissen! Lauf!",
+	hit_guard_lost = "🛡 Der Wachmann hat den Dieb verloren",
 	order_title = "📋 Tagesaufträge",
 	order_reset = "Neue in {time}",
 	order_done = "📋 Auftrag erfüllt: {genre} ★{score}+ — {money}",
