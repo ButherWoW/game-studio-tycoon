@@ -43,6 +43,17 @@ end
 
 function ConsoleNotice.start()
 	ConsoleRemotes.ConsoleNotice.OnClientEvent:Connect(onNotice)
+	-- Телефоны открылись по числу игр (Config/Platforms): один тост, при входе его нет
+	local phoneWasOpen: boolean? = nil
+	ConsoleClient.changed:Connect(function()
+		local open = ConsoleClient.platformOpen("phone")
+		if phoneWasOpen == false and open then
+			ClientState.afterReveal(function()
+				DepthToast.show(ClientState.t("platform_notice_phone"), Ui.colors.good)
+			end)
+		end
+		phoneWasOpen = open
+	end)
 	-- Этап студии поменялся (офис, 3-й этаж) — платформы и стример могли открыться
 	local level = -1
 	ClientState.changed:Connect(function()
