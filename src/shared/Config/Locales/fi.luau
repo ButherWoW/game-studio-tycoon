@@ -1919,4 +1919,14 @@ return {
 	guide_floor2_3 = "Tilanteen näet ikkunasta 🛋️ Studio; hissillä 🛗 paina 🔒-kerrosta, niin näytämme mitä puuttuu",
 	platform_notice_phone = "📱 Puhelimet-alusta avattu! Valitse se ”Uusi peli” -ikkunasta",
 	build_prompt = "⚡ Nopeuta rakentamista",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Läpinäkyvät seinät",
+	setting_wallfade_hint = "Kameran ja hahmosi välissä olevat seinät muuttuvat läpinäkyviksi",
+	intro_1 = "Olet 17-vuotias. Olet pelannut pelejä koko ikäsi, ja nyt haluat tehdä niitä itse. Ei rahaa, ei toimistoa. Vain vanha kannettava ja unelma.",
+	intro_2 = "Aloita pienestä: istu kannettavan kanssa puiston penkille ja tee ensimmäinen pelisi. Valitse lajityyppi ja teema ja jaa voimasi pelattavuuden, grafiikan, äänen ja tarinan kesken.",
+	intro_3 = "Arvostelijat antavat pisteitä 1–10. Hyvä peli tuo rahaa ja faneja, huono pelottaa ne pois. Osta autotalli, palkkaa tiimi, muuta toimistoon.",
+	intro_4 = "Tavoitteesi: puiston penkiltä pilvenpiirtäjään ja maailman tunnetuimmaksi studioksi. Valmis? Studiosi tarvitsee nimen!",
+	intro_next = "Seuraava",
+	intro_skip = "Ohita",
+	intro_start = "Aloita",
 }

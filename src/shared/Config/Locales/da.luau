@@ -1920,4 +1920,14 @@ return {
 	guide_floor2_3 = "Du kan se status i vinduet 🛋️ Studie; ved elevatoren 🛗 trykker du på den 🔒 etage, så viser vi, hvad der mangler",
 	platform_notice_phone = "📱 Platformen Telefoner er låst op! Vælg den i vinduet ”Nyt spil”",
 	build_prompt = "⚡ Gør byggeriet hurtigere",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Gennemsigtige vægge",
+	setting_wallfade_hint = "Vægge mellem kameraet og din figur bliver gennemsigtige",
+	intro_1 = "Du er 17 år. Du har spillet spil hele dit liv, og nu vil du lave dem selv. Ingen penge, intet kontor. Bare en gammel bærbar og en drøm.",
+	intro_2 = "Start småt: sæt dig med den bærbare på en bænk i parken og lav dit første spil. Vælg genre og tema, og fordel din indsats mellem gameplay, grafik, lyd og historie.",
+	intro_3 = "Anmelderne giver point fra 1 til 10. Et fedt spil giver penge og fans, et dårligt skræmmer dem væk. Køb en garage, ansæt et hold, flyt ind på et kontor.",
+	intro_4 = "Dit mål: kom fra en parkbænk til en skyskraber og byg verdens mest berømte studie. Klar? Dit studie skal have et navn!",
+	intro_next = "Næste",
+	intro_skip = "Spring over",
+	intro_start = "Start",
 }

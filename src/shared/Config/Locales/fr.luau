@@ -1948,4 +1948,14 @@ return {
 	guide_floor2_3 = "Tu suis ta progression dans la fenêtre « 🛋️ Studio » ; près de l’ascenseur 🛗, appuie sur l’étage 🔒 pour voir ce qui manque",
 	platform_notice_phone = "📱 Plateforme « Mobiles » débloquée ! Choisis-la dans la fenêtre « Nouveau jeu »",
 	build_prompt = "⚡ Accélérer le chantier",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Murs transparents",
+	setting_wallfade_hint = "Les murs entre la caméra et ton personnage deviennent transparents",
+	intro_1 = "Tu as 17 ans. Tu joues aux jeux vidéo depuis toujours – et maintenant tu veux en créer. Pas d’argent, pas de bureau. Juste un vieil ordinateur portable et un rêve.",
+	intro_2 = "Commence petit : installe-toi sur un banc dans le parc avec ton ordinateur et crée ton premier jeu. Choisis un genre et un thème, puis répartis tes efforts entre gameplay, graphismes, son et histoire.",
+	intro_3 = "Les critiques lui donnent une note de 1 à 10. Un super jeu rapporte de l’argent et des fans, un mauvais jeu les fait fuir. Achète un garage, recrute une équipe, installe-toi dans un bureau.",
+	intro_4 = "Ton but : aller d’un banc dans le parc jusqu’à un gratte-ciel et bâtir le studio le plus célèbre du monde. Prêt ? Ton studio a besoin d’un nom !",
+	intro_next = "Suivant",
+	intro_skip = "Passer",
+	intro_start = "Commencer",
 }

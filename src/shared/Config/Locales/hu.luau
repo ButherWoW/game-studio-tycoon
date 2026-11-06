@@ -1920,4 +1920,14 @@ return {
 	guide_floor2_3 = "Az állást a 🛋️ Stúdió ablakban látod; a 🛗 lifthez érve nyomj a 🔒 emeletre, és megmutatjuk, mi hiányzik",
 	platform_notice_phone = "📱 A Telefonok platform megnyílt! Válaszd ki az „Új játék” ablakban",
 	build_prompt = "⚡ Építés gyorsítása",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Átlátszó falak",
+	setting_wallfade_hint = "A kamera és a karaktered közötti falak átlátszóvá válnak",
+	intro_1 = "17 éves vagy. Egész életedben játékokkal játszottál, most pedig te is készíteni akarsz. Nincs pénzed, nincs irodád. Csak egy régi laptopod és egy álmod.",
+	intro_2 = "Kezdd kicsiben: ülj le a laptoppal egy parki padra, és készítsd el az első játékodat. Válassz műfajt és témát, majd oszd el az erődet a játékmenet, a grafika, a hang és a történet között.",
+	intro_3 = "A kritikusok 1-től 10-ig pontozzák. Egy nagyszerű játék pénzt és rajongókat hoz, egy rossz elriasztja őket. Végy egy garázst, vegyél fel csapatot, költözz irodába.",
+	intro_4 = "A célod: a parki padtól a felhőkarcolóig jutni, és a világ leghíresebb stúdiójává válni. Készen állsz? A stúdiódnak névre van szüksége!",
+	intro_next = "Tovább",
+	intro_skip = "Kihagyás",
+	intro_start = "Indítás",
 }

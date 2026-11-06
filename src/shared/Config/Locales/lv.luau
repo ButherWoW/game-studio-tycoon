@@ -1919,4 +1919,14 @@ return {
 	guide_floor2_3 = "Progresu redzi logā 🛋️ Studija; pie lifta 🛗 piespied 🔒 stāvu, un mēs parādīsim, ko trūkst",
 	platform_notice_phone = "📱 Platforma „Telefoni” atvērta! Izvēlies to logā „Jauna spēle”",
 	build_prompt = "⚡ Paātrināt būvniecību",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Caurspīdīgas sienas",
+	setting_wallfade_hint = "Sienas starp kameru un tavu varoni kļūst caurspīdīgas",
+	intro_1 = "Tev ir 17 gadu. Visu mūžu esi spēlējis spēles, un tagad vēlies tās veidot. Naudas nav, biroja nav. Ir tikai vecs portatīvais dators un sapnis.",
+	intro_2 = "Sāc ar mazumiņu: apsēdies ar datoru uz soliņa parkā un izveido savu pirmo spēli. Izvēlies žanru un tēmu, sadali spēkus starp spēles gaitu, grafiku, skaņu un sižetu.",
+	intro_3 = "Kritiķi vērtē no 1 līdz 10. Lieliska spēle atnes naudu un fanus, slikta tos atbaida. Nopērc garāžu, pieņem komandu, pārcelies uz biroju.",
+	intro_4 = "Tavs mērķis: no soliņa parkā līdz debesskrāpim un pasaules slavenākajai studijai. Gatavs? Tavai studijai vajag nosaukumu!",
+	intro_next = "Tālāk",
+	intro_skip = "Izlaist",
+	intro_start = "Sākt",
 }

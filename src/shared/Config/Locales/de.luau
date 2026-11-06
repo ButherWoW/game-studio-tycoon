@@ -1948,4 +1948,14 @@ return {
 	guide_floor2_3 = "Den Fortschritt siehst du im Fenster „🛋️ Studio“; am Aufzug 🛗 tippst du auf die 🔒-Etage und wir zeigen dir, was noch fehlt",
 	platform_notice_phone = "📱 Plattform „Handys“ freigeschaltet! Wähle sie im Fenster „Neues Spiel“",
 	build_prompt = "⚡ Bau beschleunigen",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Durchsichtige Wände",
+	setting_wallfade_hint = "Wände zwischen Kamera und deiner Figur werden durchsichtig",
+	intro_1 = "Du bist 17. Dein ganzes Leben lang hast du Spiele gespielt – jetzt willst du selbst welche machen. Kein Geld, kein Büro. Nur ein alter Laptop und ein Traum.",
+	intro_2 = "Fang klein an: Setz dich mit dem Laptop auf eine Parkbank und mach dein erstes Spiel. Wähle ein Genre und ein Thema und verteile deine Kraft auf Gameplay, Grafik, Sound und Story.",
+	intro_3 = "Kritiker bewerten es von 1 bis 10. Ein tolles Spiel bringt Geld und Fans, ein schlechtes vertreibt sie. Kauf eine Garage, stell ein Team ein, zieh in ein Büro.",
+	intro_4 = "Dein Ziel: von der Parkbank bis zum Wolkenkratzer – und das berühmteste Studio der Welt aufbauen. Bereit? Dein Studio braucht einen Namen!",
+	intro_next = "Weiter",
+	intro_skip = "Überspringen",
+	intro_start = "Los geht’s",
 }

@@ -1948,4 +1948,14 @@ return {
 	guide_floor2_3 = "O progresso aparece na janela “🛋️ Estúdio”; perto do elevador 🛗 toque no andar 🔒 e mostramos o que falta",
 	platform_notice_phone = "📱 Plataforma “Celulares” liberada! Escolha-a na janela “Novo jogo”",
 	build_prompt = "⚡ Acelerar a obra",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Paredes transparentes",
+	setting_wallfade_hint = "As paredes entre a câmera e o seu personagem ficam transparentes",
+	intro_1 = "Você tem 17 anos. Jogou videogames a vida toda — e agora quer criá-los. Sem dinheiro, sem escritório. Só um notebook velho e um sonho.",
+	intro_2 = "Comece pequeno: sente num banco do parque com o notebook e crie o seu primeiro jogo. Escolha um gênero e um tema e divida seu esforço entre jogabilidade, gráficos, som e história.",
+	intro_3 = "Os críticos dão uma nota de 1 a 10. Um jogo ótimo traz dinheiro e fãs; um ruim espanta todo mundo. Compre uma garagem, contrate uma equipe, mude para um escritório.",
+	intro_4 = "Seu objetivo: sair de um banco de parque e chegar a um arranha-céu, criando o estúdio mais famoso do mundo. Pronto? Seu estúdio precisa de um nome!",
+	intro_next = "Avançar",
+	intro_skip = "Pular",
+	intro_start = "Começar",
 }

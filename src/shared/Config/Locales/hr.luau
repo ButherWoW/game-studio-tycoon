@@ -1946,4 +1946,14 @@ return {
 	guide_floor2_3 = "Napredak vidiš u prozoru „🛋️ Studio“; kod dizala 🛗 dodirni kat 🔒 i pokazat ćemo ti što nedostaje",
 	platform_notice_phone = "📱 Platforma „Mobiteli“ otključana! Odaberi je u prozoru „Nova igra“",
 	build_prompt = "⚡ Ubrzaj gradnju",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Prozirni zidovi",
+	setting_wallfade_hint = "Zidovi između kamere i tvog lika postaju prozirni",
+	intro_1 = "Imaš 17 godina. Cijeli život igraš igre – a sada ih želiš praviti. Nema novca, nema ureda. Samo stari laptop i san.",
+	intro_2 = "Kreni od malog: sjedni s laptopom na klupu u parku i napravi svoju prvu igru. Odaberi žanr i temu, a snagu podijeli između igranja, grafike, zvuka i priče.",
+	intro_3 = "Kritičari će je ocijeniti ocjenom od 1 do 10. Odlična igra donosi novac i obožavatelje, a loša ih tjera. Kupi garažu, zaposli tim, preseli se u ured.",
+	intro_4 = "Tvoj cilj: proći put od klupe u parku do nebodera i izgraditi najpoznatiji studio na svijetu. Spreman? Tvom studiju treba ime!",
+	intro_next = "Dalje",
+	intro_skip = "Preskoči",
+	intro_start = "Započni",
 }

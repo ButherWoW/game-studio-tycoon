@@ -1946,4 +1946,14 @@ return {
 	guide_floor2_3 = "Napredek vidiš v oknu „🛋️ Studio“; pri dvigalu 🛗 tapni nadstropje 🔒 in pokazali ti bomo, kaj manjka",
 	platform_notice_phone = "📱 Platforma „Telefoni“ odklenjena! Izberi jo v oknu „Nova igra“",
 	build_prompt = "⚡ Pospeši gradnjo",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Prosojne stene",
+	setting_wallfade_hint = "Stene med kamero in tvojim likom postanejo prosojne",
+	intro_1 = "Star si 17 let. Vse življenje si igral igre – zdaj pa jih želiš ustvarjati. Brez denarja, brez pisarne. Samo star prenosnik in sanje.",
+	intro_2 = "Začni v malem: sedi s prenosnikom na klop v parku in naredi svojo prvo igro. Izberi žanr in temo, moči pa razdeli med igranje, grafiko, zvok in zgodbo.",
+	intro_3 = "Kritiki jo bodo ocenili z ocenami od 1 do 10. Odlična igra prinese denar in oboževalce, slaba jih prežene. Kupi garažo, najemi ekipo, preseli se v pisarno.",
+	intro_4 = "Tvoj cilj: od klopi v parku do nebotičnika in najslavnejši studio na svetu. Pripravljen? Tvoj studio potrebuje ime!",
+	intro_next = "Naprej",
+	intro_skip = "Preskoči",
+	intro_start = "Začni",
 }

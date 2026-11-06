@@ -1918,4 +1918,14 @@ return {
 	guide_floor2_3 = "Durumu 🛋️ Stüdyo penceresinde görürsün; 🛗 asansörde 🔒 katına bas, neyin eksik olduğunu gösterelim",
 	platform_notice_phone = "📱 Telefonlar platformu açıldı! “Yeni oyun” penceresinden seç",
 	build_prompt = "⚡ İnşaatı hızlandır",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Şeffaf duvarlar",
+	setting_wallfade_hint = "Kamera ile karakterin arasındaki duvarlar şeffaf olur",
+	intro_1 = "17 yaşındasın. Bütün hayatın oyun oynayarak geçti, şimdi de oyun yapmak istiyorsun. Paran yok, ofisin yok. Sadece eski bir dizüstü bilgisayarın ve bir hayalin var.",
+	intro_2 = "Küçükten başla: dizüstü bilgisayarınla parktaki bir banka otur ve ilk oyununu yap. Bir tür ve bir tema seç, gücünü oynanış, grafik, ses ve hikaye arasında paylaştır.",
+	intro_3 = "Eleştirmenler 1'den 10'a kadar puan verir. Harika bir oyun para ve hayran getirir, kötü bir oyun onları kaçırır. Bir garaj al, ekip kur, ofise taşın.",
+	intro_4 = "Hedefin: park bankından gökdelene uzanıp dünyanın en ünlü stüdyosunu kurmak. Hazır mısın? Stüdyonun bir isme ihtiyacı var!",
+	intro_next = "İleri",
+	intro_skip = "Atla",
+	intro_start = "Başla",
 }
