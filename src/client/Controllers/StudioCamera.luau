@@ -13,6 +13,7 @@ local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 
 local CameraConfig = require(ReplicatedStorage.Shared.Config.Camera)
+local InteriorFinishes = require(ReplicatedStorage.Shared.Config.InteriorFinishes)
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local ClientState = require(script.Parent.Parent.ClientState)
@@ -94,6 +95,21 @@ end
 
 -- ===== Прозрачность передних стен и потолка =====
 
+-- Стена оболочки текущего этажа (гараж: Garage / GarageWalls, в т.ч. клоны отделки; офис: Office / Floor /
+-- Skyscraper): высокая вертикальная деталь модели-оболочки прямо на участке. Клон отделки носит классическое
+-- имя (PlotService.placeModel), поэтому достаточно InteriorFinishes.SHELLS. Верхние этажи отсекает fadeFor
+-- раньше (они спрятаны), потолок/крыша — тонкие по Y, их не считаем стенами и прозрачность им остаётся.
+local function isShellWall(plot: BasePart, part: BasePart): boolean
+	if part.Size.Y <= CameraConfig.frontMinHeight then
+		return false
+	end
+	local node: Instance? = part
+	while node and node.Parent ~= plot do
+		node = node.Parent
+	end
+	return node ~= nil and node:IsA("Model") and InteriorFinishes.SHELLS[node.Name] ~= nil
+end
+
 -- Сколько прозрачности дать детали: nil — не трогать, 1 — этаж выше текущего (спрятать)
 local function fadeFor(plot: BasePart, part: BasePart): number?
 	if part == plot then
@@ -109,6 +125,10 @@ local function fadeFor(plot: BasePart, part: BasePart): number?
 	-- Сотрудники и прочие персонажи на участке — не стены
 	local model = part:FindFirstAncestorOfClass("Model")
 	if model and model:FindFirstChildOfClass("Humanoid") then
+		return nil
+	end
+	-- Стены текущего этажа остаются непрозрачными (в гараже — оболочка Garage/GarageWalls*)
+	if height >= 0 and isShellWall(plot, part) then
 		return nil
 	end
 	if height > CameraConfig.fadeHeight then
