@@ -1,0 +1,62 @@
+[
+  {
+    "file": "poster_pixelHero.png",
+    "sourceSize": [
+      1086,
+      1448
+    ],
+    "size": [
+      768,
+      1024
+    ],
+    "mode": "RGB",
+    "sha256": "63adb23e50b993d8a903fa0435a650b88f1b1fcaa338284f1c9cc857a8220974",
+    "format": "PNG",
+    "opaque": true
+  },
+  {
+    "file": "poster_puzzleBlocks.png",
+    "sourceSize": [
+      1086,
+      1448
+    ],
+    "size": [
+      768,
+      1024
+    ],
+    "mode": "RGB",
+    "sha256": "cc6d3d4dfbdd9e98244d82152cd0071527bbc415500263aff571d90a2dd0eb21",
+    "format": "PNG",
+    "opaque": true
+  },
+  {
+    "file": "poster_turboRacer.png",
+    "sourceSize": [
+      1086,
+      1448
+    ],
+    "size": [
+      768,
+      1024
+    ],
+    "mode": "RGB",
+    "sha256": "0057359b7e213357cea4b66d676a121d18e60628a3c4f17e4cb9a9e1e15c1d35",
+    "format": "PNG",
+    "opaque": true
+  },
+  {
+    "file": "poster_starBlaster.png",
+    "sourceSize": [
+      1086,
+      1448
+    ],
+    "size": [
+      768,
+      1024
+    ],
+    "mode": "RGB",
+    "sha256": "9da71e2e80a19811a461f1516cdf9993d9dbe211bf4e23b95679c54a289c7c64",
+    "format": "PNG",
+    "opaque": true
+  }
+]
