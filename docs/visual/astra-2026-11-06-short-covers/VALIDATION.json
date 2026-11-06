@@ -1,0 +1,87 @@
+{
+  "count": 8,
+  "files": [
+    {
+      "file": "covers/short_01_bench_hq.png",
+      "size": [
+        1080,
+        1920
+      ],
+      "opaque": true,
+      "sha256": "a000360651adf49d4db083409f4fad4a05d66817260997922fbf94474d12f601",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    },
+    {
+      "file": "covers/short_02_office_styles.png",
+      "size": [
+        1080,
+        1920
+      ],
+      "opaque": true,
+      "sha256": "3c0f331db8897c4360e60ec45cd37347adecfbab0ea42a8a24d2399c32dd1f89",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    },
+    {
+      "file": "covers/short_03_mascots.png",
+      "size": [
+        1080,
+        1920
+      ],
+      "opaque": true,
+      "sha256": "7ea951146245d3867ebf47a3b3a5e8094133008f4511b94ed5b487b9a9e15d65",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    },
+    {
+      "file": "covers/short_04_golden_hour.png",
+      "size": [
+        1080,
+        1920
+      ],
+      "opaque": true,
+      "sha256": "8b8b16320ac79a4b94b2212168420ab0dd25055542d6facfe6f971f27c71ecce",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    },
+    {
+      "file": "covers/short_05_safe.png",
+      "size": [
+        1080,
+        1920
+      ],
+      "opaque": true,
+      "sha256": "7175c894c509fc6fd624a933c98d44f8df9545204f2b5d95ff2c1559790fc826",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    },
+    {
+      "file": "covers/short_06_hit_theft.png",
+      "size": [
+        1080,
+        1920
+      ],
+      "opaque": true,
+      "sha256": "f9f5a6239d6f571e6530f44d12664f8881f9fbf2953f4cf5f781941940945195",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    },
+    {
+      "file": "covers/short_07_game_of_week.png",
+      "size": [
+        1080,
+        1920
+      ],
+      "opaque": true,
+      "sha256": "baa45c99a0c6f51c4dca5079ea688284d6dc21e5ca062d526b5d03f1d6589c67",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    },
+    {
+      "file": "covers/short_08_stock_market.png",
+      "size": [
+        1080,
+        1920
+      ],
+      "opaque": true,
+      "sha256": "5173bb5eacdf38fee4d6481ae454a829585b54ee43397116f9b2853527f18a14",
+      "visualReview": "PASS: author and independent reviewer; no text/digits/logos; focal subjects uncropped"
+    }
+  ],
+  "method": "Dimensions/RGB/hash automated; subjects, safe composition and absence of lettering manually reviewed, not OCR. Static illustrations, not game recording.",
+  "runtimeTested": false
+}
