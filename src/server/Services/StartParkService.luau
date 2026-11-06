@@ -4,6 +4,7 @@
 -- Парк строит WorldService (папка workspace.StartPark), здесь — поведение.
 -- Данные: (profile :: any).cartridges, .jobReadyAt { [jobId]: os.time() }, .studioName.
 
+local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TextService = game:GetService("TextService")
@@ -406,24 +407,86 @@ spawnCartridge = function(spot: BasePart)
 		return
 	end
 	relocateSpot(spot)
+	-- Старая дискета (06.11, владелец «перерисуй»): квадратный корпус, металлическая шторка сверху,
+	-- белая этикетка снизу, вырез защиты записи. Корпус — корневая деталь (Anchored, на ней подсказка
+	-- «Подобрать»), остальное приварено и едет вместе с ней: клиент крутит и качает дискету
+	-- (Controllers/CartridgeAnimator, тег ParkCartridge), опираясь на атрибуты BasePos и BaseYaw
 	local cartridge = Instance.new("Part")
 	cartridge.Name = "Cartridge"
 	cartridge.Anchored = true
 	cartridge.CanCollide = false
-	cartridge.Size = Vector3.new(1.4, 1.7, 0.35)
+	cartridge.Size = Vector3.new(1.7, 1.7, 0.16)
 	cartridge.Color = CARTRIDGE_COLORS[rng:NextInteger(1, #CARTRIDGE_COLORS)]
 	cartridge.Material = Enum.Material.SmoothPlastic
-	cartridge.CFrame = CFrame.new(spot.Position + Vector3.new(0, 1.5, 0))
-		* CFrame.Angles(0, rng:NextNumber(0, 2 * math.pi), math.rad(10))
-	local labelPart = Instance.new("Part")
-	labelPart.Name = "Label"
-	labelPart.Anchored = true
-	labelPart.CanCollide = false
-	labelPart.CanQuery = false
-	labelPart.Size = Vector3.new(1, 0.8, 0.05)
-	labelPart.Color = Color3.fromRGB(240, 240, 230)
-	labelPart.CFrame = cartridge.CFrame * CFrame.new(0, 0.2, 0.19)
-	labelPart.Parent = cartridge
+	local basePosition = spot.Position + Vector3.new(0, 2.2, 0)
+	local baseYaw = rng:NextNumber(0, 2 * math.pi)
+	cartridge.CFrame = CFrame.new(basePosition) * CFrame.Angles(0, baseYaw, 0)
+	cartridge:SetAttribute("BasePos", basePosition)
+	cartridge:SetAttribute("BaseYaw", baseYaw)
+	local function detail(
+		name: string,
+		size: Vector3,
+		offset: Vector3,
+		color: Color3,
+		material: Enum.Material
+	)
+		local piece = Instance.new("Part")
+		piece.Name = name
+		piece.Anchored = false
+		piece.CanCollide = false
+		piece.CanQuery = false
+		piece.CanTouch = false
+		piece.Massless = true
+		piece.Size = size
+		piece.Color = color
+		piece.Material = material
+		piece.CFrame = cartridge.CFrame * CFrame.new(offset)
+		local weld = Instance.new("WeldConstraint")
+		weld.Part0 = cartridge
+		weld.Part1 = piece
+		weld.Parent = piece
+		piece.Parent = cartridge
+		return piece
+	end
+	-- Металлическая шторка сверху и квадратное окошко в ней
+	detail(
+		"Shutter",
+		Vector3.new(0.9, 0.6, 0.2),
+		Vector3.new(0.12, 0.55, 0),
+		Color3.fromRGB(196, 200, 208),
+		Enum.Material.Metal
+	)
+	detail(
+		"ShutterWindow",
+		Vector3.new(0.22, 0.4, 0.22),
+		Vector3.new(0.3, 0.55, 0),
+		Color3.fromRGB(40, 42, 48),
+		Enum.Material.SmoothPlastic
+	)
+	-- Белая этикетка снизу (две стороны одной деталью-пластиной) и цветная полоска на ней
+	detail(
+		"Label",
+		Vector3.new(1.3, 0.85, 0.2),
+		Vector3.new(0, -0.35, 0),
+		Color3.fromRGB(242, 240, 230),
+		Enum.Material.SmoothPlastic
+	)
+	detail(
+		"LabelStripe",
+		Vector3.new(1.3, 0.16, 0.22),
+		Vector3.new(0, -0.08, 0),
+		cartridge.Color,
+		Enum.Material.SmoothPlastic
+	)
+	-- Вырез защиты записи в углу
+	detail(
+		"Notch",
+		Vector3.new(0.16, 0.16, 0.2),
+		Vector3.new(-0.72, -0.72, 0),
+		Color3.fromRGB(30, 30, 34),
+		Enum.Material.SmoothPlastic
+	)
+	CollectionService:AddTag(cartridge, "ParkCartridge")
 	local sparkle = Instance.new("Sparkles")
 	sparkle.SparkleColor = cartridge.Color
 	sparkle.Parent = cartridge

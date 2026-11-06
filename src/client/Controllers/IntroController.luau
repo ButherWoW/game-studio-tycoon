@@ -1,5 +1,6 @@
 --!strict
 -- Вступление для новичка: 4 экрана при первом входе нового профиля (Config/Texts intro_1..intro_4).
+-- Самым первым идёт выбор языка (06.11, владелец): чтобы историю можно было прочитать на своём языке.
 -- «Далее» / «Пропустить», на последнем экране «Начать». Показывает атрибут игрока IntroActive
 -- (IntroService; true только у профиля, который вступления ещё не видел). Пока он true, туториал
 -- (TutorialController) и всплывающие окна (PopupQueue.busy) ждут. Конец или «Пропустить» —
@@ -13,6 +14,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local IntroRemotes = require(ReplicatedStorage.Shared.IntroRemotes)
 local Images = require(ReplicatedStorage.Shared.Config.Images)
+local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
@@ -54,7 +56,8 @@ local function open()
 	if screen or finished then
 		return
 	end
-	local page = 1
+	-- 0 — выбор языка (до истории), 1..#PAGES — страницы вступления
+	local page = 0
 
 	local gui = Instance.new("ScreenGui")
 	gui.Name = "IntroScreen"
@@ -168,7 +171,41 @@ local function open()
 		table.insert(dotFrames, dot)
 	end
 
+	-- Выбор языка: заголовок на двух языках и сетка всех языков игры (кнопка — родное название)
+	local picker = Instance.new("Frame")
+	picker.Name = "LanguagePicker"
+	picker.BackgroundTransparency = 1
+	picker.Position = UDim2.fromOffset(20, 12)
+	picker.Size = UDim2.fromOffset(CARD_SIZE.X - 40, 292)
+	picker.Parent = card
+	local pickerTitle =
+		Ui.label(picker, "🌐  Выбери язык  ·  Choose your language", 36, Enum.Font.GothamBold)
+	pickerTitle.TextXAlignment = Enum.TextXAlignment.Center
+	pickerTitle.Size = UDim2.new(1, 0, 0, 36)
+	local pickerBody = Instance.new("ScrollingFrame")
+	pickerBody.BackgroundTransparency = 1
+	pickerBody.BorderSizePixel = 0
+	pickerBody.Position = UDim2.fromOffset(0, 46)
+	pickerBody.Size = UDim2.new(1, 0, 1, -46)
+	pickerBody.CanvasSize = UDim2.new()
+	pickerBody.AutomaticCanvasSize = Enum.AutomaticSize.Y
+	pickerBody.ScrollBarThickness = 6
+	pickerBody.Parent = picker
+	local pickerGrid = Instance.new("UIGridLayout")
+	pickerGrid.CellSize = UDim2.new(1 / 3, -8, 0, 40)
+	pickerGrid.CellPadding = UDim2.fromOffset(6, 6)
+	pickerGrid.SortOrder = Enum.SortOrder.LayoutOrder
+	pickerGrid.Parent = pickerBody
+	local langButtons: { [string]: TextButton } = {}
 	local render: () -> ()
+	for index, language in Texts.languages do
+		local button = Ui.button(pickerBody, language.nativeName, Ui.colors.primary, function()
+			ClientState.setLang(language.code)
+		end)
+		button.Font = Ui.titleFontFor(language.code)
+		button.LayoutOrder = index
+		langButtons[language.code] = button
+	end
 
 	local skip = Ui.button(card, "", Ui.colors.locked, finish)
 	skip.Name = "SkipButton"
@@ -192,6 +229,21 @@ local function open()
 
 	-- Перерисовка текущей страницы (смена страницы и смена языка)
 	render = function()
+		-- Экран выбора языка (до истории): без картинки, текста страницы и точек
+		local choosing = page == 0
+		picker.Visible = choosing
+		art.Visible = not choosing
+		body.Visible = not choosing
+		dots.Visible = not choosing
+		for code, button in langButtons do
+			button.BackgroundColor3 = if code == ClientState.lang then Ui.colors.good else Ui.colors.primary
+		end
+		if choosing then
+			skip.Visible = false
+			nextButton.Text = ClientState.t("intro_next")
+			nextButton.BackgroundColor3 = Ui.colors.primary
+			return
+		end
 		local current = PAGES[page]
 		art.BackgroundColor3 = current.color
 		local imageId = (Images.intro :: { [string]: number })[current.image] or 0
