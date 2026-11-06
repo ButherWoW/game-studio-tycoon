@@ -1,0 +1,21 @@
+{
+  "file": "menu_guides.png",
+  "size": [
+    256,
+    256
+  ],
+  "mode": "RGBA",
+  "alphaRange": [
+    0,
+    255
+  ],
+  "corners": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "sha256": "983ff6da0722f8d568a078c163a08aae7b6fcfd2c352671e6b51938ec7c3dc75",
+  "visualReview": "PASS: open book, blank pages, blue/gold palette, dark outline; reviewed at256px and40px over white and#161826; no text/numerals or alpha halo",
+  "runtimeTested": false
+}

@@ -1,0 +1,9 @@
+{
+  "prompt": "Use case: stylized-concept. Asset: menu_guides.png, Roblox game studio tycoon menu handbook icon. Supporting style references: supplied research flask and tax receipt menu icons; do not copy their subjects. Draw ONE friendly chunky OPEN HANDBOOK with rich blue hardcover, thick cream pages, small golden bookmark ribbon, tiny gold star on the cover edge. Pages blank, no writing or horizontal fake text lines. Book faces viewer in slightly three-quarter front view, readable silhouette at40x40. Match reference glossy cartoon game UI style, thick dark navy #1E1E2E outlines, simple bright blue #3D7BFF and gold #FFC93C fills with small rounded highlights. Center with generous transparent padding. NO words, letters, digits, logos, background, drop shadow, floating symbols or border tile. Real transparent background.",
+  "source": "/Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-170688e2-95fb-4a9a-9ae7-bc84c940b257.png",
+  "hint": "Generated images are saved to /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286 as /Users/erland/.codex/generated_images/01a1a60c-8dad-75b0-94ec-eb09d8d19286/exec-170688e2-95fb-4a9a-9ae7-bc84c940b257.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+  "referencePaths": [
+    "docs/visual/astra-2026-11-04/V3/menu_research.png",
+    "docs/visual/astra-2026-11-06-ui-v31/V31/menu_tax.png"
+  ]
+}
