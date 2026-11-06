@@ -10,6 +10,7 @@ export type Values = {
 	hideTitles: boolean, -- не показывать титулы над чужими игроками
 	hideMascots: boolean, -- не показывать чужих маскотов
 	notifications: boolean, -- пинги «Событие дня скоро» (NotifyService.wantsPings)
+	wallFade: boolean, -- «Прозрачные стены»: в виде студии стены между камерой и героем полупрозрачные
 }
 
 export type Kind = "volume" | "toggle"
@@ -23,9 +24,10 @@ Settings.defaults = {
 	hideTitles = false,
 	hideMascots = false,
 	notifications = true,
+	wallFade = false,
 } :: Values
 
--- Порядок в окне: ключ, вид, ключ текста
+-- Порядок в окне: ключ, вид, ключ текста, (необязательно) ключ пояснения под подписью
 Settings.list = {
 	{ key = "musicVolume", kind = "volume", text = "set_music" },
 	{ key = "sfxVolume", kind = "volume", text = "set_sfx" },
@@ -33,7 +35,8 @@ Settings.list = {
 	{ key = "hideTitles", kind = "toggle", text = "set_hide_titles" },
 	{ key = "hideMascots", kind = "toggle", text = "set_hide_mascots" },
 	{ key = "notifications", kind = "toggle", text = "set_notify" },
-} :: { { key: string, kind: Kind, text: string } }
+	{ key = "wallFade", kind = "toggle", text = "setting_wallfade", hint = "setting_wallfade_hint" },
+} :: { { key: string, kind: Kind, text: string, hint: string? } }
 
 Settings.volumeStep = 0.1 -- шаг кнопок − / +
 
