@@ -6,6 +6,7 @@
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TextService = game:GetService("TextService")
 
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local PaidRemotes = require(ReplicatedStorage.Shared.PaidRemotes)
@@ -30,13 +31,15 @@ local TOP_Y = 6
 local BAR_HEIGHT = Hud.topBarHeight
 local BAR_WIDTH = Ui.HUD_PLATE_WIDTH -- боковое меню на тач-экране не заходит под строку (Ui)
 local CASH_TEXT = if Ui.touch then 22 else 26
-local CHIP_TEXT = if Ui.touch then 16 else 18 -- значки читаемы: не меньше 16 px
+local CHIP_TEXT = if Ui.touch then 14 else 18 -- значки читаемы: не меньше 14 px
+local CHIP_PAD = if Ui.touch then 4 else 6 -- отступ текста внутри значка
 local CHIP_HEIGHT = BAR_HEIGHT - 8
 -- Блок денег: правый нижний угол. На телефоне правее — кнопка прыжка Roblox (внизу справа,
 -- до ~110 px от края; крупные кнопки — шире), поэтому блок сдвинут левее неё
 local MONEY_RIGHT = if Ui.touch then 150 else 12
 local MONEY_BOTTOM = if Ui.touch then 10 else 12
-local CASH_SHORT_FROM = 100000000 -- деньги от $100 млн — коротко: «$123.4M»
+-- Деньги коротко («$12.3M»): на телефоне раньше, иначе сумма заезжает на «Создать игру»
+local CASH_SHORT_FROM = if Ui.touch then 10000000 else 100000000
 -- Строки прогресса разработки — под верхней строкой, узкие
 local PROGRESS_WIDTH = 300
 local PROGRESS_HEIGHT = 26
@@ -85,7 +88,20 @@ end
 
 type Row = { label: TextLabel, finish: TextButton, projectId: number? }
 type Progress = { percent: number, paused: boolean, remaining: number?, hintUntil: number? }
-type Chip = { button: TextButton, detail: string }
+-- Узкая кнопка: меньше внутренних отступов и нижняя граница шрифта, чтобы длинный перевод
+-- (DE/FI) не ужимался до 9 px
+local function tightButton(button: TextButton, minSize: number)
+	local padding = button:FindFirstChildOfClass("UIPadding")
+	if padding then
+		padding.PaddingTop = UDim.new(0, 2)
+		padding.PaddingBottom = UDim.new(0, 2)
+		padding.PaddingLeft = UDim.new(0, 4)
+		padding.PaddingRight = UDim.new(0, 4)
+	end
+	Ui.minText(button, minSize)
+end
+
+type Chip = { button: TextButton, detail: string, atMoney: boolean, wanted: boolean }
 
 -- Подсказка «Пауза — сядь за компьютер»: коротко (на PAUSE_HINT_SECONDS) и не чаще раза в
 -- PAUSE_HINT_COOLDOWN секунд; в остальное время строка паузы выглядит как обычный прогресс
@@ -110,7 +126,6 @@ function HudController.start()
 	bar.AutomaticSize = Enum.AutomaticSize.X
 	bar.BackgroundColor3 = Ui.colors.panel
 	bar.BackgroundTransparency = 0.25
-	bar.ClipsDescendants = true
 	Ui.corner(bar, 10)
 	local barLimit = Instance.new("UISizeConstraint")
 	barLimit.MaxSize = Vector2.new(BAR_WIDTH, BAR_HEIGHT)
@@ -232,11 +247,11 @@ function HudController.start()
 		b.Visible = false
 		Ui.corner(b, 8)
 		local padding = Instance.new("UIPadding")
-		padding.PaddingLeft = UDim.new(0, 6)
-		padding.PaddingRight = UDim.new(0, 6)
+		padding.PaddingLeft = UDim.new(0, CHIP_PAD)
+		padding.PaddingRight = UDim.new(0, CHIP_PAD)
 		padding.Parent = b
 		b.Parent = if atMoney then money else bar
-		local chip: Chip = { button = b, detail = "", atMoney = atMoney == true }
+		local chip: Chip = { button = b, detail = "", atMoney = atMoney == true, wanted = false }
 		b.Activated:Connect(function()
 			togglePopover(chip)
 		end)
@@ -255,7 +270,38 @@ function HudController.start()
 	local moodChip = makeChip("Mood", 8)
 	-- Мощность команды (StaffPower) — пока идёт разработка и есть сотрудники
 	local powerChip = makeChip("Power", 9)
+	-- Верхняя строка не клипуется: если значки не помещаются в BAR_WIDTH, прячем наименее важные
+	-- (мощность, игры, реклама, настроение, фанаты); расходы, долг и забастовка остаются всегда
+	local fitOrder = { powerChip, gamesChip, adChip, moodChip, fansChip }
+	local barChips = { fansChip, gamesChip, strikeChip, expensesChip, debtChip, adChip, moodChip, powerChip }
+	local function chipWidth(chip: Chip): number
+		local size = TextService:GetTextSize(chip.button.Text, CHIP_TEXT, Ui.bodyFont, Vector2.new(1000, 100))
+		return size.X + CHIP_PAD * 2 + 6 -- + зазор строки
+	end
+	local function fitBar()
+		local total = 14 -- отступы строки 20 минус лишний зазор
+		for _, chip in barChips do
+			chip.button.Visible = chip.wanted
+			if chip.wanted then
+				total += chipWidth(chip)
+			end
+		end
+		for _, chip in fitOrder do
+			if total <= BAR_WIDTH then
+				break
+			end
+			if chip.wanted then
+				chip.button.Visible = false
+				total -= chipWidth(chip)
+				if popoverOwner == chip then
+					popover.Visible = false
+					popoverOwner = nil
+				end
+			end
+		end
+	end
 	local function setChip(chip: Chip, shown: boolean, text: string?, detail: string?, color: Color3?)
+		chip.wanted = shown
 		chip.button.Visible = shown
 		if not shown then
 			if popoverOwner == chip then
@@ -322,6 +368,7 @@ function HudController.start()
 		finish.AnchorPoint = Vector2.new(0, 0)
 		finish.Position = UDim2.new(0.5, PROGRESS_WIDTH / 2 + 6, 0, y)
 		finish.Size = UDim2.fromOffset(FINISH_WIDTH, PROGRESS_HEIGHT)
+		tightButton(finish, 12)
 		finish.Visible = false
 		newRow = { label = label, finish = finish, projectId = nil }
 		rows[index] = newRow
@@ -398,11 +445,12 @@ function HudController.start()
 		PaidRemotes.SetAutoRelease:FireServer(not DevState.autoReleaseOn)
 	end)
 	autoRelease.Name = "AutoReleaseToggle"
+	tightButton(autoRelease, 13)
 	if Ui.touch then
 		-- Телефон: справа от «Создать игру» теперь блок денег — тумблер над кнопкой
 		autoRelease.AnchorPoint = Vector2.new(0.5, 1)
 		autoRelease.Position = UDim2.new(0.5, 0, 1, -86)
-		autoRelease.Size = UDim2.fromOffset(170, 36)
+		autoRelease.Size = UDim2.fromOffset(220, 36)
 	else
 		autoRelease.AnchorPoint = Vector2.new(0, 1)
 		autoRelease.Position = UDim2.new(0.5, 140, 1, -30)
@@ -510,6 +558,7 @@ function HudController.start()
 		else
 			setChip(powerChip, false)
 		end
+		fitBar()
 		-- «Создать игру» доступна, пока есть свободный слот
 		create.Visible = DevState.hasFreeSlot()
 	end
