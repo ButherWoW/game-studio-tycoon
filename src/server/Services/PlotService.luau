@@ -264,6 +264,19 @@ local function buildPlot(plot: BasePart, profile: DataService.Profile)
 	end
 	-- Потолок этажей (низ перекрытий) — в цвете отделки владельца; классика — как раньше
 	local finish = StyleModels.finish(profile)
+	-- Пол 2-го и 3-го этажа в оболочках Астры (Floor и Skyscraper) — деталь Floor из белого гладкого
+	-- пластика, а на 1-м этаже дерево (владелец 06.11: «пол на втором и третьем просто белый»).
+	-- При классической отделке красим его в дерево; платные отделки оставляем как нарисовала Астра
+	if not finish or finish.suffix == "" then
+		for _, shellName in { "Floor", "Skyscraper" } do
+			local shell = plot:FindFirstChild(shellName)
+			local floorPart = shell and shell:FindFirstChild("Floor")
+			if floorPart and floorPart:IsA("BasePart") then
+				floorPart.Material = Enum.Material.WoodPlanks
+				floorPart.Color = Color3.fromRGB(176, 128, 86)
+			end
+		end
+	end
 	local ceiling: OfficeFloors.Ceiling? = if finish and finish.ceilingColor
 		then { color = finish.ceilingColor, material = finish.ceilingMaterial or Enum.Material.SmoothPlastic }
 		else nil
