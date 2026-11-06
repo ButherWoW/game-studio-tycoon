@@ -1,0 +1,14 @@
+{
+  "Office": "assets/models/astra-office/models/Office.rbxm",
+  "Office_Aurora": "assets/models/astra-interior-aurora/models/Office_Aurora.rbxm",
+  "Office_Sakura": "assets/models/astra-interior-sakura/models/Office_Sakura.rbxm",
+  "Office_ObsidianGold": "assets/models/astra-interior-obsidian-gold/models/Office_ObsidianGold.rbxm",
+  "Floor": "assets/models/astra-floor/models/Floor.rbxm",
+  "Floor_Aurora": "assets/models/astra-interior-aurora/models/Floor_Aurora.rbxm",
+  "Floor_Sakura": "assets/models/astra-interior-sakura/models/Floor_Sakura.rbxm",
+  "Floor_ObsidianGold": "assets/models/astra-interior-obsidian-gold/models/Floor_ObsidianGold.rbxm",
+  "Skyscraper": "assets/models/astra-sky/models/Skyscraper.rbxm",
+  "Skyscraper_Aurora": "assets/models/astra-interior-aurora/models/Skyscraper_Aurora.rbxm",
+  "Skyscraper_Sakura": "assets/models/astra-interior-sakura/models/Skyscraper_Sakura.rbxm",
+  "Skyscraper_ObsidianGold": "assets/models/astra-interior-obsidian-gold/models/Skyscraper_ObsidianGold.rbxm"
+}

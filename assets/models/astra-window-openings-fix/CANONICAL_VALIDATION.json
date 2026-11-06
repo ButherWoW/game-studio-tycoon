@@ -1,0 +1,119 @@
+{
+  "status": "PASS",
+  "models": [
+    {
+      "model": "Office",
+      "canonicalPath": "assets/models/astra-office/models/Office.rbxm",
+      "sha256": "fdf584c4a1d88f400ee7385a2dd5f639bf8e999fca9eef4980f71415cc04a1ae",
+      "glassPanels": 4,
+      "lights": 1
+    },
+    {
+      "model": "Office_Aurora",
+      "canonicalPath": "assets/models/astra-interior-aurora/models/Office_Aurora.rbxm",
+      "sha256": "bade7a7d2db5fe13d729afc08f89664424b6176b0ce449a17983beaaeca78deb",
+      "glassPanels": 6,
+      "lights": 1
+    },
+    {
+      "model": "Office_Sakura",
+      "canonicalPath": "assets/models/astra-interior-sakura/models/Office_Sakura.rbxm",
+      "sha256": "e57c8e1bb0ccb134e85b60131cbf86d0835e5244a5f7837403c54dd98eab39a7",
+      "glassPanels": 6,
+      "lights": 1
+    },
+    {
+      "model": "Office_ObsidianGold",
+      "canonicalPath": "assets/models/astra-interior-obsidian-gold/models/Office_ObsidianGold.rbxm",
+      "sha256": "c0be56ce3cdb1d22602f0e91cb8936c79d9c6116fce33d03f641236e799cd08f",
+      "glassPanels": 6,
+      "lights": 1
+    },
+    {
+      "model": "Floor",
+      "canonicalPath": "assets/models/astra-floor/models/Floor.rbxm",
+      "sha256": "7efdd2655194a0a755334f33440e0e80908f8ff8314507da508da7f7d6ce5008",
+      "glassPanels": 6,
+      "lights": 1
+    },
+    {
+      "model": "Floor_Aurora",
+      "canonicalPath": "assets/models/astra-interior-aurora/models/Floor_Aurora.rbxm",
+      "sha256": "c562f017822517772e0bc1e7f6d0778afca77a2ee18b8eefbc2ac11b62a34182",
+      "glassPanels": 6,
+      "lights": 1
+    },
+    {
+      "model": "Floor_Sakura",
+      "canonicalPath": "assets/models/astra-interior-sakura/models/Floor_Sakura.rbxm",
+      "sha256": "83b35356d0e27d165f7fcbbde9057a5c17d45a56a33188e95c6a659da84b9f8b",
+      "glassPanels": 6,
+      "lights": 1
+    },
+    {
+      "model": "Floor_ObsidianGold",
+      "canonicalPath": "assets/models/astra-interior-obsidian-gold/models/Floor_ObsidianGold.rbxm",
+      "sha256": "f64bfea3715159df5c42459e2b23183600fcd2cfd8cf863d702ef3c9f2db1fb1",
+      "glassPanels": 6,
+      "lights": 1
+    },
+    {
+      "model": "Skyscraper",
+      "canonicalPath": "assets/models/astra-sky/models/Skyscraper.rbxm",
+      "sha256": "3ea11bd5f62f5a44a7231ddce762dee3e38c9d3bcb811a66863d7fa4d8fa32e3",
+      "glassPanels": 5,
+      "lights": 1
+    },
+    {
+      "model": "Skyscraper_Aurora",
+      "canonicalPath": "assets/models/astra-interior-aurora/models/Skyscraper_Aurora.rbxm",
+      "sha256": "fecc7d2c1e62d305e886055a9a5012f010e9e5d03423e6a243d93c6efc6359b1",
+      "glassPanels": 5,
+      "lights": 1
+    },
+    {
+      "model": "Skyscraper_Sakura",
+      "canonicalPath": "assets/models/astra-interior-sakura/models/Skyscraper_Sakura.rbxm",
+      "sha256": "19a563c40a59cf33388030eaec60625103d96dc709bb4457eb6945b77b1dbab0",
+      "glassPanels": 5,
+      "lights": 1
+    },
+    {
+      "model": "Skyscraper_ObsidianGold",
+      "canonicalPath": "assets/models/astra-interior-obsidian-gold/models/Skyscraper_ObsidianGold.rbxm",
+      "sha256": "a65514f8b32c30cff5a44b5d2e6aecd2f4a132c2128d6f1f8151dafc7f39375b",
+      "glassPanels": 5,
+      "lights": 1
+    },
+    {
+      "model": "GarageWalls",
+      "canonicalPath": "assets/models/astra-garage/models/GarageWalls.rbxm",
+      "sha256": "7aae6ed547c6b62d3847c597a7d09d65a7f413be055898e468bf74c78357b690",
+      "glassPanels": 12,
+      "lights": 1
+    },
+    {
+      "model": "GarageWalls_Aurora",
+      "canonicalPath": "assets/models/astra-interior-aurora/models/GarageWalls_Aurora.rbxm",
+      "sha256": "aaea9da365c87594eed9caed91d9b2b8da76c1b8476d43f8d8e4077812cefb26",
+      "glassPanels": 12,
+      "lights": 1
+    },
+    {
+      "model": "GarageWalls_Sakura",
+      "canonicalPath": "assets/models/astra-interior-sakura/models/GarageWalls_Sakura.rbxm",
+      "sha256": "ed0673e3af279d0dc2bb5321c7207bf906eda7194f824951ff69ee5efd97e318",
+      "glassPanels": 12,
+      "lights": 1
+    },
+    {
+      "model": "GarageWalls_ObsidianGold",
+      "canonicalPath": "assets/models/astra-interior-obsidian-gold/models/GarageWalls_ObsidianGold.rbxm",
+      "sha256": "a9c08a56a180c53f8ae58778d42488c524b4fa487c4d555c08d8fbe60f237f89",
+      "glassPanels": 12,
+      "lights": 1
+    }
+  ],
+  "glassPanelsTotal": 114,
+  "runtimeTested": false
+}

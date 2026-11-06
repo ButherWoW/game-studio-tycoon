@@ -1,0 +1,558 @@
+{
+  "status": "PASS",
+  "models": [
+    {
+      "model": "GarageWalls",
+      "originalParts": 369,
+      "finalParts": 465,
+      "glassPanels": 12,
+      "glassTransparency": 0.4,
+      "rearOpenings": 8,
+      "rearOpaqueBlockers": 0,
+      "sideOpaquePanelBlockers": 0,
+      "framePolicy": "opaque frames/mullions/timber posts retained",
+      "carvedGroups": [
+        {
+          "source": "RearWall",
+          "fragments": 25,
+          "volumeError": 1.1368683772161603e-13,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorDarkRecess",
+          "fragments": 13,
+          "volumeError": 3.552713678800501e-15,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorPanel",
+          "fragments": 13,
+          "volumeError": 2.886579864025407e-15,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 1.0278236595162582e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 5.074066167232161e-17,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 2.8449465006019636e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 4.0245584642661925e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorDarkRecess",
+          "fragments": 13,
+          "volumeError": 0.0,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorPanel",
+          "fragments": 13,
+          "volumeError": 2.6645352591003757e-15,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 5.074066167232161e-17,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 1.0278236595162582e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 4.0245584642661925e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 2.8449465006019636e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        }
+      ],
+      "geometryProof": "Each fragment is a disjoint subset of an original solid; removed volume equals aperture union. Thus no NEW intersections can be introduced; old decorative joins not claimed absent.",
+      "pivotOtherPartsLights": "unchanged",
+      "sha256": {
+        "GarageWalls.rbxmx": "0734fb42690e4f3f50da5c51b6446751a152a12baa730a37b84b434ea1eaaecd",
+        "GarageWalls.rbxm": "7aae6ed547c6b62d3847c597a7d09d65a7f413be055898e468bf74c78357b690"
+      }
+    },
+    {
+      "model": "GarageWalls_Aurora",
+      "originalParts": 524,
+      "finalParts": 620,
+      "glassPanels": 12,
+      "glassTransparency": 0.4,
+      "rearOpenings": 8,
+      "rearOpaqueBlockers": 0,
+      "sideOpaquePanelBlockers": 0,
+      "framePolicy": "opaque frames/mullions/timber posts retained",
+      "carvedGroups": [
+        {
+          "source": "RearWall",
+          "fragments": 25,
+          "volumeError": 1.1368683772161603e-13,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorDarkRecess",
+          "fragments": 13,
+          "volumeError": 3.552713678800501e-15,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorPanel",
+          "fragments": 13,
+          "volumeError": 2.886579864025407e-15,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 1.0278236595162582e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 5.074066167232161e-17,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 2.8449465006019636e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 4.0245584642661925e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorDarkRecess",
+          "fragments": 13,
+          "volumeError": 0.0,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorPanel",
+          "fragments": 13,
+          "volumeError": 2.6645352591003757e-15,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 5.074066167232161e-17,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 1.0278236595162582e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 4.0245584642661925e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 2.8449465006019636e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        }
+      ],
+      "geometryProof": "Each fragment is a disjoint subset of an original solid; removed volume equals aperture union. Thus no NEW intersections can be introduced; old decorative joins not claimed absent.",
+      "pivotOtherPartsLights": "unchanged",
+      "sha256": {
+        "GarageWalls_Aurora.rbxmx": "e6f11d3ddfd44fb59f0bfe28d1779a63f516c7ee27eae89f78ad317012c60ab0",
+        "GarageWalls_Aurora.rbxm": "aaea9da365c87594eed9caed91d9b2b8da76c1b8476d43f8d8e4077812cefb26"
+      }
+    },
+    {
+      "model": "GarageWalls_ObsidianGold",
+      "originalParts": 526,
+      "finalParts": 622,
+      "glassPanels": 12,
+      "glassTransparency": 0.4,
+      "rearOpenings": 8,
+      "rearOpaqueBlockers": 0,
+      "sideOpaquePanelBlockers": 0,
+      "framePolicy": "opaque frames/mullions/timber posts retained",
+      "carvedGroups": [
+        {
+          "source": "RearWall",
+          "fragments": 25,
+          "volumeError": 1.1368683772161603e-13,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorDarkRecess",
+          "fragments": 13,
+          "volumeError": 3.552713678800501e-15,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorPanel",
+          "fragments": 13,
+          "volumeError": 2.886579864025407e-15,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 1.0278236595162582e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 5.074066167232161e-17,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 2.8449465006019636e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 4.0245584642661925e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorDarkRecess",
+          "fragments": 13,
+          "volumeError": 0.0,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorPanel",
+          "fragments": 13,
+          "volumeError": 2.6645352591003757e-15,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 5.074066167232161e-17,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 1.0278236595162582e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 4.0245584642661925e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 2.8449465006019636e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        }
+      ],
+      "geometryProof": "Each fragment is a disjoint subset of an original solid; removed volume equals aperture union. Thus no NEW intersections can be introduced; old decorative joins not claimed absent.",
+      "pivotOtherPartsLights": "unchanged",
+      "sha256": {
+        "GarageWalls_ObsidianGold.rbxmx": "e7e3a94dcf69db2bca7be848cf7cca77aa2dff654cf16b071d11005484392736",
+        "GarageWalls_ObsidianGold.rbxm": "a9c08a56a180c53f8ae58778d42488c524b4fa487c4d555c08d8fbe60f237f89"
+      }
+    },
+    {
+      "model": "GarageWalls_Sakura",
+      "originalParts": 541,
+      "finalParts": 637,
+      "glassPanels": 12,
+      "glassTransparency": 0.4,
+      "rearOpenings": 8,
+      "rearOpaqueBlockers": 0,
+      "sideOpaquePanelBlockers": 0,
+      "framePolicy": "opaque frames/mullions/timber posts retained",
+      "carvedGroups": [
+        {
+          "source": "RearWall",
+          "fragments": 25,
+          "volumeError": 1.1368683772161603e-13,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorDarkRecess",
+          "fragments": 13,
+          "volumeError": 3.552713678800501e-15,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorPanel",
+          "fragments": 13,
+          "volumeError": 2.886579864025407e-15,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 1.0278236595162582e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 5.074066167232161e-17,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 2.8449465006019636e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 4.0245584642661925e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorDarkRecess",
+          "fragments": 13,
+          "volumeError": 0.0,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorPanel",
+          "fragments": 13,
+          "volumeError": 2.6645352591003757e-15,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 5.074066167232161e-17,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "DoorHinge",
+          "fragments": 1,
+          "volumeError": 1.0278236595162582e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 4.0245584642661925e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 2.8449465006019636e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        },
+        {
+          "source": "WindowGasket",
+          "fragments": 4,
+          "volumeError": 1.5265566588595902e-16,
+          "insideOriginalSolid": true,
+          "fragmentIntersections": 0
+        }
+      ],
+      "geometryProof": "Each fragment is a disjoint subset of an original solid; removed volume equals aperture union. Thus no NEW intersections can be introduced; old decorative joins not claimed absent.",
+      "pivotOtherPartsLights": "unchanged",
+      "sha256": {
+        "GarageWalls_Sakura.rbxmx": "1d3eb955863d326162a41c671bf1aae921b09ff037753b0257e879779b5367c3",
+        "GarageWalls_Sakura.rbxm": "ed0673e3af279d0dc2bb5321c7207bf906eda7194f824951ff69ee5efd97e318"
+      }
+    }
+  ],
+  "runtimeTested": false
+}
