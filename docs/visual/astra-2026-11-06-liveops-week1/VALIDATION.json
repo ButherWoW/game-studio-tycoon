@@ -1,0 +1,95 @@
+{
+  "expected": 7,
+  "ready": 7,
+  "sourcePlan": "docs/LAUNCH.md section4",
+  "published": false,
+  "studioScreenshots": false,
+  "assets": [
+    {
+      "file": "liveops_d1_open.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "fullyOpaque": true,
+      "sha256": "8e4a4336ea02412f9bd1077f0de291f9c299e28dba95e6513650956f434debc2",
+      "visualReview": "PASS: no dates/text/codes/names; readable480pxwide; own staff/interior/mascot identity; launch-content restrictions respected"
+    },
+    {
+      "file": "liveops_d2_golden.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "fullyOpaque": true,
+      "sha256": "2fc7f1cc3824d80f97e3a3bb5fcfe45ff869ff200b6acc77a9dd4f53f39a53f5",
+      "visualReview": "PASS: no dates/text/codes/names; readable480pxwide; own staff/interior/mascot identity; launch-content restrictions respected"
+    },
+    {
+      "file": "liveops_d3_combo.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "fullyOpaque": true,
+      "sha256": "c62123e33bd24ae8fab24a072df294a71f78c1a9c743d937c76290e7b4595a72",
+      "visualReview": "PASS: no dates/text/codes/names; readable480pxwide; own staff/interior/mascot identity; launch-content restrictions respected"
+    },
+    {
+      "file": "liveops_d4_style_vote.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "fullyOpaque": true,
+      "sha256": "7d3367dab814329751995d83a7ef236362078eef221de798481fc83ff3e3022c",
+      "visualReview": "PASS: no dates/text/codes/names; readable480pxwide; own staff/interior/mascot identity; launch-content restrictions respected"
+    },
+    {
+      "file": "liveops_d5_showcase.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "fullyOpaque": true,
+      "sha256": "81967c5e8bb82075dd34efbf2522cb3b1774862052064ada33f969487afa5de5",
+      "visualReview": "PASS: no dates/text/codes/names; readable480pxwide; own staff/interior/mascot identity; launch-content restrictions respected"
+    },
+    {
+      "file": "liveops_d6_gamejam.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "fullyOpaque": true,
+      "sha256": "3732a6f7965e72533a36fe6dccae0b7443e87d5a56d6343ed00dd6ead80071c4",
+      "visualReview": "PASS: no dates/text/codes/names; readable480pxwide; own staff/interior/mascot identity; launch-content restrictions respected"
+    },
+    {
+      "file": "liveops_d7_winners.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "fullyOpaque": true,
+      "sha256": "fb9afdfd150115db4762221e321d06385e8019660bbbaa7e7899da15a48e93c5",
+      "visualReview": "PASS: no dates/text/codes/names; readable480pxwide; own staff/interior/mascot identity; launch-content restrictions respected"
+    }
+  ],
+  "sourceChecks": {
+    "stylua": "PASS",
+    "selene": "PASS",
+    "rojoBuild": "PASS"
+  },
+  "contentReview": {
+    "day4Styles": [
+      "Classic",
+      "Cozy"
+    ],
+    "futureContentAdvertisedAsUnlocked": false,
+    "realPlayerPhotosOrNamedWinners": false,
+    "actualSafeCodeIncluded": false,
+    "existingSeasonBannerReused": "PR207, not duplicated",
+    "narrativeCharacterVariation": "Some scenes use existing purple-shirt/scarf V13 staff instead of requested Mila; accepted as authentic staff reference"
+  }
+}
