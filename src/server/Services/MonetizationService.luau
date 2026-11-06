@@ -156,8 +156,10 @@ local function processReceipt(receipt): Enum.ProductPurchaseDecision
 			or grantConstruction(player, profile, receipt.ProductId)
 			or ConsoleService.grantProduct(player, profile, receipt.ProductId)
 	end)
-	-- Единая точка учёта всех Developer Products: выдано (или выдано частично при ошибке) — пишем
-	analytics("endReceipt", player, receipt.ProductId, if ok then handled == true else true)
+	-- Единая точка учёта всех Developer Products: ProductPurchased только при успешной выдаче.
+	-- Выдача упала исключением — квитанция всё равно запишется (второй раз не выдаём), но в аналитике
+	-- это не покупка: ошибка видна в warn ниже
+	analytics("endReceipt", player, receipt.ProductId, ok and handled == true)
 	if not ok then
 		warn("[Monetization] Grant failed:", receipt.ProductId, receipt.PurchaseId, handled)
 	elseif not handled then

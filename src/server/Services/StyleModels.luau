@@ -123,8 +123,9 @@ function StyleModels.find(folder: Instance?, name: string, profile: DataService.
 	else
 		-- Мебель: купленный стиль мебели важнее; при «Классике» — мебель в тон отделке
 		-- (Desk1_Sakura от Астры), если такой шаблон импортирован
-		styled = variant(folder, name, StyleModels.suffix(profile))
-		if not styled and StyleModels.suffix(profile) == "" then
+		local suffix = StyleModels.suffix(profile)
+		styled = variant(folder, name, suffix)
+		if not styled and suffix == "" then
 			local finish = StyleModels.finish(profile)
 			styled = if finish then variant(folder, name, finish.suffix) else nil
 		end
