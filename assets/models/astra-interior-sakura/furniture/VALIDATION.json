@@ -1,0 +1,1469 @@
+{
+  "expected": 29,
+  "ready": 29,
+  "theme": "Sakura",
+  "method": "Independent XML comparison; hierarchy/references/geometry invariant; only appearance and required Shadows=false flag may differ",
+  "intersectionMethod": "Identical native geometry implies identical pairwise intersection graph; no added Parts",
+  "sourceSHA256Verified": true,
+  "models": {
+    "Desk1": {
+      "zone": "garage",
+      "partsClassic": 263,
+      "partsVariant": 263,
+      "changedAppearanceParts": 256,
+      "protectedArtworkParts": 0,
+      "functionalSeatPartsPreserved": 1,
+      "lightsPreserved": 1,
+      "dimensionsXYZ": [
+        7.6,
+        4.315,
+        5.35
+      ],
+      "classicVisibleBounds": [
+        [
+          -3.8,
+          0.0,
+          -1.75
+        ],
+        [
+          3.8,
+          4.315,
+          3.5999999999999996
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -3.8,
+          -0.025,
+          -1.75
+        ],
+        [
+          3.8,
+          4.315,
+          3.5999999999999996
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 34453,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "d3fa02359594db05c01dd6855a8ca860e53d3a7bd123bda99917cee3f4a8b35a",
+      "sha256RBXM": "16e69097415ca585aa2857e2fbfd448010ea6312ec48907b7900587e40b65195",
+      "status": "PASS"
+    },
+    "Desk2": {
+      "zone": "garage",
+      "partsClassic": 259,
+      "partsVariant": 259,
+      "changedAppearanceParts": 252,
+      "protectedArtworkParts": 0,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 1,
+      "dimensionsXYZ": [
+        7.6,
+        4.315,
+        3.5
+      ],
+      "classicVisibleBounds": [
+        [
+          -3.8,
+          0.0,
+          -1.75
+        ],
+        [
+          3.8,
+          4.315,
+          1.75
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -3.8,
+          -0.025,
+          -1.75
+        ],
+        [
+          3.8,
+          4.315,
+          1.75
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 33411,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "994ebe0ce771e210713cb8a8337082fcf711ae3c9924724134c5c2b41e880dea",
+      "sha256RBXM": "75e6fc80be13d3e76b065f5f7902299c39fac1bb7c69175d71adef24ad46c41d",
+      "status": "PASS"
+    },
+    "PC1": {
+      "zone": "garage",
+      "partsClassic": 233,
+      "partsVariant": 233,
+      "changedAppearanceParts": 124,
+      "protectedArtworkParts": 108,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        5.531,
+        2.45,
+        3.226654893264561
+      ],
+      "classicVisibleBounds": [
+        [
+          -3.006,
+          0.0,
+          -1.166654893264561
+        ],
+        [
+          2.525,
+          2.45,
+          2.06
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -3.006,
+          -0.025,
+          -1.166654893264561
+        ],
+        [
+          2.525,
+          2.45,
+          2.06
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 27028,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "35a65a90a494c9f15b711f37b76f00d4f8f8355af953f50beaf5564c01da1523",
+      "sha256RBXM": "17d0be888e1c63f7438fbeea3c7edf2f3d99515e52f82113b163c33b60d3d1e3",
+      "status": "PASS"
+    },
+    "PCPro": {
+      "zone": "garage",
+      "partsClassic": 314,
+      "partsVariant": 314,
+      "changedAppearanceParts": 171,
+      "protectedArtworkParts": 142,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        5.531,
+        2.275,
+        3.226654893264561
+      ],
+      "classicVisibleBounds": [
+        [
+          -3.006,
+          0.0,
+          -1.166654893264561
+        ],
+        [
+          2.525,
+          2.275,
+          2.06
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -3.006,
+          -0.025,
+          -1.166654893264561
+        ],
+        [
+          2.525,
+          2.275,
+          2.06
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 49141,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "f16a27108b521a89c75c4e30929044eb799c9d64c8d377defff8e49f10014dda",
+      "sha256RBXM": "8963d100724d904bc581f3b0e4069ec75bea589bd5cc1f66fbdb58463aee87b2",
+      "status": "PASS"
+    },
+    "Chair": {
+      "zone": "garage",
+      "partsClassic": 156,
+      "partsVariant": 156,
+      "changedAppearanceParts": 149,
+      "protectedArtworkParts": 5,
+      "functionalSeatPartsPreserved": 1,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        2.4456250938,
+        3.9499999999999997,
+        2.325927616
+      ],
+      "classicVisibleBounds": [
+        [
+          -1.2228125469,
+          -0.03,
+          -1.075927616
+        ],
+        [
+          1.2228125469,
+          3.92,
+          1.25
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -1.2228125469,
+          -0.03,
+          -1.075927616
+        ],
+        [
+          1.2228125469,
+          3.92,
+          1.25
+        ]
+      ],
+      "lowestYUnchanged": -0.03,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 12090,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "93d2260aa9967441e1ff742a436a222b61667b2fa1709a36c55bf757205fa2b4",
+      "sha256RBXM": "142833ded0a7b47c75d404f5d94d2df4dca3fdf182b65c003241004ffaac4117",
+      "status": "PASS"
+    },
+    "Coffee": {
+      "zone": "garage",
+      "partsClassic": 145,
+      "partsVariant": 145,
+      "changedAppearanceParts": 141,
+      "protectedArtworkParts": 3,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        6.9,
+        5.55,
+        2.77
+      ],
+      "classicVisibleBounds": [
+        [
+          -3.45,
+          0.0,
+          -1.35
+        ],
+        [
+          3.45,
+          5.55,
+          1.42
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -3.45,
+          -0.025,
+          -1.35
+        ],
+        [
+          3.45,
+          5.55,
+          1.42
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 10440,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "5c17ba58aa51747bec400c85c76b52516cedcd31ff73800f4cc8a611c458cebb",
+      "sha256RBXM": "ba118eed48f756a22bb5aab1180c9376082b2313e719bc1db47e1fa526cbc9e3",
+      "status": "PASS"
+    },
+    "HitShelf": {
+      "zone": "garage",
+      "partsClassic": 8,
+      "partsVariant": 8,
+      "changedAppearanceParts": 7,
+      "protectedArtworkParts": 0,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 1,
+      "dimensionsXYZ": [
+        11.5,
+        5.9,
+        1.7
+      ],
+      "classicVisibleBounds": [
+        [
+          -5.75,
+          0.0,
+          -0.85
+        ],
+        [
+          5.75,
+          5.9,
+          0.85
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -5.75,
+          -0.025,
+          -0.85
+        ],
+        [
+          5.75,
+          5.9,
+          0.85
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 28,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "32bfdc7f475f3d19be2842e595e96ca1d3d3ce6884b6465641cb02eeddb4b634",
+      "sha256RBXM": "2dd8a93ec08782528af5fc9522ae4d664709822c59c6d84adb97ef14fdc786d8",
+      "status": "PASS"
+    },
+    "Posters": {
+      "zone": "garage",
+      "partsClassic": 45,
+      "partsVariant": 45,
+      "changedAppearanceParts": 3,
+      "protectedArtworkParts": 41,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        12.6,
+        4.800000000000001,
+        0.35250000000000004
+      ],
+      "classicVisibleBounds": [
+        [
+          -6.3,
+          0.10000000000000009,
+          -0.1
+        ],
+        [
+          6.3,
+          4.9,
+          0.2525
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -6.3,
+          -0.025,
+          -0.1
+        ],
+        [
+          6.3,
+          4.9,
+          0.2525
+        ]
+      ],
+      "lowestYUnchanged": 0.10000000000000009,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 990,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "7e2cd71a1aa5f990ad1ad00a7d148708440756260bb63178fa8ef300638baf12",
+      "sha256RBXM": "d176d1a381fdfd9d81a96149624a1a24c238926c939c651be391d5579a1d020b",
+      "status": "PASS"
+    },
+    "Plant": {
+      "zone": "decor",
+      "partsClassic": 31,
+      "partsVariant": 31,
+      "changedAppearanceParts": 24,
+      "protectedArtworkParts": 0,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        2.46675,
+        4.2405,
+        2.112
+      ],
+      "classicVisibleBounds": [
+        [
+          -1.19625,
+          0.0,
+          -0.86625
+        ],
+        [
+          1.2705000000000002,
+          4.2405,
+          1.2457500000000001
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -1.19625,
+          -0.025,
+          -0.86625
+        ],
+        [
+          1.2705000000000002,
+          4.2405,
+          1.2457500000000001
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 465,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "cb51df70d5d5f262f5f737768316fc88b310602c214d451935020a25d1ba84ea",
+      "sha256RBXM": "2a5c3a5c22aed75ca857a9b2f07009cd761b3d75fcb844bf27743245c56fe3c1",
+      "status": "PASS"
+    },
+    "Rug": {
+      "zone": "decor",
+      "partsClassic": 70,
+      "partsVariant": 70,
+      "changedAppearanceParts": 69,
+      "protectedArtworkParts": 0,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        21.000000000000004,
+        0.129,
+        23.0
+      ],
+      "classicVisibleBounds": [
+        [
+          -10.500000000000002,
+          0.0,
+          -11.5
+        ],
+        [
+          10.500000000000002,
+          0.129,
+          11.5
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -10.500000000000002,
+          -0.025,
+          -11.5
+        ],
+        [
+          10.500000000000002,
+          0.129,
+          11.5
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 2415,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "42677c99fc0fad4f523f3d70550426fbecde323350078731b31145fccf24ff60",
+      "sha256RBXM": "f2090f02d6e7d635640aca9452d513098df9496d3e7ab78d9919fe7967eed2fd",
+      "status": "PASS"
+    },
+    "Sofa": {
+      "zone": "decor",
+      "partsClassic": 281,
+      "partsVariant": 281,
+      "changedAppearanceParts": 280,
+      "protectedArtworkParts": 0,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        8.83,
+        3.0700000000000003,
+        3.2
+      ],
+      "classicVisibleBounds": [
+        [
+          -4.415,
+          0.0,
+          -1.6
+        ],
+        [
+          4.415,
+          3.0700000000000003,
+          1.6
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -4.415,
+          -0.025,
+          -1.6
+        ],
+        [
+          4.415,
+          3.0700000000000003,
+          1.6
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 39340,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "510ae778d29ef51605b6d99f4e480c0ffccf6c1deae754907c6c741eeaca56b0",
+      "sha256RBXM": "3eb49ae2a4adcb44b82123ca42508f3905aae7e8ba9a8867bbbab15a7e407473",
+      "status": "PASS"
+    },
+    "CoffeeTable": {
+      "zone": "decor",
+      "partsClassic": 61,
+      "partsVariant": 61,
+      "changedAppearanceParts": 52,
+      "protectedArtworkParts": 2,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        5.8,
+        3.1891999999999996,
+        2.5
+      ],
+      "classicVisibleBounds": [
+        [
+          -2.9,
+          0.0,
+          -1.25
+        ],
+        [
+          2.9,
+          3.1891999999999996,
+          1.25
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -2.9,
+          -0.025,
+          -1.25
+        ],
+        [
+          2.9,
+          3.1891999999999996,
+          1.25
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 1830,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "7cc9b3a309ce2dc514d4c1bfca1e7a4fa2787806d91d6a7a4190d9f98d55abe1",
+      "sha256RBXM": "5146a30f48630c57e354d21fb6eee053d50ae4d531ed95013af5b6019e520edb",
+      "status": "PASS"
+    },
+    "PendantLamp": {
+      "zone": "decor",
+      "partsClassic": 10,
+      "partsVariant": 10,
+      "changedAppearanceParts": 9,
+      "protectedArtworkParts": 0,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 1,
+      "dimensionsXYZ": [
+        2.35,
+        3.05,
+        2.35
+      ],
+      "classicVisibleBounds": [
+        [
+          -1.175,
+          -2.98,
+          -1.175
+        ],
+        [
+          1.175,
+          0.07000000000000002,
+          1.175
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -1.175,
+          -2.98,
+          -1.175
+        ],
+        [
+          1.175,
+          0.07000000000000002,
+          1.175
+        ]
+      ],
+      "lowestYUnchanged": -2.98,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [
+        {
+          "name": "WarmLight",
+          "from": "true",
+          "to": "false"
+        }
+      ],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 45,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "40c550d5e45136391068af5e05ebd93b662016f1f21c68a387b6af783f3baccf",
+      "sha256RBXM": "433506b2f9b0e83eb7f1f028eaf38b9d343106459c682f5aa66bdfb2ccf3cbe6",
+      "status": "PASS"
+    },
+    "WallBench": {
+      "zone": "decor",
+      "partsClassic": 26,
+      "partsVariant": 26,
+      "changedAppearanceParts": 25,
+      "protectedArtworkParts": 0,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        5.8,
+        1.725,
+        1.7
+      ],
+      "classicVisibleBounds": [
+        [
+          -2.9,
+          0.0,
+          -0.85
+        ],
+        [
+          2.9,
+          1.725,
+          0.85
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -2.9,
+          -0.025,
+          -0.85
+        ],
+        [
+          2.9,
+          1.725,
+          0.85
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 325,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "e3335ada96794e4f578cdc317587c81fcf0790d97f5030912d6ec3ca8230942b",
+      "sha256RBXM": "6c3bdf6187961ebc875e31289ea69067b6102773ac3962d6efedf03193a28d37",
+      "status": "PASS"
+    },
+    "BeanBags": {
+      "zone": "decor",
+      "partsClassic": 15,
+      "partsVariant": 15,
+      "changedAppearanceParts": 15,
+      "protectedArtworkParts": 0,
+      "functionalSeatPartsPreserved": 3,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        7.8,
+        2.41,
+        2.65
+      ],
+      "classicVisibleBounds": [
+        [
+          -3.9,
+          0.0,
+          -1.325
+        ],
+        [
+          3.9,
+          2.41,
+          1.325
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -3.9,
+          0.0,
+          -1.325
+        ],
+        [
+          3.9,
+          2.41,
+          1.325
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 105,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "9d2bc348349a500e265f32d434e37e0ccdf5e7df52c9fddd27dad9b7786931af",
+      "sha256RBXM": "1976ff9bb1653b28b620ebb004eb6ad6ea3615884ea75b57cad3831aed2bdb77",
+      "status": "PASS"
+    },
+    "Bookshelf": {
+      "zone": "decor",
+      "partsClassic": 57,
+      "partsVariant": 57,
+      "changedAppearanceParts": 36,
+      "protectedArtworkParts": 21,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        5.8,
+        5.0,
+        1.44
+      ],
+      "classicVisibleBounds": [
+        [
+          -2.9,
+          0.0,
+          -0.72
+        ],
+        [
+          2.9,
+          5.0,
+          0.72
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -2.9,
+          0.0,
+          -0.72
+        ],
+        [
+          2.9,
+          5.0,
+          0.72
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 1596,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "af0151963ee7b3adaedbb25d60c9b76cb9f8f1a2ee9f51e715c935e9359f1472",
+      "sha256RBXM": "4f341d8da830448bcd9fdab08e44382fdbc3db07e60b7c29c0f230c3ea9cae45",
+      "status": "PASS"
+    },
+    "MiniFridge": {
+      "zone": "decor",
+      "partsClassic": 42,
+      "partsVariant": 42,
+      "changedAppearanceParts": 22,
+      "protectedArtworkParts": 19,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 1,
+      "dimensionsXYZ": [
+        2.4000000000000004,
+        4.0,
+        2.46
+      ],
+      "classicVisibleBounds": [
+        [
+          -1.2000000000000002,
+          0.0,
+          -1.23
+        ],
+        [
+          1.2000000000000002,
+          4.0,
+          1.23
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -1.2000000000000002,
+          0.0,
+          -1.23
+        ],
+        [
+          1.2000000000000002,
+          4.0,
+          1.23
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 861,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "fafdc3e0b818667c85d6fbcae580483f7fbd1fec1360109aab073bc7bcd8da41",
+      "sha256RBXM": "e0c5b3147562a37aa377153eb7c5a471954699a7661938b484ca3d669cf3097e",
+      "status": "PASS"
+    },
+    "NeonSign": {
+      "zone": "decor",
+      "partsClassic": 18,
+      "partsVariant": 18,
+      "changedAppearanceParts": 1,
+      "protectedArtworkParts": 17,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 1,
+      "dimensionsXYZ": [
+        5.7,
+        2.3,
+        0.26
+      ],
+      "classicVisibleBounds": [
+        [
+          -2.85,
+          -1.15,
+          -0.08
+        ],
+        [
+          2.85,
+          1.15,
+          0.18
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -2.85,
+          -1.15,
+          -0.08
+        ],
+        [
+          2.85,
+          1.15,
+          0.18
+        ]
+      ],
+      "lowestYUnchanged": -1.15,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 153,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "d0a952b3033eba176444b18d7c92942e2c93ead374f1539f9b3d255528a28589",
+      "sha256RBXM": "3e814754056b12c3e3fe501756fa5c5f04d956f1654aee1bb3feb9563616de11",
+      "status": "PASS"
+    },
+    "Aquarium": {
+      "zone": "decor",
+      "partsClassic": 45,
+      "partsVariant": 45,
+      "changedAppearanceParts": 15,
+      "protectedArtworkParts": 13,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 1,
+      "dimensionsXYZ": [
+        5.9,
+        4.96,
+        1.9825
+      ],
+      "classicVisibleBounds": [
+        [
+          -2.95,
+          0.0,
+          -0.99125
+        ],
+        [
+          2.95,
+          4.96,
+          0.99125
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -2.95,
+          0.0,
+          -0.99125
+        ],
+        [
+          2.95,
+          4.96,
+          0.99125
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 990,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "6a3ec46460c186538d9fc2f77fbaa4a931f2939eb1b2749e2ddb0d567f4023c5",
+      "sha256RBXM": "d5d3d455f1aef3efbbb24a170388c0d3e166a40c21cacdb66b493c2458a28370",
+      "status": "PASS"
+    },
+    "ArcadeMachine": {
+      "zone": "decor",
+      "partsClassic": 34,
+      "partsVariant": 34,
+      "changedAppearanceParts": 20,
+      "protectedArtworkParts": 14,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 1,
+      "dimensionsXYZ": [
+        2.8600000000000003,
+        6.0,
+        2.5
+      ],
+      "classicVisibleBounds": [
+        [
+          -1.4300000000000002,
+          0.0,
+          -1.25
+        ],
+        [
+          1.4300000000000002,
+          6.0,
+          1.25
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -1.4300000000000002,
+          0.0,
+          -1.25
+        ],
+        [
+          1.4300000000000002,
+          6.0,
+          1.25
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 561,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "318dfceafa415b9a8a70a1c9bd55c2499a7795c00b09c43a536049ac683a7332",
+      "sha256RBXM": "73cd6a2b93fa5f1f0ca304b622ed2985b697c3d1d66d205157870dc67b7eb808",
+      "status": "PASS"
+    },
+    "OfficeDesk": {
+      "zone": "office",
+      "partsClassic": 187,
+      "partsVariant": 187,
+      "changedAppearanceParts": 132,
+      "protectedArtworkParts": 47,
+      "functionalSeatPartsPreserved": 23,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        6.000000000000001,
+        4.8,
+        3.83
+      ],
+      "classicVisibleBounds": [
+        [
+          -3.0000000000000004,
+          0.0,
+          -1.9000000000000001
+        ],
+        [
+          3.0000000000000004,
+          4.8,
+          1.9300000000000002
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -3.0000000000000004,
+          -0.025,
+          -1.9000000000000001
+        ],
+        [
+          3.0000000000000004,
+          4.8,
+          1.9300000000000002
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 17391,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "25399984531a98dd4168db072e9ec51c26b418a1c22a62e0ff8b2572fd05ac99",
+      "sha256RBXM": "f5f80f6a3c9df6e58099188c35bf690869332a3016dab00141ec484509f2effa",
+      "status": "PASS"
+    },
+    "Cooler": {
+      "zone": "office",
+      "partsClassic": 49,
+      "partsVariant": 49,
+      "changedAppearanceParts": 45,
+      "protectedArtworkParts": 2,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        1.92,
+        3.65,
+        1.86
+      ],
+      "classicVisibleBounds": [
+        [
+          -0.87,
+          0.0,
+          -0.845
+        ],
+        [
+          1.05,
+          3.65,
+          1.0150000000000001
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -0.87,
+          -0.025,
+          -0.845
+        ],
+        [
+          1.05,
+          3.65,
+          1.0150000000000001
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 1176,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "59efa152eaeb33d72fdf12f32fd0e64614a872e65d319108a44988334f19286b",
+      "sha256RBXM": "1ea0349287b1318e2caf689f9e872d5cd1e6dfa4aa210a663a0c7f2bade677c9",
+      "status": "PASS"
+    },
+    "MeetingRoom": {
+      "zone": "office",
+      "partsClassic": 82,
+      "partsVariant": 82,
+      "changedAppearanceParts": 65,
+      "protectedArtworkParts": 6,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        14.0,
+        7.0,
+        9.96
+      ],
+      "classicVisibleBounds": [
+        [
+          -7.0,
+          0.0,
+          -4.98
+        ],
+        [
+          7.0,
+          7.0,
+          4.98
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -7.0,
+          -0.025,
+          -4.98
+        ],
+        [
+          7.0,
+          7.0,
+          4.98
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 3321,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "2083cbe54fda988681489cc0a3a7e768c869bdaedf0de8a71836300975703fd9",
+      "sha256RBXM": "bd3e136c53eaf78e78038b6ca55ebd3ac5eb40e18cc787252d3966277a7bb493",
+      "status": "PASS"
+    },
+    "FloorDesk": {
+      "zone": "office",
+      "partsClassic": 192,
+      "partsVariant": 192,
+      "changedAppearanceParts": 137,
+      "protectedArtworkParts": 47,
+      "functionalSeatPartsPreserved": 23,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        5.0000001,
+        4.8,
+        3.83
+      ],
+      "classicVisibleBounds": [
+        [
+          -2.50000005,
+          0.0,
+          -1.9000000000000001
+        ],
+        [
+          2.50000005,
+          4.8,
+          1.9300000000000002
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -2.50000005,
+          -0.025,
+          -1.9000000000000001
+        ],
+        [
+          2.50000005,
+          4.8,
+          1.9300000000000002
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 18336,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "e1a6195a5bb824e695e702d1cd64c646126751a89d92c4635f7df4daac115288",
+      "sha256RBXM": "962146ddd0fddbd214c3d77008848ef9f30c8e8594a6f8622422ad4e3584f0bf",
+      "status": "PASS"
+    },
+    "ServerRoom": {
+      "zone": "office",
+      "partsClassic": 172,
+      "partsVariant": 172,
+      "changedAppearanceParts": 130,
+      "protectedArtworkParts": 36,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        10.0,
+        7.8,
+        4.0
+      ],
+      "classicVisibleBounds": [
+        [
+          -5.0,
+          0.0,
+          -2.0
+        ],
+        [
+          5.0,
+          7.8,
+          2.0
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -5.0,
+          -0.025,
+          -2.0
+        ],
+        [
+          5.0,
+          7.8,
+          2.0
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 14706,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "93365a8b09eabf1ffae286fb580b26fc84fb342ce252248ed1b166000921c8c8",
+      "sha256RBXM": "6390110c4f1f00afbb72bc313b770524a2751e35d9cf268946d142a417761dd4",
+      "status": "PASS"
+    },
+    "Lounge": {
+      "zone": "office",
+      "partsClassic": 158,
+      "partsVariant": 158,
+      "changedAppearanceParts": 145,
+      "protectedArtworkParts": 12,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        8.0,
+        4.37,
+        8.875
+      ],
+      "classicVisibleBounds": [
+        [
+          -4.0,
+          0.0,
+          -4.7
+        ],
+        [
+          4.0,
+          4.37,
+          4.175
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -4.0,
+          -0.025,
+          -4.7
+        ],
+        [
+          4.0,
+          4.37,
+          4.175
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 12403,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "07b58ccdb415160ce5f28165e6dabdadde19c5f61ebbca240474e941a40cec1c",
+      "sha256RBXM": "0d991c87fce8899c361c66def0125b4a751c715ef0274da16ccaf1fc5297c080",
+      "status": "PASS"
+    },
+    "SkyDesk": {
+      "zone": "office",
+      "partsClassic": 70,
+      "partsVariant": 70,
+      "changedAppearanceParts": 32,
+      "protectedArtworkParts": 37,
+      "functionalSeatPartsPreserved": 1,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        4.0,
+        4.7749999999999995,
+        3.575
+      ],
+      "classicVisibleBounds": [
+        [
+          -2.0,
+          0.0,
+          -1.7875
+        ],
+        [
+          2.0,
+          4.7749999999999995,
+          1.7874999999999999
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -2.0,
+          0.0,
+          -1.7875
+        ],
+        [
+          2.0,
+          4.7749999999999995,
+          1.7874999999999999
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 2415,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "6f46f9fa2e500c1c3a4f1d8a027298840a8912538d61a72d4d7974d9d6f85031",
+      "sha256RBXM": "58f3e59253b665bb7e2bc186ad270a90c1a6a7bc9857620c1e367b2bd215ff53",
+      "status": "PASS"
+    },
+    "SoundStudio": {
+      "zone": "office",
+      "partsClassic": 91,
+      "partsVariant": 91,
+      "changedAppearanceParts": 68,
+      "protectedArtworkParts": 18,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 1,
+      "dimensionsXYZ": [
+        10.8,
+        7.2,
+        8.6
+      ],
+      "classicVisibleBounds": [
+        [
+          -5.4,
+          -2.7755575615628914e-17,
+          -4.3
+        ],
+        [
+          5.4,
+          7.2,
+          4.3
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -5.4,
+          -2.7755575615628914e-17,
+          -4.3
+        ],
+        [
+          5.4,
+          7.2,
+          4.3
+        ]
+      ],
+      "lowestYUnchanged": -2.7755575615628914e-17,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 4095,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "a2038f70499838a5e537cd21b37f1e592be1ea03371b157e9273babfbcb741e8",
+      "sha256RBXM": "ed2bbd9356ef09772a88d34859767d2c64b0c2d8f7e53d36e408af6340508881",
+      "status": "PASS"
+    },
+    "ArtWall": {
+      "zone": "office",
+      "partsClassic": 28,
+      "partsVariant": 28,
+      "changedAppearanceParts": 10,
+      "protectedArtworkParts": 18,
+      "functionalSeatPartsPreserved": 0,
+      "lightsPreserved": 0,
+      "dimensionsXYZ": [
+        13.5,
+        7.8,
+        0.9
+      ],
+      "classicVisibleBounds": [
+        [
+          -6.75,
+          0.0,
+          -0.45
+        ],
+        [
+          6.75,
+          7.8,
+          0.45
+        ]
+      ],
+      "classicAllNativeBounds": [
+        [
+          -6.75,
+          0.0,
+          -0.45
+        ],
+        [
+          6.75,
+          7.8,
+          0.45
+        ]
+      ],
+      "lowestYUnchanged": 0.0,
+      "boundsIdentical": true,
+      "geometryPropertiesIdentical": true,
+      "allOtherPropertiesIdenticalExceptRequiredLightShadowFlag": true,
+      "requiredShadowChanges": [],
+      "hierarchyAndReferencesIdentical": true,
+      "pairsCoveredByGeometryIdentity": 378,
+      "newIntersections": 0,
+      "baselineIntersectionGraph": "unchanged; existing classic primitive joints are not asserted overlap-free",
+      "sha256XML": "2bd6590e825e800be0f5c493e2665b31a0000a39f8181f9b2d2c588680e92794",
+      "sha256RBXM": "40add9e435f3875cb0468200b0d886764923f3c9a1d70514ff625db1596ed812",
+      "status": "PASS"
+    }
+  },
+  "status": "PASS",
+  "runtimeTested": false,
+  "mountingOriginNote": "Classic model origins remain exact: hanging/wall templates are not ground-normalized; any existing negative/positive minY is retained."
+}
