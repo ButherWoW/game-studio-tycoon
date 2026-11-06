@@ -17,6 +17,7 @@ local QuickEvents = require(ReplicatedStorage.Shared.Config.QuickEvents)
 local QuickRemotes = require(ReplicatedStorage.Shared.QuickRemotes)
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local ClientState = require(script.Parent.Parent.ClientState)
+local DevState = require(script.Parent.Parent.DevState)
 local Ui = require(script.Parent.Parent.Ui)
 
 local PANEL_SIZE = Vector2.new(500, 270)
@@ -521,6 +522,18 @@ function QuickEventPopup.start()
 	gui = screen
 	QuickRemotes.QuickEvent.OnClientEvent:Connect(show)
 	QuickRemotes.QuickEventResult.OnClientEvent:Connect(showResult)
+	-- Пауза (встал из-за ПК) или проектов не осталось: быстрое событие разработки не должно висеть.
+	-- Сервер тоже его закроет; это — страховка на случай потерянного ответа
+	Remotes.DevelopmentProgress.OnClientEvent:Connect(function(data: any)
+		if current and type(data) == "table" and data.paused == true then
+			clear()
+		end
+	end)
+	DevState.changed:Connect(function()
+		if current and #DevState.projects == 0 then
+			clear()
+		end
+	end)
 	Remotes.GameReleased.OnClientEvent:Connect(function(info: any)
 		-- Событие второй игры в разработке не прячем
 		if type(info) == "table" and (tonumber(info.activeProjects) or 0) > 0 then
