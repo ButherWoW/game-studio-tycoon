@@ -519,7 +519,7 @@ function OfferClient.releaseOffer(info: any): ((parent: Instance, order: number)
 				frame,
 				ClientState.t(
 					"offer_x2_buy",
-					{ price = RobuxPrice.of(doubleCash.productId, doubleCash.robuxPrice) }
+					{ price = RobuxPrice.of(doubleCash.gamePassId, doubleCash.robuxPrice, true) }
 				),
 				Ui.colors.good,
 				function()

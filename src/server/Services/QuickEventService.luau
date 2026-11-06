@@ -415,13 +415,14 @@ function QuickEventService.plan(
 	if skip then
 		return
 	end
-	if not force and not takeFromBag(player) then
-		return
-	end
 	local gap = QuickEvents.minGap
 	local from = duration * QuickEvents.windowFrom
 	local to = math.min(duration * QuickEvents.windowTo, duration - QuickEvents.roomSeconds)
+	-- Игра слишком короткая для событий: слот мешка не тратим (доля «5 из 10» не проседает)
 	if to < from then
+		return
+	end
+	if not force and not takeFromBag(player) then
 		return
 	end
 	local count = math.min(QuickEvents.countFor(duration), math.floor((to - from) / gap) + 1)

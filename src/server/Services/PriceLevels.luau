@@ -24,8 +24,11 @@ local function levelsOf(a: Player, b: Player): (number?, number?)
 	end
 	local lookup: { [number]: number } = {}
 	for _, info in result :: { any } do
-		if type(info) == "table" and type(info.UserId) == "number" and type(info.PriceLevel) == "number" then
-			lookup[info.UserId] = info.PriceLevel
+		-- Поля по документации: UserId, PriceLevel; на случай другого регистра принимаем и его
+		local userId = if type(info) == "table" then (info.UserId or info.userId) else nil
+		local level = if type(info) == "table" then (info.PriceLevel or info.priceLevel) else nil
+		if type(userId) == "number" and type(level) == "number" then
+			lookup[userId] = level
 		end
 	end
 	return lookup[a.UserId], lookup[b.UserId]

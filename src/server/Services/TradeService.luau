@@ -270,7 +270,9 @@ local function onRequest(player: Player, userId: any)
 		notice(player, { kind = "tradeUnavailable" })
 		return
 	end
-	if not player.Parent or not target.Parent then
+	-- Пока ждали Roblox, кто-то мог начать другой обмен или выйти: проверяем заново
+	if not player.Parent or not target.Parent or blocker(player) or blocker(target) then
+		notice(player, { kind = "tradeBusy" })
 		return
 	end
 	local refusedAt = declined[player] and declined[player][target.UserId]
