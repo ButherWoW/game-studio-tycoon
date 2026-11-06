@@ -1,0 +1,42 @@
+[
+  {
+    "file": "skin_hoodie_coder_acc.rbxmx",
+    "parts": 26,
+    "welds": 25,
+    "pairChecks": 300,
+    "overlap": 0,
+    "binaryRoundtrip": "PASS",
+    "structural": "PASS",
+    "sha256": "ed4d848a350c1577303fb46d73e9fdc741d0c960eb40421d98985961e0652abd"
+  },
+  {
+    "file": "skin_intern_acc.rbxmx",
+    "parts": 20,
+    "welds": 19,
+    "pairChecks": 171,
+    "overlap": 0,
+    "binaryRoundtrip": "PASS",
+    "structural": "PASS",
+    "sha256": "c2bade01e133847388488a8132b640941e59930516e7a3d7b7cc7a835690b834"
+  },
+  {
+    "file": "skin_sound_nerd_acc.rbxmx",
+    "parts": 36,
+    "welds": 35,
+    "pairChecks": 595,
+    "overlap": 0,
+    "binaryRoundtrip": "PASS",
+    "structural": "PASS",
+    "sha256": "783e3548ba82bea54725dd204d423bc19d438b834a16c4259582fa502e13dbac"
+  },
+  {
+    "file": "skin_writer_acc.rbxmx",
+    "parts": 18,
+    "welds": 17,
+    "pairChecks": 136,
+    "overlap": 0,
+    "binaryRoundtrip": "PASS",
+    "structural": "PASS",
+    "sha256": "f13e8ea786f146c17b9fde80cbd474784170802a619de2cdaeee5c47181263ac"
+  }
+]
