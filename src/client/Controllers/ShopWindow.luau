@@ -186,7 +186,9 @@ local function buildPasses(body: Instance)
 		-- VIP-офис — корона V14 (Images.vip)
 		local frame =
 			row(body, i, pass.icon, name, description, if pass.id == "vipOffice" then Images.vip else nil)
-		robuxButton(frame, pass.gamePassId, pass.robuxPrice, state.passes[pass.id] == true, function()
+		-- Закрытый геймпасс (GamePasses.disabled) — «Скоро», как при gamePassId = 0
+		local shownId = if pass.disabled then 0 else pass.gamePassId
+		robuxButton(frame, shownId, pass.robuxPrice, state.passes[pass.id] == true, function()
 			MarketplaceService:PromptGamePassPurchase(Players.LocalPlayer, pass.gamePassId)
 		end, true)
 	end

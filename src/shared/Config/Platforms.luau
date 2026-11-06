@@ -13,6 +13,7 @@ export type Platform = {
 	-- Условие открытия (UnlockRules, как у жанров) или запущенная своя консоль
 	requires: Genres.Requires?,
 	needsConsole: boolean?,
+	closed: boolean?, -- закрыта совсем (07.11, владелец): в окне не показывается, выбрать нельзя
 	default: number, -- множитель дохода для жанров, которых нет в revenue
 	revenue: { [string]: number },
 	scoreBonus: number,
@@ -20,7 +21,8 @@ export type Platform = {
 
 local Platforms = {}
 
-Platforms.order = { "pc", "phone", "console" } :: { string }
+-- «Телефоны» закрыты совсем (владелец 06.11): нет в строке платформ, не открываются по числу игр
+Platforms.order = { "pc", "console" } :: { string }
 
 Platforms.list = {
 	pc = {
@@ -34,6 +36,7 @@ Platforms.list = {
 	phone = {
 		id = "phone",
 		icon = "📱",
+		closed = true,
 		requires = { gamesReleased = 3 },
 		default = 1,
 		revenue = { casual = 1.2, puzzle = 1.2, sports = 1.1, strategy = 0.8, rpg = 0.85, simulation = 0.9 },

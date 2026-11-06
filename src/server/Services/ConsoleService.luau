@@ -195,6 +195,9 @@ end
 
 -- Открыта ли платформа игроку
 local function platformOpen(profile: DataService.Profile, platform: Platforms.Platform): boolean
+	if platform.closed then
+		return false
+	end
 	if platform.needsConsole then
 		return released() and Features.isReleased("platforms") and launched(data(profile))
 	end
