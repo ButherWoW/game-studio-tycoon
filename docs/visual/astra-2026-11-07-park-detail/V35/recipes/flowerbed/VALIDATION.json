@@ -1,0 +1,49 @@
+{
+  "model": "Flowerbed",
+  "parts": 119,
+  "budget": 120,
+  "dimensionsXYZ": [
+    3.8,
+    1.42,
+    3.8
+  ],
+  "bounds": {
+    "min": [
+      -1.9000000000000001,
+      0.0,
+      -1.9
+    ],
+    "max": [
+      1.9,
+      1.42,
+      1.9
+    ]
+  },
+  "baseY": 0.0,
+  "pivotXYZ": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "front": "+Z",
+  "allAnchored": true,
+  "nativeClasses": [
+    "Model",
+    "Part"
+  ],
+  "scriptsLightsMeshesTexturesText": 0,
+  "obbSat": {
+    "axes": 15,
+    "pairChecks": 7021,
+    "toleranceStuds": 1e-06,
+    "positiveVolumeOverlaps": [],
+    "count": 0,
+    "conservative": "Primitive OBBs used even for ellipsoids. Zero OBB intersections proves zero actual Part volume intersections."
+  },
+  "runtimeTested": false,
+  "sha256": {
+    "Flowerbed.rbxm": "0f972ec40c128d7d5a1e17add0b68202c6ba621f9c0205ecba0212916b6e34f6",
+    "Flowerbed.rbxmx": "2fa90ad5df8e21f969a5d908221341f11cb015f8521425b61c74d7acc6bea37e"
+  },
+  "status": "PASS"
+}
