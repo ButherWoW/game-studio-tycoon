@@ -9,6 +9,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local TutorialRemotes = require(ReplicatedStorage.Shared.TutorialRemotes)
 local Tutorial = require(ReplicatedStorage.Shared.Config.Tutorial)
+local Economy = require(ReplicatedStorage.Shared.Config.Economy)
 local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local Images = require(ReplicatedStorage.Shared.Config.Images)
@@ -179,7 +180,10 @@ local function currentStep(playerGui: Instance): number
 			return STEP_RELEASE
 		end
 		local data = ClientState.data
-		if data and (tonumber(data.gamesReleased) or 0) > 0 then
+		-- К гаражу ведём, только когда на него хватает денег И первые игры выпущены на ноутбуке
+		-- (отчёт v71, №4: гид тащил к дому, который не по карману). Пока игр мало — снова ноутбук
+		local gamesDone = if data then tonumber(data.gamesReleased) or 0 else 0
+		if data and gamesDone >= Economy.firstGames then
 			return if (tonumber(data.cash) or 0) >= StartPark.garagePrice then STEP_BUY_GARAGE else STEP_SAVE
 		end
 		-- Игра уже в разработке: «Сделай первую игру» не висит (отчёт #3, P2-6);
