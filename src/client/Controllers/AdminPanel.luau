@@ -310,8 +310,12 @@ local function buildTime(parent: Instance)
 		if type(data) ~= "table" or not info.Parent then
 			return
 		end
-		local day = if type(data.contentDay) == "number" then "день " .. data.contentDay else "по календарю"
-		local where = if data.contentAllowed then "здесь можно" else "здесь нельзя (обычный сервер)"
+		local day = if type(data.contentDay) == "number"
+			then "день " .. data.contentDay
+			else "по календарю"
+		local where = if data.contentAllowed
+			then "здесь можно"
+			else "здесь нельзя (обычный сервер)"
 		info.Text = "Сейчас: "
 			.. day
 			.. " (календарь — день "
@@ -412,7 +416,8 @@ local function buildModeration(parent: Instance)
 	local profileBox = note(parent, 7, "", 0)
 	profileBox.AutomaticSize = Enum.AutomaticSize.Y
 	profileBox.TextColor3 = Ui.colors.text
-	local reason = input(row(parent, 4), "Причина (необязательно, видит игрок)", 560)
+	local reason =
+		input(row(parent, 4), "Причина (необязательно, видит игрок)", 560)
 	local function withTarget(action: string, extra: { [string]: any }?, onData: ((any) -> ())?)
 		if not selectedTarget then
 			setStatus("Сначала выбери игрока", Ui.colors.bad)
@@ -451,9 +456,15 @@ local function buildModeration(parent: Instance)
 	local bans = row(parent, 5)
 	caption(bans, "Бан", 70)
 	for _, days in Admin.banDays do
-		button(bans, if days == 0 then "Навсегда" else days .. " дн.", Ui.colors.bad, 120, function()
-			withTarget("ban", { days = days, reason = reason.Text })
-		end)
+		button(
+			bans,
+			if days == 0 then "Навсегда" else days .. " дн.",
+			Ui.colors.bad,
+			120,
+			function()
+				withTarget("ban", { days = days, reason = reason.Text })
+			end
+		)
 	end
 	local unban = row(parent, 6)
 	caption(unban, "Разбан", 70)
@@ -471,7 +482,13 @@ end
 
 local function buildServer(parent: Instance)
 	local limit = Admin.announceMaxLength
-	note(parent, 1, "Объявление увидят все игроки сервера (фильтр Roblox, до " .. limit .. " символов).")
+	note(
+		parent,
+		1,
+		"Объявление увидят все игроки сервера (фильтр Roblox, до "
+			.. limit
+			.. " символов)."
+	)
 	local r = row(parent, 2)
 	local box = input(r, "Текст объявления", 520)
 	box.TextWrapped = true
@@ -501,11 +518,17 @@ local function buildServer(parent: Instance)
 		local eventEnds = data.eventEndsAt
 		if type(data.eventId) == "string" and type(eventEnds) == "number" and eventEnds > now then
 			local left = (eventEnds - now) // 60
-			table.insert(lines, "Событие из панели: " .. data.eventId .. ", ещё " .. left .. " мин")
+			table.insert(
+				lines,
+				"Событие из панели: " .. data.eventId .. ", ещё " .. left .. " мин"
+			)
 		end
 		local goldenEnds = data.goldenEndsAt
 		if type(goldenEnds) == "number" and goldenEnds > now then
-			table.insert(lines, "Золотой час из панели: ещё " .. (goldenEnds - now) // 60 .. " мин")
+			table.insert(
+				lines,
+				"Золотой час из панели: ещё " .. (goldenEnds - now) // 60 .. " мин"
+			)
 		end
 		info.Text = table.concat(lines, "\n")
 	end)
@@ -543,7 +566,8 @@ local function open()
 	Ui.windowOpened(close)
 
 	local window = Ui.window(screen, "Window", Vector2.new(780, 540))
-	local title = Ui.label(window, "🛠 Админ-панель владельца", 32, Enum.Font.GothamBold)
+	local title =
+		Ui.label(window, "🛠 Админ-панель владельца", 32, Enum.Font.GothamBold)
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -80, 0, 32)
 	local closeButton = Ui.button(window, "×", Ui.colors.locked, close)
@@ -584,7 +608,13 @@ local function open()
 	scroll.Parent = window
 	body = scroll
 
-	local result = Ui.label(window, "Все действия пишутся в лог", 22, Enum.Font.GothamMedium, Ui.colors.muted)
+	local result = Ui.label(
+		window,
+		"Все действия пишутся в лог",
+		22,
+		Enum.Font.GothamMedium,
+		Ui.colors.muted
+	)
 	result.Position = UDim2.new(0, 16, 1, -76)
 	result.Size = UDim2.new(1, -212, 0, 64)
 	result.TextWrapped = true
