@@ -1,0 +1,1163 @@
+{
+  "theme": "ObsidianGold",
+  "expected": 29,
+  "ready": 29,
+  "totalParts": 3142,
+  "newParts": 0,
+  "lightCorrection": "Classic PendantLamp PointLight Shadows=true corrected to false; no light added or moved",
+  "classicOriginExceptions": {
+    "Chair_ObsidianGold": -0.03,
+    "Posters_ObsidianGold": 0.10000000000000009,
+    "PendantLamp_ObsidianGold": -2.98,
+    "NeonSign_ObsidianGold": -1.15
+  },
+  "sourceCommit": "fe8c7a7300ae885931254c375bb6a652a4151a37",
+  "checks": [
+    "exact29V15coverage",
+    "all nonappearance XML identical",
+    "seat classes/names/behavior/pivot/frames unchanged",
+    "all AABB exact",
+    "same lights Shadowsfalse",
+    "no scripts/mesh/texture/Decal",
+    "validRojoRBXM"
+  ],
+  "intersectionsNote": "Classic internal geometry is not redesigned: all overlap relationships are mathematically identical because geometry/transparency/tree topology are unchanged. No zero-overlap claim is made for pre-existing classic joints.",
+  "models": {
+    "Desk1_ObsidianGold": {
+      "zone": "garage",
+      "classicParts": 263,
+      "variantParts": 263,
+      "newParts": 0,
+      "bounds": [
+        [
+          -3.8,
+          0.0,
+          -1.75
+        ],
+        [
+          3.8,
+          4.315,
+          3.5999999999999996
+        ]
+      ],
+      "dimensionsXYZ": [
+        7.6,
+        4.315,
+        5.35
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [
+        "PcSeat"
+      ],
+      "preservedSemanticNames": [],
+      "lights": 1,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "b8dc1e83d82a583d723ba71306735ed3336ccfc0fc6d5e329d1064e8296d6ba9",
+      "status": "PASS"
+    },
+    "Desk2_ObsidianGold": {
+      "zone": "garage",
+      "classicParts": 259,
+      "variantParts": 259,
+      "newParts": 0,
+      "bounds": [
+        [
+          -3.8,
+          0.0,
+          -1.75
+        ],
+        [
+          3.8,
+          4.315,
+          1.75
+        ]
+      ],
+      "dimensionsXYZ": [
+        7.6,
+        4.315,
+        3.5
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [],
+      "lights": 1,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "1bca2e6b7510a945ddfd5120108dd6d87d039b5256d83eb68d312c2ff55ee629",
+      "status": "PASS"
+    },
+    "PC1_ObsidianGold": {
+      "zone": "garage",
+      "classicParts": 233,
+      "variantParts": 233,
+      "newParts": 0,
+      "bounds": [
+        [
+          -3.006,
+          0.0,
+          -1.166654893264561
+        ],
+        [
+          2.525,
+          2.45,
+          2.06
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.531,
+        2.45,
+        3.226654893264561
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "BlueScreen",
+        "FanHub",
+        "Keyboard_core0",
+        "Keyboard_core1",
+        "Keyboard_core2",
+        "Keyboard_corner",
+        "Keyboard_edge",
+        "Keycap",
+        "PowerLED",
+        "ScreenAvatar",
+        "ScreenCloud",
+        "ScreenInset_core0",
+        "ScreenInset_core1",
+        "ScreenInset_core2",
+        "ScreenInset_corner",
+        "ScreenInset_edge",
+        "ScreenTerrain",
+        "ScreenTerrainSoil",
+        "SpaceBar"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "445db676c015a85ee331247e50471667461445db9e4eb5f186e1d7ed87e18eff",
+      "status": "PASS"
+    },
+    "PCPro_ObsidianGold": {
+      "zone": "garage",
+      "classicParts": 314,
+      "variantParts": 314,
+      "newParts": 0,
+      "bounds": [
+        [
+          -3.006,
+          0.0,
+          -1.166654893264561
+        ],
+        [
+          2.525,
+          2.275,
+          2.06
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.531,
+        2.275,
+        3.226654893264561
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "BlueScreen",
+        "FanHub",
+        "Keyboard_core0",
+        "Keyboard_core1",
+        "Keyboard_core2",
+        "Keyboard_corner",
+        "Keyboard_edge",
+        "Keycap",
+        "PowerLED",
+        "ScreenAvatar",
+        "ScreenCloud",
+        "ScreenInset_core0",
+        "ScreenInset_core1",
+        "ScreenInset_core2",
+        "ScreenInset_corner",
+        "ScreenInset_edge",
+        "ScreenTerrain",
+        "ScreenTerrainSoil",
+        "SpaceBar"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "c66a3e05203a37a1beb31436e1ea78f5cfe291ade3126a0440322baca950e72f",
+      "status": "PASS"
+    },
+    "Chair_ObsidianGold": {
+      "zone": "garage",
+      "classicParts": 156,
+      "variantParts": 156,
+      "newParts": 0,
+      "bounds": [
+        [
+          -1.2228125469,
+          -0.03,
+          -1.075927616
+        ],
+        [
+          1.2228125469,
+          3.92,
+          1.25
+        ]
+      ],
+      "dimensionsXYZ": [
+        2.4456250938,
+        3.9499999999999997,
+        2.325927616
+      ],
+      "lowerY": -0.03,
+      "dimensionDelta": 0,
+      "functionalParts": [
+        "PcSeat"
+      ],
+      "preservedSemanticNames": [
+        "FiveStarBase"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "8060619d4bd67ab7879d52107ce0c38a615558560e1f39904e2c87581b989756",
+      "status": "PASS"
+    },
+    "Coffee_ObsidianGold": {
+      "zone": "garage",
+      "classicParts": 145,
+      "variantParts": 145,
+      "newParts": 0,
+      "bounds": [
+        [
+          -3.45,
+          0.0,
+          -1.35
+        ],
+        [
+          3.45,
+          5.55,
+          1.42
+        ]
+      ],
+      "dimensionsXYZ": [
+        6.9,
+        5.55,
+        2.77
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "BrewButton",
+        "Display"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "6d36eb0e155c4e024130b83131912a7e925508126883a3da859a82958480db4e",
+      "status": "PASS"
+    },
+    "HitShelf_ObsidianGold": {
+      "zone": "garage",
+      "classicParts": 8,
+      "variantParts": 8,
+      "newParts": 0,
+      "bounds": [
+        [
+          -5.75,
+          0.0,
+          -0.85
+        ],
+        [
+          5.75,
+          5.9,
+          0.85
+        ]
+      ],
+      "dimensionsXYZ": [
+        11.5,
+        5.9,
+        1.7
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [],
+      "lights": 1,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "a94e616d567ec36ed6afa8dc6cb58963ef001560b13f42b526fde15b6fcccbfc",
+      "status": "PASS"
+    },
+    "Posters_ObsidianGold": {
+      "zone": "garage",
+      "classicParts": 45,
+      "variantParts": 45,
+      "newParts": 0,
+      "bounds": [
+        [
+          -6.3,
+          0.10000000000000009,
+          -0.1
+        ],
+        [
+          6.3,
+          4.9,
+          0.2525
+        ]
+      ],
+      "dimensionsXYZ": [
+        12.6,
+        4.800000000000001,
+        0.35250000000000004
+      ],
+      "lowerY": 0.10000000000000009,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "AbstractMountain",
+        "ArtButton",
+        "ArtSun",
+        "Artwork",
+        "ControllerArt_core0",
+        "ControllerArt_core1",
+        "ControllerArt_core2",
+        "ControllerArt_corner",
+        "ControllerArt_edge",
+        "DPad",
+        "Flag",
+        "FlagPole",
+        "Mat",
+        "PlatformArt"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "0e8ca5f21efb0458a31013a76f9831db9556965e14bef88ad04ea745bec878f3",
+      "status": "PASS"
+    },
+    "Plant_ObsidianGold": {
+      "zone": "decor",
+      "classicParts": 31,
+      "variantParts": 31,
+      "newParts": 0,
+      "bounds": [
+        [
+          -1.19625,
+          0.0,
+          -0.86625
+        ],
+        [
+          1.2705000000000002,
+          4.2405,
+          1.2457500000000001
+        ]
+      ],
+      "dimensionsXYZ": [
+        2.46675,
+        4.2405,
+        2.112
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "693bd73dc273eba46da4f75c9b373bdced97da8ccf736f8bdbce33fa1488f6c4",
+      "status": "PASS"
+    },
+    "Rug_ObsidianGold": {
+      "zone": "decor",
+      "classicParts": 70,
+      "variantParts": 70,
+      "newParts": 0,
+      "bounds": [
+        [
+          -10.500000000000002,
+          0.0,
+          -11.5
+        ],
+        [
+          10.500000000000002,
+          0.129,
+          11.5
+        ]
+      ],
+      "dimensionsXYZ": [
+        21.000000000000004,
+        0.129,
+        23.0
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "2a4bb200b644f41e59b525243efd3a86323f0d74d95dd72febd815b13ec596be",
+      "status": "PASS"
+    },
+    "Sofa_ObsidianGold": {
+      "zone": "decor",
+      "classicParts": 281,
+      "variantParts": 281,
+      "newParts": 0,
+      "bounds": [
+        [
+          -4.415,
+          0.0,
+          -1.6
+        ],
+        [
+          4.415,
+          3.0700000000000003,
+          1.6
+        ]
+      ],
+      "dimensionsXYZ": [
+        8.83,
+        3.0700000000000003,
+        3.2
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "c4a992fd370092f35859c1bb190fe6b6b91014811897954009fea96dcce4b7b0",
+      "status": "PASS"
+    },
+    "CoffeeTable_ObsidianGold": {
+      "zone": "decor",
+      "classicParts": 61,
+      "variantParts": 61,
+      "newParts": 0,
+      "bounds": [
+        [
+          -2.9,
+          0.0,
+          -1.25
+        ],
+        [
+          2.9,
+          3.1891999999999996,
+          1.25
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.8,
+        3.1891999999999996,
+        2.5
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "Book"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "289cc2158f7aa6183a1fcf4a2fa6ceb9ba9276dd21ae01f85e720b1473dcc102",
+      "status": "PASS"
+    },
+    "PendantLamp_ObsidianGold": {
+      "zone": "decor",
+      "classicParts": 10,
+      "variantParts": 10,
+      "newParts": 0,
+      "bounds": [
+        [
+          -1.175,
+          -2.98,
+          -1.175
+        ],
+        [
+          1.175,
+          0.07000000000000002,
+          1.175
+        ]
+      ],
+      "dimensionsXYZ": [
+        2.35,
+        3.05,
+        2.35
+      ],
+      "lowerY": -2.98,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [],
+      "lights": 1,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "bf1a609f95ab4487906f0919fc7ac06aa6f53aa63b7b548f054530eddcbc72da",
+      "status": "PASS"
+    },
+    "WallBench_ObsidianGold": {
+      "zone": "decor",
+      "classicParts": 26,
+      "variantParts": 26,
+      "newParts": 0,
+      "bounds": [
+        [
+          -2.9,
+          0.0,
+          -0.85
+        ],
+        [
+          2.9,
+          1.725,
+          0.85
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.8,
+        1.725,
+        1.7
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "030a4da346101efac848af287cf3f19066522702fc60578352562ac8a4b9dd51",
+      "status": "PASS"
+    },
+    "BeanBags_ObsidianGold": {
+      "zone": "decor",
+      "classicParts": 15,
+      "variantParts": 15,
+      "newParts": 0,
+      "bounds": [
+        [
+          -3.9,
+          0.0,
+          -1.325
+        ],
+        [
+          3.9,
+          2.41,
+          1.325
+        ]
+      ],
+      "dimensionsXYZ": [
+        7.8,
+        2.41,
+        2.65
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [
+        "SeatCushion",
+        "SeatCushion",
+        "SeatCushion"
+      ],
+      "preservedSemanticNames": [],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "67493c43a7ea55801df2e31601f961ef9b69f87aef34a0926ed1e6a6950b3845",
+      "status": "PASS"
+    },
+    "Bookshelf_ObsidianGold": {
+      "zone": "decor",
+      "classicParts": 57,
+      "variantParts": 57,
+      "newParts": 0,
+      "bounds": [
+        [
+          -2.9,
+          0.0,
+          -0.72
+        ],
+        [
+          2.9,
+          5.0,
+          0.72
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.8,
+        5.0,
+        1.44
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "Book"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "a9ea699ad5b55f9fb496f4ced7885001eb7d1b70f5baca63b869d1b311eed681",
+      "status": "PASS"
+    },
+    "MiniFridge_ObsidianGold": {
+      "zone": "decor",
+      "classicParts": 42,
+      "variantParts": 42,
+      "newParts": 0,
+      "bounds": [
+        [
+          -1.2000000000000002,
+          0.0,
+          -1.23
+        ],
+        [
+          1.2000000000000002,
+          4.0,
+          1.23
+        ]
+      ],
+      "dimensionsXYZ": [
+        2.4000000000000004,
+        4.0,
+        2.46
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "CanMark",
+        "InteriorLED",
+        "SodaCan"
+      ],
+      "lights": 1,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "5e920da173428da14921561257b3aa5452d82fd71661315af7b00bed9b6b9a47",
+      "status": "PASS"
+    },
+    "NeonSign_ObsidianGold": {
+      "zone": "decor",
+      "classicParts": 18,
+      "variantParts": 18,
+      "newParts": 0,
+      "bounds": [
+        [
+          -2.85,
+          -1.15,
+          -0.08
+        ],
+        [
+          2.85,
+          1.15,
+          0.18
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.7,
+        2.3,
+        0.26
+      ],
+      "lowerY": -1.15,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "ActionDot",
+        "ControllerNeon",
+        "DPadHorizontal",
+        "DPadVertical"
+      ],
+      "lights": 1,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "22026428f343eac8c606299b9feada400d3103de91dc24cdfb2a793308b53966",
+      "status": "PASS"
+    },
+    "Aquarium_ObsidianGold": {
+      "zone": "decor",
+      "classicParts": 45,
+      "variantParts": 45,
+      "newParts": 0,
+      "bounds": [
+        [
+          -2.95,
+          0.0,
+          -0.99125
+        ],
+        [
+          2.95,
+          4.96,
+          0.99125
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.9,
+        4.96,
+        1.9825
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "FishBody",
+        "FishEye",
+        "FishTail",
+        "TankLED"
+      ],
+      "lights": 1,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "85c750c7de28600c7c34620d8adbad518d44a14b12d744019fef85f48d7b54f6",
+      "status": "PASS"
+    },
+    "ArcadeMachine_ObsidianGold": {
+      "zone": "decor",
+      "classicParts": 34,
+      "variantParts": 34,
+      "newParts": 0,
+      "bounds": [
+        [
+          -1.4300000000000002,
+          0.0,
+          -1.25
+        ],
+        [
+          1.4300000000000002,
+          6.0,
+          1.25
+        ]
+      ],
+      "dimensionsXYZ": [
+        2.8600000000000003,
+        6.0,
+        2.5
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "Button",
+        "MarqueeGem",
+        "PlayerShip",
+        "Screen",
+        "ScreenHousing",
+        "ScreenPlanet",
+        "ShipWing",
+        "StarPixel"
+      ],
+      "lights": 1,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "48842ce4aedfaadf1b120c8115d61c53f2b106a291dcd1f3dd168847729d90ea",
+      "status": "PASS"
+    },
+    "OfficeDesk_ObsidianGold": {
+      "zone": "office",
+      "classicParts": 187,
+      "variantParts": 187,
+      "newParts": 0,
+      "bounds": [
+        [
+          -3.0000000000000004,
+          0.0,
+          -1.9000000000000001
+        ],
+        [
+          3.0000000000000004,
+          4.8,
+          1.9300000000000002
+        ]
+      ],
+      "dimensionsXYZ": [
+        6.000000000000001,
+        4.8,
+        3.83
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [
+        "BlueSeat_core0",
+        "BlueSeat_core1",
+        "BlueSeat_core2",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_corner",
+        "BlueSeat_corner",
+        "BlueSeat_corner",
+        "BlueSeat_corner",
+        "BlueSeat_corner",
+        "BlueSeat_corner",
+        "BlueSeat_corner",
+        "BlueSeat_corner"
+      ],
+      "preservedSemanticNames": [
+        "AppHeader",
+        "Character",
+        "Cloud",
+        "FanHub",
+        "Key",
+        "Keyboard",
+        "MonitorLED",
+        "PixelIsland",
+        "PixelSoil",
+        "PowerButton",
+        "Screen",
+        "Space"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "886d01e51da98af3ce0731b77c65db84d36488f27da4c921e7da537bfaacf560",
+      "status": "PASS"
+    },
+    "Cooler_ObsidianGold": {
+      "zone": "office",
+      "classicParts": 49,
+      "variantParts": 49,
+      "newParts": 0,
+      "bounds": [
+        [
+          -0.87,
+          0.0,
+          -0.845
+        ],
+        [
+          1.05,
+          3.65,
+          1.0150000000000001
+        ]
+      ],
+      "dimensionsXYZ": [
+        1.92,
+        3.65,
+        1.86
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "TapLever"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "31fbb0f660b99f39d32577c9f344b2a28b99bc7fd5168fed2a6cbe30dc790902",
+      "status": "PASS"
+    },
+    "MeetingRoom_ObsidianGold": {
+      "zone": "office",
+      "classicParts": 82,
+      "variantParts": 82,
+      "newParts": 0,
+      "bounds": [
+        [
+          -7.0,
+          0.0,
+          -4.98
+        ],
+        [
+          7.0,
+          7.0,
+          4.98
+        ]
+      ],
+      "dimensionsXYZ": [
+        14.0,
+        7.0,
+        9.96
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "ChartBar",
+        "Display",
+        "TableNotebook"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "c2b17c0130365e51029e87c5a44b8c381a34bfc928751ad32575dc20d5e91c09",
+      "status": "PASS"
+    },
+    "FloorDesk_ObsidianGold": {
+      "zone": "office",
+      "classicParts": 192,
+      "variantParts": 192,
+      "newParts": 0,
+      "bounds": [
+        [
+          -2.50000005,
+          0.0,
+          -1.9000000000000001
+        ],
+        [
+          2.50000005,
+          4.8,
+          1.9300000000000002
+        ]
+      ],
+      "dimensionsXYZ": [
+        5.0000001,
+        4.8,
+        3.83
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [
+        "BlueSeat_core0",
+        "BlueSeat_core1",
+        "BlueSeat_core2",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_edge",
+        "BlueSeat_corner",
+        "BlueSeat_corner",
+        "BlueSeat_corner",
+        "BlueSeat_corner",
+        "BlueSeat_corner",
+        "BlueSeat_corner",
+        "BlueSeat_corner",
+        "BlueSeat_corner"
+      ],
+      "preservedSemanticNames": [
+        "AppHeader",
+        "Character",
+        "Cloud",
+        "FanHub",
+        "Key",
+        "Keyboard",
+        "MonitorLED",
+        "PixelIsland",
+        "PixelSoil",
+        "PowerButton",
+        "Screen",
+        "Space"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "d152699f5b5636ba2c5a34f9a38185dd26e1eea5ba6971c727dab96303123e54",
+      "status": "PASS"
+    },
+    "ServerRoom_ObsidianGold": {
+      "zone": "office",
+      "classicParts": 172,
+      "variantParts": 172,
+      "newParts": 0,
+      "bounds": [
+        [
+          -5.0,
+          0.0,
+          -2.0
+        ],
+        [
+          5.0,
+          7.8,
+          2.0
+        ]
+      ],
+      "dimensionsXYZ": [
+        10.0,
+        7.8,
+        4.0
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "StatusLED"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "8217cf4551fd46d58c2b8bb6680777138d4b0a0d8d93f90cc109c44d1718f8c9",
+      "status": "PASS"
+    },
+    "Lounge_ObsidianGold": {
+      "zone": "office",
+      "classicParts": 158,
+      "variantParts": 158,
+      "newParts": 0,
+      "bounds": [
+        [
+          -4.0,
+          0.0,
+          -4.7
+        ],
+        [
+          4.0,
+          4.37,
+          4.175
+        ]
+      ],
+      "dimensionsXYZ": [
+        8.0,
+        4.37,
+        8.875
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "ControllerButton",
+        "ControllerPad",
+        "TVScreen",
+        "TrophyBase",
+        "TrophyCup",
+        "TrophyHandle",
+        "TrophyStem"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "f262b7f9f36e7548b24f4c4f8c3988bd7526e175fb340ddef2f6314a9dd3dbcf",
+      "status": "PASS"
+    },
+    "SkyDesk_ObsidianGold": {
+      "zone": "office",
+      "classicParts": 70,
+      "variantParts": 70,
+      "newParts": 0,
+      "bounds": [
+        [
+          -2.0,
+          0.0,
+          -1.7875
+        ],
+        [
+          2.0,
+          4.7749999999999995,
+          1.7874999999999999
+        ]
+      ],
+      "dimensionsXYZ": [
+        4.0,
+        4.7749999999999995,
+        3.575
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [
+        "SeatCushion"
+      ],
+      "preservedSemanticNames": [
+        "EditorTile",
+        "FanHub",
+        "Key",
+        "Keyboard",
+        "Screen",
+        "Timeline",
+        "TimelineBar"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "1ef296a6b2850f493a7c9277d97c672afd5a0e570a83e674c2728c9337e22bf6",
+      "status": "PASS"
+    },
+    "SoundStudio_ObsidianGold": {
+      "zone": "office",
+      "classicParts": 91,
+      "variantParts": 91,
+      "newParts": 0,
+      "bounds": [
+        [
+          -5.4,
+          -2.7755575615628914e-17,
+          -4.3
+        ],
+        [
+          5.4,
+          7.2,
+          4.3
+        ]
+      ],
+      "dimensionsXYZ": [
+        10.8,
+        7.2,
+        8.6
+      ],
+      "lowerY": -2.7755575615628914e-17,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "FaderCap",
+        "MixKnob"
+      ],
+      "lights": 1,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "d0857bd650d3f74091413614e193e988144779a99485e4a64c4dddbe21f89f2f",
+      "status": "PASS"
+    },
+    "ArtWall_ObsidianGold": {
+      "zone": "office",
+      "classicParts": 28,
+      "variantParts": 28,
+      "newParts": 0,
+      "bounds": [
+        [
+          -6.75,
+          0.0,
+          -0.45
+        ],
+        [
+          6.75,
+          7.8,
+          0.45
+        ]
+      ],
+      "dimensionsXYZ": [
+        13.5,
+        7.8,
+        0.9
+      ],
+      "lowerY": 0.0,
+      "dimensionDelta": 0,
+      "functionalParts": [],
+      "preservedSemanticNames": [
+        "Canvas",
+        "FloatingTile",
+        "Horizon",
+        "Moon",
+        "Orbit",
+        "PixelMountain",
+        "Wave"
+      ],
+      "lights": 0,
+      "nonAppearanceProperties": "identical XML after excluding Color/Material, root template name and existing light Shadows; Shadows forced false as required",
+      "intersections": "unchanged by exact geometry proof; no new parts or intersections",
+      "sha256": "87152b0da2aee147c95cda114ac7081e3ef5643e86d10bb5d3d13ce4df7142c3",
+      "status": "PASS"
+    }
+  },
+  "status": "PASS",
+  "runtimeTested": false
+}

@@ -1,0 +1,17 @@
+{
+  "newFurnitureModels": 29,
+  "existingShellsUnchanged": true,
+  "previousCanonicalModelFiles": {
+    "GarageWalls_ObsidianGold.rbxm": "8fdda54ecb7712d8bf49490eafa9bf405e6cae3df13308b09513b5a65edf3fd3",
+    "Office_ObsidianGold.rbxm": "8ed23a397f15c48837b91b9b69a53d7a890156b1e62fe754222923ebf43bf359",
+    "Skyscraper_ObsidianGold.rbxm": "13551a5b857184771d48035b5c7adf5dcf563877e19a163dbbe4501e4249ee65",
+    "GarageWalls_ObsidianGold.rbxmx": "8ef8ed0ebc1ffefb244517ac652f651650bd811e154aca7aa7593e1b0fb2013e",
+    "Office_ObsidianGold.rbxmx": "c8192ea5b3daa7366c405174cfdb0c16ba1f08bd5d228f233a205955ca638a37",
+    "Floor_ObsidianGold.rbxm": "79136485e57afbbd26d92148058c049590b4b4573c989dd79603dd7b30e97909",
+    "Skyscraper_ObsidianGold.rbxmx": "e81fecde89c473213414740ea21234b916b0d190cb7267955ea60614412d9147",
+    "Floor_ObsidianGold.rbxmx": "5f6536aee155f7995f62cf47a8eb7dc113bab626e9cc9493f3ff501bb966d5c3"
+  },
+  "canonicalModelsPath": "../models",
+  "supportOnly": "baseline/source/previews; do notimport",
+  "runtimeTested": false
+}
