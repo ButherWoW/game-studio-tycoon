@@ -1919,4 +1919,14 @@ return {
 	guide_floor2_3 = "Pažangą matai lange 🛋️ Studija; prie lifto 🛗 paspausk 🔒 aukštą ir parodysime, ko trūksta",
 	platform_notice_phone = "📱 Telefonų platforma atrakinta! Pasirink ją lange „Naujas žaidimas”",
 	build_prompt = "⚡ Pagreitinti statybą",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Permatomos sienos",
+	setting_wallfade_hint = "Sienos tarp kameros ir tavo veikėjo tampa permatomos",
+	intro_1 = "Tau 17 metų. Visą gyvenimą žaidei žaidimus, o dabar nori juos kurti. Pinigų nėra, biuro nėra. Yra tik senas nešiojamasis kompiuteris ir svajonė.",
+	intro_2 = "Pradėk nuo mažų žingsnių: atsisėsk su kompiuteriu ant suolelio parke ir sukurk pirmąjį žaidimą. Pasirink žanrą ir temą, paskirstyk jėgas tarp žaidimo eigos, grafikos, garso ir siužeto.",
+	intro_3 = "Kritikai vertina nuo 1 iki 10. Puikus žaidimas atneša pinigų ir gerbėjų, prastas juos atbaido. Nusipirk garažą, pasamdyk komandą, persikelk į biurą.",
+	intro_4 = "Tavo tikslas: nuo suolelio parke iki dangoraižio ir garsiausios pasaulio studijos. Pasiruošęs? Tavo studijai reikia pavadinimo!",
+	intro_next = "Toliau",
+	intro_skip = "Praleisti",
+	intro_start = "Pradėti",
 }
