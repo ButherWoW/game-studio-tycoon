@@ -24,10 +24,14 @@ local queue: { Entry } = {}
 local running = false
 local freeSince = 0 -- os.clock(), с какого момента ничего не мешает
 
--- Экран занят: открыто окно игры, идёт туториал, окно предложения или событие разработки
--- (выбор или быстрое) на экране
+-- Экран занят: открыто окно игры, идёт вступление или туториал, окно предложения или событие
+-- разработки (выбор или быстрое) на экране
 function PopupQueue.busy(): boolean
-	if Ui.anyWindowOpen() or player:GetAttribute("TutorialActive") == true then
+	if
+		Ui.anyWindowOpen()
+		or player:GetAttribute("TutorialActive") == true
+		or player:GetAttribute("IntroActive") == true
+	then
 		return true
 	end
 	if OfferClient.popupOpen() then
