@@ -1300,6 +1300,7 @@ return {
 	tutorial_first_game = "🎮 Maak je eerste game: genre, thema, focus — en starten maar",
 	tutorial_save = "💰 Spaar voor de garage ({price}): klussen op het bord en cartridges leveren ook geld op",
 	tutorial_buy_garage = "🏠 Koop de garage: ga op het bordje op je kavel staan",
+	tutorial_garage_building = "🏗️ De garage wordt gebouwd. Wacht een paar minuten of versnel de bouw bij het bord",
 	hit_err_pair = "Je hebt deze speler al bestolen — wacht {minutes} min",
 	hit_err_steal_back = "Deze hit is net van je gestolen — je kunt hem niet meteen terugpakken",
 	park_jobs_garage = "Bijbaantjes zijn voor wie spaart voor een garage. Jij hebt al een studio!",

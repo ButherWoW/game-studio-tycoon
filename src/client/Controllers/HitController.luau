@@ -506,10 +506,13 @@ function HitController.start()
 		end
 	end)
 
-	local plots = workspace:WaitForChild("Plots")
-	plots.DescendantAdded:Connect(watchPrompt)
-	for _, descendant in plots:GetDescendants() do
-		watchPrompt(descendant)
+	-- Карта строится на сервере при старте: ждём с запасом, без предупреждения «Infinite yield»
+	local plots = workspace:WaitForChild("Plots", 30)
+	if plots then
+		plots.DescendantAdded:Connect(watchPrompt)
+		for _, descendant in plots:GetDescendants() do
+			watchPrompt(descendant)
+		end
 	end
 
 	ClientState.changed:Connect(function()

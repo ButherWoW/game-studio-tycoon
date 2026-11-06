@@ -1300,6 +1300,7 @@ return {
 	tutorial_first_game = "🎮 Sprav prvú hru: žáner, téma, zameranie — a pusti sa do vývoja",
 	tutorial_save = "💰 Našetri si na garáž ({price}): platia aj zákazky z nástenky a kazety",
 	tutorial_buy_garage = "🏠 Kúp garáž: stúp na tabuľku na svojom pozemku",
+	tutorial_garage_building = "🏗️ Garáž sa stavia. Počkaj pár minút alebo stavbu urýchli pri tabuli",
 	hit_err_pair = "Tohto hráča si už okradol — počkaj {minutes} min",
 	hit_err_steal_back = "Tento hit ti nedávno ukradli — hneď späť ho nevezmeš",
 	park_jobs_garage = "Brigády sú pre tých, čo šetria na garáž. Ty už štúdio máš!",

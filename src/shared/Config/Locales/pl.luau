@@ -1300,6 +1300,7 @@ return {
 	tutorial_first_game = "🎮 Zrób pierwszą grę: gatunek, temat, fokus — i do roboty",
 	tutorial_save = "💰 Uzbieraj na garaż ({price}): zlecenia z tablicy i kartridże też płacą",
 	tutorial_buy_garage = "🏠 Kup garaż: stań na tabliczce na swojej działce",
+	tutorial_garage_building = "🏗️ Garaż jest budowany. Poczekaj kilka minut albo przyspiesz budowę przy tabliczce",
 	hit_err_pair = "Już okradłeś tego gracza — poczekaj {minutes} min",
 	hit_err_steal_back = "Ten hit niedawno ci ukradziono — nie odbierzesz go od razu",
 	park_jobs_garage = "Dorywcze zlecenia są dla tych, co zbierają na garaż. Ty masz już studio!",

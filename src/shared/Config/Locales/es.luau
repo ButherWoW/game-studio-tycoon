@@ -1300,6 +1300,7 @@ return {
 	tutorial_first_game = "🎮 Haz tu primer juego: género, tema, enfoque — ¡y a desarrollar!",
 	tutorial_save = "💰 Ahorra para el garaje ({price}): los encargos del tablón y los cartuchos también dan dinero",
 	tutorial_buy_garage = "🏠 Compra el garaje: pisa el cartel de tu parcela",
+	tutorial_garage_building = "🏗️ El garaje se está construyendo. Espera unos minutos o acelera la obra en el cartel",
 	hit_err_pair = "Ya le robaste a este jugador: espera {minutes} min",
 	hit_err_steal_back = "Te robaron este éxito hace poco: no puedes recuperarlo enseguida",
 	park_jobs_garage = "Los trabajillos son para quien ahorra para un garaje. ¡Tú ya tienes estudio!",

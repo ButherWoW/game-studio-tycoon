@@ -1298,6 +1298,7 @@ return {
 	tutorial_first_game = "🎮 Направи прву игру: жанр, тема, фокус — и крени",
 	tutorial_save = "💰 Уштеди за гаражу ({price}): плаћају и послови са табле и кертриџи",
 	tutorial_buy_garage = "🏠 Купи гаражу: стани на натпис на својој парцели",
+	tutorial_garage_building = "🏗️ Garaža se gradi. Sačekaj nekoliko minuta ili ubrzaj gradnju kod table",
 	hit_err_pair = "Већ си крао од овог играча — сачекај {minutes} мин",
 	hit_err_steal_back = "Овај хит ти је недавно украден — не можеш га одмах вратити",
 	park_jobs_garage = "Хонорарни послови су за оне који штеде за гаражу. Ти већ имаш студио!",

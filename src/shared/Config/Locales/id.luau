@@ -1299,6 +1299,7 @@ return {
 	tutorial_first_game = "🎮 Buat game pertamamu: genre, tema, fokus — lalu mulai",
 	tutorial_save = "💰 Kumpulkan uang untuk garasi ({price}): tugas di papan dan kaset juga menghasilkan uang",
 	tutorial_buy_garage = "🏠 Beli garasi: injak tanda di lahanmu",
+	tutorial_garage_building = "🏗️ Garasi sedang dibangun. Tunggu beberapa menit atau percepat pembangunan di papan",
 	hit_err_pair = "Kamu sudah mencuri dari pemain ini — tunggu {minutes} menit",
 	hit_err_steal_back = "Hit ini baru saja dicuri darimu — belum bisa diambil kembali",
 	park_jobs_garage = "Kerja sampingan untuk yang menabung beli garasi. Kamu sudah punya studio!",

@@ -1300,6 +1300,7 @@ return {
 	tutorial_first_game = "🎮 Fă primul joc: gen, temă, focus — și începe dezvoltarea",
 	tutorial_save = "💰 Strânge bani de garaj ({price}): plătesc și comenzile de pe avizier, și cartușele",
 	tutorial_buy_garage = "🏠 Cumpără garajul: calcă pe plăcuța de pe parcela ta",
+	tutorial_garage_building = "🏗️ Garajul se construiește. Așteaptă câteva minute sau accelerează construcția la panou",
 	hit_err_pair = "Ai furat deja de la acest jucător — așteaptă {minutes} min",
 	hit_err_steal_back = "Acest hit ți-a fost furat de curând — nu îl poți lua înapoi imediat",
 	park_jobs_garage = "Joburile mărunte sunt pentru cei care strâng pentru garaj. Tu ai deja un studio!",

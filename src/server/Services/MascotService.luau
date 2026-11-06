@@ -30,6 +30,9 @@ type MascotData = { owned: { [string]: boolean }, equipped: string? }
 type Pet = { model: Model, body: BasePart, offset: CFrame, id: string, hop: boolean, tween: Tween? }
 
 local MascotService = {}
+
+-- Для каких маскотов уже писали про отсутствие модели (раз на id)
+local missingWarned: { [string]: boolean } = {}
 local pets: { [Player]: Pet } = {}
 local lastBuy: { [Player]: number } = {}
 local lastEquip: { [Player]: number } = {}
@@ -197,6 +200,18 @@ end
 local function buildModel(mascot: Mascots.Mascot): (Model, BasePart)
 	local source = ServerStorage:FindFirstChild(Mascots.folder)
 	local template = source and source:FindFirstChild("Mascot_" .. mascot.id)
+	-- Нет модели Астры — запасной вариант из шаров (владелец 07.11: «бегает какое-то убожище»): пишем в
+	-- лог, какой именно маскот остался заглушкой, чтобы Dev 1 импортировал assets/models/astra-mascots
+	if not (template and template:IsA("Model")) and not missingWarned[mascot.id] then
+		missingWarned[mascot.id] = true
+		warn(
+			"[MascotService] нет модели ServerStorage."
+				.. Mascots.folder
+				.. ".Mascot_"
+				.. mascot.id
+				.. " — заглушка из шаров"
+		)
+	end
 	local model = if template and template:IsA("Model") then template:Clone() else placeholder(mascot)
 	local body = model:FindFirstChild("Body", true)
 	if not body or not body:IsA("BasePart") then

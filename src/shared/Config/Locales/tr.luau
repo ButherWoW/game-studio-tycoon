@@ -1298,6 +1298,7 @@ return {
 	tutorial_first_game = "🎮 İlk oyununu yap: tür, konu, odak — ve başla",
 	tutorial_save = "💰 Garaj için para biriktir ({price}): panodaki işler ve kartuşlar da para kazandırır",
 	tutorial_buy_garage = "🏠 Garajı satın al: arsandaki tabelaya bas",
+	tutorial_garage_building = "🏗️ Garaj inşa ediliyor. Birkaç dakika bekle ya da tabelada inşaatı hızlandır",
 	hit_err_pair = "Bu oyuncudan zaten çaldın — {minutes} dk bekle",
 	hit_err_steal_back = "Bu hit yakın zamanda senden çalındı — hemen geri alamazsın",
 	park_jobs_garage = "Ek işler garaj için para biriktirenler içindir. Senin zaten stüdyon var!",

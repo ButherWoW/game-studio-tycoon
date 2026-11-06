@@ -1299,6 +1299,7 @@ return {
 	tutorial_first_game = "🎮 Tee ensimmäinen pelisi: genre, aihe, fokus — ja aloita",
 	tutorial_save = "💰 Säästä autotalliin ({price}): myös taulun keikat ja kasetit tuovat rahaa",
 	tutorial_buy_garage = "🏠 Osta autotalli: astu kyltille omalla tontillasi",
+	tutorial_garage_building = "🏗️ Autotallia rakennetaan. Odota pari minuuttia tai nopeuta rakennusta kyltillä",
 	hit_err_pair = "Varastit jo tältä pelaajalta — odota {minutes} min",
 	hit_err_steal_back = "Tämä hitti varastettiin sinulta äsken — et voi ottaa sitä heti takaisin",
 	park_jobs_garage = "Keikkatyöt ovat autotalliin säästäville. Sinulla on jo studio!",

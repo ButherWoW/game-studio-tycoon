@@ -1300,6 +1300,7 @@ return {
 	tutorial_first_game = "🎮 Készítsd el az első játékod: műfaj, téma, fókusz — és indulhat a fejlesztés",
 	tutorial_save = "💰 Gyűjts a garázsra ({price}): a tábla munkái és a kazetták is fizetnek",
 	tutorial_buy_garage = "🏠 Vedd meg a garázst: lépj a táblára a telkeden",
+	tutorial_garage_building = "🏗️ A garázs épül. Várj pár percet, vagy gyorsítsd az építést a táblánál",
 	hit_err_pair = "Ettől a játékostól már loptál — várj {minutes} percet",
 	hit_err_steal_back = "Ezt a slágert nemrég lopták el tőled — nem veheted vissza azonnal",
 	park_jobs_garage = "Az alkalmi munkák a garázsra gyűjtőknek valók. Neked már van stúdiód!",

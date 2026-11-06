@@ -22,6 +22,10 @@ local ModelFactory = require(script.Parent.ModelFactory)
 local StyleModels = require(script.Parent.StyleModels)
 
 local MODEL_NAME = "PlayerDecor"
+-- Подвесная лампа в офисе: низ перекрытия этажа (14 − 0.01 − толщина плиты 0.98 ≈ 13.0 над полом), pivot
+-- модели Астры — крепление к потолку. В Config/Decor высота 12 рассчитана на гараж (владелец 07.11:
+-- «лампы висят под потолком, но не прикреплены» — зазор ≈ 1 stud на этажах офиса)
+local OFFICE_CEILING = 13
 local FLOOR_LEVEL = 0.5 -- пол участка над его центром (как y = 0.5 в Config/Upgrades)
 local ACTION_COOLDOWN = 0.25
 local STATE_REQUEST_COOLDOWN = 1
@@ -94,7 +98,11 @@ local function place(player: Player)
 			model:ScaleTo(model:GetScale() * entry.item.importScale)
 		end
 		local stage = Stages[entry.stage]
-		local y = FLOOR_LEVEL + (if stage then stage.floorY else 0) + (entry.slot.y or 0)
+		local height = entry.slot.y or 0
+		if entry.item.id == "pendantLamp" and entry.stage >= 2 then
+			height = OFFICE_CEILING
+		end
+		local y = FLOOR_LEVEL + (if stage then stage.floorY else 0) + height
 		model:PivotTo(
 			plot.CFrame
 				* CFrame.new(entry.slot.x, y, entry.slot.z)
