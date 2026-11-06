@@ -1108,27 +1108,11 @@ local function buildNpc(employee: Employees.Employee, look: Look): Model?
 	return model
 end
 
--- Сидушка кресла в модели стола на участке (у столов Астры: BlueSeat_* / SeatCushion; PcSeat игрока
--- не трогаем). Возвращает центр верха сидушки в мировых координатах или nil — кресла нет
-local function chairSeatTop(plot: BasePart, desk: Upgrades.Upgrade): Vector3?
-	local position = desk.position or Vector3.zero
-	local deskWorld =
-		plot.CFrame:PointToWorldSpace(Vector3.new(position.X, plot.Size.Y / 2 + position.Y - 0.5, position.Z))
-	local model: Model? = nil
-	for _, child in plot:GetChildren() do
-		if child:IsA("Model") and child.Name == desk.model then
-			local pivot = child:GetPivot().Position
-			if Vector3.new(pivot.X - deskWorld.X, 0, pivot.Z - deskWorld.Z).Magnitude < 1 then
-				model = child
-				break
-			end
-		end
-	end
-	if not model then
-		return nil
-	end
+-- Верх сидушки среди деталей поддерева root: центр верха в мировых координатах или nil.
+-- Сидушка — деталь с «seat» в имени (BlueSeat_*, SeatCushion); PcSeat игрока не трогаем
+local function seatTopIn(root: Instance): Vector3?
 	local minX, maxX, minZ, maxZ, top = math.huge, -math.huge, math.huge, -math.huge, -math.huge
-	for _, part in model:GetDescendants() do
+	for _, part in root:GetDescendants() do
 		if
 			part:IsA("BasePart")
 			and part.Name ~= "PcSeat"
@@ -1144,6 +1128,60 @@ local function chairSeatTop(plot: BasePart, desk: Upgrades.Upgrade): Vector3?
 		return nil
 	end
 	return Vector3.new((minX + maxX) / 2, top, (minZ + maxZ) / 2)
+end
+
+-- Насколько близко (по XZ, studs) к месту NPC перед столом должен стоять отдельный Chair
+local STAFF_CHAIR_RADIUS = 5
+
+-- Кресло сотрудника — отдельная модель на участке (у импортированного гаража Desk1 имеет только PcSeat,
+-- у Desk2 сидушки нет, Chair — отдельная модель игрока). Контракт для моделей Астры/Studio, по порядку:
+--   1) Model/деталь с атрибутом StaffChair = id стола ("desk2") — явная привязка;
+--   2) Model с именем "StaffChair_<id стола>" (например StaffChair_desk2);
+--   3) Model "Chair" ближе STAFF_CHAIR_RADIUS по XZ к месту перед столом (стол + SEAT_DISTANCE по его
+--      повороту). Кресло игрока (стол desk1, PcSeat) сюда не попадает: для desk1 этот шаг пропускаем.
+-- Внутри такой модели сидушка ищется по имени «seat» (seatTopIn); без неё — nil (NPC стоит).
+local function standaloneChairTop(plot: BasePart, desk: Upgrades.Upgrade, front: Vector3): Vector3?
+	local fallback: Model? = nil
+	for _, child in plot:GetChildren() do
+		if child:IsA("Model") then
+			if child:GetAttribute("StaffChair") == desk.id or child.Name == "StaffChair_" .. desk.id then
+				return seatTopIn(child)
+			end
+			if child.Name == "Chair" and desk.id ~= "desk1" and not fallback then
+				local pivot = child:GetPivot().Position
+				if Vector3.new(pivot.X - front.X, 0, pivot.Z - front.Z).Magnitude <= STAFF_CHAIR_RADIUS then
+					fallback = child
+				end
+			end
+		end
+	end
+	return if fallback then seatTopIn(fallback) else nil
+end
+
+-- Сидушка кресла сотрудника у стола: в модели стола (у столов Астры BlueSeat_* / SeatCushion) или
+-- отдельным креслом рядом (standaloneChairTop). Возвращает центр верха сидушки в мировых координатах
+-- или nil — кресла нет, NPC стоит перед столом
+local function chairSeatTop(plot: BasePart, desk: Upgrades.Upgrade): Vector3?
+	local position = desk.position or Vector3.zero
+	local deskWorld =
+		plot.CFrame:PointToWorldSpace(Vector3.new(position.X, plot.Size.Y / 2 + position.Y - 0.5, position.Z))
+	for _, child in plot:GetChildren() do
+		if child:IsA("Model") and child.Name == desk.model then
+			local pivot = child:GetPivot().Position
+			if Vector3.new(pivot.X - deskWorld.X, 0, pivot.Z - deskWorld.Z).Magnitude < 1 then
+				local inDesk = seatTopIn(child)
+				if inDesk then
+					return inDesk
+				end
+				break
+			end
+		end
+	end
+	-- Место перед столом (как у стоящего NPC в seatNpc): стол «лицом» к +Z
+	local rotation = CFrame.Angles(0, math.rad(desk.rotation or 0), 0)
+	local offset = rotation:VectorToWorldSpace(Vector3.new(0, 0, SEAT_DISTANCE))
+	local front = deskWorld + plot.CFrame:VectorToWorldSpace(offset)
+	return standaloneChairTop(plot, desk, front)
 end
 
 -- Поза «сидя» для R15: корень закреплён, остальные детали держатся на суставах; бёдра вперёд на 90°,

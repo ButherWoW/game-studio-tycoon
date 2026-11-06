@@ -112,8 +112,28 @@ local function placeModel(plot: BasePart, modelName: string, position: Vector3?,
 	model.Parent = plot
 end
 
+-- Кодовая оболочка этапа → купленная модель, которая её заменяет, если импортирована из Studio
+-- (стены гаража Астры #61 уже с полом и стенами: вторые стены мерцали бы)
+local SUPERSEDED_BY = { Garage = "GarageWalls" }
+
+-- Смотрим на поставленный клон, а не на классический шаблон: при отделке на участке может стоять
+-- GarageWalls_<suffix> (импортирован) при заглушке GarageWalls — гараж всё равно не ставим второй.
+-- Клон несёт атрибут Generated своего шаблона
+local function supersededOnPlot(plot: BasePart, modelName: string): boolean
+	local replacement = SUPERSEDED_BY[modelName]
+	local placed = replacement and plot:FindFirstChild(replacement)
+	return placed ~= nil and placed:GetAttribute("Generated") ~= true
+end
+
 local function placeUpgrade(plot: BasePart, upgrade: Upgrades.Upgrade)
 	placeModel(plot, upgrade.model, upgrade.position, upgrade.rotation)
+	-- Купили импортированные стены гаража (GarageWalls или GarageWalls_<отделка>) — это полная оболочка:
+	-- старый Garage убираем, как это делает buildPlot (supersededOnPlot). Заглушка Generated — только декор,
+	-- базовый Garage остаётся
+	local oldShell = plot:FindFirstChild("Garage")
+	if oldShell and supersededOnPlot(plot, "Garage") then
+		oldShell:Destroy()
+	end
 	-- Купили кресло — табурет у первого стола больше не нужен: место игрока теперь в кресле
 	if upgrade.id == "chair" then
 		local desk = plot:FindFirstChild("Desk1")
@@ -219,19 +239,6 @@ end
 -- интерьер следующих этапов появляется только после переезда (Upgrade.stage)
 local function isVisible(upgrade: Upgrades.Upgrade, profile: DataService.Profile): boolean
 	return StudioLayout.isVisible(upgrade, profile.studioLevel)
-end
-
--- Кодовая оболочка этапа → купленная модель, которая её заменяет, если импортирована из Studio
--- (стены гаража Астры #61 уже с полом и стенами: вторые стены мерцали бы)
-local SUPERSEDED_BY = { Garage = "GarageWalls" }
-
--- Смотрим на поставленный клон, а не на классический шаблон: при отделке на участке может стоять
--- GarageWalls_<suffix> (импортирован) при заглушке GarageWalls — гараж всё равно не ставим второй.
--- Клон несёт атрибут Generated своего шаблона
-local function supersededOnPlot(plot: BasePart, modelName: string): boolean
-	local replacement = SUPERSEDED_BY[modelName]
-	local placed = replacement and plot:FindFirstChild(replacement)
-	return placed ~= nil and placed:GetAttribute("Generated") ~= true
 end
 
 local onLift: OfficeFloors.LiftHandler
