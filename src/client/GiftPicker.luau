@@ -57,9 +57,7 @@ local function render(gift: Social.Gift, itemName: string)
 	title.Position = UDim2.fromOffset(16, 12)
 	title.Size = UDim2.new(1, -80, 0, 30)
 	local closeButton = Ui.button(window, "×", Ui.colors.bad, close)
-	closeButton.AnchorPoint = Vector2.new(1, 0)
-	closeButton.Position = UDim2.new(1, -12, 0, 8)
-	closeButton.Size = UDim2.fromOffset(40, 40)
+	Ui.headerClose(closeButton)
 
 	local body = Instance.new("ScrollingFrame")
 	body.BackgroundTransparency = 1
