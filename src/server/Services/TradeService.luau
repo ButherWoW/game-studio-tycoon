@@ -397,7 +397,14 @@ local function valid(trade: Trade): boolean
 		local receiver = partnerOf(trade, giver)
 		local gp = DataService.get(giver)
 		local rp = DataService.get(receiver)
-		if not giver.Parent or not gp or not rp or gp.cash < 0 then
+		if
+			not giver.Parent
+			or not gp
+			or not rp
+			or gp.cash < 0
+			or DataService.isClosing(giver)
+			or DataService.isClosing(receiver)
+		then
 			return false
 		end
 		local offer = trade.offers[giver]
@@ -434,6 +441,11 @@ local function revoke(player: Player, profile: DataService.Profile, item: Item)
 end
 
 local function execute(trade: Trade)
+	-- Сервер закрывается или профиль уже пишется в последний раз: обмен не проводим
+	if DataService.isClosing(trade.a) or DataService.isClosing(trade.b) then
+		cancel(trade, nil)
+		return
+	end
 	if not valid(trade) then
 		-- Что-то поменялось (вещь ушла приставам, деньги потрачены): подтвердить заново
 		trade.confirmed = {}
@@ -498,15 +510,36 @@ local function execute(trade: Trade)
 		)
 	)
 	-- Сохраняем по очереди: сначала отдающий (у кого забрали больше предметов, при равенстве —
-	-- больше денег), потом получатель. Сбой второй записи теряет вещь, но не дублирует её
+	-- больше денег), потом получатель. Получателя не пишем, пока отдающий не записан (повторы):
+	-- иначе при сбое вещь окажется в DataStore у обоих. Сбой второй записи теряет вещь, но не дублирует
 	local giveA = #offerA.items * 1e12 + offerA.cash
 	local giveB = #offerB.items * 1e12 + offerB.cash
 	local first, second = if giveB > giveA then b else a, if giveB > giveA then a else b
 	task.spawn(function()
-		for _, player in { first, second } do
-			if not DataService.save(player) and player.Parent then
-				warn("[TradeService] trade", trade.id, "save failed for", player.UserId)
+		local saved = false
+		for attempt = 1, Friends.trade.saveRetries do
+			if DataService.save(first) then
+				saved = true
+				break
 			end
+			-- Отдающий выходит: его профиль пишет closeProfile (со своими повторами). Ждём конца записи
+			if not first.Parent or DataService.isClosing(first) then
+				while DataService.get(first) ~= nil do
+					task.wait(0.5)
+				end
+				saved = true
+				break
+			end
+			if attempt < Friends.trade.saveRetries then
+				task.wait(Friends.trade.saveRetryPause)
+			end
+		end
+		if not saved then
+			warn("[TradeService] trade", trade.id, "giver save failed", first.UserId, "- receiver skipped")
+			return
+		end
+		if not DataService.save(second) and second.Parent then
+			warn("[TradeService] trade", trade.id, "save failed for", second.UserId)
 		end
 	end)
 end
@@ -574,6 +607,16 @@ local function startNow()
 		lastStateRequest[player] = nil
 		declined[player] = nil
 		cooldownUntil[player] = nil
+	end)
+	-- Сервер закрывается: профили пишутся по очереди, обмен посередине раздвоил бы предмет
+	game:BindToClose(function()
+		local seen: { [Trade]: boolean } = {}
+		for _, trade in trades do
+			if not seen[trade] then
+				seen[trade] = true
+				cancel(trade, nil)
+			end
+		end
 	end)
 	task.spawn(function()
 		while true do
