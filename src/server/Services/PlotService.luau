@@ -134,15 +134,11 @@ local function placeUpgrade(plot: BasePart, upgrade: Upgrades.Upgrade)
 	if oldShell and supersededOnPlot(plot, "Garage") then
 		oldShell:Destroy()
 	end
-	-- Купили кресло — табурет у первого стола больше не нужен: место игрока теперь в кресле
-	if upgrade.id == "chair" then
+	-- Купили кресло (или стол при уже стоящем кресле) — табурет у первого стола больше не нужен: место
+	-- игрока теперь в кресле. Шаблон Desk1 мог не загрузиться (placeModel только warn) — тогда убирать нечего
+	if upgrade.id == "chair" or (upgrade.id == "desk1" and plot:FindFirstChild("Chair")) then
 		local desk = plot:FindFirstChild("Desk1")
 		local stool = desk and desk:FindFirstChild("PcSeat")
-		if stool then
-			stool:Destroy()
-		end
-	elseif upgrade.id == "desk1" and plot:FindFirstChild("Chair") then
-		local stool = (plot:FindFirstChild("Desk1") :: Instance):FindFirstChild("PcSeat")
 		if stool then
 			stool:Destroy()
 		end
@@ -387,6 +383,25 @@ local function isStandingOn(root: BasePart, button: BasePart): boolean
 		and offset.Y <= STAND_HEIGHT
 end
 
+-- Дорогие кнопки переезда (офис, этажи) покупаются только подтверждением на ProximityPrompt:
+-- «наступил — купил» для них не работает (деньги на порядки больше, стройка необратима).
+-- Гараж и серые кнопки (cost 0) остаются как были
+local function needsConfirm(upgrade: Upgrades.Upgrade): boolean
+	return upgrade.move == true and upgrade.cost > 0 and upgrade.id ~= GARAGE_ID
+end
+
+-- Сколько секунд строится этап, который открывает кнопка переезда (0 — переезд сразу)
+local function moveBuildSeconds(upgrade: Upgrades.Upgrade): number
+	for _, stage in Stages do
+		local byStageButton = "stage_" .. stage.id == upgrade.id
+		local byUpgrade = stage.requiresUpgrade == upgrade.id
+		if byStageButton or byUpgrade then
+			return Construction.duration(stage.level)
+		end
+	end
+	return 0
+end
+
 local tryBuy: (player: Player, upgradeId: string) -> ()
 local onMoveStudio: (player: Player) -> ()
 local startConstruction: (player: Player, profile: DataService.Profile, stage: number, cost: number) -> ()
@@ -432,11 +447,38 @@ local function createButton(
 		.. upgrade.name
 		.. "\n"
 		.. formatPrice(upgrade.cost)
+	if needsConfirm(upgrade) then
+		local minutes = moveBuildSeconds(upgrade) // 60
+		label.Text ..= "\n" .. Texts.format("ru", "move_hint", { minutes = minutes })
+	end
 	label.Parent = billboard
 
 	-- Новая кнопка появляется там, где стоит игрок: пока он не отойдёт, она «не взведена»,
 	-- иначе стоя на месте покупались подряд компьютер, кресло и стены (отчёт #42)
 	button:SetAttribute("Armed", false)
+	if needsConfirm(upgrade) then
+		-- Подтверждение: окно подсказки с ценой и сроком (тексты на языке игрока ставит PlotLabels).
+		-- Оплату и все условия по-прежнему проверяет tryBuy на сервере
+		local minutes = moveBuildSeconds(upgrade) // 60
+		local prompt = Instance.new("ProximityPrompt")
+		prompt.Name = "MovePrompt"
+		prompt.ActionText = Texts.format("ru", "move_prompt_action")
+		prompt.ObjectText =
+			Texts.format("ru", "move_prompt_object", { price = formatPrice(upgrade.cost), minutes = minutes })
+		prompt.HoldDuration = Construction.confirmHoldSeconds
+		prompt.MaxActivationDistance = Construction.confirmDistance
+		prompt.RequiresLineOfSight = false
+		prompt.Exclusivity = Enum.ProximityPromptExclusivity.OnePerButton
+		prompt:SetAttribute("MoveCost", upgrade.cost)
+		prompt:SetAttribute("MoveMinutes", minutes)
+		prompt.Parent = button
+		prompt.Triggered:Connect(function(who: Player)
+			if who == player then
+				tryBuy(player, upgrade.id)
+			end
+		end)
+		return button
+	end
 	button.Touched:Connect(function(hit: BasePart)
 		local character = hit.Parent
 		if not character or Players:GetPlayerFromCharacter(character) ~= player then
@@ -530,6 +572,9 @@ refreshButtons = function(player: Player)
 		byFloor[topFloor] = byFloor[topFloor] or {}
 		table.insert(byFloor[topFloor], soon)
 	end
+	-- Для табличек этажей (PlotLabels): какой этап сейчас строится (0 — никакой)
+	local constructionNow = activeConstruction(profile)
+	plot:SetAttribute("BuildingStage", if constructionNow then constructionNow.stage else 0)
 	local playerButtons = {}
 	for floor, floorList in byFloor do
 		for i, upgrade in floorList do
@@ -1005,6 +1050,7 @@ function PlotService.start()
 						-- Touched не повторится, пока он не сойдёт, — покупаем сами (отчёт #3, P1-2)
 						if
 							affordable
+							and not needsConfirm(upgrade)
 							and root
 							and button:GetAttribute("Armed") == true
 							and isStandingOn(root, button)

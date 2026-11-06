@@ -46,6 +46,8 @@ local FIRE_CONFIRM_SECONDS = 5 -- сколько ждём второе нажа�
 local TRAIN_TICK = 0.25 -- как часто двигать полоски обучения (без перерисовки окна)
 local TRAIN_COLOR = Color3.fromRGB(110, 170, 255)
 local FLASH_SECONDS = 1.2 -- вспышка строки, когда сотрудник доучился
+-- Причины отказа переезда, которые окно показывает под кнопкой (сервер — PlotService.moveLock)
+local LOCK_HINTS: { [string]: boolean } = { studio_lock_interior = true, studio_lock_staff = true }
 
 local TeamWindow = {}
 local gui: ScreenGui? = nil
@@ -186,6 +188,14 @@ local function buildStagePanel(parent: Instance, data: any, order: number)
 	-- Идёт стройка следующего этапа (V29): кнопка «🏗️ Строится…» неактивна
 	local building = type(data.construction) == "table" and data.construction.stage == nextStage.level
 	ready = ready and not building
+	-- Интерьер и команда: причину отказа присылает сервер (StudioState.offers), кнопка не врёт «зелёной»
+	local lockText: string? = nil
+	for _, offer in StudioState.state.offers do
+		if offer.stage == nextStage.level and offer.lock ~= nil and LOCK_HINTS[offer.lock] then
+			ready = false
+			lockText = ClientState.t(offer.lock)
+		end
+	end
 	local move = Ui.button(
 		panel,
 		if building then ClientState.t("build_button") else ClientState.t("team_move"),
@@ -201,6 +211,15 @@ local function buildStagePanel(parent: Instance, data: any, order: number)
 	move.Size = UDim2.new(0.35, -12, 0, 48)
 	if not ready then
 		move.TextColor3 = Ui.colors.muted
+	end
+	if lockText and not building then
+		local hint = Ui.label(panel, lockText, SMALL_TEXT, nil, Ui.colors.bad)
+		hint.TextScaled = false
+		hint.TextSize = SMALL_TEXT
+		hint.TextWrapped = true
+		hint.AnchorPoint = Vector2.new(1, 0)
+		hint.Position = UDim2.new(1, -12, 0, 98)
+		hint.Size = UDim2.new(0.35, -12, 0, 30)
 	end
 end
 

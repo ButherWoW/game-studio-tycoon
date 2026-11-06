@@ -232,10 +232,16 @@ local function startBanner()
 			SoundController.play("construction_done")
 			task.delay(CELEBRATE_DELAY, MoveCelebration.celebrate, stage)
 		elseif event.kind == "speed" and event.skip ~= true then
-			toast(
-				ClientState.t("build_speed_done", { minutes = tonumber(event.minutes) or 0 }),
-				Ui.colors.money
-			)
+			local minutes = tonumber(event.minutes) or 0
+			local amount = tonumber(event.amount) or 0
+			local money = Texts.money(amount)
+			local message = ClientState.t("build_speed_done", { minutes = minutes })
+			if amount > 0 and minutes > 0 then
+				message = ClientState.t("build_speed_partial", { minutes = minutes, amount = money })
+			elseif amount > 0 then
+				message = ClientState.t("build_speed_late", { amount = money })
+			end
+			toast(message, Ui.colors.money)
 		elseif event.kind == "fallback" then
 			toast(
 				ClientState.t("build_fallback", { amount = Texts.money(tonumber(event.amount) or 0) }),

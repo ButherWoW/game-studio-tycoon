@@ -7,6 +7,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
+local Construction = require(ReplicatedStorage.Shared.Config.Construction)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 local Features = require(ReplicatedStorage.Shared.Config.Features)
@@ -47,7 +48,13 @@ local function labelFor(buttonName: string): string?
 		for _, stage in Stages do
 			if stage.id == stageId then
 				local name = ClientState.localName(stage)
-				return ClientState.t("team_move") .. ": " .. name .. "\n" .. Texts.money(stage.cost)
+				return ClientState.t("team_move")
+					.. ": "
+					.. name
+					.. "\n"
+					.. Texts.money(stage.cost)
+					.. "\n"
+					.. ClientState.t("move_hint", { minutes = Construction.duration(stage.level) // 60 })
 			end
 		end
 		return nil
@@ -74,6 +81,14 @@ local function labelFor(buttonName: string): string?
 		table.insert(bonuses, ClientState.t("bonus_review", { value = review }))
 	end
 	local line = (if upgrade.move then "🏢 " else "") .. name .. "\n" .. price
+	if upgrade.move and upgrade.cost > 0 then
+		for _, stage in Stages do
+			if stage.requiresUpgrade == id then
+				local minutes = Construction.duration(stage.level) // 60
+				line ..= "\n" .. ClientState.t("move_hint", { minutes = minutes })
+			end
+		end
+	end
 	if #bonuses > 0 then
 		line ..= "\n" .. table.concat(bonuses, " · ")
 	end
@@ -100,6 +115,18 @@ local function relabelFloor(item: Instance)
 		local lift = item:GetAttribute("FloorLift")
 		if type(sign) == "number" then
 			item.Text = StudioLayout.floorSign(lang, sign)
+			-- Этаж строится: цену и условия не показываем, как у обычного 🔒
+			local floorStage = StudioLayout.floorStage(sign)
+			local ancestor: Instance? = item.Parent
+			while ancestor and ancestor:GetAttribute("BuildingStage") == nil do
+				ancestor = ancestor.Parent
+			end
+			if floorStage and ancestor and ancestor:GetAttribute("BuildingStage") == floorStage.level then
+				item.Text = "🏗️ "
+					.. StudioLayout.floorName(lang, sign)
+					.. "\n"
+					.. ClientState.t("build_lock_building")
+			end
 		elseif type(lift) == "number" then
 			item.Text = "🛗 " .. StudioLayout.floorName(lang, lift)
 		end
@@ -110,11 +137,19 @@ local function relabelFloor(item: Instance)
 			item.ActionText = arrow .. " " .. StudioLayout.floorName(lang, target)
 			item.ObjectText = ClientState.t("floor_lift")
 		end
+		local cost = item:GetAttribute("MoveCost")
+		local minutes = item:GetAttribute("MoveMinutes")
+		if type(cost) == "number" and type(minutes) == "number" then
+			item.ActionText = ClientState.t("move_prompt_action")
+			item.ObjectText =
+				ClientState.t("move_prompt_object", { price = Texts.money(cost), minutes = minutes })
+		end
 	end
 end
 
 local function isFloorText(item: Instance): boolean
-	return item:GetAttribute("FloorSign") ~= nil
+	return item:GetAttribute("MoveCost") ~= nil
+		or item:GetAttribute("FloorSign") ~= nil
 		or item:GetAttribute("FloorLift") ~= nil
 		or item:GetAttribute("FloorTarget") ~= nil
 end

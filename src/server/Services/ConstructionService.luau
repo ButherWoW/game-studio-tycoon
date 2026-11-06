@@ -868,11 +868,15 @@ local function spawnBuilders(player: Player, site: Site)
 	folder.Parent = site.folder
 	for i = 1, Construction.builders do
 		local model = makeBuilder(i)
-		if not model or sites[player] ~= site or not site.folder.Parent then
+		if sites[player] ~= site or not site.folder.Parent then
 			if model then
 				model:Destroy()
 			end
 			return
+		end
+		if not model then
+			-- Не вышло собрать одного строителя — остальные всё равно прибегут
+			continue
 		end
 		-- Стук молотка слышен рядом (SoundController: тег SoundEmitter, пауза 0.6–1.5 с)
 		local root = model:FindFirstChild("HumanoidRootPart")
@@ -1013,8 +1017,37 @@ ConstructionService.sync = sync
 
 -- ===== Ускорения за Robux =====
 
+-- Запасной доход за долю fraction (0..1) цены ускорения: Robux не пропадают, если ускорять нечего
+local function fallbackIncome(
+	player: Player,
+	profile: DataService.Profile,
+	speedup: Construction.Speedup,
+	fraction: number
+): number
+	if fraction <= 0 then
+		return 0
+	end
+	local shop = script.Parent:FindFirstChild("ShopService")
+	if not shop or not shop:IsA("ModuleScript") then
+		return 0
+	end
+	local service = require(shop) :: any
+	local minutes = speedup.robuxPrice * Construction.fallbackMinutesPerRobux * fraction
+	local amount = math.max(0, math.floor(service.incomePerMinute(player, profile) * minutes))
+	if amount > 0 then
+		DataService.addCash(player, amount)
+		local reward = script.Parent:FindFirstChild("RewardService")
+		if reward and reward:IsA("ModuleScript") then
+			pcall((require(reward) :: any).noteNonEarned, player, amount)
+		end
+	end
+	return amount
+end
+
 -- Developer Product «Ускорить стройку» (MonetizationService, после проверки квитанции).
--- Стройки уже нет (закончилась, пока шла покупка) — Robux не пропадают: доход за N минут
+-- Стройки уже нет (закончилась, пока шла покупка) — Robux не пропадают: доход за N минут.
+-- Порог minLeftSeconds и остаток проверяются здесь, в момент выдачи (а не только в окне клиента):
+-- «−N мин» срезает не больше, чем осталось, а неиспользованная доля уходит доходом
 function ConstructionService.grantProduct(
 	player: Player,
 	profile: DataService.Profile,
@@ -1027,20 +1060,7 @@ function ConstructionService.grantProduct(
 	local construction = PlotService.construction(player)
 	local now = os.time()
 	if not construction or construction.endsAt <= now then
-		local shop = script.Parent:FindFirstChild("ShopService")
-		local amount = 0
-		if shop and shop:IsA("ModuleScript") then
-			local service = require(shop) :: any
-			local minutes = speedup.robuxPrice * Construction.fallbackMinutesPerRobux
-			amount = math.max(0, math.floor(service.incomePerMinute(player, profile) * minutes))
-		end
-		if amount > 0 then
-			DataService.addCash(player, amount)
-			local reward = script.Parent:FindFirstChild("RewardService")
-			if reward and reward:IsA("ModuleScript") then
-				pcall((require(reward) :: any).noteNonEarned, player, amount)
-			end
-		end
+		local amount = fallbackIncome(player, profile, speedup, 1)
 		ConstructionRemotes.BuildEvent:FireClient(player, { kind = "fallback", amount = amount })
 		analytics(player, amount, speedup.id .. "_fallback")
 		if construction then
@@ -1049,17 +1069,30 @@ function ConstructionService.grantProduct(
 		return true
 	end
 	local left = construction.endsAt - now
-	if speedup.kind == "skip" then
-		construction.endsAt = now
+	local amount = 0
+	local usedSeconds = left
+	if speedup.kind == "minutes" then
+		local fullSeconds = (speedup.minutes or 0) * 60
+		usedSeconds = math.min(fullSeconds, left)
+		-- Остаток стройки ниже порога — ускорение не применяем: весь товар уходит доходом
+		if speedup.minLeftSeconds and left <= speedup.minLeftSeconds then
+			usedSeconds = 0
+		end
+		construction.endsAt = now + left - usedSeconds
+		if fullSeconds > 0 and usedSeconds < fullSeconds then
+			amount = fallbackIncome(player, profile, speedup, 1 - usedSeconds / fullSeconds)
+		end
 	else
-		construction.endsAt = math.max(now, construction.endsAt - (speedup.minutes or 0) * 60)
+		construction.endsAt = now
 	end
 	analytics(player, left, stageKey(construction.stage) .. "_" .. speedup.id)
 	DataService.replicate(player)
-	ConstructionRemotes.BuildEvent:FireClient(
-		player,
-		{ kind = "speed", minutes = speedup.minutes or 0, skip = speedup.kind == "skip" }
-	)
+	ConstructionRemotes.BuildEvent:FireClient(player, {
+		kind = "speed",
+		minutes = math.floor(usedSeconds / 60 + 0.5),
+		skip = speedup.kind == "skip",
+		amount = amount,
+	})
 	-- Квитанцию с новым временем сохраняет MonetizationService; переезд — следующим кадром
 	task.defer(sync, player)
 	return true
