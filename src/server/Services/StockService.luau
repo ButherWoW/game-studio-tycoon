@@ -397,24 +397,31 @@ local function notice(player: Player, message: string, params: any?)
 end
 
 -- Компания владельца обанкротилась: снять с биржи, акции держателей сгорают
-local function delist(player: Player, profile: DataService.Profile)
+-- false — запись не удалось обновить (сбой DataStore): компания остаётся на бирже, повтор на следующем тике
+local function delist(player: Player, profile: DataService.Profile): boolean
 	local data = dataOf(profile)
 	local listedAt = data.listedAt
-	data.listed = false
-	player:SetAttribute("StockListed", false)
+	local declined = false
 	local record = updateRecord(player.UserId, function(old)
 		if not old or old.listedAt ~= listedAt then
+			declined = true
 			return nil, false
 		end
 		old.delisted = true
 		old.updatedAt = os.time()
 		return old, true
 	end)
+	if not record and not declined then
+		return false
+	end
+	data.listed = false
+	player:SetAttribute("StockListed", false)
 	if record then
 		writeBoard(record)
 	end
 	analytics(player, "bankrupt", 1)
 	notice(player, "stock_bankrupt_owner")
+	return true
 end
 
 -- Акция потеряна (компания снята с биржи или вышла заново): убрать из портфеля
@@ -597,7 +604,7 @@ local function buy(player: Player, id: any, amount: any)
 	id = math.floor(id)
 	withLock(player, function()
 		local profile = DataService.get(player)
-		if not profile or id == player.UserId then
+		if not profile or id == player.UserId or DataService.isClosing(player) then
 			return
 		end
 		local data = dataOf(profile)
@@ -654,7 +661,8 @@ local function buy(player: Player, id: any, amount: any)
 			notice(player, "stock_err_gone")
 			return
 		end
-		if not DataService.trySpend(player, cost) then
+		-- Пока ждали запись, сервер мог начать закрываться: профиль уже пишется, сделку откатываем
+		if DataService.isClosing(player) or not DataService.trySpend(player, cost) then
 			updateRecord(id, function(old)
 				if not old then
 					return nil, false
@@ -691,7 +699,7 @@ local function onSell(player: Player, id: any, amount: any)
 	id = math.floor(id)
 	withLock(player, function()
 		local profile = DataService.get(player)
-		if not profile then
+		if not profile or DataService.isClosing(player) then
 			return
 		end
 		local data = dataOf(profile)
@@ -719,6 +727,17 @@ local function onSell(player: Player, id: any, amount: any)
 		if not updated then
 			return
 		end
+		if DataService.isClosing(player) then
+			-- Сервер начал закрываться, пока ждали запись: профиль уже пишется, продажу откатываем
+			updateRecord(id, function(old)
+				if not old then
+					return nil, false
+				end
+				old.sold += shares
+				return old, true
+			end)
+			return
+		end
 		local left = holding.shares - shares
 		if left <= 0 then
 			data.holdings[idText] = nil
@@ -741,7 +760,7 @@ local function onIpo(player: Player)
 	end
 	withLock(player, function()
 		local profile = DataService.get(player)
-		if not profile or not store then
+		if not profile or not store or DataService.isClosing(player) then
 			return
 		end
 		local status = ipoStatus(player, profile)
@@ -750,12 +769,14 @@ local function onIpo(player: Player)
 		end
 		noteExpense(player, Stocks.ipo.cost)
 		local data = dataOf(profile)
-		local now = os.time()
+		-- listedAt строго больше прошлого: акции прежнего листинга не оживут в новом
+		local now = math.max(os.time(), data.listedAt + 1)
 		local income, offline, avg, base = ownerSnapshot(player, profile)
 		local name = studioName(player, profile)
 		local record = updateRecord(player.UserId, function(old)
-			-- Уже на бирже (другой сервер) — второй раз не выходим
-			if old and not old.delisted then
+			-- Уже на бирже (другой сервер) — второй раз не выходим. Своя запись с тем же listedAt,
+			-- что в профиле, — «зомби» от несостоявшегося делистинга: её можно перезаписать
+			if old and not old.delisted and old.listedAt ~= data.listedAt then
 				return nil, false
 			end
 			return {
@@ -838,10 +859,13 @@ local function step(player: Player)
 			local left = Stocks.bankruptAfterSeconds - (os.clock() - (negativeSince[player] :: number))
 			player:SetAttribute("StockBankruptIn", math.max(math.ceil(left), 0))
 			if left <= 0 then
-				negativeSince[player] = nil
-				player:SetAttribute("StockBankruptIn", nil)
-				delist(player, profile)
-				return
+				if delist(player, profile) then
+					negativeSince[player] = nil
+					player:SetAttribute("StockBankruptIn", nil)
+					return
+				end
+				-- Запись не обновилась: negativeSince остаётся, делистинг повторится на следующем тике
+				player:SetAttribute("StockBankruptIn", 0)
 			end
 		else
 			negativeSince[player] = nil
@@ -943,6 +967,17 @@ local function startNow()
 			return
 		end
 		local id = if type(selected) == "number" and selected == selected then math.floor(selected) else nil
+		-- Только компании из списка биржи, портфеля и своя: произвольные id наполняли бы кэш записей
+		if id then
+			local profile = DataService.get(player)
+			local known = table.find(listIds, id) ~= nil or id == player.UserId
+			if profile and not known then
+				known = dataOf(profile).holdings[tostring(id)] ~= nil
+			end
+			if not known then
+				id = nil
+			end
+		end
 		sendState(player, id)
 	end)
 	StockRemotes.StockBuy.OnServerEvent:Connect(buy)
