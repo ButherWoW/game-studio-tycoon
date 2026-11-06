@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "Pealkirjas on inetuid sõnu — mõtle teine",
 	move_celebrate = "🎉 Uus stuudio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Päeva tellimused",
+	order_reset = "Uued {time} pärast",
+	order_done = "📋 Tellimus täidetud: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ Garaaži ehitus — {time}",
 	build_banner_office = "🏗️ Kontori ehitus — {time}",
 	build_banner_floor = "🏗️ Ehitus: {floor} — {time}",

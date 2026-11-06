@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "Titeln har fula ord — hitta på en annan",
 	move_celebrate = "🎉 Ny studio: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Dagens beställningar",
+	order_reset = "Nya om {time}",
+	order_done = "📋 Beställning slutförd: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ Bygger garaget — {time}",
 	build_banner_office = "🏗️ Kontoret byggs — {time}",
 	build_banner_floor = "🏗️ Bygge: {floor} — {time}",

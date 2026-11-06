@@ -1305,6 +1305,9 @@ return {
 	error_name_bad = "Başlıkta kötü kelimeler var — başka bir tane bul",
 	move_celebrate = "🎉 Yeni stüdyo: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Günün siparişleri",
+	order_reset = "Yeni siparişler {time} sonra",
+	order_done = "📋 Sipariş tamamlandı: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ Garaj inşa ediliyor — {time}",
 	build_banner_office = "🏗️ Ofis inşaatı — {time}",
 	build_banner_floor = "🏗️ İnşaat: {floor} — {time}",

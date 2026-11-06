@@ -868,6 +868,11 @@ local function release(player: Player, project: Project)
 		score = score,
 		focus = project.focus,
 	})
+	-- Заказы дня (доска у участка): жанр и оценка; заказ выполняется, только если оценка не ниже минимальной
+	hook("OrderService", "onGameReleased", player, {
+		genreId = project.genreId,
+		score = score,
+	})
 	hook("AchievementService", "onGameReleased", player, {
 		genreId = project.genreId,
 		topicId = project.topicId,

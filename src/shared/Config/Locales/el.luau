@@ -1306,6 +1306,9 @@ return {
 	error_name_bad = "Ο τίτλος έχει κακές λέξεις — σκέψου άλλον",
 	move_celebrate = "🎉 Νέο στούντιο: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Παραγγελίες ημέρας",
+	order_reset = "Νέες σε {time}",
+	order_done = "📋 Η παραγγελία ολοκληρώθηκε: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ Κατασκευή γκαράζ — {time}",
 	build_banner_office = "🏗️ Κατασκευή γραφείου — {time}",
 	build_banner_floor = "🏗️ Κατασκευή: {floor} — {time}",

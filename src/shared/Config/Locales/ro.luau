@@ -1307,6 +1307,9 @@ return {
 	error_name_bad = "Titlul are cuvinte urâte — inventează altul",
 	move_celebrate = "🎉 Studio nou: {stage}!",
 	-- Стройка следующего этапа (V29, ConstructionController)
+	order_title = "📋 Comenzile zilei",
+	order_reset = "Noi în {time}",
+	order_done = "📋 Comandă finalizată: {genre} ★{score}+ — {money}",
 	build_banner_garage = "🏗️ Construcția garajului — {time}",
 	build_banner_office = "🏗️ Construcția biroului — {time}",
 	build_banner_floor = "🏗️ Construcție: {floor} — {time}",
