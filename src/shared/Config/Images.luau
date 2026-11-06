@@ -17,6 +17,7 @@ Images.menu = {
 	menu_holiday = 108939585178579, -- menu_holiday.png, 🎉
 	menu_camera = 113053777664719, -- menu_camera.png, 🎥
 	menu_bank = 82427982778270, -- menu_bank.png, 🏦
+	menu_guides = 0, -- menu_guides.png, 📖 «Справочник» (обучение; ID — Dev 1 после арта Астры)
 	menu_achievements = 97631283620169, -- menu_achievements.png, 🏆 (V10)
 	menu_studio = 127200595653936, -- menu_studio.png, 🛋️ (окно «Студия»: декор и настроение)
 	home = 112336651662592, -- home.png, 🏠
