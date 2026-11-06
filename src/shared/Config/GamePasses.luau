@@ -29,7 +29,7 @@ local list: { GamePass } = {
 		descriptionEn = "Double revenue from every release",
 		icon = "💰",
 		gamePassId = Universe.pick({ test = 2071008855, main = 2070540998 }),
-		robuxPrice = 299, -- главный, ставим первым
+		robuxPrice = 249, -- главный, ставим первым
 	},
 	{
 		id = "autoRelease",
@@ -39,7 +39,7 @@ local list: { GamePass } = {
 		descriptionEn = "The next game starts by itself after a release",
 		icon = "🔁",
 		gamePassId = Universe.pick({ test = 2072480376, main = 2071816553 }),
-		robuxPrice = 149,
+		robuxPrice = 99,
 	},
 	{
 		id = "fastDev",
@@ -49,7 +49,7 @@ local list: { GamePass } = {
 		descriptionEn = "Games are made 25% faster",
 		icon = "⚡",
 		gamePassId = Universe.pick({ test = 2067092439, main = 2070314173 }),
-		robuxPrice = 199,
+		robuxPrice = 149,
 	},
 	{
 		id = "extraSlot",
@@ -59,7 +59,7 @@ local list: { GamePass } = {
 		descriptionEn = "Develop two games at once",
 		icon = "➕",
 		gamePassId = Universe.pick({ test = 2068496428, main = 2072234478 }),
-		robuxPrice = 249,
+		robuxPrice = 199,
 	},
 	{
 		id = "vipOffice",
