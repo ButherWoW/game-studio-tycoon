@@ -1948,4 +1948,14 @@ return {
 	guide_floor2_3 = "Postup uvidíš v okne „🛋️ Štúdio“; pri výťahu 🛗 ťukni na poschodie 🔒 a ukážeme ti, čo chýba",
 	platform_notice_phone = "📱 Platforma „Telefóny“ odomknutá! Vyber ju v okne „Nová hra“",
 	build_prompt = "⚡ Urýchliť stavbu",
+	-- 2-й этаж, платформы, стройка (06.11)
+	setting_wallfade = "🧱 Priehľadné steny",
+	setting_wallfade_hint = "Steny medzi kamerou a tvojou postavou sa stanú priehľadnými",
+	intro_1 = "Máš 17 rokov. Celý život si hral hry — a teraz chceš robiť vlastné. Žiadne peniaze, žiadna kancelária. Len starý notebook a sen.",
+	intro_2 = "Začni v malom: sadni si s notebookom na lavičku v parku a urob svoju prvú hru. Vyber žáner a tému a rozdeľ sily medzi hrateľnosť, grafiku, zvuk a príbeh.",
+	intro_3 = "Kritici ju ohodnotia od 1 do 10. Skvelá hra prinesie peniaze a fanúšikov, zlá ich odoženie. Kúp garáž, najmi tím, presťahuj sa do kancelárie.",
+	intro_4 = "Tvoj cieľ: prejsť od lavičky v parku až po mrakodrap a vybudovať najslávnejšie štúdio na svete. Pripravený? Tvoje štúdio potrebuje meno!",
+	intro_next = "Ďalej",
+	intro_skip = "Preskočiť",
+	intro_start = "Začať",
 }
