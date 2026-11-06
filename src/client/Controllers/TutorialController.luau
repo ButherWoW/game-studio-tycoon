@@ -11,6 +11,8 @@ local TutorialRemotes = require(ReplicatedStorage.Shared.TutorialRemotes)
 local Tutorial = require(ReplicatedStorage.Shared.Config.Tutorial)
 local StartPark = require(ReplicatedStorage.Shared.Config.StartPark)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 
@@ -283,6 +285,7 @@ local function run()
 	arrow2d.AnchorPoint = Vector2.new(0.5, 1)
 	arrow2d.Size = UDim2.fromOffset(ARROW_SIZE, ARROW_SIZE)
 	arrow2d.Visible = false
+	ArtIcon.replace(arrow2d, Images.tutorial.arrow) -- V31: стрелка Астры вместо ⬇
 
 	-- Подсветка и стрелка над кнопкой на участке (локальные, другим игрокам не видны)
 	local highlight = Instance.new("Highlight")
@@ -297,6 +300,7 @@ local function run()
 	local arrow3d = Ui.label(billboard, ARROW, ARROW_SIZE * 2, Ui.titleFont, Ui.colors.money)
 	arrow3d.Size = UDim2.fromScale(1, 1)
 	arrow3d.TextXAlignment = Enum.TextXAlignment.Center
+	ArtIcon.replace(arrow3d, Images.tutorial.arrow)
 
 	local function point3d(target: BasePart?)
 		highlight.Adornee = target

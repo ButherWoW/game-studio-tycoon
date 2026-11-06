@@ -89,6 +89,28 @@ function ArtIcon.prefix(target: TextLabel | TextButton, emoji: string, id: numbe
 	return image
 end
 
+-- Картинка size×size отдельной строкой списка (UIListLayout) — над заголовком окна по центру.
+-- id 0 — ничего не создаём (окно как раньше). Высоту окна вызывающий увеличивает на
+-- ArtIcon.headerHeight(id, size, gap) заранее: Ui.window получает размер при создании
+function ArtIcon.header(parent: Instance, id: number, size: number, layoutOrder: number): ImageLabel?
+	if id <= 0 then
+		return nil
+	end
+	local image = Instance.new("ImageLabel")
+	image.Name = "HeaderArt"
+	image.BackgroundTransparency = 1
+	image.Size = UDim2.fromOffset(size, size)
+	image.ScaleType = Enum.ScaleType.Fit
+	image.LayoutOrder = layoutOrder
+	image.Image = "rbxassetid://" .. id
+	image.Parent = parent
+	return image
+end
+
+function ArtIcon.headerHeight(id: number, size: number, gap: number): number
+	return if id > 0 then size + gap else 0
+end
+
 -- Вспышка частиц с текстурами Астры (Images.fx, V24) над деталью part (по умолчанию — над
 -- персонажем игрока). ids — id текстур, нулевые пропускаются; все 0 — ничего не делаем
 -- и возвращаем false: у вызывающего остаётся старый эффект (или эффекта нет, как раньше)

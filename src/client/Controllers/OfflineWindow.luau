@@ -7,10 +7,14 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local RetentionRemotes = require(ReplicatedStorage.Shared.RetentionRemotes)
 local Texts = require(ReplicatedStorage.Shared.Config.Texts)
+local Images = require(ReplicatedStorage.Shared.Config.Images)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local Offline = require(ReplicatedStorage.Shared.Config.Offline)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
 local PopupQueue = require(script.Parent.Parent.PopupQueue)
+
+local HEADER_ART = 64 -- V31: картинка Астры над заголовком (Images.windows), если есть ID
 
 local OfflineWindow = {}
 local gui: ScreenGui? = nil
@@ -53,7 +57,14 @@ local function show(amount: number)
 	Ui.windowOpened()
 
 	local away = awayText()
-	local window = Ui.window(screen, "Window", Vector2.new(440, if away then 316 else 280))
+	local window = Ui.window(
+		screen,
+		"Window",
+		Vector2.new(
+			440,
+			(if away then 316 else 280) + ArtIcon.headerHeight(Images.windows.offline, HEADER_ART, 10)
+		)
+	)
 	local body = Instance.new("Frame")
 	body.BackgroundTransparency = 1
 	body.Position = UDim2.fromOffset(16, 12)
@@ -65,6 +76,7 @@ local function show(amount: number)
 	local title = Ui.label(body, ClientState.t("offline_title"), 36, Ui.titleFontFor(ClientState.lang))
 	title.TextXAlignment = Enum.TextXAlignment.Center
 	title.LayoutOrder = 1
+	ArtIcon.header(body, Images.windows.offline, HEADER_ART, 0)
 	local money = Ui.label(
 		body,
 		ClientState.t("offline_amount", { money = Texts.money(amount) }),

@@ -18,6 +18,7 @@ local ClientState = require(script.Parent.Parent.ClientState)
 local DepthToast = require(script.Parent.Parent.DepthToast)
 local GotwPanel = require(script.Parent.Parent.GotwPanel)
 local Ui = require(script.Parent.Parent.Ui)
+local ArtIcon = require(script.Parent.Parent.ArtIcon)
 local FeatureGate = require(script.Parent.FeatureGate)
 
 local MENU_SLOT = 17
@@ -163,6 +164,7 @@ function RivalWindow.open()
 	local title = Ui.label(window, ClientState.t("rivals_title"), 40, Ui.titleFontFor(ClientState.lang))
 	title.Position = UDim2.fromOffset(16, 10)
 	title.Size = UDim2.new(1, -80, 0, 40)
+	ArtIcon.prefix(title, "📊", Images.windows.rivals, 40)
 	local close = Ui.button(window, ClientState.t("create_close"), Ui.colors.bad, RivalWindow.close)
 	close.AnchorPoint = Vector2.new(1, 0)
 	close.Position = UDim2.new(1, -12, 0, 10)
@@ -293,7 +295,7 @@ function RivalWindow.start()
 		else
 			RivalWindow.open()
 		end
-	end)
+	end, "menu_rivals")
 	buildHitBanner()
 	DepthRemotes.RivalState.OnClientEvent:Connect(function(newState: any)
 		if type(newState) == "table" then
