@@ -85,20 +85,20 @@ local function bubble(model: Model, text: string): BillboardGui?
 	end
 	local gui = Instance.new("BillboardGui")
 	gui.Name = "LifeBubble"
-	gui.Size = UDim2.fromScale(2, 2)
-	gui.StudsOffset = Vector3.new(0, 2.4, 0)
+	gui.Size = UDim2.fromScale(3, 1.5)
+	gui.StudsOffset = Vector3.new(0, 2.2, 0)
 	gui.MaxDistance = 80
 	gui.Adornee = head
 	local label = Instance.new("TextLabel")
 	label.Size = UDim2.fromScale(1, 1)
-	label.BackgroundColor3 = Color3.new(1, 1, 1)
-	label.BackgroundTransparency = 0.1
+	-- Только значок без фона-квадрата: прозрачная подпись с тонкой обводкой
+	label.BackgroundTransparency = 1
+	label.TextColor3 = Color3.new(1, 1, 1)
+	label.TextStrokeTransparency = 0.4
+	label.TextStrokeColor3 = Color3.fromRGB(30, 30, 40)
 	label.TextScaled = true
 	label.Font = Enum.Font.GothamBold
 	label.Text = text
-	local corner = Instance.new("UICorner")
-	corner.CornerRadius = UDim.new(0.5, 0)
-	corner.Parent = label
 	label.Parent = gui
 	gui.Parent = head
 	return gui
