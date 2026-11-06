@@ -531,6 +531,21 @@ function DataService.save(player: Player): boolean
 	return ok
 end
 
+-- Сброс профиля из админ-панели (AdminService): при выходе вместо профиля пишется новый
+-- (defaultProfile). Квитанции Robux остаются — ProcessReceipt не выдаст старые покупки повторно
+local resetOnClose: { [Player]: boolean } = {}
+
+-- Пометить профиль к сбросу; игрока после этого кикают (AdminService), сброс — в closeProfile.
+-- false — профиля нет или выход уже начат
+function DataService.resetOnLeave(player: Player): boolean
+	local state = states[player]
+	if not profiles[player] or not state or state.closed then
+		return false
+	end
+	resetOnClose[player] = true
+	return true
+end
+
 -- Финальное сохранение со снятием метки. Повторный вызов (PlayerRemoving + BindToClose) — пустой
 local function closeProfile(player: Player)
 	leaderstatsHold[player] = nil
@@ -540,6 +555,13 @@ local function closeProfile(player: Player)
 		return
 	end
 	state.closed = true
+	if resetOnClose[player] then
+		resetOnClose[player] = nil
+		local fresh = defaultProfile()
+		fresh.processedReceipts = p.processedReceipts
+		fresh.receiptLog = p.receiptLog
+		p = fresh
+	end
 	if state.persistent then
 		local startedAt = os.clock()
 		acquire(player.UserId)
