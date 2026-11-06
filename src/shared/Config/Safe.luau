@@ -16,7 +16,8 @@
 -- cash понимает 500000, 500k, 20m; until — дата UTC (до 23:59:59 этого дня) или 2026-11-12T18:00.
 
 local Safe = {
-	-- UserId владельцев, кому можно /safe (кроме создателя игры: его сервер находит сам)
+	-- UserId владельцев, кому можно /safe (кроме создателя игры: его сервер находит сам).
+	-- Список общий с Config/Admin.ownerUserIds: владельцев определяет server/Services/OwnerAccess
 	ownerUserIds = {} :: { number },
 
 	codeLength = 6,
