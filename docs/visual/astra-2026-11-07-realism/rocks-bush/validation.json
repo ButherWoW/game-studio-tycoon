@@ -1,0 +1,170 @@
+{
+  "RockSmall": {
+    "gltf_reimport_triangle_count_matches": true,
+    "parts": [
+      {
+        "vertices": 1655,
+        "triangles": 3248,
+        "uv_finite": true,
+        "uv_min": [
+          0.0,
+          0.0
+        ],
+        "uv_max": [
+          1.0,
+          1.0
+        ],
+        "degenerate_triangles": 0,
+        "signed_volume": 0.7278032853176949,
+        "watertight_after_seam_weld": true,
+        "bounds": [
+          [
+            -0.75,
+            0.0,
+            -0.55
+          ],
+          [
+            0.75,
+            0.9,
+            0.55
+          ]
+        ]
+      }
+    ],
+    "total_triangles": 3248,
+    "open_surfaces_expected": false
+  },
+  "RockMedium": {
+    "gltf_reimport_triangle_count_matches": true,
+    "parts": [
+      {
+        "vertices": 1655,
+        "triangles": 3248,
+        "uv_finite": true,
+        "uv_min": [
+          0.0,
+          0.0
+        ],
+        "uv_max": [
+          1.0,
+          1.0
+        ],
+        "degenerate_triangles": 0,
+        "signed_volume": 3.46933955895245,
+        "watertight_after_seam_weld": true,
+        "bounds": [
+          [
+            -1.25,
+            0.0,
+            -0.925
+          ],
+          [
+            1.25,
+            1.5,
+            0.925
+          ]
+        ]
+      }
+    ],
+    "total_triangles": 3248,
+    "open_surfaces_expected": false
+  },
+  "RockLarge": {
+    "gltf_reimport_triangle_count_matches": true,
+    "parts": [
+      {
+        "vertices": 1655,
+        "triangles": 3248,
+        "uv_finite": true,
+        "uv_min": [
+          0.0,
+          0.0
+        ],
+        "uv_max": [
+          1.0,
+          1.0
+        ],
+        "degenerate_triangles": 0,
+        "signed_volume": 14.565463566200753,
+        "watertight_after_seam_weld": true,
+        "bounds": [
+          [
+            -2.05,
+            0.0,
+            -1.5
+          ],
+          [
+            2.05,
+            2.45,
+            1.5
+          ]
+        ]
+      }
+    ],
+    "total_triangles": 3248,
+    "open_surfaces_expected": false
+  },
+  "Bush": {
+    "gltf_reimport_triangle_count_matches": true,
+    "parts": [
+      {
+        "vertices": 10880,
+        "triangles": 13056,
+        "uv_finite": true,
+        "uv_min": [
+          0.0,
+          0.0
+        ],
+        "uv_max": [
+          1.0,
+          1.0
+        ],
+        "degenerate_triangles": 0,
+        "signed_volume": 1.8713411089919507,
+        "watertight_after_seam_weld": false,
+        "bounds": [
+          [
+            -1.55,
+            0.17162031113864562,
+            -1.0
+          ],
+          [
+            1.5500000000000005,
+            1.7,
+            1.0
+          ]
+        ]
+      },
+      {
+        "vertices": 490,
+        "triangles": 420,
+        "uv_finite": true,
+        "uv_min": [
+          0.0,
+          0.0
+        ],
+        "uv_max": [
+          1.0,
+          1.0
+        ],
+        "degenerate_triangles": 0,
+        "signed_volume": 0.02264395384205899,
+        "watertight_after_seam_weld": false,
+        "bounds": [
+          [
+            -1.2024807207744848,
+            0.0,
+            -0.7308257308660003
+          ],
+          [
+            1.1191410660067562,
+            1.4691977651264352,
+            0.5993293195136433
+          ]
+        ]
+      }
+    ],
+    "total_triangles": 13476,
+    "open_surfaces_expected": true
+  }
+}
