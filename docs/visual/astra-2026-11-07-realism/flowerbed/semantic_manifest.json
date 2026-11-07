@@ -1,0 +1,2097 @@
+[
+  {
+    "name": "Sandstone edging 00",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 01",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 02",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 03",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 04",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 05",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 06",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 07",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 08",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 09",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 10",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 11",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 12",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 13",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 14",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 15",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 16",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 17",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 18",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 19",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 20",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 21",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 22",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Sandstone edging 23",
+    "material": 0,
+    "triangles": 20
+  },
+  {
+    "name": "Cultivated dark soil",
+    "material": 1,
+    "triangles": 64
+  },
+  {
+    "name": "Daisy curved stalk 0",
+    "material": 2,
+    "triangles": 84
+  },
+  {
+    "name": "Daisy leaf 0-0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 0-1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 0-2",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy ivory ray 00-00",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 00-01",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 00-02",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 00-03",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 00-04",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 00-05",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 00-06",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 00-07",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 00-08",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 00-09",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 00-10",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy golden pollen 0",
+    "material": 4,
+    "triangles": 32
+  },
+  {
+    "name": "Daisy curved stalk 1",
+    "material": 2,
+    "triangles": 84
+  },
+  {
+    "name": "Daisy leaf 1-0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 1-1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 1-2",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy ivory ray 01-00",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 01-01",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 01-02",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 01-03",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 01-04",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 01-05",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 01-06",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 01-07",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 01-08",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 01-09",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 01-10",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy golden pollen 1",
+    "material": 4,
+    "triangles": 32
+  },
+  {
+    "name": "Daisy curved stalk 2",
+    "material": 2,
+    "triangles": 84
+  },
+  {
+    "name": "Daisy leaf 2-0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 2-1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 2-2",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy ivory ray 02-00",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 02-01",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 02-02",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 02-03",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 02-04",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 02-05",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 02-06",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 02-07",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 02-08",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 02-09",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 02-10",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy golden pollen 2",
+    "material": 4,
+    "triangles": 32
+  },
+  {
+    "name": "Daisy curved stalk 3",
+    "material": 2,
+    "triangles": 84
+  },
+  {
+    "name": "Daisy leaf 3-0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 3-1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 3-2",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy ivory ray 03-00",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 03-01",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 03-02",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 03-03",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 03-04",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 03-05",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 03-06",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 03-07",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 03-08",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 03-09",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 03-10",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy golden pollen 3",
+    "material": 4,
+    "triangles": 32
+  },
+  {
+    "name": "Daisy curved stalk 4",
+    "material": 2,
+    "triangles": 84
+  },
+  {
+    "name": "Daisy leaf 4-0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 4-1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 4-2",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy ivory ray 04-00",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 04-01",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 04-02",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 04-03",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 04-04",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 04-05",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 04-06",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 04-07",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 04-08",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 04-09",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 04-10",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy golden pollen 4",
+    "material": 4,
+    "triangles": 32
+  },
+  {
+    "name": "Daisy curved stalk 5",
+    "material": 2,
+    "triangles": 84
+  },
+  {
+    "name": "Daisy leaf 5-0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 5-1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 5-2",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy ivory ray 05-00",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 05-01",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 05-02",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 05-03",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 05-04",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 05-05",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 05-06",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 05-07",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 05-08",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 05-09",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 05-10",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy golden pollen 5",
+    "material": 4,
+    "triangles": 32
+  },
+  {
+    "name": "Daisy curved stalk 6",
+    "material": 2,
+    "triangles": 84
+  },
+  {
+    "name": "Daisy leaf 6-0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 6-1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 6-2",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy ivory ray 06-00",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 06-01",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 06-02",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 06-03",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 06-04",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 06-05",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 06-06",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 06-07",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 06-08",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 06-09",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 06-10",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy golden pollen 6",
+    "material": 4,
+    "triangles": 32
+  },
+  {
+    "name": "Daisy curved stalk 7",
+    "material": 2,
+    "triangles": 84
+  },
+  {
+    "name": "Daisy leaf 7-0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 7-1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy leaf 7-2",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Daisy ivory ray 07-00",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 07-01",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 07-02",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 07-03",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 07-04",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 07-05",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 07-06",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 07-07",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 07-08",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 07-09",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy ivory ray 07-10",
+    "material": 3,
+    "triangles": 20
+  },
+  {
+    "name": "Daisy golden pollen 7",
+    "material": 4,
+    "triangles": 32
+  },
+  {
+    "name": "Tulip curved stalk 0",
+    "material": 2,
+    "triangles": 84
+  },
+  {
+    "name": "Tulip leaf 0-0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip leaf 0-1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip leaf 0-2",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip cupped petal 00-00",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 00-01",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 00-02",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 00-03",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 00-04",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 00-05",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip curved stalk 1",
+    "material": 2,
+    "triangles": 84
+  },
+  {
+    "name": "Tulip leaf 1-0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip leaf 1-1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip leaf 1-2",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip cupped petal 01-00",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 01-01",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 01-02",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 01-03",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 01-04",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 01-05",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip curved stalk 2",
+    "material": 2,
+    "triangles": 84
+  },
+  {
+    "name": "Tulip leaf 2-0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip leaf 2-1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip leaf 2-2",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip cupped petal 02-00",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 02-01",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 02-02",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 02-03",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 02-04",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 02-05",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip curved stalk 3",
+    "material": 2,
+    "triangles": 84
+  },
+  {
+    "name": "Tulip leaf 3-0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip leaf 3-1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip leaf 3-2",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip cupped petal 03-00",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 03-01",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 03-02",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 03-03",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 03-04",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 03-05",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip curved stalk 4",
+    "material": 2,
+    "triangles": 84
+  },
+  {
+    "name": "Tulip leaf 4-0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip leaf 4-1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip leaf 4-2",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Tulip cupped petal 04-00",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 04-01",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 04-02",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 04-03",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 04-04",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Tulip cupped petal 04-05",
+    "material": 6,
+    "triangles": 36
+  },
+  {
+    "name": "Lavender branching stem 0 0",
+    "material": 2,
+    "triangles": 50
+  },
+  {
+    "name": "Lavender lanceolate leaf 0 0 0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender lanceolate leaf 0 0 1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender tiny floret 0 0 0 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 0 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 0 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 1 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 1 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 1 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 2 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 2 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 2 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 3 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 3 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 3 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 4 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 4 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 0 4 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender branching stem 0 1",
+    "material": 2,
+    "triangles": 50
+  },
+  {
+    "name": "Lavender lanceolate leaf 0 1 0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender lanceolate leaf 0 1 1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender tiny floret 0 1 0 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 0 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 0 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 1 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 1 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 1 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 2 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 2 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 2 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 3 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 3 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 3 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 4 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 4 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 1 4 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender branching stem 0 2",
+    "material": 2,
+    "triangles": 50
+  },
+  {
+    "name": "Lavender lanceolate leaf 0 2 0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender lanceolate leaf 0 2 1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender tiny floret 0 2 0 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 0 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 0 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 1 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 1 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 1 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 2 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 2 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 2 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 3 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 3 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 3 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 4 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 4 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 0 2 4 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender branching stem 1 0",
+    "material": 2,
+    "triangles": 50
+  },
+  {
+    "name": "Lavender lanceolate leaf 1 0 0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender lanceolate leaf 1 0 1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender tiny floret 1 0 0 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 0 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 0 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 1 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 1 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 1 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 2 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 2 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 2 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 3 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 3 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 3 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 4 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 4 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 0 4 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender branching stem 1 1",
+    "material": 2,
+    "triangles": 50
+  },
+  {
+    "name": "Lavender lanceolate leaf 1 1 0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender lanceolate leaf 1 1 1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender tiny floret 1 1 0 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 0 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 0 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 1 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 1 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 1 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 2 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 2 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 2 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 3 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 3 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 3 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 4 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 4 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 1 4 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender branching stem 1 2",
+    "material": 2,
+    "triangles": 50
+  },
+  {
+    "name": "Lavender lanceolate leaf 1 2 0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender lanceolate leaf 1 2 1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender tiny floret 1 2 0 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 0 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 0 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 1 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 1 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 1 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 2 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 2 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 2 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 3 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 3 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 3 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 4 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 4 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 1 2 4 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender branching stem 2 0",
+    "material": 2,
+    "triangles": 50
+  },
+  {
+    "name": "Lavender lanceolate leaf 2 0 0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender lanceolate leaf 2 0 1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender tiny floret 2 0 0 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 0 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 0 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 1 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 1 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 1 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 2 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 2 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 2 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 3 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 3 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 3 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 4 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 4 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 0 4 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender branching stem 2 1",
+    "material": 2,
+    "triangles": 50
+  },
+  {
+    "name": "Lavender lanceolate leaf 2 1 0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender lanceolate leaf 2 1 1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender tiny floret 2 1 0 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 0 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 0 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 1 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 1 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 1 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 2 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 2 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 2 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 3 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 3 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 3 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 4 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 4 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 1 4 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender branching stem 2 2",
+    "material": 2,
+    "triangles": 50
+  },
+  {
+    "name": "Lavender lanceolate leaf 2 2 0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender lanceolate leaf 2 2 1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender tiny floret 2 2 0 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 0 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 0 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 1 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 1 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 1 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 2 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 2 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 2 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 3 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 3 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 3 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 4 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 4 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 2 2 4 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender branching stem 3 0",
+    "material": 2,
+    "triangles": 50
+  },
+  {
+    "name": "Lavender lanceolate leaf 3 0 0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender lanceolate leaf 3 0 1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender tiny floret 3 0 0 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 0 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 0 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 1 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 1 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 1 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 2 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 2 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 2 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 3 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 3 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 3 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 4 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 4 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 0 4 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender branching stem 3 1",
+    "material": 2,
+    "triangles": 50
+  },
+  {
+    "name": "Lavender lanceolate leaf 3 1 0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender lanceolate leaf 3 1 1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender tiny floret 3 1 0 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 0 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 0 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 1 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 1 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 1 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 2 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 2 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 2 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 3 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 3 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 3 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 4 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 4 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 1 4 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender branching stem 3 2",
+    "material": 2,
+    "triangles": 50
+  },
+  {
+    "name": "Lavender lanceolate leaf 3 2 0",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender lanceolate leaf 3 2 1",
+    "material": 2,
+    "triangles": 24
+  },
+  {
+    "name": "Lavender tiny floret 3 2 0 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 0 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 0 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 1 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 1 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 1 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 2 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 2 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 2 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 3 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 3 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 3 2",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 4 0",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 4 1",
+    "material": 5,
+    "triangles": 32
+  },
+  {
+    "name": "Lavender tiny floret 3 2 4 2",
+    "material": 5,
+    "triangles": 32
+  }
+]

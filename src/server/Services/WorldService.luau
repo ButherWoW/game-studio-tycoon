@@ -410,7 +410,26 @@ local function ensureStartPark()
 			place(pawn, 270, StartPark.boardRadius, true)
 		end
 		if pawnImported then
+			-- Старые объёмные значки закрывали локализуемую надпись на SignPanel.
+			local legacySignParts =
+				{ SignCartridge = true, SignLabel = true, SignCoin = true, CoinFace = true }
+			for _, descendant in pawn:GetDescendants() do
+				if descendant:IsA("BasePart") and legacySignParts[descendant.Name] then
+					descendant.Transparency = 1
+					descendant.CanCollide = false
+					descendant.CanTouch = false
+					descendant.CanQuery = false
+				end
+			end
 			addSign(pawn, "SignPanel", "park_pawn_sign", "📦 ЛОМБАРД", Color3.fromRGB(255, 201, 60))
+			local panel = pawn:FindFirstChild("SignPanel", true)
+			if panel then
+				local label = panel:FindFirstChild("SignText", true)
+				if label and label:IsA("TextLabel") then
+					label.Position = UDim2.fromScale(0.04, 0.12)
+					label.Size = UDim2.fromScale(0.92, 0.76)
+				end
+			end
 		end
 	end
 	-- Фонтан Астры — только вместе с её парком (место в парке под него оставлено)

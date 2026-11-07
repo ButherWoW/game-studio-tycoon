@@ -1,0 +1,152 @@
+[
+  {
+    "name": "stone",
+    "sourcePixels": [
+      1254,
+      1254
+    ],
+    "deliveredPixels": [
+      2048,
+      2048
+    ],
+    "upscaled": true,
+    "normalConvention": "OpenGL tangent +Y",
+    "maps": [
+      "basecolor",
+      "normal",
+      "roughness",
+      "metallic",
+      "orm"
+    ],
+    "metallic": 0,
+    "roughnessBase": 0.86,
+    "provenance": "built-in image_gen albedo; derived artist-authored approximate micro-normal/roughness; not scans or high-poly bake",
+    "hashes": {
+      "stone_orm.png": "3b9394ae3905fbcd02ab4890affd5a504da8420101be6346bfb5f0b89106f4d7",
+      "stone_roughness.png": "7deaad4b4a454ea3a8c67301d6a0b7ecc51ebf554df6ccd90fff9a4b6b5d8c85",
+      "stone_normal.png": "a346abac78ea3ee96100e3dd563b6e82339fe5a96a8ad4c8052c0ebe25ceb45e",
+      "stone_basecolor.png": "b9f674c006414260f22639bc352bb442e59e7bd4b02eba29601c6db045e9231c",
+      "stone_metallic.png": "47409785b30cc38f1ec62f219ce1c46f885427442416c0768dc470497ef784cb"
+    }
+  },
+  {
+    "name": "wood",
+    "sourcePixels": [
+      1254,
+      1254
+    ],
+    "deliveredPixels": [
+      2048,
+      2048
+    ],
+    "upscaled": true,
+    "normalConvention": "OpenGL tangent +Y",
+    "maps": [
+      "basecolor",
+      "normal",
+      "roughness",
+      "metallic",
+      "orm"
+    ],
+    "metallic": 0,
+    "roughnessBase": 0.6,
+    "provenance": "built-in image_gen albedo; derived artist-authored approximate micro-normal/roughness; not scans or high-poly bake",
+    "hashes": {
+      "wood_orm.png": "d60cd14c7a9b390cf39a862eca3a2c91ee918d2b08a4219652ea01de967990d3",
+      "wood_roughness.png": "bac1c52fe3db2632cb378ffed8953348cee197ee546c7df362afd712ceefaa7b",
+      "wood_normal.png": "9f77b655c4500f72300caf96ab35266c91eba7a40d64fc4d50fe9e0fe994fbd8",
+      "wood_metallic.png": "47409785b30cc38f1ec62f219ce1c46f885427442416c0768dc470497ef784cb",
+      "wood_basecolor.png": "8939f0f321495b64b6af31aa64d754340a1419224e147f600b4e655d10c6e50c"
+    }
+  },
+  {
+    "name": "soil",
+    "sourcePixels": [
+      1254,
+      1254
+    ],
+    "deliveredPixels": [
+      2048,
+      2048
+    ],
+    "upscaled": true,
+    "normalConvention": "OpenGL tangent +Y",
+    "maps": [
+      "basecolor",
+      "normal",
+      "roughness",
+      "metallic",
+      "orm"
+    ],
+    "metallic": 0,
+    "roughnessBase": 0.95,
+    "provenance": "built-in image_gen albedo; derived artist-authored approximate micro-normal/roughness; not scans or high-poly bake",
+    "hashes": {
+      "soil_normal.png": "e83adb78505432a4bacdc49b439c77bd12c4bf0b2e20add86009b970552e81c3",
+      "soil_metallic.png": "47409785b30cc38f1ec62f219ce1c46f885427442416c0768dc470497ef784cb",
+      "soil_basecolor.png": "04fb782fe16a7960a492b1e784f301afb0b2627a9c6815552b0a52e1fbf15906",
+      "soil_roughness.png": "28b4206a11a2749392ab53398164b273c195728b69b4fdba6a1e656caa04beae",
+      "soil_orm.png": "eee66753427d6c9989103e3a151483e8a0fbe99582fafa9cf5fb6e8c3228752e"
+    }
+  },
+  {
+    "name": "broadleaf",
+    "sourcePixels": [
+      1254,
+      1254
+    ],
+    "deliveredPixels": [
+      2048,
+      2048
+    ],
+    "upscaled": true,
+    "normalConvention": "OpenGL tangent +Y",
+    "maps": [
+      "basecolor",
+      "normal",
+      "roughness",
+      "metallic",
+      "orm"
+    ],
+    "metallic": 0,
+    "roughnessBase": 0.56,
+    "provenance": "built-in image_gen albedo; derived artist-authored approximate micro-normal/roughness; not scans or high-poly bake",
+    "hashes": {
+      "broadleaf_basecolor.png": "418d08dba45a45c78eb23d7454fe436b13c8b0541552c29751aaa15e9c6cf243",
+      "broadleaf_metallic.png": "47409785b30cc38f1ec62f219ce1c46f885427442416c0768dc470497ef784cb",
+      "broadleaf_normal.png": "1dc5732e70fcc65f63bb1e05c2b0864beee1902688a8030900ca85dc01e31a6b",
+      "broadleaf_orm.png": "41d71754d56cedd21aae9c7d90e24c2af3f440c248ee41609fa4df06050f470e",
+      "broadleaf_roughness.png": "8b7d080742d2657142d8b7df08cdcb086f38363f47826a2c73540a2660eac4df"
+    }
+  },
+  {
+    "name": "petal",
+    "sourcePixels": [
+      1254,
+      1254
+    ],
+    "deliveredPixels": [
+      2048,
+      2048
+    ],
+    "upscaled": true,
+    "normalConvention": "OpenGL tangent +Y",
+    "maps": [
+      "basecolor",
+      "normal",
+      "roughness",
+      "metallic",
+      "orm"
+    ],
+    "metallic": 0,
+    "roughnessBase": 0.72,
+    "provenance": "built-in image_gen albedo; derived artist-authored approximate micro-normal/roughness; not scans or high-poly bake",
+    "hashes": {
+      "petal_roughness.png": "a67b65d060cec19f0adeebaf5bd72e32082fff7940913685288eadaf1a09d776",
+      "petal_orm.png": "d3b7b05be1986cabda97c145487bb857f51b7d359e051bdd6d3db1441acfe76d",
+      "petal_metallic.png": "47409785b30cc38f1ec62f219ce1c46f885427442416c0768dc470497ef784cb",
+      "petal_normal.png": "8b458f4d62c1df502acda56c0aefbaa5d8cd3e5a85fe1ac508ad2fefb3f3a9d1",
+      "petal_basecolor.png": "0042e96658d227b2f1dd65e7fbfdce24ce35b12cc5196523e1d1ce5dcb9fa97a"
+    }
+  }
+]

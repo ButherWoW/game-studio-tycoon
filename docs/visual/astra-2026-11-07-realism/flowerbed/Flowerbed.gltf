@@ -1,0 +1,853 @@
+{
+  "images": [
+    {
+      "uri": "../textures/stone_basecolor.png"
+    },
+    {
+      "uri": "../textures/stone_orm.png"
+    },
+    {
+      "uri": "../textures/stone_normal.png"
+    },
+    {
+      "uri": "../textures/soil_basecolor.png"
+    },
+    {
+      "uri": "../textures/soil_orm.png"
+    },
+    {
+      "uri": "../textures/soil_normal.png"
+    },
+    {
+      "uri": "../textures/broadleaf_basecolor.png"
+    },
+    {
+      "uri": "../textures/broadleaf_orm.png"
+    },
+    {
+      "uri": "../textures/broadleaf_normal.png"
+    },
+    {
+      "uri": "../textures/petal_basecolor.png"
+    },
+    {
+      "uri": "../textures/petal_orm.png"
+    },
+    {
+      "uri": "../textures/petal_normal.png"
+    },
+    {
+      "uri": "../textures/petal_basecolor.png"
+    },
+    {
+      "uri": "../textures/petal_orm.png"
+    },
+    {
+      "uri": "../textures/petal_normal.png"
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
+    },
+    {
+      "source": 1
+    },
+    {
+      "source": 2
+    },
+    {
+      "source": 3
+    },
+    {
+      "source": 4
+    },
+    {
+      "source": 5
+    },
+    {
+      "source": 6
+    },
+    {
+      "source": 7
+    },
+    {
+      "source": 8
+    },
+    {
+      "source": 9
+    },
+    {
+      "source": 10
+    },
+    {
+      "source": 11
+    },
+    {
+      "source": 12
+    },
+    {
+      "source": 13
+    },
+    {
+      "source": 14
+    }
+  ],
+  "asset": {
+    "version": "2.0",
+    "generator": "Original procedural botanical sculpture"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Flowerbed",
+      "children": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "name": "Sandstone",
+      "mesh": 0
+    },
+    {
+      "name": "Soil",
+      "mesh": 1
+    },
+    {
+      "name": "Foliage",
+      "mesh": 2
+    },
+    {
+      "name": "DaisyPetals",
+      "mesh": 3
+    },
+    {
+      "name": "Pollen",
+      "mesh": 4
+    },
+    {
+      "name": "Lavender",
+      "mesh": 5
+    },
+    {
+      "name": "TulipPetals",
+      "mesh": 6
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Sandstone.Geometry",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0
+        }
+      ]
+    },
+    {
+      "name": "Soil.Geometry",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 4,
+            "NORMAL": 5,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7,
+          "material": 1
+        }
+      ]
+    },
+    {
+      "name": "Foliage.Geometry",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 8,
+            "NORMAL": 9,
+            "TEXCOORD_0": 10
+          },
+          "indices": 11,
+          "material": 2
+        }
+      ]
+    },
+    {
+      "name": "DaisyPetals.Geometry",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 12,
+            "NORMAL": 13,
+            "TEXCOORD_0": 14
+          },
+          "indices": 15,
+          "material": 3
+        }
+      ]
+    },
+    {
+      "name": "Pollen.Geometry",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 16,
+            "NORMAL": 17,
+            "TEXCOORD_0": 18
+          },
+          "indices": 19,
+          "material": 4
+        }
+      ]
+    },
+    {
+      "name": "Lavender.Geometry",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 20,
+            "NORMAL": 21,
+            "TEXCOORD_0": 22
+          },
+          "indices": 23,
+          "material": 5
+        }
+      ]
+    },
+    {
+      "name": "TulipPetals.Geometry",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 24,
+            "NORMAL": 25,
+            "TEXCOORD_0": 26
+          },
+          "indices": 27,
+          "material": 6
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "Sandstone",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.86,
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      },
+      "normalTexture": {
+        "index": 2
+      }
+    },
+    {
+      "name": "Soil",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.86,
+        "baseColorTexture": {
+          "index": 3
+        },
+        "metallicRoughnessTexture": {
+          "index": 4
+        }
+      },
+      "normalTexture": {
+        "index": 5
+      }
+    },
+    {
+      "name": "Broadleaf",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.86,
+        "baseColorTexture": {
+          "index": 6
+        },
+        "metallicRoughnessTexture": {
+          "index": 7
+        }
+      },
+      "normalTexture": {
+        "index": 8
+      }
+    },
+    {
+      "name": "Petals",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.86,
+        "baseColorTexture": {
+          "index": 9
+        },
+        "metallicRoughnessTexture": {
+          "index": 10
+        }
+      },
+      "normalTexture": {
+        "index": 11
+      }
+    },
+    {
+      "name": "Pollen",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.93,
+          0.57,
+          0.055,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.86
+      }
+    },
+    {
+      "name": "Lavender",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.43,
+          0.22,
+          0.65,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.86
+      }
+    },
+    {
+      "name": "Tulip coral",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.95,
+          0.24,
+          0.2,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.86,
+        "baseColorTexture": {
+          "index": 12
+        },
+        "metallicRoughnessTexture": {
+          "index": 13
+        }
+      },
+      "normalTexture": {
+        "index": 14
+      }
+    }
+  ],
+  "buffers": [
+    {
+      "uri": "Flowerbed.bin",
+      "byteLength": 530928
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 3456
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 3456,
+      "byteLength": 3456
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 6912,
+      "byteLength": 2304
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 9216,
+      "byteLength": 5760
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 14976,
+      "byteLength": 780
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 15756,
+      "byteLength": 780
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 16536,
+      "byteLength": 520
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 17056,
+      "byteLength": 768
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 17824,
+      "byteLength": 27840
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 45664,
+      "byteLength": 27840
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 73504,
+      "byteLength": 18560
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 92064,
+      "byteLength": 38448
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 130512,
+      "byteLength": 19008
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 149520,
+      "byteLength": 19008
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 168528,
+      "byteLength": 12672
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 181200,
+      "byteLength": 21120
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 202320,
+      "byteLength": 3456
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 205776,
+      "byteLength": 3456
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 209232,
+      "byteLength": 2304
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 211536,
+      "byteLength": 3072
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 214608,
+      "byteLength": 77760
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 292368,
+      "byteLength": 77760
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 370128,
+      "byteLength": 51840
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 421968,
+      "byteLength": 69120
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 491088,
+      "byteLength": 10080
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 501168,
+      "byteLength": 10080
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 511248,
+      "byteLength": 6720
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 517968,
+      "byteLength": 12960
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 288,
+      "type": "VEC3",
+      "min": [
+        -1.8998632431030273,
+        0.0,
+        -1.8998632431030273
+      ],
+      "max": [
+        1.8998632431030273,
+        0.28299230337142944,
+        1.8998632431030273
+      ]
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 288,
+      "type": "VEC3",
+      "min": [
+        -0.9796311855316162,
+        -0.5838616490364075,
+        -0.9797459840774536
+      ],
+      "max": [
+        0.9779124855995178,
+        0.7116451859474182,
+        0.9801048636436462
+      ]
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 288,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5125,
+      "count": 1440,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 65,
+      "type": "VEC3",
+      "min": [
+        -1.590000033378601,
+        0.1553034782409668,
+        -1.590000033378601
+      ],
+      "max": [
+        1.590000033378601,
+        0.16697612404823303,
+        1.590000033378601
+      ]
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 65,
+      "type": "VEC3",
+      "min": [
+        -0.028896024450659752,
+        -0.9999999403953552,
+        -0.03170081600546837
+      ],
+      "max": [
+        0.030488673597574234,
+        -0.9994622468948364,
+        0.030729884281754494
+      ]
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 65,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5125,
+      "count": 192,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5126,
+      "count": 2320,
+      "type": "VEC3",
+      "min": [
+        -1.306308388710022,
+        0.1599999964237213,
+        -1.4483699798583984
+      ],
+      "max": [
+        1.3058816194534302,
+        1.2100000381469727,
+        1.4271103143692017
+      ]
+    },
+    {
+      "bufferView": 9,
+      "componentType": 5126,
+      "count": 2320,
+      "type": "VEC3",
+      "min": [
+        -0.9995192289352417,
+        -0.9947025775909424,
+        -0.9992629885673523
+      ],
+      "max": [
+        0.9999993443489075,
+        0.22177399694919586,
+        0.9992629885673523
+      ]
+    },
+    {
+      "bufferView": 10,
+      "componentType": 5126,
+      "count": 2320,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 11,
+      "componentType": 5125,
+      "count": 9612,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 12,
+      "componentType": 5126,
+      "count": 1584,
+      "type": "VEC3",
+      "min": [
+        -1.168535590171814,
+        0.7223130464553833,
+        -0.9200405478477478
+      ],
+      "max": [
+        1.1138975620269775,
+        1.0490000247955322,
+        0.8928326368331909
+      ]
+    },
+    {
+      "bufferView": 13,
+      "componentType": 5126,
+      "count": 1584,
+      "type": "VEC3",
+      "min": [
+        -0.9991174936294556,
+        -0.9994152188301086,
+        -0.9991005063056946
+      ],
+      "max": [
+        0.9991174936294556,
+        0.0,
+        0.9991005063056946
+      ]
+    },
+    {
+      "bufferView": 14,
+      "componentType": 5126,
+      "count": 1584,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 15,
+      "componentType": 5125,
+      "count": 5280,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 16,
+      "componentType": 5126,
+      "count": 288,
+      "type": "VEC3",
+      "min": [
+        -1.01593816280365,
+        0.7322400212287903,
+        -0.7673217058181763
+      ],
+      "max": [
+        0.9548165798187256,
+        1.041759967803955,
+        0.7400654554367065
+      ]
+    },
+    {
+      "bufferView": 17,
+      "componentType": 5126,
+      "count": 288,
+      "type": "VEC3",
+      "min": [
+        -0.8398216962814331,
+        -0.9578365087509155,
+        -0.8398216962814331
+      ],
+      "max": [
+        0.7931991815567017,
+        0.9578365087509155,
+        0.8398216962814331
+      ]
+    },
+    {
+      "bufferView": 18,
+      "componentType": 5126,
+      "count": 288,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 19,
+      "componentType": 5125,
+      "count": 768,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 20,
+      "componentType": 5126,
+      "count": 6480,
+      "type": "VEC3",
+      "min": [
+        -1.2216308116912842,
+        0.6075199842453003,
+        -1.2935689687728882
+      ],
+      "max": [
+        1.2975468635559082,
+        0.948639988899231,
+        1.3516329526901245
+      ]
+    },
+    {
+      "bufferView": 21,
+      "componentType": 5126,
+      "count": 6480,
+      "type": "VEC3",
+      "min": [
+        -0.8398216962814331,
+        -0.9578365087509155,
+        -0.8398216962814331
+      ],
+      "max": [
+        0.7931991815567017,
+        0.9578365087509155,
+        0.8398216962814331
+      ]
+    },
+    {
+      "bufferView": 22,
+      "componentType": 5126,
+      "count": 6480,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 23,
+      "componentType": 5125,
+      "count": 17280,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 24,
+      "componentType": 5126,
+      "count": 840,
+      "type": "VEC3",
+      "min": [
+        -0.8141272664070129,
+        0.9522222280502319,
+        -1.0500584840774536
+      ],
+      "max": [
+        0.8093666434288025,
+        1.3600000143051147,
+        1.0228022336959839
+      ]
+    },
+    {
+      "bufferView": 25,
+      "componentType": 5126,
+      "count": 840,
+      "type": "VEC3",
+      "min": [
+        -0.9984743595123291,
+        -0.7131717801094055,
+        -0.9955195188522339
+      ],
+      "max": [
+        0.9984743595123291,
+        0.3285253345966339,
+        0.9955195188522339
+      ]
+    },
+    {
+      "bufferView": 26,
+      "componentType": 5126,
+      "count": 840,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 27,
+      "componentType": 5125,
+      "count": 3240,
+      "type": "SCALAR"
+    }
+  ]
+}
