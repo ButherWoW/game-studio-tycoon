@@ -1,0 +1,122 @@
+{
+  "TreeBroadleaf": {
+    "dimensionsStuds": [
+      7.4,
+      16.6,
+      7.4
+    ],
+    "baseY": 0,
+    "pivot": "center of base",
+    "meshNodes": 4,
+    "triangles": 20904,
+    "parts": [
+      {
+        "triangles": 4488,
+        "vertices": 2770,
+        "zero_area": 0,
+        "finite_uv": true
+      },
+      {
+        "triangles": 5472,
+        "vertices": 5016,
+        "zero_area": 0,
+        "finite_uv": true
+      },
+      {
+        "triangles": 5472,
+        "vertices": 5016,
+        "zero_area": 0,
+        "finite_uv": true
+      },
+      {
+        "triangles": 5472,
+        "vertices": 5016,
+        "zero_area": 0,
+        "finite_uv": true
+      }
+    ],
+    "gltf_reimport": "PASS",
+    "foliage": "open curved double-sided blades; no alpha cards",
+    "Studio": "not tested"
+  },
+  "TreeBirch": {
+    "dimensionsStuds": [
+      5.4,
+      18.6,
+      5.4
+    ],
+    "baseY": 0,
+    "pivot": "center of base",
+    "meshNodes": 4,
+    "triangles": 20904,
+    "parts": [
+      {
+        "triangles": 4488,
+        "vertices": 2770,
+        "zero_area": 0,
+        "finite_uv": true
+      },
+      {
+        "triangles": 5472,
+        "vertices": 5016,
+        "zero_area": 0,
+        "finite_uv": true
+      },
+      {
+        "triangles": 5472,
+        "vertices": 5016,
+        "zero_area": 0,
+        "finite_uv": true
+      },
+      {
+        "triangles": 5472,
+        "vertices": 5016,
+        "zero_area": 0,
+        "finite_uv": true
+      }
+    ],
+    "gltf_reimport": "PASS",
+    "foliage": "open curved double-sided blades; no alpha cards",
+    "Studio": "not tested"
+  },
+  "TreePine": {
+    "dimensionsStuds": [
+      6.2,
+      18.2,
+      6.2
+    ],
+    "baseY": 0,
+    "pivot": "center of base",
+    "meshNodes": 4,
+    "triangles": 24928,
+    "parts": [
+      {
+        "triangles": 14176,
+        "vertices": 9458,
+        "zero_area": 0,
+        "finite_uv": true
+      },
+      {
+        "triangles": 3600,
+        "vertices": 4500,
+        "zero_area": 0,
+        "finite_uv": true
+      },
+      {
+        "triangles": 3576,
+        "vertices": 4470,
+        "zero_area": 0,
+        "finite_uv": true
+      },
+      {
+        "triangles": 3576,
+        "vertices": 4470,
+        "zero_area": 0,
+        "finite_uv": true
+      }
+    ],
+    "gltf_reimport": "PASS",
+    "foliage": "open curved double-sided blades; no alpha cards",
+    "Studio": "not tested"
+  }
+}
