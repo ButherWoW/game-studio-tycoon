@@ -1071,8 +1071,39 @@ local function buildDeskItem(model: Model, item: string, cframe: CFrame)
 	end
 end
 
-local function buildNpc(employee: Employees.Employee, look: Look): Model?
+-- Keep staff identity/clothes; take only body assets and proportions from the owner.
+local function ownerBodyDescription(player: Player): HumanoidDescription?
+	local character = player.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	local ok, result = pcall(function()
+		if humanoid then
+			return humanoid:GetAppliedDescription()
+		end
+		return Players:GetHumanoidDescriptionFromUserIdAsync(player.UserId)
+	end)
+	if ok then
+		return result :: HumanoidDescription
+	end
+	warn("[StaffService] Owner body unavailable; using default R15:", result)
+	return nil
+end
+
+local function buildNpc(employee: Employees.Employee, look: Look, body: HumanoidDescription?): Model?
 	local description = Instance.new("HumanoidDescription")
+	if body then
+		description.Head = body.Head
+		description.Torso = body.Torso
+		description.LeftArm = body.LeftArm
+		description.RightArm = body.RightArm
+		description.LeftLeg = body.LeftLeg
+		description.RightLeg = body.RightLeg
+		description.HeightScale = body.HeightScale
+		description.WidthScale = body.WidthScale
+		description.DepthScale = body.DepthScale
+		description.HeadScale = body.HeadScale
+		description.BodyTypeScale = body.BodyTypeScale
+		description.ProportionScale = body.ProportionScale
+	end
 	local shirt = if look.shirt > 0
 		then Skills.shirts[look.shirt]
 		else Employees.shirtColors[employee.specialization or "all"]
@@ -1093,6 +1124,7 @@ local function buildNpc(employee: Employees.Employee, look: Look): Model?
 	end
 	local model = result :: Model
 	model.Name = "Staff_" .. employee.id
+	model:SetAttribute("BodySource", if body then "OwnerAvatar" else "DefaultR15")
 	-- Лицо, причёска и одежда Астры (V13); платный скин потом перекроет одежду
 	StaffAppearance.apply(model, employee.id, look.shirt > 0)
 	for _, part in model:GetDescendants() do
@@ -1332,6 +1364,7 @@ rebuildNpcs = function(player: Player)
 		byDesk[deskId] = employeeId
 	end
 	local used: { Vector3 } = {}
+	local body = ownerBodyDescription(player)
 	for _, upgrade in Upgrades do
 		local employeeId = byDesk[upgrade.id]
 		local employee = employeeId and Employees.get(employeeId)
@@ -1344,7 +1377,7 @@ rebuildNpcs = function(player: Player)
 				npcLook = table.clone(look)
 				npcLook.hat = 1 -- "none"
 			end
-			local npc = buildNpc(employee, npcLook)
+			local npc = buildNpc(employee, npcLook, body)
 			if npc and skinned then
 				skins.decorate(npc, employeeId, profile)
 			end
@@ -1368,6 +1401,9 @@ rebuildNpcs = function(player: Player)
 				npc.Parent = folder
 			end
 		end
+	end
+	if body then
+		body:Destroy()
 	end
 	-- Пока строили, игрок мог уйти или запустить новую пересадку
 	if refreshGeneration[player] ~= generation or PlotService.getPlot(player) ~= plot then
