@@ -8,7 +8,8 @@ inputs=json.loads((ROOT/'texture_sources.json').read_text());report=[]
 settings={'stone':(.86,4),'soil':(.95,3),'wood':(.60,3),'broadleaf':(.56,2),'petal':(.72,1.5)}
 sheet=Image.new('RGB',(1280,560),'#eee9e0');d=ImageDraw.Draw(sheet)
 for index,(name,row)in enumerate(inputs.items()):
- source=Image.open(row['path']).convert('RGB');original=source.size
+ source_path=Path(row['path']);source_path=source_path if source_path.is_absolute() else ROOT/source_path
+ source=Image.open(source_path).convert('RGB');original=source.size
  image=ImageOps.fit(source,(2048,2048),method=Image.Resampling.LANCZOS)
  image.save(out/f'{name}_basecolor.png')
  # Artist-authored material data: approximate micro-bump from tonal relief.
