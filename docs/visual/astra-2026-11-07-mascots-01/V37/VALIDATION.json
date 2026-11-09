@@ -1,0 +1,40 @@
+[
+  {
+    "id": "pixel_cat",
+    "parts": 56,
+    "dimensionsXYZ": [
+      2.84,
+      3.42,
+      1.415
+    ],
+    "pairs": 1540,
+    "overlaps": [],
+    "PrimaryPart": "Body",
+    "pivotXYZ": [
+      0,
+      0,
+      0
+    ],
+    "allAnchored": true,
+    "runtimeTested": false
+  },
+  {
+    "id": "coffee_cup",
+    "parts": 77,
+    "dimensionsXYZ": [
+      3.121903819515,
+      3.19,
+      2.105
+    ],
+    "pairs": 2926,
+    "overlaps": [],
+    "PrimaryPart": "Body",
+    "pivotXYZ": [
+      0,
+      0,
+      0
+    ],
+    "allAnchored": true,
+    "runtimeTested": false
+  }
+]
