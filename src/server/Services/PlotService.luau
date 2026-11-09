@@ -282,6 +282,12 @@ local onLift: OfficeFloors.LiftHandler
 
 -- Поставить всё купленное и модели этапа: в гараже — гараж, в офисе — все три этажа
 -- (некупленные закрыты, OfficeFloors)
+-- Позиции от центра основания этажа (docs/visual/…/V38/floor-bc/README.md): этаж 2 — Y 14, этаж 3 — Y 28
+local FLOOR_EXTRAS: { { model: string, level: number, position: Vector3 } } = {
+	{ model = "GameGallery", level = 3, position = Vector3.new(0, 0.5 + 14 + 3, -28.8) },
+	{ model = "PanoramaCorner", level = 4, position = Vector3.new(22, 0.5 + 28 + 0.025, 8) },
+}
+
 local function buildPlot(plot: BasePart, profile: DataService.Profile)
 	-- Участок без гаража пустой: только табличка «Гараж продаётся» (refreshButtons)
 	if not profileOwnsGarage(profile) then
@@ -297,6 +303,15 @@ local function buildPlot(plot: BasePart, profile: DataService.Profile)
 		local shown = if stage.level == 1 then level == 1 else level >= 2
 		if shown and stage.model and not supersededOnPlot(plot, stage.model) then
 			placeModel(plot, stage.model, stage.position, 0)
+		end
+	end
+	-- Дополнения этажей V38-3: галерея игр (2-й этаж, глухая стена) и читальный уголок (3-й).
+	-- Появляются после покупки этажа; пока модель не импортирована в ServerStorage.Upgrades — пропускаем
+	local upgradesFolder = ServerStorage:FindFirstChild("Upgrades")
+	for _, extra in FLOOR_EXTRAS do
+		local available = upgradesFolder and upgradesFolder:FindFirstChild(extra.model)
+		if available and level >= extra.level then
+			placeModel(plot, extra.model, extra.position, 0)
 		end
 	end
 	-- Потолок этажей (низ перекрытий) — в цвете отделки владельца; классика — как раньше
