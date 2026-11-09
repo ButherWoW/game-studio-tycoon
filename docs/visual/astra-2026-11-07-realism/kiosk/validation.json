@@ -1,0 +1,263 @@
+{
+  "model": "Pawnshop",
+  "triangles": 5888,
+  "meshNodes": 11,
+  "materials": 7,
+  "bounds": [
+    [
+      -4.8,
+      0.0,
+      -3.81
+    ],
+    [
+      4.8,
+      6.677800226971606,
+      3.81
+    ]
+  ],
+  "dimensions": [
+    9.6,
+    6.677800226971606,
+    7.62
+  ],
+  "baseY0": true,
+  "pivot": "origin centered XZ",
+  "front": "+Z",
+  "SignPanel": {
+    "node": "SignPanel",
+    "mesh": "SignPanelGeometry",
+    "bounds": [
+      [
+        -3.1,
+        4.925,
+        3.27
+      ],
+      [
+        3.1,
+        5.9750000000000005,
+        3.35
+      ]
+    ],
+    "blank": true,
+    "reservedFrontFace": "+Z",
+    "robloxSurfaceGuiFace": "Back",
+    "frontPlaneZ": 3.35
+  },
+  "CounterNode": "Counter",
+  "externalOriginalTextures": true,
+  "scripts": 0,
+  "lights": 0,
+  "glTFReimportTriangleCountMatches": true,
+  "parts": [
+    {
+      "node": "Foundation",
+      "mesh": "FoundationGeometry",
+      "triangles": 44,
+      "bounds": [
+        [
+          -4.8,
+          0.0,
+          -3.6
+        ],
+        [
+          4.8,
+          0.2,
+          3.6
+        ]
+      ],
+      "uvFinite": true,
+      "zeroAreaTriangles": 0
+    },
+    {
+      "node": "OakShell",
+      "mesh": "OakShellGeometry",
+      "triangles": 1760,
+      "bounds": [
+        [
+          -4.525,
+          0.2,
+          -3.455
+        ],
+        [
+          4.525,
+          4.63,
+          3.3649999999999993
+        ]
+      ],
+      "uvFinite": true,
+      "zeroAreaTriangles": 0
+    },
+    {
+      "node": "MetalFrame",
+      "mesh": "MetalFrameGeometry",
+      "triangles": 1100,
+      "bounds": [
+        [
+          -4.8,
+          0.25,
+          -3.81
+        ],
+        [
+          4.8,
+          6.677800226971606,
+          3.81
+        ]
+      ],
+      "uvFinite": true,
+      "zeroAreaTriangles": 0
+    },
+    {
+      "node": "Counter",
+      "mesh": "CounterGeometry",
+      "triangles": 660,
+      "bounds": [
+        [
+          -4.245,
+          0.25,
+          2.39
+        ],
+        [
+          4.255,
+          2.81,
+          2.97
+        ]
+      ],
+      "uvFinite": true,
+      "zeroAreaTriangles": 0
+    },
+    {
+      "node": "CounterTop",
+      "mesh": "CounterTopGeometry",
+      "triangles": 176,
+      "bounds": [
+        [
+          -4.475,
+          2.81,
+          2.217
+        ],
+        [
+          4.475,
+          3.0100000000000002,
+          3.443
+        ]
+      ],
+      "uvFinite": true,
+      "zeroAreaTriangles": 0
+    },
+    {
+      "node": "SignPanel",
+      "mesh": "SignPanelGeometry",
+      "triangles": 44,
+      "bounds": [
+        [
+          -3.1,
+          4.925,
+          3.27
+        ],
+        [
+          3.1,
+          5.9750000000000005,
+          3.35
+        ]
+      ],
+      "uvFinite": true,
+      "zeroAreaTriangles": 0
+    },
+    {
+      "node": "SignFrame",
+      "mesh": "SignFrameGeometry",
+      "triangles": 176,
+      "bounds": [
+        [
+          -3.27,
+          4.75,
+          3.25
+        ],
+        [
+          3.27,
+          6.15,
+          3.37
+        ]
+      ],
+      "uvFinite": true,
+      "zeroAreaTriangles": 0
+    },
+    {
+      "node": "Shelves",
+      "mesh": "ShelvesGeometry",
+      "triangles": 88,
+      "bounds": [
+        [
+          -3.95,
+          1.48,
+          -3.26
+        ],
+        [
+          3.95,
+          3.6199999999999997,
+          -2.5
+        ]
+      ],
+      "uvFinite": true,
+      "zeroAreaTriangles": 0
+    },
+    {
+      "node": "Hardware",
+      "mesh": "HardwareGeometry",
+      "triangles": 888,
+      "bounds": [
+        [
+          -4.4350000000000005,
+          0.2950000000000004,
+          -3.4523081083962333
+        ],
+        [
+          4.635,
+          6.145,
+          3.213
+        ]
+      ],
+      "uvFinite": true,
+      "zeroAreaTriangles": 0
+    },
+    {
+      "node": "TradeStock",
+      "mesh": "TradeStockGeometry",
+      "triangles": 732,
+      "bounds": [
+        [
+          -3.475,
+          1.6199999999999999,
+          -2.945
+        ],
+        [
+          3.325,
+          4.56,
+          3.0450000000000004
+        ]
+      ],
+      "uvFinite": true,
+      "zeroAreaTriangles": 0
+    },
+    {
+      "node": "Glass",
+      "mesh": "GlassGeometry",
+      "triangles": 220,
+      "bounds": [
+        [
+          -4.414000000000001,
+          2.59,
+          -2.935
+        ],
+        [
+          4.414000000000001,
+          4.59,
+          2.935
+        ]
+      ],
+      "uvFinite": true,
+      "zeroAreaTriangles": 0
+    }
+  ],
+  "StudioTested": false
+}

@@ -1,0 +1,82 @@
+{
+  "triangles": 12604,
+  "vertices": 11865,
+  "mesh_count": 7,
+  "mesh_nodes": 7,
+  "per_mesh_triangles": {
+    "Sandstone": 480,
+    "Soil": 64,
+    "Foliage": 3204,
+    "DaisyPetals": 1760,
+    "Pollen": 256,
+    "Lavender": 5760,
+    "TulipPetals": 1080
+  },
+  "bounds_min": [
+    -1.899863201641592,
+    0.0,
+    -1.8998632016415922
+  ],
+  "bounds_max": [
+    1.899863201641592,
+    1.3599999999999999,
+    1.899863201641592
+  ],
+  "dimensions": [
+    3.799726403283184,
+    1.3599999999999999,
+    3.7997264032831843
+  ],
+  "finite": true,
+  "uv_present": true,
+  "texture_files_verified": true,
+  "texture_dimensions": [
+    2048,
+    2048
+  ],
+  "gltf_reimport_triangles_match": true,
+  "parts": [
+    {
+      "mesh": "Sandstone.Geometry",
+      "triangles": 480,
+      "uv_finite": true,
+      "degenerate_triangles": 0
+    },
+    {
+      "mesh": "Soil.Geometry",
+      "triangles": 64,
+      "uv_finite": true,
+      "degenerate_triangles": 0
+    },
+    {
+      "mesh": "Foliage.Geometry",
+      "triangles": 3204,
+      "uv_finite": true,
+      "degenerate_triangles": 0
+    },
+    {
+      "mesh": "DaisyPetals.Geometry",
+      "triangles": 1760,
+      "uv_finite": true,
+      "degenerate_triangles": 0
+    },
+    {
+      "mesh": "Pollen.Geometry",
+      "triangles": 256,
+      "uv_finite": true,
+      "degenerate_triangles": 0
+    },
+    {
+      "mesh": "Lavender.Geometry",
+      "triangles": 5760,
+      "uv_finite": true,
+      "degenerate_triangles": 0
+    },
+    {
+      "mesh": "TulipPetals.Geometry",
+      "triangles": 1080,
+      "uv_finite": true,
+      "degenerate_triangles": 0
+    }
+  ]
+}
