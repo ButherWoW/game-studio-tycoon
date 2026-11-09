@@ -33,6 +33,8 @@ local FOUNTAIN_SCALE = World.fountainScale
 local PATH_WIDTH = 6
 -- Начинаются за скамейками парка, чтобы не идти под ними (при 12 участках тропинки на углах скамеек)
 local PATH_START = StartPark.benchRadius + 6
+-- Все тропинки — гравий одного вида (владелец 09.11: на всей длине одинаковая текстура)
+local PATH_MATERIAL = Enum.Material.Pebble
 local PATH_COLOR = Color3.fromRGB(176, 150, 112)
 -- Парк Астры (модель Park в ServerStorage): свои дорожки до радиуса 69.25, дальше — наши, его цветом
 local LANDSCAPE_NAME = "Park"
@@ -215,6 +217,27 @@ local function concretePlots()
 	end
 end
 
+-- Дорожки парка Астры (GardenWalk_*, PondWalk_*) — гравий, как тропинки к участкам
+local function gravelParkPaths()
+	if workspace:GetAttribute("GravelPaths") == true then
+		return
+	end
+	local found = false
+	for _, item in workspace:GetDescendants() do
+		if
+			item:IsA("BasePart")
+			and (string.find(item.Name, "^GardenWalk_") or string.find(item.Name, "^PondWalk_"))
+		then
+			item.Material = PATH_MATERIAL
+			item.Color = LANDSCAPE_PATH_COLOR
+			found = true
+		end
+	end
+	if found then
+		workspace:SetAttribute("GravelPaths", true)
+	end
+end
+
 local function ensureSpawnPad()
 	local spawn = workspace:FindFirstChildWhichIsA("SpawnLocation", true)
 	local template = landscapeTemplate(StartPark.spawnPadName)
@@ -282,7 +305,7 @@ local function ensurePaths()
 					if hasLandscape() then LANDSCAPE_PATH_COLOR else PATH_COLOR,
 					folder
 				)
-				path.Material = Enum.Material.Ground
+				path.Material = PATH_MATERIAL
 				path.CanCollide = false
 				path.CanQuery = false
 				path.CanTouch = false
@@ -901,6 +924,7 @@ function WorldService.start()
 	ensureLandscape()
 	ensurePigeons()
 	ensureOuterLandscape()
+	gravelParkPaths()
 	dimImportedLights()
 	untouchUpgradeModels()
 end
