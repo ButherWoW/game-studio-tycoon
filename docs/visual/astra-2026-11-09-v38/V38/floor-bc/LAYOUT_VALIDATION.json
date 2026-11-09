@@ -1,0 +1,66 @@
+[
+  {
+    "name": "GameGallery",
+    "floor": 2,
+    "localTranslation": [
+      0,
+      3,
+      -28.8
+    ],
+    "zone": [
+      -5,
+      3,
+      -29,
+      5,
+      8,
+      -28.6
+    ],
+    "boundsAfterTranslation": [
+      [
+        -4.9,
+        3.0,
+        -28.995
+      ],
+      [
+        4.9,
+        8.0,
+        -28.605
+      ]
+    ],
+    "liftAndApproachClear": true,
+    "existingShellCrossIntersections": [],
+    "StudioTested": false
+  },
+  {
+    "name": "PanoramaCorner",
+    "floor": 3,
+    "localTranslation": [
+      22,
+      0.025,
+      8
+    ],
+    "zone": [
+      17,
+      0,
+      5,
+      27,
+      5,
+      11
+    ],
+    "boundsAfterTranslation": [
+      [
+        17.2,
+        0.024999999999999703,
+        5.2
+      ],
+      [
+        26.8,
+        3.945,
+        10.8
+      ]
+    ],
+    "liftAndApproachClear": true,
+    "existingShellCrossIntersections": [],
+    "StudioTested": false
+  }
+]
