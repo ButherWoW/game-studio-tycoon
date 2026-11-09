@@ -288,6 +288,42 @@ local FLOOR_EXTRAS: { { model: string, level: number, position: Vector3 } } = {
 	{ model = "PanoramaCorner", level = 4, position = Vector3.new(22, 0.5 + 28 + 0.025, 8) },
 }
 
+-- Крыша гаража: плита по габариту стен (60×60) на их верхе. Высоту берём по модели гаража (стены Астры
+-- могут быть выше кодовых 12), в разумных пределах. Тёмно-серая, с небольшим свесом
+local GARAGE_ROOF_COLOR = Color3.fromRGB(88, 92, 98)
+local GARAGE_WALL_HEIGHT = 12
+
+local function placeGarageRoof(plot: BasePart)
+	if plot:FindFirstChild("GarageRoof") then
+		return
+	end
+	local height = GARAGE_WALL_HEIGHT
+	local shell = plot:FindFirstChild("GarageWalls") or plot:FindFirstChild("Garage")
+	if shell and shell:IsA("Model") then
+		local cf, size = shell:GetBoundingBox()
+		local top = plot.CFrame:ToObjectSpace(cf).Position.Y + size.Y / 2 - 0.5
+		if top >= 11 and top <= 14 then
+			height = top
+		end
+	end
+	local model = Instance.new("Model")
+	model.Name = "GarageRoof"
+	local slab = Instance.new("Part")
+	slab.Name = "Roof"
+	slab.Anchored = true
+	-- Без коллизии: на крышу не запрыгнуть, камера сверху не упирается
+	slab.CanCollide = false
+	slab.CanQuery = false
+	slab.CanTouch = false
+	slab.Material = Enum.Material.Concrete
+	slab.Color = GARAGE_ROOF_COLOR
+	slab.Size = Vector3.new(61.5, 0.6, 61.5)
+	slab.CFrame = plot.CFrame * CFrame.new(0, 0.5 + height + 0.3, 0)
+	slab.Parent = model
+	model.PrimaryPart = slab
+	model.Parent = plot
+end
+
 local function buildPlot(plot: BasePart, profile: DataService.Profile)
 	-- Участок без гаража пустой: только табличка «Гараж продаётся» (refreshButtons)
 	if not profileOwnsGarage(profile) then
@@ -304,6 +340,11 @@ local function buildPlot(plot: BasePart, profile: DataService.Profile)
 		if shown and stage.model and not supersededOnPlot(plot, stage.model) then
 			placeModel(plot, stage.model, stage.position, 0)
 		end
+	end
+	-- Крыша гаража (владелец 09.11: на первом этапе у гаража нет крыши). Только на этапе «гараж»: офис
+	-- перекрывают потолки OfficeFloors. Модель, а не деталь: rebuild сносит именно модели участка
+	if level == 1 then
+		placeGarageRoof(plot)
 	end
 	-- Дополнения этажей V38-3: галерея игр (2-й этаж, глухая стена) и читальный уголок (3-й).
 	-- Появляются после покупки этажа; пока модель не импортирована в ServerStorage.Upgrades — пропускаем
