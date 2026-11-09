@@ -238,6 +238,58 @@ local function gravelParkPaths()
 	end
 end
 
+-- Под тропинками вынимаем траву из террейна: 3D-травинки (Terrain.Decoration) растут на Grass и торчали
+-- сквозь тонкие плиты тропинок (владелец 09.11: текстура дорожки не везде одинаковая). Под плитой
+-- террейн заменяем на Ground — травинок там нет, плита лежит на плотной земле
+local function carvePathsFromGrass()
+	if workspace:GetAttribute("PathsCarved") == true or workspace:GetAttribute("GrassTerrain") ~= true then
+		return
+	end
+	local base = workspace:FindFirstChild("Baseplate")
+	if not base or not base:IsA("BasePart") then
+		return
+	end
+	local top = base.Position.Y + base.Size.Y / 2
+	local depth = World.grass.depth
+	local centerY = top - depth / 2 - 2
+	local count = 0
+	for _, item in workspace:GetDescendants() do
+		if
+			item:IsA("BasePart")
+			and (
+				string.find(item.Name, "^Path_")
+				or string.find(item.Name, "^GardenWalk_")
+				or string.find(item.Name, "^PondWalk_")
+			)
+		then
+			local ok = pcall(function()
+				if string.find(item.Name, "roundJoin") then
+					-- Стык поворота — диск радиуса 3 (вертикальная ось)
+					workspace.Terrain:FillCylinder(
+						CFrame.new(item.Position.X, centerY, item.Position.Z),
+						depth,
+						math.max(item.Size.Y, item.Size.Z) / 2,
+						Enum.Material.Ground
+					)
+				else
+					local _, yaw = item.CFrame:ToEulerAnglesYXZ()
+					workspace.Terrain:FillBlock(
+						CFrame.new(item.Position.X, centerY, item.Position.Z) * CFrame.Angles(0, yaw, 0),
+						Vector3.new(item.Size.X, depth, item.Size.Z),
+						Enum.Material.Ground
+					)
+				end
+			end)
+			if ok then
+				count += 1
+			end
+		end
+	end
+	if count > 0 then
+		workspace:SetAttribute("PathsCarved", true)
+	end
+end
+
 local function ensureSpawnPad()
 	local spawn = workspace:FindFirstChildWhichIsA("SpawnLocation", true)
 	local template = landscapeTemplate(StartPark.spawnPadName)
@@ -975,6 +1027,7 @@ function WorldService.start()
 	ensurePigeons()
 	ensureOuterLandscape()
 	gravelParkPaths()
+	carvePathsFromGrass()
 	dimImportedLights()
 	softenBrightParts()
 	untouchUpgradeModels()
