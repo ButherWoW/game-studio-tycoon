@@ -304,6 +304,16 @@ Images.platforms = {
 
 -- Текстуры частиц (V24). 0 — текстуры нет: эффекты как раньше (стандартные Sparkles/детали).
 -- PNG 128×128 на прозрачном фоне; Dev 1: загрузить как Image (Decal) и вставить ID
+-- Арт эффекта «улучшение здания» (Астра V38, upg_*.png 256×256, прозрачный фон; UpgradeFx). 0 — берётся
+-- запасная текстура из Images.fx. Dev 1: загрузить и вписать ID
+Images.upgradeFx = {
+	sparkle = 0, -- upg_sparkle.png
+	dust = 0, -- upg_dust.png
+	confetti = 0, -- upg_confetti.png
+	ray = 0, -- upg_ray.png (зарезервировано: столб света сейчас деталью)
+	ring = 0, -- upg_ring.png (зарезервировано: кольцо сейчас деталью)
+} :: { [string]: number }
+
 Images.fx = {
 	coin = 94369218789257, -- fx_coin.png: релиз и хит (монеты)
 	star = 120250365832201, -- fx_star.png: релиз и хит (звёзды)

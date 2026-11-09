@@ -10,6 +10,7 @@ local Images = require(ReplicatedStorage.Shared.Config.Images)
 local Stages = require(ReplicatedStorage.Shared.Config.Stages)
 local ClientState = require(script.Parent.Parent.ClientState)
 local Ui = require(script.Parent.Parent.Ui)
+local UpgradeFx = require(script.Parent.Parent.UpgradeFx)
 
 local SHOW_SECONDS = 4
 local CONFETTI = 60
@@ -68,6 +69,8 @@ local function celebrate(level: number)
 		return
 	end
 	celebrated[level] = true
+	-- Столб света, кольцо, пыль и искры над участком (UpgradeFx); сбой эффекта праздник не ломает
+	pcall(UpgradeFx.play, level)
 	local gui = Instance.new("ScreenGui")
 	gui.Name = "MoveCelebration"
 	gui.ResetOnSpawn = false
