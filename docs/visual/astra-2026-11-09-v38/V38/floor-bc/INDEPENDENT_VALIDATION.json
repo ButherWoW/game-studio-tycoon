@@ -1,0 +1,54 @@
+[
+  {
+    "name": "GameGallery",
+    "parts": 69,
+    "dimensionsXYZ": [
+      9.8,
+      5.0,
+      0.39
+    ],
+    "worldBoxXZ": [
+      -4.9,
+      -28.995,
+      4.9,
+      -28.605
+    ],
+    "pairs": 2346,
+    "overlaps": [],
+    "layoutConflicts": [],
+    "deskApronsChecked": 7,
+    "binaryRoundtrip": "PASS",
+    "pivot": "PASS",
+    "allAnchored": true,
+    "lights": 1,
+    "shadows": false,
+    "scripts": 0,
+    "runtimeTested": false
+  },
+  {
+    "name": "PanoramaCorner",
+    "parts": 56,
+    "dimensionsXYZ": [
+      9.6,
+      3.9200000000000004,
+      5.6
+    ],
+    "worldBoxXZ": [
+      17.2,
+      5.2,
+      26.8,
+      10.8
+    ],
+    "pairs": 1540,
+    "overlaps": [],
+    "layoutConflicts": [],
+    "deskApronsChecked": 11,
+    "binaryRoundtrip": "PASS",
+    "pivot": "PASS",
+    "allAnchored": true,
+    "lights": 1,
+    "shadows": false,
+    "scripts": 0,
+    "runtimeTested": false
+  }
+]

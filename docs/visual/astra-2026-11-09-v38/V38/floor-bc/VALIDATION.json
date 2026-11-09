@@ -1,0 +1,48 @@
+[
+  {
+    "name": "GameGallery",
+    "parts": 69,
+    "bounds": [
+      [
+        -4.9,
+        0.0,
+        -0.195
+      ],
+      [
+        4.9,
+        5.0,
+        0.195
+      ]
+    ],
+    "certifiedPairs": 2346,
+    "overlaps": [],
+    "pointLights": 1,
+    "shadows": false,
+    "scripts": 0,
+    "externalMeshesTextures": 0,
+    "StudioTested": false
+  },
+  {
+    "name": "PanoramaCorner",
+    "parts": 56,
+    "bounds": [
+      [
+        -4.8,
+        -2.949029909160572e-16,
+        -2.8
+      ],
+      [
+        4.8,
+        3.92,
+        2.8
+      ]
+    ],
+    "certifiedPairs": 1540,
+    "overlaps": [],
+    "pointLights": 1,
+    "shadows": false,
+    "scripts": 0,
+    "externalMeshesTextures": 0,
+    "StudioTested": false
+  }
+]
