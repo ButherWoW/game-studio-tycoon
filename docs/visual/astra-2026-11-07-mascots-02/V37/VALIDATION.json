@@ -1,0 +1,40 @@
+[
+  {
+    "id": "bug_beetle",
+    "parts": 38,
+    "dimensionsXYZ": [
+      2.4731729999999996,
+      2.955,
+      2.54
+    ],
+    "pairs": 703,
+    "overlaps": [],
+    "PrimaryPart": "Body",
+    "pivotXYZ": [
+      0,
+      0,
+      0
+    ],
+    "allAnchored": true,
+    "runtimeTested": false
+  },
+  {
+    "id": "floppy_dog",
+    "parts": 39,
+    "dimensionsXYZ": [
+      2.84,
+      3.27,
+      1.645
+    ],
+    "pairs": 741,
+    "overlaps": [],
+    "PrimaryPart": "Body",
+    "pivotXYZ": [
+      0,
+      0,
+      0
+    ],
+    "allAnchored": true,
+    "runtimeTested": false
+  }
+]
