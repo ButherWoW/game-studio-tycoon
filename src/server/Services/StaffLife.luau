@@ -310,6 +310,215 @@ local function endBreak(player: Player, employeeId: string, record: Break)
 	StaffService.setBreak(player, employeeId, false)
 end
 
+-- Обход предметов (владелец 09.11: NPC заходили в текстуры объектов). Сетка свободных клеток на уровне
+-- корпуса: клетка занята, если в ней есть деталь мебели/декора (любой CanCollide — NPC обходят и
+-- декор без коллизии). Оболочки здания (огромные детали), невидимые коллайдеры и сами NPC не считаются.
+-- Путь — A* по сетке, затем спрямление по линии видимости. Нет пути — старый прямой маршрут
+local CELL = 1.5
+local BODY_BOX = Vector3.new(1.7, 2.4, 1.7)
+local BODY_LIFT = 2.7 -- центр коробки над полом (участок: пол этажа = floorY + 0.5)
+local SHELL_SIZE = 30 -- деталь крупнее по любой стороне — стена/пол/потолок здания
+local GRID_TTL = 15
+
+type Grid = { floorY: number, built: number, cols: number, rows: number, blocked: { boolean } }
+local grids: { [BasePart]: { [number]: Grid } } = {}
+
+local function cellCenter(plot: BasePart, grid: Grid, col: number, row: number): Vector3
+	local hx = plot.Size.X / 2 - PLOT_MARGIN
+	local hz = plot.Size.Z / 2 - PLOT_MARGIN
+	return Vector3.new(-hx + (col - 1) * CELL, grid.floorY, -hz + (row - 1) * CELL)
+end
+
+local function buildGrid(player: Player, plot: BasePart, floorY: number): Grid
+	local hx = plot.Size.X / 2 - PLOT_MARGIN
+	local hz = plot.Size.Z / 2 - PLOT_MARGIN
+	local cols = math.floor(hx * 2 / CELL) + 1
+	local rows = math.floor(hz * 2 / CELL) + 1
+	local grid: Grid = { floorY = floorY, built = os.clock(), cols = cols, rows = rows, blocked = {} }
+	local params = OverlapParams.new()
+	local ignore: { Instance } = {}
+	local folder = StaffService.npcFolder(player)
+	if folder then
+		table.insert(ignore, folder)
+	end
+	for _, other in Players:GetPlayers() do
+		if other.Character then
+			table.insert(ignore, other.Character)
+		end
+	end
+	params.FilterDescendantsInstances = ignore
+	params.FilterType = Enum.RaycastFilterType.Exclude
+	for row = 1, rows do
+		for col = 1, cols do
+			local center = cellCenter(plot, grid, col, row)
+			local cf = plot.CFrame * CFrame.new(center.X, floorY + BODY_LIFT, center.Z)
+			local blocked = false
+			for _, part in workspace:GetPartBoundsInBox(cf, BODY_BOX, params) do
+				local big = math.max(part.Size.X, part.Size.Y, part.Size.Z) > SHELL_SIZE
+				local ghost = part.Transparency >= 1 and not part.CanCollide
+				if not big and not ghost and part ~= plot and not part:IsDescendantOf(Players) then
+					blocked = true
+					break
+				end
+			end
+			grid.blocked[(row - 1) * cols + col] = blocked
+		end
+	end
+	return grid
+end
+
+local function gridFor(player: Player, plot: BasePart, floorY: number): Grid
+	local key = math.floor(floorY + 0.5)
+	local perPlot = grids[plot] or {}
+	grids[plot] = perPlot
+	local grid = perPlot[key]
+	if not grid or os.clock() - grid.built > GRID_TTL then
+		grid = buildGrid(player, plot, floorY)
+		perPlot[key] = grid
+	end
+	return grid
+end
+
+local function toCell(plot: BasePart, grid: Grid, v: Vector3): (number, number)
+	local hx = plot.Size.X / 2 - PLOT_MARGIN
+	local hz = plot.Size.Z / 2 - PLOT_MARGIN
+	local col = math.clamp(math.floor((v.X + hx) / CELL + 0.5) + 1, 1, grid.cols)
+	local row = math.clamp(math.floor((v.Z + hz) / CELL + 0.5) + 1, 1, grid.rows)
+	return col, row
+end
+
+-- Маршрут между двумя точками пола (координаты участка) в обход предметов. Всегда возвращает
+-- непустой список точек; при неудаче — просто конечную точку (прямая)
+local function route(player: Player, plot: BasePart, from: Vector3, to: Vector3): { Vector3 }
+	local ok, result = pcall(function()
+		local grid = gridFor(player, plot, from.Y)
+		local cols, rows = grid.cols, grid.rows
+		local sc, sr = toCell(plot, grid, from)
+		local gc, gr = toCell(plot, grid, to)
+		-- Стартовая и конечная клетки с соседями свободны: стол и кресло рядом, но не поперёк пути
+		local function isFree(col: number, row: number): boolean
+			if col < 1 or row < 1 or col > cols or row > rows then
+				return false
+			end
+			if math.abs(col - sc) <= 1 and math.abs(row - sr) <= 1 then
+				return true
+			end
+			if math.abs(col - gc) <= 1 and math.abs(row - gr) <= 1 then
+				return true
+			end
+			return not grid.blocked[(row - 1) * cols + col]
+		end
+		local function id(col: number, row: number): number
+			return (row - 1) * cols + col
+		end
+		local function heuristic(col: number, row: number): number
+			local dc, dr = math.abs(col - gc), math.abs(row - gr)
+			return (dc + dr) + (1.4142 - 2) * math.min(dc, dr)
+		end
+		local gScore: { [number]: number } = { [id(sc, sr)] = 0 }
+		local came: { [number]: number } = {}
+		local open: { number } = { id(sc, sr) }
+		local fScore: { [number]: number } = { [id(sc, sr)] = heuristic(sc, sr) }
+		local closed: { [number]: boolean } = {}
+		local found = false
+		local guard = 0
+		while #open > 0 and guard < 4000 do
+			guard += 1
+			local bestIndex = 1
+			for i = 2, #open do
+				if (fScore[open[i]] or math.huge) < (fScore[open[bestIndex]] or math.huge) then
+					bestIndex = i
+				end
+			end
+			local current = table.remove(open, bestIndex) :: number
+			if current == id(gc, gr) then
+				found = true
+				break
+			end
+			closed[current] = true
+			local col = (current - 1) % cols + 1
+			local row = (current - 1) // cols + 1
+			for dc = -1, 1 do
+				for dr = -1, 1 do
+					if dc == 0 and dr == 0 then
+						continue
+					end
+					local nc, nr = col + dc, row + dr
+					if not isFree(nc, nr) then
+						continue
+					end
+					-- По диагонали не режем угол занятой клетки
+					if dc ~= 0 and dr ~= 0 and (not isFree(col + dc, row) or not isFree(col, row + dr)) then
+						continue
+					end
+					local nid = id(nc, nr)
+					if closed[nid] then
+						continue
+					end
+					local tentative = (gScore[current] or 0) + (if dc ~= 0 and dr ~= 0 then 1.4142 else 1)
+					if tentative < (gScore[nid] or math.huge) then
+						came[nid] = current
+						gScore[nid] = tentative
+						fScore[nid] = tentative + heuristic(nc, nr)
+						if not table.find(open, nid) then
+							table.insert(open, nid)
+						end
+					end
+				end
+			end
+		end
+		if not found then
+			return { to }
+		end
+		local cells: { number } = {}
+		local at: number? = id(gc, gr)
+		while at do
+			table.insert(cells, 1, at)
+			at = came[at]
+		end
+		-- Спрямление: пропускаем промежуточные клетки, если до дальней видно по прямой
+		local function clear(a: number, b: number): boolean
+			local ac, ar = (a - 1) % cols + 1, (a - 1) // cols + 1
+			local bc, br = (b - 1) % cols + 1, (b - 1) // cols + 1
+			local steps = math.max(math.abs(bc - ac), math.abs(br - ar)) * 2
+			for i = 1, steps do
+				local t = i / steps
+				local col = math.floor(ac + (bc - ac) * t + 0.5)
+				local row = math.floor(ar + (br - ar) * t + 0.5)
+				if not isFree(col, row) then
+					return false
+				end
+			end
+			return true
+		end
+		local points: { Vector3 } = {}
+		local anchor = 1
+		while anchor < #cells do
+			local far = anchor + 1
+			for j = #cells, anchor + 1, -1 do
+				if clear(cells[anchor], cells[j]) then
+					far = j
+					break
+				end
+			end
+			local col = (cells[far] - 1) % cols + 1
+			local row = (cells[far] - 1) // cols + 1
+			local center = cellCenter(plot, grid, col, row)
+			table.insert(points, Vector3.new(center.X, from.Y, center.Z))
+			anchor = far
+		end
+		if #points == 0 then
+			return { to }
+		end
+		points[#points] = to
+		return points
+	end)
+	if ok and type(result) == "table" then
+		return result :: { Vector3 }
+	end
+	return { to }
+end
+
 local function startBreak(
 	player: Player,
 	plot: BasePart,
@@ -322,8 +531,8 @@ local function startBreak(
 		return
 	end
 	local spot, emote = chooseSpot(player, plot, model, aisle, tier)
-	-- Г-образно: по проходу до нужного X, потом к месту — меньше идёт сквозь столы
-	local path = { aisle, Vector3.new(spot.X, aisle.Y, aisle.Z), spot }
+	-- Маршрут в обход мебели и декора (route); path[1] — первая точка, последняя — место отдыха
+	local path = route(player, plot, stand, spot)
 	local record: Break = {
 		model = model,
 		phase = "out",
@@ -353,7 +562,12 @@ local function goBack(player: Player, plot: BasePart, employeeId: string, record
 	record.phase = "back"
 	setBubble(record, nil)
 	local stand = deskPoints(record.model)
-	local back = { record.path[2], record.path[1], stand or record.path[1] }
+	-- Обратно тем же маршрутом: точки в обратном порядке и к столу
+	local back: { Vector3 } = {}
+	for i = #record.path - 1, 1, -1 do
+		table.insert(back, record.path[i])
+	end
+	table.insert(back, stand or record.path[1])
 	record.walker = walk(player, record.model, plot, back, Mood.breaks.walkSpeed, false, function()
 		local mine = breaksOf[player]
 		if not mine or mine[employeeId] ~= record then
