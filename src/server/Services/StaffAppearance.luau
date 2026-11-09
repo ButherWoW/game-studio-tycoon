@@ -39,8 +39,67 @@ local function weldByAttachment(model: Model, accessory: Accessory)
 end
 
 -- Надеть копию аксессуара на NPC (и для скинов: SkinService)
-function StaffAppearance.addAccessory(model: Model, humanoid: Humanoid, source: Accessory): Accessory
+-- Причёска садится на макушку (владелец 09.11: «слишком высоко» — между головой и Crown зазор):
+-- голова NPC меньше той, под которую делали модель (пропорции тела владельца). Считаем, где окажутся
+-- детали над головой, и опускаем крепление на зазор (с нахлёстом 0.05)
+local HAIR_OVERLAP = 0.05
+local function seatOnHead(model: Model, accessory: Accessory)
+	local head = model:FindFirstChild("Head")
+	local handle = accessory:FindFirstChild("Handle")
+	if not head or not head:IsA("BasePart") or not handle or not handle:IsA("BasePart") then
+		return
+	end
+	local own = handle:FindFirstChildOfClass("Attachment")
+	local target = own and head:FindFirstChild(own.Name)
+	if not own or not target or not target:IsA("Attachment") then
+		return
+	end
+	local handleWorld = target.WorldCFrame * own.CFrame:Inverse()
+	local half = head.Size / 2
+	local lowest = math.huge
+	for _, part in accessory:GetDescendants() do
+		if part:IsA("BasePart") and part ~= handle and part.Transparency < 1 then
+			local world = handleWorld * handle.CFrame:ToObjectSpace(part.CFrame)
+			local p = head.CFrame:ToObjectSpace(world).Position
+			-- Только то, что над головой и над её серединой (чёлка и хвост сбоку не в счёт)
+			if math.abs(p.X) < half.X and math.abs(p.Z) < half.Z and p.Y > half.Y then
+				lowest = math.min(lowest, p.Y - part.Size.Y / 2)
+			end
+		end
+	end
+	local gap = lowest - half.Y
+	if gap > 0 and gap < head.Size.Y then
+		own.CFrame = own.CFrame * CFrame.new(0, gap + HAIR_OVERLAP, 0)
+	end
+end
+
+function StaffAppearance.addAccessory(
+	model: Model,
+	humanoid: Humanoid,
+	source: Accessory,
+	fitToHead: boolean?
+): Accessory
 	local clone = source:Clone()
+	if fitToHead then
+		seatOnHead(model, clone)
+	end
+	-- WeldConstraint запоминает смещение при активации, а надеваем мы до Workspace и двигаем Handle
+	-- вручную: детали причёски «стягивались» в одну точку (владелец 09.11: коричневая полоса сквозь
+	-- голову — Crown hair_mila на уровне глаз). Меняем на Weld с явным смещением из шаблона
+	for _, constraint in clone:GetDescendants() do
+		if constraint:IsA("WeldConstraint") then
+			local part0, part1 = constraint.Part0, constraint.Part1
+			if part0 and part1 and part0:IsDescendantOf(clone) and part1:IsDescendantOf(clone) then
+				local weld = Instance.new("Weld")
+				weld.Name = constraint.Name
+				weld.Part0 = part0
+				weld.Part1 = part1
+				weld.C0 = part0.CFrame:ToObjectSpace(part1.CFrame)
+				weld.Parent = constraint.Parent
+				constraint:Destroy()
+			end
+		end
+	end
 	local ok = pcall(function()
 		humanoid:AddAccessory(clone)
 	end)
@@ -130,7 +189,7 @@ function StaffAppearance.apply(model: Model, employeeId: string, ownShirt: boole
 		pants.Parent = model
 	end
 	local hairSource = template("hair_" .. employeeId)
-	local hair = if hairSource then StaffAppearance.addAccessory(model, humanoid, hairSource) else nil
+	local hair = if hairSource then StaffAppearance.addAccessory(model, humanoid, hairSource, true) else nil
 	if hair and not look.faceOnScreen then
 		hideFaceCovering(model, hair, employeeId)
 	end
