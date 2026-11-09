@@ -1,0 +1,92 @@
+[
+  {
+    "name": "upg_sparkle",
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "alphaZeroPixels": 47038,
+    "alphaIntermediatePixels": 18498,
+    "maxEdgeAlpha": 1,
+    "sha256": "da7e7eab7a74e5ff70749d31dcd16b15e82bf7890ba9a22b3cd037f2a4c27321",
+    "source": "built-in image_gen with transparent_background=true; only Lanczos normalization",
+    "StudioTested": false
+  },
+  {
+    "name": "upg_dust",
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "alphaZeroPixels": 33683,
+    "alphaIntermediatePixels": 31853,
+    "maxEdgeAlpha": 1,
+    "sha256": "1440267d181bfb1313e977407ab5ebe9753c7c950aebf2ab1078b342bc86ba3c",
+    "source": "built-in image_gen with transparent_background=true; only Lanczos normalization",
+    "StudioTested": false
+  },
+  {
+    "name": "upg_confetti",
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "alphaZeroPixels": 60130,
+    "alphaIntermediatePixels": 5073,
+    "maxEdgeAlpha": 0,
+    "sha256": "b92f657b2ff0b372cb9d153a56fd824032ed1efb62fe0cd12dee27dce2e94faa",
+    "source": "built-in image_gen with transparent_background=true; only Lanczos normalization",
+    "StudioTested": false
+  },
+  {
+    "name": "upg_ray",
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "alphaZeroPixels": 53582,
+    "alphaIntermediatePixels": 11954,
+    "maxEdgeAlpha": 0,
+    "sha256": "e204a605d0f981306df847eb5e50f92a8ba12f16c896c3fe14916a1df576a3d1",
+    "source": "built-in image_gen with transparent_background=true; only Lanczos normalization",
+    "StudioTested": false
+  },
+  {
+    "name": "upg_ring",
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "alphaZeroPixels": 47221,
+    "alphaIntermediatePixels": 18315,
+    "maxEdgeAlpha": 1,
+    "sha256": "91ffd523b1dc0b78f8be3075524ed1cc0da31c5a693432f74ab98977eaee561f",
+    "source": "built-in image_gen with transparent_background=true; only Lanczos normalization",
+    "StudioTested": false
+  }
+]
