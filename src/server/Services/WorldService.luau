@@ -543,9 +543,12 @@ local function ensureGrassTerrain(): boolean
 	end
 	local terrain = workspace.Terrain
 	local top = base.Position.Y + base.Size.Y / 2
+	-- Поверхность гладкого террейна рисуется по центру вокселя (4 studs): блок с верхом ровно на top
+	-- поднимает траву на +2 над плитой (ножки скамеек тонут). Опускаем на полвокселя — верхний воксель
+	-- заполнен на 50%, поверхность ровно на top (проверено в Studio 09.11: 2.00 → 0.02)
 	local ok = pcall(function()
 		terrain:FillBlock(
-			CFrame.new(base.Position.X, top - config.depth / 2, base.Position.Z),
+			CFrame.new(base.Position.X, top - config.depth / 2 - 2, base.Position.Z),
 			Vector3.new(base.Size.X, config.depth, base.Size.Z),
 			Enum.Material.Grass
 		)
