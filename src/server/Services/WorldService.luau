@@ -198,6 +198,23 @@ end
 -- низом на землю. Сам SpawnLocation остаётся невидимым (Duration = 0), вписывается в габарит площадки
 -- и теряет коллизию: опора — модель, второй ступеньки над рисунком нет. Нет модели, она пустая или
 -- это заглушка Generated — SpawnLocation остаётся как был (8×1×8, видимый)
+-- Участок до постройки гаража — бетонная площадка (владелец 09.11), а не зелёная плита.
+-- Красим и уже существующие участки (собранные в Studio): ensurePlots с ними выходит рано
+local PLOT_CONCRETE_COLOR = Color3.fromRGB(150, 152, 156)
+
+local function concretePlots()
+	local folder = workspace:FindFirstChild("Plots")
+	if not folder then
+		return
+	end
+	for _, item in folder:GetChildren() do
+		if item:IsA("BasePart") then
+			item.Material = Enum.Material.Concrete
+			item.Color = PLOT_CONCRETE_COLOR
+		end
+	end
+end
+
 local function ensureSpawnPad()
 	local spawn = workspace:FindFirstChildWhichIsA("SpawnLocation", true)
 	local template = landscapeTemplate(StartPark.spawnPadName)
@@ -876,6 +893,7 @@ function WorldService.start()
 	ensureGround()
 	ensureGrassTerrain()
 	ensurePlots()
+	concretePlots()
 	ensureSpawnPad()
 	ensurePaths()
 	ensureUpgradeModels()
