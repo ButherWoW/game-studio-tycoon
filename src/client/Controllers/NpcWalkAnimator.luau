@@ -129,10 +129,37 @@ local function trackSitter(item: Instance)
 	end
 end
 
-local function applySitting(model: Model, joints: any)
+-- Печать за компьютером (владелец 09.11: сидят с застывшими руками, «жутко»): предплечья и плечи
+-- по очереди «стучат» по клавиатуре, с паузами «подумал» и сдвигом фазы у каждого сотрудника
+local TYPE_SPEED = 9 -- рад/с: ~1.4 нажатия в секунду на руку
+local TYPE_SHOULDER = math.rad(4)
+local TYPE_ELBOW = math.rad(9)
+
+local function typingOffsets(joints: any, dt: number): (number, number, number, number)
+	joints.clock = (joints.clock or 0) + dt
+	local seed = joints.seed
+	if not seed then
+		seed = math.random() * 100
+		joints.seed = seed
+	end
+	local t = joints.clock
+	-- Пауза между очередями набора: примерно 3 с печатает, 1 с руки лежат
+	local active = math.sin(t * 0.55 + seed) > -0.5
+	local amount = joints.amount or 0
+	amount += ((if active then 1 else 0) - amount) * math.min(dt * 5, 1)
+	joints.amount = amount
+	local left = math.sin(t * TYPE_SPEED + seed) * amount
+	local right = math.sin(t * TYPE_SPEED * 1.13 + seed + 2) * amount
+	return left * TYPE_SHOULDER, right * TYPE_SHOULDER, left * TYPE_ELBOW, right * TYPE_ELBOW
+end
+
+local function applySitting(model: Model, joints: any, dt: number)
 	if needsCollect(model, joints) then
 		local fresh = collect(model) :: any
 		fresh.posed = joints.posed
+		fresh.clock = joints.clock
+		fresh.seed = joints.seed
+		fresh.amount = joints.amount
 		sitters[model] = fresh
 		joints = fresh
 	end
@@ -145,10 +172,11 @@ local function applySitting(model: Model, joints: any)
 		setAngle(joints.rightKnee, math.rad(-90))
 		setAngle(joints.leftAnkle, 0)
 		setAngle(joints.rightAnkle, 0)
-		setAngle(joints.leftShoulder, math.rad(50))
-		setAngle(joints.rightShoulder, math.rad(50))
-		setAngle(joints.leftElbow, math.rad(55))
-		setAngle(joints.rightElbow, math.rad(55))
+		local leftS, rightS, leftE, rightE = typingOffsets(joints, dt)
+		setAngle(joints.leftShoulder, math.rad(50) + leftS)
+		setAngle(joints.rightShoulder, math.rad(50) + rightS)
+		setAngle(joints.leftElbow, math.rad(55) + leftE)
+		setAngle(joints.rightElbow, math.rad(55) + rightE)
 		joints.posed = true
 	elseif joints.posed then
 		relax(joints)
@@ -194,7 +222,7 @@ function NpcWalkAnimator.start()
 			if not model.Parent then
 				sitters[model] = nil
 			elseif (model:GetPivot().Position - origin).Magnitude <= VIEW_DISTANCE then
-				applySitting(model, joints)
+				applySitting(model, joints, dt)
 			end
 		end
 		for model, state in tracked do
