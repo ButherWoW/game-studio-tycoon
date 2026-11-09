@@ -1,0 +1,22 @@
+{
+  "upg_sparkle": {
+    "path": "source/upg_sparkle.png",
+    "description": "one centered four-point warm-white sparkle, long narrow elegant rays and small soft golden glow, a crisp luminous core, radial falloff"
+  },
+  "upg_dust": {
+    "path": "source/upg_dust.png",
+    "description": "one soft light warm-gray construction dust puff, organic wispy cloudy silhouette, subtle soft tan variation, no hard rim, airy translucent outer falloff"
+  },
+  "upg_confetti": {
+    "path": "source/upg_confetti.png",
+    "description": "exactly three small paper confetti pieces grouped near center, one blue #3D7BFF, one gold #FFC93C, one violet #7C4DFF, slight folded curls, clearly separated, minimal soft shading"
+  },
+  "upg_ray": {
+    "path": "source/upg_ray.png",
+    "description": "one centered vertical luminous white beam with pale cyan core, narrow at top, softly widening toward bottom, smooth intensity gradient along its length, feathered edges, no floor or halo"
+  },
+  "upg_ring": {
+    "path": "source/upg_ring.png",
+    "description": "one thin clean circular white expanding shockwave ring seen straight on, perfectly round and centered, hollow completely transparent center, softly feathered thin rim, extremely faint pale cyan glow"
+  }
+}
