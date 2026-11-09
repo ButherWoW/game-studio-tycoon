@@ -1222,6 +1222,67 @@ local SIT_ROOT_ABOVE_SEAT = 1.6
 -- Воображаемая сидушка без кресла: чуть дальше края стола (глубина 3) и на высоте сидушек Астры (≈1.6)
 local VIRTUAL_SEAT_DISTANCE = 2.4
 local VIRTUAL_SEAT_HEIGHT = 1.6
+
+-- Стул сотрудника, когда у стола своей сидушки нет (владелец 09.11: «нет стула, пусть спавнится со
+-- столом»). Шаблон ServerStorage.Upgrades.StaffChair (pivot — центр основания, сидящий смотрит в −Z),
+-- иначе простое кресло из деталей. Лежит в папке NPC: при пересборке уходит вместе с ней.
+-- Декор: без коллизий и запросов, на перерыв сотрудник уходит, стул остаётся
+local STAFF_CHAIR_COLOR = Color3.fromRGB(45, 45, 55)
+local STAFF_CHAIR_LEG_COLOR = Color3.fromRGB(70, 70, 78)
+local function chairPart(model: Model, size: Vector3, cframe: CFrame, color: Color3, name: string?)
+	local p = Instance.new("Part")
+	p.Name = name or "Part"
+	p.Anchored = true
+	p.CanCollide = false
+	p.CanQuery = false
+	p.CanTouch = false
+	p.Size = size
+	p.CFrame = cframe
+	p.Color = color
+	p.Material = Enum.Material.SmoothPlastic
+	p.TopSurface = Enum.SurfaceType.Smooth
+	p.BottomSurface = Enum.SurfaceType.Smooth
+	p.Parent = model
+end
+
+local function spawnStaffChair(base: CFrame, parent: Instance, employeeId: string?)
+	local upgrades = game:GetService("ServerStorage"):FindFirstChild("Upgrades")
+	local template = upgrades and upgrades:FindFirstChild("StaffChair")
+	local chair: Model
+	if template and template:IsA("Model") then
+		chair = template:Clone()
+		for _, part in chair:GetDescendants() do
+			if part:IsA("BasePart") then
+				part.Anchored = true
+				part.CanCollide = false
+				part.CanQuery = false
+				part.CanTouch = false
+			end
+		end
+		chair:PivotTo(base)
+	else
+		chair = Instance.new("Model")
+		local seatY = VIRTUAL_SEAT_HEIGHT
+		-- Сидушка (верх ровно на seatY), спинка сзади (+Z), стойка и крестовина
+		chairPart(chair, Vector3.new(1.7, 0.3, 1.5), base * CFrame.new(0, seatY - 0.15, 0), STAFF_CHAIR_COLOR)
+		chairPart(
+			chair,
+			Vector3.new(1.7, 1.7, 0.25),
+			base * CFrame.new(0, seatY + 0.85, 0.75),
+			STAFF_CHAIR_COLOR
+		)
+		chairPart(
+			chair,
+			Vector3.new(0.25, seatY - 0.4, 0.25),
+			base * CFrame.new(0, (seatY - 0.3) / 2 + 0.1, 0),
+			STAFF_CHAIR_LEG_COLOR
+		)
+		chairPart(chair, Vector3.new(1.6, 0.15, 0.25), base * CFrame.new(0, 0.1, 0), STAFF_CHAIR_LEG_COLOR)
+		chairPart(chair, Vector3.new(0.25, 0.15, 1.6), base * CFrame.new(0, 0.1, 0), STAFF_CHAIR_LEG_COLOR)
+	end
+	chair.Name = if employeeId then "StaffSeat_" .. employeeId else "StaffSeat"
+	chair.Parent = parent
+end
 local function poseSitting(model: Model)
 	if model:GetAttribute("Sitting") == true then
 		return
@@ -1261,7 +1322,13 @@ end
 
 -- Посадить NPC в кресло стола (если оно есть в модели) или поставить перед столом лицом к нему.
 -- used — уже занятые точки (в координатах участка)
-local function seatNpc(model: Model, plot: BasePart, desk: Upgrades.Upgrade, used: { Vector3 })
+local function seatNpc(
+	model: Model,
+	plot: BasePart,
+	desk: Upgrades.Upgrade,
+	used: { Vector3 },
+	chairParent: Instance?
+)
 	local position = desk.position or Vector3.zero
 	-- Пол этажа стола: position.Y = 0.5 (верх участка) + высота этажа (Config/Stages.floorY)
 	local floorY = plot.Size.Y / 2 + position.Y - 0.5
@@ -1308,6 +1375,13 @@ local function seatNpc(model: Model, plot: BasePart, desk: Upgrades.Upgrade, use
 		end
 	end
 	table.insert(used, seat)
+	if chairParent then
+		spawnStaffChair(
+			plot.CFrame * CFrame.new(seat) * rotation,
+			chairParent,
+			model:GetAttribute("EmployeeId")
+		)
+	end
 
 	-- Pivot R15 — HumanoidRootPart. Смотрит на стол: стол «лицом» к +Z, значит NPC смотрит в -Z стола
 	poseSitting(model)
@@ -1384,7 +1458,7 @@ rebuildNpcs = function(player: Player)
 			if npc then
 				npc:SetAttribute("EmployeeId", employeeId)
 				markNpc(npc, studying[employeeId])
-				seatNpc(npc, plot, upgrade, used)
+				seatNpc(npc, plot, upgrade, used, folder)
 				local item = Skills.items[look.item] or "none"
 				if item ~= "none" then
 					local position = upgrade.position or Vector3.zero
