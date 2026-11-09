@@ -4,6 +4,7 @@
 -- Благодаря этому плейс можно пересобирать из build.rbxl и ничего не теряется.
 
 local ServerStorage = game:GetService("ServerStorage")
+local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Upgrades = require(ReplicatedStorage.Shared.Config.Upgrades)
@@ -588,6 +589,20 @@ local function ensureLandscape()
 		else Vector3.zero
 	local park = template:Clone()
 	park:PivotTo(CFrame.new(center))
+	-- V35 (патч Астры): в Park пять встроенных клумб Flowerbed_01…05; заменяем их детальной Flowerbed из
+	-- библиотеки ландшафта с сохранением имени и pivot (одна замена шаблона их не обновляет)
+	local flowerbed = landscapeTemplate("Flowerbed")
+	if flowerbed and flowerbed:IsA("Model") and flowerbed:GetAttribute("Generated") ~= true then
+		for _, item in park:GetDescendants() do
+			if item:IsA("Model") and item.Parent and string.match(item.Name, "^Flowerbed_%d+$") then
+				local replacement = flowerbed:Clone()
+				replacement.Name = item.Name
+				replacement:PivotTo(item:GetPivot())
+				replacement.Parent = item.Parent
+				item:Destroy()
+			end
+		end
+	end
 	local terrainGrass = workspace:GetAttribute("GrassTerrain") == true
 	for _, item in park:GetDescendants() do
 		if item:IsA("BasePart") and isMeadow(item) then
@@ -755,6 +770,49 @@ local function ensureOuterLandscape()
 	folder.Parent = workspace
 end
 
+-- Голуби парка (Астра V35, модель Pigeon в библиотеке ландшафта): несколько штук у фонтана и вдоль дорожек.
+-- Нет модели — ничего не ставим. Тег ParkPigeon: клиент (Controllers/PigeonAnimator) клюёт и пугает их
+local PIGEON_COUNT = 6
+local PIGEON_SEED = 1717
+local PIGEON_NAME = "ParkPigeons"
+
+local function ensurePigeons()
+	if workspace:FindFirstChild(PIGEON_NAME) or not hasLandscape() then
+		return
+	end
+	local template = landscapeTemplate("Pigeon")
+	if not template or not template:IsA("Model") or template:GetAttribute("Generated") == true then
+		return
+	end
+	local spawn = workspace:FindFirstChildWhichIsA("SpawnLocation", true)
+	local center = if spawn and spawn:IsA("BasePart")
+		then Vector3.new(spawn.Position.X, 0, spawn.Position.Z)
+		else Vector3.zero
+	local base = workspace:FindFirstChild("Baseplate")
+	local groundY = if base and base:IsA("BasePart") then base.Position.Y + base.Size.Y / 2 else 0
+	local fountain = center
+		+ Vector3.new(StartPark.landscapeFountain.position.X, 0, StartPark.landscapeFountain.position.Z)
+	local random = Random.new(PIGEON_SEED)
+	local folder = Instance.new("Folder")
+	folder.Name = PIGEON_NAME
+	for i = 1, PIGEON_COUNT do
+		-- Стайка у фонтана: радиус 12–20 вокруг (центр парка 16×16 и дорожки остаются свободными)
+		local angle = random:NextNumber(0, 2 * math.pi)
+		local radius = random:NextNumber(12, 20)
+		local point = fountain + Vector3.new(math.cos(angle) * radius, 0, math.sin(angle) * radius)
+		local model = template:Clone()
+		model.Name = "Pigeon" .. i
+		model:PivotTo(
+			CFrame.new(point.X, groundY, point.Z) * CFrame.Angles(0, random:NextNumber(0, 2 * math.pi), 0)
+		)
+		model:SetAttribute("HomeX", point.X)
+		model:SetAttribute("HomeZ", point.Z)
+		CollectionService:AddTag(model, "ParkPigeon")
+		model.Parent = folder
+	end
+	folder.Parent = workspace
+end
+
 -- Вызывать до PlotService.start()
 -- Импортированные модели апгрейдов (ServerStorage.Upgrades) клонируются на каждый участок:
 -- касания у декора не нужны (Touched — только у кнопок покупки), Seat оставляем
@@ -820,6 +878,7 @@ function WorldService.start()
 	ensureUpgradeModels()
 	ensureStartPark()
 	ensureLandscape()
+	ensurePigeons()
 	ensureOuterLandscape()
 	dimImportedLights()
 	untouchUpgradeModels()
