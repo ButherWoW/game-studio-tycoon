@@ -307,9 +307,9 @@ Images.platforms = {
 -- Арт эффекта «улучшение здания» (Астра V38, upg_*.png 256×256, прозрачный фон; UpgradeFx). 0 — берётся
 -- запасная текстура из Images.fx. Dev 1: загрузить и вписать ID
 Images.upgradeFx = {
-	sparkle = 0, -- upg_sparkle.png
-	dust = 0, -- upg_dust.png
-	confetti = 0, -- upg_confetti.png
+	sparkle = 86552670676035, -- upg_sparkle.png
+	dust = 108850095310063, -- upg_dust.png
+	confetti = 127037075032061, -- upg_confetti.png
 	ray = 0, -- upg_ray.png (зарезервировано: столб света сейчас деталью)
 	ring = 0, -- upg_ring.png (зарезервировано: кольцо сейчас деталью)
 } :: { [string]: number }
