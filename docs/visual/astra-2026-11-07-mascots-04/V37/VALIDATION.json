@@ -1,0 +1,40 @@
+[
+  {
+    "id": "robo_owl",
+    "parts": 54,
+    "dimensionsXYZ": [
+      3.000000026542723,
+      3.195486025185388,
+      1.42
+    ],
+    "pairs": 1431,
+    "overlaps": [],
+    "PrimaryPart": "Body",
+    "pivotXYZ": [
+      0,
+      0,
+      0
+    ],
+    "allAnchored": true,
+    "runtimeTested": false
+  },
+  {
+    "id": "slime_star",
+    "parts": 54,
+    "dimensionsXYZ": [
+      2.9483568,
+      2.8698805,
+      1.62
+    ],
+    "pairs": 1431,
+    "overlaps": [],
+    "PrimaryPart": "Body",
+    "pivotXYZ": [
+      0,
+      0,
+      0
+    ],
+    "allAnchored": true,
+    "runtimeTested": false
+  }
+]

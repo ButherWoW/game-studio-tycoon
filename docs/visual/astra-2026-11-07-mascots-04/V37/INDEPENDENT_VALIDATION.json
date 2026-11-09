@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Mascot_robo_owl",
+    "parts": 54,
+    "dimensionsXYZ": [
+      3.000000026542723,
+      3.195486085185388,
+      1.4200000000000002
+    ],
+    "pairs": 1431,
+    "overlaps": [],
+    "BodyPrimaryPart": true,
+    "pivotY0": true,
+    "allAnchored": true,
+    "binaryRoundtrip": "PASS",
+    "runtimeTested": false
+  },
+  {
+    "name": "Mascot_slime_star",
+    "parts": 54,
+    "dimensionsXYZ": [
+      2.9483568,
+      2.8698805,
+      1.62
+    ],
+    "pairs": 1431,
+    "overlaps": [],
+    "BodyPrimaryPart": true,
+    "pivotY0": true,
+    "allAnchored": true,
+    "binaryRoundtrip": "PASS",
+    "runtimeTested": false
+  }
+]
