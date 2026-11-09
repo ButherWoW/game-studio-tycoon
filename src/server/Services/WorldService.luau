@@ -534,8 +534,20 @@ local COZY_LIGHT_SCALE = 0.5
 -- моделей Астры не вернул яркость (Dev 1 правил то же руками в плейсе). Повторный проход безопасен:
 -- уже приглушённый цвет ниже порога
 local SOFTEN_VALUE = 0.85
-local SOFTEN_SATURATION = 0.25
-local SOFTEN_SCALE = 0.75
+local SOFTEN_SATURATION = 0.3
+local SOFTEN_SCALE = 0.78
+-- Стили отделки с засветом (владелец 09.11: «засвеченных быть не должно ни в одном стиле»); классика,
+-- Neon и ObsidianGold нормальные. Суффикс совпадает и с оболочками (Floor_Sakura, Office_Sakura…)
+local SOFTEN_SUFFIXES = { "_Cozy", "_Minimal", "_Aurora", "_Sakura" }
+
+local function isSoftened(name: string): boolean
+	for _, suffix in SOFTEN_SUFFIXES do
+		if name:sub(-#suffix) == suffix then
+			return true
+		end
+	end
+	return false
+end
 
 local function softenBrightParts()
 	local folder = ServerStorage:FindFirstChild("Upgrades")
@@ -543,15 +555,22 @@ local function softenBrightParts()
 		return
 	end
 	for _, model in folder:GetChildren() do
-		if model.Name:sub(-#COZY_SUFFIX) == COZY_SUFFIX and not model:GetAttribute("ColorsSoftened") then
+		if isSoftened(model.Name) and not model:GetAttribute("ColorsSoftened") then
 			model:SetAttribute("ColorsSoftened", true)
 			for _, item in model:GetDescendants() do
-				if item:IsA("BasePart") and item.Material ~= Enum.Material.Neon then
+				if
+					item:IsA("BasePart")
+					and item.Material ~= Enum.Material.Neon
+					and item.Transparency < 0.5
+				then
 					local h, sat, v = item.Color:ToHSV()
 					if v > SOFTEN_VALUE and sat < SOFTEN_SATURATION then
 						item.Color = Color3.fromHSV(h, sat, v * SOFTEN_SCALE)
 					end
-					if item.Material == Enum.Material.SmoothPlastic then
+					if
+						item.Material == Enum.Material.SmoothPlastic
+						or item.Material == Enum.Material.Glass
+					then
 						item.Material = Enum.Material.Plastic
 					end
 				end
