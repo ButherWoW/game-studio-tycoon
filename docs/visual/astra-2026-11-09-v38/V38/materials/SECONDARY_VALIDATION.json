@@ -1,0 +1,39 @@
+{
+  "512maps": 32,
+  "seamCheck": "PASS",
+  "metalness": "PASS",
+  "normalChecks": [
+    {
+      "name": "wood_floor",
+      "normalLengthMaxError": 0.009378852641821922
+    },
+    {
+      "name": "wood_dark",
+      "normalLengthMaxError": 0.007827637104724117
+    },
+    {
+      "name": "concrete_wall",
+      "normalLengthMaxError": 0.007827637104724117
+    },
+    {
+      "name": "fabric_carpet",
+      "normalLengthMaxError": 0.007827637104724117
+    },
+    {
+      "name": "brushed_metal",
+      "normalLengthMaxError": 0.007827637104724117
+    },
+    {
+      "name": "brick_warm",
+      "normalLengthMaxError": 0.01087030825211277
+    },
+    {
+      "name": "plastic_soft",
+      "normalLengthMaxError": 0.007827637104724117
+    },
+    {
+      "name": "marble_light",
+      "normalLengthMaxError": 0.007827637104724117
+    }
+  ]
+}

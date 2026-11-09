@@ -1,0 +1,466 @@
+[
+  {
+    "name": "wood_floor",
+    "Enum.Material": "WoodPlanks",
+    "sourcePixels": [
+      1254,
+      1254
+    ],
+    "deliveredPixels": [
+      1024,
+      1024
+    ],
+    "source": "built-in image_gen original albedo",
+    "processing": "Lanczos size conversion; cosine-taper boundary projection; approximate tonal normal and roughness; not scans",
+    "fabricReconstruction": false,
+    "sourceVerticalBorderRMSE": 22.797112390242177,
+    "metalness": 0.0,
+    "normalConvention": "OpenGL tangent +Y; RGB data, not sRGB albedo",
+    "maps": {
+      "color": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "863b1f65b4be1ac0ff587d3e36cbcefa713807463bee5e5f6b12000a61b32fb3"
+      },
+      "normal": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "6e966b487b40afbce44c50457c93eeb413092f0469ba837d81bd3ba436bef15d"
+      },
+      "roughness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "cb416224b483ffd0121bfb2cb65a5d4139adff3abd25698252054b65de76efbd"
+      },
+      "metalness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "0f4b1668d119f77ceb6b86645573f088ab2341d7b284314d5df0be7226ea5d91"
+      }
+    },
+    "preview": "analytical CPU cube/sphere, approximate shading; normal map not applied in preview",
+    "StudioTested": false
+  },
+  {
+    "name": "wood_dark",
+    "Enum.Material": "Wood",
+    "sourcePixels": [
+      1254,
+      1254
+    ],
+    "deliveredPixels": [
+      1024,
+      1024
+    ],
+    "source": "built-in image_gen original albedo",
+    "processing": "Lanczos size conversion; cosine-taper boundary projection; approximate tonal normal and roughness; not scans",
+    "fabricReconstruction": false,
+    "sourceVerticalBorderRMSE": 5.6089760187726485,
+    "metalness": 0.0,
+    "normalConvention": "OpenGL tangent +Y; RGB data, not sRGB albedo",
+    "maps": {
+      "color": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "ee9368b37ce2ca0c001b5aefdf256ea929380827a3b1ea261c03eb188604ac46"
+      },
+      "normal": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "804a60281dd26f3e6633a6252eee400d0bb314073b907889ce9dbe40fbe3eb9c"
+      },
+      "roughness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "f0e07d6619cb390793a468a88095ea71b65bba132e0cb63ba68d21617fdf7aeb"
+      },
+      "metalness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "0f4b1668d119f77ceb6b86645573f088ab2341d7b284314d5df0be7226ea5d91"
+      }
+    },
+    "preview": "analytical CPU cube/sphere, approximate shading; normal map not applied in preview",
+    "StudioTested": false
+  },
+  {
+    "name": "concrete_wall",
+    "Enum.Material": "Concrete",
+    "sourcePixels": [
+      1254,
+      1254
+    ],
+    "deliveredPixels": [
+      1024,
+      1024
+    ],
+    "source": "built-in image_gen original albedo",
+    "processing": "Lanczos size conversion; cosine-taper boundary projection; approximate tonal normal and roughness; not scans",
+    "fabricReconstruction": false,
+    "sourceVerticalBorderRMSE": 4.7454405200325365,
+    "metalness": 0.0,
+    "normalConvention": "OpenGL tangent +Y; RGB data, not sRGB albedo",
+    "maps": {
+      "color": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "1d4aa0d99a9356fea8384233d1558fb0d236425db4fede55e3c9f02f54ab5558"
+      },
+      "normal": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "c52333fb5fed7c4e6712f170366f2cdb85e145dca8ffcb202202b86ef652ec46"
+      },
+      "roughness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "5f68da79101bc128dba76207851c6521a8491e955a8824f00874b2c520bb9f57"
+      },
+      "metalness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "0f4b1668d119f77ceb6b86645573f088ab2341d7b284314d5df0be7226ea5d91"
+      }
+    },
+    "preview": "analytical CPU cube/sphere, approximate shading; normal map not applied in preview",
+    "StudioTested": false
+  },
+  {
+    "name": "fabric_carpet",
+    "Enum.Material": "Fabric",
+    "sourcePixels": [
+      1254,
+      1254
+    ],
+    "deliveredPixels": [
+      1024,
+      1024
+    ],
+    "source": "built-in image_gen original albedo",
+    "processing": "Lanczos size conversion; cosine-taper boundary projection; approximate tonal normal and roughness; not scans",
+    "fabricReconstruction": true,
+    "sourceVerticalBorderRMSE": 32.569042249056594,
+    "metalness": 0.0,
+    "normalConvention": "OpenGL tangent +Y; RGB data, not sRGB albedo",
+    "maps": {
+      "color": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "0fc8c482fd10e51ab8e4f22797ef03b2aa8d2ea6df7ab16dd0ef66fedda1df37"
+      },
+      "normal": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "4d2d2407260f2a931709a6263cdeb834866bc1493d9d0dc52f0b957330ba0acd"
+      },
+      "roughness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "a299112610f90644b6c8f853d4fd9b6caac46823b87c78c2c76df2eb3ded5921"
+      },
+      "metalness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "0f4b1668d119f77ceb6b86645573f088ab2341d7b284314d5df0be7226ea5d91"
+      }
+    },
+    "preview": "analytical CPU cube/sphere, approximate shading; normal map not applied in preview",
+    "StudioTested": false
+  },
+  {
+    "name": "brushed_metal",
+    "Enum.Material": "Metal",
+    "sourcePixels": [
+      1254,
+      1254
+    ],
+    "deliveredPixels": [
+      1024,
+      1024
+    ],
+    "source": "built-in image_gen original albedo",
+    "processing": "Lanczos size conversion; cosine-taper boundary projection; approximate tonal normal and roughness; not scans",
+    "fabricReconstruction": false,
+    "sourceVerticalBorderRMSE": 10.134399572125622,
+    "metalness": 1.0,
+    "normalConvention": "OpenGL tangent +Y; RGB data, not sRGB albedo",
+    "maps": {
+      "color": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "342ac43f45a068a00fc7b3bb59b2a1f92f17f10ab7392f72c1d4bfc1d547947f"
+      },
+      "normal": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "accb4a6dd6ccde1c612775a7363f3ab9678535fbb2407580a839d5fc96332185"
+      },
+      "roughness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "ecc944b111df565cca61251cd6d9c26257a989678da53d96eb5e652c27c300d8"
+      },
+      "metalness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "92d103ae3b35360d5c817ca0287ddaf222ce4889a230003c99128f0c56eef900"
+      }
+    },
+    "preview": "analytical CPU cube/sphere, approximate shading; normal map not applied in preview",
+    "StudioTested": false
+  },
+  {
+    "name": "brick_warm",
+    "Enum.Material": "Brick",
+    "sourcePixels": [
+      1254,
+      1254
+    ],
+    "deliveredPixels": [
+      1024,
+      1024
+    ],
+    "source": "built-in image_gen original albedo",
+    "processing": "Lanczos size conversion; cosine-taper boundary projection; approximate tonal normal and roughness; not scans",
+    "fabricReconstruction": false,
+    "sourceVerticalBorderRMSE": 17.420522649306477,
+    "metalness": 0.0,
+    "normalConvention": "OpenGL tangent +Y; RGB data, not sRGB albedo",
+    "maps": {
+      "color": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "40775f60909e7ac15142d8262c25a76fe6f34e4d9d90fb66113ff35a35148344"
+      },
+      "normal": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "5c1200a2e05eddd9e4e1093009a8c0f8de160c8bb8cf0e3adaad7ec264284ac9"
+      },
+      "roughness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "986aa15c0574820db3ef424b22b305e54ecc0b12514848825d94b68e7be71aae"
+      },
+      "metalness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "0f4b1668d119f77ceb6b86645573f088ab2341d7b284314d5df0be7226ea5d91"
+      }
+    },
+    "preview": "analytical CPU cube/sphere, approximate shading; normal map not applied in preview",
+    "StudioTested": false
+  },
+  {
+    "name": "plastic_soft",
+    "Enum.Material": "SmoothPlastic",
+    "sourcePixels": [
+      1254,
+      1254
+    ],
+    "deliveredPixels": [
+      1024,
+      1024
+    ],
+    "source": "built-in image_gen original albedo",
+    "processing": "Lanczos size conversion; cosine-taper boundary projection; approximate tonal normal and roughness; not scans",
+    "fabricReconstruction": false,
+    "sourceVerticalBorderRMSE": 2.811284459548695,
+    "metalness": 0.0,
+    "normalConvention": "OpenGL tangent +Y; RGB data, not sRGB albedo",
+    "maps": {
+      "color": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "20d172b4f28314f77208a9781bc0f38eaf3314a6b9931d679799b8f9a9247f8b"
+      },
+      "normal": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "90339e052672b69d85a117840e8abbd73cdb07958955fb58cf30c34245bb9069"
+      },
+      "roughness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "cc40db56d5310f17bcb988a603546b77ff1b453b2f97ba44a5358f4321e5a9ff"
+      },
+      "metalness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "0f4b1668d119f77ceb6b86645573f088ab2341d7b284314d5df0be7226ea5d91"
+      }
+    },
+    "preview": "analytical CPU cube/sphere, approximate shading; normal map not applied in preview",
+    "StudioTested": false
+  },
+  {
+    "name": "marble_light",
+    "Enum.Material": "Marble",
+    "sourcePixels": [
+      1254,
+      1254
+    ],
+    "deliveredPixels": [
+      1024,
+      1024
+    ],
+    "source": "built-in image_gen original albedo",
+    "processing": "Lanczos size conversion; cosine-taper boundary projection; approximate tonal normal and roughness; not scans",
+    "fabricReconstruction": false,
+    "sourceVerticalBorderRMSE": 3.9441082114127313,
+    "metalness": 0.0,
+    "normalConvention": "OpenGL tangent +Y; RGB data, not sRGB albedo",
+    "maps": {
+      "color": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "8884885e4cf3a60023cb0232f12b6c75daf8b8f2ad68e0bb088a6bef0a19408c"
+      },
+      "normal": {
+        "mode": "RGB",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "69e101555a0fc12f91a181371f71291e81e31b1f030331ed9587c92fd3d056d9"
+      },
+      "roughness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "d394bed527607a86444e26aa8279f979cdacae47690cb9e929e1c20ce32947e4"
+      },
+      "metalness": {
+        "mode": "L",
+        "size": [
+          1024,
+          1024
+        ],
+        "oppositeBorderMaxDifference": 0.0,
+        "sha256": "0f4b1668d119f77ceb6b86645573f088ab2341d7b284314d5df0be7226ea5d91"
+      }
+    },
+    "preview": "analytical CPU cube/sphere, approximate shading; normal map not applied in preview",
+    "StudioTested": false
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "wood_floor": {
+    "path": "source/wood_floor.png",
+    "description": "warm wide oak floor planks, subtle satin lacquer, offset staggered board end joints, realistically varied restrained grain"
+  },
+  "wood_dark": {
+    "path": "source/wood_dark.png",
+    "description": "dark walnut furniture wood surface, continuous longitudinal fine grain and subtle pores, no plank joints"
+  },
+  "concrete_wall": {
+    "path": "source/concrete_wall.png",
+    "description": "very light warm gray smooth architectural concrete, nearly imperceptible tiny pores, no damage, no seams"
+  },
+  "fabric_carpet": {
+    "path": "source/fabric_carpet.png",
+    "description": "muted warm gray dense tightly looped carpet fabric, tiny regular textile fibers, subdued natural tonal variation"
+  },
+  "brushed_metal": {
+    "path": "source/brushed_metal.png",
+    "description": "neutral satin brushed aluminum, fine consistent horizontal brushing, diffuse silver gray color, absolutely no reflections or highlights"
+  },
+  "brick_warm": {
+    "path": "source/brick_warm.png",
+    "description": "warm restrained terra cotta building bricks in running bond with thin pale gray mortar, regular consistent courses, authentic subtly rough faces"
+  },
+  "plastic_soft": {
+    "path": "source/plastic_soft.png",
+    "description": "smooth muted slate gray polymer plastic, very subtle tiny micro scratches and fine matte grain, visually quiet"
+  },
+  "marble_light": {
+    "path": "source/marble_light.png",
+    "description": "light ivory white marble stone, sparse elegant restrained warm gray fine veins, uniform pale background, no tile joints"
+  }
+}
