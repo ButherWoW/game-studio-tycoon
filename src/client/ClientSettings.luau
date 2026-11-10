@@ -14,6 +14,7 @@ local ClientSettings = {}
 local ATTRIBUTES: { [string]: string } = {
 	lowGraphics = "LowGraphics",
 	hideTitles = "HideTitles",
+	hideCapital = "HideCapital",
 	hideMascots = "HideMascots",
 	wallFade = "WallFade",
 }
