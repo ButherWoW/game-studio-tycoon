@@ -608,6 +608,7 @@ local CLASSIC_SOFTEN_SCALE: { [string]: number } = {
 	FloorDesk = 0.65,
 	OfficeDesk = 0.65,
 	Desk1 = 0.65,
+	PC1 = 0.65, -- белый системный блок у стола 1-го этажа
 	Lounge = 0.65,
 	MeetingRoom = SOFTEN_SCALE,
 	Office = SOFTEN_SCALE,
