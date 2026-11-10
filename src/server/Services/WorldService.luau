@@ -517,6 +517,12 @@ local function ensureStartPark()
 			addSign(pawn, "SignPanel", "park_pawn_sign", "📦 ЛОМБАРД", Color3.fromRGB(255, 201, 60))
 			local panel = pawn:FindFirstChild("SignPanel", true)
 			if panel then
+				-- Панель реалистичного киоска узкая (≈6×1): холст 800×600 растягивал текст и эмодзи по ширине
+				local gui = panel:FindFirstChildOfClass("SurfaceGui")
+				if gui then
+					gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+					gui.PixelsPerStud = 60
+				end
 				local label = panel:FindFirstChild("SignText", true)
 				if label and label:IsA("TextLabel") then
 					label.Position = UDim2.fromScale(0.04, 0.12)
