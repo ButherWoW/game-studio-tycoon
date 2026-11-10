@@ -601,6 +601,37 @@ local function isSoftened(name: string): boolean
 	return false
 end
 
+-- Классическая оболочка 3-го этажа (Skyscraper) была тёмной: почти непрозрачное тонированное стекло
+-- (Transparency 0.1) и тёмно-синие полосы и рамы, а 1-й и 2-й этажи — светлые с прозрачным стеклом
+-- (владелец 10.11: «почему верхний этаж чёрный»). Приводим к виду нижних этажей; крышу, пол и неон не трогаем
+local SKYSCRAPER_GLASS_COLOR = Color3.fromRGB(170, 210, 240)
+local SKYSCRAPER_GLASS_TRANSPARENCY = 0.75
+local SKYSCRAPER_FRAME_COLOR = Color3.fromRGB(205, 208, 214)
+local SKYSCRAPER_DARK_VALUE = 0.45
+
+local function lightenSkyscraperShell()
+	local folder = ServerStorage:FindFirstChild("Upgrades")
+	local shell = folder and folder:FindFirstChild("Skyscraper")
+	if not shell or shell:GetAttribute("FacadeLightened") then
+		return
+	end
+	shell:SetAttribute("FacadeLightened", true)
+	for _, item in shell:GetDescendants() do
+		if item:IsA("BasePart") then
+			if item.Material == Enum.Material.Glass then
+				item.Color = SKYSCRAPER_GLASS_COLOR
+				item.Transparency = SKYSCRAPER_GLASS_TRANSPARENCY
+			elseif item.Material ~= Enum.Material.Neon and item.Name ~= "Roof" and item.Name ~= "Floor" then
+				local _, _, v = item.Color:ToHSV()
+				if v < SKYSCRAPER_DARK_VALUE then
+					item.Color = SKYSCRAPER_FRAME_COLOR
+					item.Material = Enum.Material.Plastic
+				end
+			end
+		end
+	end
+end
+
 local function softenBrightParts()
 	local folder = ServerStorage:FindFirstChild("Upgrades")
 	if not folder then
@@ -1030,6 +1061,7 @@ function WorldService.start()
 	carvePathsFromGrass()
 	dimImportedLights()
 	softenBrightParts()
+	lightenSkyscraperShell()
 	untouchUpgradeModels()
 end
 
