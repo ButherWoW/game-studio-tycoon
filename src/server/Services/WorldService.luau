@@ -1201,8 +1201,10 @@ local BIN_EVERY = 3 -- брать каждый N-й сегмент дорожк�
 local BIN_GAP = 1.6 -- от края дорожки до урны
 local BENCH_GAP = 2.6 -- от края дорожки до скамейки (глубина скамейки 1.7)
 local BENCH_REACH = 28 -- скамейки дальше этого от дорожки не трогаем
-local BIN_BODY_COLOR = Color3.fromRGB(56, 104, 82)
-local BIN_LID_COLOR = Color3.fromRGB(38, 44, 48)
+-- Владелец 10.11: урны больше «под размер» и другой текстурой — мультяшные: гладкий яркий пластик
+local BIN_BODY_COLOR = Color3.fromRGB(64, 170, 96)
+local BIN_LID_COLOR = Color3.fromRGB(40, 110, 64)
+local BIN_SCALE = 1.8 -- во сколько раз больше шаблона ParkBin
 
 local function parkWalkSegments(): { BasePart }
 	local list = {}
@@ -1242,13 +1244,23 @@ local function spotFree(center: Vector3, size: Vector3, yaw: CFrame?, ignore: { 
 end
 
 local function retextureBin(bin: Model)
+	if bin:GetAttribute("BinStyled") == true then
+		return
+	end
+	bin:SetAttribute("BinStyled", true)
+	-- Увеличиваем, оставляя низ урны на прежней высоте
+	local cf, size = bin:GetBoundingBox()
+	local bottom = cf.Position.Y - size.Y / 2
+	bin:ScaleTo(bin:GetScale() * BIN_SCALE)
+	local cf2, size2 = bin:GetBoundingBox()
+	bin:PivotTo(bin:GetPivot() + Vector3.new(0, bottom - (cf2.Position.Y - size2.Y / 2), 0))
 	for _, item in bin:GetDescendants() do
 		if item:IsA("BasePart") then
 			if item.Name == "BinBody" then
-				item.Material = Enum.Material.DiamondPlate
+				item.Material = Enum.Material.SmoothPlastic
 				item.Color = BIN_BODY_COLOR
 			elseif item.Name == "BinLid" then
-				item.Material = Enum.Material.Metal
+				item.Material = Enum.Material.SmoothPlastic
 				item.Color = BIN_LID_COLOR
 			end
 		end
@@ -1339,7 +1351,12 @@ local function arrangeParkFurniture()
 		local ground = Vector3.new(spot.X, walk.Position.Y, spot.Z)
 		if
 			not tooClose
-			and spotFree(ground + Vector3.new(0, 1.6, 0), Vector3.new(2, 2.4, 2), nil, { folder })
+			and spotFree(
+				ground + Vector3.new(0, 1.6 * BIN_SCALE, 0),
+				Vector3.new(2, 2.4, 2) * BIN_SCALE,
+				nil,
+				{ folder }
+			)
 		then
 			local bin = template:Clone()
 			bin.Name = "ParkBin"
