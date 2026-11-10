@@ -662,7 +662,7 @@ local function ensureStartPark()
 			local copy = fountain:Clone()
 			copy.Name = "Fountain"
 			-- Фонтан крупнее (владелец 07.11): масштаб вокруг центра основания, место в парке под него есть
-			copy:ScaleTo(FOUNTAIN_SCALE)
+			copy:ScaleTo(copy:GetScale() * FOUNTAIN_SCALE)
 			placeAt(copy, StartPark.landscapeFountain)
 		end
 	end
@@ -1092,7 +1092,7 @@ local function ensureOuterLandscape()
 				local model = chosen.model:Clone()
 				local scale = chosen.scale[1] + (chosen.scale[2] - chosen.scale[1]) * scaleRoll
 				if scale ~= 1 then
-					model:ScaleTo(scale)
+					model:ScaleTo(model:GetScale() * scale)
 				end
 				model:PivotTo(CFrame.new(point) * CFrame.Angles(0, yaw, 0))
 				model.Parent = folder
