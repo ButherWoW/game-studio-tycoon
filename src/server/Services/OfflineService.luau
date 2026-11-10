@@ -40,9 +40,12 @@ function OfflineService.earnings(profile: DataService.Profile, seconds: number):
 	local perMinute = perGame / Offline.gameMinutes
 	-- Команда: «Призрачный кодер» ×2, перк «Ночная смена» (StaffService)
 	local staff = script.Parent:FindFirstChild("StaffService")
-	local team = if staff and staff:IsA("ModuleScript")
-		then (require(staff) :: any).offlineMultiplier(profile)
-		else 1
+	local okTeam, teamValue = pcall(function()
+		return if staff and staff:IsA("ModuleScript")
+			then (require(staff) :: any).offlineMultiplier(profile)
+			else 1
+	end)
+	local team = if okTeam and type(teamValue) == "number" then teamValue else 1
 	-- Звёзды студии (Config/RebirthPerks, ветка «Пассив»): +N% к офлайн-доходу
 	local stars = 1 + RebirthPerks.forProfile(profile).offline
 	local gross = capped / 60 * perMinute * Offline.rate * team * stars

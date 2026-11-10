@@ -82,6 +82,8 @@ local function onClaim(player: Player)
 		RewardService.grant(player, { coffeeMinutes = coffee })
 	end
 	sendState(player)
+	-- Сразу в DataStore: краш до автосейва откатил бы lastClaimDay и позволил забрать награду дважды
+	task.spawn(DataService.save, player)
 end
 
 function DailyRewardService.start()

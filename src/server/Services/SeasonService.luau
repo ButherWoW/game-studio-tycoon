@@ -339,8 +339,18 @@ function SeasonService.grantProduct(player: Player, profile: DataService.Profile
 end
 
 function SeasonService.start()
+	-- Запрос состояния не чаще раза в секунду: иначе флуд грузит CPU и трафик сервера
+	local lastState: { [Player]: number } = {}
 	LiveOpsRemotes.RequestSeason.OnServerEvent:Connect(function(player)
+		local now = os.clock()
+		if now - (lastState[player] or -1) < 1 then
+			return
+		end
+		lastState[player] = now
 		SeasonService.sendState(player)
+	end)
+	Players.PlayerRemoving:Connect(function(player)
+		lastState[player] = nil
 	end)
 	LiveOpsRemotes.ClaimSeason.OnServerEvent:Connect(onClaim)
 	DataService.onProfileLoaded(function(player, profile)
