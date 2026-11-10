@@ -858,7 +858,8 @@ local OUTER_PROPS = {
 	{ name = "TreeBroadleaf", weight = 5, scale = { 0.85, 1.3 } },
 	{ name = "TreePine", weight = 4, scale = { 0.85, 1.4 } },
 	{ name = "TreeBirch", weight = 3, scale = { 0.85, 1.2 } },
-	{ name = "Bush", weight = 4, scale = { 0.8, 1.4 } },
+	-- Кустов на 70% больше (владелец 10.11): вес 4 → 6.8, OUTER_FILL поднят, чтобы остального не стало меньше
+	{ name = "Bush", weight = 6.8, scale = { 0.8, 1.4 } },
 	{ name = "Flowerbed", weight = 1, scale = { 1, 1 } },
 	-- Набор Астры для разнообразия (assets/models/astra-landscape)
 	{ name = "RockSmall", weight = 2, scale = { 0.8, 1.3 } },
@@ -867,7 +868,7 @@ local OUTER_PROPS = {
 	-- Заборы и изгороди убраны (владелец 06.11: стояли ни к чему, смысла не имеют)
 	{ name = "StreetBench", weight = 0.8, scale = { 1, 1 } },
 }
-local OUTER_FILL = 0.55 -- доля клеток с предметом
+local OUTER_FILL = 0.62 -- доля клеток с предметом (0.55 × 24.8 / 22 — под добавленные кусты)
 
 local function outerBlocked(point: Vector3, center: Vector3): boolean
 	local flat = Vector3.new(point.X - center.X, 0, point.Z - center.Z)
