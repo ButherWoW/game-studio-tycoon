@@ -11,7 +11,7 @@ local StudioLayout = require(ReplicatedStorage.Shared.StudioLayout)
 
 local OfficeFloors = {}
 
--- Деталей мало (12 участков): лифт — 2, стекло — 1, закрытый этаж — 5
+-- Деталей мало (12 участков): лифт — 2, окно — 7, полоса окон — 13, закрытый этаж — 5
 local PAD_SIZE = Vector3.new(6, 0.1, 6)
 local PANEL_SIZE = Vector3.new(1, 7, 3)
 local PAD_COLOR = Color3.fromRGB(95, 100, 115)
@@ -140,20 +140,91 @@ local function buildSlab(model: Model, plot: BasePart, floor: number, ceiling: C
 	slab.Material = if ceiling then ceiling.material else Enum.Material.Concrete
 end
 
--- Открытый верхний этаж: стекло в проёме передней стены, чтобы не выпасть на улицу
+-- Открытый верхний этаж: окно в проёме передней стены, чтобы не выпасть на улицу.
+-- Владелец 10.11: невидимое стекло выглядело дырой в стене — делаем окно: голубое полупрозрачное
+-- стекло и тёмная рама (верх, низ и несколько вертикальных стоек)
+local WINDOW_TRANSPARENCY = 0.55
+local WINDOW_FRAME_COLOR = Color3.fromRGB(45, 60, 90)
+local WINDOW_FRAME = 0.4 -- толщина рамы
+local WINDOW_MULLIONS = 3 -- вертикальных стоек внутри проёма
+
 local function buildGlass(model: Model, plot: BasePart, floor: number)
 	local y = StudioLayout.floorY(floor)
+	local z = PLOT_HALF - 0.5
 	local glass = makePart(
 		model,
 		"FrontGlass",
 		GLASS_SIZE,
-		at(plot, 0, y + 0.1 + GLASS_SIZE.Y / 2, PLOT_HALF - 0.5),
+		at(plot, 0, y + 0.1 + GLASS_SIZE.Y / 2, z),
 		Color3.fromRGB(170, 210, 240)
 	)
 	glass.Material = Enum.Material.Glass
-	-- Стекла убраны с глаз (владелец 07.11), но остаются стеной без вида: иначе из проёма верхнего
-	-- этажа можно выпасть на улицу
-	glass.Transparency = 1
+	glass.Transparency = WINDOW_TRANSPARENCY
+	glass.Reflectance = 0.1
+	glass.CastShadow = false
+	local depth = GLASS_SIZE.Z + 0.2
+	local function bar(name: string, size: Vector3, x: number, barY: number)
+		local part = makePart(model, name, size, at(plot, x, barY, z), WINDOW_FRAME_COLOR)
+		part.CanCollide = false
+		part.CastShadow = false
+	end
+	bar(
+		"WindowTop",
+		Vector3.new(GLASS_SIZE.X, WINDOW_FRAME, depth),
+		0,
+		y + 0.1 + GLASS_SIZE.Y - WINDOW_FRAME / 2
+	)
+	bar("WindowBottom", Vector3.new(GLASS_SIZE.X, WINDOW_FRAME, depth), 0, y + 0.1 + WINDOW_FRAME / 2)
+	for i = 0, WINDOW_MULLIONS + 1 do
+		local x = -GLASS_SIZE.X / 2 + i * GLASS_SIZE.X / (WINDOW_MULLIONS + 1)
+		x = math.clamp(x, -GLASS_SIZE.X / 2 + WINDOW_FRAME / 2, GLASS_SIZE.X / 2 - WINDOW_FRAME / 2)
+		bar(
+			"WindowMullion" .. i,
+			Vector3.new(WINDOW_FRAME, GLASS_SIZE.Y, depth),
+			x,
+			y + 0.1 + GLASS_SIZE.Y / 2
+		)
+	end
+end
+
+-- Полоса окон под перекрытием (владелец 10.11, «дырки в стенах»): у оболочек этажей передняя стена
+-- заканчивается на ~8.5 над полом, а перекрытие следующего этажа начинается на FLOOR_HEIGHT − SLAB,
+-- между ними во всю ширину фасада была щель. Закрываем её стеклом с рамой
+local TRANSOM_FROM = 8.4 -- от пола этажа
+
+local function buildTransom(model: Model, plot: BasePart, floor: number)
+	local y = StudioLayout.floorY(floor)
+	local top = StudioLayout.FLOOR_HEIGHT - SLAB_THICKNESS
+	local height = top - TRANSOM_FROM
+	if height <= 0 then
+		return
+	end
+	local width = PLOT_HALF * 2
+	local z = PLOT_HALF - 0.2
+	local centerY = y + TRANSOM_FROM + height / 2
+	local glass = makePart(
+		model,
+		"TransomGlass",
+		Vector3.new(width, height, 0.3),
+		at(plot, 0, centerY, z),
+		Color3.fromRGB(170, 210, 240)
+	)
+	glass.Material = Enum.Material.Glass
+	glass.Transparency = WINDOW_TRANSPARENCY
+	glass.Reflectance = 0.1
+	glass.CastShadow = false
+	local function bar(name: string, size: Vector3, x: number, barY: number)
+		local part = makePart(model, name, size, at(plot, x, barY, z), WINDOW_FRAME_COLOR)
+		part.CanCollide = false
+		part.CastShadow = false
+	end
+	bar("TransomBottom", Vector3.new(width, WINDOW_FRAME, 0.5), 0, y + TRANSOM_FROM + WINDOW_FRAME / 2)
+	local step = 6
+	for i = 0, math.floor(width / step) do
+		local x =
+			math.clamp(-PLOT_HALF + i * step, -PLOT_HALF + WINDOW_FRAME / 2, PLOT_HALF - WINDOW_FRAME / 2)
+		bar("TransomMullion" .. i, Vector3.new(WINDOW_FRAME, height, 0.5), x, centerY)
+	end
 end
 
 -- Закрытый этаж: тёмная обёртка со всех сторон и сверху (внутрь не попасть) и табличка на фасаде
@@ -244,6 +315,7 @@ function OfficeFloors.build(plot: BasePart, studioLevel: number, onLift: LiftHan
 		end
 		if floor <= unlocked then
 			buildElevator(model, plot, floor, unlocked, onLift)
+			buildTransom(model, plot, floor)
 			if floor > 1 then
 				buildGlass(model, plot, floor)
 			end
