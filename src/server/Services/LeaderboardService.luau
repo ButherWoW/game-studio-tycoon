@@ -46,7 +46,7 @@ local deferred: { [number]: Written } = {} -- отложенные записи 
 local names: { [number]: string } = {}
 local lastRequest: { [Player]: number } = {}
 
-local function write(userId: number, best: number, games: number, fans: number, old: Written?)
+local function write(userId: number, best: number, games: number, fans: number, old: Written?): boolean
 	local key = tostring(userId)
 	local okBest, errBest = pcall(function()
 		(bestStore :: OrderedDataStore):SetAsync(key, best)
@@ -63,7 +63,9 @@ local function write(userId: number, best: number, games: number, fans: number, 
 	end
 	if not okBest or not okGames or not okFans then
 		warn("[LeaderboardService] Запись не удалась:", errBest, errGames, errFans)
+		return false
 	end
+	return true
 end
 
 local function fansOf(profile: any): number
@@ -111,7 +113,10 @@ local function maybeWrite(
 	deferred[userId] = nil
 	-- Отмечаем до yield, чтобы параллельный вызов не записал второй раз
 	written[userId] = { best = best, games = games, fans = fans, at = now }
-	write(userId, best, games, fans, w)
+	if not write(userId, best, games, fans, w) then
+		-- Не записалось: откатываем отметку, чтобы следующая проверка повторила запись
+		written[userId] = w
+	end
 end
 
 local function nameOf(userId: number): string
