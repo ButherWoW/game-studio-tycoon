@@ -11,6 +11,7 @@ local Hud = require(ReplicatedStorage.Shared.Config.Hud)
 local Images = require(ReplicatedStorage.Shared.Config.Images)
 local Unlocks = require(ReplicatedStorage.Shared.Config.Unlocks)
 local Features = require(ReplicatedStorage.Shared.Config.Features)
+local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 
 local Ui = {}
 
@@ -624,24 +625,37 @@ local menuMore: Frame? = nil
 -- Подпись под значком (ключ menu_label_<slot> в Config/Texts); на тач-экране подписей нет — клетка мала
 local MENU_LABELED = not Ui.touch
 local menuLabels: { [TextLabel]: string } = {}
-local labelsHooked = false
+
+-- Язык подписей задаёт LanguageController (Ui.setMenuLang): Ui не тянет ClientState (цикл require)
+local menuLang = "en"
+local menuHide: TextButton? = nil
 
 local function menuText(key: string): string
-	local ok, ClientState = pcall(require, script.Parent.ClientState)
-	if not ok then
-		return ""
-	end
-	local text = (ClientState :: any).t(key)
+	local text = Texts.format(menuLang, key)
 	return if text == key then "" else text
 end
 
+local function hideText(collapsed: boolean): string
+	return if collapsed then "▲ " .. menuText("menu_label_show") else "▼ " .. menuText("menu_label_hide")
+end
+
 local function relabelMenu()
+	if menuHide then
+		menuHide.Text = hideText(menuHide:GetAttribute("Collapsed") == true)
+	end
 	for label, key in menuLabels do
 		if label.Parent then
 			label.Text = menuText(key)
 		else
 			menuLabels[label] = nil
 		end
+	end
+end
+
+function Ui.setMenuLang(code: string)
+	if code ~= menuLang then
+		menuLang = code
+		relabelMenu()
 	end
 end
 
@@ -671,15 +685,6 @@ local function addMenuLabel(b: TextButton, key: string)
 	local padding = b:FindFirstChildOfClass("UIPadding")
 	if padding then
 		padding.PaddingBottom = UDim.new(0, labelHeight)
-	end
-	if not labelsHooked then
-		labelsHooked = true
-		task.spawn(function()
-			local ok, ClientState = pcall(require, script.Parent.ClientState)
-			if ok then
-				(ClientState :: any).langChanged:Connect(relabelMenu)
-			end
-		end)
 	end
 end
 
@@ -1005,8 +1010,8 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 		hide.Name = "HideToggle"
 		hide.LayoutOrder = -1
 		hide.Size = UDim2.fromOffset(MENU_BUTTON, math.floor(MENU_BUTTON * 0.4))
-		hide.Text = "▼ " .. menuText("menu_label_hide")
-		menuLabels[hide :: any] = nil
+		hide.Text = hideText(false)
+		menuHide = hide
 		-- Кнопки создаются пачкой при старте и меняют Visible: пересчёт раз в кадр
 		local scheduled = false
 		refitMenu = function()

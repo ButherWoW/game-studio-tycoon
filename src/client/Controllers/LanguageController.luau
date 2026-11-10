@@ -248,6 +248,11 @@ function LanguageController.close()
 end
 
 function LanguageController.start()
+	-- Подписи кнопок бокового меню — на языке игрока
+	Ui.setMenuLang(ClientState.lang)
+	ClientState.langChanged:Connect(function()
+		Ui.setMenuLang(ClientState.lang)
+	end)
 	Ui.menuButton(6, "🌐", function()
 		if gui then
 			LanguageController.close()
