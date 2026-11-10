@@ -27,6 +27,7 @@ type PerksData = {
 local TOGGLE_COOLDOWN = 0.5
 local VIP_CHECK_SECONDS = 5 -- геймпасс могут купить посреди сессии
 local VIP_SIGN_NAME = "VipSign"
+local VIP_SIGN_CLEARANCE = 3 -- зазор между крышей постройки и низом таблички
 
 local PerksService = {}
 local lastToggle: { [Player]: number } = {}
@@ -149,7 +150,23 @@ local function makeSign(plot: BasePart): Model
 	part.Material = Enum.Material.Metal
 	part.Color = effects.vipSignColor
 	part.Size = effects.vipSignSize
-	part.CFrame = plot.CFrame * CFrame.new(effects.vipSignOffset)
+	-- Над гаражом хватает vipSignOffset, а офис и небоскрёб выше: табличка торчала сквозь пол
+	-- 2-го этажа (владелец 09.11: «жёлтая палка на 2-м этаже и под потолком»). Ставим над крышей
+	local offset = effects.vipSignOffset
+	local top = plot.Position.Y + offset.Y - effects.vipSignSize.Y / 2 - VIP_SIGN_CLEARANCE
+	local studioSign = plot:FindFirstChild("StudioSign")
+	for _, item in plot:GetDescendants() do
+		-- Вывеска студии стоит на крыше сама по себе: над ней табличку не поднимаем
+		if
+			item:IsA("BasePart")
+			and item.Transparency < 1
+			and not (studioSign and item:IsDescendantOf(studioSign))
+		then
+			top = math.max(top, item.Position.Y + item.Size.Y / 2)
+		end
+	end
+	local y = top + VIP_SIGN_CLEARANCE + effects.vipSignSize.Y / 2 - plot.Position.Y
+	part.CFrame = plot.CFrame * CFrame.new(offset.X, math.max(offset.Y, y), offset.Z)
 	part.Parent = model
 	for _, face in { Enum.NormalId.Front, Enum.NormalId.Back } do
 		local gui = Instance.new("SurfaceGui")
