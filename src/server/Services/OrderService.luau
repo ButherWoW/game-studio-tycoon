@@ -150,53 +150,54 @@ local function onRequest(player: Player)
 	push(player)
 end
 
--- Офис на участке — модель Office или Office_<стиль>
-local function hasOffice(plot: BasePart): boolean
-	for _, child in plot:GetChildren() do
-		if child:IsA("Model") and (child.Name == "Office" or string.find(child.Name, "^Office_") ~= nil) then
-			return true
-		end
-	end
-	return false
-end
-
-local function boardCFrame(plot: BasePart): CFrame
+-- Где стоит доска: в офисе (этап 2+) — на задней стене 1-го этажа, в гараже — рядом с участком.
+-- Решаем по профилю, а не по именам моделей: модель могла ещё не собраться (владелец 10.11:
+-- доска торчала у стены снаружи). Пока гаража нет — доски нет вовсе (владелец 10.11)
+local function boardCFrame(plot: BasePart, inOffice: boolean): CFrame
 	local size = Orders.board.size
-	if hasOffice(plot) then
+	if inOffice then
 		return plot.CFrame * CFrame.new(Orders.board.officeOffset)
 	end
 	local offset = Orders.board.offset
 	return plot.CFrame * CFrame.new(offset.X, plot.Size.Y / 2 + size.Y / 2, offset.Z)
 end
 
--- Доска у участка: одна деталь на участок, живёт рядом (Model участка пересобирается, деталь нет)
-local function ensureBoard(plot: Instance)
-	if not plot:IsA("BasePart") or plot:FindFirstChild("OrderBoard") then
-		return
-	end
-	local size = Orders.board.size
+local function createBoard(plot: BasePart, cframe: CFrame)
 	local board = Instance.new("Part")
 	board.Name = "OrderBoard"
 	board.Anchored = true
 	board.CanCollide = true
 	board.CanQuery = false
 	board.CanTouch = false
-	board.Size = size
+	board.Size = Orders.board.size
 	board.Color = Color3.fromRGB(32, 36, 52)
 	board.Material = Enum.Material.SmoothPlastic
-	board.CFrame = boardCFrame(plot)
+	board.CFrame = cframe
 	board:SetAttribute("OrderBoard", true)
 	board.Parent = plot
 end
 
--- Участок перестроен (гараж → офис и обратно): доска переезжает на стену или наружу
-local function placeBoard(plot: Instance)
-	if not plot:IsA("BasePart") then
+-- Доска игрока: нет гаража — убрать; есть — создать и поставить на место (офис/гараж)
+local function syncBoard(player: Player)
+	local plot = PlotService.getPlot(player)
+	local profile = DataService.get(player)
+	if not plot or not plot:IsA("BasePart") or not profile then
 		return
 	end
 	local board = plot:FindFirstChild("OrderBoard")
+	if not PlotService.ownsGarage(player) then
+		if board then
+			board:Destroy()
+		end
+		return
+	end
+	local cframe = boardCFrame(plot, profile.studioLevel >= 2)
 	if board and board:IsA("BasePart") then
-		board.CFrame = boardCFrame(plot)
+		if board.CFrame ~= cframe then
+			board.CFrame = cframe
+		end
+	else
+		createBoard(plot, cframe)
 	end
 end
 
@@ -208,17 +209,17 @@ function OrderService.start()
 	Players.PlayerRemoving:Connect(function(player)
 		lastRequest[player] = nil
 	end)
-	local plots = workspace:FindFirstChild("Plots")
-	if plots then
-		for _, plot in plots:GetChildren() do
-			ensureBoard(plot)
-		end
-		plots.ChildAdded:Connect(ensureBoard)
-	end
-	PlotService.plotChanged:Connect(function(player: Player)
-		local plot = PlotService.getPlot(player)
-		if plot then
-			placeBoard(plot)
+	-- Доска появляется с гаражом и переезжает в офис вместе со студией; сверяем по событию и раз в 3 с
+	PlotService.plotChanged:Connect(syncBoard)
+	DataService.onProfileLoaded(function(player: Player, _profile: DataService.Profile)
+		task.delay(1, syncBoard, player)
+	end)
+	task.spawn(function()
+		while true do
+			task.wait(3)
+			for _, player in Players:GetPlayers() do
+				syncBoard(player)
+			end
 		end
 	end)
 	-- Новый день UTC: новые заказы тем, кто в игре
