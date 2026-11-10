@@ -1075,6 +1075,167 @@ local function rescueFallen()
 	end
 end
 
+-- Парковая мебель у дорожек (владелец 10.11): скамейка стоит у тропинки лицом к ней, урн больше,
+-- у урн рифлёный металл вместо гладкой краски. Один раз за сервер
+local BIN_COUNT = 14 -- сколько урн добавить вдоль дорожек
+local BIN_EVERY = 3 -- брать каждый N-й сегмент дорожки
+local BIN_GAP = 1.6 -- от края дорожки до урны
+local BENCH_GAP = 2.6 -- от края дорожки до скамейки (глубина скамейки 1.7)
+local BENCH_REACH = 28 -- скамейки дальше этого от дорожки не трогаем
+local BIN_BODY_COLOR = Color3.fromRGB(56, 104, 82)
+local BIN_LID_COLOR = Color3.fromRGB(38, 44, 48)
+
+local function parkWalkSegments(): { BasePart }
+	local list = {}
+	for _, item in workspace:GetDescendants() do
+		if item:IsA("BasePart") and isParkWalk(item.Name) and not string.find(item.Name, "oundJoin") then
+			table.insert(list, item)
+		end
+	end
+	table.sort(list, function(a, b)
+		return a.Position.X + a.Position.Z * 1.7 < b.Position.X + b.Position.Z * 1.7
+	end)
+	return list
+end
+
+-- Ближайшая к точке точка на плите дорожки (в мировых координатах, по плоскости XZ)
+local function nearestOnWalk(walk: BasePart, point: Vector3): Vector3
+	local local3 = walk.CFrame:PointToObjectSpace(point)
+	local half = walk.Size / 2
+	local clamped =
+		Vector3.new(math.clamp(local3.X, -half.X, half.X), 0, math.clamp(local3.Z, -half.Z, half.Z))
+	return walk.CFrame:PointToWorldSpace(clamped)
+end
+
+local function spotFree(center: Vector3, size: Vector3, yaw: CFrame?, ignore: { Instance }): boolean
+	local params = OverlapParams.new()
+	params.FilterType = Enum.RaycastFilterType.Exclude
+	params.FilterDescendantsInstances = ignore
+	local cframe = if yaw then yaw else CFrame.new(center)
+	for _, part in workspace:GetPartBoundsInBox(cframe, size, params) do
+		if part.CanCollide and part.Transparency < 1 and part ~= workspace.Terrain then
+			if not (part.Name == "Baseplate" or part.Size.Y < 0.5 and part.Position.Y < center.Y - 0.2) then
+				return false
+			end
+		end
+	end
+	return true
+end
+
+local function retextureBin(bin: Model)
+	for _, item in bin:GetDescendants() do
+		if item:IsA("BasePart") then
+			if item.Name == "BinBody" then
+				item.Material = Enum.Material.DiamondPlate
+				item.Color = BIN_BODY_COLOR
+			elseif item.Name == "BinLid" then
+				item.Material = Enum.Material.Metal
+				item.Color = BIN_LID_COLOR
+			end
+		end
+	end
+end
+
+local function arrangeParkFurniture()
+	if workspace:GetAttribute("ParkFurniture") == true then
+		return
+	end
+	local walks = parkWalkSegments()
+	if #walks == 0 then
+		return
+	end
+	workspace:SetAttribute("ParkFurniture", true)
+	-- Скамейки: ближайшая дорожка, встать рядом и повернуться лицом к ней (перед скамейки — +Z)
+	for _, item in workspace:GetDescendants() do
+		if
+			item:IsA("Model")
+			and string.find(item.Name, "^StreetBench")
+			and not item:IsDescendantOf(workspace:FindFirstChild("Plots") or item)
+		then
+			local pos = item:GetPivot().Position
+			local best: Vector3? = nil
+			local bestDist = BENCH_REACH
+			for _, walk in walks do
+				local onWalk = nearestOnWalk(walk, pos)
+				local dist = (Vector3.new(onWalk.X, 0, onWalk.Z) - Vector3.new(pos.X, 0, pos.Z)).Magnitude
+				if dist < bestDist then
+					bestDist = dist
+					best = onWalk
+				end
+			end
+			if best then
+				local flat = Vector3.new(best.X - pos.X, 0, best.Z - pos.Z)
+				if flat.Magnitude > 0.1 then
+					local dir = flat.Unit
+					local spot = Vector3.new(best.X, pos.Y, best.Z) - dir * BENCH_GAP
+					local cframe = CFrame.lookAt(spot, spot - dir)
+					if
+						spotFree(
+							spot + Vector3.new(0, 1.4, 0),
+							Vector3.new(6.4, 2.4, 2.4),
+							cframe * CFrame.new(0, 1.4, 0),
+							{ item }
+						)
+					then
+						item:PivotTo(cframe)
+					end
+				end
+			end
+		end
+	end
+	-- Урны: существующие перекрашиваем, новых добавляем вдоль дорожек
+	local template = landscapeTemplate("ParkBin")
+	local existing: { Vector3 } = {}
+	for _, item in workspace:GetDescendants() do
+		if item:IsA("Model") and item.Name == "ParkBin" then
+			retextureBin(item)
+			table.insert(existing, item:GetPivot().Position)
+		end
+	end
+	if not template or not template:IsA("Model") then
+		return
+	end
+	local folder = Instance.new("Folder")
+	folder.Name = "ParkBinsExtra"
+	local placed = 0
+	for index = 1, #walks, BIN_EVERY do
+		if placed >= BIN_COUNT then
+			break
+		end
+		local walk = walks[index]
+		local alongX = walk.Size.X >= walk.Size.Z
+		local halfPerp = (if alongX then walk.Size.Z else walk.Size.X) / 2
+		local side = if placed % 2 == 0 then 1 else -1
+		local localSpot = if alongX
+			then Vector3.new(0, 0, side * (halfPerp + BIN_GAP))
+			else Vector3.new(side * (halfPerp + BIN_GAP), 0, 0)
+		local spot = walk.CFrame:PointToWorldSpace(localSpot)
+		local tooClose = false
+		for _, other in existing do
+			if (Vector3.new(other.X, 0, other.Z) - Vector3.new(spot.X, 0, spot.Z)).Magnitude < 12 then
+				tooClose = true
+				break
+			end
+		end
+		local ground = Vector3.new(spot.X, walk.Position.Y, spot.Z)
+		if
+			not tooClose
+			and spotFree(ground + Vector3.new(0, 1.6, 0), Vector3.new(2, 2.4, 2), nil, { folder })
+		then
+			local bin = template:Clone()
+			bin.Name = "ParkBin"
+			local _, size = bin:GetBoundingBox()
+			-- Низом на землю; повернуть крышкой к дорожке не нужно: урна круглая
+			bin:PivotTo(CFrame.new(ground.X, ground.Y + size.Y / 2 - 0.1, ground.Z))
+			retextureBin(bin)
+			bin.Parent = folder
+			table.insert(existing, ground)
+			placed += 1
+		end
+	end
+	folder.Parent = workspace
+end
+
 function WorldService.start()
 	local Lighting = game:GetService("Lighting")
 	Lighting.ExposureCompensation = math.min(Lighting.ExposureCompensation, World.lighting.exposure)
@@ -1101,6 +1262,7 @@ function WorldService.start()
 	ensureOuterLandscape()
 	gravelParkPaths()
 	carvePathsFromGrass()
+	arrangeParkFurniture()
 	dimImportedLights()
 	softenBrightParts()
 	lightenSkyscraperShell()
