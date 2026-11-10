@@ -424,6 +424,80 @@ end
 -- Парк «Инди в парке» вокруг спавна: скамейки с ноутбуками, доска заказов, ломбард и точки
 -- картриджей (поведение — StartParkService). Участки начинаются в 60 studs от спавна,
 -- тропинки к ним идут по углам 0°, 60°…, поэтому скамейки и киоски стоят между тропинками.
+-- Фонтан Астры был статичным: плоская голубая «вода» без движения (владелец 10.11: «ужасен, сделай
+-- анимацию»). Вода — полупрозрачное стекло, из JetTop бьёт струя, с краёв чаш капает, над нижней
+-- чашей лёгкий туман. Частицы — встроенная текстура Roblox, своих ассетов не нужно
+local FOUNTAIN_PARTICLE = "rbxasset://textures/particles/smoke_main.dds"
+
+local function fountainEmitter(parent: Instance, name: string): ParticleEmitter
+	local emitter = Instance.new("ParticleEmitter")
+	emitter.Name = name
+	emitter.Texture = FOUNTAIN_PARTICLE
+	emitter.Color = ColorSequence.new(Color3.fromRGB(215, 240, 255))
+	emitter.LightEmission = 0.35
+	emitter.LightInfluence = 0.6
+	emitter.Parent = parent
+	return emitter
+end
+
+local function animateFountain(model: Model)
+	for _, item in model:GetDescendants() do
+		if item:IsA("BasePart") then
+			if item.Name == "WaterCascade" then
+				item.Color = Color3.fromRGB(150, 205, 235)
+				item.Material = Enum.Material.Glass
+				item.Transparency = 0.55
+			elseif string.find(item.Name, "Water") then
+				item.Color = Color3.fromRGB(70, 150, 200)
+				item.Material = Enum.Material.Glass
+				item.Transparency = 0.3
+				item.Reflectance = 0.15
+			end
+		end
+	end
+	local top = model:FindFirstChild("JetTop", true)
+	if top and top:IsA("BasePart") then
+		local attachment = Instance.new("Attachment")
+		attachment.Name = "JetSpray"
+		attachment.Position = Vector3.new(0, top.Size.Y / 2, 0)
+		attachment.Parent = top
+		local spray = fountainEmitter(attachment, "Spray")
+		spray.Rate = 160
+		spray.Lifetime = NumberRange.new(0.8, 1)
+		spray.Speed = NumberRange.new(9, 11)
+		spray.SpreadAngle = Vector2.new(16, 16)
+		spray.Acceleration = Vector3.new(0, -32, 0)
+		spray.Size = NumberSequence.new(0.35, 0.12)
+		spray.Transparency = NumberSequence.new(0.15, 0.9)
+	end
+	for _, bowlName in { "UpperBowl", "LowerBowl" } do
+		local bowl = model:FindFirstChild(bowlName, true)
+		if bowl and bowl:IsA("BasePart") then
+			local drip = fountainEmitter(bowl, "Drip")
+			drip.Shape = Enum.ParticleEmitterShape.Cylinder
+			drip.ShapeStyle = Enum.ParticleEmitterShapeStyle.Surface
+			drip.ShapeInOut = Enum.ParticleEmitterShapeInOut.Outward
+			drip.Rate = 90
+			drip.Lifetime = NumberRange.new(0.5, 0.8)
+			drip.Speed = NumberRange.new(1.5, 2.5)
+			drip.Acceleration = Vector3.new(0, -30, 0)
+			drip.Size = NumberSequence.new(0.25, 0.1)
+			drip.Transparency = NumberSequence.new(0.25, 0.95)
+		end
+	end
+	local lower = model:FindFirstChild("LowerWater", true)
+	if lower and lower:IsA("BasePart") then
+		local mist = fountainEmitter(lower, "Mist")
+		mist.Shape = Enum.ParticleEmitterShape.Disc
+		mist.ShapeStyle = Enum.ParticleEmitterShapeStyle.Surface
+		mist.Rate = 12
+		mist.Lifetime = NumberRange.new(1.5, 2.5)
+		mist.Speed = NumberRange.new(0.3, 0.8)
+		mist.Size = NumberSequence.new(0.8, 1.6)
+		mist.Transparency = NumberSequence.new(0.75, 1)
+	end
+end
+
 local function ensureStartPark()
 	if workspace:FindFirstChild("StartPark") then
 		return
@@ -534,6 +608,7 @@ local function ensureStartPark()
 			-- Фонтан крупнее (владелец 07.11): масштаб вокруг центра основания, место в парке под него есть
 			copy:ScaleTo(FOUNTAIN_SCALE)
 			placeAt(copy, StartPark.landscapeFountain)
+			animateFountain(copy)
 		end
 	end
 
