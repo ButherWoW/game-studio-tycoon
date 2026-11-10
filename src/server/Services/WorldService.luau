@@ -601,11 +601,14 @@ local function isSoftened(name: string): boolean
 	return false
 end
 
--- Классика без суффикса (владелец 09.11): столы и диван 2-го этажа «чуть менее ярко»,
+-- Классика без суффикса (владелец 09.11–10.11): белые столы и диван заметно темнее,
 -- стены офиса и переговорка «очень яркие» — их приглушаем сильнее
 local CLASSIC_SOFTEN_SCALE: { [string]: number } = {
-	FloorDesk = 0.85,
-	Lounge = 0.85,
+	-- Белые столы и диван: ×0.85 владельцу мало («один хуй очень яркие», 10.11) — светло-серые
+	FloorDesk = 0.65,
+	OfficeDesk = 0.65,
+	Desk1 = 0.65,
+	Lounge = 0.65,
 	MeetingRoom = SOFTEN_SCALE,
 	Office = SOFTEN_SCALE,
 	Floor = SOFTEN_SCALE, -- оболочка верхних этажей (стены, рамы окон)
