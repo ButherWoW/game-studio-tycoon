@@ -869,6 +869,8 @@ local OUTER_PROPS = {
 	{ name = "TreeBroadleaf", weight = 5, scale = { 0.85, 1.3 } },
 	{ name = "TreePine", weight = 4, scale = { 0.85, 1.4 } },
 	{ name = "TreeBirch", weight = 3, scale = { 0.85, 1.2 } },
+	-- Low-poly сакура (владелец 10.11, мультяшный стиль): шаблон TreeSakura в ServerStorage; нет шаблона — пропускается
+	{ name = "TreeSakura", weight = 1.5, scale = { 0.85, 1.2 } },
 	-- Кустов на 70% больше (владелец 10.11): вес 4 → 6.8, OUTER_FILL поднят, чтобы остального не стало меньше
 	{ name = "Bush", weight = 6.8, scale = { 0.8, 1.4 } },
 	{ name = "Flowerbed", weight = 1, scale = { 1, 1 } },
