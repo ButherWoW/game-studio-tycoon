@@ -609,13 +609,35 @@ local function isSoftened(name: string): boolean
 	return false
 end
 
+-- Классика без суффикса (владелец 09.11–10.11): белые столы и диван заметно темнее,
+-- стены офиса и переговорка «очень яркие» — их приглушаем сильнее
+local CLASSIC_SOFTEN_SCALE: { [string]: number } = {
+	-- Белые столы и диван: ×0.85 владельцу мало («один хуй очень яркие», 10.11) — светло-серые
+	FloorDesk = 0.65,
+	OfficeDesk = 0.65,
+	Desk1 = 0.65,
+	PC1 = 0.65, -- белый системный блок у стола 1-го этажа
+	Lounge = 0.65,
+	MeetingRoom = SOFTEN_SCALE,
+	Office = SOFTEN_SCALE,
+	Floor = SOFTEN_SCALE, -- оболочка верхних этажей (стены, рамы окон)
+}
+
+local function softenScale(name: string): number?
+	if isSoftened(name) then
+		return SOFTEN_SCALE
+	end
+	return CLASSIC_SOFTEN_SCALE[name]
+end
+
 local function softenBrightParts()
 	local folder = ServerStorage:FindFirstChild("Upgrades")
 	if not folder then
 		return
 	end
 	for _, model in folder:GetChildren() do
-		if isSoftened(model.Name) and not model:GetAttribute("ColorsSoftened") then
+		local scale = softenScale(model.Name)
+		if scale and not model:GetAttribute("ColorsSoftened") then
 			model:SetAttribute("ColorsSoftened", true)
 			for _, item in model:GetDescendants() do
 				if
@@ -625,7 +647,7 @@ local function softenBrightParts()
 				then
 					local h, sat, v = item.Color:ToHSV()
 					if v > SOFTEN_VALUE and sat < SOFTEN_SATURATION then
-						item.Color = Color3.fromHSV(h, sat, v * SOFTEN_SCALE)
+						item.Color = Color3.fromHSV(h, sat, v * scale)
 					end
 					if
 						item.Material == Enum.Material.SmoothPlastic
