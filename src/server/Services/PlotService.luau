@@ -43,6 +43,8 @@ local STAND_HEIGHT = 6
 local COLOR_REFRESH = 0.5
 local COLOR_AFFORDABLE = Color3.fromRGB(61, 220, 132)
 local COLOR_EXPENSIVE = Color3.fromRGB(70, 72, 90)
+local PRICE_TEXT_AFFORDABLE = Color3.fromRGB(130, 255, 170)
+local PRICE_TEXT_EXPENSIVE = Color3.fromRGB(175, 178, 190)
 -- Кнопка переезда крупнее и золотая, чтобы не путать с интерьером
 local MOVE_BUTTON_SIZE = Vector3.new(8, 0.5, 8)
 local COLOR_MOVE = Color3.fromRGB(255, 201, 60)
@@ -1198,6 +1200,15 @@ function PlotService.start()
 						local ready = if upgrade.move then COLOR_MOVE else COLOR_AFFORDABLE
 						local affordable = profile.cash >= upgrade.cost
 						button.Color = if affordable then ready else COLOR_EXPENSIVE
+						-- Цена над кнопкой: зелёная — хватает денег, серая — нет
+						local gui = button:FindFirstChildWhichIsA("BillboardGui")
+						local priceLabel = gui and gui:FindFirstChildWhichIsA("TextLabel")
+						if priceLabel then
+							local want = if affordable then PRICE_TEXT_AFFORDABLE else PRICE_TEXT_EXPENSIVE
+							if priceLabel.TextColor3 ~= want then
+								priceLabel.TextColor3 = want
+							end
+						end
 						-- Игрок уже стоит на взведённой кнопке, а деньги появились только сейчас:
 						-- Touched не повторится, пока он не сойдёт, — покупаем сами (отчёт #3, P1-2)
 						if
