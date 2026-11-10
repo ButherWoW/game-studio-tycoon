@@ -249,7 +249,11 @@ end
 
 -- Под тропинками вынимаем траву из террейна: 3D-травинки (Terrain.Decoration) растут на Grass и торчали
 -- сквозь тонкие плиты тропинок (владелец 09.11: текстура дорожки не везде одинаковая). Под плитой
--- террейн заменяем на Ground — травинок там нет, плита лежит на плотной земле
+-- террейн заменяем на гравий (PATH_TERRAIN) — травинок там нет, плита лежит на плотном гравии
+-- Под плитами — террейн-гравий цвета дорожек, а не Ground: голая коричневая земля торчала из-под
+-- стыков и развилок пятнами (владелец 10.11: «соедини их нормально»). Гравий там продолжает дорожку
+local PATH_TERRAIN = Enum.Material.Pebble
+
 local function carvePathsFromGrass()
 	if workspace:GetAttribute("PathsCarved") == true or workspace:GetAttribute("GrassTerrain") ~= true then
 		return
@@ -261,6 +265,7 @@ local function carvePathsFromGrass()
 	local top = base.Position.Y + base.Size.Y / 2
 	local depth = World.grass.depth
 	local centerY = top - depth / 2 - 2
+	workspace.Terrain:SetMaterialColor(PATH_TERRAIN, LANDSCAPE_PATH_COLOR)
 	local count = 0
 	for _, item in workspace:GetDescendants() do
 		if item:IsA("BasePart") and (string.find(item.Name, "^Path_") or isParkWalk(item.Name)) then
@@ -271,14 +276,14 @@ local function carvePathsFromGrass()
 						CFrame.new(item.Position.X, centerY, item.Position.Z),
 						depth,
 						math.max(item.Size.Y, item.Size.Z) / 2,
-						Enum.Material.Ground
+						PATH_TERRAIN
 					)
 				else
 					local _, yaw = item.CFrame:ToEulerAnglesYXZ()
 					workspace.Terrain:FillBlock(
 						CFrame.new(item.Position.X, centerY, item.Position.Z) * CFrame.Angles(0, yaw, 0),
 						Vector3.new(item.Size.X, depth, item.Size.Z),
-						Enum.Material.Ground
+						PATH_TERRAIN
 					)
 				end
 			end)
