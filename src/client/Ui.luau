@@ -11,6 +11,7 @@ local Hud = require(ReplicatedStorage.Shared.Config.Hud)
 local Images = require(ReplicatedStorage.Shared.Config.Images)
 local Unlocks = require(ReplicatedStorage.Shared.Config.Unlocks)
 local Features = require(ReplicatedStorage.Shared.Config.Features)
+local Texts = require(ReplicatedStorage.Shared.Config.Texts)
 
 local Ui = {}
 
@@ -581,7 +582,8 @@ end
 -- Слоты, чтобы фичи не спорили за место: 1 исследования, 2 сотрудники, 3 задания,
 -- 4 магазин, 5 rebirth, 6 язык. order внутри слота не нужен — один слот, одна кнопка.
 -- 07.11 (владелец): меню компактнее — кнопки 52 → 44, зазор 8 → 5, на телефоне ячейка 46 → 40
-local MENU_BUTTON = 44
+-- Крупные кнопки с подписью, как в популярных тайкунах (референс владельца 10.11); тач — сетка MENU_TOUCH_CELL
+local MENU_BUTTON = if Ui.touch then 44 else 62
 local MENU_COLORS = {
 	Color3.fromRGB(61, 123, 255), -- синий
 	Color3.fromRGB(46, 190, 110), -- зелёный
@@ -606,6 +608,85 @@ local MENU_TOUCH_CELL = 40
 local MENU_TOUCH_GAP = 3
 local MENU_HUD_GAP = 8 -- зазор от меню до плашек HUD
 local MENU_TOUCH_MIN_SCALE = 0.7
+
+-- Компактное меню (владелец 10.11: «слишком длинное, пусть раскладывается при нажатии»): в колонке
+-- только главные слоты и кнопка «⋯»; остальные — в выдвижной панели справа от колонки
+local MENU_MAIN_SLOTS: { [number]: boolean } = {
+	[1] = true, -- исследования
+	[2] = true, -- команда
+	[3] = true, -- задания
+	[4] = true, -- магазин
+	[5] = true, -- rebirth
+	[12] = true, -- домой
+	[13] = true, -- студия
+}
+local MENU_MORE_COLUMNS = 4
+local menuMore: Frame? = nil
+-- Подпись под значком (ключ menu_label_<slot> в Config/Texts); на тач-экране подписей нет — клетка мала
+local MENU_LABELED = not Ui.touch
+local menuLabels: { [TextLabel]: string } = {}
+
+-- Язык подписей задаёт LanguageController (Ui.setMenuLang): Ui не тянет ClientState (цикл require)
+local menuLang = "en"
+local menuHide: TextButton? = nil
+
+local function menuText(key: string): string
+	local text = Texts.format(menuLang, key)
+	return if text == key then "" else text
+end
+
+local function hideText(collapsed: boolean): string
+	return if collapsed then "▲ " .. menuText("menu_label_show") else "▼ " .. menuText("menu_label_hide")
+end
+
+local function relabelMenu()
+	if menuHide then
+		menuHide.Text = hideText(menuHide:GetAttribute("Collapsed") == true)
+	end
+	for label, key in menuLabels do
+		if label.Parent then
+			label.Text = menuText(key)
+		else
+			menuLabels[label] = nil
+		end
+	end
+end
+
+function Ui.setMenuLang(code: string)
+	if code ~= menuLang then
+		menuLang = code
+		relabelMenu()
+	end
+end
+
+-- Значок сверху, подпись снизу (обводка — как у текста кнопок)
+local function addMenuLabel(b: TextButton, key: string)
+	if not MENU_LABELED then
+		return
+	end
+	local label = Instance.new("TextLabel")
+	label.Name = "MenuLabel"
+	label.BackgroundTransparency = 1
+	-- Под областью значка: нижний отступ кнопки (UIPadding) — место подписи
+	local labelHeight = math.floor(MENU_BUTTON * 0.3)
+	label.AnchorPoint = Vector2.new(0.5, 0)
+	label.Position = UDim2.new(0.5, 0, 1, 0)
+	label.Size = UDim2.new(1, 14, 0, labelHeight)
+	label.Font = Ui.bodyFont
+	label.TextScaled = true
+	label.TextColor3 = Color3.new(1, 1, 1)
+	label.TextStrokeTransparency = 0.2
+	label.Text = menuText(key)
+	label.ZIndex = b.ZIndex + 1
+	label.Parent = b
+	menuLabels[label] = key
+	-- Значок — в верхние 70%: у кнопки UIPadding, поэтому прижимаем текст к верху
+	b.TextYAlignment = Enum.TextYAlignment.Top
+	local padding = b:FindFirstChildOfClass("UIPadding")
+	if padding then
+		padding.PaddingBottom = UDim.new(0, labelHeight)
+	end
+end
 
 -- Ширина верхней строки HUD (HudController, Config/Hud): меню на тач-экране правее не заходит.
 -- Плашки событий по центру больше не висят — они в лотке справа (Ui.bannerStack)
@@ -862,6 +943,75 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 		column.Parent = screen
 		screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 		menuColumn = column
+		-- Выдвижная панель «⋯»: сетка остальных кнопок справа от колонки, закрыта по умолчанию
+		local more = Instance.new("Frame")
+		more.Name = "More"
+		more.Visible = false
+		more.BackgroundColor3 = Ui.colors.panel
+		more.BackgroundTransparency = 0.35
+		more.Size = UDim2.new()
+		more.AutomaticSize = Enum.AutomaticSize.XY
+		local moreCorner = Instance.new("UICorner")
+		moreCorner.CornerRadius = UDim.new(0, 12)
+		moreCorner.Parent = more
+		local morePad = Instance.new("UIPadding")
+		morePad.PaddingTop = UDim.new(0, 6)
+		morePad.PaddingBottom = UDim.new(0, 6)
+		morePad.PaddingLeft = UDim.new(0, 6)
+		morePad.PaddingRight = UDim.new(0, 6)
+		morePad.Parent = more
+		local moreGrid = Instance.new("UIGridLayout")
+		moreGrid.SortOrder = Enum.SortOrder.LayoutOrder
+		moreGrid.FillDirection = Enum.FillDirection.Horizontal
+		moreGrid.FillDirectionMaxCells = MENU_MORE_COLUMNS
+		local cell = if Ui.touch then MENU_TOUCH_CELL else MENU_BUTTON
+		moreGrid.CellSize = UDim2.fromOffset(cell, cell)
+		moreGrid.CellPadding = UDim2.fromOffset(MENU_GAP, MENU_GAP)
+		moreGrid.Parent = more
+		local moreScale = Instance.new("UIScale")
+		moreScale.Parent = more
+		more.Parent = screen
+		menuMore = more
+		local toggle = Ui.button(column, "⋯", Ui.colors.panel, function()
+			if not more.Visible then
+				-- Справа от колонки, на уровне её верха; масштаб — как у колонки
+				local pos = column.AbsolutePosition
+				local size = column.AbsoluteSize
+				moreScale.Scale = scale.Scale
+				more.Position = UDim2.fromOffset(pos.X + size.X + MENU_GAP * 2, pos.Y)
+			end
+			more.Visible = not more.Visible
+		end)
+		toggle.Name = "MoreToggle"
+		toggle.LayoutOrder = 1000
+		toggle.Size = UDim2.fromOffset(MENU_BUTTON, MENU_BUTTON)
+		toggle.TextScaled = true
+		addMenuLabel(toggle, "menu_label_more")
+		-- «▼ Скрыть» над колонкой: сворачивает все кнопки меню, кроме себя
+		local collapsed = false
+		local hide: TextButton
+		hide = Ui.button(column, "", Ui.colors.panel, function()
+			collapsed = not collapsed
+			for _, child in column:GetChildren() do
+				if child:IsA("GuiButton") and child ~= hide then
+					if collapsed then
+						child:SetAttribute("MenuWasVisible", child.Visible)
+						child.Visible = false
+					else
+						child.Visible = child:GetAttribute("MenuWasVisible") ~= false
+					end
+				end
+			end
+			more.Visible = false
+			hide.Text = if collapsed
+				then "▲ " .. menuText("menu_label_show")
+				else "▼ " .. menuText("menu_label_hide")
+		end)
+		hide.Name = "HideToggle"
+		hide.LayoutOrder = -1
+		hide.Size = UDim2.fromOffset(MENU_BUTTON, math.floor(MENU_BUTTON * 0.4))
+		hide.Text = hideText(false)
+		menuHide = hide
 		-- Кнопки создаются пачкой при старте и меняют Visible: пересчёт раз в кадр
 		local scheduled = false
 		refitMenu = function()
@@ -893,8 +1043,13 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 	-- 18 налоги, 19 биржа, 20 справочник обучения (GuideController)
 	local b: TextButton
 	-- Нажатие снимает значок 🆕 (Ui.markNew)
-	b = Ui.button(menuColumn :: Frame, icon, Ui.colors.panel, function()
+	local inMore = not MENU_MAIN_SLOTS[slot] and menuMore ~= nil
+	local parent: Frame = if inMore then menuMore :: Frame else menuColumn :: Frame
+	b = Ui.button(parent, icon, Ui.colors.panel, function()
 		clearNewBadge(b)
+		if inMore and menuMore then
+			menuMore.Visible = false
+		end
 		onClick()
 		menuClickedEvent:Fire(slot)
 	end)
@@ -909,6 +1064,7 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 	end
 	b.Size = UDim2.fromOffset(MENU_BUTTON, MENU_BUTTON)
 	b:GetPropertyChangedSignal("Visible"):Connect(refitMenu)
+	addMenuLabel(b, "menu_label_" .. slot)
 	local imageId = if imageKey then Images.menu[imageKey] else nil
 	if imageId and imageId > 0 then
 		b.Text = ""
@@ -918,6 +1074,7 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 		image.Size = UDim2.fromScale(1, 1)
 		image.ScaleType = Enum.ScaleType.Fit
 		image.Image = "rbxassetid://" .. imageId
+		image.ZIndex = b.ZIndex
 		image.Parent = b -- отступы даёт UIPadding кнопки
 	end
 	-- Система ещё закрыта для новичка (Config/Unlocks) — кнопка ждёт в LockedFeatures

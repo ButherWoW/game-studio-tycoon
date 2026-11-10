@@ -86,6 +86,30 @@ function Texts.lookup(lang: Lang, key: string): string?
 end
 
 Texts.ru = {
+	-- Подписи кнопок бокового меню (Ui.menuButton)
+	menu_label_1 = "Наука",
+	menu_label_2 = "Команда",
+	menu_label_3 = "Задания",
+	menu_label_4 = "Магазин",
+	menu_label_5 = "Rebirth",
+	menu_label_6 = "Язык",
+	menu_label_7 = "Хиты",
+	menu_label_8 = "Воры",
+	menu_label_9 = "Праздник",
+	menu_label_10 = "Камера",
+	menu_label_11 = "Банк",
+	menu_label_12 = "Домой",
+	menu_label_13 = "Студия",
+	menu_label_14 = "Награды",
+	menu_label_15 = "Студии",
+	menu_label_16 = "Сезон",
+	menu_label_17 = "Топ",
+	menu_label_18 = "Налоги",
+	menu_label_19 = "Биржа",
+	menu_label_20 = "Справка",
+	menu_label_more = "Ещё",
+	menu_label_hide = "Скрыть",
+	menu_label_show = "Меню",
 	-- Постеры
 	shop_tab_posters = "🖼 Постеры",
 	posters_hint = "Обычные — за $, премиум — за Robux. Постеры висят на стенах студии",
@@ -1855,6 +1879,30 @@ Texts.ru = {
 } :: { [string]: string }
 
 Texts.en = {
+	-- Подписи кнопок бокового меню (Ui.menuButton)
+	menu_label_1 = "Research",
+	menu_label_2 = "Team",
+	menu_label_3 = "Quests",
+	menu_label_4 = "Shop",
+	menu_label_5 = "Rebirth",
+	menu_label_6 = "Language",
+	menu_label_7 = "Hits",
+	menu_label_8 = "Thieves",
+	menu_label_9 = "Event",
+	menu_label_10 = "Camera",
+	menu_label_11 = "Bank",
+	menu_label_12 = "Home",
+	menu_label_13 = "Studio",
+	menu_label_14 = "Awards",
+	menu_label_15 = "Studios",
+	menu_label_16 = "Season",
+	menu_label_17 = "Top",
+	menu_label_18 = "Taxes",
+	menu_label_19 = "Stocks",
+	menu_label_20 = "Guide",
+	menu_label_more = "More",
+	menu_label_hide = "Hide",
+	menu_label_show = "Menu",
 	-- Постеры
 	shop_tab_posters = "🖼 Posters",
 	posters_hint = "Regular ones cost $, premium ones cost Robux. Posters hang on your studio walls",
