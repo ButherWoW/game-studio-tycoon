@@ -16,6 +16,7 @@ local Genres = require(Shared.Config.Genres)
 local OrderRemotes = require(Shared.OrderRemotes)
 local DataService = require(script.Parent.DataService)
 local RewardService = require(script.Parent.RewardService)
+local PlotService = require(script.Parent.PlotService)
 
 local DAY_SECONDS = 86400
 local REQUEST_COOLDOWN = 1
@@ -149,6 +150,25 @@ local function onRequest(player: Player)
 	push(player)
 end
 
+-- Офис на участке — модель Office или Office_<стиль>
+local function hasOffice(plot: BasePart): boolean
+	for _, child in plot:GetChildren() do
+		if child:IsA("Model") and (child.Name == "Office" or string.find(child.Name, "^Office_") ~= nil) then
+			return true
+		end
+	end
+	return false
+end
+
+local function boardCFrame(plot: BasePart): CFrame
+	local size = Orders.board.size
+	if hasOffice(plot) then
+		return plot.CFrame * CFrame.new(Orders.board.officeOffset)
+	end
+	local offset = Orders.board.offset
+	return plot.CFrame * CFrame.new(offset.X, plot.Size.Y / 2 + size.Y / 2, offset.Z)
+end
+
 -- Доска у участка: одна деталь на участок, живёт рядом (Model участка пересобирается, деталь нет)
 local function ensureBoard(plot: Instance)
 	if not plot:IsA("BasePart") or plot:FindFirstChild("OrderBoard") then
@@ -164,10 +184,20 @@ local function ensureBoard(plot: Instance)
 	board.Size = size
 	board.Color = Color3.fromRGB(32, 36, 52)
 	board.Material = Enum.Material.SmoothPlastic
-	local offset = Orders.board.offset
-	board.CFrame = plot.CFrame * CFrame.new(offset.X, plot.Size.Y / 2 + size.Y / 2, offset.Z)
+	board.CFrame = boardCFrame(plot)
 	board:SetAttribute("OrderBoard", true)
 	board.Parent = plot
+end
+
+-- Участок перестроен (гараж → офис и обратно): доска переезжает на стену или наружу
+local function placeBoard(plot: Instance)
+	if not plot:IsA("BasePart") then
+		return
+	end
+	local board = plot:FindFirstChild("OrderBoard")
+	if board and board:IsA("BasePart") then
+		board.CFrame = boardCFrame(plot)
+	end
 end
 
 function OrderService.start()
@@ -185,6 +215,12 @@ function OrderService.start()
 		end
 		plots.ChildAdded:Connect(ensureBoard)
 	end
+	PlotService.plotChanged:Connect(function(player: Player)
+		local plot = PlotService.getPlot(player)
+		if plot then
+			placeBoard(plot)
+		end
+	end)
 	-- Новый день UTC: новые заказы тем, кто в игре
 	task.spawn(function()
 		while true do
