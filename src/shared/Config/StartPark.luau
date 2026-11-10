@@ -73,7 +73,8 @@ local StartPark = {
 	-- Раскладка Астры для её парка (assets/models/astra-park-objects/README.md): старые точки доски и
 	-- ломбарда (радиус 12) легли бы на её дорожки. От центра спавна, yaw — поворот лица (+Z) в градусах
 	landscapeBoard = { position = Vector3.new(0, 0, 17), yaw = 180 },
-	landscapePawnshop = { position = Vector3.new(-9.148114, 0, -43.038494), yaw = 12 },
+	-- Владелец 10.11: развернуть ломбард на 180° (было yaw = 12)
+	landscapePawnshop = { position = Vector3.new(-9.148114, 0, -43.038494), yaw = 192 },
 	landscapeFountain = { position = Vector3.new(43.466662, 0, 11.646857), yaw = 0 },
 	-- Площадка появления игрока (модель Астры assets/models/astra-v33 в ServerStorage.Upgrades): центр —
 	-- X/Z SpawnLocation, низ на уровне земли. Невидимый SpawnLocation вписывается в её габарит и верх,
