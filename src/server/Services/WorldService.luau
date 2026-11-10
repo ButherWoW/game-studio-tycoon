@@ -230,6 +230,10 @@ local function isParkWalk(name: string): boolean
 	return false
 end
 
+-- Плиты дорожек тонкие (0.02) и лежали на 0.11, а поверхность травы местами 0.14–0.26: трава
+-- накрывала плиты, дорожки рвались (владелец 10.11). Поднимаем их над травой
+local PATH_LIFT = 0.25
+
 local function gravelParkPaths()
 	if workspace:GetAttribute("GravelPaths") == true then
 		return
@@ -237,6 +241,7 @@ local function gravelParkPaths()
 	local found = false
 	for _, item in workspace:GetDescendants() do
 		if item:IsA("BasePart") and isParkWalk(item.Name) then
+			item.CFrame += Vector3.new(0, PATH_LIFT, 0)
 			item.Material = PATH_MATERIAL
 			item.Color = LANDSCAPE_PATH_COLOR
 			found = true
@@ -249,7 +254,12 @@ end
 
 -- Под тропинками вынимаем траву из террейна: 3D-травинки (Terrain.Decoration) растут на Grass и торчали
 -- сквозь тонкие плиты тропинок (владелец 09.11: текстура дорожки не везде одинаковая). Под плитой
--- террейн заменяем на Ground — травинок там нет, плита лежит на плотной земле
+-- террейн заменяем на землю цвета дорожки (PATH_TERRAIN) — травинок там нет
+-- Под плитами — земля Ground цвета дорожек: коричневая торчала из-под стыков и развилок пятнами
+-- (владелец 10.11: «соедини их нормально»). Того же цвета, что плиты, она продолжает дорожку.
+-- Pebble у террейна нет — только у деталей, поэтому именно Ground с цветом
+local PATH_TERRAIN = Enum.Material.Ground
+
 local function carvePathsFromGrass()
 	if workspace:GetAttribute("PathsCarved") == true or workspace:GetAttribute("GrassTerrain") ~= true then
 		return
@@ -261,6 +271,7 @@ local function carvePathsFromGrass()
 	local top = base.Position.Y + base.Size.Y / 2
 	local depth = World.grass.depth
 	local centerY = top - depth / 2 - 2
+	workspace.Terrain:SetMaterialColor(PATH_TERRAIN, LANDSCAPE_PATH_COLOR)
 	local count = 0
 	for _, item in workspace:GetDescendants() do
 		if item:IsA("BasePart") and (string.find(item.Name, "^Path_") or isParkWalk(item.Name)) then
@@ -271,14 +282,14 @@ local function carvePathsFromGrass()
 						CFrame.new(item.Position.X, centerY, item.Position.Z),
 						depth,
 						math.max(item.Size.Y, item.Size.Z) / 2,
-						Enum.Material.Ground
+						PATH_TERRAIN
 					)
 				else
 					local _, yaw = item.CFrame:ToEulerAnglesYXZ()
 					workspace.Terrain:FillBlock(
 						CFrame.new(item.Position.X, centerY, item.Position.Z) * CFrame.Angles(0, yaw, 0),
 						Vector3.new(item.Size.X, depth, item.Size.Z),
-						Enum.Material.Ground
+						PATH_TERRAIN
 					)
 				end
 			end)
@@ -351,7 +362,7 @@ local function ensurePaths()
 			if length > 1 then
 				local dir = offset.Unit
 				local from = center + dir * start
-				local mid = from + dir * (length / 2) + Vector3.new(0, 0.05, 0)
+				local mid = from + dir * (length / 2) + Vector3.new(0, 0.05 + PATH_LIFT, 0)
 				local path = makePart(
 					"Path_" .. plot.Name,
 					Vector3.new(PATH_WIDTH, 0.1, length),
