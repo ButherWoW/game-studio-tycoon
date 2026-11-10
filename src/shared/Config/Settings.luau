@@ -9,6 +9,7 @@ export type Values = {
 	lowGraphics: boolean, -- «Меньше эффектов»: частицы, искры, конфетти, вспышки
 	hideTitles: boolean, -- не показывать титулы над чужими игроками
 	hideCapital: boolean, -- не показывать имя и «Капитал» над головой игроков
+	hideGuide: boolean, -- не показывать стрелки на земле и подсказку внизу экрана
 	hideMascots: boolean, -- не показывать чужих маскотов
 	notifications: boolean, -- пинги «Событие дня скоро» (NotifyService.wantsPings)
 	wallFade: boolean, -- «Прозрачные стены»: в виде студии стены между камерой и героем полупрозрачные
@@ -24,6 +25,7 @@ Settings.defaults = {
 	lowGraphics = false,
 	hideTitles = false,
 	hideCapital = false,
+	hideGuide = false,
 	hideMascots = false,
 	notifications = true,
 	wallFade = false,
@@ -36,6 +38,7 @@ Settings.list = {
 	{ key = "lowGraphics", kind = "toggle", text = "set_low_gfx" },
 	{ key = "hideTitles", kind = "toggle", text = "set_hide_titles" },
 	{ key = "hideCapital", kind = "toggle", text = "set_hide_capital" },
+	{ key = "hideGuide", kind = "toggle", text = "set_hide_guide" },
 	{ key = "hideMascots", kind = "toggle", text = "set_hide_mascots" },
 	{ key = "notifications", kind = "toggle", text = "set_notify" },
 	{ key = "wallFade", kind = "toggle", text = "setting_wallfade", hint = "setting_wallfade_hint" },

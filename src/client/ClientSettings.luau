@@ -15,6 +15,7 @@ local ATTRIBUTES: { [string]: string } = {
 	lowGraphics = "LowGraphics",
 	hideTitles = "HideTitles",
 	hideCapital = "HideCapital",
+	hideGuide = "HideGuide",
 	hideMascots = "HideMascots",
 	wallFade = "WallFade",
 }
