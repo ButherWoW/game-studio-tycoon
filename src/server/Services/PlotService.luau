@@ -90,6 +90,50 @@ local function getPlot(player: Player): BasePart?
 end
 PlotService.getPlot = getPlot
 
+-- Тёплый деревянный пол классики и тёмная окантовка по краям (мультяшный стиль, владелец 10.11)
+local FLOOR_WOOD_COLOR = Color3.fromRGB(200, 128, 63)
+local FLOOR_BORDER_COLOR = Color3.fromRGB(59, 38, 24)
+local FLOOR_BORDER_WIDTH = 0.8
+
+local function addFloorBorder(floor: BasePart)
+	if floor:GetAttribute("BorderAdded") == true then
+		return
+	end
+	floor:SetAttribute("BorderAdded", true)
+	for _, side in { -1, 1 } do
+		for _, alongX in { true, false } do
+			local strip = Instance.new("Part")
+			strip.Name = "FloorBorder"
+			strip.Anchored = true
+			strip.CanCollide = false
+			strip.CanQuery = false
+			strip.CanTouch = false
+			strip.CastShadow = false
+			strip.Material = Enum.Material.WoodPlanks
+			strip.Color = FLOOR_BORDER_COLOR
+			local thickness = 0.04
+			if alongX then
+				strip.Size = Vector3.new(floor.Size.X, thickness, FLOOR_BORDER_WIDTH)
+				strip.CFrame = floor.CFrame
+					* CFrame.new(
+						0,
+						floor.Size.Y / 2 + thickness / 2,
+						side * (floor.Size.Z / 2 - FLOOR_BORDER_WIDTH / 2)
+					)
+			else
+				strip.Size = Vector3.new(FLOOR_BORDER_WIDTH, thickness, floor.Size.Z)
+				strip.CFrame = floor.CFrame
+					* CFrame.new(
+						side * (floor.Size.X / 2 - FLOOR_BORDER_WIDTH / 2),
+						floor.Size.Y / 2 + thickness / 2,
+						0
+					)
+			end
+			strip.Parent = floor.Parent
+		end
+	end
+end
+
 local function placeModel(plot: BasePart, modelName: string, position: Vector3?, rotationDeg: number?)
 	local folder = ServerStorage:FindFirstChild("Upgrades")
 	-- Стиль мебели владельца (V15): Desk1_Neon вместо Desk1, если такая модель импортирована;
@@ -363,7 +407,7 @@ local function buildPlot(plot: BasePart, profile: DataService.Profile)
 	-- пластика, а на 1-м этаже дерево (владелец 06.11: «пол на втором и третьем просто белый»).
 	-- При классической отделке красим его в дерево; платные отделки оставляем как нарисовала Астра
 	if not finish or finish.suffix == "" then
-		for _, shellName in { "Floor", "Skyscraper" } do
+		for _, shellName in { "Garage", "GarageWalls", "Office", "Floor", "Skyscraper" } do
 			local shell = plot:FindFirstChild(shellName)
 			-- Пол — тонкая широкая деталь «Floor» (в модели может лежать глубже первого уровня)
 			for _, item in if shell then shell:GetDescendants() else {} do
@@ -374,7 +418,8 @@ local function buildPlot(plot: BasePart, profile: DataService.Profile)
 					and item.Size.X >= 20
 				then
 					item.Material = Enum.Material.WoodPlanks
-					item.Color = Color3.fromRGB(176, 128, 86)
+					item.Color = FLOOR_WOOD_COLOR
+					addFloorBorder(item)
 				end
 			end
 		end
