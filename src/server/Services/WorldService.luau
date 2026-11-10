@@ -1322,6 +1322,7 @@ local function arrangeParkFurniture()
 		then
 			local pos = item:GetPivot().Position
 			local best: Vector3? = nil
+			local bestWalk: BasePart? = nil
 			local bestDist = BENCH_REACH
 			for _, walk in walks do
 				local onWalk = nearestOnWalk(walk, pos)
@@ -1329,13 +1330,25 @@ local function arrangeParkFurniture()
 				if dist < bestDist then
 					bestDist = dist
 					best = onWalk
+					bestWalk = walk
 				end
 			end
-			if best then
+			if best and bestWalk then
 				local flat = Vector3.new(best.X - pos.X, 0, best.Z - pos.Z)
 				if flat.Magnitude > 0.1 then
-					local dir = flat.Unit
-					local spot = Vector3.new(best.X, pos.Y, best.Z) - dir * BENCH_GAP
+					-- Владелец 10.11: «лавочка кривая» — ближайшая точка бывает на конце отрезка, и скамейка
+					-- смотрела по диагонали. Берём только перпендикуляр к оси дорожки: скамейка параллельна ей
+					local axisRaw = if bestWalk.Size.Z >= bestWalk.Size.X
+						then bestWalk.CFrame.LookVector
+						else bestWalk.CFrame.RightVector
+					local axis = Vector3.new(axisRaw.X, 0, axisRaw.Z)
+					local perp = flat
+					if axis.Magnitude > 0.1 then
+						axis = axis.Unit
+						perp = flat - axis * flat:Dot(axis)
+					end
+					local dir = if perp.Magnitude > 0.5 then perp.Unit else flat.Unit
+					local spot = pos + Vector3.new(perp.X, 0, perp.Z) - dir * BENCH_GAP
 					local cframe = CFrame.lookAt(spot, spot - dir)
 					if
 						spotFree(
