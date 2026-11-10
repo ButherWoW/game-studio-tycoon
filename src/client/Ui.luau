@@ -581,7 +581,8 @@ end
 -- Слоты, чтобы фичи не спорили за место: 1 исследования, 2 сотрудники, 3 задания,
 -- 4 магазин, 5 rebirth, 6 язык. order внутри слота не нужен — один слот, одна кнопка.
 -- 07.11 (владелец): меню компактнее — кнопки 52 → 44, зазор 8 → 5, на телефоне ячейка 46 → 40
-local MENU_BUTTON = 44
+-- Крупные кнопки с подписью, как в популярных тайкунах (референс владельца 10.11); тач — сетка MENU_TOUCH_CELL
+local MENU_BUTTON = if Ui.touch then 44 else 62
 local MENU_COLORS = {
 	Color3.fromRGB(61, 123, 255), -- синий
 	Color3.fromRGB(46, 190, 110), -- зелёный
@@ -620,6 +621,67 @@ local MENU_MAIN_SLOTS: { [number]: boolean } = {
 }
 local MENU_MORE_COLUMNS = 4
 local menuMore: Frame? = nil
+-- Подпись под значком (ключ menu_label_<slot> в Config/Texts); на тач-экране подписей нет — клетка мала
+local MENU_LABELED = not Ui.touch
+local menuLabels: { [TextLabel]: string } = {}
+local labelsHooked = false
+
+local function menuText(key: string): string
+	local ok, ClientState = pcall(require, script.Parent.ClientState)
+	if not ok then
+		return ""
+	end
+	local text = (ClientState :: any).t(key)
+	return if text == key then "" else text
+end
+
+local function relabelMenu()
+	for label, key in menuLabels do
+		if label.Parent then
+			label.Text = menuText(key)
+		else
+			menuLabels[label] = nil
+		end
+	end
+end
+
+-- Значок сверху, подпись снизу (обводка — как у текста кнопок)
+local function addMenuLabel(b: TextButton, key: string)
+	if not MENU_LABELED then
+		return
+	end
+	local label = Instance.new("TextLabel")
+	label.Name = "MenuLabel"
+	label.BackgroundTransparency = 1
+	-- Под областью значка: нижний отступ кнопки (UIPadding) — место подписи
+	local labelHeight = math.floor(MENU_BUTTON * 0.3)
+	label.AnchorPoint = Vector2.new(0.5, 0)
+	label.Position = UDim2.new(0.5, 0, 1, 0)
+	label.Size = UDim2.new(1, 14, 0, labelHeight)
+	label.Font = Ui.bodyFont
+	label.TextScaled = true
+	label.TextColor3 = Color3.new(1, 1, 1)
+	label.TextStrokeTransparency = 0.2
+	label.Text = menuText(key)
+	label.ZIndex = b.ZIndex + 1
+	label.Parent = b
+	menuLabels[label] = key
+	-- Значок — в верхние 70%: у кнопки UIPadding, поэтому прижимаем текст к верху
+	b.TextYAlignment = Enum.TextYAlignment.Top
+	local padding = b:FindFirstChildOfClass("UIPadding")
+	if padding then
+		padding.PaddingBottom = UDim.new(0, labelHeight)
+	end
+	if not labelsHooked then
+		labelsHooked = true
+		task.spawn(function()
+			local ok, ClientState = pcall(require, script.Parent.ClientState)
+			if ok then
+				(ClientState :: any).langChanged:Connect(relabelMenu)
+			end
+		end)
+	end
+end
 
 -- Ширина верхней строки HUD (HudController, Config/Hud): меню на тач-экране правее не заходит.
 -- Плашки событий по центру больше не висят — они в лотке справа (Ui.bannerStack)
@@ -919,6 +981,32 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 		toggle.LayoutOrder = 1000
 		toggle.Size = UDim2.fromOffset(MENU_BUTTON, MENU_BUTTON)
 		toggle.TextScaled = true
+		addMenuLabel(toggle, "menu_label_more")
+		-- «▼ Скрыть» над колонкой: сворачивает все кнопки меню, кроме себя
+		local collapsed = false
+		local hide: TextButton
+		hide = Ui.button(column, "", Ui.colors.panel, function()
+			collapsed = not collapsed
+			for _, child in column:GetChildren() do
+				if child:IsA("GuiButton") and child ~= hide then
+					if collapsed then
+						child:SetAttribute("MenuWasVisible", child.Visible)
+						child.Visible = false
+					else
+						child.Visible = child:GetAttribute("MenuWasVisible") ~= false
+					end
+				end
+			end
+			more.Visible = false
+			hide.Text = if collapsed
+				then "▲ " .. menuText("menu_label_show")
+				else "▼ " .. menuText("menu_label_hide")
+		end)
+		hide.Name = "HideToggle"
+		hide.LayoutOrder = -1
+		hide.Size = UDim2.fromOffset(MENU_BUTTON, math.floor(MENU_BUTTON * 0.4))
+		hide.Text = "▼ " .. menuText("menu_label_hide")
+		menuLabels[hide :: any] = nil
 		-- Кнопки создаются пачкой при старте и меняют Visible: пересчёт раз в кадр
 		local scheduled = false
 		refitMenu = function()
@@ -971,6 +1059,7 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 	end
 	b.Size = UDim2.fromOffset(MENU_BUTTON, MENU_BUTTON)
 	b:GetPropertyChangedSignal("Visible"):Connect(refitMenu)
+	addMenuLabel(b, "menu_label_" .. slot)
 	local imageId = if imageKey then Images.menu[imageKey] else nil
 	if imageId and imageId > 0 then
 		b.Text = ""
@@ -980,6 +1069,7 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 		image.Size = UDim2.fromScale(1, 1)
 		image.ScaleType = Enum.ScaleType.Fit
 		image.Image = "rbxassetid://" .. imageId
+		image.ZIndex = b.ZIndex
 		image.Parent = b -- отступы даёт UIPadding кнопки
 	end
 	-- Система ещё закрыта для новичка (Config/Unlocks) — кнопка ждёт в LockedFeatures
