@@ -820,6 +820,8 @@ local function spawnCenter(): Vector3
 end
 
 -- Место свободно: в объёме над землёй (с 0.6 stud — без травы и тропинок) нет чужих деталей
+local FOUNTAIN_MARGIN = 3 -- зазор между краем чаши фонтана и сейфом
+
 local function isFree(cframe: CFrame, ignore: Instance): boolean
 	local params = OverlapParams.new()
 	params.FilterType = Enum.RaycastFilterType.Exclude
@@ -839,8 +841,18 @@ local function basePlacement(): (Vector3, number)
 	local fountain = workspace:FindFirstChild("Fountain", true)
 	if fountain and fountain:IsA("Model") then
 		local offset = Safe.landscapePosition - StartPark.landscapeFountain.position
-		local at = fountain:GetPivot().Position
-		return Vector3.new(at.X, 0, at.Z) + offset, Safe.landscapeYaw
+		local box, boxSize = fountain:GetBoundingBox()
+		local at = Vector3.new(box.Position.X, 0, box.Position.Z)
+		local position = at + offset
+		-- Фонтан увеличен (World.fountainScale), а смещение задано под исходный размер: сейф оказывался
+		-- внутри чаши. Отодвигаем его от центра фонтана за край чаши
+		local radius = math.max(boxSize.X, boxSize.Z) / 2 + FOUNTAIN_MARGIN
+		local away = position - at
+		if away.Magnitude < radius then
+			local dir = if away.Magnitude > 0.1 then away.Unit else Vector3.new(1, 0, 0)
+			position = at + dir * radius
+		end
+		return position, Safe.landscapeYaw
 	end
 	return spawnCenter() + Safe.fallbackPosition, Safe.fallbackYaw
 end
