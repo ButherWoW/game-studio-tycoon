@@ -836,8 +836,16 @@ local function isFree(cframe: CFrame, ignore: Instance): boolean
 	return true
 end
 
--- У фонтана: смещение от фонтана как в раскладке (фонтан могли подвинуть в Studio); без фонтана — запасная точка
+-- Рядом с ломбардом (владелец 10.11): сбоку от ларька, лицом туда же, куда ларёк. Берём фактическое
+-- положение модели Pawnshop (её могли подвинуть в Studio). Нет ломбарда — у фонтана, как раньше
 local function basePlacement(): (Vector3, number)
+	local pawn = workspace:FindFirstChild("Pawnshop", true)
+	if pawn and pawn:IsA("Model") then
+		local pivot = pawn:GetPivot()
+		local spot = pivot * CFrame.new(Safe.pawnOffset)
+		local _, yawRad = pivot:ToEulerAnglesYXZ()
+		return Vector3.new(spot.Position.X, 0, spot.Position.Z), math.deg(yawRad) + Safe.pawnYawOffset
+	end
 	local fountain = workspace:FindFirstChild("Fountain", true)
 	if fountain and fountain:IsA("Model") then
 		local offset = Safe.landscapePosition - StartPark.landscapeFountain.position
