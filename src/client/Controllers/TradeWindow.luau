@@ -436,6 +436,12 @@ local function openWindow()
 	end)
 	reset.LayoutOrder = count
 	reset.Size = UDim2.new(1 / count, -6, 1, 0)
+	-- Деньги в обмене выключены (Config/Friends.trade.cashEnabled): ни кнопок, ни строк с суммой
+	if not Friends.trade.cashEnabled then
+		cashRow.Visible = false
+		refs.myCash.Visible = false
+		refs.theirCash.Visible = false
+	end
 
 	local status = Ui.label(window, "", 22, Enum.Font.GothamMedium, Ui.colors.muted)
 	status.TextXAlignment = Enum.TextXAlignment.Center

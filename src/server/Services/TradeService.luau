@@ -104,6 +104,9 @@ end
 
 -- Сколько денег игрок может положить в обмен
 local function maxCash(profile: DataService.Profile): number
+	if not Friends.trade.cashEnabled then
+		return 0
+	end
 	return math.max(math.floor(profile.cash * Friends.trade.maxCashShare), 0)
 end
 
@@ -361,7 +364,7 @@ local function cleanOffer(
 			table.insert(result.items, item)
 		end
 	end
-	if type(cash) == "number" and cash == cash and cash > 0 then
+	if Friends.trade.cashEnabled and type(cash) == "number" and cash == cash and cash > 0 then
 		result.cash = math.clamp(math.floor(cash), 0, maxCashFor(profile, partner, partnerProfile))
 	end
 	return result
