@@ -488,9 +488,7 @@ spawnCartridge = function(spot: BasePart)
 		Enum.Material.SmoothPlastic
 	)
 	CollectionService:AddTag(cartridge, "ParkCartridge")
-	local sparkle = Instance.new("Sparkles")
-	sparkle.SparkleColor = cartridge.Color
-	sparkle.Parent = cartridge
+	-- Блёстки убраны (владелец 10.11): картридж просто вращается
 	local prompt = makePrompt(
 		cartridge,
 		"Подобрать",
