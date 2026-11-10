@@ -234,6 +234,54 @@ end
 -- накрывала плиты, дорожки рвались (владелец 10.11). Поднимаем их над травой
 local PATH_LIFT = 0.25
 
+-- Мультяшная плита дорожки (World.flatGround): гладкий светлый материал, шире в pathWidthScale раз,
+-- по краям зелёный бордюр. Один раз на деталь (атрибут FlatStyled)
+local function flatPathStyle(item: BasePart)
+	if item:GetAttribute("FlatStyled") == true then
+		return
+	end
+	item:SetAttribute("FlatStyled", true)
+	local flat = World.flat
+	item.Material = Enum.Material.SmoothPlastic
+	item.Color = flat.pathColor
+	if string.find(item.Name, "oundJoin") then
+		-- Стык поворота — диск: ось вдоль X, диаметр по Y и Z
+		item.Size =
+			Vector3.new(item.Size.X, item.Size.Y * flat.pathWidthScale, item.Size.Z * flat.pathWidthScale)
+		return
+	end
+	-- Длинная сторона — вдоль дорожки, короткая (из X/Z) — ширина
+	local alongZ = item.Size.Z >= item.Size.X
+	local width = if alongZ then item.Size.X else item.Size.Z
+	local length = if alongZ then item.Size.Z else item.Size.X
+	local newWidth = width * flat.pathWidthScale
+	item.Size = if alongZ
+		then Vector3.new(newWidth, item.Size.Y, length)
+		else Vector3.new(length, item.Size.Y, newWidth)
+	for _, side in { -1, 1 } do
+		local curb = Instance.new("Part")
+		curb.Name = "Curb_" .. item.Name
+		curb.Anchored = true
+		curb.CanCollide = false
+		curb.CanQuery = false
+		curb.CanTouch = false
+		curb.CastShadow = false
+		curb.Material = Enum.Material.SmoothPlastic
+		curb.Color = flat.curbColor
+		curb.TopSurface = Enum.SurfaceType.Smooth
+		curb.BottomSurface = Enum.SurfaceType.Smooth
+		local shift = side * (newWidth / 2 + flat.curbWidth / 2)
+		if alongZ then
+			curb.Size = Vector3.new(flat.curbWidth, item.Size.Y, length)
+			curb.CFrame = item.CFrame * CFrame.new(shift, 0, 0)
+		else
+			curb.Size = Vector3.new(length, item.Size.Y, flat.curbWidth)
+			curb.CFrame = item.CFrame * CFrame.new(0, 0, shift)
+		end
+		curb.Parent = item.Parent
+	end
+end
+
 local function gravelParkPaths()
 	if workspace:GetAttribute("GravelPaths") == true then
 		return
@@ -242,14 +290,74 @@ local function gravelParkPaths()
 	for _, item in workspace:GetDescendants() do
 		if item:IsA("BasePart") and isParkWalk(item.Name) then
 			item.CFrame += Vector3.new(0, PATH_LIFT, 0)
-			item.Material = PATH_MATERIAL
-			item.Color = LANDSCAPE_PATH_COLOR
+			if World.flatGround then
+				flatPathStyle(item)
+			else
+				item.Material = PATH_MATERIAL
+				item.Color = LANDSCAPE_PATH_COLOR
+			end
 			found = true
 		end
 	end
 	if found then
 		workspace:SetAttribute("GravelPaths", true)
 	end
+end
+
+-- Площадь у спавна (World.flatGround): круглая светлая плита, кольца-«канавки» и круглые камни-ступеньки.
+-- Всё плоское и без коллизии: центральная площадка 16×16 остаётся свободной
+local PLAZA_Y = 0.4 -- на уровне поднятых плит дорожек
+local PLAZA_SHADES = { Color3.fromRGB(217, 212, 220), Color3.fromRGB(194, 188, 201) }
+
+local function flatPlaza()
+	if not World.flatGround or workspace:GetAttribute("FlatPlaza") == true then
+		return
+	end
+	local spawn = workspace:FindFirstChildWhichIsA("SpawnLocation", true)
+	if not spawn or not spawn:IsA("BasePart") then
+		return
+	end
+	workspace:SetAttribute("FlatPlaza", true)
+	local flat = World.flat
+	local folder = Instance.new("Folder")
+	folder.Name = "FlatPlaza"
+	local function disc(name: string, diameter: number, height: number, at: Vector3, color: Color3)
+		local part = Instance.new("Part")
+		part.Name = name
+		part.Shape = Enum.PartType.Cylinder
+		part.Anchored = true
+		part.CanCollide = false
+		part.CanQuery = false
+		part.CanTouch = false
+		part.CastShadow = false
+		part.Material = Enum.Material.SmoothPlastic
+		part.Color = color
+		part.Size = Vector3.new(height, diameter, diameter)
+		part.CFrame = CFrame.new(at) * CFrame.Angles(0, 0, math.pi / 2)
+		part.Parent = folder
+	end
+	local center = Vector3.new(spawn.Position.X, 0, spawn.Position.Z)
+	-- Широкая плита и кольца: от большого диска к малому, цвета чередуются (читаются как канавки)
+	local steps = flat.plazaRings + 1
+	for i = 1, steps do
+		local radius = flat.plazaRadius * (1 - (i - 1) / steps)
+		disc(
+			"PlazaDisc" .. i,
+			radius * 2,
+			0.05,
+			center + Vector3.new(0, PLAZA_Y + i * 0.02, 0),
+			PLAZA_SHADES[(i - 1) % 2 + 1]
+		)
+	end
+	-- Круглые «камни» по кольцу
+	local ringRadius = flat.plazaRadius * 0.62
+	for i = 1, flat.plazaStones do
+		local angle = (i - 1) * 2 * math.pi / flat.plazaStones
+		local at = center
+			+ Vector3.new(math.cos(angle) * ringRadius, PLAZA_Y + 0.12, math.sin(angle) * ringRadius)
+		disc("PlazaStone" .. i, 1.8, 0.1, at, Color3.fromRGB(236, 232, 240))
+	end
+	folder.Parent = workspace
 end
 
 -- Под тропинками вынимаем траву из террейна: 3D-травинки (Terrain.Decoration) растут на Grass и торчали
@@ -374,6 +482,9 @@ local function ensurePaths()
 				path.CanCollide = false
 				path.CanQuery = false
 				path.CanTouch = false
+				if World.flatGround then
+					flatPathStyle(path)
+				end
 			end
 		end
 	end
@@ -738,14 +849,15 @@ end
 -- Трава с настоящей текстурой (материал Grass) по всему парку: земля вокруг и газон парка Астры
 -- (MeadowGround #6BBF59, был гладкий пластик). Узнаём газон по цвету и имени
 local function grassify(part: BasePart)
-	part.Material = Enum.Material.Grass
+	-- Ровный мультяшный газон (World.flatGround): гладкая заливка без текстуры травы
+	part.Material = if World.flatGround then Enum.Material.SmoothPlastic else Enum.Material.Grass
 end
 
 -- Террейн Grass по всей земле карты: настоящая текстура травы и 3D-травинки. true — удалось; тогда плоскую
 -- плиту и газон парка Астры скрываем (прозрачные, коллизия остаётся), иначе остаётся материал Grass на деталях
 local function ensureGrassTerrain(): boolean
 	local config = World.grass
-	if not config.terrain then
+	if not config.terrain or World.flatGround then
 		return false
 	end
 	if workspace:GetAttribute("GrassTerrain") == true then
@@ -1263,6 +1375,7 @@ function WorldService.start()
 	ensurePigeons()
 	ensureOuterLandscape()
 	gravelParkPaths()
+	flatPlaza()
 	carvePathsFromGrass()
 	arrangeParkFurniture()
 	dimImportedLights()
