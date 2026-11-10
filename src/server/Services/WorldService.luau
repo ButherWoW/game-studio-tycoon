@@ -1038,6 +1038,39 @@ local function outerBlocked(point: Vector3, center: Vector3): boolean
 	return false
 end
 
+-- Скамейка вокруг парка — лицом к ближайшей тропинке к участку (владелец 10.11: «стоит криво»).
+-- Перед скамейки — +Z. Нет тропинки ближе OUTER_BENCH_REACH — случайный поворот, как раньше
+local OUTER_BENCH_REACH = 24
+
+local function benchYawToPath(point: Vector3): number?
+	local paths = workspace:FindFirstChild("PlotPaths")
+	if not paths then
+		return nil
+	end
+	local best: Vector3? = nil
+	local bestDist = OUTER_BENCH_REACH
+	for _, path in paths:GetChildren() do
+		if path:IsA("BasePart") then
+			local here = path.CFrame:PointToObjectSpace(point)
+			-- Ось тропинки — Z детали (Path_ строится через CFrame.lookAt)
+			if math.abs(here.Z) < path.Size.Z / 2 and math.abs(here.X) < bestDist then
+				bestDist = math.abs(here.X)
+				local side = if here.X > 0 then -1 else 1
+				best = path.CFrame.RightVector * side
+			end
+		end
+	end
+	if not best then
+		return nil
+	end
+	local flat = Vector3.new(best.X, 0, best.Z)
+	if flat.Magnitude < 0.1 then
+		return nil
+	end
+	-- Лицо +Z смотрит на тропинку: угол поворота вокруг Y для вектора flat
+	return math.atan2(flat.X, flat.Z)
+end
+
 local function ensureOuterLandscape()
 	if workspace:FindFirstChild(OUTER_NAME) or not hasLandscape() then
 		return
@@ -1099,7 +1132,11 @@ local function ensureOuterLandscape()
 				if scale ~= 1 then
 					model:ScaleTo(model:GetScale() * scale)
 				end
-				model:PivotTo(CFrame.new(point) * CFrame.Angles(0, yaw, 0))
+				local finalYaw = yaw
+				if chosen.model.Name == "StreetBench" then
+					finalYaw = benchYawToPath(point) or yaw
+				end
+				model:PivotTo(CFrame.new(point) * CFrame.Angles(0, finalYaw, 0))
 				model.Parent = folder
 			end
 		end
