@@ -233,6 +233,8 @@ end
 -- Плиты дорожек тонкие (0.02) и лежали на 0.11, а поверхность травы местами 0.14–0.26: трава
 -- накрывала плиты, дорожки рвались (владелец 10.11). Поднимаем их над травой
 local PATH_LIFT = 0.25
+-- Насколько бордюр ниже плиты дорожки: меньше PATH_LIFT, чтобы над газоном он оставался виден
+local CURB_DROP = 0.06
 
 -- Мультяшная плита дорожки (World.flatGround): гладкий светлый материал, шире в pathWidthScale раз,
 -- по краям зелёный бордюр. Один раз на деталь (атрибут FlatStyled)
@@ -271,12 +273,15 @@ local function flatPathStyle(item: BasePart)
 		curb.TopSurface = Enum.SurfaceType.Smooth
 		curb.BottomSurface = Enum.SurfaceType.Smooth
 		local shift = side * (newWidth / 2 + flat.curbWidth / 2)
+		-- Бордюр чуть ниже плиты (владелец 10.11: на перекрёстках зелёные полосы шли поперёк дорожек
+		-- и мерцали): соседняя плита дорожки или площади его накрывает, над газоном он виден
+		local drop = -CURB_DROP
 		if alongZ then
 			curb.Size = Vector3.new(flat.curbWidth, item.Size.Y, length)
-			curb.CFrame = item.CFrame * CFrame.new(shift, 0, 0)
+			curb.CFrame = item.CFrame * CFrame.new(shift, drop, 0)
 		else
 			curb.Size = Vector3.new(length, item.Size.Y, flat.curbWidth)
-			curb.CFrame = item.CFrame * CFrame.new(0, 0, shift)
+			curb.CFrame = item.CFrame * CFrame.new(0, drop, shift)
 		end
 		curb.Parent = item.Parent
 	end
