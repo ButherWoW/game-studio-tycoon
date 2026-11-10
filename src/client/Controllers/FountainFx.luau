@@ -98,8 +98,10 @@ local function build(model: Model): Setup?
 	-- Центральная струя: бьёт вверх, веером падает обратно
 	local top = Instance.new("Attachment")
 	top.Name = "FountainJet"
-	top.WorldPosition = jetTop.Position + Vector3.new(0, jetTop.Size.Y / 2, 0)
+	-- Сначала родитель, потом WorldPosition: у Attachment без родителя WorldPosition пишется как
+	-- локальная позиция, и после привязки к JetTop струя висела в воздухе далеко от фонтана (владелец 10.11)
 	top.Parent = jetTop
+	top.WorldPosition = jetTop.Position + Vector3.new(0, jetTop.Size.Y / 2, 0)
 	table.insert(
 		setup.emitters,
 		emitter(top, {
