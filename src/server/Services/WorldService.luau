@@ -217,17 +217,26 @@ local function concretePlots()
 	end
 end
 
--- Дорожки парка Астры (GardenWalk_*, PondWalk_*) — гравий, как тропинки к участкам
+-- Дорожки парка Астры — гравий, как тропинки к участкам. Promenade_*, BridgeExit_*, PlotApproach_*
+-- оставались песочными SmoothPlastic (владелец 09.11: дорожка вся цветом гравия, без песчаного)
+local PARK_WALK_PREFIXES = { "^GardenWalk_", "^PondWalk_", "^Promenade_", "^BridgeExit_", "^PlotApproach_" }
+
+local function isParkWalk(name: string): boolean
+	for _, prefix in PARK_WALK_PREFIXES do
+		if string.find(name, prefix) then
+			return true
+		end
+	end
+	return false
+end
+
 local function gravelParkPaths()
 	if workspace:GetAttribute("GravelPaths") == true then
 		return
 	end
 	local found = false
 	for _, item in workspace:GetDescendants() do
-		if
-			item:IsA("BasePart")
-			and (string.find(item.Name, "^GardenWalk_") or string.find(item.Name, "^PondWalk_"))
-		then
+		if item:IsA("BasePart") and isParkWalk(item.Name) then
 			item.Material = PATH_MATERIAL
 			item.Color = LANDSCAPE_PATH_COLOR
 			found = true
@@ -254,14 +263,7 @@ local function carvePathsFromGrass()
 	local centerY = top - depth / 2 - 2
 	local count = 0
 	for _, item in workspace:GetDescendants() do
-		if
-			item:IsA("BasePart")
-			and (
-				string.find(item.Name, "^Path_")
-				or string.find(item.Name, "^GardenWalk_")
-				or string.find(item.Name, "^PondWalk_")
-			)
-		then
+		if item:IsA("BasePart") and (string.find(item.Name, "^Path_") or isParkWalk(item.Name)) then
 			local ok = pcall(function()
 				if string.find(item.Name, "roundJoin") then
 					-- Стык поворота — диск радиуса 3 (вертикальная ось)
