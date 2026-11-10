@@ -881,10 +881,9 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 		more.Name = "More"
 		more.Visible = false
 		more.BackgroundColor3 = Ui.colors.panel
-		more.BackgroundTransparency = 0.15
+		more.BackgroundTransparency = 0.35
 		more.Size = UDim2.new()
 		more.AutomaticSize = Enum.AutomaticSize.XY
-		more.ZIndex = 5
 		local moreCorner = Instance.new("UICorner")
 		moreCorner.CornerRadius = UDim.new(0, 12)
 		moreCorner.Parent = more
