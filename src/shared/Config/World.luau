@@ -27,6 +27,18 @@ local World = {
 		color = Color3.fromRGB(88, 150, 66),
 		decoration = true,
 	},
+	-- Мультяшный стиль (владелец 10.11, референс): ровный газон без террейн-травы, широкие светлые плиты
+	-- дорожек с зелёным бордюром и площадь с кольцами и «камнями». false — прежнее поведение (террейн, гравий)
+	flatGround = true,
+	flat = {
+		pathColor = Color3.fromRGB(217, 212, 220),
+		curbColor = Color3.fromRGB(95, 174, 76),
+		pathWidthScale = 1.5, -- во сколько раз шире прежние дорожки
+		curbWidth = 0.6,
+		plazaRadius = 9.5,
+		plazaRings = 3,
+		plazaStones = 9,
+	},
 	-- Фонтан в парке крупнее (масштаб вокруг центра основания)
 	fountainScale = 1.7,
 }
