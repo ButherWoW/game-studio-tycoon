@@ -235,7 +235,8 @@ local function placeArrows()
 		local glow = math.clamp(1 - math.abs(pulse - (index - 1)) / 2, 0, 1)
 		for _, bar in bars do
 			local side = bar:GetAttribute("Side") :: number
-			bar.CFrame = base * CFrame.new(side * 0.55, 0, 0.55) * CFrame.Angles(0, -side * math.pi / 4, 0)
+			-- Остриё вперёд (−Z базы, к цели), крылья назад: владелец 10.11 — «стрелка не в ту сторону»
+			bar.CFrame = base * CFrame.new(side * 0.55, 0, 0.55) * CFrame.Angles(0, side * math.pi / 4, 0)
 			bar.Transparency = if visible then 0.55 - glow * 0.5 else 1
 		end
 	end
