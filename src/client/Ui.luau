@@ -607,6 +607,20 @@ local MENU_TOUCH_GAP = 3
 local MENU_HUD_GAP = 8 -- зазор от меню до плашек HUD
 local MENU_TOUCH_MIN_SCALE = 0.7
 
+-- Компактное меню (владелец 10.11: «слишком длинное, пусть раскладывается при нажатии»): в колонке
+-- только главные слоты и кнопка «⋯»; остальные — в выдвижной панели справа от колонки
+local MENU_MAIN_SLOTS: { [number]: boolean } = {
+	[1] = true, -- исследования
+	[2] = true, -- команда
+	[3] = true, -- задания
+	[4] = true, -- магазин
+	[5] = true, -- rebirth
+	[12] = true, -- домой
+	[13] = true, -- студия
+}
+local MENU_MORE_COLUMNS = 4
+local menuMore: Frame? = nil
+
 -- Ширина верхней строки HUD (HudController, Config/Hud): меню на тач-экране правее не заходит.
 -- Плашки событий по центру больше не висят — они в лотке справа (Ui.bannerStack)
 Ui.HUD_PLATE_WIDTH = if Ui.touch then Hud.topBarWidthTouch else Hud.topBarWidth
@@ -862,6 +876,50 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 		column.Parent = screen
 		screen.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 		menuColumn = column
+		-- Выдвижная панель «⋯»: сетка остальных кнопок справа от колонки, закрыта по умолчанию
+		local more = Instance.new("Frame")
+		more.Name = "More"
+		more.Visible = false
+		more.BackgroundColor3 = Ui.colors.panel
+		more.BackgroundTransparency = 0.15
+		more.Size = UDim2.new()
+		more.AutomaticSize = Enum.AutomaticSize.XY
+		more.ZIndex = 5
+		local moreCorner = Instance.new("UICorner")
+		moreCorner.CornerRadius = UDim.new(0, 12)
+		moreCorner.Parent = more
+		local morePad = Instance.new("UIPadding")
+		morePad.PaddingTop = UDim.new(0, 6)
+		morePad.PaddingBottom = UDim.new(0, 6)
+		morePad.PaddingLeft = UDim.new(0, 6)
+		morePad.PaddingRight = UDim.new(0, 6)
+		morePad.Parent = more
+		local moreGrid = Instance.new("UIGridLayout")
+		moreGrid.SortOrder = Enum.SortOrder.LayoutOrder
+		moreGrid.FillDirection = Enum.FillDirection.Horizontal
+		moreGrid.FillDirectionMaxCells = MENU_MORE_COLUMNS
+		local cell = if Ui.touch then MENU_TOUCH_CELL else MENU_BUTTON
+		moreGrid.CellSize = UDim2.fromOffset(cell, cell)
+		moreGrid.CellPadding = UDim2.fromOffset(MENU_GAP, MENU_GAP)
+		moreGrid.Parent = more
+		local moreScale = Instance.new("UIScale")
+		moreScale.Parent = more
+		more.Parent = screen
+		menuMore = more
+		local toggle = Ui.button(column, "⋯", Ui.colors.panel, function()
+			if not more.Visible then
+				-- Справа от колонки, на уровне её верха; масштаб — как у колонки
+				local pos = column.AbsolutePosition
+				local size = column.AbsoluteSize
+				moreScale.Scale = scale.Scale
+				more.Position = UDim2.fromOffset(pos.X + size.X + MENU_GAP * 2, pos.Y)
+			end
+			more.Visible = not more.Visible
+		end)
+		toggle.Name = "MoreToggle"
+		toggle.LayoutOrder = 1000
+		toggle.Size = UDim2.fromOffset(MENU_BUTTON, MENU_BUTTON)
+		toggle.TextScaled = true
 		-- Кнопки создаются пачкой при старте и меняют Visible: пересчёт раз в кадр
 		local scheduled = false
 		refitMenu = function()
@@ -893,8 +951,13 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 	-- 18 налоги, 19 биржа, 20 справочник обучения (GuideController)
 	local b: TextButton
 	-- Нажатие снимает значок 🆕 (Ui.markNew)
-	b = Ui.button(menuColumn :: Frame, icon, Ui.colors.panel, function()
+	local inMore = not MENU_MAIN_SLOTS[slot] and menuMore ~= nil
+	local parent: Frame = if inMore then menuMore :: Frame else menuColumn :: Frame
+	b = Ui.button(parent, icon, Ui.colors.panel, function()
 		clearNewBadge(b)
+		if inMore and menuMore then
+			menuMore.Visible = false
+		end
 		onClick()
 		menuClickedEvent:Fire(slot)
 	end)
