@@ -82,6 +82,17 @@ Ui.colors = {
 }
 
 Ui.titleFont = Enum.Font.FredokaOne
+
+-- Мультяшный стиль (issue #14, фидбек владельца 10.11): у кнопок — контур потемнее цвета кнопки
+-- и лёгкая обводка текста; у кнопок бокового меню — свой цвет на слот
+function Ui.shade(color: Color3, factor: number): Color3
+	local h, s, v = color:ToHSV()
+	return Color3.fromHSV(h, s, math.clamp(v * factor, 0, 1))
+end
+
+local BUTTON_OUTLINE = 0.55 -- во сколько раз контур темнее кнопки
+local BUTTON_OUTLINE_SIZE = 2.5
+local BUTTON_TEXT_STROKE = 0.55 -- 0 — чёрная обводка, 1 — нет
 Ui.bodyFont = Enum.Font.GothamBold
 
 -- В Fredoka One нет кириллицы, греческого, деванагари и иероглифов
@@ -368,7 +379,15 @@ function Ui.button(parent: Instance, text: string, color: Color3, onClick: () ->
 	b.TextScaled = true
 	b.AutoButtonColor = true
 	b.Text = text
+	b.TextStrokeColor3 = Color3.new(0, 0, 0)
+	b.TextStrokeTransparency = BUTTON_TEXT_STROKE
 	Ui.corner(b, 10)
+	local outline = Instance.new("UIStroke")
+	outline.Name = "Outline"
+	outline.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	outline.Thickness = BUTTON_OUTLINE_SIZE
+	outline.Color = Ui.shade(color, BUTTON_OUTLINE)
+	outline.Parent = b
 	local padding = Instance.new("UIPadding")
 	padding.PaddingTop = UDim.new(0, 6)
 	padding.PaddingBottom = UDim.new(0, 6)
@@ -563,6 +582,14 @@ end
 -- 4 магазин, 5 rebirth, 6 язык. order внутри слота не нужен — один слот, одна кнопка.
 -- 07.11 (владелец): меню компактнее — кнопки 52 → 44, зазор 8 → 5, на телефоне ячейка 46 → 40
 local MENU_BUTTON = 44
+local MENU_COLORS = {
+	Color3.fromRGB(61, 123, 255), -- синий
+	Color3.fromRGB(46, 190, 110), -- зелёный
+	Color3.fromRGB(255, 150, 50), -- оранжевый
+	Color3.fromRGB(150, 90, 230), -- фиолетовый
+	Color3.fromRGB(30, 190, 210), -- голубой
+	Color3.fromRGB(235, 80, 120), -- розовый
+}
 local MENU_GAP = 5
 -- Сверху HUD и плашки, снизу кнопка «Создать игру»: столько по высоте меню не занимает
 local MENU_RESERVED = 200
@@ -873,6 +900,13 @@ function Ui.menuButton(slot: number, icon: string, onClick: () -> (), imageKey: 
 	end)
 	b.Name = "Slot" .. slot
 	b.LayoutOrder = slot
+	-- Свой цвет у каждого слота (было: все тёмные)
+	local slotColor = MENU_COLORS[(slot - 1) % #MENU_COLORS + 1]
+	b.BackgroundColor3 = slotColor
+	local slotOutline = b:FindFirstChild("Outline")
+	if slotOutline and slotOutline:IsA("UIStroke") then
+		slotOutline.Color = Ui.shade(slotColor, BUTTON_OUTLINE)
+	end
 	b.Size = UDim2.fromOffset(MENU_BUTTON, MENU_BUTTON)
 	b:GetPropertyChangedSignal("Visible"):Connect(refitMenu)
 	local imageId = if imageKey then Images.menu[imageKey] else nil
