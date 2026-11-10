@@ -17,6 +17,7 @@ local ClientState = require(script.Parent.Parent.ClientState)
 local player = Players.LocalPlayer
 
 local CHECK_INTERVAL = 0.4
+local ARROW_LIFT = 0.45
 local ARROW_COUNT = 7
 local ARROW_FIRST = 5 -- studs от игрока до первой стрелки
 local ARROW_STEP = 4
@@ -230,12 +231,15 @@ local function placeArrows()
 			groundY(Vector3.new(flatPos.X, root.Position.Y, flatPos.Z), ignore),
 			flatPos.Z
 		)
+		-- Над землёй, чтобы стрелки не тонули в газоне и плитах (владелец 10.11)
+		pos += Vector3.new(0, ARROW_LIFT, 0)
 		local base = CFrame.lookAt(pos, pos + dir)
 		-- Волна: стрелка, до которой дошёл «импульс», светится сильнее
 		local glow = math.clamp(1 - math.abs(pulse - (index - 1)) / 2, 0, 1)
 		for _, bar in bars do
 			local side = bar:GetAttribute("Side") :: number
-			bar.CFrame = base * CFrame.new(side * 0.55, 0, 0.55) * CFrame.Angles(0, -side * math.pi / 4, 0)
+			-- Остриё вперёд (−Z базы, к цели), крылья назад: владелец 10.11 — «стрелка не в ту сторону»
+			bar.CFrame = base * CFrame.new(side * 0.55, 0, 0.55) * CFrame.Angles(0, side * math.pi / 4, 0)
 			bar.Transparency = if visible then 0.55 - glow * 0.5 else 1
 		end
 	end

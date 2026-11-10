@@ -156,7 +156,9 @@ end
 local function boardCFrame(plot: BasePart, inOffice: boolean): CFrame
 	local size = Orders.board.size
 	if inOffice then
-		return plot.CFrame * CFrame.new(Orders.board.officeOffset)
+		return plot.CFrame
+			* CFrame.new(Orders.board.officeOffset)
+			* CFrame.Angles(0, math.rad(Orders.board.officeYaw or 0), 0)
 	end
 	local offset = Orders.board.offset
 	return plot.CFrame * CFrame.new(offset.X, plot.Size.Y / 2 + size.Y / 2, offset.Z)

@@ -191,6 +191,7 @@ end
 -- заканчивается на ~8.5 над полом, а перекрытие следующего этажа начинается на FLOOR_HEIGHT − SLAB,
 -- между ними во всю ширину фасада была щель. Закрываем её стеклом с рамой
 local TRANSOM_FROM = 8.4 -- от пола этажа
+local TRANSOM_TRANSPARENCY = 0.7 -- как остекление фасада оболочки
 
 local function buildTransom(model: Model, plot: BasePart, floor: number)
 	local y = StudioLayout.floorY(floor)
@@ -210,21 +211,9 @@ local function buildTransom(model: Model, plot: BasePart, floor: number)
 		Color3.fromRGB(170, 210, 240)
 	)
 	glass.Material = Enum.Material.Glass
-	glass.Transparency = WINDOW_TRANSPARENCY
-	glass.Reflectance = 0.1
+	glass.Transparency = TRANSOM_TRANSPARENCY
 	glass.CastShadow = false
-	local function bar(name: string, size: Vector3, x: number, barY: number)
-		local part = makePart(model, name, size, at(plot, x, barY, z), WINDOW_FRAME_COLOR)
-		part.CanCollide = false
-		part.CastShadow = false
-	end
-	bar("TransomBottom", Vector3.new(width, WINDOW_FRAME, 0.5), 0, y + TRANSOM_FROM + WINDOW_FRAME / 2)
-	local step = 6
-	for i = 0, math.floor(width / step) do
-		local x =
-			math.clamp(-PLOT_HALF + i * step, -PLOT_HALF + WINDOW_FRAME / 2, PLOT_HALF - WINDOW_FRAME / 2)
-		bar("TransomMullion" .. i, Vector3.new(WINDOW_FRAME, height, 0.5), x, centerY)
-	end
+	-- Без своих стоек и рамы (владелец 10.11: «окна странно выглядят»): полоса продолжает остекление фасада
 end
 
 -- Закрытый этаж: тёмная обёртка со всех сторон и сверху (внутрь не попасть) и табличка на фасаде
