@@ -89,7 +89,9 @@ local function build(model: Model): Setup?
 		end
 	end
 	for _, name in { "BasinWater", "LowerWater", "UpperWater" } do
-		local water = part(model, name)
+		-- V39 Астры: настоящая вода — BasinWaterSurface, BasinWater остаётся невидимым proxy для кругов;
+		-- старая модель без Surface работает по прежним именам
+		local water = part(model, name .. "Surface") or part(model, name)
 		if water then
 			table.insert(setup.waters, water)
 			setup.baseColors[water] = water.Color
