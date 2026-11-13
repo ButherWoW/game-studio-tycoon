@@ -1,0 +1,42 @@
+{
+  "assets": [
+    {
+      "file": "concept_garage.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "01e6ac319c475f3427d9ec818d163f78f0c9ade58805b3cb5bf863fa3b1fed02"
+    },
+    {
+      "file": "concept_office.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "b6d6a2f2d24b69b9759b19095ecef35f2ebefc21eaf4f30543d3498ecf4e2752"
+    },
+    {
+      "file": "concept_pawnshop.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "4965c27eb4721b52e27d65224a7259504a6c32615fc1d5f471297c2250286937"
+    },
+    {
+      "file": "concept_skyscraper.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "b3bdc7b0d57465fe8791036caf7137dd85b743412443ae7b38809cb272f59d90"
+    }
+  ],
+  "type": "concept images, not 3D models",
+  "studioTested": false
+}
