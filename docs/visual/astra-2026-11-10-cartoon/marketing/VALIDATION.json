@@ -1,0 +1,66 @@
+{
+  "assets": [
+    {
+      "file": "game_icon.png",
+      "size": [
+        512,
+        512
+      ],
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAspect": 1.0,
+      "targetAspect": 1.0,
+      "mode": "RGB",
+      "sha256": "c7dd7eaf808cc7512f64df71a0572c9d55386fd9525c79e1de5d25a9f88d1711"
+    },
+    {
+      "file": "thumb_1.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sourceSize": [
+        1672,
+        941
+      ],
+      "sourceAspect": 1.7768331562167907,
+      "targetAspect": 1.7777777777777777,
+      "mode": "RGB",
+      "sha256": "0730a14d53adb20146fdd5f5ccaad02db0f501c25d327ea6ed23a219fcfd4ac8"
+    },
+    {
+      "file": "thumb_2.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sourceSize": [
+        1672,
+        941
+      ],
+      "sourceAspect": 1.7768331562167907,
+      "targetAspect": 1.7777777777777777,
+      "mode": "RGB",
+      "sha256": "66b3cd6a85ed6edb9f6fa836146c8a5722bee6651df712d9cbb27a0f0de4f175"
+    },
+    {
+      "file": "thumb_3.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "sourceSize": [
+        1672,
+        941
+      ],
+      "sourceAspect": 1.7768331562167907,
+      "targetAspect": 1.7777777777777777,
+      "mode": "RGB",
+      "sha256": "4917620e237b7f1f09738a04028070e0754099989b6ade0a28dbac21787cbc36"
+    }
+  ],
+  "studioTested": false,
+  "isGameplayScreenshot": false
+}
