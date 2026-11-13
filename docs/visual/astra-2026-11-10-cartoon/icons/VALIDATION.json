@@ -1,0 +1,320 @@
+{
+  "assets": [
+    {
+      "file": "icon_studio.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 118389,
+      "alphaIntermediatePixels": 142285,
+      "visibleBounds": [
+        53,
+        28,
+        453,
+        494
+      ],
+      "sha256": "48f42ba71f24cde1141916739837163ba5b17b006d9fdf1563de20cf381972f8"
+    },
+    {
+      "file": "icon_create_game.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 130668,
+      "alphaIntermediatePixels": 130190,
+      "visibleBounds": [
+        22,
+        27,
+        470,
+        501
+      ],
+      "sha256": "e6442f776978744f432c068ba9f301937eb52d40925e2878014ae236958450f9"
+    },
+    {
+      "file": "icon_upgrades.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 162362,
+      "alphaIntermediatePixels": 98883,
+      "visibleBounds": [
+        60,
+        46,
+        449,
+        472
+      ],
+      "sha256": "42d950001510de8e4077ca884fc309f75252f3795f4395e3b4fa6d195e731eef"
+    },
+    {
+      "file": "icon_team.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 121508,
+      "alphaIntermediatePixels": 139540,
+      "visibleBounds": [
+        14,
+        70,
+        498,
+        460
+      ],
+      "sha256": "fc2e1640e6cb4b773fb6585506ea3eb254bc8361150cc6dd35f260f3840047e0"
+    },
+    {
+      "file": "icon_shop.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 136704,
+      "alphaIntermediatePixels": 124444,
+      "visibleBounds": [
+        57,
+        43,
+        455,
+        482
+      ],
+      "sha256": "11602fd328a4a1aa2daecc16ed22040728cd6b619e969a330c9b1d09b9657b0b"
+    },
+    {
+      "file": "icon_rebirth.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 151966,
+      "alphaIntermediatePixels": 108762,
+      "visibleBounds": [
+        28,
+        47,
+        482,
+        476
+      ],
+      "sha256": "35a02404b5e2db348572f263daeec7924b7aca884bb18d7dd43b7d3883d081d5"
+    },
+    {
+      "file": "icon_collection.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 130249,
+      "alphaIntermediatePixels": 130961,
+      "visibleBounds": [
+        44,
+        50,
+        457,
+        477
+      ],
+      "sha256": "25e78bab8f66686a0f6ead8afe3b335a237b020c8e1d187ab1e1feb0bcea36f9"
+    },
+    {
+      "file": "icon_quests.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 126521,
+      "alphaIntermediatePixels": 134482,
+      "visibleBounds": [
+        75,
+        13,
+        421,
+        504
+      ],
+      "sha256": "e0f009fe4ca8c16e084799794a442da37d03cd6936d81e04b5a2abec8a754b2e"
+    },
+    {
+      "file": "icon_rating.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 137619,
+      "alphaIntermediatePixels": 123062,
+      "visibleBounds": [
+        36,
+        36,
+        476,
+        484
+      ],
+      "sha256": "f2119d86d3cdedc497f86533a77136593c330f2f489b2a1342f49b7b2f5cb786"
+    },
+    {
+      "file": "icon_settings.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 133149,
+      "alphaIntermediatePixels": 127592,
+      "visibleBounds": [
+        26,
+        30,
+        476,
+        485
+      ],
+      "sha256": "9b32d7c5b6de531635a23b496c9a4d19760a64134d2c638dd265fafdccb07882"
+    },
+    {
+      "file": "icon_bank.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 122588,
+      "alphaIntermediatePixels": 138492,
+      "visibleBounds": [
+        40,
+        50,
+        472,
+        478
+      ],
+      "sha256": "2946670e4213cb3d13b1635f95d05e2c92f14f6e87601484f3a19b7bdf24bd31"
+    },
+    {
+      "file": "icon_taxes.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 118081,
+      "alphaIntermediatePixels": 142883,
+      "visibleBounds": [
+        19,
+        55,
+        486,
+        473
+      ],
+      "sha256": "d1087308b4dd2f109f4b2a47e622f04ce9bc6f095a3773239f5738daeae63ae0"
+    },
+    {
+      "file": "icon_exchange.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 144194,
+      "alphaIntermediatePixels": 116810,
+      "visibleBounds": [
+        44,
+        37,
+        470,
+        485
+      ],
+      "sha256": "38eb12f216d80c1b14ecb633dd57d2db30617aa55b5e0354dab4a19d0d6ad2fd"
+    },
+    {
+      "file": "icon_contracts.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 114667,
+      "alphaIntermediatePixels": 146227,
+      "visibleBounds": [
+        50,
+        34,
+        461,
+        487
+      ],
+      "sha256": "6276b4bedfcd526dd5dc03bd3b3ef1982ad594801e06e67b8cf66323d812db82"
+    },
+    {
+      "file": "icon_safe.png",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "alphaZeroPixels": 80294,
+      "alphaIntermediatePixels": 180603,
+      "visibleBounds": [
+        30,
+        32,
+        477,
+        499
+      ],
+      "sha256": "8524d1e90772062e8c850204b7bbdde19d89362bedecd07857754a1e0fda30f2"
+    }
+  ],
+  "studioTested": false
+}

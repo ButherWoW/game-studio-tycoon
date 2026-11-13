@@ -1,0 +1,61 @@
+# Built-in image_gen prompts
+
+## studio
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: a chunky blue desktop computer with a cyan blank screen and small warm orange garage-shaped roof above it, symbolizing Studio. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outline equivalent to 4 pixels on a 512px image, subtle white highlights, consistent top-left lighting and gentle three-quarter view. One centered isolated object, fills 78 percent of square, generous clean padding. NO words, letters, numerals, logos, watermark, button plate, ground plane or cast background shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## create_game
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: a chunky purple videogame controller with cyan buttons and one golden five-point star floating above its upper right corner. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## upgrades
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: one bold emerald green upward arrow, thick extruded body, slightly tilted in three-quarter view. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## team
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: three friendly simplified rounded pawn-like people, blue central figure forward and orange and purple figures behind, plain round heads without facial detail. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## shop
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: one plump orange-gold coin bag with a teal drawstring and three chunky gold coins, blank coin faces without currency symbols. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## rebirth
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: two thick curved cyan and purple arrows forming one clear circular loop, an open transparent center. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## collection
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: one chunky closed teal book with warm cream page edges, a purple videogame controller emblem on the front cover. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## quests
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: one chunky orange clipboard with a cream sheet bearing three large green checkmarks, no writing or horizontal text lines. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## rating
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: one bright golden trophy cup with two curved handles and a blue plinth, no writing. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## settings
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: one chunky silver-blue gear with eight broad rounded teeth, cyan inner rim and a transparent central hole. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## bank
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: one chunky teal bank building with three cream columns, golden triangular pediment and a blank gold coin emblem, no writing. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## taxes
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: one thick cream receipt sheet beside a golden coin, one large red minus sign as a graphic, no text or numbers. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## exchange
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: two thick chunky arrows cyan upward and orange downward beside two gold coins, no chart grid or numerals. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## contracts
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: one chunky cream rolled-edge contract document with a large purple wax seal and blue pen, no writing. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
+
+## safe
+
+Use case: stylized-concept. Single game UI icon for Roblox Game Studio Tycoon: one chunky blue steel safe with a thick door and golden circular three-spoke lock, no numbers. Glossy cartoon low-poly 3D illustration, saturated friendly colors, simplified large shapes, rounded bevels, near-black outer contour equivalent to 4 pixels on a 512px image, smooth colored shading with subtle white highlights, consistent top-left lighting, gentle three-quarter view. Centered isolated subject fills 78 percent of square with generous padding. Matches a shiny blue computer and orange garage-roof icon set. NO words, letters, numerals, logos, watermark, button plate, ground plane or background cast shadow. Genuine transparent alpha background. Must read clearly at 80px.
