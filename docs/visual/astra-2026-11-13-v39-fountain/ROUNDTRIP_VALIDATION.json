@@ -1,0 +1,12 @@
+{
+  "partTransformsMatch": 306,
+  "maxTolerance": 2e-06,
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "pivotRotation": "identity",
+  "scriptFree": true,
+  "studioTested": false
+}

@@ -1,0 +1,26 @@
+{
+  "parts": 306,
+  "visibleParts": 303,
+  "pairChecks": 45753,
+  "unresolvedPairs": [],
+  "minCertifiedGap": -2.4203055843500815e-06,
+  "bounds": [
+    [
+      -5.4,
+      -3.3306690738754696e-16,
+      -5.4
+    ],
+    [
+      5.4,
+      4.154999999999999,
+      5.4
+    ]
+  ],
+  "classes": [
+    "Model",
+    "Part",
+    "WedgePart"
+  ],
+  "studioTested": false,
+  "physicsFPS": null
+}

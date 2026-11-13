@@ -1,0 +1,11 @@
+--- a/src/client/Controllers/FountainFx.luau
++++ b/src/client/Controllers/FountainFx.luau
+@@ -89,7 +89,7 @@
+ 		end
+ 	end
+ 	for _, name in { "BasinWater", "LowerWater", "UpperWater" } do
+-		local water = part(model, name)
++		local water = part(model, name .. "Surface") or part(model, name)
+ 		if water then
+ 			table.insert(setup.waters, water)
+ 			setup.baseColors[water] = water.Color
